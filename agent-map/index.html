@@ -519,7 +519,7 @@
 
       <!-- Row 2 -->
       <div class="dept-row">
-        <div class="dept card-lavender">
+        <div class="dept card-lavender" id="agent-eda">
           <div class="dept-header">
             <div class="dept-title-wrap">
               <div class="dept-icon">◈</div>
@@ -533,7 +533,7 @@
             <div class="agent-item">Correlation Discovery</div>
           </div>
         </div>
-        <div class="dept card-mint">
+        <div class="dept card-mint" id="agent-preprocessing">
           <div class="dept-header">
             <div class="dept-title-wrap">
               <div class="dept-icon">⊘</div>
@@ -551,7 +551,7 @@
 
       <!-- Row 3 -->
       <div class="dept-row">
-        <div class="dept card-rose">
+        <div class="dept card-rose" id="agent-problem">
           <div class="dept-header">
             <div class="dept-title-wrap">
               <div class="dept-icon">✦</div>
@@ -565,7 +565,7 @@
             <div class="agent-item">Scope Definition</div>
           </div>
         </div>
-        <div class="dept card-cream">
+        <div class="dept card-cream" id="agent-metrics">
           <div class="dept-header">
             <div class="dept-title-wrap">
               <div class="dept-icon">▣</div>
@@ -609,7 +609,7 @@
 
       <!-- Row 5 -->
       <div class="dept-row">
-        <div class="dept card-lavender">
+        <div class="dept card-lavender" id="agent-dashboard">
           <div class="dept-header">
             <div class="dept-title-wrap">
               <div class="dept-icon">▦</div>
@@ -623,7 +623,7 @@
             <div class="agent-item">Layout Design</div>
           </div>
         </div>
-        <div class="dept card-lavender">
+        <div class="dept card-lavender" id="agent-experiment">
           <div class="dept-header">
             <div class="dept-title-wrap">
               <div class="dept-icon">⊿</div>
@@ -641,7 +641,7 @@
 
       <!-- Row 6 -->
       <div class="dept-row">
-        <div class="dept card-offwhite">
+        <div class="dept card-offwhite" id="agent-report">
           <div class="dept-header">
             <div class="dept-title-wrap">
               <div class="dept-icon">≡</div>
@@ -655,7 +655,7 @@
             <div class="agent-item">Slide Generation</div>
           </div>
         </div>
-        <div class="dept card-mint">
+        <div class="dept card-mint" id="agent-actions">
           <div class="dept-header">
             <div class="dept-title-wrap">
               <div class="dept-icon">→</div>
@@ -679,33 +679,33 @@
     <div class="col-label">Outputs</div>
     <div class="card card-cream output-card">
       <div class="output-grid">
-        <div class="output-item">
+        <div class="output-item" data-from="eda">
           <div class="output-icon icon-lavender">◇</div>
           <div class="output-name">EDA Report</div>
         </div>
-        <div class="output-item">
-          <div class="output-icon icon-blue">▤</div>
-          <div class="output-name">Dashboard</div>
+        <div class="output-item" data-from="problem">
+          <div class="output-icon icon-pink">✧</div>
+          <div class="output-name">Problem</div>
         </div>
-        <div class="output-item">
-          <div class="output-icon icon-red">△</div>
-          <div class="output-name">A/B Test</div>
-        </div>
-        <div class="output-item">
-          <div class="output-icon icon-teal">☰</div>
-          <div class="output-name">Report</div>
-        </div>
-        <div class="output-item">
-          <div class="output-icon icon-green">→</div>
-          <div class="output-name">Action Plan</div>
-        </div>
-        <div class="output-item">
+        <div class="output-item" data-from="metrics">
           <div class="output-icon icon-yellow">□</div>
           <div class="output-name">KPI</div>
         </div>
-        <div class="output-item">
-          <div class="output-icon icon-pink">✧</div>
-          <div class="output-name">Problem</div>
+        <div class="output-item" data-from="dashboard">
+          <div class="output-icon icon-blue">▤</div>
+          <div class="output-name">Dashboard</div>
+        </div>
+        <div class="output-item" data-from="experiment">
+          <div class="output-icon icon-red">△</div>
+          <div class="output-name">A/B Test</div>
+        </div>
+        <div class="output-item" data-from="report">
+          <div class="output-icon icon-teal">☰</div>
+          <div class="output-name">Report</div>
+        </div>
+        <div class="output-item" data-from="actions">
+          <div class="output-icon icon-green">→</div>
+          <div class="output-name">Action Plan</div>
         </div>
       </div>
     </div>
@@ -789,15 +789,28 @@ function drawFlowLines() {
     });
   }
 
-  // 3. Department Rows → Output
-  if (outputPos && deptRows.length) {
-    deptRows.forEach(row => {
-      const rowPos = getCenter(row);
-      if (rowPos) {
-        drawCurve(rowPos.right, rowPos.y, outputPos.left, outputPos.y);
+  // 3. Agents → Matching Outputs
+  const agentOutputMap = [
+    ['agent-eda', 'eda'],
+    ['agent-problem', 'problem'],
+    ['agent-metrics', 'metrics'],
+    ['agent-dashboard', 'dashboard'],
+    ['agent-experiment', 'experiment'],
+    ['agent-report', 'report'],
+    ['agent-actions', 'actions']
+  ];
+  
+  agentOutputMap.forEach(([agentId, outputKey]) => {
+    const agent = document.getElementById(agentId);
+    const outputItem = document.querySelector(`[data-from="${outputKey}"]`);
+    if (agent && outputItem) {
+      const agentPos = getCenter(agent);
+      const outputItemPos = getCenter(outputItem);
+      if (agentPos && outputItemPos) {
+        drawCurve(agentPos.right, agentPos.y, outputItemPos.left, outputItemPos.y);
       }
-    });
-  }
+    }
+  });
 
   // 4. Output → Feedback
   if (outputPos && feedbackPos) {
