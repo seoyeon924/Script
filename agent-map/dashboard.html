@@ -56,6 +56,16 @@
       margin-left: 12px;
     }
 
+    .header-title span a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .header-title span a:hover {
+      color: var(--text-white);
+    }
+
     .status-badge {
       display: flex;
       align-items: center;
@@ -546,7 +556,7 @@
 <body>
 
 <header class="header">
-  <h1 class="header-title">AI Data Analyst OS <span>Dashboard</span></h1>
+  <h1 class="header-title">AI Data Analyst OS <span>by <a href="https://www.linkedin.com/in/seoyeonjun/" target="_blank">Seoyeon Jun</a></span></h1>
   <div class="status-badge">
     <div class="status-dot processing"></div>
     <span>Processing @metrics</span>
