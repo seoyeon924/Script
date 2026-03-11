@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Data Platform — Agent Map</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0d0d12;
+      color: #e0e0e0;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    
+    /* ─── HEADER ─── */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: rgba(20,20,28,0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #7C3AED, #EC4899);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    
+    .logo-text {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+    
+    .logo-text span {
+      color: #888;
+      font-weight: 400;
+      margin-left: 8px;
+      font-size: 12px;
+    }
+    
+    .legend {
+      display: flex;
+      gap: 16px;
+      font-size: 11px;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    
+    .stats {
+      display: flex;
+      gap: 24px;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+    }
+    
+    .stat-label {
+      font-size: 10px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    /* ─── MAIN LAYOUT ─── */
+    .main {
+      display: flex;
+      height: calc(100vh - 65px);
+    }
+    
+    /* ─── MAP AREA ─── */
+    .map-container {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .map-canvas {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    
+    /* SVG for connections */
+    .connections-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .connection {
+      fill: none;
+      stroke-width: 2;
+      opacity: 0.6;
+    }
+    
+    /* ─── COLUMNS ─── */
+    .columns {
+      display: flex;
+      justify-content: space-between;
+      padding: 40px;
+      height: 100%;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 160px;
+    }
+    
+    .column-header {
+      font-size: 10px;
+      font-weight: 600;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    
+    /* ─── NODES ─── */
+    .node {
+      background: rgba(30,30,40,0.9);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 14px 16px;
+      cursor: grab;
+      transition: all 0.2s;
+      position: relative;
+    }
+    
+    .node:hover {
+      background: rgba(40,40,55,0.95);
+      border-color: rgba(255,255,255,0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    
+    .node:active {
+      cursor: grabbing;
+    }
+    
+    .node-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    
+    .node-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    
+    .node-subtitle {
+      font-size: 10px;
+      color: #666;
+    }
+    
+    /* ─── DEPARTMENT CARDS ─── */
+    .dept-card {
+      background: rgba(25,25,35,0.95);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 16px;
+      min-width: 200px;
+    }
+    
+    .dept-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    
+    .dept-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    
+    .dept-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+    }
+    
+    .dept-count {
+      font-size: 11px;
+      color: #666;
+      margin-left: auto;
+      background: rgba(255,255,255,0.05);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    
+    .dept-agents {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .agent-item {
+      font-size: 11px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+    }
+    
+    .agent-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    
+    /* ─── OUTPUT NODES ─── */
+    .output-node {
+      background: rgba(30,30,40,0.8);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 12px 16px;
+      text-align: center;
+      min-width: 120px;
+    }
+    
+    .output-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      margin: 0 auto 8px;
+    }
+    
+    .output-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+    }
+    
+    /* ─── COLORS ─── */
+    .color-analysis { background: rgba(59,130,246,0.2); color: #3B82F6; }
+    .color-viz { background: rgba(16,185,129,0.2); color: #10B981; }
+    .color-content { background: rgba(236,72,153,0.2); color: #EC4899; }
+    .color-auto { background: rgba(245,158,11,0.2); color: #F59E0B; }
+    .color-ops { background: rgba(139,92,246,0.2); color: #8B5CF6; }
+    
+    .dot-analysis { background: #3B82F6; }
+    .dot-viz { background: #10B981; }
+    .dot-content { background: #EC4899; }
+    .dot-auto { background: #F59E0B; }
+    .dot-ops { background: #8B5CF6; }
+    
+    .stroke-analysis { stroke: #3B82F6; }
+    .stroke-viz { stroke: #10B981; }
+    .stroke-content { stroke: #EC4899; }
+    .stroke-auto { stroke: #F59E0B; }
+    .stroke-ops { stroke: #8B5CF6; }
+    
+    /* ─── SIDEBAR (구현 가이드) ─── */
+    .sidebar {
+      width: 360px;
+      background: rgba(18,18,24,0.98);
+      border-left: 1px solid rgba(255,255,255,0.06);
+      padding: 24px;
+      overflow-y: auto;
+    }
+    
+    .sidebar-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .sidebar-section {
+      margin-bottom: 24px;
+    }
+    
+    .sidebar-section h3 {
+      font-size: 11px;
+      font-weight: 700;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    
+    .sidebar-section p {
+      font-size: 12px;
+      color: #999;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    
+    .code-block {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 11px;
+      color: #7dd3fc;
+      overflow-x: auto;
+      margin-bottom: 12px;
+    }
+    
+    .tech-tag {
+      display: inline-block;
+      background: rgba(124,58,237,0.2);
+      color: #a78bfa;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+    
+    .flow-step {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .flow-num {
+      width: 24px;
+      height: 24px;
+      background: rgba(124,58,237,0.3);
+      color: #a78bfa;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    
+    .flow-text {
+      font-size: 12px;
+      color: #bbb;
+      line-height: 1.6;
+    }
+    
+    .flow-text strong {
+      color: #fff;
+    }
+    
+    /* ─── MINIMAP ─── */
+    .minimap {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 160px;
+      height: 100px;
+      background: rgba(20,20,28,0.9);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .minimap-viewport {
+      position: absolute;
+      border: 2px solid rgba(124,58,237,0.6);
+      background: rgba(124,58,237,0.1);
+      border-radius: 2px;
+    }
+    
+    /* ─── ZOOM CONTROLS ─── */
+    .zoom-controls {
+      position: absolute;
+      bottom: 20px;
+      right: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    .zoom-btn {
+      width: 36px;
+      height: 36px;
+      background: rgba(30,30,40,0.9);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    
+    .zoom-btn:hover {
+      background: rgba(50,50,65,0.95);
+    }
+    
+    /* ─── BOTTOM BAR ─── */
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 360px;
+      padding: 12px 24px;
+      background: rgba(15,15,20,0.95);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+      font-size: 11px;
+      color: #555;
+    }
+    
+    /* ─── KNOWLEDGE BASE ─── */
+    .knowledge-node {
+      background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(59,130,246,0.15));
+      border: 1px solid rgba(16,185,129,0.3);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .knowledge-badge {
+      display: inline-block;
+      background: rgba(16,185,129,0.2);
+      color: #10B981;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">🧠</div>
+    <div class="logo-text">
+      AI Data Platform — Agent Map
+      <span>v1.0 Demo</span>
+    </div>
+  </div>
+  
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot dot-analysis"></div> 데이터 분석</div>
+    <div class="legend-item"><div class="legend-dot dot-viz"></div> 시각화</div>
+    <div class="legend-item"><div class="legend-dot dot-content"></div> 콘텐츠</div>
+    <div class="legend-item"><div class="legend-dot dot-auto"></div> 자동화</div>
+    <div class="legend-item"><div class="legend-dot dot-ops"></div> 운영</div>
+    <div class="legend-item" style="color:#555;">── Data Flow</div>
+    <div class="legend-item" style="color:#555;">┈┈ Feedback Loop</div>
+  </div>
+  
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">12+</div>
+      <div class="stat-label">AI Agents</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">5</div>
+      <div class="stat-label">Modules</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">5</div>
+      <div class="stat-label">Departments</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  
+  <!-- MAP AREA -->
+  <div class="map-container">
+    <svg class="connections-svg" id="connections">
+      <!-- 연결선은 JS로 동적 생성 -->
+    </svg>
+    
+    <div class="columns">
+      
+      <!-- INPUT -->
+      <div class="column" style="justify-content: center;">
+        <div class="column-header">Input</div>
+        <div class="node" id="node-client" data-col="input">
+          <div class="node-icon" style="background:rgba(255,255,255,0.1);">👤</div>
+          <div class="node-title">Client</div>
+          <div class="node-subtitle">데이터 요청</div>
+        </div>
+      </div>
+      
+      <!-- ORCHESTRATOR -->
+      <div class="column" style="justify-content: center;">
+        <div class="column-header">Orchestrator</div>
+        <div class="node" id="node-orchestrator" data-col="orchestrator" style="border-color: rgba(124,58,237,0.4);">
+          <div class="node-icon" style="background: linear-gradient(135deg, #7C3AED, #EC4899);">✦</div>
+          <div class="node-title">AI Data Agent</div>
+          <div class="node-subtitle">12+ Agents · 5 Modules</div>
+        </div>
+      </div>
+      
+      <!-- DEPARTMENTS -->
+      <div class="column" style="gap: 16px;">
+        <div class="column-header">Departments & Agents</div>
+        
+        <div class="dept-card" id="dept-analysis" data-col="dept">
+          <div class="dept-header">
+            <div class="dept-icon color-analysis">🔍</div>
+            <div class="dept-title">데이터 분석</div>
+            <div class="dept-count">3</div>
+          </div>
+          <div class="dept-agents">
+            <div class="agent-item"><div class="agent-dot dot-analysis"></div> Data Cleaner</div>
+            <div class="agent-item"><div class="agent-dot dot-analysis"></div> Pattern Analyzer</div>
+            <div class="agent-item"><div class="agent-dot dot-analysis"></div> SQL Generator</div>
+          </div>
+        </div>
+        
+        <div class="dept-card" id="dept-viz" data-col="dept">
+          <div class="dept-header">
+            <div class="dept-icon color-viz">📊</div>
+            <div class="dept-title">시각화</div>
+            <div class="dept-count">3</div>
+          </div>
+          <div class="dept-agents">
+            <div class="agent-item"><div class="agent-dot dot-viz"></div> Chart Builder</div>
+            <div class="agent-item"><div class="agent-dot dot-viz"></div> Dashboard Designer</div>
+            <div class="agent-item"><div class="agent-dot dot-viz"></div> D3.js Generator</div>
+          </div>
+        </div>
+        
+        <div class="dept-card" id="dept-content" data-col="dept">
+          <div class="dept-header">
+            <div class="dept-icon color-content">✍️</div>
+            <div class="dept-title">콘텐츠</div>
+            <div class="dept-count">3</div>
+          </div>
+          <div class="dept-agents">
+            <div class="agent-item"><div class="agent-dot dot-content"></div> Report Writer</div>
+            <div class="agent-item"><div class="agent-dot dot-content"></div> Insight Narrator</div>
+            <div class="agent-item"><div class="agent-dot dot-content"></div> Slide Generator</div>
+          </div>
+        </div>
+        
+        <div class="dept-card" id="dept-auto" data-col="dept">
+          <div class="dept-header">
+            <div class="dept-icon color-auto">⚡</div>
+            <div class="dept-title">자동화</div>
+            <div class="dept-count">2</div>
+          </div>
+          <div class="dept-agents">
+            <div class="agent-item"><div class="agent-dot dot-auto"></div> Scheduler</div>
+            <div class="agent-item"><div class="agent-dot dot-auto"></div> Notifier</div>
+          </div>
+        </div>
+        
+        <div class="dept-card" id="dept-ops" data-col="dept">
+          <div class="dept-header">
+            <div class="dept-icon color-ops">⚙️</div>
+            <div class="dept-title">운영</div>
+            <div class="dept-count">1</div>
+          </div>
+          <div class="dept-agents">
+            <div class="agent-item"><div class="agent-dot dot-ops"></div> Cost Tracker</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- OUTPUTS -->
+      <div class="column" style="gap: 12px; justify-content: center;">
+        <div class="column-header">Outputs</div>
+        
+        <div class="output-node" id="out-dashboard" data-col="output">
+          <div class="output-icon">📈</div>
+          <div class="output-title">대시보드</div>
+        </div>
+        
+        <div class="output-node" id="out-report" data-col="output">
+          <div class="output-icon">📄</div>
+          <div class="output-title">리포트</div>
+        </div>
+        
+        <div class="output-node" id="out-chart" data-col="output">
+          <div class="output-icon">📊</div>
+          <div class="output-title">차트</div>
+        </div>
+        
+        <div class="output-node" id="out-alert" data-col="output">
+          <div class="output-icon">🔔</div>
+          <div class="output-title">알림</div>
+        </div>
+      </div>
+      
+      <!-- FEEDBACK -->
+      <div class="column" style="justify-content: center;">
+        <div class="column-header">Feedback</div>
+        <div class="knowledge-node" id="node-knowledge" data-col="feedback">
+          <div class="node-icon" style="background: rgba(16,185,129,0.2); margin: 0 auto 8px;">📚</div>
+          <div class="node-title">Knowledge Base</div>
+          <div class="node-subtitle">모든 결과물이 피드백되어<br>시스템이 학습합니다</div>
+          <div class="knowledge-badge">SELF-IMPROVING</div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- MINIMAP -->
+    <div class="minimap">
+      <div class="minimap-viewport" style="top:30%; left:20%; width:60%; height:40%;"></div>
+    </div>
+    
+    <!-- ZOOM CONTROLS -->
+    <div class="zoom-controls">
+      <button class="zoom-btn">+</button>
+      <button class="zoom-btn">−</button>
+      <button class="zoom-btn">⟲</button>
+    </div>
+    
+    <!-- BOTTOM BAR -->
+    <div class="bottom-bar">
+      Drag any card to reposition — lines follow automatically
+    </div>
+  </div>
+  
+  <!-- SIDEBAR: 구현 가이드 -->
+  <div class="sidebar">
+    <div class="sidebar-title">🛠️ 구현 가이드</div>
+    
+    <div class="sidebar-section">
+      <h3>사용 기술</h3>
+      <div>
+        <span class="tech-tag">React Flow</span>
+        <span class="tech-tag">D3.js</span>
+        <span class="tech-tag">SVG</span>
+        <span class="tech-tag">Canvas</span>
+      </div>
+      <p style="margin-top:12px;">
+        이 맵은 순수 HTML/CSS/JS로 제작된 데모입니다.<br>
+        프로덕션에서는 <strong>React Flow</strong>를 추천합니다.
+      </p>
+    </div>
+    
+    <div class="sidebar-section">
+      <h3>데이터 플로우</h3>
+      
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-text">
+          <strong>Client</strong>가 데이터 분석 요청을 보냄<br>
+          <code style="color:#7dd3fc;">"매출 트렌드 분석해줘"</code>
+        </div>
+      </div>
+      
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-text">
+          <strong>Orchestrator</strong>가 요청을 파싱하고<br>
+          적절한 에이전트 팀을 구성
+        </div>
+      </div>
+      
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-text">
+          각 <strong>Department</strong>의 에이전트들이<br>
+          병렬로 작업 수행 (분석→시각화→리포트)
+        </div>
+      </div>
+      
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-text">
+          <strong>Output</strong>이 생성되고<br>
+          클라이언트에게 전달
+        </div>
+      </div>
+      
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div class="flow-text">
+          모든 결과물이 <strong>Knowledge Base</strong>에<br>
+          저장되어 시스템이 학습 (Feedback Loop)
+        </div>
+      </div>
+    </div>
+    
+    <div class="sidebar-section">
+      <h3>React Flow 구현 예시</h3>
+      <div class="code-block">
+import ReactFlow from 'reactflow';
+
+const nodes = [
+  { id: 'client', 
+    position: { x: 0, y: 200 },
+    data: { label: 'Client' } },
+  { id: 'orchestrator',
+    position: { x: 200, y: 200 },
+    data: { label: 'AI Agent' } },
+  // ... more nodes
+];
+
+const edges = [
+  { id: 'e1', source: 'client',
+    target: 'orchestrator',
+    animated: true },
+];
+
+&lt;ReactFlow 
+  nodes={nodes} 
+  edges={edges}
+  fitView
+/&gt;
+      </div>
+    </div>
+    
+    <div class="sidebar-section">
+      <h3>핵심 기능</h3>
+      <p>
+        ✓ <strong>드래그 & 드롭</strong> — 노드 위치 자유 이동<br>
+        ✓ <strong>연결선 자동 업데이트</strong> — 노드 이동 시 따라옴<br>
+        ✓ <strong>줌 & 팬</strong> — 마우스 휠 / 드래그<br>
+        ✓ <strong>미니맵</strong> — 전체 구조 한눈에<br>
+        ✓ <strong>커스텀 노드</strong> — 부서/에이전트 카드<br>
+        ✓ <strong>애니메이션</strong> — 데이터 흐름 시각화
+      </p>
+    </div>
+    
+    <div class="sidebar-section">
+      <h3>확장 아이디어</h3>
+      <p>
+        • 실시간 에이전트 상태 표시 (활성/대기)<br>
+        • 클릭 시 에이전트 상세 정보 패널<br>
+        • 에이전트 간 메시지 흐름 애니메이션<br>
+        • 비용/토큰 사용량 실시간 표시<br>
+        • 에이전트 추가/삭제 편집 모드
+      </p>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+// ─── 연결선 그리기 ───
+function drawConnections() {
+  const svg = document.getElementById('connections');
+  svg.innerHTML = '';
+  
+  // 연결 정의 (source → target, color)
+  const connections = [
+    ['node-client', 'node-orchestrator', '#7C3AED'],
+    ['node-orchestrator', 'dept-analysis', '#3B82F6'],
+    ['node-orchestrator', 'dept-viz', '#10B981'],
+    ['node-orchestrator', 'dept-content', '#EC4899'],
+    ['node-orchestrator', 'dept-auto', '#F59E0B'],
+    ['node-orchestrator', 'dept-ops', '#8B5CF6'],
+    ['dept-viz', 'out-dashboard', '#10B981'],
+    ['dept-viz', 'out-chart', '#10B981'],
+    ['dept-content', 'out-report', '#EC4899'],
+    ['dept-auto', 'out-alert', '#F59E0B'],
+    ['out-dashboard', 'node-knowledge', '#10B981'],
+    ['out-report', 'node-knowledge', '#10B981'],
+  ];
+  
+  connections.forEach(([srcId, tgtId, color]) => {
+    const src = document.getElementById(srcId);
+    const tgt = document.getElementById(tgtId);
+    if (!src || !tgt) return;
+    
+    const srcRect = src.getBoundingClientRect();
+    const tgtRect = tgt.getBoundingClientRect();
+    const containerRect = svg.getBoundingClientRect();
+    
+    const x1 = srcRect.right - containerRect.left;
+    const y1 = srcRect.top + srcRect.height/2 - containerRect.top;
+    const x2 = tgtRect.left - containerRect.left;
+    const y2 = tgtRect.top + tgtRect.height/2 - containerRect.top;
+    
+    // Bezier curve
+    const midX = (x1 + x2) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M${x1},${y1} C${midX},${y1} ${midX},${y2} ${x2},${y2}`);
+    path.setAttribute('stroke', color);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-width', '2');
+    path.setAttribute('opacity', '0.5');
+    svg.appendChild(path);
+  });
+}
+
+// 초기 연결선 그리기
+setTimeout(drawConnections, 100);
+
+// 리사이즈 시 다시 그리기
+window.addEventListener('resize', drawConnections);
+
+// ─── 드래그 기능 (간단 버전) ───
+let draggedNode = null;
+let offsetX, offsetY;
+
+document.querySelectorAll('.node, .dept-card, .output-node, .knowledge-node').forEach(node => {
+  node.addEventListener('mousedown', (e) => {
+    draggedNode = node;
+    offsetX = e.clientX - node.getBoundingClientRect().left;
+    offsetY = e.clientY - node.getBoundingClientRect().top;
+    node.style.position = 'relative';
+    node.style.zIndex = '100';
+  });
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!draggedNode) return;
+  // 간단한 시각적 피드백 (실제 이동은 React Flow에서)
+  draggedNode.style.transform = `translate(${e.movementX}px, ${e.movementY}px)`;
+});
+
+document.addEventListener('mouseup', () => {
+  if (draggedNode) {
+    draggedNode.style.zIndex = '';
+    draggedNode = null;
+    drawConnections();
+  }
+});
+</script>
+
+</body>
+</html>
