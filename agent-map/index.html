@@ -155,7 +155,7 @@
     
     .column-input { width: 100px; padding-top: 80px; }
     .column-orchestrator { width: 130px; padding-top: 60px; }
-    .column-agents { flex: 1; min-width: 420px; max-width: 520px; }
+    .column-agents { width: 460px; flex-shrink: 0; }
     .column-outputs { width: 130px; }
     .column-feedback { width: 170px; padding-top: 40px; }
     
@@ -216,17 +216,13 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      width: 100%;
+      width: 440px;
     }
     
     .stage-row {
       display: flex;
       gap: 8px;
-      justify-content: center;
-    }
-    
-    .stage-row.single {
-      justify-content: center;
+      width: 100%;
     }
     
     .department {
@@ -234,12 +230,12 @@
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 10px;
       padding: 10px 12px;
-      width: 200px;
-      flex-shrink: 0;
+      flex: 1;
+      min-width: 0;
     }
     
-    .department.wide {
-      width: 300px;
+    .stage-row.single .department {
+      flex: 1;
     }
     
     .dept-header {
@@ -527,7 +523,7 @@
       
       <!-- Stage 4: Analysis (Sequential) -->
       <div class="stage-row single">
-        <div class="department wide b-analysis" data-color="#22C55E">
+        <div class="department b-analysis" data-color="#22C55E">
           <div class="dept-header">
             <div class="dept-title">
               <div class="dept-icon c-analysis">⌘</div>
@@ -535,7 +531,7 @@
             </div>
             <span class="dept-count c-analysis">5</span>
           </div>
-          <div class="agent-list" style="display:flex;flex-wrap:wrap;gap:0 16px;">
+          <div class="agent-list">
             <div class="agent-item">SQL Generator</div>
             <div class="agent-item">Statistical Analyzer</div>
             <div class="agent-item">Cohort Analyzer</div>
