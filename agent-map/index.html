@@ -9,171 +9,257 @@
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0d0d14;
-      color: #e0e0e0;
+      background: #111;
+      color: #333;
       min-height: 100vh;
-      overflow-x: auto;
+      padding: 24px;
     }
     
     /* ─── HEADER ─── */
     .header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 10px 24px;
-      background: rgba(13,13,20,0.98);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      align-items: flex-start;
+      margin-bottom: 24px;
     }
     
-    .logo {
+    .header-left h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    
+    .header-right {
+      text-align: right;
+      color: #888;
+      font-size: 12px;
+      line-height: 1.6;
+      max-width: 400px;
+    }
+    
+    .stats-row {
       display: flex;
-      align-items: center;
-      gap: 10px;
+      gap: 24px;
+      margin-top: 8px;
     }
     
-    .logo-icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, #10B981, #0EA5E9);
-      border-radius: 8px;
+    .stat {
+      color: #fff;
+      font-size: 11px;
+    }
+    
+    .stat strong {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    
+    /* ─── MAIN GRID ─── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 100px 100px 360px 140px 140px;
+      gap: 12px;
+      align-items: start;
+    }
+    
+    /* ─── CARDS ─── */
+    .card {
+      border-radius: 16px;
+      padding: 16px;
+    }
+    
+    .card-dark {
+      background: #1a1a1a;
+      border: 1px solid #333;
+    }
+    
+    .card-purple { background: #E8E4F3; }
+    .card-mint { background: #D4F0E7; }
+    .card-yellow { background: #FDF6D8; }
+    .card-pink { background: #FCE4EC; }
+    .card-blue { background: #E3F2FD; }
+    .card-orange { background: #FFF3E0; }
+    
+    .card-title {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 12px;
+    }
+    
+    /* ─── INPUT & ORCHESTRATOR ─── */
+    .input-card, .orch-card {
+      text-align: center;
+      padding: 20px 12px;
+    }
+    
+    .input-icon, .orch-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-      font-weight: 800;
-      color: #fff;
+      margin: 0 auto 12px;
     }
     
-    .logo-text {
-      font-size: 15px;
+    .input-icon {
+      background: #333;
+    }
+    
+    .orch-icon {
+      background: linear-gradient(135deg, #10B981, #0EA5E9);
+      box-shadow: 0 4px 16px rgba(16,185,129,0.3);
+    }
+    
+    .input-icon svg, .orch-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+    
+    .input-icon svg { stroke: #888; fill: none; stroke-width: 1.5; }
+    .orch-icon svg { fill: #fff; }
+    
+    .input-title, .orch-title {
+      font-size: 11px;
       font-weight: 700;
       color: #fff;
+      margin-bottom: 4px;
     }
     
-    .logo-version {
-      font-size: 9px;
-      color: #10B981;
-      background: rgba(16,185,129,0.15);
-      padding: 2px 8px;
-      border-radius: 10px;
-      margin-left: 8px;
-    }
-    
-    .header-legend {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 4px;
+    .input-desc, .orch-desc {
       font-size: 9px;
       color: #666;
     }
     
-    .legend-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-    }
-    
-    .stats {
-      display: flex;
-      gap: 20px;
-    }
-    
-    .stat {
-      text-align: center;
-    }
-    
-    .stat-value {
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
-    }
-    
-    .stat-label {
-      font-size: 8px;
-      color: #555;
-      text-transform: uppercase;
-    }
-    
-    /* ─── MAIN ─── */
-    .main-container {
-      display: flex;
-      align-items: flex-start;
-      padding: 20px 16px;
-      gap: 0;
-      position: relative;
-      min-height: calc(100vh - 54px);
-    }
-    
-    /* ─── SVG LAYER ─── */
-    .svg-layer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-    
-    .flow-line {
-      fill: none;
-      stroke-width: 2;
-      opacity: 0.5;
-    }
-    
-    .flow-line-dash {
-      stroke-dasharray: 6,4;
-    }
-    
-    /* ─── COLUMNS ─── */
-    .column {
+    /* ─── DEPARTMENTS ─── */
+    .dept-grid {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      position: relative;
-      z-index: 10;
+      gap: 8px;
     }
     
-    .col-label {
-      font-size: 8px;
+    .dept-row {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .dept {
+      flex: 1;
+      border-radius: 12px;
+      padding: 12px;
+    }
+    
+    .dept-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    
+    .dept-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .dept-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      background: rgba(0,0,0,0.08);
+    }
+    
+    .dept-name {
+      font-size: 11px;
       font-weight: 700;
       color: #333;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 12px;
     }
     
-    .column-input { width: 100px; padding-top: 80px; }
-    .column-orchestrator { width: 130px; padding-top: 60px; }
-    .column-agents { width: 460px; flex-shrink: 0; }
-    .column-outputs { width: 130px; }
-    .column-feedback { width: 170px; padding-top: 40px; }
+    .dept-count {
+      font-size: 10px;
+      font-weight: 700;
+      background: rgba(0,0,0,0.08);
+      color: #555;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
     
-    /* ─── INPUT ─── */
-    .input-card {
-      background: rgba(20,20,28,0.9);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
-      padding: 18px 14px;
+    .agent-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .agent-item {
+      font-size: 10px;
+      color: #666;
+      padding: 2px 0;
+    }
+    
+    .agent-item::before {
+      content: '·';
+      margin-right: 6px;
+      color: #999;
+    }
+    
+    /* ─── OUTPUTS ─── */
+    .output-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .output-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.05);
+    }
+    
+    .output-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    
+    .output-name {
+      font-size: 10px;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .o-purple { background: #C5B3E3; color: #5B3E90; }
+    .o-blue { background: #90CAF9; color: #1565C0; }
+    .o-red { background: #EF9A9A; color: #C62828; }
+    .o-teal { background: #80CBC4; color: #00695C; }
+    .o-green { background: #A5D6A7; color: #2E7D32; }
+    .o-yellow { background: #FFF59D; color: #F57F17; }
+    .o-pink { background: #F48FB1; color: #AD1457; }
+    
+    /* ─── FEEDBACK ─── */
+    .feedback-card {
       text-align: center;
-      width: 90px;
+      padding: 20px 14px;
     }
     
-    .input-icon {
+    .feedback-icon {
       width: 40px;
       height: 40px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.06);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -181,266 +267,113 @@
       margin: 0 auto 10px;
     }
     
-    .input-icon svg { width: 20px; height: 20px; stroke: #888; fill: none; stroke-width: 1.5; }
-    .input-title { font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 3px; }
-    .input-desc { font-size: 8px; color: #555; }
-    
-    /* ─── ORCHESTRATOR ─── */
-    .orchestrator-card {
-      background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(14,165,233,0.12));
-      border: 1px solid rgba(16,185,129,0.3);
-      border-radius: 16px;
-      padding: 20px 16px;
-      text-align: center;
-      width: 110px;
+    .feedback-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: #10B981;
+      fill: none;
+      stroke-width: 1.5;
     }
     
-    .orchestrator-icon {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, #10B981, #0EA5E9);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 12px;
-      box-shadow: 0 6px 24px rgba(16,185,129,0.35);
-    }
-    
-    .orchestrator-icon svg { width: 24px; height: 24px; fill: #fff; }
-    .orchestrator-title { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 3px; }
-    .orchestrator-desc { font-size: 9px; color: #10B981; }
-    
-    /* ─── DEPARTMENTS ─── */
-    .pipeline-stages {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      width: 440px;
-    }
-    
-    .stage-row {
-      display: flex;
-      gap: 8px;
-      width: 100%;
-    }
-    
-    .department {
-      background: rgba(18,18,26,0.95);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 10px;
-      padding: 10px 12px;
-      flex: 1;
-      min-width: 0;
-    }
-    
-    .stage-row.single .department {
-      flex: 1;
-    }
-    
-    .dept-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 6px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    
-    .dept-title {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    
-    .dept-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-    }
-    
-    .dept-name { font-size: 10px; font-weight: 700; color: #fff; }
-    .dept-count { font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 8px; }
-    
-    .agent-list { display: flex; flex-direction: column; gap: 1px; }
-    .agent-item {
-      font-size: 9px;
-      color: #777;
-      padding: 2px 0;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .agent-item::before { content: '·'; color: #444; }
-    
-    /* ─── COLORS ─── */
-    .c-ingest { background: rgba(14,165,233,0.2); color: #0EA5E9; }
-    .c-eda { background: rgba(168,85,247,0.2); color: #A855F7; }
-    .c-prep { background: rgba(249,115,22,0.2); color: #F97316; }
-    .c-prob { background: rgba(236,72,153,0.2); color: #EC4899; }
-    .c-metric { background: rgba(234,179,8,0.2); color: #EAB308; }
-    .c-analysis { background: rgba(34,197,94,0.2); color: #22C55E; }
-    .c-dash { background: rgba(59,130,246,0.2); color: #3B82F6; }
-    .c-exp { background: rgba(239,68,68,0.2); color: #EF4444; }
-    .c-report { background: rgba(20,184,166,0.2); color: #14B8A6; }
-    .c-action { background: rgba(16,185,129,0.2); color: #10B981; }
-    
-    .b-ingest { border-color: rgba(14,165,233,0.25) !important; }
-    .b-eda { border-color: rgba(168,85,247,0.25) !important; }
-    .b-prep { border-color: rgba(249,115,22,0.25) !important; }
-    .b-prob { border-color: rgba(236,72,153,0.25) !important; }
-    .b-metric { border-color: rgba(234,179,8,0.25) !important; }
-    .b-analysis { border-color: rgba(34,197,94,0.25) !important; }
-    .b-dash { border-color: rgba(59,130,246,0.25) !important; }
-    .b-exp { border-color: rgba(239,68,68,0.25) !important; }
-    .b-report { border-color: rgba(20,184,166,0.25) !important; }
-    .b-action { border-color: rgba(16,185,129,0.25) !important; }
-    
-    /* ─── OUTPUTS ─── */
-    .outputs-list { display: flex; flex-direction: column; gap: 6px; }
-    .output-card {
-      background: rgba(20,20,28,0.9);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      padding: 8px 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      width: 115px;
-    }
-    .output-icon {
-      width: 26px;
-      height: 26px;
-      border-radius: 7px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .feedback-title {
       font-size: 11px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 6px;
     }
-    .output-name { font-size: 9px; font-weight: 600; color: #fff; }
     
-    /* ─── FEEDBACK ─── */
-    .feedback-card {
-      background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(20,184,166,0.08));
-      border: 1px solid rgba(16,185,129,0.2);
-      border-radius: 14px;
-      padding: 16px 14px;
-      text-align: center;
-      width: 150px;
+    .feedback-desc {
+      font-size: 9px;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 10px;
     }
-    .feedback-icon {
-      width: 40px;
-      height: 40px;
-      background: rgba(16,185,129,0.15);
-      border: 1px solid rgba(16,185,129,0.3);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 10px;
-    }
-    .feedback-icon svg { width: 20px; height: 20px; stroke: #10B981; fill: none; stroke-width: 1.5; }
-    .feedback-title { font-size: 11px; font-weight: 700; color: #10B981; margin-bottom: 6px; }
-    .feedback-desc { font-size: 8px; color: #555; line-height: 1.4; margin-bottom: 8px; }
+    
     .feedback-badge {
+      display: inline-block;
       font-size: 8px;
       font-weight: 700;
       color: #10B981;
       background: rgba(16,185,129,0.15);
-      padding: 3px 10px;
-      border-radius: 10px;
+      padding: 4px 10px;
+      border-radius: 8px;
       text-transform: uppercase;
     }
     
-    /* ─── PARALLEL INDICATOR ─── */
-    .parallel-badge {
-      font-size: 7px;
+    /* ─── COLUMN LABELS ─── */
+    .col-label {
+      font-size: 8px;
+      font-weight: 700;
       color: #555;
-      background: rgba(255,255,255,0.05);
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-left: auto;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    
+    .col-label-dark {
+      color: #666;
     }
   </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header class="header">
-  <div class="logo">
-    <div class="logo-icon">D</div>
-    <div class="logo-text">AI Data Pipeline — Agent Map</div>
-    <span class="logo-version">v2.0</span>
+  <div class="header-left">
+    <h1>AI Data Pipeline</h1>
+    <div class="stats-row">
+      <div class="stat"><strong>38</strong> Agents</div>
+      <div class="stat"><strong>10</strong> Stages</div>
+      <div class="stat"><strong>7</strong> Outputs</div>
+    </div>
   </div>
-  
-  <div class="header-legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#0EA5E9"></div>Ingestion</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#A855F7"></div>EDA</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#F97316"></div>Preprocess</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#EC4899"></div>Problem</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#EAB308"></div>Metrics</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#22C55E"></div>Analysis</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#3B82F6"></div>Dashboard</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#EF4444"></div>Experiment</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#14B8A6"></div>Report</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Actions</div>
-    <div class="legend-item" style="margin-left:8px;color:#444">── Flow</div>
-    <div class="legend-item" style="color:#444">╌╌ Feedback</div>
-  </div>
-  
-  <div class="stats">
-    <div class="stat"><div class="stat-value">38</div><div class="stat-label">Agents</div></div>
-    <div class="stat"><div class="stat-value">10</div><div class="stat-label">Stages</div></div>
-    <div class="stat"><div class="stat-value">7</div><div class="stat-label">Outputs</div></div>
+  <div class="header-right">
+    End-to-end data analysis automation. From raw data to actionable insights, fully orchestrated by AI agents.
   </div>
 </header>
 
-<div class="main-container">
-  
-  <!-- SVG CURVES -->
-  <svg class="svg-layer" id="svgLayer"></svg>
+<!-- MAIN GRID -->
+<div class="main-grid">
   
   <!-- INPUT -->
-  <div class="column column-input">
-    <div class="col-label">Input</div>
-    <div class="input-card" id="inputCard">
+  <div>
+    <div class="col-label col-label-dark">Input</div>
+    <div class="card card-dark input-card">
       <div class="input-icon">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
       </div>
-      <div class="input-title">Data Input</div>
-      <div class="input-desc">CSV · Excel · DB · API</div>
+      <div class="input-title">Data</div>
+      <div class="input-desc">CSV · DB · API</div>
     </div>
   </div>
   
   <!-- ORCHESTRATOR -->
-  <div class="column column-orchestrator">
-    <div class="col-label">Orchestrator</div>
-    <div class="orchestrator-card" id="orchCard">
-      <div class="orchestrator-icon">
+  <div>
+    <div class="col-label col-label-dark">Orchestrator</div>
+    <div class="card card-dark orch-card">
+      <div class="orch-icon">
         <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       </div>
-      <div class="orchestrator-title">AI Pipeline</div>
-      <div class="orchestrator-desc">38 Agents · 10 Stages</div>
+      <div class="orch-title">AI Pipeline</div>
+      <div class="orch-desc">38 Agents</div>
     </div>
   </div>
   
   <!-- DEPARTMENTS -->
-  <div class="column column-agents">
+  <div>
     <div class="col-label">Departments & Agents</div>
-    <div class="pipeline-stages" id="stagesArea">
+    <div class="dept-grid">
       
-      <!-- Stage 1: Ingestion (Sequential) -->
-      <div class="stage-row single">
-        <div class="department b-ingest" data-color="#0EA5E9">
+      <!-- Row 1 -->
+      <div class="dept-row">
+        <div class="dept card-purple">
           <div class="dept-header">
-            <div class="dept-title">
-              <div class="dept-icon c-ingest">⊕</div>
+            <div class="dept-title-wrap">
+              <div class="dept-icon">⊕</div>
               <span class="dept-name">Data Ingestion</span>
             </div>
-            <span class="dept-count c-ingest">4</span>
+            <span class="dept-count">4</span>
           </div>
           <div class="agent-list">
             <div class="agent-item">API Connector</div>
@@ -451,52 +384,47 @@
         </div>
       </div>
       
-      <!-- Stage 2: EDA + Preprocessing (Parallel) -->
-      <div class="stage-row">
-        <div class="department b-eda" data-color="#A855F7">
+      <!-- Row 2 -->
+      <div class="dept-row">
+        <div class="dept card-purple">
           <div class="dept-header">
-            <div class="dept-title">
-              <div class="dept-icon c-eda">◈</div>
+            <div class="dept-title-wrap">
+              <div class="dept-icon">◈</div>
               <span class="dept-name">EDA</span>
             </div>
-            <span class="parallel-badge">∥ 병렬</span>
-            <span class="dept-count c-eda">4</span>
+            <span class="dept-count">4</span>
           </div>
           <div class="agent-list">
             <div class="agent-item">Data Profiler</div>
             <div class="agent-item">Distribution Analyzer</div>
             <div class="agent-item">Correlation Finder</div>
-            <div class="agent-item">Anomaly Scanner</div>
           </div>
         </div>
-        <div class="department b-prep" data-color="#F97316">
+        <div class="dept card-mint">
           <div class="dept-header">
-            <div class="dept-title">
-              <div class="dept-icon c-prep">⊘</div>
+            <div class="dept-title-wrap">
+              <div class="dept-icon">⊘</div>
               <span class="dept-name">Preprocessing</span>
             </div>
-            <span class="parallel-badge">∥ 병렬</span>
-            <span class="dept-count c-prep">4</span>
+            <span class="dept-count">4</span>
           </div>
           <div class="agent-list">
             <div class="agent-item">Data Cleaner</div>
             <div class="agent-item">Type Converter</div>
-            <div class="agent-item">Outlier Handler</div>
             <div class="agent-item">Feature Engineer</div>
           </div>
         </div>
       </div>
       
-      <!-- Stage 3: Problem + Metrics (Parallel) -->
-      <div class="stage-row">
-        <div class="department b-prob" data-color="#EC4899">
+      <!-- Row 3 -->
+      <div class="dept-row">
+        <div class="dept card-pink">
           <div class="dept-header">
-            <div class="dept-title">
-              <div class="dept-icon c-prob">✦</div>
-              <span class="dept-name">Problem Definition</span>
+            <div class="dept-title-wrap">
+              <div class="dept-icon">✦</div>
+              <span class="dept-name">Problem</span>
             </div>
-            <span class="parallel-badge">∥ 병렬</span>
-            <span class="dept-count c-prob">3</span>
+            <span class="dept-count">3</span>
           </div>
           <div class="agent-list">
             <div class="agent-item">Question Generator</div>
@@ -504,14 +432,13 @@
             <div class="agent-item">Scope Definer</div>
           </div>
         </div>
-        <div class="department b-metric" data-color="#EAB308">
+        <div class="dept card-yellow">
           <div class="dept-header">
-            <div class="dept-title">
-              <div class="dept-icon c-metric">▣</div>
-              <span class="dept-name">Metric Setting</span>
+            <div class="dept-title-wrap">
+              <div class="dept-icon">▣</div>
+              <span class="dept-name">Metrics</span>
             </div>
-            <span class="parallel-badge">∥ 병렬</span>
-            <span class="dept-count c-metric">3</span>
+            <span class="dept-count">3</span>
           </div>
           <div class="agent-list">
             <div class="agent-item">KPI Designer</div>
@@ -521,52 +448,47 @@
         </div>
       </div>
       
-      <!-- Stage 4: Analysis (Sequential) -->
-      <div class="stage-row single">
-        <div class="department b-analysis" data-color="#22C55E">
+      <!-- Row 4 -->
+      <div class="dept-row">
+        <div class="dept card-mint">
           <div class="dept-header">
-            <div class="dept-title">
-              <div class="dept-icon c-analysis">⌘</div>
+            <div class="dept-title-wrap">
+              <div class="dept-icon">⌘</div>
               <span class="dept-name">Analysis</span>
             </div>
-            <span class="dept-count c-analysis">5</span>
+            <span class="dept-count">5</span>
           </div>
           <div class="agent-list">
             <div class="agent-item">SQL Generator</div>
             <div class="agent-item">Statistical Analyzer</div>
-            <div class="agent-item">Cohort Analyzer</div>
-            <div class="agent-item">Funnel Analyzer</div>
-            <div class="agent-item">Trend Detector</div>
+            <div class="agent-item">Cohort · Funnel · Trend</div>
           </div>
         </div>
       </div>
       
-      <!-- Stage 5: Dashboard + Experiment (Parallel) -->
-      <div class="stage-row">
-        <div class="department b-dash" data-color="#3B82F6">
+      <!-- Row 5 -->
+      <div class="dept-row">
+        <div class="dept card-blue">
           <div class="dept-header">
-            <div class="dept-title">
-              <div class="dept-icon c-dash">▦</div>
+            <div class="dept-title-wrap">
+              <div class="dept-icon">▦</div>
               <span class="dept-name">Dashboard</span>
             </div>
-            <span class="parallel-badge">∥ 병렬</span>
-            <span class="dept-count c-dash">4</span>
+            <span class="dept-count">4</span>
           </div>
           <div class="agent-list">
             <div class="agent-item">Chart Selector</div>
             <div class="agent-item">Chart Builder</div>
             <div class="agent-item">Layout Designer</div>
-            <div class="agent-item">Interactive Builder</div>
           </div>
         </div>
-        <div class="department b-exp" data-color="#EF4444">
+        <div class="dept card-orange">
           <div class="dept-header">
-            <div class="dept-title">
-              <div class="dept-icon c-exp">⊿</div>
+            <div class="dept-title-wrap">
+              <div class="dept-icon">⊿</div>
               <span class="dept-name">Experiment</span>
             </div>
-            <span class="parallel-badge">∥ 병렬</span>
-            <span class="dept-count c-exp">3</span>
+            <span class="dept-count">3</span>
           </div>
           <div class="agent-list">
             <div class="agent-item">AB Test Designer</div>
@@ -576,38 +498,34 @@
         </div>
       </div>
       
-      <!-- Stage 6: Report + Actions (Parallel) -->
-      <div class="stage-row">
-        <div class="department b-report" data-color="#14B8A6">
+      <!-- Row 6 -->
+      <div class="dept-row">
+        <div class="dept card-purple">
           <div class="dept-header">
-            <div class="dept-title">
-              <div class="dept-icon c-report">≡</div>
+            <div class="dept-title-wrap">
+              <div class="dept-icon">≡</div>
               <span class="dept-name">Report</span>
             </div>
-            <span class="parallel-badge">∥ 병렬</span>
-            <span class="dept-count c-report">4</span>
+            <span class="dept-count">4</span>
           </div>
           <div class="agent-list">
             <div class="agent-item">Insight Generator</div>
             <div class="agent-item">Report Writer</div>
             <div class="agent-item">Slide Generator</div>
-            <div class="agent-item">Executive Summary</div>
           </div>
         </div>
-        <div class="department b-action" data-color="#10B981">
+        <div class="dept card-mint">
           <div class="dept-header">
-            <div class="dept-title">
-              <div class="dept-icon c-action">→</div>
-              <span class="dept-name">Action Items</span>
+            <div class="dept-title-wrap">
+              <div class="dept-icon">→</div>
+              <span class="dept-name">Actions</span>
             </div>
-            <span class="parallel-badge">∥ 병렬</span>
-            <span class="dept-count c-action">4</span>
+            <span class="dept-count">4</span>
           </div>
           <div class="agent-list">
-            <div class="agent-item">Recommendation Engine</div>
+            <div class="agent-item">Recommendation</div>
             <div class="agent-item">Priority Ranker</div>
             <div class="agent-item">Task Assigner</div>
-            <div class="agent-item">Timeline Planner</div>
           </div>
         </div>
       </div>
@@ -616,128 +534,57 @@
   </div>
   
   <!-- OUTPUTS -->
-  <div class="column column-outputs">
+  <div>
     <div class="col-label">Outputs</div>
-    <div class="outputs-list" id="outputsList">
-      <div class="output-card" data-color="#A855F7">
-        <div class="output-icon c-eda">◈</div>
-        <div class="output-name">EDA Report</div>
-      </div>
-      <div class="output-card" data-color="#3B82F6">
-        <div class="output-icon c-dash">▦</div>
-        <div class="output-name">Dashboard</div>
-      </div>
-      <div class="output-card" data-color="#EF4444">
-        <div class="output-icon c-exp">⊿</div>
-        <div class="output-name">A/B Test</div>
-      </div>
-      <div class="output-card" data-color="#14B8A6">
-        <div class="output-icon c-report">≡</div>
-        <div class="output-name">Report</div>
-      </div>
-      <div class="output-card" data-color="#10B981">
-        <div class="output-icon c-action">→</div>
-        <div class="output-name">Action Plan</div>
-      </div>
-      <div class="output-card" data-color="#EAB308">
-        <div class="output-icon c-metric">▣</div>
-        <div class="output-name">KPI</div>
-      </div>
-      <div class="output-card" data-color="#EC4899">
-        <div class="output-icon c-prob">✦</div>
-        <div class="output-name">Problem</div>
+    <div class="card card-yellow" style="padding:14px;">
+      <div class="card-title">Generated</div>
+      <div class="output-grid">
+        <div class="output-item">
+          <div class="output-icon o-purple">◈</div>
+          <div class="output-name">EDA Report</div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon o-blue">▦</div>
+          <div class="output-name">Dashboard</div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon o-red">⊿</div>
+          <div class="output-name">A/B Test</div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon o-teal">≡</div>
+          <div class="output-name">Report</div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon o-green">→</div>
+          <div class="output-name">Action Plan</div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon o-yellow">▣</div>
+          <div class="output-name">KPI</div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon o-pink">✦</div>
+          <div class="output-name">Problem</div>
+        </div>
       </div>
     </div>
   </div>
   
   <!-- FEEDBACK -->
-  <div class="column column-feedback">
+  <div>
     <div class="col-label">Feedback</div>
-    <div class="feedback-card" id="feedbackCard">
+    <div class="card card-mint feedback-card">
       <div class="feedback-icon">
         <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
       </div>
-      <div class="feedback-title">Knowledge Base (RAG)</div>
-      <div class="feedback-desc">분석 결과를 학습하여<br>시스템이 점점 똑똑해집니다</div>
+      <div class="feedback-title">Knowledge Base</div>
+      <div class="feedback-desc">분석 결과를 학습하여<br>시스템이 똑똑해집니다</div>
       <span class="feedback-badge">Self-Improving</span>
     </div>
   </div>
   
 </div>
-
-<script>
-function drawCurves() {
-  const svg = document.getElementById('svgLayer');
-  const main = document.querySelector('.main-container');
-  if (!svg || !main) return;
-  
-  const rect = main.getBoundingClientRect();
-  svg.setAttribute('width', rect.width);
-  svg.setAttribute('height', rect.height);
-  svg.innerHTML = '';
-  
-  function pos(el) {
-    const r = el.getBoundingClientRect();
-    return {
-      cx: r.left - rect.left + r.width/2,
-      cy: r.top - rect.top + r.height/2,
-      left: r.left - rect.left,
-      right: r.right - rect.left,
-      top: r.top - rect.top,
-      bottom: r.bottom - rect.top
-    };
-  }
-  
-  function curve(x1, y1, x2, y2, color, dash) {
-    const cpx1 = x1 + (x2-x1)*0.4;
-    const cpx2 = x2 - (x2-x1)*0.4;
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', `M${x1},${y1} C${cpx1},${y1} ${cpx2},${y2} ${x2},${y2}`);
-    path.setAttribute('stroke', color);
-    path.classList.add('flow-line');
-    if (dash) path.classList.add('flow-line-dash');
-    svg.appendChild(path);
-  }
-  
-  const orch = document.getElementById('orchCard');
-  const departments = document.querySelectorAll('.department');
-  const outputs = document.querySelectorAll('.output-card');
-  const feedback = document.getElementById('feedbackCard');
-  
-  if (!orch || !departments.length) return;
-  
-  const orchPos = pos(orch);
-  
-  // Orch -> Departments
-  departments.forEach(dept => {
-    const d = pos(dept);
-    const color = dept.dataset.color || '#666';
-    curve(orchPos.right, orchPos.cy, d.left, d.cy, color, false);
-  });
-  
-  // Departments -> Outputs
-  const outputArr = Array.from(outputs);
-  departments.forEach((dept, i) => {
-    const d = pos(dept);
-    const color = dept.dataset.color || '#666';
-    const out = outputArr[i % outputArr.length];
-    if (out) {
-      const o = pos(out);
-      curve(d.right, d.cy, o.left, o.cy, color, false);
-    }
-  });
-  
-  // Last output -> Feedback (dashed)
-  if (outputArr.length && feedback) {
-    const lastOut = pos(outputArr[outputArr.length - 1]);
-    const fb = pos(feedback);
-    curve(lastOut.right, lastOut.cy, fb.left, fb.cy, '#10B981', true);
-  }
-}
-
-window.addEventListener('load', () => setTimeout(drawCurves, 100));
-window.addEventListener('resize', drawCurves);
-</script>
 
 </body>
 </html>
