@@ -39,7 +39,24 @@
       font-style: italic;
       color: #fff;
       line-height: 1.1;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
+    }
+
+    .header-left .hero-author {
+      font-size: 11px;
+      color: #666;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+
+    .header-left .hero-author a {
+      color: #888;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .header-left .hero-author a:hover {
+      color: #fff;
     }
 
     .header-right {
@@ -407,23 +424,6 @@
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
-    
-    .footer {
-      margin-top: 40px;
-      text-align: center;
-      padding: 20px;
-    }
-    
-    .footer a {
-      color: #666;
-      font-size: 12px;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    
-    .footer a:hover {
-      color: #fff;
-    }
   </style>
 </head>
 <body>
@@ -433,6 +433,7 @@
   <div class="header-left">
     <div class="hero-line1">AI Data Pipeline</div>
     <div class="hero-line2">Automation flow map</div>
+    <div class="hero-author">by <a href="https://www.linkedin.com/in/seoyeonjun/" target="_blank">Seoyeon Jun</a></div>
     <div class="stats-row">
       <div class="stat"><strong>38</strong> Agents</div>
       <div class="stat"><strong>10</strong> Stages</div>
@@ -714,10 +715,6 @@
 
 </div>
 </div>
-
-<footer class="footer">
-  <a href="https://www.linkedin.com/in/seoyeonjun/" target="_blank">by Seoyeon Jun</a>
-</footer>
 
 <script>
 function drawFlowLines() {
