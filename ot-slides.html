@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0c14; font-family: -apple-system, 'Pretendard', 'Apple SD Gothic Neo', sans-serif; }
+  .slide {
+    width: 1920px; height: 1080px;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 120px 160px;
+    position: relative; overflow: hidden;
+    background: #0a0c14;
+  }
+  .slide::before {
+    content: ''; position: absolute;
+    top: -300px; right: -300px;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(74,122,181,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .tag {
+    font-size: 22px; font-weight: 700; color: #4A7AB5;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    margin-bottom: 32px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .tag::before {
+    content: ''; display: block;
+    width: 32px; height: 3px; background: #4A7AB5;
+    border-radius: 2px;
+  }
+  h1 { font-size: 88px; font-weight: 800; color: #fff; line-height: 1.1; letter-spacing: -0.02em; }
+  h2 { font-size: 64px; font-weight: 700; color: #fff; line-height: 1.2; }
+  .sub { font-size: 32px; color: #7c85a2; margin-top: 24px; line-height: 1.6; font-weight: 400; }
+  .accent { color: #4A7AB5; }
+  .logo {
+    position: absolute; bottom: 60px; right: 80px;
+    font-size: 22px; font-weight: 700; color: #2d3148;
+    letter-spacing: 0.05em;
+  }
+  .num-badge {
+    position: absolute; top: 60px; right: 80px;
+    font-size: 20px; color: #2d3148; font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  /* 비교 레이아웃 */
+  .compare { display: flex; gap: 40px; margin-top: 48px; width: 100%; }
+  .compare-box {
+    flex: 1; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px; padding: 48px;
+  }
+  .compare-box.bad { border-color: rgba(200,80,80,0.2); }
+  .compare-box.good { border-color: rgba(74,122,181,0.3); background: rgba(74,122,181,0.05); }
+  .compare-label { font-size: 20px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; }
+  .compare-label.bad { color: #e07070; }
+  .compare-label.good { color: #4A7AB5; }
+  .compare-text { font-size: 30px; color: #b8c0d8; line-height: 1.7; }
+  /* 결과물 카드 */
+  .cards { display: flex; gap: 32px; margin-top: 48px; }
+  .card {
+    flex: 1; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(74,122,181,0.2);
+    border-radius: 20px; padding: 48px 40px;
+    display: flex; flex-direction: column;
+  }
+  .card-num { font-size: 20px; font-weight: 800; color: #4A7AB5; margin-bottom: 20px; }
+  .card-title { font-size: 34px; font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.3; }
+  .card-desc { font-size: 26px; color: #7c85a2; line-height: 1.6; }
+  /* 커리큘럼 */
+  .curriculum { margin-top: 40px; width: 100%; }
+  .curr-item {
+    display: flex; align-items: flex-start; gap: 32px;
+    padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .curr-item:last-child { border-bottom: none; }
+  .curr-num {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: #1a1d2e; display: flex; align-items: center;
+    justify-content: center; font-size: 18px; font-weight: 700;
+    color: #4A7AB5; flex-shrink: 0; margin-top: 4px;
+  }
+  .curr-num.active {
+    background: rgba(74,122,181,0.2);
+    border: 2px solid #4A7AB5;
+  }
+  .curr-title { font-size: 30px; font-weight: 700; color: #c8d0e7; }
+  .curr-desc { font-size: 24px; color: #5a6180; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 01: 타이틀 -->
+<div class="slide" id="s01">
+  <div class="tag">Claude Code × 데이터 시각화</div>
+  <h1>반복 작업을 없애고<br>진짜 일에 집중합니다</h1>
+  <p class="sub">패스트캠퍼스 강의 OT · 데이터브릿지 전서연</p>
+  <div class="logo">DATABRIDGE</div>
+</div>
+
+<!-- SLIDE 02: 강사 소개 -->
+<div class="slide" id="s02">
+  <div class="num-badge">02 / 07</div>
+  <div class="tag">강사 소개</div>
+  <h2>전서연</h2>
+  <p class="sub">
+    데이터브릿지 CEO<br>
+    Tableau 대시보드 강의 5년+<br>
+    Claude Code 기업 프로젝트 적용 중
+  </p>
+  <div class="logo">DATABRIDGE</div>
+</div>
+
+<!-- SLIDE 03: 기존 LLM vs Claude Code -->
+<div class="slide" id="s03">
+  <div class="num-badge">03 / 07</div>
+  <div class="tag">왜 Claude Code인가</div>
+  <h2>기존 AI 툴과 뭐가 다른가</h2>
+  <div class="compare">
+    <div class="compare-box bad">
+      <div class="compare-label bad">ChatGPT / Gemini</div>
+      <div class="compare-text">
+        대화창에서 텍스트만 주고받음<br>
+        새 채팅 = 컨텍스트 초기화<br>
+        매번 반복 설명 필요
+      </div>
+    </div>
+    <div class="compare-box good">
+      <div class="compare-label good">Claude Code</div>
+      <div class="compare-text">
+        내 컴퓨터 파일에 직접 접근<br>
+        컨텍스트를 파일로 저장·유지<br>
+        파일 수정 + 코드 실행 가능
+      </div>
+    </div>
+  </div>
+  <div class="logo">DATABRIDGE</div>
+</div>
+
+<!-- SLIDE 04: 실무 예시 -->
+<div class="slide" id="s04">
+  <div class="num-badge">04 / 07</div>
+  <div class="tag">실무 예시</div>
+  <h2>이런 요청 하나면 됩니다</h2>
+  <p class="sub" style="margin-top:36px; font-size:36px; color:#8b9abf; font-style:italic; border-left:4px solid #4A7AB5; padding-left:32px; line-height:1.7;">
+    "7월 캠페인 데이터 분석해서<br>
+    채널별 ROI 계산해주세요"
+  </p>
+  <p class="sub" style="margin-top:36px;">
+    Excel 열기 → 집계 → 차트 → 대시보드 생성<br>
+    <span class="accent">SQL · Python 코딩 불필요</span>
+  </p>
+  <div class="logo">DATABRIDGE</div>
+</div>
+
+<!-- SLIDE 05: 최종 결과물 -->
+<div class="slide" id="s05">
+  <div class="num-badge">05 / 07</div>
+  <div class="tag">이 강의를 마치면</div>
+  <h2>3가지를 직접 만들 수 있습니다</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="card-num">01</div>
+      <div class="card-title">자동 갱신<br>대시보드</div>
+      <div class="card-desc">CSV 교체 시 Tableau 자동 업데이트</div>
+    </div>
+    <div class="card">
+      <div class="card-num">02</div>
+      <div class="card-title">주간 리포트<br>자동화</div>
+      <div class="card-desc">집계 → 요약 → 슬랙 발송까지 자동</div>
+    </div>
+    <div class="card">
+      <div class="card-num">03</div>
+      <div class="card-title">데이터 분석<br>에이전트</div>
+      <div class="card-desc">분석 요청 → 결과 → 시각화까지 자동</div>
+    </div>
+  </div>
+  <div class="logo">DATABRIDGE</div>
+</div>
+
+<!-- SLIDE 06: 커리큘럼 -->
+<div class="slide" id="s06">
+  <div class="num-badge">06 / 07</div>
+  <div class="tag">전체 커리큘럼</div>
+  <h2>16시간 · 60+ 클립</h2>
+  <div class="curriculum">
+    <div class="curr-item">
+      <div class="curr-num active">1</div>
+      <div><div class="curr-title">CH01~02 · 기초 세팅</div><div class="curr-desc">설치, CLAUDE.md, 기본 워크플로우 — 지금 여기</div></div>
+    </div>
+    <div class="curr-item">
+      <div class="curr-num">2</div>
+      <div><div class="curr-title">CH03~06 · 에이전트 시스템 + 시각화</div><div class="curr-desc">서브에이전트, MCP, Tableau 전략 자동 설계</div></div>
+    </div>
+    <div class="curr-item">
+      <div class="curr-num">3</div>
+      <div><div class="curr-title">CH09~13 · 실무 프로젝트 5개</div><div class="curr-desc">마케팅 / 분석 / PM / 리텐션 / HR 실제 케이스</div></div>
+    </div>
+    <div class="curr-item">
+      <div class="curr-num">4</div>
+      <div><div class="curr-title">CH14 · 나만의 파이프라인</div><div class="curr-desc">24시간 자동 실행 시스템 직접 구축</div></div>
+    </div>
+  </div>
+  <div class="logo">DATABRIDGE</div>
+</div>
+
+<!-- SLIDE 07: 시작 -->
+<div class="slide" id="s07">
+  <div class="tag">시작합니다</div>
+  <h1>챕터 1에서<br>뵙겠습니다</h1>
+  <p class="sub">Claude Code 설치부터 첫 세션까지</p>
+  <div class="logo">DATABRIDGE</div>
+</div>
+
+</body>
+</html>

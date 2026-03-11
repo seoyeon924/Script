@@ -1,0 +1,170 @@
+---
+tags: #CH04 #클라우드환경 #Codespaces #GitHub #원격실행
+time: 13분
+chapter: CH04
+status: ✅ 대본완성
+---
+
+# CH04-02 클라우드 환경 — GitHub Codespaces와 원격 에이전트 실행
+
+## 📌 클립 정보
+- **예상시간:** 13분
+- **유형:** 슬라이드 2장 + 화면 녹화
+- **준비물:** 깃허브 계정 (무료 가능), 클로드 코드 API 키
+
+---
+
+## 학습 목표 선언 (30초)
+
+이 클립을 마치면 두 가지를 할 수 있습니다.
+
+첫 번째, 깃허브 코드스페이스에서 클로드 코드를 실행할 수 있습니다.
+두 번째, 클라우드 환경과 로컬 환경의 차이점과 각각의 적합한 사용 시나리오를 설명할 수 있습니다.
+
+---
+
+## 클라우드 환경이 필요한 이유 (3분)
+
+> 📎 **참고 링크**
+> - [GitHub Codespaces 문서](https://docs.github.com/en/codespaces) — 공식 가이드
+> - [Codespaces 무료 플랜](https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-codespaces/about-billing-for-github-codespaces#monthly-included-storage-and-core-hours-for-personal-accounts) — 월 120시간 무료
+> - [VS Code Remote Development](https://code.visualstudio.com/docs/remote/remote-overview) — 원격 개발 환경
+
+로컬 환경은 편리합니다.
+그런데 실무에서는 로컬만으로는 부족한 상황이 있습니다.
+
+첫 번째 상황, 대용량 데이터입니다.
+수백 기가바이트 데이터를 로컬 노트북에서 처리하기에는 메모리가 부족합니다.
+
+두 번째 상황, 팀 협업입니다.
+여러 명이 같은 프로젝트에서 작업할 때 로컬 환경 차이로 충돌이 발생합니다.
+
+세 번째 상황, 장시간 작업입니다.
+서브에이전트 파이프라인이 몇 시간 걸릴 때 노트북을 계속 켜두기 어렵습니다.
+
+깃허브 코드스페이스는 이 문제를 해결합니다.
+
+**비유하자면 이렇습니다.**
+
+로컬 환경은 내 책상입니다.
+클라우드 환경은 회사 서버실에 있는 워크스테이션입니다.
+내 노트북이 꺼져도 서버는 계속 돌아갑니다.
+어디서든 브라우저로 접속해서 작업을 이어갈 수 있습니다.
+
+---
+
+## GitHub Codespaces 설정 방법 (5분)
+
+깃허브 코드스페이스 설정은 세 단계입니다.
+
+**1단계: 레포지토리 생성 또는 기존 레포 사용**
+
+깃허브에서 새 레포지토리를 생성합니다.
+프로젝트 폴더를 `git init`으로 초기화하고 푸시합니다.
+
+```bash
+# 프로젝트 폴더를 깃 레포로 초기화
+cd ~/my-analysis
+git init
+git add .
+git commit -m "initial commit"
+git remote add origin https://github.com/본인계정/my-analysis.git
+git push -u origin main
+```
+
+**2단계: Codespace 생성**
+
+깃허브 레포지토리 페이지에서 초록색 `Code` 버튼을 클릭합니다.
+`Codespaces` 탭을 선택합니다.
+`Create codespace on main`을 클릭합니다.
+브라우저에서 브이에스코드 환경이 열립니다.
+
+**3단계: 클로드 코드 설치 및 API 키 설정**
+
+코드스페이스 터미널에서 클로드 코드를 설치합니다.
+
+```bash
+# 클로드 코드 설치
+curl -fsSL https://claude.ai/install.sh | bash
+
+# API 키 환경 변수 설정
+export ANTHROPIC_API_KEY="sk-ant-..."
+
+# 클로드 코드 실행
+claude
+```
+
+코드스페이스는 세션을 닫아도 환경이 유지됩니다.
+다음에 접속하면 작업을 이어갈 수 있습니다.
+
+---
+
+## 로컬 vs 클라우드 — 상황별 선택 기준 (3분)
+
+**로컬 환경이 적합한 상황:**
+- 빠른 프로토타이핑, 간단한 실험
+- 민감한 데이터 (외부 서버에 올리면 안 되는 경우)
+- 인터넷 연결이 불안정한 환경
+- 소규모 데이터 (몇십 메가바이트 이하)
+
+**클라우드 환경이 적합한 상황:**
+- 대용량 데이터 처리 (수 기가바이트 이상)
+- 팀 협업 (같은 환경 공유)
+- 장시간 파이프라인 실행 (몇 시간 이상)
+- 서버 환경과 동일한 조건에서 테스트
+
+**중요한 점:** 클라우드 환경이라도 클로드 코드 사용 방법은 동일합니다.
+터미널에서 `claude`를 실행하고 지시를 입력합니다.
+환경이 달라도 작업 방식은 같습니다.
+
+---
+
+## 직접 해보기
+
+**목표**: 깃허브 코드스페이스에서 클로드 코드를 실행합니다.
+
+**1단계: 레포 생성 (터미널에 복붙)**
+```bash
+mkdir ~/codespace-test && cd ~/codespace-test
+git init
+echo "# My Analysis" > README.md
+git add .
+git commit -m "init"
+```
+
+**2단계: 깃허브에 푸시**
+```bash
+# 깃허브에서 new repository 생성 후 아래 실행
+git remote add origin https://github.com/내계정/codespace-test.git
+git push -u origin main
+```
+
+**3단계: 코드스페이스 열기**
+→ 깃허브 레포 페이지 → Code → Codespaces → Create codespace on main
+
+**4단계: 코드스페이스 터미널에서**
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+export ANTHROPIC_API_KEY="본인_API_키"
+claude
+```
+
+**클로드에게 이렇게 말합니다**
+```
+이 코드스페이스 환경을 데이터 분석용으로 설정해줘.
+파이썬 라이브러리 pandas, matplotlib, seaborn을 설치하고
+data, scripts, output 폴더를 만들어줘.
+```
+
+---
+
+## 핵심 정리 (30초)
+
+클라우드 환경은 로컬의 대안이 아니라 보완입니다.
+대용량 데이터, 팀 협업, 장시간 파이프라인에는 코드스페이스가 유리합니다.
+클로드 코드 사용 방법은 로컬과 동일하기 때문에 진입 장벽이 없습니다.
+
+## 다음 클립 예고 (30초)
+
+다음 클립에서는 로컬과 클라우드를 오가는 실전 파이프라인을 설계합니다.
+로컬에서 프로토타입을 만들고, 클라우드에서 대규모로 실행하는 워크플로를 구성합니다.

@@ -1,0 +1,3204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>클로드코드 × 데이터분석 — 학습 가이드</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F6F3;
+  --sidebar: #EFEDE8;
+  --line: #E0DDD6;
+  --text-1: #111110;
+  --text-2: #6B6860;
+  --text-3: #A09D98;
+  --hover: #E8E5DF;
+  --active-bg: #1C1A18;
+  --active-text: #fff;
+  --accent: #4A7AB5;
+  --accent-soft: rgba(74,122,181,0.1);
+  --ch00: #7B6FA0;
+  --ch01: #4A7AB5;
+  --ch02: #4A8A6A;
+  --ch03: #B5724A;
+  --ch04: #8A6A9E;
+  --ch04-soft: rgba(138,106,158,0.1);
+  --ch05: #9E6A7A;
+  --ch05-soft: rgba(158,106,122,0.1);
+  --ch06: #6A8A9E;
+  --ch06-soft: rgba(106,138,158,0.1);
+  --ch07: #4AAAB5;
+  --ch08: #7C3AED;
+  --ch09: #EC4899;
+  --ch10: #F59E0B;
+  --ch11: #10B981;
+  --ch12: #3B82F6;
+  --ch13: #8B5CF6;
+  --ch14: #EF4444;
+  --ch07-soft: rgba(74,170,181,0.1);
+  --ch00-soft: rgba(123,111,160,0.1);
+  --ch01-soft: rgba(74,122,181,0.1);
+  --ch02-soft: rgba(74,138,106,0.1);
+  --ch03-soft: rgba(181,114,74,0.1);
+  --why-bg: #FAFAF8;
+  --why-border: #C8C2B6;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--bg); display: flex; height: 100vh; overflow: hidden; }
+
+/* ─── SIDEBAR ─── */
+#sidebar { width: 280px; flex-shrink: 0; background: var(--sidebar); border-right: 1px solid var(--line); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+.sidebar-header { padding: 20px 18px 14px; border-bottom: 1px solid var(--line); }
+.sidebar-header .brand { font-size: 12px; font-weight: 700; color: var(--text-3); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+.sidebar-header .title { font-size: 14.5px; font-weight: 700; color: var(--text-1); line-height: 1.35; }
+.sidebar-header .sub { font-size: 11.5px; color: var(--text-3); margin-top: 3px; }
+
+.sidebar-progress { padding: 10px 18px; border-bottom: 1px solid var(--line); }
+.progress-label { font-size: 10.5px; color: var(--text-3); margin-bottom: 5px; display: flex; justify-content: space-between; }
+.progress-bar { height: 3px; background: var(--line); border-radius: 2px; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+
+#nav { flex: 1; overflow-y: auto; padding: 8px 0 32px; }
+
+.chapter-label {
+  padding: 6px 10px 6px 14px;
+  font-size: 11px; font-weight: 700;
+  color: var(--text-2);
+  display: flex; align-items: center; gap: 7px;
+  cursor: pointer; border-radius: 7px; margin: 3px 6px 1px;
+  transition: background 0.12s;
+  user-select: none;
+}
+.chapter-label:hover { background: var(--hover); }
+.chapter-label .ch-badge {
+  display: inline-block; padding: 2px 7px; border-radius: 4px;
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; flex-shrink: 0;
+}
+.chapter-label .ch-meta {
+  display: flex; align-items: center; gap: 5px;
+  flex: 1; font-size: 10px; font-weight: 500; color: var(--text-3);
+  white-space: nowrap; overflow: hidden;
+}
+.chapter-label .ch-name {
+  font-size: 11px; font-weight: 700; color: var(--text-2); flex-shrink: 0;
+}
+.chapter-label .ch-toggle {
+  margin-left: auto; font-size: 9px; color: var(--text-3);
+  transition: transform 0.2s; flex-shrink: 0;
+}
+.chapter-label.collapsed .ch-toggle { transform: rotate(-90deg); }
+.chapter-clips { overflow: hidden; transition: max-height 0.22s ease; }
+.chapter-clips.collapsed { max-height: 0 !important; }
+.ch-badge.ch00 { background: var(--ch00-soft); color: var(--ch00); }
+.ch-badge.ch01 { background: var(--ch01-soft); color: var(--ch01); }
+.ch-badge.ch02 { background: var(--ch02-soft); color: var(--ch02); }
+.ch-badge.ch03 { background: var(--ch03-soft); color: var(--ch03); }
+.ch-badge.ch04 { background: var(--ch04-soft); color: var(--ch04); }
+.ch-badge.ch05 { background: var(--ch05-soft); color: var(--ch05); }
+.ch-badge.ch06 { background: var(--ch06-soft); color: var(--ch06); }
+.ch-badge.ch07 { background: var(--ch07-soft); color: var(--ch07); }
+
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 18px; font-size: 12.5px; color: var(--text-2);
+  cursor: pointer; border-radius: 6px; margin: 1px 8px;
+  transition: background 0.1s; line-height: 1.4;
+}
+.nav-item:hover { background: var(--hover); color: var(--text-1); }
+.nav-item.active { background: var(--active-bg); color: var(--active-text); font-weight: 600; }
+.nav-item .num {
+  font-size: 10px; color: var(--text-3); flex-shrink: 0;
+  font-weight: 700; min-width: 18px; font-feature-settings: "tnum";
+}
+.nav-item.active .num { color: rgba(255,255,255,0.4); }
+.nav-item .clip-title { flex: 1; }
+.nav-item .clip-time { font-size: 10px; color: var(--text-3); flex-shrink: 0; }
+.nav-item.active .clip-time { color: rgba(255,255,255,0.35); }
+.nav-item.visited .clip-title::after {
+  content: '✓'; font-size: 9px; color: var(--ch02);
+  margin-left: 5px; font-weight: 700;
+}
+.nav-item.active .clip-title::after { display: none; }
+
+.nav-divider { height: 1px; background: var(--line); margin: 6px 18px; }
+
+/* ─── MAIN ─── */
+#main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+
+/* 로드맵 바 */
+#roadmap-bar {
+  background: #fff; border-bottom: 1px solid var(--line);
+  padding: 14px 40px; flex-shrink: 0;
+  overflow-x: auto; white-space: nowrap;
+}
+.roadmap-inner { display: inline-flex; align-items: center; gap: 0; }
+.roadmap-chapter-group { display: inline-flex; align-items: center; }
+.roadmap-chapter-label {
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 3px 8px 3px 0;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.roadmap-chapter-label .rmap-badge {
+  display: inline-block; padding: 1px 5px; border-radius: 3px;
+  font-size: 8.5px; font-weight: 800;
+}
+.rmap-badge.ch00 { background: var(--ch00-soft); color: var(--ch00); }
+.rmap-badge.ch01 { background: var(--ch01-soft); color: var(--ch01); }
+.rmap-badge.ch02 { background: var(--ch02-soft); color: var(--ch02); }
+.rmap-badge.ch03 { background: var(--ch03-soft); color: var(--ch03); }
+.rmap-badge.ch04 { background: var(--ch04-soft); color: var(--ch04); }
+.rmap-badge.ch05 { background: var(--ch05-soft); color: var(--ch05); }
+.rmap-badge.ch06 { background: var(--ch06-soft); color: var(--ch06); }
+.rmap-badge.ch07 { background: var(--ch07-soft); color: var(--ch07); }
+
+.roadmap-clips { display: inline-flex; align-items: center; gap: 0; }
+.rmap-clip {
+  display: inline-flex; align-items: center; gap: 0;
+}
+.rmap-node {
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 2px;
+  padding: 5px 10px; border-radius: 6px; cursor: pointer;
+  border: 1.5px solid transparent; transition: all 0.15s;
+  text-align: center; min-width: 52px;
+}
+.rmap-node:hover { background: var(--hover); border-color: var(--line); }
+.rmap-node.current {
+  background: var(--active-bg); border-color: var(--active-bg);
+}
+.rmap-node.done {
+  background: transparent; border-color: var(--line);
+}
+.rmap-node .rmap-num {
+  font-size: 9px; font-weight: 700;
+  color: var(--text-3); line-height: 1;
+}
+.rmap-node.current .rmap-num { color: rgba(255,255,255,0.55); }
+.rmap-node.done .rmap-num { color: var(--text-3); }
+.rmap-node .rmap-label {
+  font-size: 9.5px; font-weight: 600; color: var(--text-2); line-height: 1.2;
+  white-space: nowrap; max-width: 72px; overflow: hidden; text-overflow: ellipsis;
+}
+.rmap-node.current .rmap-label { color: #fff; }
+.rmap-node.done .rmap-label { color: var(--text-3); }
+
+.rmap-arrow {
+  font-size: 10px; color: var(--line); margin: 0 2px; line-height: 1;
+  align-self: center; padding-top: 2px;
+}
+.roadmap-chapter-sep {
+  display: inline-flex; align-items: center; margin: 0 10px;
+  font-size: 10px; color: var(--line);
+}
+
+/* 콘텐츠 영역 */
+#content-wrap { flex: 1; padding: 44px 64px 80px; }
+#content { max-width: 800px; }
+
+/* WHY 카드 */
+.why-card {
+  background: var(--why-bg); border: 1.5px solid var(--why-border);
+  border-radius: 10px; padding: 18px 22px; margin-bottom: 32px;
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.why-icon {
+  font-size: 18px; flex-shrink: 0; opacity: 0.8; margin-top: 1px;
+}
+.why-body {}
+.why-label {
+  font-size: 9.5px; font-weight: 800; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 5px;
+}
+.why-text { font-size: 13.5px; color: var(--text-1); line-height: 1.7; font-weight: 500; }
+.why-prereq { font-size: 12px; color: var(--text-3); margin-top: 8px; }
+.why-prereq strong { color: var(--text-2); }
+
+/* 클립 헤더 */
+.clip-header { margin-bottom: 28px; }
+.clip-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.meta-badge {
+  display: inline-flex; align-items: center; padding: 3px 9px;
+  border-radius: 4px; font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.meta-badge.chapter { background: var(--ch01-soft); color: var(--ch01); }
+.meta-badge.chapter.ch00 { background: var(--ch00-soft); color: var(--ch00); }
+.meta-badge.chapter.ch02 { background: var(--ch02-soft); color: var(--ch02); }
+.meta-badge.chapter.ch03 { background: var(--ch03-soft); color: var(--ch03); }
+.meta-badge.chapter.ch04 { background: var(--ch04-soft); color: var(--ch04); }
+.meta-badge.chapter.ch05 { background: var(--ch05-soft); color: var(--ch05); }
+.meta-badge.chapter.ch06 { background: var(--ch06-soft); color: var(--ch06); }
+.meta-badge.chapter.ch07 { background: var(--ch07-soft); color: var(--ch07); }
+.meta-badge.type { background: var(--hover); color: var(--text-2); }
+.meta-badge.time { background: var(--hover); color: var(--text-2); }
+.clip-title-h { font-size: 26px; font-weight: 700; color: var(--text-1); line-height: 1.2; letter-spacing: -0.02em; }
+.clip-pos { font-size: 13px; color: var(--text-3); margin-top: 6px; }
+
+/* ── 코드 블록 배지 ── */
+.code-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em;
+  padding: 3px 9px; border-radius: 4px 4px 0 0;
+  margin-bottom: -1px; position: relative; z-index: 1;
+}
+.code-badge.terminal {
+  background: #1C1A18; color: #A3E635;
+  border: 1px solid #3A3832; border-bottom: none;
+}
+.code-badge.terminal::before { content: '$ '; font-family: monospace; opacity: 0.6; }
+.code-badge.prompt {
+  background: #EAF4FF; color: #2563EB;
+  border: 1px solid #BFDBFE; border-bottom: none;
+}
+.code-badge.prompt::before { content: '💬 '; font-size: 10px; }
+.code-block-wrap { margin: 12px 0; }
+
+/* ── 입문자 안내 박스 ── */
+.beginner-box {
+  background: #FFF8EE;
+  border: 1.5px solid #D4A84B;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 20px 0 28px;
+}
+.beginner-box-header {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 700; color: #9A6A00;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(212,168,75,0.25);
+}
+.beginner-box-header::before { content: '📖'; font-size: 13px; }
+.beginner-item { margin: 8px 0; }
+.beginner-term {
+  font-size: 12.5px; font-weight: 700; color: #7A5500;
+  margin-bottom: 2px;
+}
+.beginner-desc {
+  font-size: 12.5px; color: #5C4010; line-height: 1.6;
+}
+
+/* ── 직접 해보기 박스 ── */
+.lab-box {
+  background: #F0F8F4;
+  border: 1.5px solid #4A8A6A;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: 28px 0 32px;
+}
+.lab-box-header {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 700; color: #2D6A4F;
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 1px solid rgba(74,138,106,0.2);
+}
+.lab-box-header::before { content: '▶'; font-size: 11px; }
+.lab-box h2 { display: none; } /* 원래 h2 숨김 */
+.lab-box pre {
+  background: #1C1A18;
+  border-radius: 0 8px 8px 8px;
+  padding: 14px 16px;
+  margin: 0;
+  overflow-x: auto;
+  border: 1px solid #3A3832;
+}
+.code-badge.prompt + pre {
+  background: #F0F7FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 0 8px 8px 8px;
+}
+.code-badge.prompt + pre code {
+  color: #1E40AF;
+}
+.code-block-wrap { margin: 14px 0; }
+.lab-box code { color: #E8E5DF; font-size: 13px; }
+.lab-box p { font-size: 13.5px; color: #374151; line-height: 1.65; margin: 8px 0; }
+.lab-box ul { padding-left: 18px; }
+.lab-box li { font-size: 13.5px; color: #374151; margin: 4px 0; }
+.lab-box strong { color: #2D6A4F; }
+
+/* 이미지 갤러리 */
+.img-gallery { margin-bottom: 32px; }
+.gallery-nav {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.gal-btn {
+  background: var(--hover); border: 1px solid var(--line); border-radius: 6px;
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px; color: var(--text-2); line-height: 1;
+  transition: background 0.15s;
+}
+.gal-btn:hover { background: var(--line); }
+.gal-count { font-size: 11px; color: var(--text-3); font-feature-settings: "tnum"; }
+.gallery-track { position: relative; }
+.gallery-slide { display: none; }
+.gallery-slide.active { display: block; }
+.clip-img-wrap {
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--line); background: #F0EDE8;
+  display: flex; align-items: center; justify-content: center;
+}
+.clip-img-wrap img { width: 100%; max-height: 480px; object-fit: contain; }
+.clip-img-caption { font-size: 11px; color: var(--text-3); text-align: center; margin-top: 8px; }
+
+/* 마크다운 콘텐츠 */
+#content h1 { font-size: 24px; font-weight: 700; color: var(--text-1); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 6px; margin-top: 0; }
+#content h2 { font-size: 16.5px; font-weight: 700; color: var(--text-1); margin: 32px 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+#content h3 { font-size: 14px; font-weight: 700; color: var(--text-1); margin: 22px 0 8px; }
+#content p { font-size: 14.5px; color: var(--text-2); line-height: 1.85; margin-bottom: 14px; }
+#content ul, #content ol { padding-left: 20px; margin-bottom: 14px; }
+#content li { font-size: 14.5px; color: var(--text-2); line-height: 1.8; margin-bottom: 3px; }
+#content strong { color: var(--text-1); font-weight: 700; }
+#content code { font-family: 'SF Mono', 'Menlo', monospace; font-size: 12.5px; background: #E8E5DF; padding: 2px 6px; border-radius: 4px; color: #1C1A18; }
+#content pre { background: #1C1A18; border-radius: 10px; padding: 18px 22px; margin: 16px 0; overflow-x: auto; }
+#content pre code { background: none; color: #D4D0C8; font-size: 12.5px; padding: 0; }
+#content table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13.5px; }
+#content th { background: #E8E5DF; font-weight: 700; padding: 9px 14px; text-align: left; color: var(--text-1); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+#content td { padding: 9px 14px; color: var(--text-2); border-bottom: 1px solid var(--line); }
+#content hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
+#content blockquote { border-left: 3px solid var(--line); padding: 4px 18px; margin: 14px 0; color: var(--text-3); font-style: italic; }
+
+/* 홈 카드 */
+.home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
+.home-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; cursor: pointer; transition: box-shadow 0.15s; }
+.home-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+.home-card .hc-chapter { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px; }
+.home-card .hc-chapter.ch00 { color: var(--ch00); }
+.home-card .hc-chapter.ch01 { color: var(--ch01); }
+.home-card .hc-chapter.ch02 { color: var(--ch02); }
+.home-card .hc-chapter.ch03 { color: var(--ch03); }
+.home-card .hc-chapter.ch04 { color: var(--ch04); }
+.home-card .hc-chapter.ch05 { color: var(--ch05); }
+.home-card .hc-chapter.ch06 { color: var(--ch06); }
+.home-card .hc-chapter.ch07 { color: var(--ch07); }
+.home-card .hc-title { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 5px; }
+.home-card .hc-desc { font-size: 12.5px; color: var(--text-3); line-height: 1.6; }
+.home-card .hc-count { font-size: 12px; color: var(--text-3); margin-top: 10px; }
+
+/* 햄버거 */
+#hamburger { display: none; position: fixed; top: 14px; left: 14px; z-index: 200; background: var(--active-bg); color: #fff; border: none; border-radius: 8px; padding: 8px 12px; font-size: 16px; cursor: pointer; }
+/* 모바일 오버레이 */
+#sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 150; }
+#sidebar-overlay.show { display: block; }
+@media (max-width: 768px) {
+  html, body { height: auto; min-height: 100%; overflow: visible; }
+  body { display: block; }
+  #hamburger { display: block; }
+  #sidebar { display: none; }
+  #sidebar.open { display: flex; flex-direction: column; position: fixed; width: 85%; max-width: 320px; top: 0; left: 0; height: 100%; z-index: 160; box-shadow: 4px 0 24px rgba(0,0,0,0.25); overflow-y: auto; }
+  #main { display: block; width: 100%; height: auto; overflow: visible; }
+  #roadmap-bar { display: none; }
+  #content-wrap { display: block; padding: 64px 16px 80px; }
+  #content { display: block; max-width: 100%; }
+  .home-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<button id="hamburger" onclick="toggleSidebar()">☰</button>
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- ─── SIDEBAR ─── -->
+<div id="sidebar">
+  <div class="sidebar-header">
+    <div class="title">클로드코드 × 데이터분석</div>
+    <div class="sub">전서연 · 학습 가이드</div>
+  </div>
+  <div class="sidebar-progress">
+    <div class="progress-label">
+      <span>전체 진행률</span>
+      <span id="prog-label">0 / 14 클립</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+  <div id="nav">
+
+    <!-- 홈 -->
+    <div class="nav-item" id="home-nav-item" onclick="showHome(this)" style="margin-bottom:4px;">
+      <span class="num" style="font-size:12px;">⌂</span>
+      <span class="clip-title" style="font-weight:600;">전체 커리큘럼</span>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <!-- CH00 -->
+    <div class="chapter-label" onclick="toggleChapter('ch00')">
+      <span class="ch-badge ch00">CH00</span>
+      <span class="ch-name">강의 소개 & 준비</span>
+      <span class="ch-meta">4클립 · 55분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-ch00">
+      <div class="nav-item" onclick="loadClip('ch00-01',this)" data-id="ch00-01">
+        <span class="num">01</span>
+        <span class="clip-title">강의 OT</span>
+        <span class="clip-time">15분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch00-02',this)" data-id="ch00-02">
+        <span class="num">02</span>
+        <span class="clip-title">결과물 프리뷰</span>
+        <span class="clip-time">10분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch00-03',this)" data-id="ch00-03">
+        <span class="num">03</span>
+        <span class="clip-title">수강생 경로 가이드</span>
+        <span class="clip-time">10분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch00-04',this)" data-id="ch00-04">
+        <span class="num">04</span>
+        <span class="clip-title">환경 셋업</span>
+        <span class="clip-time">20분</span>
+      </div>
+    </div>
+
+    <!-- CH01 -->
+    <div class="chapter-label" onclick="toggleChapter('ch01')">
+      <span class="ch-badge ch01">CH01</span>
+      <span class="ch-name">기본 활용</span>
+      <span class="ch-meta">11클립 · 122분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-ch01">
+      <div class="nav-item" onclick="loadClip('ch01-01',this)" data-id="ch01-01">
+        <span class="num">01</span>
+        <span class="clip-title">클로드 코드란?</span>
+        <span class="clip-time">12분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch01-02',this)" data-id="ch01-02">
+        <span class="num">02</span>
+        <span class="clip-title">설치 & 첫 세션</span>
+        <span class="clip-time">10분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch01-03',this)" data-id="ch01-03">
+        <span class="num">03</span>
+        <span class="clip-title">CLAUDE.md</span>
+        <span class="clip-time">10분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch01-04',this)" data-id="ch01-04">
+        <span class="num">04</span>
+        <span class="clip-title">기본 워크플로우</span>
+        <span class="clip-time">12분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch01-05',this)" data-id="ch01-05">
+        <span class="num">05</span>
+        <span class="clip-title">작업 모드</span>
+        <span class="clip-time">12분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch01-06',this)" data-id="ch01-06">
+        <span class="num">06</span>
+        <span class="clip-title">슬래시 커맨드</span>
+        <span class="clip-time">8분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch01-07',this)" data-id="ch01-07">
+        <span class="num">07</span>
+        <span class="clip-title">토큰 & 비용 관리</span>
+        <span class="clip-time">10분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch01-08',this)" data-id="ch01-08">
+        <span class="num">08</span>
+        <span class="clip-title">훅 — 자동화 트리거</span>
+        <span class="clip-time">12분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch01-09',this)" data-id="ch01-09">
+        <span class="num">09</span>
+        <span class="clip-title">서브에이전트</span>
+        <span class="clip-time">12분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch01-10',this)" data-id="ch01-10">
+        <span class="num">10</span>
+        <span class="clip-title">MCP 연결</span>
+        <span class="clip-time">12분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch01-11',this)" data-id="ch01-11">
+        <span class="num">11</span>
+        <span class="clip-title">효과적인 지시 작성</span>
+        <span class="clip-time">12분</span>
+      </div>
+    </div>
+
+    <!-- CH02 -->
+    <div class="chapter-label" onclick="toggleChapter('ch02')">
+      <span class="ch-badge ch02">CH02</span>
+      <span class="ch-name">서브에이전트</span>
+      <span class="ch-meta">3클립 · 60분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-ch02">
+      <div class="nav-item" onclick="loadClip('ch02-01',this)" data-id="ch02-01">
+        <span class="num">01</span>
+        <span class="clip-title">서브에이전트란?</span>
+        <span class="clip-time">20분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch02-02',this)" data-id="ch02-02">
+        <span class="num">02</span>
+        <span class="clip-title">병렬 작업 설계</span>
+        <span class="clip-time">20분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch02-03',this)" data-id="ch02-03">
+        <span class="num">03</span>
+        <span class="clip-title">실전 실습</span>
+        <span class="clip-time">20분</span>
+      </div>
+    </div>
+
+    <!-- CH03 -->
+    <div class="chapter-label" onclick="toggleChapter('ch03')">
+      <span class="ch-badge ch03">CH03</span>
+      <span class="ch-name">에이전트 팀</span>
+      <span class="ch-meta">4클립 · 70분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-ch03">
+      <div class="nav-item" onclick="loadClip('ch03-01',this)" data-id="ch03-01">
+        <span class="num">01</span>
+        <span class="clip-title">멀티 에이전트란?</span>
+        <span class="clip-time">20분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch03-02',this)" data-id="ch03-02">
+        <span class="num">02</span>
+        <span class="clip-title">역할 분리 설계</span>
+        <span class="clip-time">18분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch03-03',this)" data-id="ch03-03">
+        <span class="num">03</span>
+        <span class="clip-title">팀 실행</span>
+        <span class="clip-time">17분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch03-04',this)" data-id="ch03-04">
+        <span class="num">04</span>
+        <span class="clip-title">실전 — 3-에이전트 팀</span>
+        <span class="clip-time">15분</span>
+      </div>
+    </div>
+
+    <!-- CH04 -->
+    <div class="chapter-label" onclick="toggleChapter('ch04')">
+      <span class="ch-badge ch04">CH04</span>
+      <span class="ch-name">멀티 환경</span>
+      <span class="ch-meta">3클립 · 40분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-ch04">
+      <div class="nav-item" onclick="loadClip('ch04-01',this)" data-id="ch04-01">
+        <span class="num">01</span>
+        <span class="clip-title">로컬 환경 최적화</span>
+        <span class="clip-time">12분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch04-02',this)" data-id="ch04-02">
+        <span class="num">02</span>
+        <span class="clip-title">클라우드 환경</span>
+        <span class="clip-time">14분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch04-03',this)" data-id="ch04-03">
+        <span class="num">03</span>
+        <span class="clip-title">실전 — 환경 전환</span>
+        <span class="clip-time">14분</span>
+      </div>
+    </div>
+
+    <!-- CH05 -->
+    <div class="chapter-label" onclick="toggleChapter('ch05')">
+      <span class="ch-badge ch05">CH05</span>
+      <span class="ch-name">MCP 연동</span>
+      <span class="ch-meta">4클립 · 60분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-ch05">
+      <div class="nav-item" onclick="loadClip('ch05-01',this)" data-id="ch05-01">
+        <span class="num">01</span>
+        <span class="clip-title">MCP란 무엇인가</span>
+        <span class="clip-time">12분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch05-02',this)" data-id="ch05-02">
+        <span class="num">02</span>
+        <span class="clip-title">데이터베이스 MCP</span>
+        <span class="clip-time">16분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch05-03',this)" data-id="ch05-03">
+        <span class="num">03</span>
+        <span class="clip-title">Slack MCP</span>
+        <span class="clip-time">14분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch05-04',this)" data-id="ch05-04">
+        <span class="num">04</span>
+        <span class="clip-title">실전 — 완전 자동화</span>
+        <span class="clip-time">18분</span>
+      </div>
+    </div>
+
+    <!-- CH06 -->
+    <div class="chapter-label" onclick="toggleChapter('ch06')">
+      <span class="ch-badge ch06">CH06</span>
+      <span class="ch-name">시각화 전략</span>
+      <span class="ch-meta">8클립 · 110분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-ch06">
+      <div class="nav-item" onclick="loadClip('ch06-01',this)" data-id="ch06-01">
+        <span class="num">01</span>
+        <span class="clip-title">시각화 전략이란</span>
+        <span class="clip-time">12분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch06-02',this)" data-id="ch06-02">
+        <span class="num">02</span>
+        <span class="clip-title">비교형 차트</span>
+        <span class="clip-time">14분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch06-03',this)" data-id="ch06-03">
+        <span class="num">03</span>
+        <span class="clip-title">분포와 관계 차트</span>
+        <span class="clip-time">14분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch06-04',this)" data-id="ch06-04">
+        <span class="num">04</span>
+        <span class="clip-title">태블로 자동화</span>
+        <span class="clip-time">14분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch06-05',this)" data-id="ch06-05">
+        <span class="num">05</span>
+        <span class="clip-title">파이썬 시각화</span>
+        <span class="clip-time">14분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch06-06',this)" data-id="ch06-06">
+        <span class="num">06</span>
+        <span class="clip-title">인터랙티브 차트</span>
+        <span class="clip-time">14분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch06-07',this)" data-id="ch06-07">
+        <span class="num">07</span>
+        <span class="clip-title">색상과 브랜드</span>
+        <span class="clip-time">12분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch06-08',this)" data-id="ch06-08">
+        <span class="num">08</span>
+        <span class="clip-title">실전 — 8단계 파이프라인</span>
+        <span class="clip-time">16분</span>
+      </div>
+    </div>
+
+    <!-- CH07 -->
+    <div class="chapter-label" onclick="toggleChapter('ch07')">
+      <span class="ch-badge ch07">CH07</span>
+      <span class="ch-name">D3.js 시각화</span>
+      <span class="ch-meta">4클립 · 75분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-ch07">
+      <div class="nav-item" onclick="loadClip('ch07-01',this)" data-id="ch07-01">
+        <span class="num">01</span>
+        <span class="clip-title">D3.js란 무엇인가</span>
+        <span class="clip-time">18분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch07-02',this)" data-id="ch07-02">
+        <span class="num">02</span>
+        <span class="clip-title">인터랙티브 기능</span>
+        <span class="clip-time">18분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch07-03',this)" data-id="ch07-03">
+        <span class="num">03</span>
+        <span class="clip-title">히트맵·트리맵·네트워크</span>
+        <span class="clip-time">20분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('ch07-04',this)" data-id="ch07-04">
+        <span class="num">04</span>
+        <span class="clip-title">실전 — 대시보드 완성</span>
+        <span class="clip-time">19분</span>
+      </div>
+    </div>
+
+    <!-- CH08 -->
+    <div class="chapter-header" onclick="toggleChapter('ch08')">
+      <span class="ch-dot" style="background:var(--ch08)"></span>
+      <span class="ch-num">CH08</span>
+      <span class="ch-title">Antigravity 파이프라인</span>
+      <span class="ch-meta">4클립 · 65분</span>
+      <span class="ch-toggle">▸</span>
+    </div>
+    <div class="chapter-clips collapsed" id="clips-ch08">
+      <div class="nav-item" onclick="loadClip('ch08-01',this)" data-id="ch08-01"><span class="num">01</span><span class="clip-title">Antigravity 소개</span><span class="clip-time">15분</span></div>
+      <div class="nav-item" onclick="loadClip('ch08-02',this)" data-id="ch08-02"><span class="num">02</span><span class="clip-title">기본 워크플로우</span><span class="clip-time">18분</span></div>
+      <div class="nav-item" onclick="loadClip('ch08-03',this)" data-id="ch08-03"><span class="num">03</span><span class="clip-title">브랜드 스타일 적용</span><span class="clip-time">15분</span></div>
+      <div class="nav-item" onclick="loadClip('ch08-04',this)" data-id="ch08-04"><span class="num">04</span><span class="clip-title">실전 — 완전 자동화</span><span class="clip-time">17분</span></div>
+    </div>
+
+    <!-- CH09 -->
+    <div class="chapter-header" onclick="toggleChapter('ch09')">
+      <span class="ch-dot" style="background:var(--ch09)"></span>
+      <span class="ch-num">CH09</span>
+      <span class="ch-title">마케팅 대시보드</span>
+      <span class="ch-meta">4클립 · 65분</span>
+      <span class="ch-toggle">▸</span>
+    </div>
+    <div class="chapter-clips collapsed" id="clips-ch09">
+      <div class="nav-item" onclick="loadClip('ch09-01',this)" data-id="ch09-01"><span class="num">01</span><span class="clip-title">대시보드 기획</span><span class="clip-time">15분</span></div>
+      <div class="nav-item" onclick="loadClip('ch09-02',this)" data-id="ch09-02"><span class="num">02</span><span class="clip-title">광고 API 연동</span><span class="clip-time">18분</span></div>
+      <div class="nav-item" onclick="loadClip('ch09-03',this)" data-id="ch09-03"><span class="num">03</span><span class="clip-title">차트 4종 만들기</span><span class="clip-time">18분</span></div>
+      <div class="nav-item" onclick="loadClip('ch09-04',this)" data-id="ch09-04"><span class="num">04</span><span class="clip-title">실전 — 배포와 자동 갱신</span><span class="clip-time">14분</span></div>
+    </div>
+
+    <!-- CH10 -->
+    <div class="chapter-header" onclick="toggleChapter('ch10')">
+      <span class="ch-dot" style="background:var(--ch10)"></span>
+      <span class="ch-num">CH10</span>
+      <span class="ch-title">A/B 테스트 분석</span>
+      <span class="ch-meta">3클립 · 45분</span>
+      <span class="ch-toggle">▸</span>
+    </div>
+    <div class="chapter-clips collapsed" id="clips-ch10">
+      <div class="nav-item" onclick="loadClip('ch10-01',this)" data-id="ch10-01"><span class="num">01</span><span class="clip-title">통계적 유의성</span><span class="clip-time">15분</span></div>
+      <div class="nav-item" onclick="loadClip('ch10-02',this)" data-id="ch10-02"><span class="num">02</span><span class="clip-title">결과 시각화</span><span class="clip-time">15분</span></div>
+      <div class="nav-item" onclick="loadClip('ch10-03',this)" data-id="ch10-03"><span class="num">03</span><span class="clip-title">실전 — 리포트 자동화</span><span class="clip-time">15분</span></div>
+    </div>
+
+    <!-- CH11 -->
+    <div class="chapter-header" onclick="toggleChapter('ch11')">
+      <span class="ch-dot" style="background:var(--ch11)"></span>
+      <span class="ch-num">CH11</span>
+      <span class="ch-title">PM KPI 시각화</span>
+      <span class="ch-meta">3클립 · 50분</span>
+      <span class="ch-toggle">▸</span>
+    </div>
+    <div class="chapter-clips collapsed" id="clips-ch11">
+      <div class="nav-item" onclick="loadClip('ch11-01',this)" data-id="ch11-01"><span class="num">01</span><span class="clip-title">DAU, 리텐션, 퍼널</span><span class="clip-time">18분</span></div>
+      <div class="nav-item" onclick="loadClip('ch11-02',this)" data-id="ch11-02"><span class="num">02</span><span class="clip-title">PM 대시보드 구현</span><span class="clip-time">16분</span></div>
+      <div class="nav-item" onclick="loadClip('ch11-03',this)" data-id="ch11-03"><span class="num">03</span><span class="clip-title">실전 — 이상 감지 알림</span><span class="clip-time">16분</span></div>
+    </div>
+
+    <!-- CH12 -->
+    <div class="chapter-header" onclick="toggleChapter('ch12')">
+      <span class="ch-dot" style="background:var(--ch12)"></span>
+      <span class="ch-num">CH12</span>
+      <span class="ch-title">리텐션 & 매출 분석</span>
+      <span class="ch-meta">3클립 · 50분</span>
+      <span class="ch-toggle">▸</span>
+    </div>
+    <div class="chapter-clips collapsed" id="clips-ch12">
+      <div class="nav-item" onclick="loadClip('ch12-01',this)" data-id="ch12-01"><span class="num">01</span><span class="clip-title">코호트, 생존 분석</span><span class="clip-time">18분</span></div>
+      <div class="nav-item" onclick="loadClip('ch12-02',this)" data-id="ch12-02"><span class="num">02</span><span class="clip-title">LTV, 매출 예측</span><span class="clip-time">16분</span></div>
+      <div class="nav-item" onclick="loadClip('ch12-03',this)" data-id="ch12-03"><span class="num">03</span><span class="clip-title">실전 — 통합 대시보드</span><span class="clip-time">16분</span></div>
+    </div>
+
+    <!-- CH13 -->
+    <div class="chapter-header" onclick="toggleChapter('ch13')">
+      <span class="ch-dot" style="background:var(--ch13)"></span>
+      <span class="ch-num">CH13</span>
+      <span class="ch-title">HR 자동화</span>
+      <span class="ch-meta">7클립 · 115분</span>
+      <span class="ch-toggle">▸</span>
+    </div>
+    <div class="chapter-clips collapsed" id="clips-ch13">
+      <div class="nav-item" onclick="loadClip('ch13-01',this)" data-id="ch13-01"><span class="num">01</span><span class="clip-title">HR 데이터 입문</span><span class="clip-time">15분</span></div>
+      <div class="nav-item" onclick="loadClip('ch13-02',this)" data-id="ch13-02"><span class="num">02</span><span class="clip-title">채용 분석</span><span class="clip-time">16분</span></div>
+      <div class="nav-item" onclick="loadClip('ch13-03',this)" data-id="ch13-03"><span class="num">03</span><span class="clip-title">이직 예측</span><span class="clip-time">18분</span></div>
+      <div class="nav-item" onclick="loadClip('ch13-04',this)" data-id="ch13-04"><span class="num">04</span><span class="clip-title">급여 벤치마크</span><span class="clip-time">15분</span></div>
+      <div class="nav-item" onclick="loadClip('ch13-05',this)" data-id="ch13-05"><span class="num">05</span><span class="clip-title">성과 평가 분석</span><span class="clip-time">16분</span></div>
+      <div class="nav-item" onclick="loadClip('ch13-06',this)" data-id="ch13-06"><span class="num">06</span><span class="clip-title">DEI 지표</span><span class="clip-time">16분</span></div>
+      <div class="nav-item" onclick="loadClip('ch13-07',this)" data-id="ch13-07"><span class="num">07</span><span class="clip-title">실전 — HR 리포트 자동화</span><span class="clip-time">18분</span></div>
+    </div>
+
+    <!-- CH14 -->
+    <div class="chapter-header" onclick="toggleChapter('ch14')">
+      <span class="ch-dot" style="background:var(--ch14)"></span>
+      <span class="ch-num">CH14</span>
+      <span class="ch-title">Openclaw 파이프라인</span>
+      <span class="ch-meta">3클립 · 50분</span>
+      <span class="ch-toggle">▸</span>
+    </div>
+    <div class="chapter-clips collapsed" id="clips-ch14">
+      <div class="nav-item" onclick="loadClip('ch14-01',this)" data-id="ch14-01"><span class="num">01</span><span class="clip-title">Openclaw 소개</span><span class="clip-time">18분</span></div>
+      <div class="nav-item" onclick="loadClip('ch14-02',this)" data-id="ch14-02"><span class="num">02</span><span class="clip-title">텔레그램 연동</span><span class="clip-time">16분</span></div>
+      <div class="nav-item" onclick="loadClip('ch14-03',this)" data-id="ch14-03"><span class="num">03</span><span class="clip-title">실전 — 완전 자동화</span><span class="clip-time">16분</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── MAIN ─── -->
+<div id="main">
+
+  <!-- 로드맵 바 -->
+  <div id="roadmap-bar" style="display:none">
+    <div class="roadmap-inner" id="roadmap-inner"></div>
+  </div>
+
+  <!-- 콘텐츠 -->
+  <div id="content-wrap">
+    <div id="content">
+      <!-- 홈 화면 -->
+      <div id="home-view">
+        <h1 style="font-size:28px;letter-spacing:-0.02em;margin-bottom:8px;">클로드코드 × 데이터분석</h1>
+        <p style="color:var(--text-3);font-size:14px;margin-bottom:8px;">전서연 · 학습 가이드</p>
+
+        <div style="margin:28px 0 16px;padding:18px 22px;background:#fff;border:1px solid var(--line);border-radius:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">전체 학습 목표</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:12px;font-weight:700;color:var(--ch00);background:var(--ch00-soft);padding:2px 7px;border-radius:3px;flex-shrink:0;">LO-1</span>
+              <span style="font-size:13.5px;color:var(--text-2);line-height:1.6;">클로드 코드의 에이전트 구조를 설명할 수 있습니다.</span>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:12px;font-weight:700;color:var(--ch01);background:var(--ch01-soft);padding:2px 7px;border-radius:3px;flex-shrink:0;">LO-2</span>
+              <span style="font-size:13.5px;color:var(--text-2);line-height:1.6;">씨에스브이 데이터를 입력받아 시각화를 자동으로 생성할 수 있습니다.</span>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:12px;font-weight:700;color:#4A8B6A;background:rgba(74,139,106,0.1);padding:2px 7px;border-radius:3px;flex-shrink:0;">LO-3</span>
+              <span style="font-size:13.5px;color:var(--text-2);line-height:1.6;">자동으로 갱신되는 대시보드와 리포트 파이프라인을 구축할 수 있습니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-grid">
+          <div class="home-card" onclick="loadClip('ch00-01',null)">
+            <div class="hc-chapter ch00">CH00 · 강의 소개 & 준비</div>
+            <div class="hc-title">OT부터 시작하기</div>
+            <div class="hc-desc">강의 목표, 결과물 프리뷰, 수강생 경로 선택, 환경 셋업</div>
+            <div class="hc-count">4클립 · 55분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch01-01',null)">
+            <div class="hc-chapter ch01">CH01 · 기본 활용</div>
+            <div class="hc-title">클로드 코드 시작하기</div>
+            <div class="hc-desc">에이전트 구조, CLAUDE.md, 작업 모드, 훅, MCP, 효과적인 지시</div>
+            <div class="hc-count">11클립 · 122분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch02-01',null)">
+            <div class="hc-chapter" style="color:var(--ch02);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH02 · 서브에이전트</div>
+            <div class="hc-title">여러 에이전트 병렬 실행</div>
+            <div class="hc-desc">Task 도구, 분할-처리-합산 패턴, 병렬 파이프라인 실전</div>
+            <div class="hc-count">3클립 · 60분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch03-01',null)">
+            <div class="hc-chapter" style="color:var(--ch03);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH03 · 에이전트 팀</div>
+            <div class="hc-title">역할 분리 멀티 에이전트</div>
+            <div class="hc-desc">오케스트레이터-워커 패턴, 역할 설계, 3-에이전트 완전 실습</div>
+            <div class="hc-count">4클립 · 70분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch04-01',null)">
+            <div class="hc-chapter" style="color:var(--ch04);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH04 · 멀티 환경</div>
+            <div class="hc-title">로컬 ↔ 클라우드 전환</div>
+            <div class="hc-desc">CLAUDE.md 전략, GitHub Codespaces, 환경 전환 파이프라인</div>
+            <div class="hc-count">3클립 · 40분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch05-01',null)">
+            <div class="hc-chapter" style="color:var(--ch05);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH05 · MCP 연동</div>
+            <div class="hc-title">외부 도구 확장</div>
+            <div class="hc-desc">데이터베이스 MCP, Slack MCP, DB→분석→발송 완전 자동화</div>
+            <div class="hc-count">4클립 · 60분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch06-01',null)">
+            <div class="hc-chapter" style="color:var(--ch06);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH06 · 시각화 전략</div>
+            <div class="hc-title">데이터 → 차트 자동 설계</div>
+            <div class="hc-desc">차트 선택, 태블로·파이썬·인터랙티브, 8단계 파이프라인</div>
+            <div class="hc-count">8클립 · 110분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch07-01',null)">
+            <div class="hc-chapter" style="color:var(--ch07);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH07 · D3.js 시각화</div>
+            <div class="hc-title">커스텀 인터랙티브 차트</div>
+            <div class="hc-desc">히트맵, 트리맵, 네트워크 그래프, 커스텀 대시보드</div>
+            <div class="hc-count">4클립 · 75분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch08-01',null)">
+            <div class="hc-chapter" style="color:var(--ch08);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH08 · Antigravity</div>
+            <div class="hc-title">시각화 자동화 파이프라인</div>
+            <div class="hc-desc">브랜드 스타일, 분석→배포 완전 자동화</div>
+            <div class="hc-count">4클립 · 65분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch09-01',null)">
+            <div class="hc-chapter" style="color:var(--ch09);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH09 · 마케팅</div>
+            <div class="hc-title">마케팅 대시보드</div>
+            <div class="hc-desc">광고 API 연동, KPI 차트 4종, 자동 갱신</div>
+            <div class="hc-count">4클립 · 65분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch10-01',null)">
+            <div class="hc-chapter" style="color:var(--ch10);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH10 · A/B 테스트</div>
+            <div class="hc-title">A/B 테스트 분석</div>
+            <div class="hc-desc">통계적 유의성, 신뢰구간, 리포트 자동화</div>
+            <div class="hc-count">3클립 · 45분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch11-01',null)">
+            <div class="hc-chapter" style="color:var(--ch11);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH11 · PM KPI</div>
+            <div class="hc-title">PM KPI 시각화</div>
+            <div class="hc-desc">DAU, 리텐션, 퍼널, 이상 감지 알림</div>
+            <div class="hc-count">3클립 · 50분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch12-01',null)">
+            <div class="hc-chapter" style="color:var(--ch12);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH12 · 리텐션</div>
+            <div class="hc-title">리텐션 & 매출 분석</div>
+            <div class="hc-desc">코호트, 생존 분석, LTV, 매출 예측</div>
+            <div class="hc-count">3클립 · 50분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch13-01',null)">
+            <div class="hc-chapter" style="color:var(--ch13);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH13 · HR</div>
+            <div class="hc-title">HR 자동화</div>
+            <div class="hc-desc">채용·이직·급여·성과·DEI 분석</div>
+            <div class="hc-count">7클립 · 115분</div>
+          </div>
+          <div class="home-card" onclick="loadClip('ch14-01',null)">
+            <div class="hc-chapter" style="color:var(--ch14);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH14 · Openclaw</div>
+            <div class="hc-title">완전 자동화 파이프라인</div>
+            <div class="hc-desc">텔레그램 연동, 데이터→알림 자동화</div>
+            <div class="hc-count">3클립 · 50분</div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;padding:16px 20px;background:var(--hover);border-radius:10px;">
+          <div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">직무별 권장 경로</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div><span style="font-size:12px;font-weight:700;color:var(--text-1);">데이터 분석가</span><br><span style="font-size:11.5px;color:var(--text-3);">CH00→01→02→05→06→10→12</span></div>
+            <div><span style="font-size:12px;font-weight:700;color:var(--text-1);">마케터/기획자</span><br><span style="font-size:11.5px;color:var(--text-3);">CH00→01→02→09→11</span></div>
+            <div><span style="font-size:12px;font-weight:700;color:var(--text-1);">PM</span><br><span style="font-size:11.5px;color:var(--text-3);">CH00→01→02→11→10</span></div>
+            <div><span style="font-size:12px;font-weight:700;color:var(--text-1);">개발자/AI 엔지니어</span><br><span style="font-size:11.5px;color:var(--text-3);">CH00→01→02→03→04→05→08→14</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 챕터 뷰 -->
+      <div id="chapter-view" style="display:none">
+        <div id="chapter-header"></div>
+        <div id="chapter-clips" class="home-grid" style="margin-top:20px;"></div>
+      </div>
+
+      <!-- 클립 뷰 -->
+      <div id="clip-view" style="display:none">
+        <div id="clip-header-area" class="clip-header"></div>
+        <div id="clip-illust" style="display:none;margin:0 0 24px;background:var(--hover);border-radius:12px;padding:20px 16px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;"></div>
+        <div id="why-area"></div>
+        <div id="img-area"></div>
+        <div id="clip-body"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── 커리큘럼 데이터 ───
+const CHAPTER_INFO = {
+  'CH00': { title: '강의 소개 & 준비', desc: '강의 목표, 결과물 프리뷰, 수강생 경로 가이드, 환경 셋업', time: '55분', color: 'ch00' },
+  'CH01': { title: '기본 활용', desc: '클로드 코드 핵심 기능 — 세션, CLAUDE.md, 워크플로우, 슬래시 커맨드, 훅, MCP', time: '122분', color: 'ch01' },
+  'CH02': { title: '서브에이전트 시스템', desc: 'Task 도구로 병렬 처리, 100개 파일 동시 분석, 분할-처리-합산 패턴', time: '60분', color: 'ch02' },
+  'CH03': { title: '에이전트 팀 코워크', desc: '역할 분리 멀티 에이전트, 오케스트레이터-워커 패턴, 5-에이전트 실사례', time: '70분', color: 'ch03' },
+  'CH04': { title: '멀티 환경 활용', desc: '로컬 최적화, GitHub Codespaces, 환경 전환 파이프라인', time: '40분', color: 'ch04' },
+  'CH05': { title: 'MCP & 외부 도구 연동', desc: '데이터베이스 MCP, Slack MCP, DB→분석→발송 완전 자동화', time: '60분', color: 'ch05' },
+  'CH06': { title: '시각화 전략 자동 설계', desc: '차트 선택 원칙, 태블로·파이썬·인터랙티브, 8단계 파이프라인', time: '110분', color: 'ch06' },
+  'CH07': { title: 'D3.js 커스텀 시각화', desc: '히트맵, 트리맵, 네트워크 그래프, 커스텀 대시보드', time: '75분', color: 'ch07' },
+  'CH08': { title: 'Antigravity 파이프라인', desc: '시각화 자동 생성, 브랜드 스타일, 분석→배포 완전 자동화', time: '65분', color: 'ch08' },
+  'CH09': { title: '마케팅 대시보드', desc: 'KPI 기획, 광고 API 연동, 차트 4종, 자동 갱신', time: '65분', color: 'ch09' },
+  'CH10': { title: 'A/B 테스트 분석', desc: '통계적 유의성, 신뢰구간, 리포트 자동화', time: '45분', color: 'ch10' },
+  'CH11': { title: 'PM KPI 시각화', desc: 'DAU/리텐션/퍼널, 실시간 대시보드, 이상 감지', time: '50분', color: 'ch11' },
+  'CH12': { title: '리텐션 & 매출 분석', desc: '코호트, 생존 분석, LTV, 매출 예측', time: '50분', color: 'ch12' },
+  'CH13': { title: 'HR 자동화', desc: '채용·이직·급여·성과·DEI 분석, 월간 리포트', time: '115분', color: 'ch13' },
+  'CH14': { title: 'Openclaw 파이프라인', desc: '텔레그램 연동, 완전 자동화 데이터 파이프라인', time: '50분', color: 'ch14' }
+};
+
+const CURRICULUM = [
+  // CH00
+  {
+    id: 'ch00-01',
+    file: 'CH00-01 강의 OT — Why, What, Who, How.md',
+    title: '강의 OT — Why · What · Who · How',
+    short: 'OT',
+    chapter: 'CH00',
+    chTitle: '강의 소개 & 준비',
+    time: '15분',
+    type: '슬라이드',
+    why: '이 강의가 내 직무에 맞는지, 배우면 무엇을 할 수 있는지 파악합니다. 목표가 명확해야 이후 60개 클립을 끝까지 완주할 수 있습니다.',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'ch00-02',
+    file: 'CH00-02 결과물 프리뷰 — 이 강의로 무엇을 만드나.md',
+    title: '결과물 프리뷰 — 이 강의로 무엇을 만드나',
+    short: '결과물',
+    chapter: 'CH00',
+    chTitle: '강의 소개 & 준비',
+    time: '10분',
+    type: '화면 시연',
+    why: '완성된 대시보드, 자동화 리포트, 분석 에이전트 3가지를 미리 봅니다. "이게 진짜 되는 거구나"를 확인해야 학습 동기가 유지됩니다.',
+    prereq: 'CH00-01 강의 OT',
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'ch00-03',
+    file: 'CH00-03 수강생 경로 가이드 — 내 직무에 맞는 학습 순서.md',
+    title: '수강생 경로 가이드 — 내 직무에 맞는 학습 순서',
+    short: '경로',
+    chapter: 'CH00',
+    chTitle: '강의 소개 & 준비',
+    time: '10분',
+    type: '슬라이드',
+    why: '60개 클립을 처음부터 전부 볼 필요는 없습니다. 내 직무(데이터 분석가 / 마케터 / PM / 개발자)에 맞는 최적 순서를 선택하면 절반 시간에 핵심을 익힐 수 있습니다.',
+    prereq: 'CH00-01, CH00-02',
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'ch00-04',
+    file: 'CH00-04 개발 환경 셋업 — 첫 실행까지.md',
+    title: '개발 환경 셋업 — 첫 실행까지',
+    short: '셋업',
+    chapter: 'CH00',
+    chTitle: '강의 소개 & 준비',
+    time: '20분',
+    type: '화면 녹화',
+    why: '노드제이에스, API 키, 클로드 코드 설치까지 완료해야 CH01부터 실습이 가능합니다. 이 클립을 건너뛰면 이후 모든 실습이 막힙니다.',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
+  },
+
+  // CH01
+  {
+    id: 'ch01-01',
+    file: 'CH01-01 클로드 코드란 무엇인가.md',
+    title: '클로드 코드란 무엇인가',
+    short: '개념',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '12분',
+    type: '슬라이드 + 데모',
+    why: '에이전트 AI가 챗지피티와 구조적으로 어떻게 다른지 이해해야, 이후 실습에서 "왜 이렇게 동작하는지"를 납득하며 학습할 수 있습니다.',
+    prereq: 'CH00-04 환경 셋업 완료',
+    imgUrls: [
+      { src: 'img/diagrams/ch01-01-agent-loop.png', caption: '에이전트 루프 — Task → Language Model → Gather context → Formulate a plan → Take an action → Iterate (출처: Anthropic Academy)' },
+      { src: 'img/diagrams/ch01-01-tool-use.png', caption: 'Tool Use — 코딩 어시스턴트와 언어 모델이 도구를 통해 상호작용하는 구조 (출처: Anthropic Academy)' },
+    ],
+    analogy: '챗지피티는 전화로 조수에게 지시하는 방식입니다. 조수가 대답은 하지만 실제로 아무것도 하지 않습니다. 클로드 코드는 그 조수가 내 책상 앞에 직접 앉아서 파일을 열고, 코드를 실행하고, 결과를 저장합니다.'
+  },
+  {
+    id: 'ch01-02',
+    file: 'CH01-02 설치 & 첫 번째 세션.md',
+    title: '설치 & 첫 번째 세션',
+    short: '설치',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '10분',
+    type: '화면 녹화',
+    why: '설치는 5분이면 끝납니다. 이후 실습은 모두 이 설치가 완료된 상태를 전제합니다.',
+    prereq: 'CH00-04 환경 셋업 (겹치는 내용 있음)',
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'ch01-02-5',
+    file: 'CH01-02-5 안티그래비티와 클로드 코드 병행 활용.md',
+    title: '안티그래비티와 클로드 코드 병행 활용',
+    short: 'Antigravity 병행',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '12분',
+    type: '슬라이드 + 화면 녹화',
+    why: '클로드 코드 프로 플랜은 토큰이 빨리 소진됩니다. 무료인 안티그래비티와 병행하면 비용을 아끼면서 두 도구의 강점을 조합할 수 있습니다.',
+    prereq: 'CH01-02 설치 완료',
+    imgUrls: [],
+    analogy: '두 명의 전문가를 번갈아 고용하는 것과 같습니다. 한 명은 디자인과 프로토타입에 강하고(안티그래비티), 다른 한 명은 복잡한 로직과 시스템 연동에 강합니다(클로드 코드). 작업 성격에 따라 적합한 사람에게 맡깁니다.'
+  },
+  {
+    id: 'ch01-03',
+    file: 'CH01-03 CLAUDE.md — 프로젝트 메모리.md',
+    title: 'CLAUDE.md — 프로젝트 메모리',
+    short: 'CLAUDE.md',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '10분',
+    type: '슬라이드 + 실습',
+    why: '클로드 코드는 세션이 끊기면 기억을 잃습니다. CLAUDE.md 없이는 매번 프로젝트를 처음부터 설명해야 합니다. 이 파일 하나가 생산성을 2-3배 높입니다.',
+    prereq: 'CH01-01 개념 이해 후',
+    imgUrls: [
+      { src: 'img/diagrams/ch01-03-a.png', caption: 'CLAUDE.md 개념 도식 (출처: Anthropic Academy)' },
+      { src: 'img/diagrams/ch01-03-b.png', caption: 'CLAUDE.md 구조와 메모리 스코프 (출처: Anthropic Academy)' },
+      { src: 'img/diagrams/ch01-03-c.png', caption: 'CLAUDE.md 컨텍스트 활용 패턴 (출처: Anthropic Academy)' },
+    ],
+    analogy: '매일 새로 출근하는 파견 직원과 일한다고 생각해보세요. 매번 처음부터 설명해야 합니다. CLAUDE.md는 그 직원에게 처음부터 드리는 인수인계 문서입니다. 읽고 나면 바로 일을 시작합니다.'
+  },
+  {
+    id: 'ch01-04',
+    file: 'CH01-04 기본 워크플로우 — 파일 읽기·쓰기·실행.md',
+    title: '기본 워크플로우 — 파일 읽기·쓰기·실행',
+    short: '워크플로우',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '12분',
+    type: '화면 녹화',
+    why: '실제 씨에스브이 파일을 읽고, 집계하고, 결과를 저장하는 전 과정을 직접 실행합니다. 이것이 이후 모든 프로젝트의 기본 패턴입니다.',
+    prereq: 'CH01-01~03',
+    imgUrls: [
+      { src: 'img/ch01-04.jpg', caption: '파일 읽기·수정·저장 워크플로우 (출처: Anthropic Academy)' },
+    ],
+    analogy: null
+  },
+  {
+    id: 'ch01-05',
+    file: 'CH01-05 작업 모드 — Plan, Auto, Editor.md',
+    title: '작업 모드 — Plan · Auto · Editor',
+    short: '작업 모드',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '12분',
+    type: '슬라이드 + 데모',
+    why: '클로드 코드는 파일을 직접 수정하고 명령어를 실행합니다. 적절한 모드 선택 없이 쓰면 원본 데이터가 덮어써지거나 의도치 않은 명령이 실행될 수 있습니다.',
+    prereq: 'CH01-01~04',
+    imgUrls: [
+      { src: 'img/ch01-05.jpg', caption: 'Plan · Auto · Editor 작업 모드 (출처: Anthropic Academy)' },
+    ],
+    analogy: '인테리어 공사와 비슷합니다. Auto는 공사업자가 집 전체를 마음대로 수정하는 방식, Plan은 먼저 도면을 보여주고 승인받은 후 공사하는 방식, Editor는 수정할 곳마다 하나씩 확인받는 방식입니다. 처음에는 반드시 Plan 모드를 권장합니다.'
+  },
+  {
+    id: 'ch01-06',
+    file: 'CH01-06 슬래시 커맨드 완전 정리.md',
+    title: '슬래시 커맨드 완전 정리',
+    short: '슬래시',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '8분',
+    type: '슬라이드',
+    why: '슬래시 커맨드는 클로드 코드의 내장 단축 기능입니다. 모르면 매번 긴 문장으로 요청하게 되고, 알면 한 줄로 처리됩니다.',
+    prereq: 'CH01-01~05',
+    imgUrls: [
+      { src: 'img/ch01-06.jpg', caption: '슬래시 커맨드와 커스텀 명령어 (출처: Anthropic Academy)' },
+    ],
+    analogy: null
+  },
+  {
+    id: 'ch01-07',
+    file: 'CH01-07 토큰 절약과 비용 관리.md',
+    title: '토큰 절약과 비용 관리',
+    short: '비용',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '10분',
+    type: '슬라이드',
+    why: '클로드 코드는 사용량 기반 과금입니다. 전략 없이 쓰면 같은 작업에 10배 비용이 들 수 있습니다. 실무에서 오래 쓰려면 비용 관리가 필수입니다.',
+    prereq: 'CH01-01~06',
+    imgUrls: [],
+    analogy: '택시를 탈 때 목적지까지 최단 경로로 가느냐, 돌아서 가느냐의 차이입니다. 토큰은 택시 요금입니다. 같은 목적지에 도달하더라도 경로에 따라 비용이 크게 달라집니다.'
+  },
+  {
+    id: 'ch01-08',
+    file: 'CH01-08 훅(Hooks) — 작업 자동화 트리거.md',
+    title: '훅(Hooks) — 작업 자동화 트리거',
+    short: '훅',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '12분',
+    type: '슬라이드 + 실습',
+    why: '훅을 쓰면 "클로드가 파일 저장할 때마다 자동 백업", "위험 명령어 자동 차단", "작업 완료 시 알림" 같은 자동화가 코드 없이 가능합니다.',
+    prereq: 'CH01-01~07',
+    imgUrls: [
+      { src: 'img/diagrams/ch01-08-a.png', caption: '훅 개념 — 이벤트 트리거 구조 (출처: Anthropic Academy)' },
+      { src: 'img/diagrams/ch01-08-b.png', caption: '훅 종류와 실행 시점 (출처: Anthropic Academy)' },
+      { src: 'img/diagrams/ch01-08-c.png', caption: '훅 설정 예시 (출처: Anthropic Academy)' },
+      { src: 'img/diagrams/ch01-08-d.png', caption: '실용적인 훅 활용 패턴 (출처: Anthropic Academy)' },
+    ],
+    analogy: '엑셀의 트리거 매크로와 비슷합니다. "셀 값이 바뀔 때마다 이 코드 실행"처럼, 훅은 "클로드가 특정 동작을 할 때마다 이 스크립트 실행"입니다. 차이는 훅이 파일 시스템과 터미널 전체에 적용된다는 점입니다.'
+  },
+  {
+    id: 'ch01-09',
+    file: 'CH01-09 서브에이전트 — 역할 분리와 위임.md',
+    title: '서브에이전트 — 역할 분리와 위임',
+    short: '서브에이전트',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '12분',
+    type: '슬라이드 + 실습',
+    why: '혼자 일하는 에이전트 하나로는 복잡한 파이프라인이 버겁습니다. 서브에이전트를 쓰면 데이터 분석, 시각화, 보고서 작성을 각각 전문 에이전트에게 위임해 병렬로 처리할 수 있습니다.',
+    prereq: 'CH01-01~08',
+    imgUrls: [],
+    analogy: '회사 팀 구성과 같습니다. 팀장(메인 에이전트)이 "월간 보고서 만들어줘"라는 지시를 받으면, 데이터 담당(서브1), 시각화 담당(서브2), 작성 담당(서브3)에게 나눠서 위임합니다. 각자 자기 일을 하고, 팀장이 결과를 취합합니다.'
+  },
+  {
+    id: 'ch01-10',
+    file: 'CH01-10 MCP — 외부 도구 연결.md',
+    title: 'MCP — 외부 도구 연결',
+    short: 'MCP',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '12분',
+    type: '슬라이드 + 실습',
+    why: '클로드 코드 기본 기능으로는 데이터베이스, 슬랙, 구글 시트에 직접 접근하기 어렵습니다. 엠씨피(MCP)를 연결하면 외부 시스템과 자연어로 대화하듯 연동됩니다.',
+    prereq: 'CH01-01~09',
+    imgUrls: [
+      { src: 'img/ch01-10.jpg', caption: 'MCP — 외부 도구 연결 구조 (출처: Anthropic Academy)' },
+    ],
+    analogy: '클로드 코드를 스마트폰이라고 하면, 엠씨피는 앱입니다. 기본 스마트폰으로도 많은 것을 할 수 있지만, 앱을 설치하면 배달, 은행, 지도까지 연결됩니다. 엠씨피를 연결하면 에스큐엘 데이터베이스, 슬랙, 구글 시트가 클로드의 도구가 됩니다.'
+  },
+
+  // ── CH01-11 (추가) ──
+  {
+    id: 'ch01-11',
+    file: 'CH01-06 효과적인 지시 작성.md',
+    title: '효과적인 지시 작성',
+    short: '지시 작성',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '12분',
+    type: '슬라이드 + 실습',
+    why: '클로드 코드에 "이거 분석해줘"라고만 해도 동작하지만, 결과가 기대와 다를 때가 많습니다. 5가지 패턴을 익히면 처음부터 원하는 결과를 얻는 빈도가 크게 높아집니다.',
+    prereq: 'CH01-01~10',
+    imgUrls: [],
+    analogy: '요리사에게 "맛있는 거 만들어줘"라고 하면 무엇이 나올지 모릅니다. "간 낮은 닭가슴살 샐러드, 두 인분, 30분 안에"라고 하면 원하는 결과가 나옵니다. 지시도 같습니다.'
+  },
+
+  // ── CH01-12 (추가) ──
+  {
+    id: 'ch01-12',
+    file: 'CH01-12 데스크탑 앱과 클라우드 환경.md',
+    title: '데스크탑 앱과 클라우드 환경',
+    short: '데스크탑/클라우드',
+    chapter: 'CH01',
+    chTitle: '기본 활용',
+    time: '15분',
+    type: '슬라이드 + 데모',
+    why: '터미널만 쓰면 항상 컴퓨터 앞에 있어야 합니다. 데스크탑 앱의 Cowork 탭으로 작업을 클라우드에 보내면, 앱을 닫아도 계속 돌아가고 핸드폰으로 진행 상황을 확인할 수 있습니다.',
+    prereq: 'CH01-01~11',
+    imgUrls: [],
+    analogy: '터미널은 회사에 앉아서 일하는 것이고, Cowork는 일을 외주 팀에 맡기는 것입니다. 외주 팀은 여러분이 퇴근해도 밤새 작업합니다. 다음날 결과만 확인하면 됩니다.'
+  },
+
+  // ── CH02 서브에이전트 시스템 ──
+  {
+    id: 'ch02-01',
+    file: 'CH02/CH02-01 서브에이전트란 무엇인가 — 위임의 기술.md',
+    title: '서브에이전트란 무엇인가',
+    short: '위임의 기술',
+    chapter: 'CH02',
+    chTitle: '서브에이전트 시스템',
+    time: '20분',
+    type: '슬라이드 + 실습',
+    why: '하나의 에이전트만으로는 대규모 데이터를 처리하기 어렵습니다. 서브에이전트를 이해하면 100개 파일을 한 번에 처리하는 파이프라인을 설계할 수 있습니다.',
+    prereq: 'CH01 전체',
+    imgUrls: [],
+    analogy: '팀장이 혼자 보고서 100개를 쓰는 대신, 팀원 10명에게 10개씩 나눠주는 방식입니다. 클로드 코드에서 팀장은 메인 에이전트, 팀원들은 서브에이전트입니다.'
+  },
+  {
+    id: 'ch02-02',
+    file: 'CH02/CH02-02 병렬 작업 설계 — 여러 에이전트가 동시에 일하다.md',
+    title: '병렬 작업 설계',
+    short: '병렬 처리',
+    chapter: 'CH02',
+    chTitle: '서브에이전트 시스템',
+    time: '20분',
+    type: '슬라이드 + 실습',
+    why: '서브에이전트를 아무 계획 없이 실행하면 파일 충돌이나 결과 불일치가 생깁니다. 분할-처리-합산, 파이프라인, 병렬 검토 3가지 패턴을 알면 안전하게 설계할 수 있습니다.',
+    prereq: 'CH02-01',
+    imgUrls: [],
+    analogy: '공장 생산 라인을 설계하는 것과 같습니다. 어떤 공정은 병렬로, 어떤 공정은 순서대로 배치해야 최고 효율이 나옵니다.'
+  },
+  {
+    id: 'ch02-03',
+    file: 'CH02/CH02-03 서브에이전트 실전 — 데이터 분석 파이프라인 자동화.md',
+    title: '서브에이전트 실전 실습',
+    short: '실전 파이프라인',
+    chapter: 'CH02',
+    chTitle: '서브에이전트 시스템',
+    time: '20분',
+    type: '화면 녹화 (실습)',
+    why: '5개 캠페인 씨에스브이를 병렬 분석하고 최종 비교 리포트까지 자동 생성하는 전체 흐름을 직접 실행합니다. 이 패턴을 본인 데이터에 바로 적용할 수 있습니다.',
+    prereq: 'CH02-01~02',
+    imgUrls: [],
+    analogy: '조리법을 배웠으니 이제 실제로 요리합니다. 레시피(클로드엠디)를 보면서 처음부터 끝까지 한 번 완성합니다.'
+  },
+
+  // ── CH03 에이전트 팀 코워크 ──
+  {
+    id: 'ch03-01',
+    file: 'CH03/CH03-01 멀티 에이전트 코워크란 — 혼자보다 팀이 강하다.md',
+    title: '멀티 에이전트 코워크란',
+    short: '팀이 강하다',
+    chapter: 'CH03',
+    chTitle: '에이전트 팀 코워크',
+    time: '20분',
+    type: '슬라이드 + 실습',
+    why: '서브에이전트는 같은 작업을 여럿이 처리하지만, 멀티 에이전트는 역할이 다릅니다. 데이터 분석·인사이트 도출·리포트 작성을 각 전문 에이전트가 나눠 맡으면 품질이 올라갑니다.',
+    prereq: 'CH02 전체',
+    imgUrls: [],
+    analogy: '콜센터 상담원 여럿(서브에이전트)과 병원 팀(멀티 에이전트)의 차이입니다. 병원은 접수·의사·간호사·약사가 각자 역할로 협력합니다.'
+  },
+  {
+    id: 'ch03-02',
+    file: 'CH03/CH03-02 역할 분리 에이전트 설계 — 기획자·실행자·검토자.md',
+    title: '역할 분리 에이전트 설계',
+    short: '역할 설계',
+    chapter: 'CH03',
+    chTitle: '에이전트 팀 코워크',
+    time: '18분',
+    type: '슬라이드 + 클로드엠디 작성',
+    why: '에이전트 팀의 역할을 명확히 정의하지 않으면 에이전트들이 서로 겹치거나 빠진 역할이 생깁니다. 기획자·실행자·검토자 3역할로 구조를 잡으면 안정적인 팀이 완성됩니다.',
+    prereq: 'CH03-01',
+    imgUrls: [],
+    analogy: '드라마 제작팀에 작가·감독·편집자가 있듯이, 에이전트 팀에도 역할별 전문가가 있어야 좋은 결과물이 나옵니다.'
+  },
+  {
+    id: 'ch03-03',
+    file: 'CH03/CH03-03 에이전트 팀으로 복잡한 분석 처리하기.md',
+    title: '에이전트 팀으로 복잡한 분석 처리',
+    short: '팀 실행',
+    chapter: 'CH03',
+    chTitle: '에이전트 팀 코워크',
+    time: '17분',
+    type: '화면 녹화 (실습)',
+    why: '설계한 팀이 실제로 어떻게 동작하는지, 중간에 오류가 나면 어떻게 처리하는지 직접 확인합니다. 특히 단계별 재실행 패턴은 실무에서 자주 쓰이는 기술입니다.',
+    prereq: 'CH03-01~02',
+    imgUrls: [],
+    analogy: '팀을 구성했으니 실제 프로젝트를 돌립니다. 중간에 팀원 하나가 막히면 그 사람만 교체하면 됩니다. 전체를 처음부터 다시 할 필요가 없습니다.'
+  },
+  {
+    id: 'ch03-04',
+    file: 'CH03/CH03-04 실전 — 3-에이전트 마케팅 데이터 분석 팀.md',
+    title: '실전 — 3-에이전트 분석 팀',
+    short: '완전 실습',
+    chapter: 'CH03',
+    chTitle: '에이전트 팀 코워크',
+    time: '15분',
+    type: '화면 녹화 (완전 실습)',
+    why: '처음부터 끝까지 완전한 실습입니다. 강의 제공 템플릿을 본인 데이터에 수정해서 바로 실무에 쓸 수 있는 수준으로 완성합니다.',
+    prereq: 'CH03-01~03',
+    imgUrls: [],
+    analogy: '수영 강습의 마지막 날 — 코치 없이 혼자 25미터를 완주합니다. 이 클립을 마치면 클로드 에이전트 팀을 혼자 운영할 수 있습니다.'
+  },
+
+  // ── CH04 멀티 환경 활용 ──
+  {
+    id: 'ch04-01',
+    file: 'CH04/CH04-01 로컬 환경 최적화 — 프로젝트 구조와 CLAUDE.md 전략.md',
+    title: '로컬 환경 최적화',
+    short: 'CLAUDE.md 전략',
+    chapter: 'CH04',
+    chTitle: '멀티 환경 활용',
+    time: '12분',
+    type: '슬라이드 + 실습',
+    why: '프로젝트 폴더 구조와 CLAUDE.md 설정을 최적화하면 에이전트의 작업 정확도가 높아집니다.',
+    prereq: 'CH03',
+    imgUrls: [],
+    analogy: '정리된 작업실에서 도구를 바로 찾을 수 있듯, 프로젝트 구조가 명확하면 에이전트도 빠르게 작업합니다.'
+  },
+  {
+    id: 'ch04-02',
+    file: 'CH04/CH04-02 클라우드 환경 — GitHub Codespaces와 원격 에이전트 실행.md',
+    title: '클라우드 환경',
+    short: 'Codespaces',
+    chapter: 'CH04',
+    chTitle: '멀티 환경 활용',
+    time: '14분',
+    type: '화면 녹화',
+    why: 'GitHub Codespaces에서 클로드 코드를 실행하면 어디서든 동일한 환경으로 작업할 수 있습니다.',
+    prereq: 'CH04-01',
+    imgUrls: [],
+    analogy: '회사 컴퓨터와 집 컴퓨터가 항상 같은 상태를 유지하는 것과 같습니다.'
+  },
+  {
+    id: 'ch04-03',
+    file: 'CH04/CH04-03 실전 — 로컬과 클라우드를 잇는 환경 전환 파이프라인.md',
+    title: '실전 — 환경 전환 파이프라인',
+    short: '환경 전환',
+    chapter: 'CH04',
+    chTitle: '멀티 환경 활용',
+    time: '14분',
+    type: '화면 녹화 (완전 실습)',
+    why: '로컬에서 작업하다 클라우드로 전환하고 다시 로컬로 돌아오는 워크플로를 자동화합니다.',
+    prereq: 'CH04-01~02',
+    imgUrls: [],
+    analogy: '집에서 시작한 요리를 식당 주방에서 마무리하고 집으로 가져오는 것처럼 자연스러운 환경 전환입니다.'
+  },
+
+  // ── CH05 MCP & 외부 도구 연동 ──
+  {
+    id: 'ch05-01',
+    file: 'CH05/CH05-01 MCP란 무엇인가 — 에이전트의 도구를 확장하다.md',
+    title: 'MCP란 무엇인가',
+    short: '도구 확장',
+    chapter: 'CH05',
+    chTitle: 'MCP 연동',
+    time: '12분',
+    type: '슬라이드 + 실습',
+    why: 'MCP를 이해하면 클로드 코드의 능력을 무한히 확장할 수 있습니다. 데이터베이스, 슬랙, 파일 시스템 등 모든 외부 도구와 연결됩니다.',
+    prereq: 'CH04',
+    imgUrls: [],
+    analogy: '스마트폰에 앱을 설치하면 새로운 기능이 생기듯, MCP는 에이전트에 새로운 도구를 추가합니다.'
+  },
+  {
+    id: 'ch05-02',
+    file: 'CH05/CH05-02 데이터베이스 MCP — SQL에 직접 연결하다.md',
+    title: '데이터베이스 MCP',
+    short: 'SQL 연결',
+    chapter: 'CH05',
+    chTitle: 'MCP 연동',
+    time: '16분',
+    type: '화면 녹화',
+    why: '에이전트가 데이터베이스에 직접 쿼리를 실행하면 분석 속도가 비약적으로 빨라집니다.',
+    prereq: 'CH05-01',
+    imgUrls: [],
+    analogy: '통역사 없이 현지인과 직접 대화하는 것처럼, 에이전트가 데이터베이스와 직접 소통합니다.'
+  },
+  {
+    id: 'ch05-03',
+    file: 'CH05/CH05-03 Slack MCP — 분석 결과를 팀에 자동 전달하다.md',
+    title: 'Slack MCP',
+    short: '자동 전달',
+    chapter: 'CH05',
+    chTitle: 'MCP 연동',
+    time: '14분',
+    type: '화면 녹화',
+    why: '분석이 완료되면 자동으로 슬랙에 리포트를 전송합니다. 사람이 개입할 필요가 없습니다.',
+    prereq: 'CH05-01~02',
+    imgUrls: [],
+    analogy: '비서가 보고서를 완성하면 바로 팀 채널에 공유하는 것과 같습니다.'
+  },
+  {
+    id: 'ch05-04',
+    file: 'CH05/CH05-04 실전 — DB 분석부터 Slack 발송까지 완전 자동화.md',
+    title: '실전 — 완전 자동화',
+    short: 'DB→Slack',
+    chapter: 'CH05',
+    chTitle: 'MCP 연동',
+    time: '18분',
+    type: '화면 녹화 (완전 실습)',
+    why: '데이터베이스 쿼리 → 분석 → 시각화 → 슬랙 발송까지 한 번의 명령으로 완료합니다.',
+    prereq: 'CH05-01~03',
+    imgUrls: [],
+    analogy: '버튼 하나로 원두 분쇄, 추출, 우유 스팀, 컵 서빙까지 완료되는 전자동 커피머신입니다.'
+  },
+
+  // ── CH06 시각화 전략 자동 설계 ──
+  {
+    id: 'ch06-01',
+    file: 'CH06/CH06-01 시각화 전략이란 — 데이터 구조가 차트를 결정한다.md',
+    title: '시각화 전략이란',
+    short: '차트 선택',
+    chapter: 'CH06',
+    chTitle: '시각화 전략',
+    time: '12분',
+    type: '슬라이드',
+    why: '데이터 구조만 보면 어떤 차트를 써야 할지 알 수 있습니다. 이 원칙을 알면 에이전트에게 정확한 지시를 내릴 수 있습니다.',
+    prereq: 'CH05',
+    imgUrls: [],
+    analogy: '옷을 고를 때 날씨와 상황을 보듯, 차트도 데이터의 성격과 목적을 보고 고릅니다.'
+  },
+  {
+    id: 'ch06-02',
+    file: 'CH06/CH06-02 비교형 차트 — 막대와 라인, 언제 어떻게 쓰는가.md',
+    title: '비교형 차트',
+    short: '막대·라인',
+    chapter: 'CH06',
+    chTitle: '시각화 전략',
+    time: '14분',
+    type: '슬라이드 + 실습',
+    why: '가장 많이 쓰는 막대 그래프와 라인 차트의 정확한 사용법을 익힙니다.',
+    prereq: 'CH06-01',
+    imgUrls: [],
+    analogy: '망치와 드라이버처럼 가장 기본이지만 가장 자주 쓰는 도구입니다.'
+  },
+  {
+    id: 'ch06-03',
+    file: 'CH06/CH06-03 분포와 관계 차트 — 히스토그램, 스캐터, 박스 플롯.md',
+    title: '분포와 관계 차트',
+    short: '히스토·스캐터',
+    chapter: 'CH06',
+    chTitle: '시각화 전략',
+    time: '14분',
+    type: '슬라이드 + 실습',
+    why: '데이터의 분포와 변수 간 관계를 한눈에 보여주는 차트들입니다.',
+    prereq: 'CH06-01~02',
+    imgUrls: [],
+    analogy: '사진이 순간을 담듯, 이 차트들은 데이터의 전체 분포를 한 장에 담습니다.'
+  },
+  {
+    id: 'ch06-04',
+    file: 'CH06/CH06-04 태블로 자동화 — Claude Code로 TWB 파일 생성하기.md',
+    title: '태블로 자동화',
+    short: 'TWB 생성',
+    chapter: 'CH06',
+    chTitle: '시각화 전략',
+    time: '14분',
+    type: '화면 녹화',
+    why: '클로드 코드로 태블로 워크북 파일을 직접 생성합니다. GUI 없이 대시보드를 자동화할 수 있습니다.',
+    prereq: 'CH06-01~03',
+    imgUrls: [],
+    analogy: '수작업으로 보고서를 그리는 대신 템플릿을 코드로 찍어내는 것과 같습니다.'
+  },
+  {
+    id: 'ch06-05',
+    file: 'CH06/CH06-05 파이썬 시각화 자동화 — matplotlib과 seaborn.md',
+    title: '파이썬 시각화',
+    short: 'matplotlib',
+    chapter: 'CH06',
+    chTitle: '시각화 전략',
+    time: '14분',
+    type: '화면 녹화',
+    why: '파이썬 시각화 라이브러리를 에이전트가 자동으로 사용하게 합니다.',
+    prereq: 'CH06-01~03',
+    imgUrls: [],
+    analogy: '화가에게 그림을 맡기듯, 에이전트에게 시각화를 맡깁니다.'
+  },
+  {
+    id: 'ch06-06',
+    file: 'CH06/CH06-06 인터랙티브 차트 — HTML로 살아있는 시각화 만들기.md',
+    title: '인터랙티브 차트',
+    short: 'HTML 차트',
+    chapter: 'CH06',
+    chTitle: '시각화 전략',
+    time: '14분',
+    type: '화면 녹화',
+    why: '정적 이미지가 아닌 클릭하고 줌하고 필터할 수 있는 차트를 만듭니다.',
+    prereq: 'CH06-01~05',
+    imgUrls: [],
+    analogy: '사진 대신 동영상을 만드는 것처럼, 차트에 생명을 불어넣습니다.'
+  },
+  {
+    id: 'ch06-07',
+    file: 'CH06/CH06-07 색상과 브랜드 일관성 — 에이전트에게 디자인 기준 전달하기.md',
+    title: '색상과 브랜드',
+    short: '디자인 기준',
+    chapter: 'CH06',
+    chTitle: '시각화 전략',
+    time: '12분',
+    type: '슬라이드 + 실습',
+    why: '회사 브랜드에 맞는 색상과 스타일을 CLAUDE.md에 정의해서 일관된 시각화를 만듭니다.',
+    prereq: 'CH06-01~06',
+    imgUrls: [],
+    analogy: '옷을 입을 때 색상 조합을 맞추듯, 차트도 브랜드 가이드를 따릅니다.'
+  },
+  {
+    id: 'ch06-08',
+    file: 'CH06/CH06-08 실전 — 데이터에서 대시보드까지 8단계 전자동 파이프라인.md',
+    title: '실전 — 8단계 파이프라인',
+    short: '전자동',
+    chapter: 'CH06',
+    chTitle: '시각화 전략',
+    time: '16분',
+    type: '화면 녹화 (완전 실습)',
+    why: '문제 정의부터 최종 보고서까지 8단계 파이프라인을 한 번의 명령으로 실행합니다.',
+    prereq: 'CH06-01~07',
+    imgUrls: [],
+    analogy: '원재료 투입부터 완제품 포장까지 자동화된 공장 라인입니다.'
+  },
+  {
+    id: 'ch07-01',
+    file: 'CH07/CH07-01 D3.js란 무엇인가 — 데이터로 그림을 그리다.md',
+    title: 'D3.js란 무엇인가',
+    short: '개념 + 원리',
+    chapter: 'CH07',
+    chTitle: 'D3.js 커스텀 시각화',
+    time: '18분',
+    type: '강의 + 시연',
+    why: '디쓰리제이에스는 라이브러리가 아닌 데이터 바인딩 엔진입니다. 원리를 이해하면 어떤 차트도 만들 수 있는 기반이 생깁니다.',
+    prereq: 'CH06',
+    imgUrls: [],
+    analogy: '붓과 물감을 처음 받은 날 — 이제부터 그릴 수 있는 것에 제한이 없습니다.'
+  },
+  {
+    id: 'ch07-02',
+    file: 'CH07/CH07-02 인터랙티브 기능 — 필터, 애니메이션, 줌.md',
+    title: '인터랙티브 기능',
+    short: '필터·애니·줌',
+    chapter: 'CH07',
+    chTitle: 'D3.js 커스텀 시각화',
+    time: '18분',
+    type: '화면 녹화 위주',
+    why: '정적인 차트와 살아있는 차트의 차이는 인터랙션입니다. 클로드 코드로 드래그, 줌, 필터를 자동으로 구현합니다.',
+    prereq: 'CH07-01',
+    imgUrls: [],
+    analogy: '지도 앱에서 핀치로 확대하는 순간 — 데이터가 사용자의 손안으로 들어옵니다.'
+  },
+  {
+    id: 'ch07-03',
+    file: 'CH07/CH07-03 고급 차트 — 히트맵, 트리맵, 네트워크 그래프.md',
+    title: '히트맵·트리맵·네트워크 그래프',
+    short: '고급 차트 3종',
+    chapter: 'CH07',
+    chTitle: 'D3.js 커스텀 시각화',
+    time: '20분',
+    type: '화면 녹화 위주',
+    why: '일반 라이브러리로는 만들기 어렵지만 실무에서 강력하게 쓰이는 차트 3종을 클로드 코드로 자동 생성합니다. 어벤져스 네트워크 실사례 포함.',
+    prereq: 'CH07-01~02',
+    imgUrls: [],
+    analogy: '요리사가 칼 3종을 모두 다룰 수 있게 되는 날 — 어떤 재료가 와도 적합한 도구를 고를 수 있습니다.'
+  },
+  {
+    id: 'ch07-04',
+    file: 'CH07/CH07-04 실전 — D3.js 커스텀 대시보드 완성.md',
+    title: '실전 — 커스텀 대시보드 완성',
+    short: '완전 실습',
+    chapter: 'CH07',
+    chTitle: 'D3.js 커스텀 시각화',
+    time: '19분',
+    type: '화면 녹화 (완전 실습)',
+    why: '히트맵, 트리맵, 네트워크 그래프를 하나의 대시보드로 통합합니다. 이 클립을 마치면 디쓰리제이에스 커스텀 대시보드를 처음부터 완성할 수 있습니다.',
+    prereq: 'CH07-01~03',
+    imgUrls: [],
+    analogy: '세 악기를 배운 뒤 첫 합주 — 각 파트가 하나의 음악이 됩니다.'
+  },
+  // CH08 - Antigravity 파이프라인
+  {
+    id: 'ch08-01',
+    file: 'CH08-01 Antigravity란 — 시각화 자동화 파이프라인 소개.md',
+    title: 'Antigravity란 — 시각화 자동화 소개',
+    short: '소개',
+    chapter: 'CH08',
+    chTitle: 'Antigravity 파이프라인',
+    time: '15분',
+    type: '슬라이드 + 화면 녹화',
+    why: 'Antigravity가 무엇인지, Claude Code와 어떻게 연동하는지 이해합니다.',
+    prereq: 'CH06~CH07 권장',
+    imgUrls: [],
+    analogy: '자동화된 공장 라인 — 원료만 넣으면 완제품이 나옵니다.'
+  },
+  {
+    id: 'ch08-02',
+    file: 'CH08-02 데이터에서 차트까지 — Antigravity 기본 워크플로우.md',
+    title: '데이터에서 차트까지 — 기본 워크플로우',
+    short: '기본 사용',
+    chapter: 'CH08',
+    chTitle: 'Antigravity 파이프라인',
+    time: '18분',
+    type: '화면 녹화',
+    why: 'CSV 데이터를 Antigravity로 차트로 변환하는 실습입니다.',
+    prereq: 'CH08-01',
+    imgUrls: [],
+    analogy: '레시피 따라 요리하기 — 재료와 순서만 알면 됩니다.'
+  },
+  {
+    id: 'ch08-03',
+    file: 'CH08-03 브랜드 스타일 적용 — 일관된 시각화 만들기.md',
+    title: '브랜드 스타일 적용',
+    short: '테마',
+    chapter: 'CH08',
+    chTitle: 'Antigravity 파이프라인',
+    time: '15분',
+    type: '화면 녹화',
+    why: '테마 파일로 모든 차트에 브랜드 스타일을 일관되게 적용합니다.',
+    prereq: 'CH08-02',
+    imgUrls: [],
+    analogy: '유니폼 — 한 번 정하면 전 직원에게 적용됩니다.'
+  },
+  {
+    id: 'ch08-04',
+    file: 'CH08-04 실전 — 분석부터 배포까지 완전 자동화.md',
+    title: '실전 — 분석→배포 완전 자동화',
+    short: '실전',
+    chapter: 'CH08',
+    chTitle: 'Antigravity 파이프라인',
+    time: '17분',
+    type: '화면 녹화 (실습)',
+    why: '데이터 분석, 시각화, 배포까지 전체 파이프라인을 자동화합니다.',
+    prereq: 'CH08-01~03',
+    imgUrls: [],
+    analogy: '전자동 세탁기 — 버튼 하나로 세탁, 헹굼, 탈수까지.'
+  },
+  // CH09 - 마케팅 대시보드
+  {
+    id: 'ch09-01',
+    file: 'CH09-01 마케팅 대시보드 기획 — 무엇을 보여줄 것인가.md',
+    title: '마케팅 대시보드 기획',
+    short: '기획',
+    chapter: 'CH09',
+    chTitle: '마케팅 대시보드',
+    time: '15분',
+    type: '슬라이드',
+    why: '마케팅 팀이 필요로 하는 핵심 KPI와 대시보드 레이아웃을 설계합니다.',
+    prereq: 'CH06~CH08 권장',
+    imgUrls: [],
+    analogy: '건축 설계도 — 짓기 전에 뭘 만들지 정합니다.'
+  },
+  {
+    id: 'ch09-02',
+    file: 'CH09-02 데이터 연결 — 광고 플랫폼 API 연동.md',
+    title: '데이터 연결 — 광고 API 연동',
+    short: 'API',
+    chapter: 'CH09',
+    chTitle: '마케팅 대시보드',
+    time: '18분',
+    type: '화면 녹화',
+    why: 'Google Ads, Meta Ads 등 광고 플랫폼에서 데이터를 자동 수집합니다.',
+    prereq: 'CH09-01',
+    imgUrls: [],
+    analogy: '수도관 연결 — 물이 자동으로 흘러옵니다.'
+  },
+  {
+    id: 'ch09-03',
+    file: 'CH09-03 대시보드 구현 — 핵심 차트 4종 만들기.md',
+    title: '대시보드 구현 — 차트 4종',
+    short: '차트',
+    chapter: 'CH09',
+    chTitle: '마케팅 대시보드',
+    time: '18분',
+    type: '화면 녹화',
+    why: 'KPI 카드, 라인, 막대, 히트맵 차트를 Claude Code로 생성합니다.',
+    prereq: 'CH09-02',
+    imgUrls: [],
+    analogy: '레고 조립 — 부품을 하나씩 맞춰 완성합니다.'
+  },
+  {
+    id: 'ch09-04',
+    file: 'CH09-04 실전 — 대시보드 배포와 자동 갱신.md',
+    title: '실전 — 배포와 자동 갱신',
+    short: '실전',
+    chapter: 'CH09',
+    chTitle: '마케팅 대시보드',
+    time: '14분',
+    type: '화면 녹화',
+    why: '대시보드를 Netlify에 배포하고 매일 자동 갱신되게 설정합니다.',
+    prereq: 'CH09-01~03',
+    imgUrls: [],
+    analogy: '자동급식기 — 설정해두면 매일 밥이 나옵니다.'
+  },
+  // CH10 - A/B 테스트
+  {
+    id: 'ch10-01',
+    file: 'CH10-01 A/B 테스트 기초 — 통계적 유의성이란.md',
+    title: 'A/B 테스트 기초 — 통계적 유의성',
+    short: '기초',
+    chapter: 'CH10',
+    chTitle: 'A/B 테스트 분석',
+    time: '15분',
+    type: '슬라이드 + 화면 녹화',
+    why: 'A/B 테스트의 개념과 p-value, 통계적 유의성을 이해합니다.',
+    prereq: '없음',
+    imgUrls: [],
+    analogy: '동전 던지기 — 우연인지 실력인지 구분합니다.'
+  },
+  {
+    id: 'ch10-02',
+    file: 'CH10-02 A/B 테스트 시각화 — 결과를 한눈에.md',
+    title: 'A/B 테스트 시각화',
+    short: '시각화',
+    chapter: 'CH10',
+    chTitle: 'A/B 테스트 분석',
+    time: '15분',
+    type: '화면 녹화',
+    why: '전환율 비교, 신뢰구간, 시계열 차트로 결과를 시각화합니다.',
+    prereq: 'CH10-01',
+    imgUrls: [],
+    analogy: '시력검사표 — 한눈에 차이가 보입니다.'
+  },
+  {
+    id: 'ch10-03',
+    file: 'CH10-03 실전 — A/B 테스트 리포트 자동화.md',
+    title: '실전 — 리포트 자동화',
+    short: '실전',
+    chapter: 'CH10',
+    chTitle: 'A/B 테스트 분석',
+    time: '15분',
+    type: '화면 녹화',
+    why: '분석, 시각화, 리포트 생성까지 전체를 자동화합니다.',
+    prereq: 'CH10-01~02',
+    imgUrls: [],
+    analogy: '자동 채점기 — 답만 넣으면 점수와 해설이 나옵니다.'
+  },
+  // CH11 - PM KPI
+  {
+    id: 'ch11-01',
+    file: 'CH11-01 PM이 봐야 할 핵심 지표 — DAU, 리텐션, 퍼널.md',
+    title: 'PM 핵심 지표 — DAU, 리텐션, 퍼널',
+    short: 'KPI',
+    chapter: 'CH11',
+    chTitle: 'PM KPI 시각화',
+    time: '18분',
+    type: '슬라이드 + 화면 녹화',
+    why: 'DAU/WAU/MAU, 리텐션, 퍼널 등 PM 필수 지표를 이해하고 계산합니다.',
+    prereq: '없음',
+    imgUrls: [],
+    analogy: '건강검진 — 핵심 수치만 봐도 상태를 알 수 있습니다.'
+  },
+  {
+    id: 'ch11-02',
+    file: 'CH11-02 PM 대시보드 구현 — 실시간 지표 모니터링.md',
+    title: 'PM 대시보드 구현',
+    short: '대시보드',
+    chapter: 'CH11',
+    chTitle: 'PM KPI 시각화',
+    time: '16분',
+    type: '화면 녹화',
+    why: 'KPI 카드, DAU 추이, 리텐션 히트맵을 포함한 대시보드를 만듭니다.',
+    prereq: 'CH11-01',
+    imgUrls: [],
+    analogy: '자동차 계기판 — 운전 중 핵심 정보만 보여줍니다.'
+  },
+  {
+    id: 'ch11-03',
+    file: 'CH11-03 실전 — 이상 감지와 자동 알림.md',
+    title: '실전 — 이상 감지와 알림',
+    short: '실전',
+    chapter: 'CH11',
+    chTitle: 'PM KPI 시각화',
+    time: '16분',
+    type: '화면 녹화',
+    why: '지표 이상을 자동 감지하고 Slack으로 알림을 보냅니다.',
+    prereq: 'CH11-01~02',
+    imgUrls: [],
+    analogy: '화재경보기 — 이상 감지하면 바로 알려줍니다.'
+  },
+  // CH12 - 리텐션 & 매출
+  {
+    id: 'ch12-01',
+    file: 'CH12-01 리텐션 분석 심화 — 코호트와 생존 분석.md',
+    title: '리텐션 심화 — 코호트, 생존 분석',
+    short: '코호트',
+    chapter: 'CH12',
+    chTitle: '리텐션 & 매출 분석',
+    time: '18분',
+    type: '화면 녹화',
+    why: '코호트별 리텐션과 Kaplan-Meier 생존 분석을 수행합니다.',
+    prereq: 'CH11 권장',
+    imgUrls: [],
+    analogy: '의료 생존율 분석 — 시간에 따른 변화를 추적합니다.'
+  },
+  {
+    id: 'ch12-02',
+    file: 'CH12-02 매출 분석 — LTV와 매출 예측.md',
+    title: '매출 분석 — LTV, 예측',
+    short: 'LTV',
+    chapter: 'CH12',
+    chTitle: '리텐션 & 매출 분석',
+    time: '16분',
+    type: '화면 녹화',
+    why: '고객 LTV를 계산하고 향후 매출을 예측합니다.',
+    prereq: 'CH12-01',
+    imgUrls: [],
+    analogy: '보험 계리사 — 미래 가치를 현재 숫자로 환산합니다.'
+  },
+  {
+    id: 'ch12-03',
+    file: 'CH12-03 실전 — 리텐션·매출 통합 대시보드.md',
+    title: '실전 — 통합 대시보드',
+    short: '실전',
+    chapter: 'CH12',
+    chTitle: '리텐션 & 매출 분석',
+    time: '16분',
+    type: '화면 녹화',
+    why: '리텐션과 매출 분석을 경영진용 대시보드로 통합합니다.',
+    prereq: 'CH12-01~02',
+    imgUrls: [],
+    analogy: '경영 보고서 — 핵심만 한 페이지에 담습니다.'
+  },
+  // CH13 - HR 자동화
+  {
+    id: 'ch13-01',
+    file: 'CH13-01 HR 데이터 분석 입문 — 인사 데이터의 특성.md',
+    title: 'HR 데이터 분석 입문',
+    short: '입문',
+    chapter: 'CH13',
+    chTitle: 'HR 자동화',
+    time: '15분',
+    type: '슬라이드',
+    why: 'HR 데이터의 특성과 보안 고려사항을 이해합니다.',
+    prereq: '없음',
+    imgUrls: [],
+    analogy: '의료 기록 — 민감하고 신중하게 다뤄야 합니다.'
+  },
+  {
+    id: 'ch13-02',
+    file: 'CH13-02 채용 분석 — 채널별 효율과 합격률.md',
+    title: '채용 분석 — 채널 효율',
+    short: '채용',
+    chapter: 'CH13',
+    chTitle: 'HR 자동화',
+    time: '16분',
+    type: '화면 녹화',
+    why: '채용 퍼널과 채널별 효율을 분석합니다.',
+    prereq: 'CH13-01',
+    imgUrls: [],
+    analogy: '마케팅 퍼널 — 어디서 이탈하는지 파악합니다.'
+  },
+  {
+    id: 'ch13-03',
+    file: 'CH13-03 이직 예측 — 퇴사 위험 직원 파악.md',
+    title: '이직 예측 — 위험 파악',
+    short: '이직',
+    chapter: 'CH13',
+    chTitle: 'HR 자동화',
+    time: '18분',
+    type: '화면 녹화',
+    why: '이직 위험 요인을 분석하고 위험 점수를 계산합니다.',
+    prereq: 'CH13-01~02',
+    imgUrls: [],
+    analogy: '건강 위험도 평가 — 조기에 발견하면 예방할 수 있습니다.'
+  },
+  {
+    id: 'ch13-04',
+    file: 'CH13-04 급여 벤치마크 — 시장 대비 보상 수준.md',
+    title: '급여 벤치마크',
+    short: '급여',
+    chapter: 'CH13',
+    chTitle: 'HR 자동화',
+    time: '15분',
+    type: '화면 녹화',
+    why: '시장 대비 급여 수준과 형평성을 분석합니다.',
+    prereq: 'CH13-01',
+    imgUrls: [],
+    analogy: '부동산 시세 비교 — 적정 가격인지 확인합니다.'
+  },
+  {
+    id: 'ch13-05',
+    file: 'CH13-05 성과 평가 분석 — 공정성과 분포 검증.md',
+    title: '성과 평가 분석',
+    short: '성과',
+    chapter: 'CH13',
+    chTitle: 'HR 자동화',
+    time: '16분',
+    type: '화면 녹화',
+    why: '평가 분포와 공정성을 검증합니다.',
+    prereq: 'CH13-01',
+    imgUrls: [],
+    analogy: '시험 성적 분포 — 정규분포인지 확인합니다.'
+  },
+  {
+    id: 'ch13-06',
+    file: 'CH13-06 다양성(DEI) 지표 — 포용적 조직 만들기.md',
+    title: 'DEI 지표 분석',
+    short: 'DEI',
+    chapter: 'CH13',
+    chTitle: 'HR 자동화',
+    time: '16분',
+    type: '화면 녹화',
+    why: '다양성, 형평성, 포용성 지표를 측정하고 시각화합니다.',
+    prereq: 'CH13-01',
+    imgUrls: [],
+    analogy: '팀 구성표 — 다양한 배경이 섞여야 강해집니다.'
+  },
+  {
+    id: 'ch13-07',
+    file: 'CH13-07 실전 — HR 리포트 자동화 파이프라인.md',
+    title: '실전 — HR 리포트 자동화',
+    short: '실전',
+    chapter: 'CH13',
+    chTitle: 'HR 자동화',
+    time: '18분',
+    type: '화면 녹화',
+    why: '채용, 이직, 급여, 성과, DEI를 통합한 월간 리포트를 자동화합니다.',
+    prereq: 'CH13-01~06',
+    imgUrls: [],
+    analogy: '월간 경영보고 — 모든 HR 지표를 한 번에 정리합니다.'
+  },
+  // CH14 - Openclaw 파이프라인
+  {
+    id: 'ch14-01',
+    file: 'CH14-01 Openclaw 소개 — AI 에이전트 오케스트레이션.md',
+    title: 'Openclaw 소개',
+    short: '소개',
+    chapter: 'CH14',
+    chTitle: 'Openclaw 파이프라인',
+    time: '18분',
+    type: '슬라이드 + 화면 녹화',
+    why: 'Openclaw가 무엇이고 Claude Code와 어떻게 다른지 이해합니다.',
+    prereq: '없음',
+    imgUrls: [],
+    analogy: '관제센터 — 여러 일꾼을 한 곳에서 관리합니다.'
+  },
+  {
+    id: 'ch14-02',
+    file: 'CH14-02 텔레그램 연동 — 어디서든 에이전트와 대화.md',
+    title: '텔레그램 연동',
+    short: '텔레그램',
+    chapter: 'CH14',
+    chTitle: 'Openclaw 파이프라인',
+    time: '16분',
+    type: '화면 녹화',
+    why: '텔레그램에서 에이전트에게 작업을 요청하고 결과를 받습니다.',
+    prereq: 'CH14-01',
+    imgUrls: [],
+    analogy: '비서에게 카톡 — 어디서든 일을 시킬 수 있습니다.'
+  },
+  {
+    id: 'ch14-03',
+    file: 'CH14-03 실전 — 완전 자동화 데이터 파이프라인.md',
+    title: '실전 — 완전 자동화 파이프라인',
+    short: '실전',
+    chapter: 'CH14',
+    chTitle: 'Openclaw 파이프라인',
+    time: '16분',
+    type: '화면 녹화',
+    why: '데이터 수집→분석→시각화→배포→알림까지 완전 자동화합니다.',
+    prereq: 'CH14-01~02',
+    imgUrls: [],
+    analogy: '스마트 팩토리 — 버튼 하나로 전 공정이 돌아갑니다.'
+  },
+
+  // ── 부록 ──
+  {
+    id: 'appendix-cases',
+    file: '📎 부록-최신 AI 활용 사례 모음.md',
+    title: '최신 AI 활용 사례 모음',
+    short: 'AI 사례',
+    chapter: '부록',
+    chTitle: '부록',
+    time: '참고',
+    type: '참고자료 (지속 업데이트)',
+    why: 'X(트위터), Hacker News에서 수집한 실제 AI 활용 사례입니다. levelsio, 해외 개발자들의 Claude Code 실전 활용법을 확인하세요.',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'appendix-materials',
+    file: '📦 제공자료 목록.md',
+    title: '제공자료 목록',
+    short: '제공자료',
+    chapter: '부록',
+    chTitle: '부록',
+    time: '참고',
+    type: '참고자료',
+    why: 'CLAUDE.md 템플릿, 프롬프트 모음집, 스킬 파일, MCP 설정 가이드 등 수강생 제공 자료 목록입니다.',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
+  }
+];
+
+// ─── 상태 ───
+let currentClipId = null;
+let visitedClips = new Set();
+
+// ─── 모바일 사이드바 ───
+function toggleSidebar() {
+  const s = document.getElementById('sidebar');
+  const o = document.getElementById('sidebar-overlay');
+  const isOpen = s.classList.contains('open');
+  if (isOpen) {
+    s.classList.remove('open');
+    o.classList.remove('show');
+  } else {
+    s.classList.add('open');
+    o.classList.add('show');
+  }
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('show');
+}
+
+// ─── 챕터 접기/펼치기 ───
+function toggleChapter(ch) {
+  const clips = document.getElementById('clips-' + ch);
+  const label = clips.previousElementSibling;
+  const isCollapsed = clips.classList.contains('collapsed');
+  if (isCollapsed) {
+    clips.style.maxHeight = clips.scrollHeight + 'px';
+    clips.classList.remove('collapsed');
+    label.classList.remove('collapsed');
+  } else {
+    clips.style.maxHeight = clips.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      clips.style.maxHeight = '0px';
+      clips.classList.add('collapsed');
+      label.classList.add('collapsed');
+    });
+  }
+}
+
+function expandChapter(ch) {
+  const clips = document.getElementById('clips-' + ch);
+  if (!clips) return;
+  const label = clips.previousElementSibling;
+  clips.style.maxHeight = clips.scrollHeight + 2000 + 'px';
+  clips.classList.remove('collapsed');
+  label.classList.remove('collapsed');
+}
+
+function collapseAllExcept(keepCh) {
+  ['ch00','ch01','ch02','ch03'].forEach(ch => {
+    if (ch === keepCh) { expandChapter(ch); return; }
+    const clips = document.getElementById('clips-' + ch);
+    if (!clips) return;
+    const label = clips.previousElementSibling;
+    clips.style.maxHeight = '0px';
+    clips.classList.add('collapsed');
+    label.classList.add('collapsed');
+  });
+}
+
+// ─── 진행률 ───
+function updateProgress() {
+  const total = CURRICULUM.length;
+  const done = visitedClips.size;
+  document.getElementById('prog-label').textContent = `${done} / ${total} 클립`;
+  document.getElementById('prog-fill').style.width = `${(done/total)*100}%`;
+}
+
+// ─── 방문 표시 업데이트 ───
+function updateVisitedMarks() {
+  document.querySelectorAll('.nav-item[data-id]').forEach(el => {
+    const id = el.getAttribute('data-id');
+    if (visitedClips.has(id)) el.classList.add('visited');
+    else el.classList.remove('visited');
+  });
+}
+
+// ─── 로드맵 렌더링 ───
+function renderRoadmap(currentId) {
+  const bar = document.getElementById('roadmap-inner');
+  bar.innerHTML = '';
+
+  const chapters = {};
+  CURRICULUM.forEach(c => {
+    if (!chapters[c.chapter]) chapters[c.chapter] = [];
+    chapters[c.chapter].push(c);
+  });
+
+  const chapterOrder = Object.keys(chapters);
+  chapterOrder.forEach((ch, ci) => {
+    const clips = chapters[ch];
+    const meta = clips[0];
+
+    // 챕터 그룹
+    const group = document.createElement('span');
+    group.className = 'roadmap-chapter-group';
+
+    // 챕터 레이블
+    const label = document.createElement('span');
+    label.className = 'roadmap-chapter-label';
+    const badge = document.createElement('span');
+    badge.className = `rmap-badge ${ch.toLowerCase()}`;
+    badge.textContent = ch;
+    label.appendChild(badge);
+    group.appendChild(label);
+
+    // 클립 노드들
+    const clipsWrap = document.createElement('span');
+    clipsWrap.className = 'roadmap-clips';
+    clips.forEach((clip, i) => {
+      const rNode = document.createElement('span');
+      rNode.className = 'rmap-clip';
+
+      const node = document.createElement('span');
+      node.className = 'rmap-node';
+      if (clip.id === currentId) node.classList.add('current');
+      else if (visitedClips.has(clip.id)) node.classList.add('done');
+
+      const num = document.createElement('span');
+      num.className = 'rmap-num';
+      num.textContent = String(i+1).padStart(2,'0');
+
+      const lbl = document.createElement('span');
+      lbl.className = 'rmap-label';
+      lbl.textContent = clip.short;
+
+      node.appendChild(num);
+      node.appendChild(lbl);
+      node.onclick = () => loadClip(clip.id, null);
+      rNode.appendChild(node);
+
+      if (i < clips.length - 1) {
+        const arrow = document.createElement('span');
+        arrow.className = 'rmap-arrow';
+        arrow.textContent = '›';
+        rNode.appendChild(arrow);
+      }
+
+      clipsWrap.appendChild(rNode);
+    });
+    group.appendChild(clipsWrap);
+
+    bar.appendChild(group);
+
+    // 챕터 구분선
+    if (ci < chapterOrder.length - 1) {
+      const sep = document.createElement('span');
+      sep.className = 'roadmap-chapter-sep';
+      sep.innerHTML = '&nbsp;&nbsp;│&nbsp;&nbsp;';
+      bar.appendChild(sep);
+    }
+  });
+}
+
+// ─── 클립 로드 ───
+function loadClip(id, el) {
+  // 사이드바 active 처리
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  else {
+    document.querySelectorAll('.nav-item').forEach(n => {
+      if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(`'${id}'`)) {
+        n.classList.add('active');
+      }
+    });
+  }
+
+  const clip = CURRICULUM.find(c => c.id === id);
+  if (!clip) return;
+
+  currentClipId = id;
+  visitedClips.add(id);
+  updateProgress();
+  updateVisitedMarks();
+  // 해당 챕터 자동 열기
+  const chKey = id.replace(/-\d+$/, '').replace('-','');  // ch00-01 → ch00
+  const chId = id.match(/^(ch\d+)/)?.[1];
+  if (chId) collapseAllExcept(chId);
+
+  // 뷰 전환
+  document.getElementById('home-view').style.display = 'none';
+  document.getElementById('chapter-view').style.display = 'none';
+  document.getElementById('clip-view').style.display = 'block';
+  document.getElementById('roadmap-bar').style.display = 'block';
+
+  // 로드맵
+  renderRoadmap(id);
+
+  // 챕터 내 위치
+  const chClips = CURRICULUM.filter(c => c.chapter === clip.chapter);
+  const posInCh = chClips.findIndex(c => c.id === id) + 1;
+  const totalInCh = chClips.length;
+
+  // 헤더
+  const chClass = clip.chapter.toLowerCase();
+  document.getElementById('clip-header-area').innerHTML = `
+    <div class="clip-meta">
+      <span class="meta-badge chapter ${chClass}">${clip.chapter} · ${clip.chTitle}</span>
+      <span class="meta-badge time">${clip.time}</span>
+    </div>
+    <div class="clip-title-h">${clip.title}</div>
+    <div class="clip-pos">${clip.chapter} · ${posInCh} / ${totalInCh}</div>
+  `;
+
+  // 클립 일러스트
+  const clipSvg = getClipSVG(clip.id);
+  const illustEl = document.getElementById('clip-illust');
+  if (clipSvg) {
+    illustEl.innerHTML = clipSvg;
+    illustEl.style.display = 'block';
+  } else {
+    illustEl.innerHTML = '';
+    illustEl.style.display = 'none';
+  }
+
+  // WHY 카드
+  let whyHtml = `
+    <div class="why-card">
+      <div class="why-icon">◎</div>
+      <div class="why-body">
+        <div class="why-label">왜 이 클립을 배우는가</div>
+        <div class="why-text">${clip.why}</div>
+  `;
+  if (clip.prereq) {
+    whyHtml += `<div class="why-prereq"><strong>선행 클립:</strong> ${clip.prereq}</div>`;
+  }
+  if (clip.analogy) {
+    whyHtml += `<div class="why-prereq" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--line);color:var(--text-2);font-style:italic;">"${clip.analogy}"</div>`;
+  }
+  whyHtml += `</div></div>`;
+  document.getElementById('why-area').innerHTML = whyHtml;
+
+  // 이미지 갤러리
+  const imgs = clip.imgUrls || [];
+  if (imgs.length > 0) {
+    // 갤러리: 여러 이미지를 스크롤 가능한 가로 슬라이더로
+    let galHtml = `<div class="img-gallery" id="gallery-${clip.id}">`;
+    if (imgs.length > 1) {
+      galHtml += `<div class="gallery-nav">
+        <button class="gal-btn" onclick="galPrev('${clip.id}')">‹</button>
+        <span class="gal-count" id="gal-count-${clip.id}">1 / ${imgs.length}</span>
+        <button class="gal-btn" onclick="galNext('${clip.id}')">›</button>
+      </div>`;
+    }
+    galHtml += `<div class="gallery-track" id="gallery-track-${clip.id}">`;
+    imgs.forEach((img, idx) => {
+      galHtml += `<div class="gallery-slide ${idx === 0 ? 'active' : ''}">
+        <div class="clip-img-wrap"><img src="${img.src}" alt="${img.caption}" loading="lazy"></div>
+        <div class="clip-img-caption">${img.caption}</div>
+      </div>`;
+    });
+    galHtml += `</div></div>`;
+    document.getElementById('img-area').innerHTML = galHtml;
+    // 갤러리 상태 저장
+    window._galState = window._galState || {};
+    window._galState[clip.id] = { idx: 0, total: imgs.length };
+  } else {
+    document.getElementById('img-area').innerHTML = '';
+  }
+
+  // 마크다운 로드
+  fetch(clip.file)
+    .then(r => r.ok ? r.text() : '# 파일을 찾을 수 없습니다')
+    .then(md => {
+      // 1. frontmatter 제거
+      let c = md.replace(/^---[\s\S]*?---\n?/, '').trim();
+      // 2. 첫 H1 (클립 제목) 제거 — 헤더에서 이미 표시
+      c = c.replace(/^#\s+[^\n]+\n?/m, '');
+      // 3. 📌 클립 정보 섹션 제거
+      c = c.replace(/##\s*[📌]?\s*클립\s*정보[\s\S]*?(?=\n##\s|\n---\s|$)/m, '');
+      // 4. 🗒️ 서연 메모 섹션 제거 (끝까지)
+      c = c.replace(/##\s*[🗒️📋]?\s*서연\s*메모[\s\S]*/m, '');
+      // 5. 슬라이드 번호 접두사 제거 "## 슬라이드 N — " → "## "
+      c = c.replace(/##\s*슬라이드\s*\d+\s*[—\-–]\s*/gm, '## ');
+      // 6. 패스트캠퍼스 텍스트 제거
+      c = c.replace(/패스트캠퍼스/g, '');
+      // 7. "## 클립 목표" → "## 이 클립을 마치면"
+      c = c.replace(/##\s*클립\s*목표/gm, '## 이 클립을 마치면');
+      // 8. 오프닝 → 시작하기
+      c = c.replace(/##\s*오프닝(\s*\(\d+분\))?/gm, '## 시작하기');
+      // 9. 마무리 → 핵심 정리
+      c = c.replace(/##\s*마무리(\s*\(\d+분\))?/gm, '## 핵심 정리');
+      // 10. 섹션 번호 + 시간 표기 제거 "## 1. 제목 (4분)" → "## 제목"
+      c = c.replace(/##\s*\d+\.\s*/gm, '## ');
+      c = c.replace(/\s*\(\d+분\)/gm, '');
+      // 11. 코드블록 밖의 CLAUDE.md → 파일명 강조 표기
+      // (코드블록은 이미 marked가 <code>로 변환하므로, 일반 텍스트의 CLAUDE.md만 처리)
+      c = c.replace(/(?<!`)(CLAUDE\.md)(?!`)/g, '`CLAUDE.md`');
+      // 11. 빈 줄 3개 이상 → 2개로 정리
+      c = c.replace(/\n{3,}/g, '\n\n');
+      const filtered = filterGuideContent(c.trim());
+      const rawHtml = marked.parse(filtered);
+      const wrapped = wrapLabSection(rawHtml);
+      // 입문자 안내 박스를 본문 맨 앞에 삽입
+      const tips = BEGINNER_TIPS[clip.id];
+      let beginnerHtml = '';
+      if (tips && tips.length > 0) {
+        beginnerHtml = `<div class="beginner-box">
+          <div class="beginner-box-header">처음이라면 — 알고 넘어가기</div>
+          ${tips.map(([term, desc]) =>
+            `<div class="beginner-item">
+              <div class="beginner-term">· ${term}</div>
+              <div class="beginner-desc">${desc}</div>
+            </div>`
+          ).join('')}
+        </div>`;
+      }
+      document.getElementById('clip-body').innerHTML = beginnerHtml + wrapped;
+    })
+    .catch(() => {
+      document.getElementById('clip-body').innerHTML = '<p style="color:var(--text-3)">파일 로드 실패</p>';
+    });
+
+  // 스크롤 top
+  document.getElementById('main').scrollTo(0, 0);
+
+  // 모바일 사이드바 닫기
+  closeSidebar();
+}
+
+// ─── 홈 ───
+function showHome(el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.getElementById('home-view').style.display = 'block';
+  document.getElementById('chapter-view').style.display = 'none';
+  document.getElementById('clip-view').style.display = 'none';
+  document.getElementById('roadmap-bar').style.display = 'none';
+  currentClipId = null;
+  closeSidebar();
+}
+
+// ─── 챕터 개요 ───
+function showChapter(ch) {
+  const chUp = ch.toUpperCase();
+  const info = CHAPTER_INFO[chUp];
+  if (!info) return;
+  
+  // 해당 챕터의 클립들 필터
+  const clips = CURRICULUM.filter(c => c.chapter === chUp);
+  
+  // 헤더 렌더링
+  document.getElementById('chapter-header').innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+      <span class="ch-badge ${info.color}" style="font-size:12px;padding:4px 10px;">${chUp}</span>
+      <span style="font-size:11px;color:var(--text-3);">${clips.length}클립 · ${info.time}</span>
+    </div>
+    <h1 style="font-size:24px;font-weight:700;color:var(--text-1);margin-bottom:8px;">${info.title}</h1>
+    <p style="font-size:14px;color:var(--text-3);line-height:1.6;">${info.desc}</p>
+  `;
+  
+  // 클립 카드 렌더링
+  let html = '';
+  clips.forEach((clip, i) => {
+    html += `
+      <div class="home-card" onclick="loadClip('${clip.id}',null)" style="cursor:pointer;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="font-size:11px;font-weight:700;color:var(--${info.color});background:var(--${info.color}-soft);padding:2px 8px;border-radius:4px;">${String(i+1).padStart(2,'0')}</span>
+          <span style="font-size:11px;color:var(--text-3);">${clip.time}</span>
+        </div>
+        <div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:4px;">${clip.title}</div>
+        <div style="font-size:12px;color:var(--text-3);line-height:1.5;">${clip.why ? clip.why.slice(0,80) + '...' : ''}</div>
+      </div>
+    `;
+  });
+  document.getElementById('chapter-clips').innerHTML = html;
+  
+  // 뷰 전환
+  document.getElementById('home-view').style.display = 'none';
+  document.getElementById('clip-view').style.display = 'none';
+  document.getElementById('chapter-view').style.display = 'block';
+  document.getElementById('roadmap-bar').style.display = 'none';
+  
+  // 사이드바 닫기 (모바일)
+  closeSidebar();
+  
+  // 스크롤 top
+  document.getElementById('main').scrollTo(0, 0);
+}
+
+// ─── 클립별 입문자 안내 ───
+const BEGINNER_TIPS = {
+'ch00-01': [
+  ['터미널이란?', 'Mac에서 명령어를 입력하는 프로그램입니다. Spotlight(⌘+Space)에서 "Terminal"을 검색하면 열립니다. 검은 화면이 나오면 정상입니다.'],
+  ['이 강의의 대상', '파이썬이나 코딩 경험이 없어도 됩니다. 엑셀·CSV 파일을 다뤄본 적 있고, 데이터 분석에 관심 있는 분이면 충분합니다.'],
+  ['강의 순서', 'CH00(준비) → CH01(기초) → CH02(심화) 순서로 진행합니다. 앞 챕터를 완료해야 다음 챕터를 이해할 수 있습니다.'],
+],
+'ch00-02': [
+  ['CSV란?', '엑셀처럼 행과 열로 된 데이터 파일입니다. 엑셀에서 "CSV로 저장"하면 만들 수 있습니다. 클로드 코드가 가장 잘 다루는 파일 형식입니다.'],
+  ['리포트 자동화', '지금은 엑셀에서 직접 계산하고 복사·붙여넣기 하던 작업을, 클로드 코드에게 말로 지시하면 자동으로 처리합니다.'],
+],
+'ch00-03': [
+  ['내 경로 선택 방법', '데이터 분석이 주 업무라면 분석가 경로, 마케팅·기획 업무라면 마케터 경로를 선택하세요. 모든 클립을 다 들을 필요는 없습니다.'],
+  ['학습 시간', '하루 1시간 기준으로 분석가 경로는 약 8일, 마케터 경로는 약 6일이면 완료할 수 있습니다.'],
+],
+'ch00-04': [
+  ['Node.js란?', '클로드 코드가 실행되기 위해 필요한 프로그램입니다. 직접 쓸 일은 없지만 설치는 필수입니다. nodejs.org에서 LTS 버전을 다운로드합니다.'],
+  ['API 키란?', '클로드 서비스를 사용하기 위한 비밀번호 같은 것입니다. console.anthropic.com에서 로그인 후 발급받습니다. 타인에게 절대 공유하지 마세요.'],
+  ['비용 걱정?', 'Anthropic 계정에 5달러를 충전하면 이 강의 전체 실습을 완료하고도 남습니다. 먼저 무료 크레딧으로 시작해보세요.'],
+],
+'ch01-01': [
+  ['에이전트란?', '단순히 대화하는 AI가 아닙니다. 파일을 열고, 코드를 실행하고, 결과를 저장하는 — 실제로 "일하는" AI입니다. 클로드 코드는 여러분의 컴퓨터에서 직접 작업합니다.'],
+  ['챗지피티와 차이', '챗지피티에게 "내 파일 분석해줘"라고 하면 파일을 직접 접근하지 못합니다. 클로드 코드는 실제로 파일을 열어서 분석합니다.'],
+  ['컨텍스트(Context)란?', '에이전트가 현재 기억하고 있는 대화 내용의 양입니다. 대화가 길어질수록 비용이 늘어납니다. 새 작업을 시작할 땐 /clear로 초기화합니다.'],
+],
+'ch01-02': [
+  ['curl이란?', '인터넷에서 파일을 다운로드하는 터미널 명령어입니다. curl로 시작하는 줄을 복사해서 터미널에 붙여넣고 Enter를 누르면 자동으로 설치됩니다.'],
+  ['설치 중 오류?', '"Permission denied" 오류가 나오면 명령어 앞에 sudo를 붙여보세요. 비밀번호 입력 시 화면에 아무것도 표시되지 않는 게 정상입니다.'],
+  ['claude --version', '설치 확인 명령어입니다. 버전 번호가 나오면 성공입니다. "command not found"가 나오면 터미널을 닫고 다시 열어보세요.'],
+],
+'ch01-03': [
+  ['마크다운(.md)이란?', '일반 텍스트 파일인데, # 를 붙이면 제목, ** 로 감싸면 굵은 글씨가 됩니다. 아무 텍스트 에디터(메모장, VS Code 등)로 수정할 수 있습니다.'],
+  ['왜 CLAUDE.md가 필요한가?', '클로드 코드는 세션을 종료하면 이전 대화를 기억하지 못합니다. CLAUDE.md에 프로젝트 규칙을 적어두면 매번 다시 설명하지 않아도 됩니다.'],
+  ['어디에 저장하나?', '프로젝트 폴더의 최상위(루트)에 저장합니다. data/, output/ 폴더와 같은 위치입니다. 클로드 코드가 시작될 때 자동으로 읽습니다.'],
+],
+'ch01-04': [
+  ['파일 경로란?', '"data/campaign.csv"는 현재 폴더 안의 data 폴더 안의 campaign.csv 파일을 가리킵니다. 폴더를 구분할 때 / 를 사용합니다.'],
+  ['터미널에서 폴더 이동', 'cd 폴더이름 을 입력하면 해당 폴더로 이동합니다. ls 를 입력하면 현재 폴더의 파일 목록이 표시됩니다.'],
+  ['출력 파일이 안 보일 때', 'cat output/result.csv 를 터미널에 입력하면 파일 내용을 바로 확인할 수 있습니다. 또는 Finder에서 폴더를 열어도 됩니다.'],
+],
+'ch01-05': [
+  ['Plan 모드가 필요한 상황', '파일 10개를 한 번에 수정하거나, 폴더 구조를 바꾸는 작업처럼 "되돌리기 어려운" 작업 전에 사용합니다. 미리 계획을 확인하면 실수를 방지합니다.'],
+  ['"계획 보여줘" 활용', '요청 끝에 항상 "실행 전에 계획 먼저 보여줘"를 붙이는 습관을 들이면 안전합니다. 확인 후 "진행해줘" 또는 "취소해줘"로 응답합니다.'],
+],
+'ch01-06': [
+  ['슬래시(/) 커맨드란?', '클로드 코드 세션에서 / 를 입력하면 사용 가능한 명령어 목록이 나타납니다. 채팅에서 명령어를 실행하는 단축키라고 생각하면 됩니다.'],
+  ['/clear 언제 쓰나?', '새로운 완전히 다른 작업을 시작할 때 씁니다. 이전 대화 내용이 새 작업에 영향을 주는 것을 막고, 토큰(비용)을 절약합니다.'],
+],
+'ch01-07': [
+  ['토큰(Token)이란?','AI가 텍스트를 처리하는 단위입니다. 대략 한국어 1글자 = 1~2토큰입니다. 대화가 길어질수록 더 많은 토큰을 씁니다.'],
+  ['Fast Mode란?', '더 빠르고 저렴한 모델(Haiku)을 사용합니다. "파일 몇 줄인지 세줘" 같은 단순 작업에 적합합니다. /fast 를 입력하면 전환됩니다.'],
+  ['비용 줄이는 팁', '긴 파일은 한 번에 전부 읽히지 말고 필요한 부분만 지정하세요. 새 작업마다 /clear로 컨텍스트를 초기화하세요.'],
+],
+'ch01-08': [
+  ['훅(Hook)이란?', '"어떤 일이 일어날 때 자동으로 실행되는 스크립트"입니다. 예를 들어 파일을 저장할 때마다 자동으로 백업을 만들거나 로그를 기록할 수 있습니다.'],
+  ['처음엔 안 써도 됩니다', '훅은 고급 기능입니다. CH01을 모두 마친 후에 돌아와서 배워도 늦지 않습니다. 지금은 "이런 기능이 있다"는 것만 알고 넘어가세요.'],
+  ['가장 쉬운 설정 방법', '/hooks 를 입력하면 메뉴가 나옵니다. settings.json 파일을 직접 수정하지 않아도 클릭으로 설정할 수 있습니다.'],
+],
+'ch01-09': [
+  ['서브에이전트란?', '메인 에이전트가 특정 역할을 맡은 "전문가 에이전트"에게 일을 위임하는 것입니다. 회사에서 팀장이 팀원에게 업무를 배분하는 것과 같습니다.'],
+  ['/agents 커맨드', '세션에서 /agents 를 입력하면 서브에이전트를 만들고 관리하는 메뉴가 열립니다. "Generate with Claude"를 선택하면 역할을 말로 설명해서 자동 생성됩니다.'],
+  ['처음엔 안 써도 됩니다', '서브에이전트도 고급 기능입니다. CH02에서 본격적으로 다루므로 지금은 개념만 이해하고 넘어가세요.'],
+],
+'ch01-10': [
+  ['MCP란?', 'Model Context Protocol의 약자입니다. 클로드 코드에 외부 도구를 연결하는 표준 방식입니다. USB처럼 "꽂으면 바로 인식"되는 구조입니다.'],
+  ['stdio vs http', 'stdio: 내 컴퓨터에서 실행되는 서버 연결. http: 인터넷의 클라우드 서버 연결. 파일시스템, 데이터베이스는 stdio, 노션·슬랙 같은 웹 서비스는 http를 씁니다.'],
+  ['처음엔 파일시스템만', '처음엔 파일시스템 MCP 하나만 설치해서 연습하세요. 익숙해지면 노션, 구글 시트, 슬랙 등을 추가할 수 있습니다.'],
+],
+'ch01-11': [
+  ['왜 지시 방식이 중요한가?', '클로드는 모호한 지시도 최선을 다해 해석합니다. 하지만 내가 원하는 결과와 다를 수 있습니다. 구체적으로 말할수록 원하는 결과에 가까워집니다.'],
+  ['가장 쉬운 팁', '요청에 "저장 위치"와 "출력 형식"만 추가해도 결과가 크게 달라집니다. 예: "분석해줘" → "분석해서 output/result.md로 저장해줘"'],
+],
+'ch02-01': [
+  ['서브에이전트 vs 일반 대화', '일반 대화에서 클로드에게 여러 파일을 분석하라고 하면 순서대로 처리합니다. 서브에이전트를 쓰면 여러 파일을 동시에 처리합니다.'],
+  ['Task 도구 → Agent 도구', '예전 문서에서 Task 도구라고 나오는 경우, 현재 버전(v2.1.63+)에서는 Agent 도구로 이름이 변경됐습니다. 기능은 동일합니다.'],
+  ['독립 컨텍스트의 의미', '각 서브에이전트는 메인 대화와 별개의 메모리를 가집니다. A 파일 분석 중에 생긴 정보가 B 파일 분석에 영향을 주지 않아 결과가 더 정확합니다.'],
+],
+'ch02-02': [
+  ['분할-처리-합산 패턴이란?', '큰 작업을 작게 나눠서 각 서브에이전트가 동시에 처리하고, 메인 에이전트가 결과를 합치는 방식입니다. 가장 흔하게 쓰는 병렬 처리 패턴입니다.'],
+  ['언제 병렬 처리를 쓰나?', '파일이 2개 이상이고, 각 파일이 서로 독립적일 때(A 파일 결과가 B 파일 처리에 영향 없을 때) 씁니다. 순서가 중요한 작업은 순차 처리가 맞습니다.'],
+],
+'ch02-03': [
+  ['shuf 명령어', '리눅스/맥 터미널에서 랜덤 숫자를 생성합니다. shuf -i 500-2000 -n 1 은 "500부터 2000 사이에서 숫자 1개를 랜덤으로 뽑아줘"라는 의미입니다.'],
+  ['실습 데이터 교체', '강의 샘플 데이터로 흐름을 익힌 후, 자신의 실제 CSV 파일로 교체해서 다시 실행해보세요. CLAUDE.md의 파일 경로만 바꾸면 됩니다.'],
+],
+'ch03-01': [
+  ['에이전트 팀 주의사항', '에이전트 팀은 실험 기능(Experimental)입니다. 기본으로 꺼져 있으며, 환경변수를 설정해야 활성화됩니다. 설정 방법은 실습 섹션에서 다룹니다.'],
+  ['서브에이전트와 차이', '서브에이전트는 메인 에이전트가 지시하고 결과만 받습니다. 에이전트 팀은 팀원끼리 직접 메시지를 보내고 협력합니다. 더 복잡한 작업에 적합합니다.'],
+],
+'ch03-02': [
+  ['역할을 나누는 이유', '한 에이전트가 모든 것을 다 하면 실수가 생깁니다. 분석, 해석, 작성을 각각 전문 에이전트가 맡으면 각 단계 품질이 올라갑니다.'],
+  ['CLAUDE.md에 팀 정의', '각 에이전트의 역할, 입력, 출력 경로를 CLAUDE.md에 명확히 적어두면 "팀 분석해줘" 한 마디로 전체 프로세스가 실행됩니다.'],
+],
+'ch03-03': [
+  ['단계별 확인이 중요한 이유', '에이전트가 자동으로 3단계를 다 실행하면 중간에 오류가 생겨도 끝까지 실행됩니다. 단계별로 확인하면 오류 발생 시 그 단계만 수정하면 됩니다.'],
+],
+'ch03-04': [
+  ['서브에이전트 방식 권장', '에이전트 팀(실험 기능)은 설정이 복잡합니다. 처음에는 서브에이전트 방식(방식 A)으로 완주한 뒤, 익숙해지면 에이전트 팀을 시도해보세요.'],
+  ['본인 데이터 적용', '강의 완료 후 가장 중요한 단계입니다. campaign.csv를 본인 회사 데이터로 교체하고, CLAUDE.md의 분석 지표를 업무에 맞게 수정하면 바로 실무 활용 가능합니다.'],
+],
+};
+
+// ─── 강의 연출 지시문 필터링 ───
+function filterGuideContent(md) {
+  return md
+    .split('\n')
+    .filter(line => {
+      const t = line.trim();
+      if (!t) return true;
+      // 좌측/우측 패널 지시문
+      if (/^\*\*(좌측|우측)\s*패널/.test(t)) return false;
+      if (/^(좌측|우측)\s*패널/.test(t)) return false;
+      // 화면/슬라이드/카메라 등 연출 지시문
+      if (/^\[화면/.test(t) || /^\*\*\[화면/.test(t)) return false;
+      if (/^\[좌측/.test(t) || /^\[우측/.test(t)) return false;
+      if (/^\[슬라이드/.test(t) || /^\[카메라/.test(t)) return false;
+      if (/^\[강사/.test(t) || /^\[오디오/.test(t)) return false;
+      if (/^\[자막/.test(t) || /^\[전환/.test(t)) return false;
+      if (/^\(화면/.test(t) || /^\*\*\(화면/.test(t)) return false;
+      if (/^\[스크린/.test(t) || /^\[녹화/.test(t)) return false;
+      return true;
+    })
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n');
+}
+
+// ─── 클립별 일러스트 SVG ───
+const CHC = {
+  ch00: '#7B6FA0', ch00s: 'rgba(123,111,160,0.12)',
+  ch01: '#4A7AB5', ch01s: 'rgba(74,122,181,0.12)',
+  ch02: '#4A8A6A', ch02s: 'rgba(74,138,106,0.12)',
+  ch03: '#B5724A', ch03s: 'rgba(181,114,74,0.12)',
+  ch04: '#8A6A9E', ch04s: 'rgba(138,106,158,0.12)',
+  ch05: '#9E6A7A', ch05s: 'rgba(158,106,122,0.12)',
+  ch06: '#6A8A9E', ch06s: 'rgba(106,138,158,0.12)',
+  ch07: '#4AAAB5', ch07s: 'rgba(74,170,181,0.12)',
+};
+
+function box(x,y,w,h,c,cs,label,sublabel='',rx=8) {
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${cs}" stroke="${c}" stroke-width="1.2"/>
+${label?`<text x="${x+w/2}" y="${y+h/2+(sublabel?-6:4)}" text-anchor="middle" font-size="11" font-weight="600" fill="#1A1614" font-family="system-ui,sans-serif">${label}</text>`:''}
+${sublabel?`<text x="${x+w/2}" y="${y+h/2+10}" text-anchor="middle" font-size="9.5" fill="#5C574F" font-family="system-ui,sans-serif">${sublabel}</text>`:''}`;
+}
+function arr(x1,y1,x2,y2) {
+  const dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy);
+  const ux=dx/len,uy=dy/len;
+  const ex=x2-ux*8,ey=y2-uy*8;
+  return `<line x1="${x1}" y1="${y1}" x2="${ex}" y2="${ey}" stroke="#9A9288" stroke-width="1.4"/>
+<polygon points="${x2},${y2} ${x2-uy*4-ux*8},${y2+ux*4-uy*8} ${x2+uy*4-ux*8},${y2-ux*4-uy*8}" fill="#9A9288"/>`;
+}
+function svg(w,h,inner) {
+  return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:${h}px;display:block;">${inner}</svg>`;
+}
+function label(x,y,t,size=10,color='#5C574F',weight='400') {
+  return `<text x="${x}" y="${y}" text-anchor="middle" font-size="${size}" fill="${color}" font-weight="${weight}" font-family="system-ui,sans-serif">${t}</text>`;
+}
+
+function getClipSVG(id) {
+  const c0=CHC.ch00,c0s=CHC.ch00s, c1=CHC.ch01,c1s=CHC.ch01s;
+  const c2=CHC.ch02,c2s=CHC.ch02s, c3=CHC.ch03,c3s=CHC.ch03s;
+  const c4=CHC.ch04,c4s=CHC.ch04s, c5=CHC.ch05,c5s=CHC.ch05s;
+  const c6=CHC.ch06,c6s=CHC.ch06s, c7=CHC.ch07,c7s=CHC.ch07s;
+  const lg='#C8C2B6', lgs='rgba(200,194,182,0.25)';
+
+  const SVGS = {
+
+'ch00-01': svg(680,170,`
+${box(20,30,130,52,c0,c0s,'CH00','강의 소개 · 55분')}
+${arr(152,56,192,56)}
+${box(194,30,148,52,c1,c1s,'CH01','기본 활용 · 122분')}
+${arr(344,56,384,56)}
+${box(386,30,140,52,c2,c2s,'CH02','서브에이전트 · 60분')}
+${arr(528,56,568,56)}
+${box(570,30,90,52,c3,c3s,'CH03','팀 · 70분')}
+${label(340,110,'이 강의는 4개 챕터가 순서대로 연결됩니다. 앞 챕터가 다음 챕터의 기초입니다.',10,'#5C574F')}
+${label(340,128,'챕터별 학습 후 직무 경로에 따라 필요한 클립만 선택 수강도 가능합니다.',10,'#9A9288')}
+`),
+
+'ch00-02': svg(680,170,`
+${box(30,30,120,60,lg,lgs,'원본 데이터','CSV · Excel')}
+${arr(152,60,210,60)}
+${box(212,20,180,80,c0,c0s,'클로드 코드','분석 · 계산 · 자동화')}
+${arr(394,40,452,40)}${arr(394,60,452,60)}${arr(394,80,452,80)}
+${box(454,20,100,36,c1,c1s,'리포트','')}
+${box(454,62,100,36,c1,c1s,'대시보드','')}
+${label(340,144,'하나의 Claude Code 세션으로 — 데이터 수집부터 결과 배포까지 자동화',10,'#5C574F')}
+`),
+
+'ch00-03': svg(680,170,`
+${label(340,22,'수강생 유형별 권장 경로',11,'#1A1614','600')}
+${box(30,36,130,36,c1,c1s,'데이터 분석가','CH00→01→02',6)}
+${box(30,82,130,36,c2,c2s,'마케터 · 기획자','CH00→01→03',6)}
+${box(200,36,130,36,c3,c3s,'PM','CH00→01→03',6)}
+${box(200,82,130,36,c0,c0s,'개발자 · AI 엔지니어','CH00→01→02→03',6)}
+${box(420,40,220,78,lg,lgs,'공통 선수','CH00 (OT · 환경 셋업)',6)}
+${arr(162,54,418,72)}${arr(162,100,418,84)}${arr(332,54,418,72)}${arr(332,100,418,84)}
+`),
+
+'ch00-04': svg(680,150,`
+${box(20,44,120,50,lg,lgs,'Node.js 설치','node -v 확인')}
+${arr(142,69,180,69)}
+${box(182,44,120,50,lg,lgs,'API 키 발급','console.anthropic.com')}
+${arr(304,69,342,69)}
+${box(344,44,150,50,c0,c0s,'Claude Code 설치','curl -fsSL ... | bash')}
+${arr(496,69,534,69)}
+${box(536,44,120,50,c1,c1s,'첫 실행','claude')}
+${label(340,120,'설치는 최초 1회. 이후 어디서든 claude 명령어로 바로 시작합니다.',10,'#5C574F')}
+`),
+
+'ch01-01': svg(680,190,`
+${label(340,20,'Claude Code = AI 에이전트',11,'#1A1614','600')}
+${box(240,32,200,48,c1,c1s,'클로드 코드 에이전트','도구를 직접 실행')}
+${arr(340,82,260,110)}${arr(340,82,340,110)}${arr(340,82,420,110)}
+${box(150,112,120,40,lg,lgs,'파일시스템','읽기 · 쓰기')}
+${box(280,112,120,40,lg,lgs,'터미널','명령어 실행')}
+${box(410,112,120,40,lg,lgs,'외부 API','MCP 연결')}
+${arr(340,32,340,18)}
+${box(240,0,200,30,lg,lgs,'사용자 (자연어 지시)','',4)}
+${label(340,172,'챗지피티는 텍스트만 생성합니다. 클로드 코드는 파일을 직접 만들고, 명령어를 실행합니다.',9,'#5C574F')}
+`),
+
+'ch01-02': svg(680,140,`
+${box(30,30,180,60,lg,lgs,'터미널','curl -fsSL claude.ai/install.sh | bash')}
+${arr(212,60,260,60)}
+${box(262,36,140,48,c1,c1s,'Claude Code 설치','')}
+${arr(404,60,452,60)}
+${box(454,36,100,48,lg,lgs,'claude','실행 확인')}
+${arr(556,60,596,60)}
+${box(598,36,60,48,c1,c1s,'세션','시작')}
+${label(340,114,'설치 후 claude 명령어 하나로 프로젝트 어디서든 바로 AI 에이전트가 활성화됩니다.',10,'#5C574F')}
+`),
+
+'ch01-03': svg(680,180,`
+${box(30,20,160,120,c0,c0s,'CLAUDE.md','')}
+${label(110,50,'프로젝트 규칙',10,'#1A1614','600')}
+${label(110,68,'데이터 위치',10,'#5C574F')}
+${label(110,84,'출력 형식',10,'#5C574F')}
+${label(110,100,'금지 사항',10,'#5C574F')}
+${label(110,118,'팀 컨벤션',10,'#5C574F')}
+${arr(192,80,280,80)}
+${label(360,40,'세션마다 자동 로드',10,'#9A9288','400')}
+${box(282,54,116,26,c1,c1s,'세션 A','')}
+${box(282,90,116,26,c1,c1s,'세션 B','')}
+${box(282,126,116,26,c1,c1s,'세션 C','')}
+${arr(400,67,480,67)}${arr(400,103,480,103)}${arr(400,139,480,139)}
+${box(482,52,170,90,lg,lgs,'매번 설명 불필요','프로젝트 컨텍스트를')}
+${label(567,120,'자동으로 기억합니다',10,'#5C574F')}
+`),
+
+'ch01-04': svg(680,150,`
+${label(340,18,'파일 읽기 → 처리 → 저장 — 기본 3단계',11,'#1A1614','600')}
+${box(20,36,140,60,lg,lgs,'data/input.csv','원본 데이터')}
+${arr(162,66,220,66)}
+${box(222,26,236,80,c1,c1s,'Claude Code','분석 · 계산 · 변환 · 요약')}
+${arr(460,66,520,66)}
+${box(522,36,140,60,lg,lgs,'output/result.csv','결과 파일')}
+${label(340,130,'Read → 처리 → Write. 이 흐름이 모든 데이터 자동화의 기본 패턴입니다.',10,'#5C574F')}
+`),
+
+'ch01-05': svg(680,160,`
+${box(20,30,140,60,lg,lgs,'요청 입력','실행 전 계획 보여줘')}
+${arr(162,60,210,60)}
+${box(212,20,156,80,c1,c1s,'Plan 모드','변경 사항 목록 작성')}
+${arr(370,40,430,30)}${arr(370,80,430,90)}
+${box(432,18,120,44,c2,c2s,'승인','진행해줘')}
+${box(432,82,120,44,c3,c3s,'수정','다시 계획해줘')}
+${arr(554,40,600,40)}${arr(552,104,600,104)}
+${box(602,26,56,108,'#9A9288',lgs,'실행','',6)}
+${label(340,148,'파일 여러 개를 바꿀 때 Plan 모드 → 검토 → 승인. 실수 복구 비용을 줄입니다.',10,'#5C574F')}
+`),
+
+'ch01-06': svg(680,170,`
+${label(340,20,'슬래시 커맨드 — 세션 제어 단축키',11,'#1A1614','600')}
+${[
+  ['/help','사용 가능한 커맨드 목록'],
+  ['/status','토큰 사용량 · 세션 상태'],
+  ['/clear','컨텍스트 초기화'],
+  ['/fast','Fast Mode 전환'],
+  ['/hooks','훅 관리 메뉴'],
+  ['/agents','서브에이전트 관리'],
+  ['/mcp','MCP 서버 상태'],
+].map(([cmd,desc],i) => {
+  const col = i%4, row = Math.floor(i/4);
+  const x = 20+col*162, y = 36+row*58;
+  return `${box(x,y,148,44,c1,c1s,cmd,'')}${label(x+74,y+32,desc,8.5,'#5C574F')}`;
+}).join('')}
+`),
+
+'ch01-07': svg(680,165,`
+${label(340,20,'컨텍스트 크기와 비용',11,'#1A1614','600')}
+${box(30,34,220,54,c2,c2s,'Fast Mode (Haiku)','빠름 · 저비용 · 단순 작업')}
+${box(30,96,220,54,c1,c1s,'기본 Mode (Sonnet)','정확 · 중비용 · 복잡 작업')}
+${box(280,34,220,54,c3,c3s,'컨텍스트 절약','/clear · compact · 파일 분리')}
+${box(280,96,220,54,lg,lgs,'비용 모니터링','/status · 세션별 사용량 확인')}
+${label(560,55,'컨텍스트',10,'#1A1614','600')}
+${label(560,70,'크기',10,'#1A1614','600')}
+${label(560,90,'∝ 비용',10,'#5C574F','400')}
+`),
+
+'ch01-08': svg(680,185,`
+${label(340,18,'훅 — 이벤트 기반 자동 실행',11,'#1A1614','600')}
+${box(20,30,140,36,lg,lgs,'이벤트 발생','PostToolUse / PreToolUse')}
+${arr(162,48,210,48)}
+${box(212,30,140,36,c0,c0s,'훅 트리거','matcher 조건 확인')}
+${arr(354,48,402,48)}
+${box(404,30,140,36,c1,c1s,'스크립트 실행','bash / python 명령어')}
+${arr(546,48,594,48)}
+${box(596,30,62,36,c2,c2s,'결과','',6)}
+${label(80,90,'예시 1',10,'#9A9288','600')}
+${label(80,105,'PostToolUse: Write|Edit',9,'#5C574F')}
+${label(80,119,'→ changes.log 기록',9,'#5C574F')}
+${label(340,90,'예시 2',10,'#9A9288','600')}
+${label(340,105,'PreToolUse: Bash',9,'#5C574F')}
+${label(340,119,'→ rm -rf 차단',9,'#5C574F')}
+${label(590,90,'설정',10,'#9A9288','600')}
+${label(590,105,'/hooks 메뉴',9,'#5C574F')}
+${label(590,119,'또는 settings.json',9,'#5C574F')}
+${label(340,155,'/hooks 커맨드로 인터랙티브 설정 가능. settings.json 직접 수정 불필요.',10,'#5C574F')}
+`),
+
+'ch01-09': svg(680,180,`
+${label(340,18,'서브에이전트 — 역할 위임과 전문화',11,'#1A1614','600')}
+${box(30,30,170,50,c0,c0s,'/agents 커맨드','또는 .claude/agents/ 파일')}
+${arr(202,55,260,55)}
+${box(262,26,200,118,c1,c1s,'','',8)}
+${label(362,50,'name: data-analyst',9,'#1A1614','600')}
+${label(362,68,'description: CSV 분석 담당',9,'#5C574F')}
+${label(362,86,'tools: Read, Bash',9,'#5C574F')}
+${label(362,104,'model: sonnet',9,'#5C574F')}
+${arr(464,84,520,84)}
+${box(522,58,136,52,c2,c2s,'자동 위임','data-analyst 에이전트가')}
+${label(590,124,'CSV 분석 처리',9,'#5C574F')}
+${label(340,165,'역할별 서브에이전트를 만들면 메인 에이전트가 자동으로 적합한 에이전트에 위임합니다.',10,'#5C574F')}
+`),
+
+'ch01-10': svg(680,175,`
+${label(340,18,'MCP — 외부 도구 연결',11,'#1A1614','600')}
+${box(20,30,180,56,lg,lgs,'claude mcp add','--transport stdio|http')}
+${arr(202,58,260,58)}
+${box(262,30,136,56,c1,c1s,'MCP 서버','도구 브릿지')}
+${arr(400,45,450,35)}${arr(400,58,450,58)}${arr(400,72,450,82)}
+${box(452,20,110,36,c2,c2s,'파일시스템','')}
+${box(452,58,110,36,c3,c3s,'노션 · 슬랙','')}
+${box(452,96,110,36,c0,c0s,'DB · API','')}
+${label(340,152,'기본 클로드 코드로는 접근 불가 → MCP 연결 후 자연어로 외부 도구 조작 가능',10,'#5C574F')}
+`),
+
+'ch01-11': svg(680,170,`
+${label(340,18,'효과적인 지시 — 모호 vs 구체',11,'#1A1614','600')}
+${box(20,30,220,60,c3,c3s,'모호한 지시','데이터 정리해줘')}
+${label(130,112,'→ 불확실한 결과',10,'#9A9288')}
+${box(280,30,380,60,c2,c2s,'구체적 지시','sales.csv 읽기 → 빈 행 제거 → 날짜 정렬 → output/ 저장')}
+${label(470,112,'→ 원하는 결과',10,'#4A8A6A','600')}
+${label(150,142,'맥락 · 형식 · 제약조건 · 단계 분리 · 예시 제공',10,'#5C574F')}
+${label(150,156,'— 5가지 패턴으로 처음부터 정확한 결과를',10,'#9A9288')}
+`),
+
+'ch02-01': svg(680,210,`
+${label(340,18,'서브에이전트 = 위임의 기술',11,'#1A1614','600')}
+${box(240,28,200,44,c2,c2s,'메인 에이전트','오케스트레이터')}
+${arr(280,74,200,100)}${arr(340,74,340,100)}${arr(400,74,480,100)}
+${box(120,102,120,44,c1,c1s,'서브에이전트 1','독립 컨텍스트')}
+${box(280,102,120,44,c1,c1s,'서브에이전트 2','독립 컨텍스트')}
+${box(440,102,120,44,c1,c1s,'서브에이전트 3','독립 컨텍스트')}
+${arr(180,148,280,164)}${arr(340,148,340,164)}${arr(500,148,400,164)}
+${box(240,166,200,20,lg,lgs,'결과 수집 → 메인으로 반환','',4)}
+${label(340,202,'각 서브에이전트는 독립 컨텍스트에서 실행 — 서로 영향 없음',9,'#9A9288')}
+`),
+
+'ch02-02': svg(680,175,`
+${label(340,18,'병렬 처리 패턴 — 분할-처리-합산',11,'#1A1614','600')}
+${box(20,32,100,36,lg,lgs,'입력 데이터','원본 파일들')}
+${arr(122,50,180,50)}
+${box(182,28,80,80,c2,c2s,'분할','Map')}
+${arr(264,44,310,34)}${arr(264,50,310,50)}${arr(264,58,310,67)}
+${box(312,24,80,30,c1,c1s,'처리 1','')}
+${box(312,58,80,30,c1,c1s,'처리 2','')}
+${box(312,92,80,30,c1,c1s,'처리 3','')}
+${arr(394,38,440,50)}${arr(394,72,440,64)}${arr(394,107,440,78)}
+${box(442,28,80,80,c3,c3s,'합산','Reduce')}
+${arr(524,68,580,68)}
+${box(582,50,76,36,c2,c2s,'최종 결과','')}
+${label(340,148,'파이프라인 / 앙상블 패턴도 동일한 원리 — 입력 분할 → 병렬 처리 → 결과 통합',10,'#5C574F')}
+`),
+
+'ch02-03': svg(680,185,`
+${label(340,16,'5개 캠페인 → 병렬 분석 → 비교 리포트',11,'#1A1614','600')}
+${['A','B','C','D','E'].map((c,i) => box(20,30+i*28,130,22,lg,lgs,`campaign_${c}.csv`,'',4)).join('')}
+${arr(152,86,210,86)}
+${box(212,34,170,104,c2,c2s,'서브에이전트 ×5','각자 병렬 처리')}
+${arr(384,86,440,86)}
+${box(442,50,120,36,lg,lgs,'output/results/','개별 결과 파일 5개')}
+${arr(442,96,440,110)}${arr(500,88,550,110)}
+${box(442,112,230,46,c3,c3s,'비교 리포트','5개 캠페인 성과 나란히 비교')}
+${label(340,172,'한 번의 지시로 5개 파일 동시 처리 — 순차 처리 대비 약 5배 시간 절약',10,'#5C574F')}
+`),
+
+'ch03-01': svg(680,185,`
+${label(340,16,'멀티 에이전트 vs 서브에이전트',11,'#1A1614','600')}
+${box(20,28,280,60,c2,c2s,'서브에이전트','메인 에이전트가 위임 → 결과만 반환')}
+${label(160,102,'팀원들이 서로 소통 불가',9,'#9A9288')}
+${box(360,28,300,140,c3,c3s,'에이전트 팀 (실험 기능)','CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 필요')}
+${label(510,72,'팀장 세션',10,'#1A1614','600')}
+${label(510,86,'↕ 메시지',10,'#9A9288')}
+${label(440,106,'분석 세션',9,'#5C574F')}
+${label(510,106,'인사이트 세션',9,'#5C574F')}
+${label(590,106,'리포트 세션',9,'#5C574F')}
+${label(510,122,'팀원끼리 직접 소통 가능',9,'#9A9288')}
+${label(340,182,'팀원 간 소통이 필요 → 에이전트 팀 / 결과만 수집 → 서브에이전트',10,'#5C574F')}
+`),
+
+'ch03-02': svg(680,170,`
+${label(340,18,'역할 분리 — 3-에이전트 구조',11,'#1A1614','600')}
+${box(30,32,170,90,c0,c0s,'기획자 에이전트','')}
+${label(115,64,'무엇을 할지 결정',9,'#5C574F')}${label(115,78,'분석 범위 · 지표 선택',9,'#5C574F')}${label(115,92,'클로드엠디에 정의',9,'#9A9288')}
+${arr(202,78,260,78)}
+${box(262,32,170,90,c1,c1s,'실행자 에이전트','')}
+${label(347,64,'실제 데이터 처리',9,'#5C574F')}${label(347,78,'계산 · 파일 저장',9,'#5C574F')}${label(347,92,'output/ 에 결과',9,'#9A9288')}
+${arr(434,78,492,78)}
+${box(494,32,170,90,c2,c2s,'검토자 에이전트','')}
+${label(579,64,'결과 품질 검증',9,'#5C574F')}${label(579,78,'오류 확인 · 재실행',9,'#5C574F')}${label(579,92,'최종 승인',9,'#9A9288')}
+${label(340,148,'각 에이전트는 하나의 역할만 집중 — 전문화로 품질 향상',10,'#5C574F')}
+`),
+
+'ch03-03': svg(680,175,`
+${label(340,18,'단계별 실행 + 중간 확인 패턴',11,'#1A1614','600')}
+${box(20,32,120,44,c1,c1s,'1단계','분석 에이전트')}
+${arr(142,54,180,54)}
+${box(182,32,80,44,lg,lgs,'확인','pause')}
+${arr(264,54,302,54)}
+${box(304,32,120,44,c1,c1s,'2단계','인사이트 에이전트')}
+${arr(426,54,464,54)}
+${box(466,32,80,44,lg,lgs,'확인','pause')}
+${arr(548,54,586,54)}
+${box(588,32,72,44,c2,c2s,'3단계','',6)}
+${label(340,100,'오류 발생 시',10,'#9A9288','600')}
+${box(234,112,212,36,c3,c3s,'해당 단계만 재실행','전체 처음부터 다시 불필요',6)}
+${arr(340,112,340,100)}
+${label(340,168,'단계별 확인으로 중간 수정 가능 — 오류 복구 비용 최소화',10,'#5C574F')}
+`),
+
+'ch03-04': svg(680,180,`
+${label(340,16,'3-에이전트 마케팅 분석 팀 — 완전 실습',11,'#1A1614','600')}
+${box(20,32,110,46,lg,lgs,'data/','campaign.csv')}
+${arr(132,56,180,56)}
+${box(182,26,130,56,c1,c1s,'분석 에이전트','전환율 · ROI 계산')}
+${arr(314,56,360,56)}
+${box(362,26,140,56,c0,c0s,'인사이트 에이전트','비즈니스 해석')}
+${arr(504,56,550,56)}
+${box(552,26,106,56,c2,c2s,'리포트 에이전트','마크다운 작성')}
+${label(240,96,'output/step1/',9,'#9A9288')}
+${label(432,96,'output/step2/',9,'#9A9288')}
+${label(600,96,'output/step3/',9,'#9A9288')}
+${box(180,120,490,42,c3,c3s,'서브에이전트 방식 (설정 불필요) 또는 에이전트 팀 방식 (환경변수 필요)','',6)}
+${label(340,174,'완주 후 → 본인 데이터로 교체 → 실무 적용',10,'#5C574F')}
+`),
+
+// ── CH04 멀티 환경 활용 ──
+'ch04-01': svg(680,160,`
+${label(340,16,'로컬 환경 최적화 — CLAUDE.md 전략',11,'#1A1614','600')}
+${box(20,40,150,50,c4,c4s,'프로젝트 폴더','구조화된 디렉토리')}
+${arr(172,65,220,65)}
+${box(222,40,140,50,c4,c4s,'CLAUDE.md','프로젝트 메모리')}
+${arr(364,65,410,65)}
+${box(412,40,130,50,c4,c4s,'.claude/','에이전트 설정')}
+${arr(544,65,590,65)}
+${box(592,40,68,50,c1,c1s,'정확도 ↑','')}
+${label(340,110,'명확한 구조 → 에이전트가 파일 위치·목적 즉시 파악',10,'#5C574F')}
+${label(340,130,'CLAUDE.md에 분석 규칙·출력 형식 정의 → 매번 지시 불필요',10,'#5C574F')}
+`),
+
+'ch04-02': svg(680,160,`
+${label(340,16,'클라우드 환경 — GitHub Codespaces',11,'#1A1614','600')}
+${box(20,40,120,50,c4,c4s,'💻 로컬','내 컴퓨터')}
+${arr(142,65,200,65)}
+${box(202,35,180,60,c0,c0s,'☁️ Codespaces','클라우드 개발 환경')}
+${arr(384,65,440,65)}
+${box(442,40,120,50,c4,c4s,'💻 다른 기기','어디서든')}
+${label(340,115,'브라우저만 있으면 동일 환경에서 작업',10,'#5C574F')}
+${label(340,135,'팀원과 환경 공유 · 설정 충돌 없음',10,'#5C574F')}
+`),
+
+'ch04-03': svg(680,160,`
+${label(340,16,'실전 — 환경 전환 파이프라인',11,'#1A1614','600')}
+${box(20,45,100,45,c4,c4s,'로컬 작업','개발·테스트')}
+${arr(122,68,175,68)}
+${box(177,40,110,55,c0,c0s,'Git Push','코드 동기화')}
+${arr(289,68,342,68)}
+${box(344,40,140,55,c1,c1s,'Codespaces','클라우드 실행')}
+${arr(486,68,539,68)}
+${box(541,40,120,55,c2,c2s,'Git Pull','결과 동기화')}
+${label(340,115,'로컬 ↔ 클라우드 자유롭게 전환',10,'#5C574F')}
+${label(340,135,'작업 컨텍스트 유지하면서 환경 이동',10,'#5C574F')}
+`),
+
+// ── CH05 MCP 연동 ──
+'ch05-01': svg(680,170,`
+${label(340,16,'MCP란 — 에이전트 도구 확장',11,'#1A1614','600')}
+${box(180,40,140,50,c5,c5s,'Claude Code','기본 도구')}
+${arr(322,65,380,65)}
+${box(382,30,180,70,c1,c1s,'+ MCP 서버','데이터베이스 · Slack')}
+${label(340,120,'스마트폰에 앱 설치 = 에이전트에 MCP 연결',10,'#5C574F')}
+${label(340,145,'무한 확장 가능한 도구 생태계',10,'#5C574F')}
+`),
+
+'ch05-02': svg(680,160,`
+${label(340,16,'데이터베이스 MCP — SQL 직접 연결',11,'#1A1614','600')}
+${box(20,45,140,50,c5,c5s,'Claude Code','분석 요청')}
+${arr(162,70,220,70)}
+${box(222,40,140,60,c1,c1s,'SQLite MCP','쿼리 실행')}
+${arr(364,70,420,70)}
+${box(422,45,110,50,c0,c0s,'ecommerce.db','주문·상품·고객')}
+${arr(534,70,580,70)}
+${box(582,45,78,50,c2,c2s,'결과','JSON')}
+${label(340,125,'통역사 없이 데이터베이스와 직접 대화',10,'#5C574F')}
+`),
+
+'ch05-03': svg(680,160,`
+${label(340,16,'Slack MCP — 분석 결과 자동 전달',11,'#1A1614','600')}
+${box(20,45,130,50,c5,c5s,'분석 완료','리포트 생성')}
+${arr(152,70,210,70)}
+${box(212,40,130,60,c1,c1s,'Slack MCP','메시지 전송')}
+${arr(344,70,400,70)}
+${box(402,45,160,50,c0,c0s,'#data-reports','팀 채널 자동 공유')}
+${label(340,125,'사람 개입 없이 리포트 자동 발송',10,'#5C574F')}
+`),
+
+'ch05-04': svg(680,170,`
+${label(340,16,'실전 — DB→분석→Slack 완전 자동화',11,'#1A1614','600')}
+${box(20,45,90,45,c5,c5s,'지시 1회','')}
+${arr(112,68,155,68)}
+${box(157,40,100,55,c1,c1s,'DB 쿼리','SQLite MCP')}
+${arr(259,68,302,68)}
+${box(304,40,100,55,c0,c0s,'분석·집계','Claude')}
+${arr(406,68,449,68)}
+${box(451,40,100,55,c2,c2s,'시각화','차트 생성')}
+${arr(553,68,596,68)}
+${box(598,40,62,55,c3,c3s,'Slack','발송')}
+${label(340,115,'버튼 하나로 전자동 커피머신',10,'#5C574F')}
+${label(340,140,'데이터 수집 → 분석 → 리포트 → 공유',10,'#5C574F')}
+`),
+
+// ── CH06 시각화 전략 ──
+'ch06-01': svg(680,160,`
+${label(340,16,'시각화 전략 — 데이터 구조가 차트를 결정',11,'#1A1614','600')}
+${box(20,45,130,50,c6,c6s,'데이터 구조','범주·시계열·분포')}
+${arr(152,70,200,70)}
+${box(202,45,130,50,c6,c6s,'목적 파악','비교·추이·관계')}
+${arr(334,70,380,70)}
+${box(382,45,140,50,c1,c1s,'차트 선택','막대·라인·스캐터')}
+${arr(524,70,570,70)}
+${box(572,45,88,50,c0,c0s,'정확한','시각화')}
+${label(340,125,'옷 고를 때 날씨·상황 보듯, 차트도 데이터 성격 보고 선택',10,'#5C574F')}
+`),
+
+'ch06-02': svg(680,150,`
+${label(340,16,'비교형 차트 — 막대와 라인',11,'#1A1614','600')}
+${box(80,45,150,50,c6,c6s,'막대 그래프','범주 간 크기 비교')}
+${box(450,45,150,50,c6,c6s,'라인 차트','시간 흐름 추이')}
+${label(155,110,'지역별 매출 · 제품별 판매량',9,'#9A9288')}
+${label(525,110,'월별 성장률 · 일별 트래픽',9,'#9A9288')}
+${label(340,135,'가장 기본이지만 가장 자주 쓰는 도구 — 망치와 드라이버',10,'#5C574F')}
+`),
+
+'ch06-03': svg(680,150,`
+${label(340,16,'분포와 관계 — 히스토그램, 스캐터, 박스',11,'#1A1614','600')}
+${box(40,45,130,45,c6,c6s,'히스토그램','값 분포')}
+${box(275,45,130,45,c6,c6s,'스캐터 플롯','변수 간 관계')}
+${box(510,45,130,45,c6,c6s,'박스 플롯','중앙값·이상치')}
+${label(340,115,'사진이 순간을 담듯, 데이터 전체 분포를 한 장에',10,'#5C574F')}
+`),
+
+'ch06-04': svg(680,160,`
+${label(340,16,'태블로 자동화 — TWB 파일 생성',11,'#1A1614','600')}
+${box(100,45,150,50,c6,c6s,'Claude Code','TWB 파일 생성')}
+${arr(252,70,320,70)}
+${box(322,45,160,50,c1,c1s,'Tableau Desktop','워크북 열기')}
+${arr(484,70,550,70)}
+${box(552,45,108,50,c0,c0s,'대시보드','완성')}
+${label(340,125,'GUI 없이 대시보드 자동화 — 템플릿을 코드로 찍어냄',10,'#5C574F')}
+`),
+
+'ch06-05': svg(680,150,`
+${label(340,16,'파이썬 시각화 — matplotlib · seaborn',11,'#1A1614','600')}
+${box(100,45,140,50,c6,c6s,'데이터','CSV · Excel')}
+${arr(242,70,300,70)}
+${box(302,45,170,50,c1,c1s,'Claude + Python','matplotlib·seaborn')}
+${arr(474,70,530,70)}
+${box(532,45,108,50,c0,c0s,'차트.png','이미지 저장')}
+${label(340,120,'화가에게 그림 맡기듯, 에이전트에게 시각화 위임',10,'#5C574F')}
+`),
+
+'ch06-06': svg(680,150,`
+${label(340,16,'인터랙티브 차트 — HTML로 살아있는 시각화',11,'#1A1614','600')}
+${box(100,45,130,50,c6,c6s,'정적 이미지','PNG · PDF')}
+${arr(232,70,300,70)}
+${box(302,40,180,60,c1,c1s,'인터랙티브 HTML','클릭 · 줌 · 필터')}
+${arr(484,70,550,70)}
+${box(552,45,108,50,c0,c0s,'사용자','탐색 가능')}
+${label(340,120,'사진 대신 동영상 — 차트에 생명을 불어넣음',10,'#5C574F')}
+`),
+
+'ch06-07': svg(680,150,`
+${label(340,16,'색상과 브랜드 — 디자인 기준 전달',11,'#1A1614','600')}
+${box(80,45,180,50,c6,c6s,'CLAUDE.md','브랜드 컬러 정의')}
+${arr(262,70,320,70)}
+${box(322,45,150,50,c1,c1s,'Claude Code','규칙 준수')}
+${arr(474,70,530,70)}
+${box(532,45,128,50,c0,c0s,'일관된 시각화','브랜드 통일')}
+${label(340,120,'옷 색상 조합 맞추듯, 차트도 브랜드 가이드 준수',10,'#5C574F')}
+`),
+
+'ch06-08': svg(680,180,`
+${label(340,16,'8단계 파이프라인 — 데이터→대시보드 전자동',11,'#1A1614','600')}
+${box(10,40,70,35,c6,c6s,'문제정의','')}
+${arr(82,58,95,58)}
+${box(97,40,65,35,c6,c6s,'전처리','')}
+${arr(164,58,177,58)}
+${box(179,40,70,35,c6,c6s,'지표설계','')}
+${arr(251,58,264,58)}
+${box(266,40,70,35,c1,c1s,'방법론','')}
+${arr(338,58,351,58)}
+${box(353,40,75,35,c1,c1s,'인사이트','')}
+${arr(430,58,443,58)}
+${box(445,40,65,35,c0,c0s,'시각화','')}
+${arr(512,58,525,58)}
+${box(527,40,75,35,c0,c0s,'대시보드','')}
+${arr(604,58,617,58)}
+${box(619,40,55,35,c2,c2s,'보고서','')}
+${label(340,95,'한 번의 명령으로 8단계 전자동 실행',10,'#5C574F')}
+${box(100,115,480,45,c3,c3s,'원재료 투입 → 공장 라인 → 완제품 포장 — 전자동 공장','',6)}
+`),
+
+// ── CH07 D3.js 커스텀 시각화 ──
+'ch07-01': svg(680,160,`
+${label(340,16,'D3.js란 — 데이터로 그림을 그리다',11,'#1A1614','600')}
+${box(80,45,150,50,c7,c7s,'데이터','JSON · CSV')}
+${arr(232,70,290,70)}
+${box(292,40,200,60,c7,c7s,'D3.js 바인딩','데이터 → DOM 요소')}
+${arr(494,70,550,70)}
+${box(552,45,108,50,c1,c1s,'SVG 차트','무한 커스텀')}
+${label(340,125,'붓과 물감을 처음 받은 날 — 그릴 수 있는 것에 제한 없음',10,'#5C574F')}
+`),
+
+'ch07-02': svg(680,160,`
+${label(340,16,'인터랙티브 기능 — 필터, 애니메이션, 줌',11,'#1A1614','600')}
+${box(60,45,130,50,c7,c7s,'드래그','요소 이동')}
+${box(275,45,130,50,c7,c7s,'줌 · 팬','확대 · 이동')}
+${box(490,45,130,50,c7,c7s,'필터','데이터 선택')}
+${label(340,115,'지도 앱에서 핀치 확대하듯 — 데이터가 손안으로',10,'#5C574F')}
+${label(340,140,'정적 차트와 살아있는 차트의 차이 = 인터랙션',10,'#5C574F')}
+`),
+
+'ch07-03': svg(680,170,`
+${label(340,16,'고급 차트 — 히트맵, 트리맵, 네트워크',11,'#1A1614','600')}
+${box(40,45,140,50,c7,c7s,'히트맵','행렬 색상 강도')}
+${box(270,45,140,50,c7,c7s,'트리맵','계층 면적 비율')}
+${box(500,45,140,50,c7,c7s,'네트워크','노드 · 엣지 관계')}
+${label(110,110,'코호트 리텐션',9,'#9A9288')}
+${label(340,110,'카테고리별 매출',9,'#9A9288')}
+${label(570,110,'고객 전환 경로',9,'#9A9288')}
+${label(340,145,'요리사가 칼 3종 다루듯 — 어떤 재료도 적합한 도구로',10,'#5C574F')}
+`),
+
+'ch07-04': svg(680,170,`
+${label(340,16,'실전 — D3.js 커스텀 대시보드 완성',11,'#1A1614','600')}
+${box(40,45,120,50,c7,c7s,'히트맵','리텐션')}
+${box(280,45,120,50,c7,c7s,'트리맵','매출 비중')}
+${box(520,45,120,50,c7,c7s,'네트워크','전환 경로')}
+${arr(100,97,340,130)}
+${arr(340,97,340,130)}
+${arr(580,97,340,130)}
+${box(220,132,240,40,c1,c1s,'통합 대시보드','3개 차트 하나로',6)}
+${label(340,192,'세 악기 배운 뒤 첫 합주 — 각 파트가 하나의 음악',10,'#5C574F')}
+`),
+  };
+  return SVGS[id] || '';
+}
+
+// ─── 직접 해보기 박스 변환 ───
+function wrapLabSection(html) {
+  // <h2>직접 해보기</h2>...<h2>다음섹션</h2> 사이를 박스로 감쌈
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const headings = doc.querySelectorAll('h2');
+  headings.forEach(h2 => {
+    if (!h2.textContent.includes('직접 해보기')) return;
+    // 이 h2부터 다음 h2(또는 hr)까지 묶기
+    const nodes = [];
+    let node = h2.nextSibling;
+    while (node && !(node.nodeName === 'H2' || node.nodeName === 'HR')) {
+      nodes.push(node);
+      node = node.nextSibling;
+    }
+    // 박스 생성
+    const box = doc.createElement('div');
+    box.className = 'lab-box';
+    const header = doc.createElement('div');
+    header.className = 'lab-box-header';
+    header.textContent = '직접 해보기';
+    box.appendChild(header);
+    // 도입부 안내 추가
+    const guide = doc.createElement('div');
+    guide.style.cssText = 'font-size:12px;color:#4B5563;background:#E8F5EE;border-radius:6px;padding:8px 12px;margin-bottom:14px;line-height:1.5;';
+    guide.innerHTML = '🖥️ <b>터미널 코드</b>: Mac의 Terminal 앱(또는 iTerm2)을 열고 복사해서 붙여넣으세요.<br>💬 <b>클로드에게 말하기</b>: 클로드 코드 세션이 실행 중일 때 그대로 입력하세요.';
+    box.appendChild(guide);
+    nodes.forEach(n => {
+      const clone = n.cloneNode(true);
+      // pre 블록 앞에 배지 삽입
+      if (clone.nodeName === 'PRE') {
+        const wrap = doc.createElement('div');
+        wrap.className = 'code-block-wrap';
+        const codeText = clone.textContent.trim();
+        // bash/shell 명령어 vs 자연어 프롬프트 구분
+        const isTerminal = /^(mkdir|cd|ls|cat|curl|echo|for|printf|claude\s|python3|pip|npm|brew|bash|source|\$\s)/.test(codeText) ||
+                           clone.querySelector('code.language-bash, code.language-sh, code.language-shell') !== null;
+        const badge = doc.createElement('div');
+        badge.className = isTerminal ? 'code-badge terminal' : 'code-badge prompt';
+        badge.textContent = isTerminal ? '터미널에 붙여넣기' : '클로드에게 말하기';
+        wrap.appendChild(badge);
+        wrap.appendChild(clone);
+        box.appendChild(wrap);
+      } else {
+        box.appendChild(clone);
+      }
+    });
+    // 원래 노드들 제거 후 박스 삽입
+    h2.parentNode.insertBefore(box, h2);
+    nodes.forEach(n => { if (n.parentNode) n.parentNode.removeChild(n); });
+    h2.parentNode.removeChild(h2);
+  });
+  return doc.body.innerHTML;
+}
+
+// ─── 갤러리 네비게이션 ───
+function galMove(clipId, dir) {
+  const state = (window._galState || {})[clipId];
+  if (!state) return;
+  const track = document.getElementById(`gallery-track-${clipId}`);
+  if (!track) return;
+  const slides = track.querySelectorAll('.gallery-slide');
+  slides[state.idx].classList.remove('active');
+  state.idx = (state.idx + dir + state.total) % state.total;
+  slides[state.idx].classList.add('active');
+  const counter = document.getElementById(`gal-count-${clipId}`);
+  if (counter) counter.textContent = `${state.idx + 1} / ${state.total}`;
+}
+function galPrev(id) { galMove(id, -1); }
+function galNext(id) { galMove(id, 1); }
+
+// ─── 모바일 레이아웃 강제 ───
+if (window.innerWidth <= 768) {
+  document.body.style.cssText = 'display:block; height:auto; overflow:visible;';
+  document.getElementById('main').style.cssText = 'display:block; width:100%; height:auto; overflow:visible;';
+  document.getElementById('content-wrap').style.cssText = 'display:block; padding:64px 16px 80px;';
+  console.log('📱 모바일 레이아웃 적용됨');
+}
+
+// ─── 초기화 ───
+updateProgress();
+// 초기: CH00만 열고 나머지 닫기
+['ch01','ch02','ch03','ch04','ch05','ch06','ch07'].forEach(ch => {
+  const clips = document.getElementById('clips-' + ch);
+  const label = clips ? clips.previousElementSibling : null;
+  if (clips) { clips.classList.add('collapsed'); clips.style.maxHeight = '0px'; }
+  if (label) label.classList.add('collapsed');
+});
+</script>
+</body>
+</html>
