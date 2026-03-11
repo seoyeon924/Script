@@ -163,12 +163,12 @@
     }
 
     /* Official SY Design Palette v2 - slightly more saturated */
-    .card-offwhite { background: #F5F4F0; }
-    .card-lavender { background: #E8E0F5; }
-    .card-mint { background: #D4F0E5; }
-    .card-rose { background: #FCE0E8; }
-    .card-cream { background: #FAF9F6; }
-    .card-peach { background: #FDEEE8; }
+    .card-offwhite { background: rgba(245, 244, 240, 0.75); }
+    .card-lavender { background: rgba(232, 224, 245, 0.75); }
+    .card-mint { background: rgba(212, 240, 229, 0.75); }
+    .card-rose { background: rgba(252, 224, 232, 0.75); }
+    .card-cream { background: rgba(250, 249, 246, 0.75); }
+    .card-peach { background: rgba(253, 238, 232, 0.75); }
     .card-yellow { background: #FEF8E0; }
     
     /* Wide card with illustration */
@@ -311,6 +311,10 @@
       flex: 1;
       border-radius: 14px;
       padding: 14px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
 
     .dept-header {
