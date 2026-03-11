@@ -221,12 +221,12 @@
     }
 
     .pipeline-stage.completed {
-      background: rgba(16, 185, 129, 0.08);
-      border-color: rgba(16, 185, 129, 0.2);
+      background: rgba(224, 245, 238, 0.12);
+      border-color: rgba(13, 148, 136, 0.25);
     }
 
     .pipeline-stage.processing {
-      background: rgba(245, 158, 11, 0.1);
+      background: rgba(255, 251, 235, 0.12);
       border-color: rgba(245, 158, 11, 0.3);
     }
 
@@ -238,7 +238,7 @@
     .stage-indicator {
       width: 32px;
       height: 32px;
-      border-radius: 50%;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -248,20 +248,36 @@
     }
 
     .completed .stage-indicator {
-      background: var(--accent);
-      color: #fff;
+      background: #E0F5EE;
+      color: #0D9488;
     }
 
     .processing .stage-indicator {
-      background: #F59E0B;
-      color: #000;
+      background: #FEF3C7;
+      color: #92610E;
       animation: pulse 1s infinite;
     }
 
     .pending .stage-indicator {
-      background: #333;
-      color: #666;
+      background: #222;
+      color: #555;
     }
+
+    /* Stage Colors */
+    .stage-mint.completed { background: rgba(224, 245, 238, 0.15); border-color: rgba(13, 148, 136, 0.3); }
+    .stage-mint.completed .stage-indicator { background: #E0F5EE; color: #0D9488; }
+    
+    .stage-lavender.completed { background: rgba(237, 233, 247, 0.15); border-color: rgba(124, 92, 191, 0.3); }
+    .stage-lavender.completed .stage-indicator { background: #EDE9F7; color: #7C5CBF; }
+    
+    .stage-rose.completed { background: rgba(253, 234, 239, 0.15); border-color: rgba(161, 61, 92, 0.3); }
+    .stage-rose.completed .stage-indicator { background: #FDEAEF; color: #A13D5C; }
+    
+    .stage-cream.completed { background: rgba(255, 251, 235, 0.15); border-color: rgba(245, 158, 11, 0.3); }
+    .stage-cream.completed .stage-indicator { background: #FFFBEB; color: #92610E; }
+    
+    .stage-cream.processing { background: rgba(255, 251, 235, 0.15); border-color: rgba(245, 158, 11, 0.4); }
+    .stage-cream.processing .stage-indicator { background: #FEF3C7; color: #92610E; }
 
     .stage-info {
       flex: 1;
@@ -570,7 +586,7 @@
       <span>3 / 7 completed</span>
     </div>
     <div class="panel-content">
-      <div class="pipeline-stage completed">
+      <div class="pipeline-stage completed stage-mint">
         <div class="stage-indicator">✓</div>
         <div class="stage-info">
           <h4>@data-ingestion</h4>
@@ -579,7 +595,7 @@
         <div class="stage-time">2.3s</div>
       </div>
 
-      <div class="pipeline-stage completed">
+      <div class="pipeline-stage completed stage-lavender">
         <div class="stage-indicator">✓</div>
         <div class="stage-info">
           <h4>@eda</h4>
@@ -588,7 +604,7 @@
         <div class="stage-time">8.1s</div>
       </div>
 
-      <div class="pipeline-stage completed">
+      <div class="pipeline-stage completed stage-rose">
         <div class="stage-indicator">✓</div>
         <div class="stage-info">
           <h4>@problem</h4>
@@ -597,7 +613,7 @@
         <div class="stage-time">3.4s</div>
       </div>
 
-      <div class="pipeline-stage processing">
+      <div class="pipeline-stage processing stage-cream">
         <div class="stage-indicator">●</div>
         <div class="stage-info">
           <h4>@metrics</h4>
@@ -606,7 +622,7 @@
         <div class="stage-time">—</div>
       </div>
 
-      <div class="pipeline-stage pending">
+      <div class="pipeline-stage pending stage-mint">
         <div class="stage-indicator">○</div>
         <div class="stage-info">
           <h4>@analysis</h4>
@@ -615,7 +631,7 @@
         <div class="stage-time">—</div>
       </div>
 
-      <div class="pipeline-stage pending">
+      <div class="pipeline-stage pending stage-lavender">
         <div class="stage-indicator">○</div>
         <div class="stage-info">
           <h4>@dashboard</h4>
@@ -624,7 +640,7 @@
         <div class="stage-time">—</div>
       </div>
 
-      <div class="pipeline-stage pending">
+      <div class="pipeline-stage pending stage-mint">
         <div class="stage-indicator">○</div>
         <div class="stage-info">
           <h4>@report</h4>
