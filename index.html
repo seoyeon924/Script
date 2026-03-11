@@ -538,8 +538,51 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
       <div class="nav-item" onclick="loadClip('ch08-04',this)" data-id="ch08-04"><span class="num">04</span><span class="clip-title">실전 — 통합 대시보드</span><span class="clip-time">17분</span></div>
     </div>
 
-    <!-- ═══ PART 3 · 직무별 프로젝트 ═══ -->
-    <div class="part-header">PART 3 · 직무별 프로젝트</div>
+    <!-- ═══ PART 3 · 고급 에이전트 ═══ -->
+    <div class="part-header">PART 3 · 고급 에이전트</div>
+
+    <!-- CH02 -->
+    <div class="chapter-label" onclick="toggleChapter('ch02')">
+      <span class="ch-badge ch02">CH02</span>
+      <span class="ch-name">서브에이전트</span>
+      <span class="ch-meta">3클립 · 60분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips collapsed" id="clips-ch02">
+      <div class="nav-item" onclick="loadClip('ch02-01',this)" data-id="ch02-01"><span class="num">01</span><span class="clip-title">서브에이전트란?</span><span class="clip-time">20분</span></div>
+      <div class="nav-item" onclick="loadClip('ch02-02',this)" data-id="ch02-02"><span class="num">02</span><span class="clip-title">병렬 작업 설계</span><span class="clip-time">20분</span></div>
+      <div class="nav-item" onclick="loadClip('ch02-03',this)" data-id="ch02-03"><span class="num">03</span><span class="clip-title">실전 실습</span><span class="clip-time">20분</span></div>
+    </div>
+
+    <!-- CH03 -->
+    <div class="chapter-label" onclick="toggleChapter('ch03')">
+      <span class="ch-badge ch03">CH03</span>
+      <span class="ch-name">에이전트 팀</span>
+      <span class="ch-meta">4클립 · 70분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips collapsed" id="clips-ch03">
+      <div class="nav-item" onclick="loadClip('ch03-01',this)" data-id="ch03-01"><span class="num">01</span><span class="clip-title">멀티 에이전트란?</span><span class="clip-time">20분</span></div>
+      <div class="nav-item" onclick="loadClip('ch03-02',this)" data-id="ch03-02"><span class="num">02</span><span class="clip-title">역할 분리 설계</span><span class="clip-time">18분</span></div>
+      <div class="nav-item" onclick="loadClip('ch03-03',this)" data-id="ch03-03"><span class="num">03</span><span class="clip-title">팀 실행</span><span class="clip-time">17분</span></div>
+      <div class="nav-item" onclick="loadClip('ch03-04',this)" data-id="ch03-04"><span class="num">04</span><span class="clip-title">실전 — 3-에이전트 팀</span><span class="clip-time">15분</span></div>
+    </div>
+
+    <!-- CH04 -->
+    <div class="chapter-label" onclick="toggleChapter('ch04')">
+      <span class="ch-badge ch04">CH04</span>
+      <span class="ch-name">멀티 환경</span>
+      <span class="ch-meta">3클립 · 40분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips collapsed" id="clips-ch04">
+      <div class="nav-item" onclick="loadClip('ch04-01',this)" data-id="ch04-01"><span class="num">01</span><span class="clip-title">로컬 환경 최적화</span><span class="clip-time">12분</span></div>
+      <div class="nav-item" onclick="loadClip('ch04-02',this)" data-id="ch04-02"><span class="num">02</span><span class="clip-title">클라우드 환경</span><span class="clip-time">14분</span></div>
+      <div class="nav-item" onclick="loadClip('ch04-03',this)" data-id="ch04-03"><span class="num">03</span><span class="clip-title">실전 — 환경 전환</span><span class="clip-time">14분</span></div>
+    </div>
+
+    <!-- ═══ PART 4 · 직무별 프로젝트 ═══ -->
+    <div class="part-header">PART 4 · 직무별 프로젝트</div>
 
     <!-- CH09 -->
     <div class="chapter-label" onclick="toggleChapter('ch09')">
@@ -609,49 +652,6 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
       <div class="nav-item" onclick="loadClip('ch13-05',this)" data-id="ch13-05"><span class="num">05</span><span class="clip-title">성과 평가 분석</span><span class="clip-time">16분</span></div>
       <div class="nav-item" onclick="loadClip('ch13-06',this)" data-id="ch13-06"><span class="num">06</span><span class="clip-title">DEI 지표</span><span class="clip-time">16분</span></div>
       <div class="nav-item" onclick="loadClip('ch13-07',this)" data-id="ch13-07"><span class="num">07</span><span class="clip-title">실전 — HR 리포트 자동화</span><span class="clip-time">18분</span></div>
-    </div>
-
-    <!-- ═══ PART 4 · 고급 에이전트 ═══ -->
-    <div class="part-header">PART 4 · 고급 에이전트</div>
-
-    <!-- CH02 -->
-    <div class="chapter-label" onclick="toggleChapter('ch02')">
-      <span class="ch-badge ch02">CH02</span>
-      <span class="ch-name">서브에이전트</span>
-      <span class="ch-meta">3클립 · 60분</span>
-      <span class="ch-toggle">▾</span>
-    </div>
-    <div class="chapter-clips collapsed" id="clips-ch02">
-      <div class="nav-item" onclick="loadClip('ch02-01',this)" data-id="ch02-01"><span class="num">01</span><span class="clip-title">서브에이전트란?</span><span class="clip-time">20분</span></div>
-      <div class="nav-item" onclick="loadClip('ch02-02',this)" data-id="ch02-02"><span class="num">02</span><span class="clip-title">병렬 작업 설계</span><span class="clip-time">20분</span></div>
-      <div class="nav-item" onclick="loadClip('ch02-03',this)" data-id="ch02-03"><span class="num">03</span><span class="clip-title">실전 실습</span><span class="clip-time">20분</span></div>
-    </div>
-
-    <!-- CH03 -->
-    <div class="chapter-label" onclick="toggleChapter('ch03')">
-      <span class="ch-badge ch03">CH03</span>
-      <span class="ch-name">에이전트 팀</span>
-      <span class="ch-meta">4클립 · 70분</span>
-      <span class="ch-toggle">▾</span>
-    </div>
-    <div class="chapter-clips collapsed" id="clips-ch03">
-      <div class="nav-item" onclick="loadClip('ch03-01',this)" data-id="ch03-01"><span class="num">01</span><span class="clip-title">멀티 에이전트란?</span><span class="clip-time">20분</span></div>
-      <div class="nav-item" onclick="loadClip('ch03-02',this)" data-id="ch03-02"><span class="num">02</span><span class="clip-title">역할 분리 설계</span><span class="clip-time">18분</span></div>
-      <div class="nav-item" onclick="loadClip('ch03-03',this)" data-id="ch03-03"><span class="num">03</span><span class="clip-title">팀 실행</span><span class="clip-time">17분</span></div>
-      <div class="nav-item" onclick="loadClip('ch03-04',this)" data-id="ch03-04"><span class="num">04</span><span class="clip-title">실전 — 3-에이전트 팀</span><span class="clip-time">15분</span></div>
-    </div>
-
-    <!-- CH04 -->
-    <div class="chapter-label" onclick="toggleChapter('ch04')">
-      <span class="ch-badge ch04">CH04</span>
-      <span class="ch-name">멀티 환경</span>
-      <span class="ch-meta">3클립 · 40분</span>
-      <span class="ch-toggle">▾</span>
-    </div>
-    <div class="chapter-clips collapsed" id="clips-ch04">
-      <div class="nav-item" onclick="loadClip('ch04-01',this)" data-id="ch04-01"><span class="num">01</span><span class="clip-title">로컬 환경 최적화</span><span class="clip-time">12분</span></div>
-      <div class="nav-item" onclick="loadClip('ch04-02',this)" data-id="ch04-02"><span class="num">02</span><span class="clip-title">클라우드 환경</span><span class="clip-time">14분</span></div>
-      <div class="nav-item" onclick="loadClip('ch04-03',this)" data-id="ch04-03"><span class="num">03</span><span class="clip-title">실전 — 환경 전환</span><span class="clip-time">14분</span></div>
     </div>
 
     <!-- ═══ PART 5 · 자동화 파이프라인 ═══ -->
