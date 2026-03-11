@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Data Pipeline — Agent Map</title>
+  <title>AI Data Pipeline - Agent Map</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap');
-    
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: #000000;
@@ -16,7 +16,7 @@
       min-height: 100vh;
       padding: 32px 40px;
     }
-    
+
     /* ─── HEADER ─── */
     .header {
       display: flex;
@@ -24,7 +24,7 @@
       align-items: flex-start;
       margin-bottom: 32px;
     }
-    
+
     .header-left .hero-line1 {
       font-family: 'Barlow', sans-serif;
       font-size: 36px;
@@ -32,7 +32,7 @@
       color: #fff;
       line-height: 1.1;
     }
-    
+
     .header-left .hero-line2 {
       font-family: 'Instrument Serif', serif;
       font-size: 36px;
@@ -41,7 +41,7 @@
       line-height: 1.1;
       margin-bottom: 8px;
     }
-    
+
     .header-right {
       text-align: right;
       color: #777;
@@ -49,30 +49,30 @@
       line-height: 1.6;
       max-width: 380px;
     }
-    
+
     .stats-row {
       display: flex;
       gap: 20px;
       margin-top: 6px;
     }
-    
+
     .stat {
       color: #999;
       font-size: 11px;
     }
-    
+
     .stat strong {
       font-size: 16px;
       font-weight: 700;
       color: #fff;
       margin-right: 2px;
     }
-    
+
     /* ─── MAIN GRID ─── */
     .main-wrapper {
       position: relative;
     }
-    
+
     .svg-layer {
       position: absolute;
       top: 0;
@@ -82,22 +82,22 @@
       pointer-events: none;
       z-index: 0;
     }
-    
+
     .flow-line {
       fill: none;
       stroke: rgba(255,255,255,0.5);
       stroke-width: 2;
     }
-    
+
     .main-grid {
       display: grid;
-      grid-template-columns: 100px 120px 400px 150px 200px;
+      grid-template-columns: 100px 120px 400px 140px 180px;
       gap: 40px;
       align-items: start;
       position: relative;
       z-index: 1;
     }
-    
+
     /* ─── COLUMN LABELS ─── */
     .col-label {
       font-size: 9px;
@@ -108,25 +108,25 @@
       text-align: center;
       margin-bottom: 14px;
     }
-    
+
     /* ─── CARDS ─── */
     .card {
       border-radius: 18px;
       padding: 18px;
     }
-    
+
     .card-dark {
       background: #151515;
       border: 1px solid #2a2a2a;
     }
-    
+
     /* Official SY Design Palette v2 */
     .card-offwhite { background: #F7F7F5; }
     .card-lavender { background: #EDE9F7; }
     .card-mint { background: #E0F5EE; }
     .card-rose { background: #FDEAEF; }
     .card-cream { background: #FFFBEB; }
-    
+
     .card-title {
       font-size: 9px;
       font-weight: 800;
@@ -135,13 +135,13 @@
       color: #555;
       margin-bottom: 12px;
     }
-    
+
     /* ─── INPUT & ORCHESTRATOR ─── */
     .input-card, .orch-card {
       text-align: center;
       padding: 18px 14px;
     }
-    
+
     .input-icon {
       width: 44px;
       height: 44px;
@@ -152,7 +152,7 @@
       justify-content: center;
       margin: 0 auto 10px;
     }
-    
+
     .input-icon svg {
       width: 20px;
       height: 20px;
@@ -160,12 +160,12 @@
       fill: none;
       stroke-width: 1.5;
     }
-    
+
     .orch-card {
       background: #D8F3EB;
       border: none;
     }
-    
+
     .orch-icon {
       width: 48px;
       height: 48px;
@@ -176,69 +176,69 @@
       justify-content: center;
       margin: 0 auto 10px;
     }
-    
+
     .orch-icon svg {
       width: 22px;
       height: 22px;
       fill: #fff;
     }
-    
+
     .input-title {
       font-size: 11px;
       font-weight: 700;
       color: #999;
       margin-bottom: 3px;
     }
-    
+
     .input-desc {
       font-size: 9px;
       color: #555;
     }
-    
+
     .orch-title {
       font-size: 11px;
       font-weight: 700;
       color: #333;
       margin-bottom: 3px;
     }
-    
+
     .orch-desc {
       font-size: 9px;
       color: #10B981;
       font-weight: 600;
     }
-    
+
     /* ─── DEPARTMENTS ─── */
     .dept-grid {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-    
+
     .dept-row {
       display: flex;
       gap: 10px;
     }
-    
+
     .dept {
       flex: 1;
       border-radius: 14px;
       padding: 14px;
     }
-    
+
     .dept-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 10px;
     }
-    
+
     .dept-title-wrap {
       display: flex;
       align-items: center;
       gap: 6px;
     }
-    
+
     .dept-icon {
       width: 18px;
       height: 18px;
@@ -249,13 +249,13 @@
       font-size: 9px;
       background: rgba(0,0,0,0.07);
     }
-    
+
     .dept-name {
       font-size: 11px;
       font-weight: 700;
       color: #333;
     }
-    
+
     .dept-count {
       font-size: 10px;
       font-weight: 700;
@@ -264,45 +264,45 @@
       padding: 2px 8px;
       border-radius: 10px;
     }
-    
+
     .agent-list {
       display: flex;
       flex-direction: column;
       gap: 3px;
     }
-    
+
     .agent-item {
       font-size: 10px;
       color: #555;
       padding: 2px 0;
     }
-    
+
     .agent-item::before {
       content: '·';
       margin-right: 6px;
       color: #999;
     }
-    
+
     /* ─── OUTPUTS ─── */
     .output-card {
-      padding: 14px;
+      padding: 12px;
     }
-    
+
     .output-grid {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
-    
+
     .output-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      border-radius: 10px;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 8px;
       background: rgba(0,0,0,0.03);
     }
-    
+
     .output-icon {
       width: 26px;
       height: 26px;
@@ -313,27 +313,28 @@
       font-size: 11px;
       font-weight: 700;
     }
-    
+
     .output-name {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       color: #1F2937;
-      line-height: 1.3;
+      line-height: 1.2;
+      white-space: nowrap;
     }
-    
+
     /* Output Icons - Colored point icons */
     .output-icon {
-      width: 32px;
-      height: 32px;
-      min-width: 32px;
-      border-radius: 8px;
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 13px;
       line-height: 1;
     }
-    
+
     .icon-lavender { background: #E8E0F5; color: #7C5CBF; }
     .icon-blue { background: #DBEAFE; color: #3B82F6; }
     .icon-red { background: #FEE2E2; color: #EF4444; }
@@ -341,13 +342,13 @@
     .icon-green { background: #D1FAE5; color: #10B981; }
     .icon-yellow { background: #FEF3C7; color: #F59E0B; }
     .icon-pink { background: #FCE7F3; color: #DB2777; }
-    
+
     /* ─── FEEDBACK ─── */
     .feedback-card {
       text-align: center;
       padding: 20px 16px;
     }
-    
+
     .feedback-icon {
       width: 44px;
       height: 44px;
@@ -358,7 +359,7 @@
       justify-content: center;
       margin: 0 auto 12px;
     }
-    
+
     .feedback-icon svg {
       width: 22px;
       height: 22px;
@@ -366,21 +367,21 @@
       fill: none;
       stroke-width: 1.5;
     }
-    
+
     .feedback-title {
       font-size: 12px;
       font-weight: 700;
       color: #333;
       margin-bottom: 8px;
     }
-    
+
     .feedback-desc {
       font-size: 10px;
       color: #666;
       line-height: 1.5;
       margin-bottom: 12px;
     }
-    
+
     .feedback-badge {
       display: inline-block;
       font-size: 8px;
@@ -416,7 +417,7 @@
 <div class="main-wrapper">
 <svg class="svg-layer" id="svgLayer"></svg>
 <div class="main-grid">
-  
+
   <!-- INPUT -->
   <div>
     <div class="col-label">Input</div>
@@ -428,7 +429,7 @@
       <div class="input-desc">CSV · DB · API</div>
     </div>
   </div>
-  
+
   <!-- ORCHESTRATOR -->
   <div>
     <div class="col-label">Orchestrator</div>
@@ -440,12 +441,12 @@
       <div class="orch-desc">38 Agents</div>
     </div>
   </div>
-  
+
   <!-- DEPARTMENTS -->
   <div>
     <div class="col-label">Departments & Agents</div>
     <div class="dept-grid">
-      
+
       <!-- Row 1 -->
       <div class="dept-row">
         <div class="dept card-offwhite">
@@ -464,7 +465,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Row 2 -->
       <div class="dept-row">
         <div class="dept card-lavender">
@@ -496,7 +497,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Row 3 -->
       <div class="dept-row">
         <div class="dept card-rose">
@@ -528,7 +529,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Row 4 -->
       <div class="dept-row">
         <div class="dept card-mint">
@@ -546,7 +547,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Row 5 -->
       <div class="dept-row">
         <div class="dept card-lavender">
@@ -578,7 +579,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Row 6 -->
       <div class="dept-row">
         <div class="dept card-offwhite">
@@ -610,10 +611,10 @@
           </div>
         </div>
       </div>
-      
+
     </div>
   </div>
-  
+
   <!-- OUTPUTS -->
   <div>
     <div class="col-label">Outputs</div>
@@ -650,7 +651,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- FEEDBACK -->
   <div id="feedbackCol">
     <div class="col-label">Feedback</div>
@@ -663,7 +664,7 @@
       <span class="feedback-badge">Self-Improving</span>
     </div>
   </div>
-  
+
 </div>
 </div>
 
@@ -672,13 +673,13 @@ function drawFlowLines() {
   const svg = document.getElementById('svgLayer');
   const wrapper = document.querySelector('.main-wrapper');
   if (!svg || !wrapper) return;
-  
+
   const wrapperRect = wrapper.getBoundingClientRect();
   svg.style.width = wrapperRect.width + 'px';
   svg.style.height = wrapperRect.height + 'px';
   svg.setAttribute('viewBox', `0 0 ${wrapperRect.width} ${wrapperRect.height}`);
   svg.innerHTML = '';
-  
+
   function getCenter(el) {
     if (!el) return null;
     const r = el.getBoundingClientRect();
@@ -691,7 +692,7 @@ function drawFlowLines() {
       bottom: r.bottom - wrapperRect.top
     };
   }
-  
+
   function drawCurve(x1, y1, x2, y2) {
     const cp1x = x1 + (x2 - x1) * 0.5;
     const cp2x = x1 + (x2 - x1) * 0.5;
@@ -701,24 +702,24 @@ function drawFlowLines() {
     path.classList.add('flow-line');
     svg.appendChild(path);
   }
-  
+
   // Elements
   const input = document.querySelector('.input-card');
   const orch = document.querySelector('.orch-card');
   const deptRows = document.querySelectorAll('.dept-row');
   const output = document.querySelector('.output-card');
   const feedback = document.getElementById('feedbackCard');
-  
+
   const inputPos = getCenter(input);
   const orchPos = getCenter(orch);
   const outputPos = getCenter(output);
   const feedbackPos = getCenter(feedback);
-  
+
   // 1. Input → Orch
   if (inputPos && orchPos) {
     drawCurve(inputPos.right, inputPos.y, orchPos.left, orchPos.y);
   }
-  
+
   // 2. Orch → Department Rows (center of each row)
   if (orchPos && deptRows.length) {
     deptRows.forEach(row => {
@@ -728,7 +729,7 @@ function drawFlowLines() {
       }
     });
   }
-  
+
   // 3. Department Rows → Output
   if (outputPos && deptRows.length) {
     deptRows.forEach(row => {
@@ -738,7 +739,7 @@ function drawFlowLines() {
       }
     });
   }
-  
+
   // 4. Output → Feedback
   if (outputPos && feedbackPos) {
     drawCurve(outputPos.right, outputPos.y, feedbackPos.left, feedbackPos.y);
