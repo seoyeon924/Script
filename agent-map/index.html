@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Data Pipeline — Agent Map</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: #0a0a0a;
       color: #333;
       min-height: 100vh;
-      padding: 28px;
+      padding: 32px 40px;
     }
     
     /* ─── HEADER ─── */
@@ -22,142 +22,183 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
     }
     
     .header-left h1 {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     
     .header-right {
       text-align: right;
-      color: #888;
+      color: #777;
       font-size: 12px;
       line-height: 1.6;
-      max-width: 400px;
+      max-width: 380px;
     }
     
     .stats-row {
       display: flex;
-      gap: 24px;
-      margin-top: 8px;
+      gap: 20px;
+      margin-top: 6px;
     }
     
     .stat {
-      color: #fff;
+      color: #999;
       font-size: 11px;
     }
     
     .stat strong {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
+      color: #fff;
+      margin-right: 2px;
     }
     
     /* ─── MAIN GRID ─── */
     .main-grid {
       display: grid;
-      grid-template-columns: 100px 100px 360px 140px 140px;
-      gap: 12px;
+      grid-template-columns: 90px 100px 340px 130px 150px;
+      gap: 20px;
       align-items: start;
+    }
+    
+    /* ─── COLUMN LABELS ─── */
+    .col-label {
+      font-size: 9px;
+      font-weight: 800;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-align: center;
+      margin-bottom: 14px;
     }
     
     /* ─── CARDS ─── */
     .card {
-      border-radius: 20px;
-      padding: 20px;
+      border-radius: 18px;
+      padding: 18px;
     }
     
     .card-dark {
-      background: #1a1a1a;
-      border: 1px solid #333;
+      background: #151515;
+      border: 1px solid #2a2a2a;
     }
     
-    .card-purple { background: #E8E4F3; }
-    .card-mint { background: #D4F0E7; }
-    .card-yellow { background: #FDF6D8; }
-    .card-pink { background: #FCE4EC; }
-    .card-blue { background: #E3F2FD; }
-    .card-orange { background: #FFF3E0; }
+    .card-purple { background: #EBE7F6; }
+    .card-mint { background: #D8F3EB; }
+    .card-yellow { background: #FEF8E0; }
+    .card-pink { background: #FDE8EF; }
+    .card-blue { background: #E6F4FE; }
+    .card-orange { background: #FFF5E6; }
     
     .card-title {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #444;
-      margin-bottom: 14px;
+      color: #555;
+      margin-bottom: 12px;
     }
     
     /* ─── INPUT & ORCHESTRATOR ─── */
     .input-card, .orch-card {
       text-align: center;
-      padding: 20px 12px;
+      padding: 18px 14px;
     }
     
-    .input-icon, .orch-icon {
+    .input-icon {
+      width: 44px;
+      height: 44px;
+      background: #222;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+    }
+    
+    .input-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: #666;
+      fill: none;
+      stroke-width: 1.5;
+    }
+    
+    .orch-card {
+      background: #D8F3EB;
+      border: none;
+    }
+    
+    .orch-icon {
       width: 48px;
       height: 48px;
+      background: #10B981;
       border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 12px;
+      margin: 0 auto 10px;
     }
     
-    .input-icon {
-      background: #333;
-    }
-    
-    .orch-icon {
-      background: #10B981;
-    }
-    
-    .input-icon svg, .orch-icon svg {
+    .orch-icon svg {
       width: 22px;
       height: 22px;
+      fill: #fff;
     }
     
-    .input-icon svg { stroke: #888; fill: none; stroke-width: 1.5; }
-    .orch-icon svg { fill: #fff; }
-    
-    .input-title, .orch-title {
+    .input-title {
       font-size: 11px;
       font-weight: 700;
-      color: #fff;
-      margin-bottom: 4px;
+      color: #999;
+      margin-bottom: 3px;
     }
     
-    .input-desc, .orch-desc {
+    .input-desc {
       font-size: 9px;
-      color: #666;
+      color: #555;
+    }
+    
+    .orch-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 3px;
+    }
+    
+    .orch-desc {
+      font-size: 9px;
+      color: #10B981;
+      font-weight: 600;
     }
     
     /* ─── DEPARTMENTS ─── */
     .dept-grid {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
     
     .dept-row {
       display: flex;
-      gap: 8px;
+      gap: 10px;
     }
     
     .dept {
       flex: 1;
-      border-radius: 12px;
-      padding: 12px;
+      border-radius: 14px;
+      padding: 14px;
     }
     
     .dept-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     
     .dept-title-wrap {
@@ -167,14 +208,14 @@
     }
     
     .dept-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 6px;
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
-      background: rgba(0,0,0,0.08);
+      font-size: 9px;
+      background: rgba(0,0,0,0.07);
     }
     
     .dept-name {
@@ -186,7 +227,7 @@
     .dept-count {
       font-size: 10px;
       font-weight: 700;
-      background: rgba(0,0,0,0.08);
+      background: rgba(0,0,0,0.06);
       color: #555;
       padding: 2px 8px;
       border-radius: 10px;
@@ -195,12 +236,12 @@
     .agent-list {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
     }
     
     .agent-item {
       font-size: 10px;
-      color: #666;
+      color: #555;
       padding: 2px 0;
     }
     
@@ -211,25 +252,29 @@
     }
     
     /* ─── OUTPUTS ─── */
+    .output-card {
+      padding: 16px;
+    }
+    
     .output-grid {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
     }
     
     .output-item {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       padding: 10px 12px;
       border-radius: 10px;
-      background: rgba(0,0,0,0.05);
+      background: rgba(0,0,0,0.04);
     }
     
     .output-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -238,56 +283,56 @@
     }
     
     .output-name {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
       color: #333;
     }
     
-    .o-purple { background: #C5B3E3; color: #5B3E90; }
-    .o-blue { background: #90CAF9; color: #1565C0; }
-    .o-red { background: #EF9A9A; color: #C62828; }
-    .o-teal { background: #80CBC4; color: #00695C; }
-    .o-green { background: #A5D6A7; color: #2E7D32; }
-    .o-yellow { background: #FFF59D; color: #F57F17; }
-    .o-pink { background: #F48FB1; color: #AD1457; }
+    .o-purple { background: #D4C8E8; color: #5B3E90; }
+    .o-blue { background: #A3D4F7; color: #1565C0; }
+    .o-red { background: #F5A8A8; color: #C62828; }
+    .o-teal { background: #8DD4CA; color: #00695C; }
+    .o-green { background: #AEDDB2; color: #2E7D32; }
+    .o-yellow { background: #FFF7AA; color: #E65100; }
+    .o-pink { background: #F8A4C0; color: #AD1457; }
     
     /* ─── FEEDBACK ─── */
     .feedback-card {
       text-align: center;
-      padding: 20px 14px;
+      padding: 20px 16px;
     }
     
     .feedback-icon {
-      width: 40px;
-      height: 40px;
-      background: rgba(0,0,0,0.06);
+      width: 44px;
+      height: 44px;
+      background: rgba(16,185,129,0.12);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 10px;
+      margin: 0 auto 12px;
     }
     
     .feedback-icon svg {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       stroke: #10B981;
       fill: none;
       stroke-width: 1.5;
     }
     
     .feedback-title {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
       color: #333;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     
     .feedback-desc {
-      font-size: 9px;
+      font-size: 10px;
       color: #666;
       line-height: 1.5;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
     
     .feedback-badge {
@@ -295,25 +340,11 @@
       font-size: 8px;
       font-weight: 700;
       color: #10B981;
-      background: rgba(16,185,129,0.15);
-      padding: 4px 10px;
-      border-radius: 8px;
+      background: rgba(16,185,129,0.12);
+      padding: 5px 12px;
+      border-radius: 10px;
       text-transform: uppercase;
-    }
-    
-    /* ─── COLUMN LABELS ─── */
-    .col-label {
-      font-size: 9px;
-      font-weight: 800;
-      color: #555;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-    
-    .col-label-dark {
-      color: #777;
+      letter-spacing: 0.03em;
     }
   </style>
 </head>
@@ -339,7 +370,7 @@
   
   <!-- INPUT -->
   <div>
-    <div class="col-label col-label-dark">Input</div>
+    <div class="col-label">Input</div>
     <div class="card card-dark input-card">
       <div class="input-icon">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
@@ -351,8 +382,8 @@
   
   <!-- ORCHESTRATOR -->
   <div>
-    <div class="col-label col-label-dark">Orchestrator</div>
-    <div class="card card-dark orch-card">
+    <div class="col-label">Orchestrator</div>
+    <div class="card orch-card">
       <div class="orch-icon">
         <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       </div>
@@ -537,8 +568,7 @@
   <!-- OUTPUTS -->
   <div>
     <div class="col-label">Outputs</div>
-    <div class="card card-yellow" style="padding:14px;">
-      <div class="card-title">Generated</div>
+    <div class="card card-yellow output-card">
       <div class="output-grid">
         <div class="output-item">
           <div class="output-icon o-purple">◈</div>
