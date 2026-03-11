@@ -69,11 +69,33 @@
     }
     
     /* ─── MAIN GRID ─── */
+    .main-wrapper {
+      position: relative;
+    }
+    
+    .svg-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .flow-line {
+      fill: none;
+      stroke: rgba(255,255,255,0.08);
+      stroke-width: 1.5;
+    }
+    
     .main-grid {
       display: grid;
       grid-template-columns: 90px 100px 340px 130px 150px;
       gap: 20px;
       align-items: start;
+      position: relative;
+      z-index: 1;
     }
     
     /* ─── COLUMN LABELS ─── */
@@ -381,6 +403,8 @@
 </header>
 
 <!-- MAIN GRID -->
+<div class="main-wrapper">
+<svg class="svg-layer" id="svgLayer"></svg>
 <div class="main-grid">
   
   <!-- INPUT -->
@@ -618,9 +642,9 @@
   </div>
   
   <!-- FEEDBACK -->
-  <div>
+  <div id="feedbackCol">
     <div class="col-label">Feedback</div>
-    <div class="card card-mint feedback-card">
+    <div class="card card-mint feedback-card" id="feedbackCard">
       <div class="feedback-icon">
         <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
       </div>
@@ -631,6 +655,87 @@
   </div>
   
 </div>
+</div>
+
+<script>
+function drawFlowLines() {
+  const svg = document.getElementById('svgLayer');
+  const wrapper = document.querySelector('.main-wrapper');
+  if (!svg || !wrapper) return;
+  
+  const rect = wrapper.getBoundingClientRect();
+  svg.setAttribute('width', rect.width);
+  svg.setAttribute('height', rect.height);
+  svg.innerHTML = '';
+  
+  function getPos(el) {
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    return {
+      cx: r.left - rect.left + r.width / 2,
+      cy: r.top - rect.top + r.height / 2,
+      right: r.right - rect.left,
+      left: r.left - rect.left,
+      top: r.top - rect.top,
+      bottom: r.bottom - rect.top
+    };
+  }
+  
+  function curve(x1, y1, x2, y2) {
+    const midX = (x1 + x2) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M${x1},${y1} C${midX},${y1} ${midX},${y2} ${x2},${y2}`);
+    path.classList.add('flow-line');
+    svg.appendChild(path);
+  }
+  
+  // Get elements
+  const inputCard = document.querySelector('.input-card');
+  const orchCard = document.querySelector('.orch-card');
+  const depts = document.querySelectorAll('.dept');
+  const outputCard = document.querySelector('.output-card');
+  const feedbackCard = document.getElementById('feedbackCard');
+  
+  const inputPos = getPos(inputCard);
+  const orchPos = getPos(orchCard);
+  const outputPos = getPos(outputCard);
+  const feedbackPos = getPos(feedbackCard);
+  
+  // Input → Orchestrator
+  if (inputPos && orchPos) {
+    curve(inputPos.right + 5, inputPos.cy, orchPos.left - 5, orchPos.cy);
+  }
+  
+  // Orchestrator → Each Department
+  if (orchPos && depts.length) {
+    depts.forEach(dept => {
+      const dPos = getPos(dept);
+      if (dPos) {
+        curve(orchPos.right + 5, orchPos.cy, dPos.left - 5, dPos.cy);
+      }
+    });
+  }
+  
+  // Departments → Output
+  if (outputPos && depts.length) {
+    depts.forEach(dept => {
+      const dPos = getPos(dept);
+      if (dPos) {
+        curve(dPos.right + 5, dPos.cy, outputPos.left - 5, 
+              outputPos.top + (dPos.cy - rect.top) * 0.3 + outputPos.cy * 0.4);
+      }
+    });
+  }
+  
+  // Output → Feedback
+  if (outputPos && feedbackPos) {
+    curve(outputPos.right + 5, outputPos.cy, feedbackPos.left - 5, feedbackPos.cy);
+  }
+}
+
+window.addEventListener('load', () => setTimeout(drawFlowLines, 200));
+window.addEventListener('resize', drawFlowLines);
+</script>
 
 </body>
 </html>
