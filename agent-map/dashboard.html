@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Data Analyst OS - Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #222;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .header h1 span {
+      color: #666;
+      font-weight: 400;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: #1a1a1a;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      animation: pulse 2s infinite;
+    }
+
+    .status-dot.processing {
+      background: #F59E0B;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 300px 1fr 350px;
+      gap: 20px;
+      height: calc(100vh - 120px);
+    }
+
+    .panel {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #222;
+      font-size: 12px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    /* INPUT FILES */
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: #1a1a1a;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .file-icon {
+      width: 40px;
+      height: 40px;
+      background: #2a2a2a;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .file-info h4 {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .file-info p {
+      font-size: 11px;
+      color: #666;
+    }
+
+    /* PIPELINE */
+    .pipeline-stage {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      transition: all 0.3s;
+    }
+
+    .pipeline-stage.completed {
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .pipeline-stage.processing {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .pipeline-stage.pending {
+      background: #1a1a1a;
+      opacity: 0.5;
+    }
+
+    .stage-indicator {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .completed .stage-indicator {
+      background: #10B981;
+      color: #fff;
+    }
+
+    .processing .stage-indicator {
+      background: #F59E0B;
+      color: #000;
+      animation: pulse 1s infinite;
+    }
+
+    .pending .stage-indicator {
+      background: #333;
+      color: #666;
+    }
+
+    .stage-info {
+      flex: 1;
+    }
+
+    .stage-info h4 {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .stage-info p {
+      font-size: 11px;
+      color: #666;
+    }
+
+    .stage-time {
+      font-size: 11px;
+      color: #666;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* OUTPUTS */
+    .output-item {
+      background: #1a1a1a;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .output-header:hover {
+      background: #222;
+    }
+
+    .output-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .output-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .output-icon.eda { background: rgba(139, 92, 246, 0.2); color: #A78BFA; }
+    .output-icon.metrics { background: rgba(245, 158, 11, 0.2); color: #FBBF24; }
+    .output-icon.dashboard { background: rgba(59, 130, 246, 0.2); color: #60A5FA; }
+    .output-icon.report { background: rgba(16, 185, 129, 0.2); color: #34D399; }
+
+    .output-name {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .output-meta {
+      font-size: 11px;
+      color: #666;
+    }
+
+    .output-expand {
+      color: #666;
+      transition: transform 0.2s;
+    }
+
+    .output-item.expanded .output-expand {
+      transform: rotate(180deg);
+    }
+
+    .output-preview {
+      display: none;
+      padding: 14px;
+      border-top: 1px solid #222;
+      background: #151515;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #aaa;
+      line-height: 1.6;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .output-item.expanded .output-preview {
+      display: block;
+    }
+
+    /* UPLOAD ZONE */
+    .upload-zone {
+      border: 2px dashed #333;
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 16px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .upload-zone:hover {
+      border-color: #555;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .upload-zone.dragover {
+      border-color: #10B981;
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .upload-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .upload-text {
+      font-size: 13px;
+      color: #888;
+    }
+
+    .upload-text strong {
+      color: #fff;
+    }
+
+    /* LOG */
+    .log-line {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+    }
+
+    .log-line.info { color: #888; }
+    .log-line.success { color: #10B981; background: rgba(16, 185, 129, 0.1); }
+    .log-line.processing { color: #F59E0B; background: rgba(245, 158, 11, 0.1); }
+
+    .timestamp {
+      color: #555;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <h1>AI Data Analyst OS <span>by Seoyeon Jun</span></h1>
+  <div class="status-badge">
+    <div class="status-dot processing"></div>
+    <span>Processing: @eda</span>
+  </div>
+</header>
+
+<div class="grid">
+  <!-- INPUT PANEL -->
+  <div class="panel">
+    <div class="panel-header">
+      <span>📁 Input Data</span>
+      <span style="color: #10B981">1 file</span>
+    </div>
+    <div class="panel-content">
+      <div class="upload-zone" id="uploadZone">
+        <div class="upload-icon">📄</div>
+        <div class="upload-text">
+          <strong>Drop files here</strong><br>
+          or click to browse
+        </div>
+      </div>
+
+      <div class="file-item">
+        <div class="file-icon">📊</div>
+        <div class="file-info">
+          <h4>data.xlsx</h4>
+          <p>1.1 MB · 3 sheets · 10,194 rows</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIPELINE PANEL -->
+  <div class="panel">
+    <div class="panel-header">
+      <span>⚡ Pipeline Progress</span>
+      <span>3 / 7 completed</span>
+    </div>
+    <div class="panel-content">
+      <div class="pipeline-stage completed">
+        <div class="stage-indicator">✓</div>
+        <div class="stage-info">
+          <h4>@data-ingestion</h4>
+          <p>데이터 로드 및 검증 완료</p>
+        </div>
+        <div class="stage-time">2.3s</div>
+      </div>
+
+      <div class="pipeline-stage completed">
+        <div class="stage-indicator">✓</div>
+        <div class="stage-info">
+          <h4>@eda</h4>
+          <p>탐색적 데이터 분석 완료</p>
+        </div>
+        <div class="stage-time">8.1s</div>
+      </div>
+
+      <div class="pipeline-stage completed">
+        <div class="stage-indicator">✓</div>
+        <div class="stage-info">
+          <h4>@problem</h4>
+          <p>비즈니스 질문 5개 도출</p>
+        </div>
+        <div class="stage-time">3.4s</div>
+      </div>
+
+      <div class="pipeline-stage processing">
+        <div class="stage-indicator">◉</div>
+        <div class="stage-info">
+          <h4>@metrics</h4>
+          <p>KPI 계산 중...</p>
+        </div>
+        <div class="stage-time">--</div>
+      </div>
+
+      <div class="pipeline-stage pending">
+        <div class="stage-indicator">○</div>
+        <div class="stage-info">
+          <h4>@analysis</h4>
+          <p>심층 분석 대기</p>
+        </div>
+        <div class="stage-time">--</div>
+      </div>
+
+      <div class="pipeline-stage pending">
+        <div class="stage-indicator">○</div>
+        <div class="stage-info">
+          <h4>@dashboard</h4>
+          <p>시각화 생성 대기</p>
+        </div>
+        <div class="stage-time">--</div>
+      </div>
+
+      <div class="pipeline-stage pending">
+        <div class="stage-indicator">○</div>
+        <div class="stage-info">
+          <h4>@report</h4>
+          <p>최종 리포트 대기</p>
+        </div>
+        <div class="stage-time">--</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUTPUTS PANEL -->
+  <div class="panel">
+    <div class="panel-header">
+      <span>📋 Outputs</span>
+      <span style="color: #10B981">3 ready</span>
+    </div>
+    <div class="panel-content">
+      <div class="output-item expanded">
+        <div class="output-header" onclick="this.parentElement.classList.toggle('expanded')">
+          <div class="output-title">
+            <div class="output-icon eda">◇</div>
+            <div>
+              <div class="output-name">EDA Report</div>
+              <div class="output-meta">eda-report-2024-03-11.md</div>
+            </div>
+          </div>
+          <div class="output-expand">▼</div>
+        </div>
+        <div class="output-preview">
+# EDA Report: Superstore Dataset
+
+## 주요 지표 요약
+| 지표 | 값 |
+|------|------|
+| 총 매출 | $2,326,534 |
+| 총 이익 | $292,297 |
+| 고객 수 | 804 |
+
+## 주요 발견
+1. Technology 카테고리 매출 1위
+2. Consumer 세그먼트 50.3% 비중
+3. Furniture 이익률 저조 (2.6%)
+        </div>
+      </div>
+
+      <div class="output-item">
+        <div class="output-header" onclick="this.parentElement.classList.toggle('expanded')">
+          <div class="output-title">
+            <div class="output-icon metrics">□</div>
+            <div>
+              <div class="output-name">KPI Dashboard</div>
+              <div class="output-meta">kpi-summary.json</div>
+            </div>
+          </div>
+          <div class="output-expand">▼</div>
+        </div>
+        <div class="output-preview">
+{
+  "total_revenue": 2326534,
+  "total_profit": 292297,
+  "profit_margin": 12.6,
+  "avg_order_value": 455.23,
+  "customer_count": 804
+}
+        </div>
+      </div>
+
+      <div class="output-item">
+        <div class="output-header" onclick="this.parentElement.classList.toggle('expanded')">
+          <div class="output-title">
+            <div class="output-icon report">☰</div>
+            <div>
+              <div class="output-name">Business Questions</div>
+              <div class="output-meta">questions.md</div>
+            </div>
+          </div>
+          <div class="output-expand">▼</div>
+        </div>
+        <div class="output-preview">
+## 도출된 비즈니스 질문
+
+1. Furniture 카테고리 이익률 개선 방안?
+2. Consumer vs Corporate 고객 가치 비교?
+3. 할인율과 이익의 최적 균형점?
+4. 지역별 성장 기회는?
+5. 재구매율이 높은 상품군?
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Upload zone interactions
+const uploadZone = document.getElementById('uploadZone');
+
+uploadZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  uploadZone.classList.add('dragover');
+});
+
+uploadZone.addEventListener('dragleave', () => {
+  uploadZone.classList.remove('dragover');
+});
+
+uploadZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  // Handle file upload
+  alert('File upload would trigger the pipeline!');
+});
+</script>
+
+</body>
+</html>
