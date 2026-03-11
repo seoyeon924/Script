@@ -85,8 +85,8 @@
     
     .flow-line {
       fill: none;
-      stroke: rgba(255,255,255,0.08);
-      stroke-width: 1.5;
+      stroke: rgba(255,255,255,0.15);
+      stroke-width: 1;
     }
     
     .main-grid {
@@ -663,77 +663,79 @@ function drawFlowLines() {
   const wrapper = document.querySelector('.main-wrapper');
   if (!svg || !wrapper) return;
   
-  const rect = wrapper.getBoundingClientRect();
-  svg.setAttribute('width', rect.width);
-  svg.setAttribute('height', rect.height);
+  const wrapperRect = wrapper.getBoundingClientRect();
+  svg.style.width = wrapperRect.width + 'px';
+  svg.style.height = wrapperRect.height + 'px';
+  svg.setAttribute('viewBox', `0 0 ${wrapperRect.width} ${wrapperRect.height}`);
   svg.innerHTML = '';
   
-  function getPos(el) {
+  function getCenter(el) {
     if (!el) return null;
     const r = el.getBoundingClientRect();
     return {
-      cx: r.left - rect.left + r.width / 2,
-      cy: r.top - rect.top + r.height / 2,
-      right: r.right - rect.left,
-      left: r.left - rect.left,
-      top: r.top - rect.top,
-      bottom: r.bottom - rect.top
+      x: r.left - wrapperRect.left + r.width / 2,
+      y: r.top - wrapperRect.top + r.height / 2,
+      left: r.left - wrapperRect.left,
+      right: r.right - wrapperRect.left,
+      top: r.top - wrapperRect.top,
+      bottom: r.bottom - wrapperRect.top
     };
   }
   
-  function curve(x1, y1, x2, y2) {
-    const midX = (x1 + x2) / 2;
+  function drawCurve(x1, y1, x2, y2) {
+    const cp1x = x1 + (x2 - x1) * 0.5;
+    const cp2x = x1 + (x2 - x1) * 0.5;
+    const d = `M ${x1} ${y1} C ${cp1x} ${y1}, ${cp2x} ${y2}, ${x2} ${y2}`;
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', `M${x1},${y1} C${midX},${y1} ${midX},${y2} ${x2},${y2}`);
+    path.setAttribute('d', d);
     path.classList.add('flow-line');
     svg.appendChild(path);
   }
   
-  // Get elements
-  const inputCard = document.querySelector('.input-card');
-  const orchCard = document.querySelector('.orch-card');
-  const depts = document.querySelectorAll('.dept');
-  const outputCard = document.querySelector('.output-card');
-  const feedbackCard = document.getElementById('feedbackCard');
+  // Elements
+  const input = document.querySelector('.input-card');
+  const orch = document.querySelector('.orch-card');
+  const deptRows = document.querySelectorAll('.dept-row');
+  const output = document.querySelector('.output-card');
+  const feedback = document.getElementById('feedbackCard');
   
-  const inputPos = getPos(inputCard);
-  const orchPos = getPos(orchCard);
-  const outputPos = getPos(outputCard);
-  const feedbackPos = getPos(feedbackCard);
+  const inputPos = getCenter(input);
+  const orchPos = getCenter(orch);
+  const outputPos = getCenter(output);
+  const feedbackPos = getCenter(feedback);
   
-  // Input → Orchestrator
+  // 1. Input → Orch
   if (inputPos && orchPos) {
-    curve(inputPos.right + 5, inputPos.cy, orchPos.left - 5, orchPos.cy);
+    drawCurve(inputPos.right, inputPos.y, orchPos.left, orchPos.y);
   }
   
-  // Orchestrator → Each Department
-  if (orchPos && depts.length) {
-    depts.forEach(dept => {
-      const dPos = getPos(dept);
-      if (dPos) {
-        curve(orchPos.right + 5, orchPos.cy, dPos.left - 5, dPos.cy);
+  // 2. Orch → Department Rows (center of each row)
+  if (orchPos && deptRows.length) {
+    deptRows.forEach(row => {
+      const rowPos = getCenter(row);
+      if (rowPos) {
+        drawCurve(orchPos.right, orchPos.y, rowPos.left, rowPos.y);
       }
     });
   }
   
-  // Departments → Output
-  if (outputPos && depts.length) {
-    depts.forEach(dept => {
-      const dPos = getPos(dept);
-      if (dPos) {
-        curve(dPos.right + 5, dPos.cy, outputPos.left - 5, 
-              outputPos.top + (dPos.cy - rect.top) * 0.3 + outputPos.cy * 0.4);
+  // 3. Department Rows → Output
+  if (outputPos && deptRows.length) {
+    deptRows.forEach(row => {
+      const rowPos = getCenter(row);
+      if (rowPos) {
+        drawCurve(rowPos.right, rowPos.y, outputPos.left, outputPos.y);
       }
     });
   }
   
-  // Output → Feedback
+  // 4. Output → Feedback
   if (outputPos && feedbackPos) {
-    curve(outputPos.right + 5, outputPos.cy, feedbackPos.left - 5, feedbackPos.cy);
+    drawCurve(outputPos.right, outputPos.y, feedbackPos.left, feedbackPos.y);
   }
 }
 
-window.addEventListener('load', () => setTimeout(drawFlowLines, 200));
+window.addEventListener('load', () => setTimeout(drawFlowLines, 300));
 window.addEventListener('resize', drawFlowLines);
 </script>
 
