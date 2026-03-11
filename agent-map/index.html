@@ -20,7 +20,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 32px;
+      padding: 12px 24px;
       background: rgba(15,15,22,0.98);
       border-bottom: 1px solid rgba(255,255,255,0.06);
       position: sticky;
@@ -88,48 +88,62 @@
     
     /* ─── PIPELINE FLOW ─── */
     .pipeline-container {
-      padding: 40px 32px;
-      overflow-x: auto;
+      padding: 24px;
+      overflow-x: hidden;
     }
     
     .pipeline-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: #444;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       text-align: center;
     }
     
-    .pipeline-flow {
+    .row-divider {
+      grid-column: 1 / -1;
       display: flex;
-      gap: 20px;
-      min-width: max-content;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 0;
+      color: #333;
+      font-size: 20px;
+    }
+    
+    .pipeline-flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
       padding-bottom: 20px;
+    }
+    
+    .pipeline-row {
+      display: contents;
     }
     
     /* ─── STAGE ─── */
     .stage {
       background: rgba(20,20,28,0.95);
       border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 16px;
-      padding: 20px;
-      min-width: 220px;
-      max-width: 240px;
+      border-radius: 12px;
+      padding: 14px;
       position: relative;
     }
     
     .stage::after {
       content: '→';
       position: absolute;
-      right: -18px;
+      right: -12px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 20px;
+      font-size: 14px;
       color: #333;
+      z-index: 10;
     }
     
+    .stage:nth-child(5)::after,
     .stage:last-child::after {
       display: none;
     }
@@ -137,67 +151,66 @@
     .stage-header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
     
     .stage-num {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 800;
       flex-shrink: 0;
     }
     
     .stage-title {
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 700;
       color: #fff;
     }
     
     .stage-subtitle {
-      font-size: 10px;
+      font-size: 9px;
       color: #666;
-      margin-top: 2px;
+      margin-top: 1px;
     }
     
     .stage-agents {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 4px;
     }
     
     .agent {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
+      gap: 6px;
+      padding: 6px 8px;
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.04);
-      border-radius: 10px;
-      transition: all 0.2s;
+      border-radius: 6px;
+      transition: all 0.15s;
     }
     
     .agent:hover {
       background: rgba(255,255,255,0.06);
       border-color: rgba(255,255,255,0.1);
-      transform: translateX(4px);
     }
     
     .agent-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 7px;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 10px;
       flex-shrink: 0;
     }
     
@@ -207,7 +220,7 @@
     }
     
     .agent-name {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       color: #ddd;
       white-space: nowrap;
@@ -216,9 +229,9 @@
     }
     
     .agent-desc {
-      font-size: 9px;
-      color: #666;
-      margin-top: 2px;
+      font-size: 8px;
+      color: #555;
+      margin-top: 1px;
     }
     
     /* ─── COLORS BY STAGE ─── */
@@ -246,67 +259,75 @@
     
     /* ─── OUTPUT SECTION ─── */
     .outputs-section {
-      padding: 0 32px 40px;
+      padding: 0 24px 24px;
     }
     
     .outputs-title {
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 700;
       color: #444;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
     }
     
     .outputs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     
     .output-card {
       background: rgba(20,20,28,0.9);
       border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 12px;
-      padding: 16px;
+      border-radius: 8px;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      flex: 1;
+      min-width: 180px;
     }
     
     .output-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 14px;
     }
     
     .output-info h4 {
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 600;
       color: #fff;
     }
     
     .output-info p {
-      font-size: 10px;
-      color: #666;
-      margin-top: 4px;
+      font-size: 9px;
+      color: #555;
+      margin-top: 2px;
     }
     
     /* ─── SIDEBAR ─── */
     .sidebar {
+      display: none; /* Hidden by default, toggle with JS */
       position: fixed;
       right: 0;
       top: 65px;
       bottom: 0;
-      width: 320px;
+      width: 280px;
       background: rgba(12,12,18,0.98);
       border-left: 1px solid rgba(255,255,255,0.06);
-      padding: 24px;
+      padding: 20px;
       overflow-y: auto;
+      z-index: 50;
+    }
+    
+    .sidebar.open {
+      display: block;
     }
     
     .sidebar-title {
@@ -405,14 +426,7 @@
     
     body.has-sidebar .pipeline-container,
     body.has-sidebar .outputs-section {
-      margin-right: 320px;
-    }
-    
-    @media (max-width: 1400px) {
-      body.has-sidebar .pipeline-container,
-      body.has-sidebar .outputs-section {
-        margin-right: 0;
-      }
+      margin-right: 0;
     }
   </style>
 </head>
@@ -640,6 +654,9 @@
         </div>
       </div>
     </div>
+    
+    <!-- ROW DIVIDER -->
+    <div class="row-divider">↓</div>
     
     <!-- STAGE 6: Analysis -->
     <div class="stage border-6">
