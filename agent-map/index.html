@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Data Pipeline — Agent Map</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap');
     
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
@@ -25,11 +25,21 @@
       margin-bottom: 32px;
     }
     
-    .header-left h1 {
-      font-size: 26px;
-      font-weight: 700;
+    .header-left .hero-line1 {
+      font-family: 'Barlow', sans-serif;
+      font-size: 36px;
+      font-weight: 300;
       color: #fff;
-      margin-bottom: 6px;
+      line-height: 1.1;
+    }
+    
+    .header-left .hero-line2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 36px;
+      font-style: italic;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 8px;
     }
     
     .header-right {
@@ -353,7 +363,8 @@
 <!-- HEADER -->
 <header class="header">
   <div class="header-left">
-    <h1>AI Data Pipeline</h1>
+    <div class="hero-line1">AI Data Pipeline</div>
+    <div class="hero-line2">Automation flow map</div>
     <div class="stats-row">
       <div class="stat"><strong>38</strong> Agents</div>
       <div class="stat"><strong>10</strong> Stages</div>
