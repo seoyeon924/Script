@@ -34,7 +34,7 @@
     .logo-icon {
       width: 32px;
       height: 32px;
-      background: linear-gradient(135deg, #7C3AED, #EC4899);
+      background: #2563EB;
       border-radius: 8px;
       display: flex;
       align-items: center;
@@ -365,7 +365,7 @@
     
     .tech-tag {
       display: inline-block;
-      background: rgba(124,58,237,0.2);
+      background: rgba(37,99,235,0.2);
       color: #a78bfa;
       font-size: 10px;
       font-weight: 600;
@@ -384,7 +384,7 @@
     .flow-num {
       width: 24px;
       height: 24px;
-      background: rgba(124,58,237,0.3);
+      background: rgba(37,99,235,0.3);
       color: #a78bfa;
       border-radius: 50%;
       display: flex;
@@ -420,8 +420,8 @@
     
     .minimap-viewport {
       position: absolute;
-      border: 2px solid rgba(124,58,237,0.6);
-      background: rgba(124,58,237,0.1);
+      border: 2px solid rgba(37,99,235,0.6);
+      background: rgba(37,99,235,0.1);
       border-radius: 2px;
     }
     
@@ -494,7 +494,7 @@
 <!-- HEADER -->
 <div class="header">
   <div class="logo">
-    <div class="logo-icon">🧠</div>
+    <div class="logo-icon">◆</div>
     <div class="logo-text">
       AI Data Platform — Agent Map
       <span>v1.0 Demo</span>
@@ -542,7 +542,7 @@
       <div class="column" style="justify-content: center;">
         <div class="column-header">Input</div>
         <div class="node" id="node-client" data-col="input">
-          <div class="node-icon" style="background:rgba(255,255,255,0.1);">👤</div>
+          <div class="node-icon" style="background:rgba(255,255,255,0.1);">○</div>
           <div class="node-title">Client</div>
           <div class="node-subtitle">데이터 요청</div>
         </div>
@@ -552,7 +552,7 @@
       <div class="column" style="justify-content: center;">
         <div class="column-header">Orchestrator</div>
         <div class="node" id="node-orchestrator" data-col="orchestrator" style="border-color: rgba(124,58,237,0.4);">
-          <div class="node-icon" style="background: linear-gradient(135deg, #7C3AED, #EC4899);">✦</div>
+          <div class="node-icon" style="background: #2563EB;">◈</div>
           <div class="node-title">AI Data Agent</div>
           <div class="node-subtitle">12+ Agents · 5 Modules</div>
         </div>
@@ -564,7 +564,7 @@
         
         <div class="dept-card" id="dept-analysis" data-col="dept">
           <div class="dept-header">
-            <div class="dept-icon color-analysis">🔍</div>
+            <div class="dept-icon color-analysis">⌕</div>
             <div class="dept-title">데이터 분석</div>
             <div class="dept-count">3</div>
           </div>
@@ -577,7 +577,7 @@
         
         <div class="dept-card" id="dept-viz" data-col="dept">
           <div class="dept-header">
-            <div class="dept-icon color-viz">📊</div>
+            <div class="dept-icon color-viz">▣</div>
             <div class="dept-title">시각화</div>
             <div class="dept-count">3</div>
           </div>
@@ -590,7 +590,7 @@
         
         <div class="dept-card" id="dept-content" data-col="dept">
           <div class="dept-header">
-            <div class="dept-icon color-content">✍️</div>
+            <div class="dept-icon color-content">✎</div>
             <div class="dept-title">콘텐츠</div>
             <div class="dept-count">3</div>
           </div>
@@ -615,7 +615,7 @@
         
         <div class="dept-card" id="dept-ops" data-col="dept">
           <div class="dept-header">
-            <div class="dept-icon color-ops">⚙️</div>
+            <div class="dept-icon color-ops">⊛</div>
             <div class="dept-title">운영</div>
             <div class="dept-count">1</div>
           </div>
@@ -630,22 +630,22 @@
         <div class="column-header">Outputs</div>
         
         <div class="output-node" id="out-dashboard" data-col="output">
-          <div class="output-icon">📈</div>
+          <div class="output-icon">↗</div>
           <div class="output-title">대시보드</div>
         </div>
         
         <div class="output-node" id="out-report" data-col="output">
-          <div class="output-icon">📄</div>
+          <div class="output-icon">☰</div>
           <div class="output-title">리포트</div>
         </div>
         
         <div class="output-node" id="out-chart" data-col="output">
-          <div class="output-icon">📊</div>
+          <div class="output-icon">▣</div>
           <div class="output-title">차트</div>
         </div>
         
         <div class="output-node" id="out-alert" data-col="output">
-          <div class="output-icon">🔔</div>
+          <div class="output-icon">◉</div>
           <div class="output-title">알림</div>
         </div>
       </div>
@@ -654,7 +654,7 @@
       <div class="column" style="justify-content: center;">
         <div class="column-header">Feedback</div>
         <div class="knowledge-node" id="node-knowledge" data-col="feedback">
-          <div class="node-icon" style="background: rgba(16,185,129,0.2); margin: 0 auto 8px;">📚</div>
+          <div class="node-icon" style="background: rgba(16,185,129,0.2); margin: 0 auto 8px;">≡</div>
           <div class="node-title">Knowledge Base</div>
           <div class="node-subtitle">모든 결과물이 피드백되어<br>시스템이 학습합니다</div>
           <div class="knowledge-badge">SELF-IMPROVING</div>
@@ -806,7 +806,7 @@ function drawConnections() {
   
   // 연결 정의 (source → target, color)
   const connections = [
-    ['node-client', 'node-orchestrator', '#7C3AED'],
+    ['node-client', 'node-orchestrator', '#2563EB'],
     ['node-orchestrator', 'dept-analysis', '#3B82F6'],
     ['node-orchestrator', 'dept-viz', '#10B981'],
     ['node-orchestrator', 'dept-content', '#EC4899'],
