@@ -273,36 +273,33 @@
       color: #555;
     }
 
-    /* Stage Colors - Filled Cards */
-    .stage-mint.completed { background: rgba(224, 245, 238, 0.9); border-color: rgba(13, 148, 136, 0.3); }
-    .stage-mint.completed .stage-indicator { background: #0D9488; color: #fff; }
-    .stage-mint.completed .stage-info h4 { color: #1a1a1a; }
-    .stage-mint.completed .stage-info p { color: #4a4a4a; }
-    .stage-mint.completed .stage-time { color: #4a4a4a; }
+    /* Stage Colors - Filled Cards with Abstract Icons */
+    .stage-mint.completed, .stage-mint.pending { background: rgba(224, 245, 238, 0.92); border-color: rgba(13, 148, 136, 0.2); }
+    .stage-mint .stage-indicator { background: rgba(0,0,0,0.08); color: #1a1a1a; }
+    .stage-mint .stage-info h4 { color: #1a1a1a; }
+    .stage-mint .stage-info p { color: #4a4a4a; }
+    .stage-mint .stage-time { color: #4a4a4a; }
     
-    .stage-lavender.completed { background: rgba(237, 233, 247, 0.9); border-color: rgba(124, 92, 191, 0.3); }
-    .stage-lavender.completed .stage-indicator { background: #7C5CBF; color: #fff; }
-    .stage-lavender.completed .stage-info h4 { color: #1a1a1a; }
-    .stage-lavender.completed .stage-info p { color: #4a4a4a; }
-    .stage-lavender.completed .stage-time { color: #4a4a4a; }
+    .stage-lavender.completed, .stage-lavender.pending { background: rgba(237, 233, 247, 0.92); border-color: rgba(124, 92, 191, 0.2); }
+    .stage-lavender .stage-indicator { background: rgba(0,0,0,0.08); color: #1a1a1a; }
+    .stage-lavender .stage-info h4 { color: #1a1a1a; }
+    .stage-lavender .stage-info p { color: #4a4a4a; }
+    .stage-lavender .stage-time { color: #4a4a4a; }
     
-    .stage-rose.completed { background: rgba(253, 234, 239, 0.9); border-color: rgba(161, 61, 92, 0.3); }
-    .stage-rose.completed .stage-indicator { background: #A13D5C; color: #fff; }
-    .stage-rose.completed .stage-info h4 { color: #1a1a1a; }
-    .stage-rose.completed .stage-info p { color: #4a4a4a; }
-    .stage-rose.completed .stage-time { color: #4a4a4a; }
+    .stage-rose.completed, .stage-rose.pending { background: rgba(253, 234, 239, 0.92); border-color: rgba(161, 61, 92, 0.2); }
+    .stage-rose .stage-indicator { background: rgba(0,0,0,0.08); color: #1a1a1a; }
+    .stage-rose .stage-info h4 { color: #1a1a1a; }
+    .stage-rose .stage-info p { color: #4a4a4a; }
+    .stage-rose .stage-time { color: #4a4a4a; }
     
-    .stage-cream.completed { background: rgba(255, 251, 235, 0.9); border-color: rgba(245, 158, 11, 0.3); }
-    .stage-cream.completed .stage-indicator { background: #F59E0B; color: #fff; }
-    .stage-cream.completed .stage-info h4 { color: #1a1a1a; }
-    .stage-cream.completed .stage-info p { color: #4a4a4a; }
-    .stage-cream.completed .stage-time { color: #4a4a4a; }
+    .stage-cream.completed, .stage-cream.pending, .stage-cream.processing { background: rgba(255, 251, 235, 0.92); border-color: rgba(245, 158, 11, 0.2); }
+    .stage-cream .stage-indicator { background: rgba(0,0,0,0.08); color: #1a1a1a; }
+    .stage-cream .stage-info h4 { color: #1a1a1a; }
+    .stage-cream .stage-info p { color: #4a4a4a; }
+    .stage-cream .stage-time { color: #4a4a4a; }
     
-    .stage-cream.processing { background: rgba(255, 251, 235, 0.9); border-color: rgba(245, 158, 11, 0.4); }
-    .stage-cream.processing .stage-indicator { background: #F59E0B; color: #fff; }
-    .stage-cream.processing .stage-info h4 { color: #1a1a1a; }
-    .stage-cream.processing .stage-info p { color: #4a4a4a; }
-    .stage-cream.processing .stage-time { color: #4a4a4a; }
+    .pipeline-stage.pending { opacity: 0.6; }
+    .pipeline-stage.pending .stage-indicator { background: rgba(0,0,0,0.05); color: #888; }
 
     .stage-info {
       flex: 1;
@@ -612,7 +609,7 @@
     </div>
     <div class="panel-content">
       <div class="pipeline-stage completed stage-mint">
-        <div class="stage-indicator">✓</div>
+        <div class="stage-indicator">⊕</div>
         <div class="stage-info">
           <h4>@data-ingestion</h4>
           <p>Data loaded and validated</p>
@@ -621,7 +618,7 @@
       </div>
 
       <div class="pipeline-stage completed stage-lavender">
-        <div class="stage-indicator">✓</div>
+        <div class="stage-indicator">◈</div>
         <div class="stage-info">
           <h4>@eda</h4>
           <p>Exploratory analysis complete</p>
@@ -630,7 +627,7 @@
       </div>
 
       <div class="pipeline-stage completed stage-rose">
-        <div class="stage-indicator">✓</div>
+        <div class="stage-indicator">✦</div>
         <div class="stage-info">
           <h4>@problem</h4>
           <p>5 business questions generated</p>
@@ -639,7 +636,7 @@
       </div>
 
       <div class="pipeline-stage processing stage-cream">
-        <div class="stage-indicator">●</div>
+        <div class="stage-indicator">▣</div>
         <div class="stage-info">
           <h4>@metrics</h4>
           <p>Calculating KPIs...</p>
@@ -648,7 +645,7 @@
       </div>
 
       <div class="pipeline-stage pending stage-mint">
-        <div class="stage-indicator">○</div>
+        <div class="stage-indicator">⌘</div>
         <div class="stage-info">
           <h4>@analysis</h4>
           <p>Deep analysis pending</p>
@@ -657,7 +654,7 @@
       </div>
 
       <div class="pipeline-stage pending stage-lavender">
-        <div class="stage-indicator">○</div>
+        <div class="stage-indicator">▦</div>
         <div class="stage-info">
           <h4>@dashboard</h4>
           <p>Visualization pending</p>
@@ -666,7 +663,7 @@
       </div>
 
       <div class="pipeline-stage pending stage-mint">
-        <div class="stage-indicator">○</div>
+        <div class="stage-indicator">≡</div>
         <div class="stage-info">
           <h4>@report</h4>
           <p>Final report pending</p>
