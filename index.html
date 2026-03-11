@@ -38,6 +38,13 @@
   --ch13: #8B5CF6;
   --ch14: #EF4444;
   --ch07-soft: rgba(74,170,181,0.1);
+  --ch08-soft: rgba(124,58,237,0.1);
+  --ch09-soft: rgba(236,72,153,0.1);
+  --ch10-soft: rgba(245,158,11,0.1);
+  --ch11-soft: rgba(16,185,129,0.1);
+  --ch12-soft: rgba(59,130,246,0.1);
+  --ch13-soft: rgba(139,92,246,0.1);
+  --ch14-soft: rgba(239,68,68,0.1);
   --ch00-soft: rgba(123,111,160,0.1);
   --ch01-soft: rgba(74,122,181,0.1);
   --ch02-soft: rgba(74,138,106,0.1);
@@ -99,6 +106,13 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 .ch-badge.ch05 { background: var(--ch05-soft); color: var(--ch05); }
 .ch-badge.ch06 { background: var(--ch06-soft); color: var(--ch06); }
 .ch-badge.ch07 { background: var(--ch07-soft); color: var(--ch07); }
+.ch-badge.ch08 { background: var(--ch08-soft); color: var(--ch08); }
+.ch-badge.ch09 { background: var(--ch09-soft); color: var(--ch09); }
+.ch-badge.ch10 { background: var(--ch10-soft); color: var(--ch10); }
+.ch-badge.ch11 { background: var(--ch11-soft); color: var(--ch11); }
+.ch-badge.ch12 { background: var(--ch12-soft); color: var(--ch12); }
+.ch-badge.ch13 { background: var(--ch13-soft); color: var(--ch13); }
+.ch-badge.ch14 { background: var(--ch14-soft); color: var(--ch14); }
 
 .nav-item {
   display: flex; align-items: center; gap: 10px;
@@ -712,11 +726,10 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 
     <!-- CH08 -->
     <div class="chapter-label" onclick="toggleChapter('ch08')">
-      <span class="ch-dot" style="background:var(--ch08)"></span>
-      <span class="ch-num">CH08</span>
-      <span class="ch-title">Antigravity 파이프라인</span>
+      <span class="ch-badge ch08">CH08</span>
+      <span class="ch-name">Antigravity 파이프라인</span>
       <span class="ch-meta">4클립 · 65분</span>
-      <span class="ch-toggle">▸</span>
+      <span class="ch-toggle">▾</span>
     </div>
     <div class="chapter-clips collapsed" id="clips-ch08">
       <div class="nav-item" onclick="loadClip('ch08-01',this)" data-id="ch08-01"><span class="num">01</span><span class="clip-title">Antigravity 소개</span><span class="clip-time">15분</span></div>
@@ -727,11 +740,10 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 
     <!-- CH09 -->
     <div class="chapter-label" onclick="toggleChapter('ch09')">
-      <span class="ch-dot" style="background:var(--ch09)"></span>
-      <span class="ch-num">CH09</span>
-      <span class="ch-title">마케팅 대시보드</span>
+      <span class="ch-badge ch09">CH09</span>
+      <span class="ch-name">마케팅 대시보드</span>
       <span class="ch-meta">4클립 · 65분</span>
-      <span class="ch-toggle">▸</span>
+      <span class="ch-toggle">▾</span>
     </div>
     <div class="chapter-clips collapsed" id="clips-ch09">
       <div class="nav-item" onclick="loadClip('ch09-01',this)" data-id="ch09-01"><span class="num">01</span><span class="clip-title">대시보드 기획</span><span class="clip-time">15분</span></div>
@@ -742,11 +754,10 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 
     <!-- CH10 -->
     <div class="chapter-label" onclick="toggleChapter('ch10')">
-      <span class="ch-dot" style="background:var(--ch10)"></span>
-      <span class="ch-num">CH10</span>
-      <span class="ch-title">A/B 테스트 분석</span>
+      <span class="ch-badge ch10">CH10</span>
+      <span class="ch-name">A/B 테스트 분석</span>
       <span class="ch-meta">3클립 · 45분</span>
-      <span class="ch-toggle">▸</span>
+      <span class="ch-toggle">▾</span>
     </div>
     <div class="chapter-clips collapsed" id="clips-ch10">
       <div class="nav-item" onclick="loadClip('ch10-01',this)" data-id="ch10-01"><span class="num">01</span><span class="clip-title">통계적 유의성</span><span class="clip-time">15분</span></div>
@@ -756,11 +767,10 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 
     <!-- CH11 -->
     <div class="chapter-label" onclick="toggleChapter('ch11')">
-      <span class="ch-dot" style="background:var(--ch11)"></span>
-      <span class="ch-num">CH11</span>
-      <span class="ch-title">PM KPI 시각화</span>
+      <span class="ch-badge ch11">CH11</span>
+      <span class="ch-name">PM KPI 시각화</span>
       <span class="ch-meta">3클립 · 50분</span>
-      <span class="ch-toggle">▸</span>
+      <span class="ch-toggle">▾</span>
     </div>
     <div class="chapter-clips collapsed" id="clips-ch11">
       <div class="nav-item" onclick="loadClip('ch11-01',this)" data-id="ch11-01"><span class="num">01</span><span class="clip-title">DAU, 리텐션, 퍼널</span><span class="clip-time">18분</span></div>
@@ -770,11 +780,10 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 
     <!-- CH12 -->
     <div class="chapter-label" onclick="toggleChapter('ch12')">
-      <span class="ch-dot" style="background:var(--ch12)"></span>
-      <span class="ch-num">CH12</span>
-      <span class="ch-title">리텐션 & 매출 분석</span>
+      <span class="ch-badge ch12">CH12</span>
+      <span class="ch-name">리텐션 & 매출 분석</span>
       <span class="ch-meta">3클립 · 50분</span>
-      <span class="ch-toggle">▸</span>
+      <span class="ch-toggle">▾</span>
     </div>
     <div class="chapter-clips collapsed" id="clips-ch12">
       <div class="nav-item" onclick="loadClip('ch12-01',this)" data-id="ch12-01"><span class="num">01</span><span class="clip-title">코호트, 생존 분석</span><span class="clip-time">18분</span></div>
@@ -784,11 +793,10 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 
     <!-- CH13 -->
     <div class="chapter-label" onclick="toggleChapter('ch13')">
-      <span class="ch-dot" style="background:var(--ch13)"></span>
-      <span class="ch-num">CH13</span>
-      <span class="ch-title">HR 자동화</span>
+      <span class="ch-badge ch13">CH13</span>
+      <span class="ch-name">HR 자동화</span>
       <span class="ch-meta">7클립 · 115분</span>
-      <span class="ch-toggle">▸</span>
+      <span class="ch-toggle">▾</span>
     </div>
     <div class="chapter-clips collapsed" id="clips-ch13">
       <div class="nav-item" onclick="loadClip('ch13-01',this)" data-id="ch13-01"><span class="num">01</span><span class="clip-title">HR 데이터 입문</span><span class="clip-time">15분</span></div>
@@ -802,11 +810,10 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 
     <!-- CH14 -->
     <div class="chapter-label" onclick="toggleChapter('ch14')">
-      <span class="ch-dot" style="background:var(--ch14)"></span>
-      <span class="ch-num">CH14</span>
-      <span class="ch-title">Openclaw 파이프라인</span>
+      <span class="ch-badge ch14">CH14</span>
+      <span class="ch-name">Openclaw 파이프라인</span>
       <span class="ch-meta">3클립 · 50분</span>
-      <span class="ch-toggle">▸</span>
+      <span class="ch-toggle">▾</span>
     </div>
     <div class="chapter-clips collapsed" id="clips-ch14">
       <div class="nav-item" onclick="loadClip('ch14-01',this)" data-id="ch14-01"><span class="num">01</span><span class="clip-title">Openclaw 소개</span><span class="clip-time">18분</span></div>
