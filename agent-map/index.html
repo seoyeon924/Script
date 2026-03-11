@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Data Platform — Agent Map</title>
+  <title>AI Data Pipeline — End-to-End Automation</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0d0d12;
+      background: #0a0a0f;
       color: #e0e0e0;
       min-height: 100vh;
-      overflow: hidden;
+      overflow-x: auto;
     }
     
     /* ─── HEADER ─── */
@@ -20,9 +20,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 24px;
-      background: rgba(20,20,28,0.95);
+      padding: 16px 32px;
+      background: rgba(15,15,22,0.98);
       border-bottom: 1px solid rgba(255,255,255,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
     
     .logo {
@@ -32,50 +35,38 @@
     }
     
     .logo-icon {
-      width: 32px;
-      height: 32px;
-      background: #2563EB;
-      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #0EA5E9, #10B981);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
     }
     
     .logo-text {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 700;
       color: #fff;
     }
     
     .logo-text span {
-      color: #888;
-      font-weight: 400;
-      margin-left: 8px;
-      font-size: 12px;
+      color: #10B981;
+      margin-left: 4px;
     }
     
-    .legend {
-      display: flex;
-      gap: 16px;
+    .header-subtitle {
       font-size: 11px;
-    }
-    
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    
-    .legend-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
+      color: #666;
+      margin-top: 2px;
     }
     
     .stats {
       display: flex;
-      gap: 24px;
+      gap: 32px;
     }
     
     .stat {
@@ -83,239 +74,236 @@
     }
     
     .stat-value {
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 700;
       color: #fff;
     }
     
     .stat-label {
       font-size: 10px;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    
-    /* ─── MAIN LAYOUT ─── */
-    .main {
-      display: flex;
-      height: calc(100vh - 65px);
-    }
-    
-    /* ─── MAP AREA ─── */
-    .map-container {
-      flex: 1;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .map-canvas {
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
-    
-    /* SVG for connections */
-    .connections-svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-    
-    .connection {
-      fill: none;
-      stroke-width: 2;
-      opacity: 0.6;
-    }
-    
-    /* ─── COLUMNS ─── */
-    .columns {
-      display: flex;
-      justify-content: space-between;
-      padding: 40px;
-      height: 100%;
-      position: relative;
-      z-index: 2;
-    }
-    
-    .column {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      min-width: 160px;
-    }
-    
-    .column-header {
-      font-size: 10px;
-      font-weight: 600;
       color: #555;
       text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    
+    /* ─── PIPELINE FLOW ─── */
+    .pipeline-container {
+      padding: 40px 32px;
+      overflow-x: auto;
+    }
+    
+    .pipeline-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #444;
+      text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin-bottom: 8px;
+      margin-bottom: 24px;
       text-align: center;
     }
     
-    /* ─── NODES ─── */
-    .node {
-      background: rgba(30,30,40,0.9);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 14px 16px;
-      cursor: grab;
-      transition: all 0.2s;
+    .pipeline-flow {
+      display: flex;
+      gap: 20px;
+      min-width: max-content;
+      padding-bottom: 20px;
+    }
+    
+    /* ─── STAGE ─── */
+    .stage {
+      background: rgba(20,20,28,0.95);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 20px;
+      min-width: 220px;
+      max-width: 240px;
       position: relative;
     }
     
-    .node:hover {
-      background: rgba(40,40,55,0.95);
-      border-color: rgba(255,255,255,0.15);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    .stage::after {
+      content: '→';
+      position: absolute;
+      right: -18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: #333;
     }
     
-    .node:active {
-      cursor: grabbing;
+    .stage:last-child::after {
+      display: none;
     }
     
-    .node-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-    
-    .node-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 2px;
-    }
-    
-    .node-subtitle {
-      font-size: 10px;
-      color: #666;
-    }
-    
-    /* ─── DEPARTMENT CARDS ─── */
-    .dept-card {
-      background: rgba(25,25,35,0.95);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 14px;
-      padding: 16px;
-      min-width: 200px;
-    }
-    
-    .dept-header {
+    .stage-header {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
     
-    .dept-icon {
+    .stage-num {
       width: 28px;
       height: 28px;
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
     }
     
-    .dept-title {
+    .stage-title {
       font-size: 13px;
       font-weight: 700;
       color: #fff;
     }
     
-    .dept-count {
-      font-size: 11px;
+    .stage-subtitle {
+      font-size: 10px;
       color: #666;
-      margin-left: auto;
-      background: rgba(255,255,255,0.05);
-      padding: 2px 8px;
-      border-radius: 10px;
+      margin-top: 2px;
     }
     
-    .dept-agents {
+    .stage-agents {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
     }
     
-    .agent-item {
-      font-size: 11px;
-      color: #888;
+    .agent {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 4px 0;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 10px;
+      transition: all 0.2s;
     }
     
-    .agent-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .agent:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.1);
+      transform: translateX(4px);
     }
     
-    /* ─── OUTPUT NODES ─── */
-    .output-node {
-      background: rgba(30,30,40,0.8);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 12px 16px;
-      text-align: center;
-      min-width: 120px;
-    }
-    
-    .output-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.05);
+    .agent-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
-      margin: 0 auto 8px;
+      font-size: 12px;
+      flex-shrink: 0;
     }
     
-    .output-title {
+    .agent-info {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .agent-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: #ddd;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .agent-desc {
+      font-size: 9px;
+      color: #666;
+      margin-top: 2px;
+    }
+    
+    /* ─── COLORS BY STAGE ─── */
+    .color-1 { background: rgba(14,165,233,0.2); color: #0EA5E9; }
+    .color-2 { background: rgba(168,85,247,0.2); color: #A855F7; }
+    .color-3 { background: rgba(249,115,22,0.2); color: #F97316; }
+    .color-4 { background: rgba(236,72,153,0.2); color: #EC4899; }
+    .color-5 { background: rgba(234,179,8,0.2); color: #EAB308; }
+    .color-6 { background: rgba(34,197,94,0.2); color: #22C55E; }
+    .color-7 { background: rgba(59,130,246,0.2); color: #3B82F6; }
+    .color-8 { background: rgba(239,68,68,0.2); color: #EF4444; }
+    .color-9 { background: rgba(20,184,166,0.2); color: #14B8A6; }
+    .color-10 { background: rgba(16,185,129,0.2); color: #10B981; }
+    
+    .border-1 { border-color: rgba(14,165,233,0.3); }
+    .border-2 { border-color: rgba(168,85,247,0.3); }
+    .border-3 { border-color: rgba(249,115,22,0.3); }
+    .border-4 { border-color: rgba(236,72,153,0.3); }
+    .border-5 { border-color: rgba(234,179,8,0.3); }
+    .border-6 { border-color: rgba(34,197,94,0.3); }
+    .border-7 { border-color: rgba(59,130,246,0.3); }
+    .border-8 { border-color: rgba(239,68,68,0.3); }
+    .border-9 { border-color: rgba(20,184,166,0.3); }
+    .border-10 { border-color: rgba(16,185,129,0.3); }
+    
+    /* ─── OUTPUT SECTION ─── */
+    .outputs-section {
+      padding: 0 32px 40px;
+    }
+    
+    .outputs-title {
       font-size: 12px;
+      font-weight: 700;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+    
+    .outputs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    
+    .output-card {
+      background: rgba(20,20,28,0.9);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .output-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    
+    .output-info h4 {
+      font-size: 13px;
       font-weight: 600;
       color: #fff;
     }
     
-    /* ─── COLORS ─── */
-    .color-analysis { background: rgba(59,130,246,0.2); color: #3B82F6; }
-    .color-viz { background: rgba(16,185,129,0.2); color: #10B981; }
-    .color-content { background: rgba(236,72,153,0.2); color: #EC4899; }
-    .color-auto { background: rgba(245,158,11,0.2); color: #F59E0B; }
-    .color-ops { background: rgba(139,92,246,0.2); color: #8B5CF6; }
+    .output-info p {
+      font-size: 10px;
+      color: #666;
+      margin-top: 4px;
+    }
     
-    .dot-analysis { background: #3B82F6; }
-    .dot-viz { background: #10B981; }
-    .dot-content { background: #EC4899; }
-    .dot-auto { background: #F59E0B; }
-    .dot-ops { background: #8B5CF6; }
-    
-    .stroke-analysis { stroke: #3B82F6; }
-    .stroke-viz { stroke: #10B981; }
-    .stroke-content { stroke: #EC4899; }
-    .stroke-auto { stroke: #F59E0B; }
-    .stroke-ops { stroke: #8B5CF6; }
-    
-    /* ─── SIDEBAR (구현 가이드) ─── */
+    /* ─── SIDEBAR ─── */
     .sidebar {
-      width: 360px;
-      background: rgba(18,18,24,0.98);
+      position: fixed;
+      right: 0;
+      top: 65px;
+      bottom: 0;
+      width: 320px;
+      background: rgba(12,12,18,0.98);
       border-left: 1px solid rgba(255,255,255,0.06);
       padding: 24px;
       overflow-y: auto;
@@ -336,19 +324,48 @@
     }
     
     .sidebar-section h3 {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
-      color: #666;
+      color: #555;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       margin-bottom: 12px;
     }
     
     .sidebar-section p {
-      font-size: 12px;
-      color: #999;
+      font-size: 11px;
+      color: #888;
       line-height: 1.7;
-      margin-bottom: 12px;
+    }
+    
+    .flow-step {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    
+    .flow-num {
+      width: 22px;
+      height: 22px;
+      background: rgba(16,185,129,0.2);
+      color: #10B981;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    
+    .flow-text {
+      font-size: 11px;
+      color: #999;
+      line-height: 1.5;
+    }
+    
+    .flow-text strong {
+      color: #fff;
     }
     
     .code-block {
@@ -357,529 +374,620 @@
       border-radius: 8px;
       padding: 12px;
       font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 11px;
+      font-size: 10px;
       color: #7dd3fc;
       overflow-x: auto;
-      margin-bottom: 12px;
+      margin-top: 8px;
     }
     
     .tech-tag {
       display: inline-block;
-      background: rgba(37,99,235,0.2);
-      color: #a78bfa;
-      font-size: 10px;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 6px;
-      margin-right: 6px;
-      margin-bottom: 6px;
-    }
-    
-    .flow-step {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    
-    .flow-num {
-      width: 24px;
-      height: 24px;
-      background: rgba(37,99,235,0.3);
-      color: #a78bfa;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-    
-    .flow-text {
-      font-size: 12px;
-      color: #bbb;
-      line-height: 1.6;
-    }
-    
-    .flow-text strong {
-      color: #fff;
-    }
-    
-    /* ─── MINIMAP ─── */
-    .minimap {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      width: 160px;
-      height: 100px;
-      background: rgba(20,20,28,0.9);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    
-    .minimap-viewport {
-      position: absolute;
-      border: 2px solid rgba(37,99,235,0.6);
-      background: rgba(37,99,235,0.1);
-      border-radius: 2px;
-    }
-    
-    /* ─── ZOOM CONTROLS ─── */
-    .zoom-controls {
-      position: absolute;
-      bottom: 20px;
-      right: 380px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    
-    .zoom-btn {
-      width: 36px;
-      height: 36px;
-      background: rgba(30,30,40,0.9);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      color: #fff;
-      font-size: 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-    }
-    
-    .zoom-btn:hover {
-      background: rgba(50,50,65,0.95);
-    }
-    
-    /* ─── BOTTOM BAR ─── */
-    .bottom-bar {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 360px;
-      padding: 12px 24px;
-      background: rgba(15,15,20,0.95);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      text-align: center;
-      font-size: 11px;
-      color: #555;
-    }
-    
-    /* ─── KNOWLEDGE BASE ─── */
-    .knowledge-node {
-      background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(59,130,246,0.15));
-      border: 1px solid rgba(16,185,129,0.3);
-      border-radius: 14px;
-      padding: 16px;
-      text-align: center;
-    }
-    
-    .knowledge-badge {
-      display: inline-block;
-      background: rgba(16,185,129,0.2);
+      background: rgba(16,185,129,0.15);
       color: #10B981;
       font-size: 9px;
-      font-weight: 700;
+      font-weight: 600;
       padding: 3px 8px;
-      border-radius: 4px;
-      margin-top: 8px;
+      border-radius: 5px;
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+    
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1400px) {
+      .sidebar {
+        position: relative;
+        width: 100%;
+        top: 0;
+        border-left: none;
+        border-top: 1px solid rgba(255,255,255,0.06);
+      }
+    }
+    
+    body.has-sidebar .pipeline-container,
+    body.has-sidebar .outputs-section {
+      margin-right: 320px;
+    }
+    
+    @media (max-width: 1400px) {
+      body.has-sidebar .pipeline-container,
+      body.has-sidebar .outputs-section {
+        margin-right: 0;
+      }
     }
   </style>
 </head>
-<body>
+<body class="has-sidebar">
 
 <!-- HEADER -->
 <div class="header">
   <div class="logo">
-    <div class="logo-icon">◆</div>
-    <div class="logo-text">
-      AI Data Platform — Agent Map
-      <span>v1.0 Demo</span>
+    <div class="logo-icon">D</div>
+    <div>
+      <div class="logo-text">Data Analysis<span>Pipeline</span></div>
+      <div class="header-subtitle">End-to-End Automation · Data In → Insights Out</div>
     </div>
-  </div>
-  
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot dot-analysis"></div> 데이터 분석</div>
-    <div class="legend-item"><div class="legend-dot dot-viz"></div> 시각화</div>
-    <div class="legend-item"><div class="legend-dot dot-content"></div> 콘텐츠</div>
-    <div class="legend-item"><div class="legend-dot dot-auto"></div> 자동화</div>
-    <div class="legend-item"><div class="legend-dot dot-ops"></div> 운영</div>
-    <div class="legend-item" style="color:#555;">── Data Flow</div>
-    <div class="legend-item" style="color:#555;">┈┈ Feedback Loop</div>
   </div>
   
   <div class="stats">
     <div class="stat">
-      <div class="stat-value">12+</div>
+      <div class="stat-value">38</div>
       <div class="stat-label">AI Agents</div>
     </div>
     <div class="stat">
-      <div class="stat-value">5</div>
-      <div class="stat-label">Modules</div>
+      <div class="stat-value">10</div>
+      <div class="stat-label">Stages</div>
     </div>
     <div class="stat">
-      <div class="stat-value">5</div>
-      <div class="stat-label">Departments</div>
+      <div class="stat-value">7</div>
+      <div class="stat-label">Outputs</div>
     </div>
   </div>
 </div>
 
-<!-- MAIN -->
-<div class="main">
+<!-- PIPELINE -->
+<div class="pipeline-container">
+  <div class="pipeline-title">→ Data In, Insights Out — Fully Automated Pipeline →</div>
   
-  <!-- MAP AREA -->
-  <div class="map-container">
-    <svg class="connections-svg" id="connections">
-      <!-- 연결선은 JS로 동적 생성 -->
-    </svg>
+  <div class="pipeline-flow">
     
-    <div class="columns">
-      
-      <!-- INPUT -->
-      <div class="column" style="justify-content: center;">
-        <div class="column-header">Input</div>
-        <div class="node" id="node-client" data-col="input">
-          <div class="node-icon" style="background:rgba(255,255,255,0.1);">○</div>
-          <div class="node-title">Client</div>
-          <div class="node-subtitle">데이터 요청</div>
+    <!-- STAGE 1: Data Ingestion -->
+    <div class="stage border-1">
+      <div class="stage-header">
+        <div class="stage-num color-1">01</div>
+        <div>
+          <div class="stage-title">Data Ingestion</div>
+          <div class="stage-subtitle">데이터 수집</div>
         </div>
       </div>
-      
-      <!-- ORCHESTRATOR -->
-      <div class="column" style="justify-content: center;">
-        <div class="column-header">Orchestrator</div>
-        <div class="node" id="node-orchestrator" data-col="orchestrator" style="border-color: rgba(124,58,237,0.4);">
-          <div class="node-icon" style="background: #2563EB;">◈</div>
-          <div class="node-title">AI Data Agent</div>
-          <div class="node-subtitle">12+ Agents · 5 Modules</div>
-        </div>
-      </div>
-      
-      <!-- DEPARTMENTS -->
-      <div class="column" style="gap: 16px;">
-        <div class="column-header">Departments & Agents</div>
-        
-        <div class="dept-card" id="dept-analysis" data-col="dept">
-          <div class="dept-header">
-            <div class="dept-icon color-analysis">⌕</div>
-            <div class="dept-title">데이터 분석</div>
-            <div class="dept-count">3</div>
-          </div>
-          <div class="dept-agents">
-            <div class="agent-item"><div class="agent-dot dot-analysis"></div> Data Cleaner</div>
-            <div class="agent-item"><div class="agent-dot dot-analysis"></div> Pattern Analyzer</div>
-            <div class="agent-item"><div class="agent-dot dot-analysis"></div> SQL Generator</div>
+      <div class="stage-agents">
+        <div class="agent">
+          <div class="agent-icon color-1">⊕</div>
+          <div class="agent-info">
+            <div class="agent-name">API Connector</div>
+            <div class="agent-desc">REST/GraphQL 연동</div>
           </div>
         </div>
-        
-        <div class="dept-card" id="dept-viz" data-col="dept">
-          <div class="dept-header">
-            <div class="dept-icon color-viz">▣</div>
-            <div class="dept-title">시각화</div>
-            <div class="dept-count">3</div>
-          </div>
-          <div class="dept-agents">
-            <div class="agent-item"><div class="agent-dot dot-viz"></div> Chart Builder</div>
-            <div class="agent-item"><div class="agent-dot dot-viz"></div> Dashboard Designer</div>
-            <div class="agent-item"><div class="agent-dot dot-viz"></div> D3.js Generator</div>
+        <div class="agent">
+          <div class="agent-icon color-1">⊞</div>
+          <div class="agent-info">
+            <div class="agent-name">DB Extractor</div>
+            <div class="agent-desc">SQL/NoSQL 추출</div>
           </div>
         </div>
-        
-        <div class="dept-card" id="dept-content" data-col="dept">
-          <div class="dept-header">
-            <div class="dept-icon color-content">✎</div>
-            <div class="dept-title">콘텐츠</div>
-            <div class="dept-count">3</div>
-          </div>
-          <div class="dept-agents">
-            <div class="agent-item"><div class="agent-dot dot-content"></div> Report Writer</div>
-            <div class="agent-item"><div class="agent-dot dot-content"></div> Insight Narrator</div>
-            <div class="agent-item"><div class="agent-dot dot-content"></div> Slide Generator</div>
+        <div class="agent">
+          <div class="agent-icon color-1">⊡</div>
+          <div class="agent-info">
+            <div class="agent-name">File Parser</div>
+            <div class="agent-desc">CSV/Excel/JSON</div>
           </div>
         </div>
-        
-        <div class="dept-card" id="dept-auto" data-col="dept">
-          <div class="dept-header">
-            <div class="dept-icon color-auto">↯</div>
-            <div class="dept-title">자동화</div>
-            <div class="dept-count">2</div>
-          </div>
-          <div class="dept-agents">
-            <div class="agent-item"><div class="agent-dot dot-auto"></div> Scheduler</div>
-            <div class="agent-item"><div class="agent-dot dot-auto"></div> Notifier</div>
-          </div>
-        </div>
-        
-        <div class="dept-card" id="dept-ops" data-col="dept">
-          <div class="dept-header">
-            <div class="dept-icon color-ops">⊛</div>
-            <div class="dept-title">운영</div>
-            <div class="dept-count">1</div>
-          </div>
-          <div class="dept-agents">
-            <div class="agent-item"><div class="agent-dot dot-ops"></div> Cost Tracker</div>
+        <div class="agent">
+          <div class="agent-icon color-1">⊚</div>
+          <div class="agent-info">
+            <div class="agent-name">Stream Ingester</div>
+            <div class="agent-desc">실시간 데이터</div>
           </div>
         </div>
       </div>
-      
-      <!-- OUTPUTS -->
-      <div class="column" style="gap: 12px; justify-content: center;">
-        <div class="column-header">Outputs</div>
-        
-        <div class="output-node" id="out-dashboard" data-col="output">
-          <div class="output-icon">↗</div>
-          <div class="output-title">대시보드</div>
-        </div>
-        
-        <div class="output-node" id="out-report" data-col="output">
-          <div class="output-icon">☰</div>
-          <div class="output-title">리포트</div>
-        </div>
-        
-        <div class="output-node" id="out-chart" data-col="output">
-          <div class="output-icon">▣</div>
-          <div class="output-title">차트</div>
-        </div>
-        
-        <div class="output-node" id="out-alert" data-col="output">
-          <div class="output-icon">◉</div>
-          <div class="output-title">알림</div>
-        </div>
-      </div>
-      
-      <!-- FEEDBACK -->
-      <div class="column" style="justify-content: center;">
-        <div class="column-header">Feedback</div>
-        <div class="knowledge-node" id="node-knowledge" data-col="feedback">
-          <div class="node-icon" style="background: rgba(16,185,129,0.2); margin: 0 auto 8px;">≡</div>
-          <div class="node-title">Knowledge Base</div>
-          <div class="node-subtitle">모든 결과물이 피드백되어<br>시스템이 학습합니다</div>
-          <div class="knowledge-badge">SELF-IMPROVING</div>
-        </div>
-      </div>
-      
     </div>
     
-    <!-- MINIMAP -->
-    <div class="minimap">
-      <div class="minimap-viewport" style="top:30%; left:20%; width:60%; height:40%;"></div>
+    <!-- STAGE 2: EDA -->
+    <div class="stage border-2">
+      <div class="stage-header">
+        <div class="stage-num color-2">02</div>
+        <div>
+          <div class="stage-title">EDA</div>
+          <div class="stage-subtitle">탐색적 분석</div>
+        </div>
+      </div>
+      <div class="stage-agents">
+        <div class="agent">
+          <div class="agent-icon color-2">◈</div>
+          <div class="agent-info">
+            <div class="agent-name">Data Profiler</div>
+            <div class="agent-desc">통계 요약 생성</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-2">◇</div>
+          <div class="agent-info">
+            <div class="agent-name">Distribution Analyzer</div>
+            <div class="agent-desc">분포 시각화</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-2">◆</div>
+          <div class="agent-info">
+            <div class="agent-name">Correlation Finder</div>
+            <div class="agent-desc">상관관계 탐지</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-2">◊</div>
+          <div class="agent-info">
+            <div class="agent-name">Anomaly Scanner</div>
+            <div class="agent-desc">이상치 탐지</div>
+          </div>
+        </div>
+      </div>
     </div>
     
-    <!-- ZOOM CONTROLS -->
-    <div class="zoom-controls">
-      <button class="zoom-btn">+</button>
-      <button class="zoom-btn">−</button>
-      <button class="zoom-btn">⟲</button>
+    <!-- STAGE 3: Preprocessing -->
+    <div class="stage border-3">
+      <div class="stage-header">
+        <div class="stage-num color-3">03</div>
+        <div>
+          <div class="stage-title">Preprocessing</div>
+          <div class="stage-subtitle">전처리</div>
+        </div>
+      </div>
+      <div class="stage-agents">
+        <div class="agent">
+          <div class="agent-icon color-3">⊘</div>
+          <div class="agent-info">
+            <div class="agent-name">Data Cleaner</div>
+            <div class="agent-desc">결측치/중복 처리</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-3">⊗</div>
+          <div class="agent-info">
+            <div class="agent-name">Type Converter</div>
+            <div class="agent-desc">타입 변환</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-3">⊖</div>
+          <div class="agent-info">
+            <div class="agent-name">Outlier Handler</div>
+            <div class="agent-desc">이상치 처리</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-3">⊙</div>
+          <div class="agent-info">
+            <div class="agent-name">Feature Engineer</div>
+            <div class="agent-desc">파생 변수 생성</div>
+          </div>
+        </div>
+      </div>
     </div>
     
-    <!-- BOTTOM BAR -->
-    <div class="bottom-bar">
-      Drag any card to reposition — lines follow automatically
+    <!-- STAGE 4: Problem Definition -->
+    <div class="stage border-4">
+      <div class="stage-header">
+        <div class="stage-num color-4">04</div>
+        <div>
+          <div class="stage-title">Problem Definition</div>
+          <div class="stage-subtitle">문제 정의</div>
+        </div>
+      </div>
+      <div class="stage-agents">
+        <div class="agent">
+          <div class="agent-icon color-4">✦</div>
+          <div class="agent-info">
+            <div class="agent-name">Question Generator</div>
+            <div class="agent-desc">분석 질문 도출</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-4">✧</div>
+          <div class="agent-info">
+            <div class="agent-name">Hypothesis Builder</div>
+            <div class="agent-desc">가설 수립</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-4">★</div>
+          <div class="agent-info">
+            <div class="agent-name">Scope Definer</div>
+            <div class="agent-desc">분석 범위 설정</div>
+          </div>
+        </div>
+      </div>
     </div>
+    
+    <!-- STAGE 5: Metric Setting -->
+    <div class="stage border-5">
+      <div class="stage-header">
+        <div class="stage-num color-5">05</div>
+        <div>
+          <div class="stage-title">Metric Setting</div>
+          <div class="stage-subtitle">지표 설정</div>
+        </div>
+      </div>
+      <div class="stage-agents">
+        <div class="agent">
+          <div class="agent-icon color-5">▣</div>
+          <div class="agent-info">
+            <div class="agent-name">KPI Designer</div>
+            <div class="agent-desc">핵심 지표 정의</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-5">▢</div>
+          <div class="agent-info">
+            <div class="agent-name">Metric Calculator</div>
+            <div class="agent-desc">지표 계산 로직</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-5">▤</div>
+          <div class="agent-info">
+            <div class="agent-name">Benchmark Setter</div>
+            <div class="agent-desc">목표 기준 설정</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- STAGE 6: Analysis -->
+    <div class="stage border-6">
+      <div class="stage-header">
+        <div class="stage-num color-6">06</div>
+        <div>
+          <div class="stage-title">Analysis</div>
+          <div class="stage-subtitle">분석 실행</div>
+        </div>
+      </div>
+      <div class="stage-agents">
+        <div class="agent">
+          <div class="agent-icon color-6">⌘</div>
+          <div class="agent-info">
+            <div class="agent-name">SQL Generator</div>
+            <div class="agent-desc">쿼리 자동 생성</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-6">⌥</div>
+          <div class="agent-info">
+            <div class="agent-name">Statistical Analyzer</div>
+            <div class="agent-desc">통계 분석</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-6">⌃</div>
+          <div class="agent-info">
+            <div class="agent-name">Cohort Analyzer</div>
+            <div class="agent-desc">코호트 분석</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-6">⇧</div>
+          <div class="agent-info">
+            <div class="agent-name">Funnel Analyzer</div>
+            <div class="agent-desc">퍼널 분석</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-6">⌫</div>
+          <div class="agent-info">
+            <div class="agent-name">Trend Detector</div>
+            <div class="agent-desc">트렌드 분석</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- STAGE 7: Dashboard -->
+    <div class="stage border-7">
+      <div class="stage-header">
+        <div class="stage-num color-7">07</div>
+        <div>
+          <div class="stage-title">Dashboard</div>
+          <div class="stage-subtitle">대시보드</div>
+        </div>
+      </div>
+      <div class="stage-agents">
+        <div class="agent">
+          <div class="agent-icon color-7">▦</div>
+          <div class="agent-info">
+            <div class="agent-name">Chart Selector</div>
+            <div class="agent-desc">최적 차트 추천</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-7">▧</div>
+          <div class="agent-info">
+            <div class="agent-name">Chart Builder</div>
+            <div class="agent-desc">차트 생성</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-7">▨</div>
+          <div class="agent-info">
+            <div class="agent-name">Layout Designer</div>
+            <div class="agent-desc">레이아웃 구성</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-7">▩</div>
+          <div class="agent-info">
+            <div class="agent-name">Interactive Builder</div>
+            <div class="agent-desc">인터랙션 추가</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- STAGE 8: Experiment -->
+    <div class="stage border-8">
+      <div class="stage-header">
+        <div class="stage-num color-8">08</div>
+        <div>
+          <div class="stage-title">Experiment</div>
+          <div class="stage-subtitle">실험 설계</div>
+        </div>
+      </div>
+      <div class="stage-agents">
+        <div class="agent">
+          <div class="agent-icon color-8">⊿</div>
+          <div class="agent-info">
+            <div class="agent-name">AB Test Designer</div>
+            <div class="agent-desc">실험 설계</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-8">△</div>
+          <div class="agent-info">
+            <div class="agent-name">Sample Calculator</div>
+            <div class="agent-desc">표본 크기 계산</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-8">▲</div>
+          <div class="agent-info">
+            <div class="agent-name">Significance Tester</div>
+            <div class="agent-desc">유의성 검정</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- STAGE 9: Report -->
+    <div class="stage border-9">
+      <div class="stage-header">
+        <div class="stage-num color-9">09</div>
+        <div>
+          <div class="stage-title">Report</div>
+          <div class="stage-subtitle">리포트</div>
+        </div>
+      </div>
+      <div class="stage-agents">
+        <div class="agent">
+          <div class="agent-icon color-9">≡</div>
+          <div class="agent-info">
+            <div class="agent-name">Insight Generator</div>
+            <div class="agent-desc">인사이트 도출</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-9">≢</div>
+          <div class="agent-info">
+            <div class="agent-name">Report Writer</div>
+            <div class="agent-desc">리포트 작성</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-9">≣</div>
+          <div class="agent-info">
+            <div class="agent-name">Slide Generator</div>
+            <div class="agent-desc">프레젠테이션</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-9">≋</div>
+          <div class="agent-info">
+            <div class="agent-name">Executive Summary</div>
+            <div class="agent-desc">경영진 요약</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- STAGE 10: Action -->
+    <div class="stage border-10">
+      <div class="stage-header">
+        <div class="stage-num color-10">10</div>
+        <div>
+          <div class="stage-title">Action Items</div>
+          <div class="stage-subtitle">실행 계획</div>
+        </div>
+      </div>
+      <div class="stage-agents">
+        <div class="agent">
+          <div class="agent-icon color-10">→</div>
+          <div class="agent-info">
+            <div class="agent-name">Recommendation Engine</div>
+            <div class="agent-desc">개선안 추천</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-10">⇒</div>
+          <div class="agent-info">
+            <div class="agent-name">Priority Ranker</div>
+            <div class="agent-desc">우선순위 지정</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-10">⟹</div>
+          <div class="agent-info">
+            <div class="agent-name">Task Assigner</div>
+            <div class="agent-desc">담당자 배정</div>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="agent-icon color-10">↠</div>
+          <div class="agent-info">
+            <div class="agent-name">Timeline Planner</div>
+            <div class="agent-desc">일정 수립</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
   </div>
-  
-  <!-- SIDEBAR: 구현 가이드 -->
-  <div class="sidebar">
-    <div class="sidebar-title">⚒ 구현 가이드</div>
-    
-    <div class="sidebar-section">
-      <h3>사용 기술</h3>
-      <div>
-        <span class="tech-tag">React Flow</span>
-        <span class="tech-tag">D3.js</span>
-        <span class="tech-tag">SVG</span>
-        <span class="tech-tag">Canvas</span>
-      </div>
-      <p style="margin-top:12px;">
-        이 맵은 순수 HTML/CSS/JS로 제작된 데모입니다.<br>
-        프로덕션에서는 <strong>React Flow</strong>를 추천합니다.
-      </p>
-    </div>
-    
-    <div class="sidebar-section">
-      <h3>데이터 플로우</h3>
-      
-      <div class="flow-step">
-        <div class="flow-num">1</div>
-        <div class="flow-text">
-          <strong>Client</strong>가 데이터 분석 요청을 보냄<br>
-          <code style="color:#7dd3fc;">"매출 트렌드 분석해줘"</code>
-        </div>
-      </div>
-      
-      <div class="flow-step">
-        <div class="flow-num">2</div>
-        <div class="flow-text">
-          <strong>Orchestrator</strong>가 요청을 파싱하고<br>
-          적절한 에이전트 팀을 구성
-        </div>
-      </div>
-      
-      <div class="flow-step">
-        <div class="flow-num">3</div>
-        <div class="flow-text">
-          각 <strong>Department</strong>의 에이전트들이<br>
-          병렬로 작업 수행 (분석→시각화→리포트)
-        </div>
-      </div>
-      
-      <div class="flow-step">
-        <div class="flow-num">4</div>
-        <div class="flow-text">
-          <strong>Output</strong>이 생성되고<br>
-          클라이언트에게 전달
-        </div>
-      </div>
-      
-      <div class="flow-step">
-        <div class="flow-num">5</div>
-        <div class="flow-text">
-          모든 결과물이 <strong>Knowledge Base</strong>에<br>
-          저장되어 시스템이 학습 (Feedback Loop)
-        </div>
-      </div>
-    </div>
-    
-    <div class="sidebar-section">
-      <h3>React Flow 구현 예시</h3>
-      <div class="code-block">
-import ReactFlow from 'reactflow';
-
-const nodes = [
-  { id: 'client', 
-    position: { x: 0, y: 200 },
-    data: { label: 'Client' } },
-  { id: 'orchestrator',
-    position: { x: 200, y: 200 },
-    data: { label: 'AI Agent' } },
-  // ... more nodes
-];
-
-const edges = [
-  { id: 'e1', source: 'client',
-    target: 'orchestrator',
-    animated: true },
-];
-
-&lt;ReactFlow 
-  nodes={nodes} 
-  edges={edges}
-  fitView
-/&gt;
-      </div>
-    </div>
-    
-    <div class="sidebar-section">
-      <h3>핵심 기능</h3>
-      <p>
-        ✓ <strong>드래그 & 드롭</strong> — 노드 위치 자유 이동<br>
-        ✓ <strong>연결선 자동 업데이트</strong> — 노드 이동 시 따라옴<br>
-        ✓ <strong>줌 & 팬</strong> — 마우스 휠 / 드래그<br>
-        ✓ <strong>미니맵</strong> — 전체 구조 한눈에<br>
-        ✓ <strong>커스텀 노드</strong> — 부서/에이전트 카드<br>
-        ✓ <strong>애니메이션</strong> — 데이터 흐름 시각화
-      </p>
-    </div>
-    
-    <div class="sidebar-section">
-      <h3>확장 아이디어</h3>
-      <p>
-        • 실시간 에이전트 상태 표시 (활성/대기)<br>
-        • 클릭 시 에이전트 상세 정보 패널<br>
-        • 에이전트 간 메시지 흐름 애니메이션<br>
-        • 비용/토큰 사용량 실시간 표시<br>
-        • 에이전트 추가/삭제 편집 모드
-      </p>
-    </div>
-  </div>
-  
 </div>
 
-<script>
-// ─── 연결선 그리기 ───
-function drawConnections() {
-  const svg = document.getElementById('connections');
-  svg.innerHTML = '';
+<!-- OUTPUTS -->
+<div class="outputs-section">
+  <div class="outputs-title">→ Auto-Generated Outputs</div>
+  <div class="outputs-grid">
+    <div class="output-card">
+      <div class="output-icon color-2">◈</div>
+      <div class="output-info">
+        <h4>EDA Report</h4>
+        <p>데이터 프로파일링 + 분포 + 상관관계</p>
+      </div>
+    </div>
+    <div class="output-card">
+      <div class="output-icon color-4">✦</div>
+      <div class="output-info">
+        <h4>Problem Statement</h4>
+        <p>분석 질문 + 가설 + 범위 정의</p>
+      </div>
+    </div>
+    <div class="output-card">
+      <div class="output-icon color-5">▣</div>
+      <div class="output-info">
+        <h4>Metric Framework</h4>
+        <p>KPI 정의 + 계산식 + 목표</p>
+      </div>
+    </div>
+    <div class="output-card">
+      <div class="output-icon color-7">▦</div>
+      <div class="output-info">
+        <h4>Interactive Dashboard</h4>
+        <p>실시간 대시보드 + 필터 + 드릴다운</p>
+      </div>
+    </div>
+    <div class="output-card">
+      <div class="output-icon color-8">⊿</div>
+      <div class="output-info">
+        <h4>Experiment Design</h4>
+        <p>A/B 테스트 설계 + 표본 크기 + 기간</p>
+      </div>
+    </div>
+    <div class="output-card">
+      <div class="output-icon color-9">≡</div>
+      <div class="output-info">
+        <h4>Analysis Report</h4>
+        <p>인사이트 + 시각화 + 경영진 요약</p>
+      </div>
+    </div>
+    <div class="output-card">
+      <div class="output-icon color-10">→</div>
+      <div class="output-info">
+        <h4>Action Plan</h4>
+        <p>추천 액션 + 우선순위 + 담당자 + 일정</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-title">⚒ How It Works</div>
   
-  // 연결 정의 (source → target, color)
-  const connections = [
-    ['node-client', 'node-orchestrator', '#2563EB'],
-    ['node-orchestrator', 'dept-analysis', '#3B82F6'],
-    ['node-orchestrator', 'dept-viz', '#10B981'],
-    ['node-orchestrator', 'dept-content', '#EC4899'],
-    ['node-orchestrator', 'dept-auto', '#F59E0B'],
-    ['node-orchestrator', 'dept-ops', '#8B5CF6'],
-    ['dept-viz', 'out-dashboard', '#10B981'],
-    ['dept-viz', 'out-chart', '#10B981'],
-    ['dept-content', 'out-report', '#EC4899'],
-    ['dept-auto', 'out-alert', '#F59E0B'],
-    ['out-dashboard', 'node-knowledge', '#10B981'],
-    ['out-report', 'node-knowledge', '#10B981'],
-  ];
+  <div class="sidebar-section">
+    <h3>Input</h3>
+    <p>CSV, Excel, DB 연결, API 등 <strong>데이터만 넣으면</strong> 전체 파이프라인이 자동 실행됩니다.</p>
+    <div class="code-block">
+pipeline.run(
+  data="sales_2024.csv",
+  goal="매출 하락 원인 분석"
+)
+    </div>
+  </div>
   
-  connections.forEach(([srcId, tgtId, color]) => {
-    const src = document.getElementById(srcId);
-    const tgt = document.getElementById(tgtId);
-    if (!src || !tgt) return;
+  <div class="sidebar-section">
+    <h3>Pipeline Flow</h3>
     
-    const srcRect = src.getBoundingClientRect();
-    const tgtRect = tgt.getBoundingClientRect();
-    const containerRect = svg.getBoundingClientRect();
-    
-    const x1 = srcRect.right - containerRect.left;
-    const y1 = srcRect.top + srcRect.height/2 - containerRect.top;
-    const x2 = tgtRect.left - containerRect.left;
-    const y2 = tgtRect.top + tgtRect.height/2 - containerRect.top;
-    
-    // Bezier curve
-    const midX = (x1 + x2) / 2;
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', `M${x1},${y1} C${midX},${y1} ${midX},${y2} ${x2},${y2}`);
-    path.setAttribute('stroke', color);
-    path.setAttribute('fill', 'none');
-    path.setAttribute('stroke-width', '2');
-    path.setAttribute('opacity', '0.5');
-    svg.appendChild(path);
-  });
-}
-
-// 초기 연결선 그리기
-setTimeout(drawConnections, 100);
-
-// 리사이즈 시 다시 그리기
-window.addEventListener('resize', drawConnections);
-
-// ─── 드래그 기능 (간단 버전) ───
-let draggedNode = null;
-let offsetX, offsetY;
-
-document.querySelectorAll('.node, .dept-card, .output-node, .knowledge-node').forEach(node => {
-  node.addEventListener('mousedown', (e) => {
-    draggedNode = node;
-    offsetX = e.clientX - node.getBoundingClientRect().left;
-    offsetY = e.clientY - node.getBoundingClientRect().top;
-    node.style.position = 'relative';
-    node.style.zIndex = '100';
-  });
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (!draggedNode) return;
-  // 간단한 시각적 피드백 (실제 이동은 React Flow에서)
-  draggedNode.style.transform = `translate(${e.movementX}px, ${e.movementY}px)`;
-});
-
-document.addEventListener('mouseup', () => {
-  if (draggedNode) {
-    draggedNode.style.zIndex = '';
-    draggedNode = null;
-    drawConnections();
-  }
-});
-</script>
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div class="flow-text"><strong>Ingestion</strong> — 데이터 연결 및 로드</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <div class="flow-text"><strong>EDA</strong> — 자동 탐색적 분석</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <div class="flow-text"><strong>Preprocessing</strong> — 정제 및 피처 생성</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <div class="flow-text"><strong>Problem</strong> — 분석 질문/가설 수립</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">5</div>
+      <div class="flow-text"><strong>Metrics</strong> — KPI 정의 및 목표 설정</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">6</div>
+      <div class="flow-text"><strong>Analysis</strong> — 쿼리/통계/코호트/퍼널</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">7</div>
+      <div class="flow-text"><strong>Dashboard</strong> — 시각화 자동 생성</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">8</div>
+      <div class="flow-text"><strong>Experiment</strong> — A/B 테스트 설계</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">9</div>
+      <div class="flow-text"><strong>Report</strong> — 인사이트 + 리포트</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">10</div>
+      <div class="flow-text"><strong>Actions</strong> — 실행 계획 도출</div>
+    </div>
+  </div>
+  
+  <div class="sidebar-section">
+    <h3>Tech Stack</h3>
+    <div>
+      <span class="tech-tag">Claude Code</span>
+      <span class="tech-tag">Python</span>
+      <span class="tech-tag">Pandas</span>
+      <span class="tech-tag">Plotly</span>
+      <span class="tech-tag">SQL</span>
+      <span class="tech-tag">MCP</span>
+    </div>
+  </div>
+  
+  <div class="sidebar-section">
+    <h3>Agent Count</h3>
+    <p>
+      <strong>38 Agents</strong> across 10 stages<br><br>
+      Ingestion: 4 · EDA: 4 · Preprocessing: 4<br>
+      Problem: 3 · Metrics: 3 · Analysis: 5<br>
+      Dashboard: 4 · Experiment: 3 · Report: 4<br>
+      Actions: 4
+    </p>
+  </div>
+</div>
 
 </body>
 </html>
