@@ -20,8 +20,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 32px;
-      background: linear-gradient(180deg, rgba(13,13,20,1) 0%, rgba(13,13,20,0.95) 100%);
+      padding: 10px 24px;
+      background: rgba(13,13,20,0.98);
       border-bottom: 1px solid rgba(255,255,255,0.06);
       position: sticky;
       top: 0;
@@ -31,61 +31,61 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 10px;
     }
     
     .logo-icon {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       background: linear-gradient(135deg, #10B981, #0EA5E9);
-      border-radius: 12px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 800;
       color: #fff;
     }
     
     .logo-text {
-      font-size: 20px;
+      font-size: 15px;
       font-weight: 700;
       color: #fff;
     }
     
     .logo-version {
-      font-size: 11px;
+      font-size: 9px;
       color: #10B981;
       background: rgba(16,185,129,0.15);
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-left: 10px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 8px;
     }
     
     .header-legend {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 10px;
       flex-wrap: wrap;
     }
     
     .legend-item {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: #888;
+      gap: 4px;
+      font-size: 9px;
+      color: #666;
     }
     
     .legend-dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
     }
     
     .stats {
       display: flex;
-      gap: 28px;
+      gap: 20px;
     }
     
     .stat {
@@ -93,61 +93,25 @@
     }
     
     .stat-value {
-      font-size: 26px;
+      font-size: 20px;
       font-weight: 700;
       color: #fff;
     }
     
     .stat-label {
-      font-size: 10px;
+      font-size: 8px;
       color: #555;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
     }
     
     /* ─── MAIN CONTAINER ─── */
     .main-container {
       display: flex;
-      min-height: calc(100vh - 80px);
-      padding: 32px;
-      gap: 0;
-      position: relative;
-    }
-    
-    /* ─── SVG CONNECTIONS ─── */
-    .connections-svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-    
-    .flow-line {
-      fill: none;
-      stroke-width: 2;
-      opacity: 0.6;
-    }
-    
-    /* ─── COLUMN LABELS ─── */
-    .column-labels {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 32px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      margin-bottom: 0;
-    }
-    
-    .column-label {
-      font-size: 10px;
-      font-weight: 700;
-      color: #444;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      text-align: center;
-      flex: 1;
+      align-items: flex-start;
+      padding: 16px;
+      gap: 12px;
+      min-height: calc(100vh - 60px);
     }
     
     /* ─── COLUMNS ─── */
@@ -156,186 +120,169 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding-top: 20px;
-      position: relative;
-      z-index: 10;
+      flex-shrink: 0;
     }
     
-    .column-input {
-      width: 140px;
-    }
-    
-    .column-orchestrator {
-      width: 180px;
-    }
-    
-    .column-agents {
-      flex: 1;
-      min-width: 360px;
-      max-width: 480px;
-    }
-    
-    .column-outputs {
-      width: 180px;
-    }
-    
-    .column-feedback {
-      width: 220px;
-    }
+    .column-input { width: 90px; }
+    .column-orchestrator { width: 120px; }
+    .column-agents { flex: 1; min-width: 500px; max-width: 700px; }
+    .column-outputs { width: 120px; }
+    .column-feedback { width: 160px; }
     
     /* ─── INPUT CARD ─── */
     .input-card {
       background: rgba(20,20,28,0.9);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 24px;
+      border-radius: 12px;
+      padding: 14px;
       text-align: center;
-      width: 120px;
+      width: 80px;
     }
     
     .input-icon {
-      width: 48px;
-      height: 48px;
+      width: 36px;
+      height: 36px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 12px;
+      margin: 0 auto 8px;
     }
     
     .input-icon svg {
-      width: 24px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
       stroke: #888;
       fill: none;
       stroke-width: 1.5;
     }
     
     .input-title {
-      font-size: 13px;
+      font-size: 10px;
       font-weight: 600;
       color: #fff;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     
     .input-desc {
-      font-size: 10px;
+      font-size: 8px;
       color: #555;
     }
     
-    /* ─── ORCHESTRATOR CARD ─── */
+    /* ─── ORCHESTRATOR ─── */
     .orchestrator-card {
       background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(14,165,233,0.1));
       border: 1px solid rgba(16,185,129,0.3);
-      border-radius: 20px;
-      padding: 28px 24px;
+      border-radius: 14px;
+      padding: 16px 12px;
       text-align: center;
-      width: 160px;
+      width: 100px;
     }
     
     .orchestrator-icon {
-      width: 64px;
-      height: 64px;
+      width: 44px;
+      height: 44px;
       background: linear-gradient(135deg, #10B981, #0EA5E9);
-      border-radius: 16px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 14px;
-      box-shadow: 0 8px 32px rgba(16,185,129,0.3);
+      margin: 0 auto 10px;
+      box-shadow: 0 4px 20px rgba(16,185,129,0.3);
     }
     
     .orchestrator-icon svg {
-      width: 32px;
-      height: 32px;
+      width: 22px;
+      height: 22px;
       fill: #fff;
     }
     
     .orchestrator-title {
-      font-size: 14px;
+      font-size: 11px;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     
     .orchestrator-desc {
-      font-size: 10px;
+      font-size: 8px;
       color: #10B981;
     }
     
-    /* ─── DEPARTMENTS LIST ─── */
-    .departments-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    /* ─── DEPARTMENTS - 2 COLUMN GRID ─── */
+    .departments-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
       width: 100%;
     }
     
     .department {
       background: rgba(18,18,26,0.95);
       border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 14px;
-      padding: 16px 18px;
+      border-radius: 10px;
+      padding: 10px 12px;
     }
     
     .department-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 6px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
     }
     
     .department-title {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     
     .dept-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 6px;
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
+      font-size: 9px;
     }
     
     .dept-name {
-      font-size: 13px;
+      font-size: 10px;
       font-weight: 700;
       color: #fff;
     }
     
     .dept-count {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 10px;
+      padding: 1px 6px;
+      border-radius: 8px;
     }
     
     .agent-list {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 1px;
     }
     
     .agent-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 0;
-      font-size: 12px;
-      color: #aaa;
+      font-size: 9px;
+      color: #888;
+      padding: 2px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     
     .agent-item::before {
-      content: '•';
-      font-size: 8px;
+      content: '·';
+      margin-right: 4px;
+      color: #555;
     }
     
     /* ─── COLORS ─── */
@@ -350,106 +297,106 @@
     .color-report { background: rgba(20,184,166,0.2); color: #14B8A6; }
     .color-action { background: rgba(16,185,129,0.2); color: #10B981; }
     
-    .border-ingestion { border-color: rgba(14,165,233,0.3) !important; }
-    .border-eda { border-color: rgba(168,85,247,0.3) !important; }
-    .border-preprocess { border-color: rgba(249,115,22,0.3) !important; }
-    .border-problem { border-color: rgba(236,72,153,0.3) !important; }
-    .border-metrics { border-color: rgba(234,179,8,0.3) !important; }
-    .border-analysis { border-color: rgba(34,197,94,0.3) !important; }
-    .border-dashboard { border-color: rgba(59,130,246,0.3) !important; }
-    .border-experiment { border-color: rgba(239,68,68,0.3) !important; }
-    .border-report { border-color: rgba(20,184,166,0.3) !important; }
-    .border-action { border-color: rgba(16,185,129,0.3) !important; }
+    .border-ingestion { border-color: rgba(14,165,233,0.25) !important; }
+    .border-eda { border-color: rgba(168,85,247,0.25) !important; }
+    .border-preprocess { border-color: rgba(249,115,22,0.25) !important; }
+    .border-problem { border-color: rgba(236,72,153,0.25) !important; }
+    .border-metrics { border-color: rgba(234,179,8,0.25) !important; }
+    .border-analysis { border-color: rgba(34,197,94,0.25) !important; }
+    .border-dashboard { border-color: rgba(59,130,246,0.25) !important; }
+    .border-experiment { border-color: rgba(239,68,68,0.25) !important; }
+    .border-report { border-color: rgba(20,184,166,0.25) !important; }
+    .border-action { border-color: rgba(16,185,129,0.25) !important; }
     
     /* ─── OUTPUT CARDS ─── */
     .outputs-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 6px;
     }
     
     .output-card {
       background: rgba(20,20,28,0.9);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 14px 16px;
+      border-radius: 8px;
+      padding: 8px 10px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      width: 160px;
+      gap: 8px;
+      width: 110px;
     }
     
     .output-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 11px;
       flex-shrink: 0;
     }
     
     .output-name {
-      font-size: 12px;
+      font-size: 9px;
       font-weight: 600;
       color: #fff;
+      line-height: 1.2;
     }
     
     /* ─── FEEDBACK CARD ─── */
     .feedback-card {
       background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(20,184,166,0.08));
       border: 1px solid rgba(16,185,129,0.2);
-      border-radius: 16px;
-      padding: 24px 20px;
+      border-radius: 12px;
+      padding: 14px 12px;
       text-align: center;
-      width: 200px;
-      margin-top: 60px;
+      width: 140px;
     }
     
     .feedback-icon {
-      width: 48px;
-      height: 48px;
+      width: 36px;
+      height: 36px;
       background: rgba(16,185,129,0.15);
       border: 1px solid rgba(16,185,129,0.3);
-      border-radius: 12px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 14px;
+      margin: 0 auto 10px;
     }
     
     .feedback-icon svg {
-      width: 24px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
       stroke: #10B981;
       fill: none;
       stroke-width: 1.5;
     }
     
     .feedback-title {
-      font-size: 14px;
+      font-size: 11px;
       font-weight: 700;
       color: #10B981;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     
     .feedback-desc {
-      font-size: 10px;
+      font-size: 8px;
       color: #666;
-      line-height: 1.5;
-      margin-bottom: 12px;
+      line-height: 1.4;
+      margin-bottom: 8px;
     }
     
     .feedback-badge {
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 700;
       color: #10B981;
       background: rgba(16,185,129,0.15);
-      padding: 4px 12px;
-      border-radius: 12px;
+      padding: 3px 10px;
+      border-radius: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.03em;
     }
     
     /* ─── FLOW ARROWS ─── */
@@ -457,56 +404,38 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 60px;
+      width: 30px;
       flex-shrink: 0;
     }
     
     .arrow {
-      width: 40px;
-      height: 2px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.2));
+      width: 20px;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
       position: relative;
     }
     
     .arrow::after {
       content: '';
       position: absolute;
-      right: -4px;
-      top: -4px;
+      right: -3px;
+      top: -3px;
       width: 0;
       height: 0;
-      border-left: 8px solid rgba(255,255,255,0.2);
-      border-top: 5px solid transparent;
-      border-bottom: 5px solid transparent;
+      border-left: 6px solid rgba(255,255,255,0.15);
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
     }
     
-    /* ─── FOOTER ─── */
-    .footer {
-      padding: 20px 32px;
-      border-top: 1px solid rgba(255,255,255,0.04);
+    /* ─── COLUMN LABEL ─── */
+    .col-label {
+      font-size: 8px;
+      font-weight: 700;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
       text-align: center;
-      color: #333;
-      font-size: 11px;
-    }
-    
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 1200px) {
-      .main-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 32px;
-      }
-      
-      .column {
-        width: 100%;
-        max-width: 400px;
-      }
-      
-      .arrow-container {
-        transform: rotate(90deg);
-        height: 40px;
-        width: auto;
-      }
     }
   </style>
 </head>
@@ -517,62 +446,26 @@
   <div class="logo">
     <div class="logo-icon">D</div>
     <div class="logo-text">AI Data Pipeline — Agent Map</div>
-    <span class="logo-version">v2.0 Production</span>
+    <span class="logo-version">v2.0</span>
   </div>
   
   <div class="header-legend">
-    <div class="legend-item">
-      <div class="legend-dot" style="background:#0EA5E9"></div>
-      <span>Ingestion (4)</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background:#A855F7"></div>
-      <span>EDA (4)</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background:#F97316"></div>
-      <span>Preprocessing (4)</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background:#EC4899"></div>
-      <span>Problem (3)</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background:#EAB308"></div>
-      <span>Metrics (3)</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background:#22C55E"></div>
-      <span>Analysis (5)</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background:#3B82F6"></div>
-      <span>Dashboard (4)</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background:#EF4444"></div>
-      <span>Experiment (3)</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background:#14B8A6"></div>
-      <span>Report (4)</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background:#10B981"></div>
-      <span>Actions (4)</span>
-    </div>
-    <div class="legend-item" style="margin-left: 12px; color: #555;">
-      ── Data Flow
-    </div>
-    <div class="legend-item" style="color: #555;">
-      ╌╌ Feedback Loop
-    </div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0EA5E9"></div>Ingestion</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#A855F7"></div>EDA</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#F97316"></div>Preprocess</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#EC4899"></div>Problem</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#EAB308"></div>Metrics</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#22C55E"></div>Analysis</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3B82F6"></div>Dashboard</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#EF4444"></div>Experiment</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#14B8A6"></div>Report</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Actions</div>
   </div>
   
   <div class="stats">
     <div class="stat">
       <div class="stat-value">38</div>
-      <div class="stat-label">AI Agents</div>
+      <div class="stat-label">Agents</div>
     </div>
     <div class="stat">
       <div class="stat-value">10</div>
@@ -585,32 +478,18 @@
   </div>
 </header>
 
-<!-- COLUMN LABELS -->
-<div class="column-labels">
-  <div class="column-label">Input</div>
-  <div class="column-label">Orchestrator</div>
-  <div class="column-label">Departments & Agents</div>
-  <div class="column-label">Outputs</div>
-  <div class="column-label">Feedback</div>
-</div>
-
 <!-- MAIN CONTENT -->
 <div class="main-container">
   
-  <!-- SVG CONNECTIONS -->
-  <svg class="connections-svg" id="connectionsSvg"></svg>
-  
   <!-- INPUT -->
   <div class="column column-input">
-    <div class="input-card" id="inputCard">
+    <div class="col-label">Input</div>
+    <div class="input-card">
       <div class="input-icon">
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="8" r="4"/>
-          <path d="M20 21a8 8 0 10-16 0"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
       </div>
       <div class="input-title">Data Input</div>
-      <div class="input-desc">CSV · Excel · DB · API</div>
+      <div class="input-desc">CSV·Excel·DB</div>
     </div>
   </div>
   
@@ -618,25 +497,25 @@
   
   <!-- ORCHESTRATOR -->
   <div class="column column-orchestrator">
-    <div class="orchestrator-card" id="orchestratorCard">
+    <div class="col-label">Orchestrator</div>
+    <div class="orchestrator-card">
       <div class="orchestrator-icon">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       </div>
       <div class="orchestrator-title">AI Pipeline</div>
-      <div class="orchestrator-desc">38 Agents · 10 Stages</div>
+      <div class="orchestrator-desc">38 Agents</div>
     </div>
   </div>
   
   <div class="arrow-container"><div class="arrow"></div></div>
   
-  <!-- DEPARTMENTS & AGENTS -->
+  <!-- DEPARTMENTS (2-Column Grid) -->
   <div class="column column-agents">
-    <div class="departments-list" id="departmentsList">
+    <div class="col-label">Departments & Agents</div>
+    <div class="departments-grid">
       
-      <!-- Data Ingestion -->
-      <div class="department border-ingestion" data-dept="ingestion">
+      <!-- Row 1 -->
+      <div class="department border-ingestion">
         <div class="department-header">
           <div class="department-title">
             <div class="dept-icon color-ingestion">⊕</div>
@@ -645,32 +524,31 @@
           <span class="dept-count color-ingestion">4</span>
         </div>
         <div class="agent-list">
-          <div class="agent-item">API Connector — REST/GraphQL 연동</div>
-          <div class="agent-item">DB Extractor — SQL/NoSQL 추출</div>
-          <div class="agent-item">File Parser — CSV/Excel/JSON 파싱</div>
-          <div class="agent-item">Stream Ingester — 실시간 데이터 수집</div>
+          <div class="agent-item">API Connector</div>
+          <div class="agent-item">DB Extractor</div>
+          <div class="agent-item">File Parser</div>
+          <div class="agent-item">Stream Ingester</div>
         </div>
       </div>
       
-      <!-- EDA -->
-      <div class="department border-eda" data-dept="eda">
+      <div class="department border-eda">
         <div class="department-header">
           <div class="department-title">
             <div class="dept-icon color-eda">◈</div>
-            <span class="dept-name">EDA (탐색적 분석)</span>
+            <span class="dept-name">EDA</span>
           </div>
           <span class="dept-count color-eda">4</span>
         </div>
         <div class="agent-list">
-          <div class="agent-item">Data Profiler — 통계 요약 생성</div>
-          <div class="agent-item">Distribution Analyzer — 분포 시각화</div>
-          <div class="agent-item">Correlation Finder — 상관관계 탐지</div>
-          <div class="agent-item">Anomaly Scanner — 이상치 탐지</div>
+          <div class="agent-item">Data Profiler</div>
+          <div class="agent-item">Distribution Analyzer</div>
+          <div class="agent-item">Correlation Finder</div>
+          <div class="agent-item">Anomaly Scanner</div>
         </div>
       </div>
       
-      <!-- Preprocessing -->
-      <div class="department border-preprocess" data-dept="preprocess">
+      <!-- Row 2 -->
+      <div class="department border-preprocess">
         <div class="department-header">
           <div class="department-title">
             <div class="dept-icon color-preprocess">⊘</div>
@@ -679,15 +557,14 @@
           <span class="dept-count color-preprocess">4</span>
         </div>
         <div class="agent-list">
-          <div class="agent-item">Data Cleaner — 결측치/중복 처리</div>
-          <div class="agent-item">Type Converter — 데이터 타입 변환</div>
-          <div class="agent-item">Outlier Handler — 이상치 처리</div>
-          <div class="agent-item">Feature Engineer — 파생 변수 생성</div>
+          <div class="agent-item">Data Cleaner</div>
+          <div class="agent-item">Type Converter</div>
+          <div class="agent-item">Outlier Handler</div>
+          <div class="agent-item">Feature Engineer</div>
         </div>
       </div>
       
-      <!-- Problem Definition -->
-      <div class="department border-problem" data-dept="problem">
+      <div class="department border-problem">
         <div class="department-header">
           <div class="department-title">
             <div class="dept-icon color-problem">✦</div>
@@ -696,14 +573,14 @@
           <span class="dept-count color-problem">3</span>
         </div>
         <div class="agent-list">
-          <div class="agent-item">Question Generator — 분석 질문 도출</div>
-          <div class="agent-item">Hypothesis Builder — 가설 수립</div>
-          <div class="agent-item">Scope Definer — 분석 범위 설정</div>
+          <div class="agent-item">Question Generator</div>
+          <div class="agent-item">Hypothesis Builder</div>
+          <div class="agent-item">Scope Definer</div>
         </div>
       </div>
       
-      <!-- Metric Setting -->
-      <div class="department border-metrics" data-dept="metrics">
+      <!-- Row 3 -->
+      <div class="department border-metrics">
         <div class="department-header">
           <div class="department-title">
             <div class="dept-icon color-metrics">▣</div>
@@ -712,14 +589,13 @@
           <span class="dept-count color-metrics">3</span>
         </div>
         <div class="agent-list">
-          <div class="agent-item">KPI Designer — 핵심 지표 정의</div>
-          <div class="agent-item">Metric Calculator — 지표 계산 로직</div>
-          <div class="agent-item">Benchmark Setter — 목표 기준 설정</div>
+          <div class="agent-item">KPI Designer</div>
+          <div class="agent-item">Metric Calculator</div>
+          <div class="agent-item">Benchmark Setter</div>
         </div>
       </div>
       
-      <!-- Analysis -->
-      <div class="department border-analysis" data-dept="analysis">
+      <div class="department border-analysis">
         <div class="department-header">
           <div class="department-title">
             <div class="dept-icon color-analysis">⌘</div>
@@ -728,16 +604,16 @@
           <span class="dept-count color-analysis">5</span>
         </div>
         <div class="agent-list">
-          <div class="agent-item">SQL Generator — 쿼리 자동 생성</div>
-          <div class="agent-item">Statistical Analyzer — 통계 분석</div>
-          <div class="agent-item">Cohort Analyzer — 코호트 분석</div>
-          <div class="agent-item">Funnel Analyzer — 퍼널 분석</div>
-          <div class="agent-item">Trend Detector — 트렌드 분석</div>
+          <div class="agent-item">SQL Generator</div>
+          <div class="agent-item">Statistical Analyzer</div>
+          <div class="agent-item">Cohort Analyzer</div>
+          <div class="agent-item">Funnel Analyzer</div>
+          <div class="agent-item">Trend Detector</div>
         </div>
       </div>
       
-      <!-- Dashboard -->
-      <div class="department border-dashboard" data-dept="dashboard">
+      <!-- Row 4 -->
+      <div class="department border-dashboard">
         <div class="department-header">
           <div class="department-title">
             <div class="dept-icon color-dashboard">▦</div>
@@ -746,15 +622,14 @@
           <span class="dept-count color-dashboard">4</span>
         </div>
         <div class="agent-list">
-          <div class="agent-item">Chart Selector — 최적 차트 추천</div>
-          <div class="agent-item">Chart Builder — 차트 생성</div>
-          <div class="agent-item">Layout Designer — 레이아웃 구성</div>
-          <div class="agent-item">Interactive Builder — 인터랙션 추가</div>
+          <div class="agent-item">Chart Selector</div>
+          <div class="agent-item">Chart Builder</div>
+          <div class="agent-item">Layout Designer</div>
+          <div class="agent-item">Interactive Builder</div>
         </div>
       </div>
       
-      <!-- Experiment -->
-      <div class="department border-experiment" data-dept="experiment">
+      <div class="department border-experiment">
         <div class="department-header">
           <div class="department-title">
             <div class="dept-icon color-experiment">⊿</div>
@@ -763,14 +638,14 @@
           <span class="dept-count color-experiment">3</span>
         </div>
         <div class="agent-list">
-          <div class="agent-item">AB Test Designer — 실험 설계</div>
-          <div class="agent-item">Sample Calculator — 표본 크기 계산</div>
-          <div class="agent-item">Significance Tester — 유의성 검정</div>
+          <div class="agent-item">AB Test Designer</div>
+          <div class="agent-item">Sample Calculator</div>
+          <div class="agent-item">Significance Tester</div>
         </div>
       </div>
       
-      <!-- Report -->
-      <div class="department border-report" data-dept="report">
+      <!-- Row 5 -->
+      <div class="department border-report">
         <div class="department-header">
           <div class="department-title">
             <div class="dept-icon color-report">≡</div>
@@ -779,15 +654,14 @@
           <span class="dept-count color-report">4</span>
         </div>
         <div class="agent-list">
-          <div class="agent-item">Insight Generator — 인사이트 도출</div>
-          <div class="agent-item">Report Writer — 리포트 작성</div>
-          <div class="agent-item">Slide Generator — 프레젠테이션</div>
-          <div class="agent-item">Executive Summary — 경영진 요약</div>
+          <div class="agent-item">Insight Generator</div>
+          <div class="agent-item">Report Writer</div>
+          <div class="agent-item">Slide Generator</div>
+          <div class="agent-item">Executive Summary</div>
         </div>
       </div>
       
-      <!-- Action Items -->
-      <div class="department border-action" data-dept="action">
+      <div class="department border-action">
         <div class="department-header">
           <div class="department-title">
             <div class="dept-icon color-action">→</div>
@@ -796,10 +670,10 @@
           <span class="dept-count color-action">4</span>
         </div>
         <div class="agent-list">
-          <div class="agent-item">Recommendation Engine — 개선안 추천</div>
-          <div class="agent-item">Priority Ranker — 우선순위 지정</div>
-          <div class="agent-item">Task Assigner — 담당자 배정</div>
-          <div class="agent-item">Timeline Planner — 일정 수립</div>
+          <div class="agent-item">Recommendation Engine</div>
+          <div class="agent-item">Priority Ranker</div>
+          <div class="agent-item">Task Assigner</div>
+          <div class="agent-item">Timeline Planner</div>
         </div>
       </div>
       
@@ -810,7 +684,8 @@
   
   <!-- OUTPUTS -->
   <div class="column column-outputs">
-    <div class="outputs-list" id="outputsList">
+    <div class="col-label">Outputs</div>
+    <div class="outputs-list">
       <div class="output-card">
         <div class="output-icon color-eda">◈</div>
         <div class="output-name">EDA Report</div>
@@ -821,11 +696,11 @@
       </div>
       <div class="output-card">
         <div class="output-icon color-experiment">⊿</div>
-        <div class="output-name">A/B Test Design</div>
+        <div class="output-name">A/B Test</div>
       </div>
       <div class="output-card">
         <div class="output-icon color-report">≡</div>
-        <div class="output-name">Analysis Report</div>
+        <div class="output-name">Report</div>
       </div>
       <div class="output-card">
         <div class="output-icon color-action">→</div>
@@ -833,11 +708,11 @@
       </div>
       <div class="output-card">
         <div class="output-icon color-metrics">▣</div>
-        <div class="output-name">KPI Framework</div>
+        <div class="output-name">KPI</div>
       </div>
       <div class="output-card">
         <div class="output-icon color-problem">✦</div>
-        <div class="output-name">Problem Statement</div>
+        <div class="output-name">Problem</div>
       </div>
     </div>
   </div>
@@ -846,147 +721,18 @@
   
   <!-- FEEDBACK -->
   <div class="column column-feedback">
-    <div class="feedback-card" id="feedbackCard">
+    <div class="col-label">Feedback</div>
+    <div class="feedback-card">
       <div class="feedback-icon">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
       </div>
-      <div class="feedback-title">Knowledge Base (RAG)</div>
-      <div class="feedback-desc">
-        분석 결과, 인사이트, 리포트를<br>
-        학습하여 시스템이 점점 똑똑해집니다.
-      </div>
+      <div class="feedback-title">Knowledge Base</div>
+      <div class="feedback-desc">분석 결과를 학습하여<br>시스템이 점점 똑똑해집니다</div>
       <span class="feedback-badge">Self-Improving</span>
     </div>
   </div>
   
 </div>
-
-<!-- FOOTER -->
-<div class="footer">
-  Drag any card to reposition — lines follow automatically
-</div>
-
-<script>
-// SVG Curved Connection Lines
-function drawConnections() {
-  const svg = document.getElementById('connectionsSvg');
-  const container = document.querySelector('.main-container');
-  
-  if (!svg || !container) return;
-  
-  const rect = container.getBoundingClientRect();
-  svg.setAttribute('width', rect.width);
-  svg.setAttribute('height', rect.height);
-  svg.innerHTML = '';
-  
-  // Get element positions
-  const input = document.getElementById('inputCard');
-  const orchestrator = document.getElementById('orchestratorCard');
-  const departments = document.querySelectorAll('.department');
-  const outputs = document.querySelectorAll('.output-card');
-  const feedback = document.getElementById('feedbackCard');
-  
-  if (!input || !orchestrator || !departments.length || !outputs.length || !feedback) return;
-  
-  const colors = {
-    ingestion: '#0EA5E9',
-    eda: '#A855F7',
-    preprocess: '#F97316',
-    problem: '#EC4899',
-    metrics: '#EAB308',
-    analysis: '#22C55E',
-    dashboard: '#3B82F6',
-    experiment: '#EF4444',
-    report: '#14B8A6',
-    action: '#10B981'
-  };
-  
-  // Helper to get center point relative to container
-  function getCenter(el) {
-    const elRect = el.getBoundingClientRect();
-    return {
-      x: elRect.left - rect.left + elRect.width / 2,
-      y: elRect.top - rect.top + elRect.height / 2,
-      right: elRect.right - rect.left,
-      left: elRect.left - rect.left
-    };
-  }
-  
-  // Draw curves from orchestrator to departments
-  const orchCenter = getCenter(orchestrator);
-  
-  departments.forEach((dept, i) => {
-    const deptPos = getCenter(dept);
-    const color = colors[dept.dataset.dept] || '#666';
-    
-    // Bezier curve from orchestrator to department
-    const startX = orchCenter.right + 30;
-    const startY = orchCenter.y;
-    const endX = deptPos.left - 10;
-    const endY = deptPos.y;
-    const cp1x = startX + 60;
-    const cp1y = startY;
-    const cp2x = endX - 60;
-    const cp2y = endY;
-    
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', `M${startX},${startY} C${cp1x},${cp1y} ${cp2x},${cp2y} ${endX},${endY}`);
-    path.setAttribute('stroke', color);
-    path.classList.add('flow-line');
-    svg.appendChild(path);
-  });
-  
-  // Draw curves from departments to outputs
-  const outputCards = Array.from(outputs);
-  departments.forEach((dept, i) => {
-    const deptPos = getCenter(dept);
-    const color = colors[dept.dataset.dept] || '#666';
-    
-    // Connect to corresponding output or spread
-    const targetOutput = outputCards[i % outputCards.length];
-    if (targetOutput) {
-      const outPos = getCenter(targetOutput);
-      
-      const startX = deptPos.right + 10;
-      const startY = deptPos.y;
-      const endX = outPos.left - 10;
-      const endY = outPos.y;
-      const cp1x = startX + 40;
-      const cp1y = startY;
-      const cp2x = endX - 40;
-      const cp2y = endY;
-      
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('d', `M${startX},${startY} C${cp1x},${cp1y} ${cp2x},${cp2y} ${endX},${endY}`);
-      path.setAttribute('stroke', color);
-      path.classList.add('flow-line');
-      svg.appendChild(path);
-    }
-  });
-  
-  // Feedback loop (dashed line from outputs to feedback)
-  const lastOutput = outputCards[outputCards.length - 1];
-  if (lastOutput && feedback) {
-    const outPos = getCenter(lastOutput);
-    const fbPos = getCenter(feedback);
-    
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', `M${outPos.right + 10},${outPos.y} Q${outPos.right + 50},${(outPos.y + fbPos.y) / 2} ${fbPos.left - 10},${fbPos.y}`);
-    path.setAttribute('stroke', '#10B981');
-    path.setAttribute('stroke-dasharray', '6,4');
-    path.classList.add('flow-line');
-    svg.appendChild(path);
-  }
-}
-
-// Initial draw and redraw on resize
-window.addEventListener('load', () => {
-  setTimeout(drawConnections, 100);
-});
-window.addEventListener('resize', drawConnections);
-</script>
 
 </body>
 </html>
