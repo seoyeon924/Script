@@ -225,6 +225,27 @@
       fill: #fff;
     }
 
+    .input-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      color: #aaa;
+    }
+
+    .input-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #444;
+    }
+
     .input-title {
       font-size: 11px;
       font-weight: 700;
@@ -465,11 +486,32 @@
   <div>
     <div class="col-label">Input</div>
     <div class="card card-dark input-card">
-      <div class="input-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+      <div class="input-grid">
+        <div class="input-item">
+          <span class="input-dot"></span>
+          <span>CSV / Excel</span>
+        </div>
+        <div class="input-item">
+          <span class="input-dot"></span>
+          <span>Database</span>
+        </div>
+        <div class="input-item">
+          <span class="input-dot"></span>
+          <span>REST API</span>
+        </div>
+        <div class="input-item">
+          <span class="input-dot"></span>
+          <span>Google Sheets</span>
+        </div>
+        <div class="input-item">
+          <span class="input-dot"></span>
+          <span>Cloud Storage</span>
+        </div>
+        <div class="input-item">
+          <span class="input-dot"></span>
+          <span>Web Scraping</span>
+        </div>
       </div>
-      <div class="input-title">Data</div>
-      <div class="input-desc">CSV · DB · API</div>
     </div>
   </div>
 
