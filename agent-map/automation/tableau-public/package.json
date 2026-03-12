@@ -6,7 +6,8 @@
   "scripts": {
     "auth": "node src/auth.js",
     "run": "node src/run.js",
-    "debug": "PWDEBUG=1 node src/run.js"
+    "debug": "PWDEBUG=1 node src/run.js",
+    "inspect": "node src/inspect.js"
   },
   "dependencies": {
     "playwright": "^1.54.2"
