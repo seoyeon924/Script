@@ -354,11 +354,7 @@
       box-shadow: var(--panel-shadow);
     }
 
-    .kpi-grid .kpi-card:nth-child(1) { background: var(--accent-offwhite); }
-    .kpi-grid .kpi-card:nth-child(2) { background: var(--accent-sky); }
-    .kpi-grid .kpi-card:nth-child(3) { background: var(--accent-mint); }
-    .kpi-grid .kpi-card:nth-child(4) { background: var(--accent-rose); }
-    .kpi-grid .kpi-card:nth-child(5) { background: var(--accent-cream); }
+    .kpi-grid .kpi-card { background: var(--accent-offwhite); }
 
     .layout-grid > .chart-card:first-child { background: var(--accent-offwhite); }
     .layout-grid > .insight-card { background: var(--accent-peach, var(--accent-cream)); }
@@ -1293,6 +1289,12 @@
         }));
     }
 
+    function sparklineColorForTone(tone) {
+      if (tone === 'positive') return 'var(--chart-mint)';
+      if (tone === 'negative') return 'var(--chart-rose)';
+      return 'var(--chart-ink)';
+    }
+
     function renderKpis(rows) {
       const monthly = buildMonthlySeries(rows);
       const current = monthly[monthly.length - 1] || { revenue: 0, orders: 0, visitors: 0, conversion: 0 };
@@ -1313,7 +1315,6 @@
           delta: compareDelta(current.revenue, previous?.revenue || 0),
           description: 'Primary outcome metric. Best for executive scale reading, but paired with efficiency metrics below.',
           values: monthly.map((item) => item.revenue),
-          color: 'var(--chart-lavender)',
         },
         {
           label: 'Profit',
@@ -1321,7 +1322,6 @@
           delta: compareDelta(current.profit, previous?.profit || 0),
           description: 'Closer to controllable value than revenue alone because cost pressure is included.',
           values: monthly.map((item) => item.profit),
-          color: 'var(--chart-mint)',
         },
         {
           label: 'Margin',
@@ -1329,7 +1329,6 @@
           delta: compareDelta(current.margin, previous?.margin || 0),
           description: 'Efficiency lens. Useful for identifying whether growth is high quality or discount-driven.',
           values: monthly.map((item) => item.margin),
-          color: 'var(--chart-peach)',
         },
         {
           label: 'Conversion',
@@ -1337,7 +1336,6 @@
           delta: compareDelta(current.conversion, previous?.conversion || 0),
           description: 'Actionable lead metric. Easier to influence quickly than total revenue.',
           values: monthly.map((item) => item.conversion),
-          color: 'var(--chart-rose)',
         },
         {
           label: 'Revenue / Visitor',
@@ -1345,7 +1343,6 @@
           delta: compareDelta(current.visitors ? current.revenue / current.visitors : 0, previous?.visitors ? previous.revenue / previous.visitors : 0),
           description: 'Channel and landing quality metric. Combines traffic and commercial output into one comparable number.',
           values: monthly.map((item) => (item.visitors ? item.revenue / item.visitors : 0)),
-          color: 'var(--chart-ink)',
         },
       ];
 
@@ -1355,7 +1352,7 @@
           <div class="kpi-value">${card.value}</div>
           <div class="kpi-delta ${card.delta.tone}">${card.delta.label}</div>
           <div class="kpi-desc">${card.description}</div>
-          ${renderSparkline(card.values, card.color)}
+          ${renderSparkline(card.values, sparklineColorForTone(card.delta.tone))}
         </div>
       `).join('');
     }
