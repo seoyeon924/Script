@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgentMap Executive Performance Dashboard Wireframe</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      background: #EEF1F6;
+      color: #2F3442;
+    }
+    .app {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+    .sidebar {
+      background: #434C66;
+      color: white;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .sidebar h1 { font-size: 34px; line-height: 1.05; margin: 0; }
+    .sidebar p { color: rgba(255,255,255,0.78); line-height: 1.6; }
+    .pill {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      margin: 0 8px 8px 0;
+      font-size: 13px;
+    }
+    .main {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .hero {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(47,52,66,0.08);
+      border-radius: 22px;
+      padding: 24px;
+    }
+    .hero h2 { margin: 0 0 8px; font-size: 40px; }
+    .hero p { margin: 0; color: #667085; max-width: 860px; line-height: 1.6; }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .kpi {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      min-height: 140px;
+      border: 1px solid rgba(47,52,66,0.08);
+    }
+    .kpi small { color: #778; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+    .kpi strong { display: block; font-size: 36px; margin: 10px 0; }
+    .spark {
+      height: 58px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #6E78B766, #6E78B712);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 18px;
+    }
+    .card {
+      background: rgba(255,255,255,0.72);
+      border-radius: 22px;
+      padding: 20px;
+      border: 1px solid rgba(47,52,66,0.08);
+    }
+    .card h3 { margin: 0 0 8px; font-size: 22px; }
+    .sub {
+      color: #6d7282;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .bars, .actions { display: flex; flex-direction: column; gap: 10px; }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 160px 1fr 40px;
+      gap: 10px;
+      align-items: center;
+      font-size: 13px;
+    }
+    .track {
+      height: 16px;
+      border-radius: 999px;
+      background: #dfe5ef;
+      overflow: hidden;
+    }
+    .fill { height: 100%; background: #6E78B7; }
+    .fill.min { background: #D96C63; }
+    .action {
+      background: white;
+      border-radius: 16px;
+      padding: 14px;
+      border-left: 5px solid #6E78B7;
+    }
+    .tables {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid rgba(47,52,66,0.08);
+    }
+    .tag {
+      display: inline-block;
+      background: #B9DCCD;
+      color: #2F3442;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div>
+        <h1>Executive<br>Performance</h1>
+        <p>From growth signal to operational action</p>
+      </div>
+      <div>
+        <div class="pill">Overview</div>
+        <div class="pill">Diagnostics</div>
+        <div class="pill">Action Board</div>
+        <div class="pill">Data Table</div>
+      </div>
+      <div>
+        <p><strong>Filters</strong></p>
+        <div class="pill">Date</div><div class="pill">Region</div><div class="pill">Segment</div><div class="pill">Category</div>
+      </div>
+      <div>
+        <p><strong>Design Notes</strong></p>
+        <p>Dark navigation, editorial KPI cards, soft canvas, and restrained pastel accents modeled after your usual dashboard language.</p>
+      </div>
+    </aside>
+    <main class="main">
+      <section class="hero">
+        <h2>Executive Overview</h2>
+        <p>General > Specific headline scan for executives and team leads</p>
+      </section>
+      <section class="kpis">
+        <div class='kpi'><small>Revenue</small><strong>397130.0</strong><div class='spark'></div></div><div class='kpi'><small>Profit Margin</small><strong>30.58</strong><div class='spark'></div></div><div class='kpi'><small>Conversion Rate</small><strong>12.55</strong><div class='spark'></div></div><div class='kpi'><small>Average Order Value</small><strong>120.97</strong><div class='spark'></div></div>
+      </section>
+      <section class="grid">
+        <div class="card">
+          <h3>Performance Drivers</h3>
+          <div class="sub">General > Specific flow with max/min emphasis and description under each chart.</div>
+          <div class="bars">
+            <div class="bar-row"><span>North America</span><div class="track"><div class="fill" style="width: 88%"></div></div><span>max</span></div>
+            <div class="bar-row"><span>Asia Pacific</span><div class="track"><div class="fill" style="width: 74%"></div></div><span></span></div>
+            <div class="bar-row"><span>Europe</span><div class="track"><div class="fill min" style="width: 42%"></div></div><span>min</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Action Board</h3>
+          <div class="sub">Actionable next moves surfaced in executive language.</div>
+          <div class="actions">
+            <div class='action'>Increase attention on leading indicators before revenue erosion appears in month-end reporting.</div><div class='action'>Bias spend and product focus toward high revenue-per-visitor combinations.</div><div class='action'>Treat statistically significant experiment lift as operational input, not automatic rollout approval.</div>
+          </div>
+        </div>
+      </section>
+      <section class="card">
+        <h3>Recommended Chart Set</h3>
+        <div class="sub">These placeholders map directly to the Tableau workbook tabs and objects.</div>
+        <div class="tables">
+          <table>
+            <thead><tr><th>Chart</th><th>Description</th><th>X</th><th>Y</th></tr></thead>
+            <tbody>
+              <tr><td>Executive KPI Cards</td><td>Matches the user’s reference style and gives executives an instant signal scan.</td><td>date</td><td>Revenue, Profit Margin, Conversion Rate, AOV</td></tr><tr><td>Revenue and Conversion Trend</td><td>Supports General > Specific storytelling and shows whether topline changes are demand or efficiency-driven.</td><td>date</td><td>revenue or conversion rate</td></tr><tr><td>Category / Region Performance</td><td>Easy side-by-side comparison and fast identification of max/min performers.</td><td>revenue per category or region</td><td>category / region</td></tr><tr><td>Opportunity Focus Table</td><td>Gives operators an actionable worklist, similar to the user’s sales pipeline reference.</td><td>N/A</td><td>N/A</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

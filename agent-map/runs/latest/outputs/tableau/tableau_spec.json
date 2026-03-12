@@ -1,0 +1,128 @@
+{
+  "workbook_name": "AgentMap Executive Performance Dashboard",
+  "brand_tone": "Soft editorial BI with calm premium enterprise styling",
+  "palette": {
+    "canvas": "#EEF1F6",
+    "sidebar": "#434C66",
+    "card": "#FFFFFF",
+    "headline": "#2F3442",
+    "accent_primary": "#6E78B7",
+    "accent_secondary": "#B9DCCD",
+    "positive": "#5E9B73",
+    "negative": "#D96C63",
+    "warning": "#D6A65F",
+    "highlight_max": "#6E78B7",
+    "highlight_min": "#D96C63"
+  },
+  "layout": {
+    "global_nav": "Left dark sidebar with page tabs, filter controls, and narrative guidance",
+    "page_flow": [
+      "Executive Overview",
+      "Drivers & Diagnostics",
+      "Action Board",
+      "Data Table"
+    ]
+  },
+  "filters": [
+    "Date",
+    "Region",
+    "Segment",
+    "Category",
+    "Channel",
+    "Experiment Variant"
+  ],
+  "dashboard_pages": [
+    {
+      "name": "Executive Overview",
+      "purpose": "General > Specific headline scan for executives and team leads",
+      "zones": [
+        "KPI cards with sparkline and delta",
+        "Trend line section",
+        "Category and region comparison",
+        "Action summary card"
+      ]
+    },
+    {
+      "name": "Drivers & Diagnostics",
+      "purpose": "Reveal likely causes behind KPI changes",
+      "zones": [
+        "Funnel efficiency view",
+        "A/B test lift card",
+        "Region/category ranking with max/min emphasis",
+        "Knowledge base insights"
+      ]
+    },
+    {
+      "name": "Action Board",
+      "purpose": "Operational next steps for business owners",
+      "zones": [
+        "Prioritized action cards",
+        "Actionable leading indicators",
+        "Owner-based execution table"
+      ]
+    },
+    {
+      "name": "Data Table",
+      "purpose": "Verification page for raw aggregated records",
+      "zones": [
+        "Detailed text table",
+        "Download/export affordance"
+      ]
+    }
+  ],
+  "titles": {
+    "workbook": "Executive Performance Dashboard",
+    "subtitle": "From growth signal to operational action",
+    "sections": [
+      "What changed",
+      "What explains it",
+      "Where to act next",
+      "What data is behind it"
+    ]
+  },
+  "storytelling": {
+    "narrative": [
+      "Start with signal strength through KPI cards and trend context.",
+      "Move into diagnostic comparisons by category, region, and test variant.",
+      "End with clear owner-based actions and a transparent data table."
+    ],
+    "knowledge_hooks": [
+      "Prioritize low-margin categories for pricing review before acquisition spend increases.",
+      "Promote segment-region combinations that outperform both on revenue and margin.",
+      "Translate every major insight into an explicit owner and next action.",
+      "Roll out experiment winner B only after validating downstream profit impact."
+    ]
+  },
+  "kpis": [
+    {
+      "label": "Revenue",
+      "value": 397130.0
+    },
+    {
+      "label": "Profit Margin",
+      "value": 30.58
+    },
+    {
+      "label": "Conversion Rate",
+      "value": 12.55
+    },
+    {
+      "label": "Average Order Value",
+      "value": 120.97
+    }
+  ],
+  "feedback": {
+    "executive": [
+      "Current KPI set is solid, but without a stronger lead metric emphasis executives may overreact to lagging revenue only.",
+      "Action zones should separate scale decisions from diagnostic context so the next move is unmistakable."
+    ],
+    "operator": [
+      "The dashboard needs a clear drill path from KPI card to category/region table to avoid dead-end summaries.",
+      "Use filters for date, segment, region, and channel; anything more should be secondary or hidden by default."
+    ],
+    "visual_designer": [
+      "The reference style works because the hierarchy is calm: soft canvas, dark navigation, pastel sections, strong typographic anchors.",
+      "Avoid overusing saturated accents; reserve them for status, maximum/minimum annotations, and action prompts."
+    ]
+  }
+}
