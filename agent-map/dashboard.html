@@ -98,7 +98,7 @@
     /* GRID */
     .grid {
       display: grid;
-      grid-template-columns: minmax(330px, 0.95fr) minmax(280px, 1fr) minmax(0, 2.1fr);
+      grid-template-columns: minmax(330px, 0.92fr) minmax(0, 2.55fr);
       gap: 20px;
       min-height: calc(100vh - 140px);
     }
@@ -368,114 +368,6 @@
       font-size: 12px;
       color: var(--text-muted);
       line-height: 1.5;
-    }
-
-    /* PIPELINE */
-    .pipeline-stage {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 13px 14px;
-      border-radius: 14px;
-      margin-bottom: 8px;
-      transition: all 0.3s;
-      border: 1px solid transparent;
-    }
-
-    .pipeline-stage.completed {
-      background: rgba(224, 245, 238, 0.12);
-      border-color: rgba(13, 148, 136, 0.25);
-    }
-
-    .pipeline-stage.processing {
-      background: rgba(255, 251, 235, 0.12);
-      border-color: rgba(245, 158, 11, 0.3);
-    }
-
-    .pipeline-stage.pending {
-      background: rgba(255,255,255,0.02);
-      opacity: 0.5;
-    }
-
-    .stage-indicator {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 600;
-      flex-shrink: 0;
-    }
-
-    .completed .stage-indicator {
-      background: #E0F5EE;
-      color: #0D9488;
-    }
-
-    .processing .stage-indicator {
-      background: #FEF3C7;
-      color: #92610E;
-      animation: pulse 1s infinite;
-    }
-
-    .pending .stage-indicator {
-      background: #222;
-      color: #555;
-    }
-
-    /* Stage Colors - Filled Cards with Abstract Icons */
-    .stage-mint.completed, .stage-mint.pending { background: rgba(224, 245, 238, 0.92); border-color: rgba(13, 148, 136, 0.2); }
-    .stage-mint .stage-indicator { background: rgba(0,0,0,0.08); color: #1a1a1a; }
-    .stage-mint .stage-info h4 { color: #1a1a1a; }
-    .stage-mint .stage-info p { color: #4a4a4a; }
-    .stage-mint .stage-time { color: #4a4a4a; }
-    
-    .stage-lavender.completed, .stage-lavender.pending { background: rgba(237, 233, 247, 0.92); border-color: rgba(124, 92, 191, 0.2); }
-    .stage-lavender .stage-indicator { background: rgba(0,0,0,0.08); color: #1a1a1a; }
-    .stage-lavender .stage-info h4 { color: #1a1a1a; }
-    .stage-lavender .stage-info p { color: #4a4a4a; }
-    .stage-lavender .stage-time { color: #4a4a4a; }
-    
-    .stage-rose.completed, .stage-rose.pending { background: rgba(253, 234, 239, 0.92); border-color: rgba(161, 61, 92, 0.2); }
-    .stage-rose .stage-indicator { background: rgba(0,0,0,0.08); color: #1a1a1a; }
-    .stage-rose .stage-info h4 { color: #1a1a1a; }
-    .stage-rose .stage-info p { color: #4a4a4a; }
-    .stage-rose .stage-time { color: #4a4a4a; }
-    
-    .stage-cream.completed, .stage-cream.pending, .stage-cream.processing { background: rgba(255, 251, 235, 0.92); border-color: rgba(245, 158, 11, 0.2); }
-    .stage-cream .stage-indicator { background: rgba(0,0,0,0.08); color: #1a1a1a; }
-    .stage-cream .stage-info h4 { color: #1a1a1a; }
-    .stage-cream .stage-info p { color: #4a4a4a; }
-    .stage-cream .stage-time { color: #4a4a4a; }
-    
-    .pipeline-stage.pending { opacity: 0.6; }
-    .pipeline-stage.pending .stage-indicator { background: rgba(0,0,0,0.05); color: #888; }
-
-    .stage-info {
-      flex: 1;
-    }
-
-    .stage-info h4 {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 4px;
-      font-family: 'JetBrains Mono', monospace;
-      line-height: 1.35;
-    }
-
-    .stage-info p {
-      font-size: 11px;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    .stage-time {
-      font-size: 11px;
-      color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
-      padding-top: 2px;
     }
 
     /* OUTPUTS */
@@ -1016,7 +908,7 @@
 
     @media (max-width: 1280px) {
       .grid {
-        grid-template-columns: minmax(290px, 0.95fr) minmax(250px, 1fr) minmax(0, 1.6fr);
+        grid-template-columns: minmax(290px, 0.95fr) minmax(0, 1.85fr);
       }
 
       .progress-stage-row {
@@ -1099,15 +991,6 @@
       <div class="panel-note" id="runMeta">Waiting for run metadata.</div>
       <div id="inputFiles"></div>
     </div>
-  </div>
-
-  <!-- PIPELINE PANEL -->
-  <div class="panel">
-    <div class="panel-header">
-      <span>Pipeline Progress</span>
-      <span id="progressText">0 / 7 completed</span>
-    </div>
-    <div class="panel-content" id="pipelineStages"></div>
   </div>
 
   <!-- OUTPUTS PANEL -->
@@ -1243,12 +1126,10 @@ function renderKnowledgeBase() {
 function renderStages() {
   const stages = state.status?.stages || [];
   const progress = state.status?.progress || { completed: 0, total: 7 };
-  document.getElementById('progressText').textContent = `${progress.completed} / ${progress.total} completed`;
   document.getElementById('progressSummaryCount').textContent = `${progress.completed} / ${progress.total}`;
   document.getElementById('progressFill').style.width = `${progress.total ? (progress.completed / progress.total) * 100 : 0}%`;
 
   if (!stages.length) {
-    renderEmpty('pipelineStages', 'No stage data available yet.');
     renderEmpty('topProgressStages', 'No stage data available yet.');
     document.getElementById('progressSummaryMeta').textContent = 'Waiting for latest stage timeline.';
     return;
@@ -1268,17 +1149,6 @@ function renderStages() {
         <div class="progress-chip-name">${escapeHtml(stage.name)}</div>
       </div>
       <div class="progress-chip-detail">${escapeHtml(stage.summary || 'Pending')}</div>
-    </div>
-  `).join('');
-
-  document.getElementById('pipelineStages').innerHTML = stages.map((stage) => `
-    <div class="pipeline-stage ${escapeHtml(stage.status)} stage-${escapeHtml(stage.color)}">
-      <div class="stage-indicator">${escapeHtml(stage.icon)}</div>
-      <div class="stage-info">
-        <h4>${escapeHtml(stage.name)}</h4>
-        <p>${escapeHtml(stage.summary || 'Pending')}</p>
-      </div>
-      <div class="stage-time">${formatDuration(stage.duration_seconds)}</div>
     </div>
   `).join('');
 }
