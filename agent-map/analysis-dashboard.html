@@ -92,13 +92,33 @@
       margin-bottom: 10px;
     }
 
-    .sidebar-title {
+    .sidebar-title-wrap {
+      margin-bottom: 8px;
+    }
+
+    .sidebar-hero-line1 {
       font-family: 'Barlow', sans-serif;
       font-size: 28px;
       font-weight: 300;
-      line-height: 1.02;
-      margin-bottom: 6px;
+      line-height: 1.05;
       color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .sidebar-hero-by {
+      font-size: 17px;
+      font-weight: 300;
+      color: #8c8177;
+      margin-left: 8px;
+    }
+
+    .sidebar-hero-line2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 30px;
+      font-style: italic;
+      line-height: 1.08;
+      color: var(--text-main);
+      margin-bottom: 6px;
     }
 
     .sidebar-subtitle {
@@ -918,7 +938,10 @@
     <aside class="sidebar">
       <div>
         <div class="brand-mark">▥</div>
-        <div class="sidebar-title" id="sidebarTitle">DA Executive Dashboard</div>
+        <div class="sidebar-title-wrap" id="sidebarTitleWrap">
+          <div class="sidebar-hero-line1">AI Data Analyst OS<span class="sidebar-hero-by">by Seoyeon Jun</span></div>
+          <div class="sidebar-hero-line2">Dashboard</div>
+        </div>
         <div class="sidebar-subtitle" id="sidebarSubtitle">
           General to specific. This view turns the latest DA flow into a decision dashboard with comparable KPIs,
           driver analysis, experiment readout, and prioritized actions.
@@ -1272,7 +1295,7 @@
 
     function applyLanguage() {
       const ids = [
-        'sidebarTitle', 'sidebarSubtitle', 'labelLatestRun', 'labelFilters', 'labelDateFrom', 'labelDateTo',
+        'sidebarSubtitle', 'labelLatestRun', 'labelFilters', 'labelDateFrom', 'labelDateTo',
         'labelRegion', 'labelSegment', 'labelCategory', 'labelChannel', 'applyFilters', 'resetFilters',
         'labelActionBoard', 'contentTitle', 'contentSubtitle', 'labelSource', 'tabOverview', 'tabDataTable',
         'trendTitle', 'trendDesc', 'toggleRevenue', 'toggleOrders', 'toggleConversion', 'toggleAbsolute',
