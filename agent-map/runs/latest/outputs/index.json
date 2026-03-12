@@ -11,59 +11,37 @@
       "icon_class": "metrics",
       "meta": "24 rows · 14 columns",
       "preview": {
-        "kind": "json",
-        "payload": {
-          "rows": 24,
-          "columns": 14,
-          "numeric_columns": [
-            "visitors",
-            "orders",
-            "revenue",
-            "cost",
-            "discount"
-          ],
-          "categorical_columns": [
-            "date",
-            "region",
-            "segment",
-            "category",
-            "sub_category",
-            "channel",
-            "test_group",
-            "profit",
-            "month"
-          ],
-          "date_column": "date",
-          "metric_mapping": {
-            "revenue": "revenue",
-            "cost": "cost",
-            "orders": "orders",
-            "visitors": "visitors",
-            "segment": "segment",
-            "category": "category",
-            "sub_category": "sub_category",
-            "region": "region",
-            "channel": "channel",
-            "test_group": "test_group"
+        "kind": "sections",
+        "title": "Dataset Profile",
+        "badge": "Loaded",
+        "metrics": [
+          {
+            "value": "24",
+            "label": "Rows"
           },
-          "missing_cells": 0
-        }
-      }
-    },
-    {
-      "id": "eda-chart-category",
-      "name": "Category Revenue Chart",
-      "file_name": "revenue_by_category.png",
-      "relative_path": "runs/latest/outputs/plots/revenue_by_category.png",
-      "type": "image",
-      "status": "ready",
-      "icon_class": "dashboard",
-      "meta": "EDA chart preview",
-      "preview": {
-        "kind": "image",
-        "title": "Revenue by Category",
-        "image_path": "runs/latest/outputs/plots/revenue_by_category.png",
-        "caption": "Auto-generated from the current run."
+          {
+            "value": "14",
+            "label": "Columns"
+          },
+          {
+            "value": "0",
+            "label": "Missing"
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Schema",
+            "body": "24 rows · 14 columns · date column: date"
+          },
+          {
+            "heading": "Numeric Columns",
+            "body": "visitors, orders, revenue, cost, discount"
+          },
+          {
+            "heading": "Categorical Columns",
+            "body": "date, region, segment, category, sub_category, channel"
+          }
+        ]
       }
     },
     {
@@ -76,7 +54,7 @@
       "icon_class": "eda",
       "meta": "3 insights · 24 rows",
       "preview": {
-        "kind": "report",
+        "kind": "eda-report",
         "title": "EDA Report",
         "badge": "Completed",
         "metrics": [
@@ -97,6 +75,23 @@
           "Technology leads revenue at $207K.",
           "North America is the strongest region by revenue at $170K.",
           "Furniture has the weakest margin at 10.7%."
+        ],
+        "charts": [
+          {
+            "title": "Revenue by Category",
+            "image_path": "runs/latest/outputs/plots/revenue_by_category.png",
+            "caption": "Auto-generated from the current run."
+          },
+          {
+            "title": "Revenue by Region",
+            "image_path": "runs/latest/outputs/plots/eda_revenue_by_region.png",
+            "caption": "Regional EDA slice."
+          },
+          {
+            "title": "Monthly Revenue Trend",
+            "image_path": "runs/latest/outputs/plots/eda_monthly_revenue.png",
+            "caption": "Trend over time."
+          }
         ]
       }
     },
@@ -130,21 +125,37 @@
       "icon_class": "metrics",
       "meta": "$397K revenue · 30.6% margin",
       "preview": {
-        "kind": "json",
-        "payload": {
-          "total_revenue": 397130.0,
-          "total_cost": 275670.0,
-          "total_profit": 121460.0,
-          "profit_margin_pct": 30.58,
-          "avg_order_value": 120.97,
-          "total_orders": 3283,
-          "total_visitors": 26155,
-          "conversion_rate_pct": 12.55,
-          "row_count": 24,
-          "formatted_revenue": "$397K",
-          "formatted_profit": "$121K",
-          "formatted_margin": "30.6%"
-        }
+        "kind": "sections",
+        "title": "KPI Summary",
+        "badge": "Benchmarked",
+        "metrics": [
+          {
+            "value": "$397K",
+            "label": "Revenue"
+          },
+          {
+            "value": "$121K",
+            "label": "Profit"
+          },
+          {
+            "value": "30.6%",
+            "label": "Margin"
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Revenue",
+            "body": "$397K from 3,283 orders."
+          },
+          {
+            "heading": "Profit",
+            "body": "$121K total profit with 30.6% margin."
+          },
+          {
+            "heading": "Conversion",
+            "body": "12.55% conversion rate and $120.97 AOV."
+          }
+        ]
       }
     },
     {
@@ -157,17 +168,37 @@
       "icon_class": "questions",
       "meta": "B vs A · p=0.0108",
       "preview": {
-        "kind": "json",
-        "payload": {
-          "group_a": "A",
-          "group_b": "B",
-          "conversion_rate_a_pct": 12.03,
-          "conversion_rate_b_pct": 13.08,
-          "lift_pct_point": 1.04,
-          "z_score": 2.548,
-          "p_value": 0.0108,
-          "significant_at_95": true
-        }
+        "kind": "sections",
+        "title": "A/B Test",
+        "badge": "Measured",
+        "metrics": [
+          {
+            "value": "12.03%",
+            "label": "A"
+          },
+          {
+            "value": "13.08%",
+            "label": "B"
+          },
+          {
+            "value": "0.0108",
+            "label": "p-value"
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Variant Lift",
+            "body": "B improved conversion by +1.04 pts versus A."
+          },
+          {
+            "heading": "Significance",
+            "body": "z-score 2.548 · p-value 0.0108."
+          },
+          {
+            "heading": "Decision",
+            "body": "Statistically significant at 95% confidence."
+          }
+        ]
       }
     },
     {
@@ -214,57 +245,37 @@
       "icon_class": "dashboard",
       "meta": "3 charts configured",
       "preview": {
-        "kind": "json",
-        "payload": {
-          "layout": "three-column-monitor",
-          "headline_metrics": [
-            {
-              "label": "Revenue",
-              "value": "$397K"
-            },
-            {
-              "label": "Profit",
-              "value": "$121K"
-            },
-            {
-              "label": "Margin",
-              "value": "30.6%"
-            }
-          ],
-          "charts": [
-            {
-              "title": "Revenue by Category",
-              "type": "bar",
-              "asset": "runs/latest/outputs/plots/revenue_by_category.png"
-            },
-            {
-              "title": "Revenue by Region",
-              "type": "bar",
-              "asset": "runs/latest/outputs/plots/revenue_by_region.png"
-            },
-            {
-              "title": "Monthly Revenue Trend",
-              "type": "bar",
-              "asset": "runs/latest/outputs/plots/monthly_revenue.png"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "region-chart",
-      "name": "Regional Revenue Chart",
-      "file_name": "revenue_by_region.png",
-      "relative_path": "runs/latest/outputs/plots/revenue_by_region.png",
-      "type": "image",
-      "status": "ready",
-      "icon_class": "dashboard",
-      "meta": "Dashboard chart asset",
-      "preview": {
-        "kind": "image",
-        "title": "Revenue by Region",
-        "image_path": "runs/latest/outputs/plots/revenue_by_region.png",
-        "caption": "Used by dashboard spec."
+        "kind": "sections",
+        "title": "Dashboard Spec",
+        "badge": "Prepared",
+        "metrics": [
+          {
+            "label": "Revenue",
+            "value": "$397K"
+          },
+          {
+            "label": "Profit",
+            "value": "$121K"
+          },
+          {
+            "label": "Margin",
+            "value": "30.6%"
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Revenue by Category",
+            "body": "bar chart wired to revenue_by_category.png."
+          },
+          {
+            "heading": "Revenue by Region",
+            "body": "bar chart wired to revenue_by_region.png."
+          },
+          {
+            "heading": "Monthly Revenue Trend",
+            "body": "bar chart wired to monthly_revenue.png."
+          }
+        ]
       }
     },
     {
@@ -347,33 +358,36 @@
       "icon_class": "questions",
       "meta": "3 actions remembered",
       "preview": {
-        "kind": "json",
-        "payload": {
-          "title": "Knowledge Base",
-          "subtitle": "Learns from each DA run and carries operating rules forward.",
-          "badge": "Self-Improving",
-          "memories": [
-            {
-              "title": "Dataset shape",
-              "detail": "24 rows across 14 columns were processed in the latest run."
-            },
-            {
-              "title": "Revenue baseline",
-              "detail": "Revenue is $397K with 30.6% margin."
-            },
-            {
-              "title": "Top analytical signal",
-              "detail": "Consumer is the top segment by revenue at $166K."
-            }
-          ],
-          "rules": [
-            "Prioritize low-margin categories for pricing review before acquisition spend increases.",
-            "Promote segment-region combinations that outperform both on revenue and margin.",
-            "Translate every major insight into an explicit owner and next action.",
-            "Roll out experiment winner B only after validating downstream profit impact."
-          ],
-          "action_count": 3
-        }
+        "kind": "sections",
+        "title": "Knowledge Base",
+        "badge": "Learning",
+        "metrics": [],
+        "sections": [
+          {
+            "heading": "Dataset shape",
+            "body": "24 rows across 14 columns were processed in the latest run."
+          },
+          {
+            "heading": "Revenue baseline",
+            "body": "Revenue is $397K with 30.6% margin."
+          },
+          {
+            "heading": "Top analytical signal",
+            "body": "Consumer is the top segment by revenue at $166K."
+          },
+          {
+            "heading": "Rule",
+            "body": "Prioritize low-margin categories for pricing review before acquisition spend increases."
+          },
+          {
+            "heading": "Rule",
+            "body": "Promote segment-region combinations that outperform both on revenue and margin."
+          },
+          {
+            "heading": "Rule",
+            "body": "Translate every major insight into an explicit owner and next action."
+          }
+        ]
       }
     }
   ]

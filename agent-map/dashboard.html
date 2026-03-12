@@ -330,7 +330,7 @@
       border-radius: 16px;
       overflow: hidden;
       transition: all 0.2s;
-      min-height: 260px;
+      min-height: 120px;
       display: flex;
       flex-direction: column;
     }
@@ -347,6 +347,7 @@
       padding: 16px;
       transition: background 0.2s;
       min-height: 78px;
+      cursor: pointer;
     }
 
     .output-header:hover {
@@ -390,15 +391,30 @@
     .output-preview {
       border-top: 1px solid var(--border-dark);
       background: #0a0a0a;
-      display: block;
+      display: none;
       flex: 1;
+    }
+
+    .output-item.expanded .output-preview {
+      display: block;
     }
 
     .outputs-gallery {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
       align-content: start;
+    }
+
+    .output-expand {
+      color: #666;
+      transition: transform 0.2s;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    .output-item.expanded .output-expand {
+      transform: rotate(180deg);
     }
 
     .report-card {
@@ -466,6 +482,43 @@
       padding: 16px;
     }
 
+    .report-charts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .report-chart-card {
+      background: var(--bg-card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .report-chart-card img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      margin-bottom: 8px;
+      border: 1px solid #222;
+    }
+
+    .report-chart-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 4px;
+    }
+
+    .report-chart-caption {
+      font-size: 10px;
+      line-height: 1.4;
+      color: var(--text-muted);
+    }
+
     .report-insights h4 {
       font-size: 11px;
       font-weight: 700;
@@ -525,6 +578,37 @@
       margin: 0;
       white-space: pre-wrap;
       word-break: break-word;
+    }
+
+    .section-preview {
+      padding: 20px;
+    }
+
+    .section-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-item {
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border-dark);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .section-item h4 {
+      font-size: 11px;
+      color: var(--text-white);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .section-item p {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #d0d0d0;
     }
 
     .json-key { color: #7C5CBF; }
@@ -766,7 +850,11 @@
       }
 
       .outputs-gallery {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .report-charts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
   </style>
@@ -977,6 +1065,14 @@ function renderReportPreview(preview) {
     </div>
   `).join('');
 
+  const charts = (preview.charts || []).map((chart) => `
+    <div class="report-chart-card">
+      <img src="./${escapeHtml(chart.image_path)}" alt="${escapeHtml(chart.title)}">
+      <div class="report-chart-title">${escapeHtml(chart.title)}</div>
+      <div class="report-chart-caption">${escapeHtml(chart.caption || '')}</div>
+    </div>
+  `).join('');
+
   return `
     <div class="report-card">
       <div class="report-header">
@@ -988,16 +1084,36 @@ function renderReportPreview(preview) {
         <h4>Key Insights</h4>
         ${insights}
       </div>
+      ${charts ? `<div class="report-charts">${charts}</div>` : ''}
     </div>
   `;
 }
 
-function renderJsonPreview(preview) {
-  const formatted = JSON.stringify(preview.payload || {}, null, 2)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;');
-  return `<div class="json-preview"><pre>${formatted}</pre></div>`;
+function renderSectionPreview(preview) {
+  const metrics = (preview.metrics || []).length ? (preview.metrics || []).map((metric) => `
+    <div class="metric-card">
+      <div class="metric-value">${escapeHtml(metric.value)}</div>
+      <div class="metric-label">${escapeHtml(metric.label)}</div>
+    </div>
+  `).join('') : '';
+
+  const sections = (preview.sections || []).map((section) => `
+    <div class="section-item">
+      <h4>${escapeHtml(section.heading)}</h4>
+      <p>${escapeHtml(section.body)}</p>
+    </div>
+  `).join('');
+
+  return `
+    <div class="section-preview">
+      <div class="report-header">
+        <h3>${escapeHtml(preview.title || 'Summary')}</h3>
+        <span class="badge">${escapeHtml(preview.badge || 'Ready')}</span>
+      </div>
+      ${metrics ? `<div class="report-metrics">${metrics}</div>` : ''}
+      <div class="section-list">${sections}</div>
+    </div>
+  `;
 }
 
 function renderQuestionsPreview(preview) {
@@ -1046,11 +1162,11 @@ function renderImagePreview(preview) {
 
 function previewHtml(output) {
   const preview = output.preview || {};
+  if (preview.kind === 'eda-report') return renderReportPreview(preview);
   if (preview.kind === 'report') return renderReportPreview(preview);
-  if (preview.kind === 'json') return renderJsonPreview(preview);
+  if (preview.kind === 'sections') return renderSectionPreview(preview);
   if (preview.kind === 'questions') return renderQuestionsPreview(preview);
   if (preview.kind === 'action-plan') return renderActionPlanPreview(preview);
-  if (preview.kind === 'image') return renderImagePreview(preview);
   return `<div class="empty-state">No preview available for ${escapeHtml(output.name)}.</div>`;
 }
 
@@ -1061,9 +1177,9 @@ function renderOutputs() {
     return;
   }
 
-  document.getElementById('outputsList').innerHTML = `<div class="outputs-gallery">${state.outputs.map((output) => `
-    <div class="output-item">
-      <div class="output-header">
+  document.getElementById('outputsList').innerHTML = `<div class="outputs-gallery">${state.outputs.map((output, index) => `
+    <div class="output-item ${index === 0 ? 'expanded' : ''}">
+      <div class="output-header" onclick="this.parentElement.classList.toggle('expanded')">
         <div class="output-title">
           <div class="output-icon ${escapeHtml(output.icon_class || 'report')}">${iconSymbol[output.icon_class] || '•'}</div>
           <div>
@@ -1071,6 +1187,7 @@ function renderOutputs() {
             <div class="output-meta">${escapeHtml(output.file_name)} · ${escapeHtml(output.meta || '')}</div>
           </div>
         </div>
+        <div class="output-expand">▼</div>
       </div>
       <div class="output-preview">${previewHtml(output)}</div>
     </div>

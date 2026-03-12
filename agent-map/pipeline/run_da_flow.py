@@ -170,8 +170,14 @@ def render_markdown_preview(title: str, badge: str, metrics: List[Dict[str, str]
     }
 
 
-def render_json_preview(payload: Dict[str, Any]) -> Dict[str, Any]:
-    return {"kind": "json", "payload": payload}
+def render_section_preview(title: str, badge: str, sections: List[Dict[str, Any]], metrics: Optional[List[Dict[str, str]]] = None) -> Dict[str, Any]:
+    return {
+        "kind": "sections",
+        "title": title,
+        "badge": badge,
+        "metrics": (metrics or [])[:3],
+        "sections": sections[:6],
+    }
 
 
 def render_questions_preview(questions: List[str]) -> Dict[str, Any]:
@@ -179,7 +185,7 @@ def render_questions_preview(questions: List[str]) -> Dict[str, Any]:
 
 
 def render_chart_preview(title: str, image_path: str, caption: str) -> Dict[str, Any]:
-    return {"kind": "image", "title": title, "image_path": image_path, "caption": caption}
+    return {"title": title, "image_path": image_path, "caption": caption}
 
 
 def render_action_plan_preview(actions: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -446,7 +452,20 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
             "status": "ready",
             "icon_class": "metrics",
             "meta": f"{profile['rows']:,} rows · {profile['columns']} columns",
-            "preview": render_json_preview(profile),
+            "preview": render_section_preview(
+                "Dataset Profile",
+                "Loaded",
+                [
+                    {"heading": "Schema", "body": f"{profile['rows']:,} rows · {profile['columns']} columns · date column: {profile['date_column'] or 'none'}"},
+                    {"heading": "Numeric Columns", "body": ", ".join(profile["numeric_columns"][:6]) or "None"},
+                    {"heading": "Categorical Columns", "body": ", ".join(profile["categorical_columns"][:6]) or "None"},
+                ],
+                [
+                    {"value": f"{profile['rows']:,}", "label": "Rows"},
+                    {"value": f"{profile['columns']}", "label": "Columns"},
+                    {"value": f"{profile['missing_cells']:,}", "label": "Missing"},
+                ],
+            ),
         }
     )
     ctx.set_stage("data-ingestion", "completed", f"Loaded {profile['rows']:,} rows and {profile['columns']} columns")
@@ -491,24 +510,23 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
     eda_lines += ["", "## Numeric Summary", "```json", json.dumps(numeric_summary, indent=2), "```"]
     write_text(ctx.outputs_dir / "eda_report.md", "\n".join(eda_lines))
 
+    eda_charts = []
     if category_col:
         chart_df = df.groupby(category_col, dropna=False)[revenue_col].sum().reset_index().sort_values(revenue_col, ascending=False)
         category_chart = ctx.plots_dir / "revenue_by_category.png"
         plot_bar(chart_df, category_col, revenue_col, "Revenue by Category", category_chart, "#d7c8ea")
         artifacts["category_chart"] = f"runs/{ctx.run_id}/outputs/plots/{category_chart.name}"
-        ctx.add_output(
-            {
-                "id": "eda-chart-category",
-                "name": "Category Revenue Chart",
-                "file_name": category_chart.name,
-                "relative_path": artifacts["category_chart"],
-                "type": "image",
-                "status": "ready",
-                "icon_class": "dashboard",
-                "meta": "EDA chart preview",
-                "preview": render_chart_preview("Revenue by Category", artifacts["category_chart"], "Auto-generated from the current run."),
-            }
-        )
+        eda_charts.append(render_chart_preview("Revenue by Category", artifacts["category_chart"], "Auto-generated from the current run."))
+    if region_col:
+        region_chart_df = df.groupby(region_col)[revenue_col].sum().reset_index().sort_values(revenue_col, ascending=False)
+        eda_region_chart = ctx.plots_dir / "eda_revenue_by_region.png"
+        plot_bar(region_chart_df, region_col, revenue_col, "Revenue by Region", eda_region_chart, "#bfe4d7")
+        eda_charts.append(render_chart_preview("Revenue by Region", f"runs/{ctx.run_id}/outputs/plots/{eda_region_chart.name}", "Regional EDA slice."))
+    if "month" in df.columns:
+        eda_month_df = df.groupby("month")[revenue_col].sum().reset_index()
+        eda_month_chart = ctx.plots_dir / "eda_monthly_revenue.png"
+        plot_bar(eda_month_df, "month", revenue_col, "Monthly Revenue Trend", eda_month_chart, "#f2d8e0")
+        eda_charts.append(render_chart_preview("Monthly Revenue Trend", f"runs/{ctx.run_id}/outputs/plots/{eda_month_chart.name}", "Trend over time."))
 
     ctx.add_output(
         {
@@ -520,16 +538,20 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
             "status": "ready",
             "icon_class": "eda",
             "meta": f"{len(insights)} insights · {profile['rows']:,} rows",
-            "preview": render_markdown_preview(
-                "EDA Report",
-                "Completed",
-                [
-                    {"value": f"{profile['rows']:,}", "label": "Rows"},
-                    {"value": f"{profile['columns']}", "label": "Columns"},
-                    {"value": f"{profile['missing_cells']:,}", "label": "Missing"},
-                ],
-                insights or ["Initial profiling completed."],
-            ),
+            "preview": {
+                **render_markdown_preview(
+                    "EDA Report",
+                    "Completed",
+                    [
+                        {"value": f"{profile['rows']:,}", "label": "Rows"},
+                        {"value": f"{profile['columns']}", "label": "Columns"},
+                        {"value": f"{profile['missing_cells']:,}", "label": "Missing"},
+                    ],
+                    insights or ["Initial profiling completed."],
+                ),
+                "charts": eda_charts,
+                "kind": "eda-report",
+            },
         }
     )
     ctx.set_stage("eda", "completed", f"Built EDA report with {len(insights)} core findings")
@@ -550,7 +572,9 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
     problem_md = "\n".join(
         ["# Problem Definition", "", "## Business Questions"] + [f"- {question}" for question in questions] + ["", "## Hypotheses"] + [f"- {item}" for item in hypotheses]
     )
-    write_text(ctx.outputs_dir / "problem_definition.md", problem_md)
+    write_text(ctx.outputs_dir / "problem_definition.md", "\n".join(
+        ["# Problem Definition", "", "## Business Questions"] + [f"- {question}" for question in questions] + ["", "## Hypotheses"] + [f"- {item}" for item in hypotheses]
+    ))
     ctx.add_output(
         {
             "id": "business-questions",
@@ -628,7 +652,20 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
             "status": "ready",
             "icon_class": "metrics",
             "meta": f"{metric_preview_payload['formatted_revenue']} revenue · {metric_preview_payload['formatted_margin']} margin",
-            "preview": render_json_preview(metric_preview_payload),
+            "preview": render_section_preview(
+                "KPI Summary",
+                "Benchmarked",
+                [
+                    {"heading": "Revenue", "body": f"{metric_preview_payload['formatted_revenue']} from {metrics_payload['total_orders']:,} orders."},
+                    {"heading": "Profit", "body": f"{metric_preview_payload['formatted_profit']} total profit with {metric_preview_payload['formatted_margin']} margin."},
+                    {"heading": "Conversion", "body": f"{metrics_payload['conversion_rate_pct']}% conversion rate and ${metrics_payload['avg_order_value']:.2f} AOV."},
+                ],
+                [
+                    {"value": metric_preview_payload["formatted_revenue"], "label": "Revenue"},
+                    {"value": metric_preview_payload["formatted_profit"], "label": "Profit"},
+                    {"value": metric_preview_payload["formatted_margin"], "label": "Margin"},
+                ],
+            ),
         }
     )
     if ab_test_payload:
@@ -642,7 +679,20 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
                 "status": "ready",
                 "icon_class": "questions",
                 "meta": f"{ab_test_payload['group_b']} vs {ab_test_payload['group_a']} · p={ab_test_payload['p_value']}",
-                "preview": render_json_preview(ab_test_payload),
+                "preview": render_section_preview(
+                    "A/B Test",
+                    "Measured",
+                    [
+                        {"heading": "Variant Lift", "body": f"{ab_test_payload['group_b']} improved conversion by {ab_test_payload['lift_pct_point']:+.2f} pts versus {ab_test_payload['group_a']}."},
+                        {"heading": "Significance", "body": f"z-score {ab_test_payload['z_score']} · p-value {ab_test_payload['p_value']}."},
+                        {"heading": "Decision", "body": "Statistically significant at 95% confidence." if ab_test_payload["significant_at_95"] else "Not yet significant at 95% confidence."},
+                    ],
+                    [
+                        {"value": f"{ab_test_payload['conversion_rate_a_pct']}%", "label": ab_test_payload["group_a"]},
+                        {"value": f"{ab_test_payload['conversion_rate_b_pct']}%", "label": ab_test_payload["group_b"]},
+                        {"value": f"{ab_test_payload['p_value']}", "label": "p-value"},
+                    ],
+                ),
             }
         )
     ctx.set_stage("metrics", "completed", f"Calculated KPI layer and {'A/B test summary' if ab_test_payload else 'core benchmarks'}")
@@ -723,23 +773,14 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
             "status": "ready",
             "icon_class": "dashboard",
             "meta": f"{len(dashboard_spec['charts'])} charts configured",
-            "preview": render_json_preview(dashboard_spec),
+            "preview": render_section_preview(
+                "Dashboard Spec",
+                "Prepared",
+                [{"heading": chart["title"], "body": f"{chart['type']} chart wired to {Path(chart['asset']).name}."} for chart in dashboard_spec["charts"]],
+                dashboard_spec["headline_metrics"],
+            ),
         }
     )
-    if artifacts.get("region_chart"):
-        ctx.add_output(
-            {
-                "id": "region-chart",
-                "name": "Regional Revenue Chart",
-                "file_name": Path(artifacts["region_chart"]).name,
-                "relative_path": artifacts["region_chart"],
-                "type": "image",
-                "status": "ready",
-                "icon_class": "dashboard",
-                "meta": "Dashboard chart asset",
-                "preview": render_chart_preview("Revenue by Region", artifacts["region_chart"], "Used by dashboard spec."),
-            }
-        )
     ctx.set_stage("dashboard", "completed", "Dashboard spec and chart assets generated")
 
     ctx.set_stage("report", "processing", "Writing executive report and action plan")
@@ -841,7 +882,12 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
             "status": "ready",
             "icon_class": "questions",
             "meta": f"{knowledge_base['action_count']} actions remembered",
-            "preview": render_json_preview(knowledge_base),
+            "preview": render_section_preview(
+                "Knowledge Base",
+                "Learning",
+                [{"heading": item["title"], "body": item["detail"]} for item in knowledge_base["memories"]]
+                + [{"heading": "Rule", "body": rule} for rule in knowledge_base["rules"][:3]],
+            ),
         }
     )
     ctx.set_stage("report", "completed", "Executive report and action plan completed")
