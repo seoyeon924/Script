@@ -9,33 +9,33 @@
 
     :root {
       --page-bg: #000000;
-      --shell-bg: #050505;
-      --sidebar-bg: rgba(245, 239, 232, 0.9);
+      --shell-bg: #000000;
+      --sidebar-bg: #000000;
       --sidebar-border: rgba(255, 255, 255, 0.08);
-      --panel-bg: rgba(245, 244, 240, 0.94);
-      --panel-border: rgba(255, 255, 255, 0.08);
-      --panel-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
-      --text-main: #333333;
-      --text-soft: #5f5f5f;
-      --text-faint: #8b8b8b;
-      --accent-main: #58b89b;
-      --accent-mint: rgba(226, 243, 237, 0.96);
-      --accent-rose: rgba(246, 223, 231, 0.96);
-      --accent-cream: rgba(245, 244, 240, 0.94);
-      --accent-sky: rgba(239, 242, 243, 0.96);
-      --accent-peach: rgba(244, 239, 232, 0.96);
-      --accent-offwhite: rgba(245, 244, 240, 0.94);
-      --accent-ink: #4a4a4a;
-      --chart-lavender: #8c8177;
-      --chart-lavender-soft: rgba(140, 129, 119, 0.16);
-      --chart-mint: #58b89b;
-      --chart-mint-soft: rgba(88, 184, 155, 0.18);
-      --chart-peach: #7aa99a;
-      --chart-peach-soft: rgba(122, 169, 154, 0.16);
-      --chart-rose: #d18fa6;
-      --chart-rose-soft: rgba(209, 143, 166, 0.18);
-      --chart-ink: #8c8177;
-      --chart-ink-soft: rgba(140, 129, 119, 0.18);
+      --panel-bg: rgba(247, 243, 238, 0.98);
+      --panel-border: rgba(108, 92, 79, 0.12);
+      --panel-shadow: 0 20px 38px rgba(0, 0, 0, 0.12);
+      --text-main: #2f2a25;
+      --text-soft: #62594f;
+      --text-faint: #8d8379;
+      --accent-main: #57b497;
+      --accent-mint: rgba(225, 241, 236, 0.98);
+      --accent-rose: rgba(244, 227, 233, 0.96);
+      --accent-cream: rgba(248, 244, 235, 0.96);
+      --accent-sky: rgba(240, 243, 245, 0.96);
+      --accent-peach: rgba(244, 236, 229, 0.96);
+      --accent-offwhite: rgba(252, 249, 244, 0.98);
+      --accent-ink: #4a433d;
+      --chart-lavender: #8f8074;
+      --chart-lavender-soft: rgba(143, 128, 116, 0.14);
+      --chart-mint: #57b497;
+      --chart-mint-soft: rgba(87, 180, 151, 0.16);
+      --chart-peach: #7ca899;
+      --chart-peach-soft: rgba(124, 168, 153, 0.14);
+      --chart-rose: #d694aa;
+      --chart-rose-soft: rgba(214, 148, 170, 0.16);
+      --chart-ink: #8f8074;
+      --chart-ink-soft: rgba(143, 128, 116, 0.14);
       --positive: #35c995;
       --negative: #ef7d86;
       --warning: #efb05d;
@@ -49,10 +49,7 @@
 
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at top left, rgba(232, 224, 245, 0.12), transparent 30%),
-        radial-gradient(circle at top right, rgba(212, 240, 229, 0.1), transparent 26%),
-        var(--page-bg);
+      background: #000000;
       color: #f5f5f5;
       font-family: 'Inter', sans-serif;
       min-height: 100vh;
@@ -71,8 +68,8 @@
     }
 
     .sidebar {
-      background: linear-gradient(180deg, rgba(245, 239, 232, 0.96) 0%, rgba(236, 230, 223, 0.96) 100%);
-      color: var(--text-main);
+      background: #000000;
+      color: #f5f5f5;
       padding: 20px 20px 18px;
       display: flex;
       flex-direction: column;
@@ -84,12 +81,13 @@
       width: 44px;
       height: 44px;
       border-radius: 14px;
-      background: rgba(255, 255, 255, 0.44);
+      background: rgba(255, 255, 255, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
       margin-bottom: 10px;
+      color: #f5f5f5;
     }
 
     .sidebar-title-wrap {
@@ -98,38 +96,38 @@
 
     .sidebar-hero-line1 {
       font-family: 'Barlow', sans-serif;
-      font-size: 28px;
+      font-size: 36px;
       font-weight: 300;
-      line-height: 1.05;
-      color: var(--text-main);
-      margin-bottom: 2px;
+      line-height: 1.02;
+      color: #ffffff;
+      margin-bottom: 4px;
     }
 
     .sidebar-hero-line2 {
       font-family: 'Instrument Serif', serif;
-      font-size: 30px;
+      font-size: 36px;
       font-style: italic;
-      line-height: 1.08;
-      color: var(--text-main);
-      margin-bottom: 6px;
+      line-height: 1.02;
+      color: rgba(255, 255, 255, 0.96);
+      margin-bottom: 10px;
     }
 
     .sidebar-subtitle {
       font-size: 13px;
       line-height: 1.5;
-      color: #6f675f;
+      color: rgba(255, 255, 255, 0.62);
     }
 
     .sidebar-section {
       padding-top: 14px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .sidebar-label {
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #8c8177;
+      color: rgba(255, 255, 255, 0.52);
       margin-bottom: 10px;
       font-weight: 700;
     }
@@ -139,7 +137,7 @@
       gap: 8px;
       font-size: 12px;
       line-height: 1.45;
-      color: #5f5f5f;
+      color: rgba(255, 255, 255, 0.76);
     }
 
     .meta-row strong {
@@ -147,7 +145,7 @@
       font-size: 11px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #8c8177;
+      color: rgba(255, 255, 255, 0.48);
       margin-bottom: 2px;
     }
 
@@ -160,7 +158,7 @@
       display: block;
       margin-bottom: 4px;
       font-size: 11px;
-      color: #6f675f;
+      color: rgba(255, 255, 255, 0.66);
       font-weight: 600;
     }
 
@@ -169,9 +167,9 @@
       width: 100%;
       padding: 10px 12px;
       border-radius: 14px;
-      border: 1px solid rgba(140, 129, 119, 0.18);
-      background: rgba(255, 255, 255, 0.46);
-      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.06);
+      color: #f5f5f5;
       font-size: 12px;
       outline: none;
       min-width: 0;
@@ -212,13 +210,13 @@
     .sidebar-button.primary {
       background: var(--accent-mint);
       color: var(--text-main);
-      box-shadow: 0 10px 24px rgba(212, 240, 229, 0.16);
+      box-shadow: 0 10px 24px rgba(87, 180, 151, 0.14);
     }
 
     .sidebar-button.ghost {
-      background: rgba(255, 255, 255, 0.26);
-      color: var(--text-main);
-      border: 1px solid rgba(140, 129, 119, 0.16);
+      background: rgba(255, 255, 255, 0.06);
+      color: #f5f5f5;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .action-list {
@@ -227,8 +225,8 @@
     }
 
     .sidebar-action {
-      background: rgba(255, 255, 255, 0.36);
-      border: 1px solid rgba(140, 129, 119, 0.14);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 12px;
     }
@@ -246,12 +244,12 @@
       font-weight: 800;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #ffb3c2;
+      color: #ffb9ca;
     }
 
     .sidebar-action-owner {
       font-size: 11px;
-      color: #8c8177;
+      color: rgba(255, 255, 255, 0.48);
     }
 
     .sidebar-action-title {
@@ -259,20 +257,19 @@
       font-weight: 700;
       line-height: 1.45;
       margin-bottom: 6px;
+      color: #ffffff;
     }
 
     .sidebar-action-reason {
       font-size: 11px;
       line-height: 1.45;
-      color: #6f675f;
+      color: rgba(255, 255, 255, 0.62);
     }
 
     .content {
       padding: 20px;
       overflow: auto;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.015) 0%, rgba(255, 255, 255, 0) 20%),
-        var(--shell-bg);
+      background: #000000;
     }
 
     .content-header {
@@ -295,7 +292,7 @@
     .content-subtitle {
       max-width: 760px;
       font-size: 13px;
-      color: rgba(255, 255, 255, 0.58);
+      color: rgba(255, 255, 255, 0.66);
       line-height: 1.45;
     }
 
@@ -387,7 +384,7 @@
 
     .card {
       background: var(--panel-bg);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--panel-border);
       border-radius: var(--radius-lg);
       box-shadow: var(--panel-shadow);
     }
