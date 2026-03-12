@@ -9,10 +9,27 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root {
+      /* Official SY Design Palette */
+      --color-ink: #333333;
+      --color-muted: #555555;
+      --color-soft-muted: #999999;
+      --color-dark-card: #151515;
+      --color-dark-border: #2a2a2a;
+      --color-offwhite: rgba(245, 244, 240, 0.92);
+      --color-lavender: rgba(232, 224, 245, 0.92);
+      --color-mint: rgba(212, 240, 229, 0.92);
+      --color-rose: rgba(252, 224, 232, 0.92);
+      --color-cream: rgba(250, 249, 246, 0.92);
+      --color-peach: rgba(253, 238, 232, 0.92);
+      --color-yellow: #FEF8E0;
+      --color-white: #ffffff;
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: #000000;
-      color: #333;
+      color: var(--color-ink);
       min-height: 100vh;
       padding: 32px 40px;
     }
@@ -158,18 +175,17 @@
     }
 
     .card-dark {
-      background: #151515;
-      border: 1px solid #2a2a2a;
+      background: var(--color-dark-card);
+      border: 1px solid var(--color-dark-border);
     }
 
-    /* Official SY Design Palette v2 - slightly more saturated */
-    .card-offwhite { background: rgba(245, 244, 240, 0.92); }
-    .card-lavender { background: rgba(232, 224, 245, 0.92); }
-    .card-mint { background: rgba(212, 240, 229, 0.92); }
-    .card-rose { background: rgba(252, 224, 232, 0.92); }
-    .card-cream { background: rgba(250, 249, 246, 0.92); }
-    .card-peach { background: rgba(253, 238, 232, 0.92); }
-    .card-yellow { background: #FEF8E0; }
+    .card-offwhite { background: var(--color-offwhite); }
+    .card-lavender { background: var(--color-lavender); }
+    .card-mint { background: var(--color-mint); }
+    .card-rose { background: var(--color-rose); }
+    .card-cream { background: var(--color-cream); }
+    .card-peach { background: var(--color-peach); }
+    .card-yellow { background: var(--color-yellow); }
     
     /* Wide card with illustration */
     .dept.wide {
@@ -198,9 +214,9 @@
     .input-card {
       text-align: left;
       padding: 18px 14px;
-      background: linear-gradient(180deg, rgba(255, 233, 214, 0.96) 0%, rgba(255, 214, 186, 0.92) 100%);
-      border: 1px solid rgba(240, 163, 116, 0.45);
-      box-shadow: 0 14px 30px rgba(214, 122, 72, 0.18);
+      background: var(--color-peach);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
 
     .orch-card {
@@ -261,7 +277,7 @@
       align-items: center;
       gap: 8px;
       font-size: 10px;
-      color: #5f4639;
+      color: var(--color-muted);
       text-align: left;
       white-space: nowrap;
       font-weight: 500;
@@ -271,8 +287,8 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #d97a4a;
-      box-shadow: 0 0 0 3px rgba(217, 122, 74, 0.14);
+      background: var(--color-soft-muted);
+      box-shadow: none;
     }
 
     .input-title {
