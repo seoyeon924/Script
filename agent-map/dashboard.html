@@ -674,6 +674,92 @@
       line-height: 1.5;
     }
 
+    .knowledge-card {
+      margin-top: 14px;
+      padding: 18px 16px;
+      background: rgba(253, 238, 232, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 18px;
+      color: #333;
+    }
+
+    .knowledge-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(219, 39, 119, 0.12);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      color: #db2777;
+      font-size: 20px;
+    }
+
+    .knowledge-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .knowledge-subtitle {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #666;
+      margin-bottom: 14px;
+    }
+
+    .knowledge-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      color: #db2777;
+      background: rgba(219, 39, 119, 0.12);
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .knowledge-section {
+      margin-top: 12px;
+    }
+
+    .knowledge-section h4 {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .knowledge-memory,
+    .knowledge-rule {
+      padding: 10px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .knowledge-memory:first-of-type,
+    .knowledge-rule:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .knowledge-memory-title {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .knowledge-memory-detail,
+    .knowledge-rule {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #555;
+    }
+
     @media (max-width: 1280px) {
       .grid {
         grid-template-columns: 240px 200px minmax(0, 1fr);
@@ -712,6 +798,7 @@
       </div>
       <div class="panel-note" id="runMeta">Waiting for run metadata.</div>
       <div id="inputFiles"></div>
+      <div id="knowledgeBase"></div>
     </div>
   </div>
 
@@ -737,10 +824,12 @@
 <script>
 const statusUrl = './runs/latest/status.json';
 const outputsUrl = './runs/latest/outputs/index.json';
+const knowledgeBaseUrl = './runs/latest/outputs/knowledge_base.json';
 
 const state = {
   status: null,
   outputs: [],
+  knowledgeBase: null,
 };
 
 const iconSymbol = {
@@ -814,6 +903,41 @@ function renderInputs() {
       </div>
     </div>
   `).join('');
+}
+
+function renderKnowledgeBase() {
+  if (!state.knowledgeBase) {
+    document.getElementById('knowledgeBase').innerHTML = '';
+    return;
+  }
+
+  const memories = (state.knowledgeBase.memories || []).map((memory) => `
+    <div class="knowledge-memory">
+      <div class="knowledge-memory-title">${escapeHtml(memory.title)}</div>
+      <div class="knowledge-memory-detail">${escapeHtml(memory.detail)}</div>
+    </div>
+  `).join('');
+
+  const rules = (state.knowledgeBase.rules || []).map((rule) => `
+    <div class="knowledge-rule">${escapeHtml(rule)}</div>
+  `).join('');
+
+  document.getElementById('knowledgeBase').innerHTML = `
+    <div class="knowledge-card">
+      <div class="knowledge-icon">✳</div>
+      <div class="knowledge-title">${escapeHtml(state.knowledgeBase.title || 'Knowledge Base')}</div>
+      <div class="knowledge-subtitle">${escapeHtml(state.knowledgeBase.subtitle || '')}</div>
+      <div class="knowledge-badge">${escapeHtml(state.knowledgeBase.badge || 'Active')}</div>
+      <div class="knowledge-section">
+        <h4>Latest Memory</h4>
+        ${memories}
+      </div>
+      <div class="knowledge-section">
+        <h4>Operating Rules</h4>
+        ${rules}
+      </div>
+    </div>
+  `;
 }
 
 function renderStages() {
@@ -972,18 +1096,25 @@ function renderHeader() {
 
 async function loadDashboard() {
   try {
-    const [statusResponse, outputsResponse] = await Promise.all([fetch(statusUrl, { cache: 'no-store' }), fetch(outputsUrl, { cache: 'no-store' })]);
+    const [statusResponse, outputsResponse, knowledgeResponse] = await Promise.all([
+      fetch(statusUrl, { cache: 'no-store' }),
+      fetch(outputsUrl, { cache: 'no-store' }),
+      fetch(knowledgeBaseUrl, { cache: 'no-store' }),
+    ]);
     if (!statusResponse.ok) throw new Error('status.json not found');
     state.status = await statusResponse.json();
     state.outputs = outputsResponse.ok ? (await outputsResponse.json()).outputs || [] : [];
+    state.knowledgeBase = knowledgeResponse.ok ? await knowledgeResponse.json() : null;
   } catch (error) {
     console.error(error);
     state.status = null;
     state.outputs = [];
+    state.knowledgeBase = null;
   }
 
   renderHeader();
   renderInputs();
+  renderKnowledgeBase();
   renderStages();
   renderOutputs();
 }

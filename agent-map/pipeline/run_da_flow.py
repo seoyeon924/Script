@@ -337,6 +337,46 @@ def build_dashboard_spec(metrics: Dict[str, Any], artifacts: Dict[str, Any]) -> 
     }
 
 
+def build_knowledge_base(
+    profile: Dict[str, Any],
+    metrics_payload: Dict[str, Any],
+    analysis_insights: List[str],
+    actions: List[Dict[str, Any]],
+    ab_test_payload: Optional[Dict[str, Any]],
+) -> Dict[str, Any]:
+    rules = [
+        "Prioritize low-margin categories for pricing review before acquisition spend increases.",
+        "Promote segment-region combinations that outperform both on revenue and margin.",
+        "Translate every major insight into an explicit owner and next action.",
+    ]
+    if ab_test_payload:
+        winner = ab_test_payload["group_b"] if ab_test_payload["conversion_rate_b_pct"] > ab_test_payload["conversion_rate_a_pct"] else ab_test_payload["group_a"]
+        rules.append(f"Roll out experiment winner {winner} only after validating downstream profit impact.")
+
+    memories = [
+        {
+            "title": "Dataset shape",
+            "detail": f"{profile['rows']:,} rows across {profile['columns']} columns were processed in the latest run.",
+        },
+        {
+            "title": "Revenue baseline",
+            "detail": f"Revenue is {format_compact_number(metrics_payload['total_revenue'])} with {format_percent(metrics_payload['profit_margin_pct'])} margin.",
+        },
+        {
+            "title": "Top analytical signal",
+            "detail": analysis_insights[0] if analysis_insights else "Analysis completed without a standout insight.",
+        },
+    ]
+    return {
+        "title": "Knowledge Base",
+        "subtitle": "Learns from each DA run and carries operating rules forward.",
+        "badge": "Self-Improving",
+        "memories": memories,
+        "rules": rules,
+        "action_count": len(actions),
+    }
+
+
 def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext:
     ctx = init_run(input_dir, run_label=run_label)
     input_file = choose_input_file(input_dir)
@@ -753,6 +793,8 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
     write_text(ctx.outputs_dir / "executive_report.md", "\n".join(exec_summary))
     write_text(ctx.outputs_dir / "action_plan.md", "\n".join(action_plan_lines))
     write_json(ctx.outputs_dir / "action_plan.json", {"actions": actions})
+    knowledge_base = build_knowledge_base(profile, metrics_payload, analysis_insights, actions, ab_test_payload)
+    write_json(ctx.outputs_dir / "knowledge_base.json", knowledge_base)
 
     ctx.add_output(
         {
@@ -787,6 +829,19 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
             "icon_class": "report",
             "meta": "Prioritized next steps",
             "preview": render_action_plan_preview(actions),
+        }
+    )
+    ctx.add_output(
+        {
+            "id": "knowledge-base",
+            "name": "Knowledge Base",
+            "file_name": "knowledge_base.json",
+            "relative_path": f"runs/{ctx.run_id}/outputs/knowledge_base.json",
+            "type": "json",
+            "status": "ready",
+            "icon_class": "questions",
+            "meta": f"{knowledge_base['action_count']} actions remembered",
+            "preview": render_json_preview(knowledge_base),
         }
     )
     ctx.set_stage("report", "completed", "Executive report and action plan completed")

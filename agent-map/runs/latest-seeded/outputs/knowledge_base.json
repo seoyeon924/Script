@@ -1,0 +1,26 @@
+{
+  "title": "Knowledge Base",
+  "subtitle": "Learns from each DA run and carries operating rules forward.",
+  "badge": "Self-Improving",
+  "memories": [
+    {
+      "title": "Dataset shape",
+      "detail": "24 rows across 14 columns were processed in the latest run."
+    },
+    {
+      "title": "Revenue baseline",
+      "detail": "Revenue is $397K with 30.6% margin."
+    },
+    {
+      "title": "Top analytical signal",
+      "detail": "Consumer is the top segment by revenue at $166K."
+    }
+  ],
+  "rules": [
+    "Prioritize low-margin categories for pricing review before acquisition spend increases.",
+    "Promote segment-region combinations that outperform both on revenue and margin.",
+    "Translate every major insight into an explicit owner and next action.",
+    "Roll out experiment winner B only after validating downstream profit impact."
+  ],
+  "action_count": 3
+}
