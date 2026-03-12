@@ -146,6 +146,8 @@
       margin-bottom: 16px;
       transition: all 0.2s;
       cursor: pointer;
+      text-decoration: none;
+      display: block;
     }
 
     .upload-zone:hover {
@@ -192,6 +194,14 @@
       border: 1px solid var(--border-dark);
       border-radius: 14px;
       margin-bottom: 10px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .file-item:hover {
+      border-color: #4a4a4a;
+      transform: translateY(-1px);
     }
 
     .file-icon {
@@ -740,6 +750,15 @@
       line-height: 1.6;
     }
 
+    .path-link {
+      color: #9dd8c7;
+      text-decoration: none;
+    }
+
+    .path-link:hover {
+      color: var(--text-white);
+    }
+
     .preview-image {
       padding: 18px;
     }
@@ -877,13 +896,14 @@
       <span class="count" id="inputCount">0 files</span>
     </div>
     <div class="panel-content">
-      <div class="upload-zone">
+      <a class="upload-zone" href="file:///Users/shanny/Codex/Script/agent-map/data/inbox">
         <div class="upload-icon">↑</div>
         <div class="upload-text">
           <strong>Put files in `agent-map/data/inbox/`</strong>
-          Then run `python3 agent-map/pipeline/run_da_flow.py`
+          Then run `python3 agent-map/pipeline/run_da_flow.py`<br>
+          <span class="path-link">Open folder in Finder</span>
         </div>
-      </div>
+      </a>
       <div class="panel-note" id="runMeta">Waiting for run metadata.</div>
       <div id="inputFiles"></div>
       <div id="knowledgeBase"></div>
@@ -913,6 +933,7 @@
 const statusUrl = './runs/latest/status.json';
 const outputsUrl = './runs/latest/outputs/index.json';
 const knowledgeBaseUrl = './runs/latest/outputs/knowledge_base.json';
+const inboxFinderUrl = 'file:///Users/shanny/Codex/Script/agent-map/data/inbox';
 
 const state = {
   status: null,
@@ -983,13 +1004,13 @@ function renderInputs() {
   }
 
   document.getElementById('inputFiles').innerHTML = inputs.map((file) => `
-    <div class="file-item">
+    <a class="file-item" href="${inboxFinderUrl}/${encodeURIComponent(file.name)}">
       <div class="file-icon">${escapeHtml((file.type || 'file').slice(0, 3).toUpperCase())}</div>
       <div class="file-info">
         <h4>${escapeHtml(file.name)}</h4>
-        <p>${formatBytes(file.size_bytes)} · ${file.rows || 0} rows · ${file.columns || 0} columns</p>
+        <p>${formatBytes(file.size_bytes)} · ${file.rows || 0} rows · ${file.columns || 0} columns · Open in Finder</p>
       </div>
-    </div>
+    </a>
   `).join('');
 }
 
