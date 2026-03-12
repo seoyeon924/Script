@@ -304,39 +304,37 @@
     {
       "id": "action-plan",
       "name": "Action Plan",
-      "file_name": "action_plan.json",
-      "relative_path": "runs/latest-seeded/outputs/action_plan.json",
-      "type": "json",
+      "file_name": "action_plan.md",
+      "relative_path": "runs/latest-seeded/outputs/action_plan.md",
+      "type": "markdown",
       "status": "ready",
       "icon_class": "report",
       "meta": "Prioritized next steps",
       "preview": {
-        "kind": "json",
-        "payload": {
-          "actions": [
-            {
-              "priority": 1,
-              "title": "Reduce discount pressure in low-margin categories",
-              "owner": "Pricing",
-              "impact": "High",
-              "reason": "Furniture has the weakest margin at 10.7%."
-            },
-            {
-              "priority": 2,
-              "title": "Scale the strongest segment-region mix",
-              "owner": "Growth",
-              "impact": "High",
-              "reason": "Consumer is the top segment by revenue at $166K."
-            },
-            {
-              "priority": 3,
-              "title": "Validate experiment winner before full rollout",
-              "owner": "Product",
-              "impact": "Medium",
-              "reason": "A/B test summary is available and should be operationalized."
-            }
-          ]
-        }
+        "kind": "action-plan",
+        "actions": [
+          {
+            "priority": 1,
+            "title": "Reduce discount pressure in low-margin categories",
+            "owner": "Pricing",
+            "impact": "High",
+            "reason": "Furniture has the weakest margin at 10.7%."
+          },
+          {
+            "priority": 2,
+            "title": "Scale the strongest segment-region mix",
+            "owner": "Growth",
+            "impact": "High",
+            "reason": "Consumer is the top segment by revenue at $166K."
+          },
+          {
+            "priority": 3,
+            "title": "Validate experiment winner before full rollout",
+            "owner": "Product",
+            "impact": "Medium",
+            "reason": "A/B test summary is available and should be operationalized."
+          }
+        ]
       }
     }
   ]

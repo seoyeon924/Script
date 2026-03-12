@@ -182,6 +182,20 @@ def render_chart_preview(title: str, image_path: str, caption: str) -> Dict[str,
     return {"kind": "image", "title": title, "image_path": image_path, "caption": caption}
 
 
+def render_action_plan_preview(actions: List[Dict[str, Any]]) -> Dict[str, Any]:
+    return {"kind": "action-plan", "actions": actions[:5]}
+
+
+def replace_run_paths(value: Any, run_id: str) -> Any:
+    if isinstance(value, dict):
+        return {key: replace_run_paths(item, run_id) for key, item in value.items()}
+    if isinstance(value, list):
+        return [replace_run_paths(item, run_id) for item in value]
+    if isinstance(value, str):
+        return value.replace(f"runs/{run_id}/", "runs/latest/")
+    return value
+
+
 @dataclass
 class RunContext:
     run_id: str
@@ -721,7 +735,23 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
         "",
         "## Recommended Actions",
     ] + [f"- P{item['priority']}: {item['title']} ({item['owner']})" for item in actions]
+    action_plan_lines = [
+        "# Action Plan",
+        "",
+        "Prioritized next steps based on the latest DA run.",
+        "",
+    ]
+    for item in actions:
+        action_plan_lines += [
+            f"## P{item['priority']} · {item['title']}",
+            f"- Owner: {item['owner']}",
+            f"- Impact: {item['impact']}",
+            f"- Why now: {item['reason']}",
+            "",
+        ]
+
     write_text(ctx.outputs_dir / "executive_report.md", "\n".join(exec_summary))
+    write_text(ctx.outputs_dir / "action_plan.md", "\n".join(action_plan_lines))
     write_json(ctx.outputs_dir / "action_plan.json", {"actions": actions})
 
     ctx.add_output(
@@ -750,13 +780,13 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
         {
             "id": "action-plan",
             "name": "Action Plan",
-            "file_name": "action_plan.json",
-            "relative_path": f"runs/{ctx.run_id}/outputs/action_plan.json",
-            "type": "json",
+            "file_name": "action_plan.md",
+            "relative_path": f"runs/{ctx.run_id}/outputs/action_plan.md",
+            "type": "markdown",
             "status": "ready",
             "icon_class": "report",
             "meta": "Prioritized next steps",
-            "preview": render_json_preview({"actions": actions}),
+            "preview": render_action_plan_preview(actions),
         }
     )
     ctx.set_stage("report", "completed", "Executive report and action plan completed")
@@ -770,6 +800,11 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
     if LATEST_DIR.exists():
         shutil.rmtree(LATEST_DIR)
     shutil.copytree(ctx.run_dir, LATEST_DIR)
+    latest_outputs_index = LATEST_DIR / "outputs" / "index.json"
+    latest_index_payload = json.loads(latest_outputs_index.read_text(encoding="utf-8"))
+    latest_index_payload["outputs"] = replace_run_paths(latest_index_payload["outputs"], ctx.run_id)
+    write_json(latest_outputs_index, latest_index_payload)
+    write_json(LATEST_DIR / "manifest.json", {"run_id": ctx.run_id, "status_path": "runs/latest/status.json"})
     return ctx
 
 

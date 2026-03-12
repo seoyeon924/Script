@@ -98,7 +98,7 @@
     /* GRID */
     .grid {
       display: grid;
-      grid-template-columns: 280px 1fr 400px;
+      grid-template-columns: 260px 220px minmax(0, 1.65fr);
       gap: 24px;
       height: calc(100vh - 140px);
     }
@@ -328,13 +328,16 @@
       background: var(--bg-card-dark);
       border: 1px solid var(--border-dark);
       border-radius: 16px;
-      margin-bottom: 12px;
       overflow: hidden;
       transition: all 0.2s;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
     }
 
     .output-item:hover {
       border-color: #444;
+      transform: translateY(-2px);
     }
 
     .output-header {
@@ -342,8 +345,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 16px;
-      cursor: pointer;
       transition: background 0.2s;
+      min-height: 78px;
     }
 
     .output-header:hover {
@@ -384,25 +387,18 @@
       margin-top: 2px;
     }
 
-    .output-expand {
-      color: #666;
-      transition: transform 0.3s;
-      font-size: 10px;
-    }
-
-    .output-item.expanded .output-expand {
-      transform: rotate(180deg);
-    }
-
-    /* REPORT PREVIEW */
     .output-preview {
-      display: none;
       border-top: 1px solid var(--border-dark);
       background: #0a0a0a;
+      display: block;
+      flex: 1;
     }
 
-    .output-item.expanded .output-preview {
-      display: block;
+    .outputs-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      align-content: start;
     }
 
     .report-card {
@@ -570,6 +566,79 @@
       line-height: 1.5;
     }
 
+    .action-plan-preview {
+      padding: 20px;
+    }
+
+    .action-plan-title {
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-white);
+      margin-bottom: 8px;
+    }
+
+    .action-plan-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .action-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .action-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-dark);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .action-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .action-priority {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #0D9488;
+      text-transform: uppercase;
+    }
+
+    .action-owner {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .action-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-white);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .action-meta {
+      font-size: 11px;
+      color: #9dd8c7;
+      margin-bottom: 8px;
+    }
+
+    .action-reason {
+      font-size: 12px;
+      color: #d4d4d4;
+      line-height: 1.6;
+    }
+
     .empty-state {
       padding: 24px;
       border: 1px dashed #333;
@@ -603,6 +672,16 @@
       font-size: 12px;
       color: var(--text-muted);
       line-height: 1.5;
+    }
+
+    @media (max-width: 1280px) {
+      .grid {
+        grid-template-columns: 240px 200px minmax(0, 1fr);
+      }
+
+      .outputs-gallery {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -810,6 +889,28 @@ function renderQuestionsPreview(preview) {
   `;
 }
 
+function renderActionPlanPreview(preview) {
+  return `
+    <div class="action-plan-preview">
+      <div class="action-plan-title">Action Plan</div>
+      <div class="action-plan-subtitle">Prioritized next steps based on the latest DA flow run.</div>
+      <div class="action-cards">
+        ${(preview.actions || []).map((action) => `
+          <div class="action-card">
+            <div class="action-card-header">
+              <div class="action-priority">P${escapeHtml(action.priority)}</div>
+              <div class="action-owner">${escapeHtml(action.owner)}</div>
+            </div>
+            <div class="action-title">${escapeHtml(action.title)}</div>
+            <div class="action-meta">Impact: ${escapeHtml(action.impact)}</div>
+            <div class="action-reason">${escapeHtml(action.reason)}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
 function renderImagePreview(preview) {
   return `
     <div class="preview-image">
@@ -824,6 +925,7 @@ function previewHtml(output) {
   if (preview.kind === 'report') return renderReportPreview(preview);
   if (preview.kind === 'json') return renderJsonPreview(preview);
   if (preview.kind === 'questions') return renderQuestionsPreview(preview);
+  if (preview.kind === 'action-plan') return renderActionPlanPreview(preview);
   if (preview.kind === 'image') return renderImagePreview(preview);
   return `<div class="empty-state">No preview available for ${escapeHtml(output.name)}.</div>`;
 }
@@ -835,9 +937,9 @@ function renderOutputs() {
     return;
   }
 
-  document.getElementById('outputsList').innerHTML = state.outputs.map((output, index) => `
-    <div class="output-item ${index === 0 ? 'expanded' : ''}">
-      <div class="output-header" onclick="this.parentElement.classList.toggle('expanded')">
+  document.getElementById('outputsList').innerHTML = `<div class="outputs-gallery">${state.outputs.map((output) => `
+    <div class="output-item">
+      <div class="output-header">
         <div class="output-title">
           <div class="output-icon ${escapeHtml(output.icon_class || 'report')}">${iconSymbol[output.icon_class] || '•'}</div>
           <div>
@@ -845,11 +947,10 @@ function renderOutputs() {
             <div class="output-meta">${escapeHtml(output.file_name)} · ${escapeHtml(output.meta || '')}</div>
           </div>
         </div>
-        <div class="output-expand">▼</div>
       </div>
       <div class="output-preview">${previewHtml(output)}</div>
     </div>
-  `).join('');
+  `).join('')}</div>`;
 }
 
 function renderHeader() {

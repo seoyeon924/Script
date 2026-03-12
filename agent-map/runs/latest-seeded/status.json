@@ -1,7 +1,7 @@
 {
   "run_id": "latest-seeded",
-  "started_at": "2026-03-12T06:55:36.027706+00:00",
-  "finished_at": "2026-03-12T06:55:36.601238+00:00",
+  "started_at": "2026-03-12T07:02:42.362404+00:00",
+  "finished_at": "2026-03-12T07:02:43.683994+00:00",
   "overall_status": "completed",
   "current_stage": "done",
   "inputs": [
@@ -41,8 +41,8 @@
       "color": "mint",
       "status": "completed",
       "summary": "Loaded 24 rows and 14 columns",
-      "started_at": "2026-03-12T06:55:36.044429+00:00",
-      "completed_at": "2026-03-12T06:55:36.048278+00:00",
+      "started_at": "2026-03-12T07:02:42.379625+00:00",
+      "completed_at": "2026-03-12T07:02:42.383429+00:00",
       "duration_seconds": 0.0
     },
     {
@@ -52,9 +52,9 @@
       "color": "lavender",
       "status": "completed",
       "summary": "Built EDA report with 3 core findings",
-      "started_at": "2026-03-12T06:55:36.048625+00:00",
-      "completed_at": "2026-03-12T06:55:36.275024+00:00",
-      "duration_seconds": 0.23
+      "started_at": "2026-03-12T07:02:42.383722+00:00",
+      "completed_at": "2026-03-12T07:02:42.704872+00:00",
+      "duration_seconds": 0.32
     },
     {
       "id": "problem",
@@ -63,8 +63,8 @@
       "color": "rose",
       "status": "completed",
       "summary": "Generated 5 questions and 3 hypotheses",
-      "started_at": "2026-03-12T06:55:36.275518+00:00",
-      "completed_at": "2026-03-12T06:55:36.276788+00:00",
+      "started_at": "2026-03-12T07:02:42.705444+00:00",
+      "completed_at": "2026-03-12T07:02:42.707186+00:00",
       "duration_seconds": 0.0
     },
     {
@@ -74,8 +74,8 @@
       "color": "cream",
       "status": "completed",
       "summary": "Calculated KPI layer and A/B test summary",
-      "started_at": "2026-03-12T06:55:36.277095+00:00",
-      "completed_at": "2026-03-12T06:55:36.283932+00:00",
+      "started_at": "2026-03-12T07:02:42.707671+00:00",
+      "completed_at": "2026-03-12T07:02:42.715788+00:00",
       "duration_seconds": 0.01
     },
     {
@@ -85,9 +85,9 @@
       "color": "mint",
       "status": "completed",
       "summary": "Completed 3 analytical findings",
-      "started_at": "2026-03-12T06:55:36.284260+00:00",
-      "completed_at": "2026-03-12T06:55:36.594704+00:00",
-      "duration_seconds": 0.31
+      "started_at": "2026-03-12T07:02:42.716202+00:00",
+      "completed_at": "2026-03-12T07:02:43.675830+00:00",
+      "duration_seconds": 0.96
     },
     {
       "id": "dashboard",
@@ -96,8 +96,8 @@
       "color": "lavender",
       "status": "completed",
       "summary": "Dashboard spec and chart assets generated",
-      "started_at": "2026-03-12T06:55:36.595286+00:00",
-      "completed_at": "2026-03-12T06:55:36.598081+00:00",
+      "started_at": "2026-03-12T07:02:43.676350+00:00",
+      "completed_at": "2026-03-12T07:02:43.679010+00:00",
       "duration_seconds": 0.0
     },
     {
@@ -107,8 +107,8 @@
       "color": "mint",
       "status": "completed",
       "summary": "Executive report and action plan completed",
-      "started_at": "2026-03-12T06:55:36.598422+00:00",
-      "completed_at": "2026-03-12T06:55:36.600727+00:00",
+      "started_at": "2026-03-12T07:02:43.679422+00:00",
+      "completed_at": "2026-03-12T07:02:43.683349+00:00",
       "duration_seconds": 0.0
     }
   ]
