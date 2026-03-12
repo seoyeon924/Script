@@ -446,17 +446,20 @@
       grid-template-columns: minmax(0, 1.62fr) minmax(300px, 0.78fr);
       gap: 12px;
       margin-bottom: 12px;
-      align-items: start;
+      align-items: stretch;
     }
 
     .chart-card,
     .insight-card,
     .table-card {
       padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
     .insight-card {
-      align-self: start;
+      justify-content: flex-start;
     }
 
     .card-top {
@@ -628,6 +631,7 @@
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 12px;
       margin-bottom: 12px;
+      align-items: stretch;
     }
 
     .matrix {
@@ -739,6 +743,22 @@
       display: grid;
       gap: 6px;
       margin-top: 6px;
+      flex: 1;
+      align-content: start;
+    }
+
+    #channelBars,
+    #categoryBars,
+    #regionBars,
+    #segmentRegionMatrix,
+    #actionBoard {
+      flex: 1;
+      align-content: start;
+    }
+
+    #experimentCard,
+    #trendCallouts {
+      margin-top: auto;
     }
 
     .insight-item {
