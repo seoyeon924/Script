@@ -26,6 +26,16 @@
       --accent-peach: rgba(253, 238, 232, 0.94);
       --accent-offwhite: rgba(245, 244, 240, 0.94);
       --accent-ink: #4a4a4a;
+      --chart-lavender: #7d6ac7;
+      --chart-lavender-soft: rgba(125, 106, 199, 0.18);
+      --chart-mint: #38c08b;
+      --chart-mint-soft: rgba(56, 192, 139, 0.18);
+      --chart-amber: #e1a146;
+      --chart-amber-soft: rgba(225, 161, 70, 0.18);
+      --chart-sky: #4b96d8;
+      --chart-sky-soft: rgba(75, 150, 216, 0.18);
+      --chart-rose: #d778ab;
+      --chart-rose-soft: rgba(215, 120, 171, 0.18);
       --positive: #35c995;
       --negative: #ef7d86;
       --warning: #efb05d;
@@ -495,7 +505,7 @@
 
     .line-primary {
       fill: none;
-      stroke: #6f63be;
+      stroke: var(--chart-color, var(--chart-lavender));
       stroke-width: 3;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -503,7 +513,7 @@
 
     .line-secondary {
       fill: none;
-      stroke: rgba(111, 99, 190, 0.2);
+      stroke: var(--chart-color-soft, var(--chart-lavender-soft));
       stroke-width: 10;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -511,7 +521,7 @@
 
     .point {
       fill: #fff;
-      stroke: #6f63be;
+      stroke: var(--chart-color, var(--chart-lavender));
       stroke-width: 2;
     }
 
@@ -549,9 +559,9 @@
       border-radius: 999px;
     }
 
-    .bar-fill.max { background: linear-gradient(90deg, #9cd9be 0%, #45b37d 100%); }
-    .bar-fill.min { background: linear-gradient(90deg, #f1cad1 0%, #e46b73 100%); }
-    .bar-fill.mid { background: linear-gradient(90deg, #d7d0ef 0%, #6f63be 100%); }
+    .bar-fill.max { background: linear-gradient(90deg, #9bdcbf 0%, var(--chart-mint) 100%); }
+    .bar-fill.min { background: linear-gradient(90deg, #f4c7d3 0%, var(--negative) 100%); }
+    .bar-fill.mid { background: linear-gradient(90deg, #ddd5f2 0%, var(--chart-lavender) 100%); }
 
     .bar-value {
       font-size: 12px;
@@ -710,8 +720,8 @@
       width: 28px;
       height: 28px;
       border-radius: 999px;
-      background: var(--accent-sky);
-      color: #3962a8;
+      background: rgba(232, 224, 245, 0.9);
+      color: var(--chart-lavender);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -775,7 +785,7 @@
     }
 
     tr:hover td {
-      background: rgba(111, 99, 190, 0.04);
+      background: rgba(232, 224, 245, 0.24);
     }
 
     .mono {
@@ -1303,7 +1313,7 @@
           delta: compareDelta(current.revenue, previous?.revenue || 0),
           description: 'Primary outcome metric. Best for executive scale reading, but paired with efficiency metrics below.',
           values: monthly.map((item) => item.revenue),
-          color: '#6f63be',
+          color: 'var(--chart-lavender)',
         },
         {
           label: 'Profit',
@@ -1311,7 +1321,7 @@
           delta: compareDelta(current.profit, previous?.profit || 0),
           description: 'Closer to controllable value than revenue alone because cost pressure is included.',
           values: monthly.map((item) => item.profit),
-          color: '#45b37d',
+          color: 'var(--chart-mint)',
         },
         {
           label: 'Margin',
@@ -1319,7 +1329,7 @@
           delta: compareDelta(current.margin, previous?.margin || 0),
           description: 'Efficiency lens. Useful for identifying whether growth is high quality or discount-driven.',
           values: monthly.map((item) => item.margin),
-          color: '#e0a74a',
+          color: 'var(--chart-amber)',
         },
         {
           label: 'Conversion',
@@ -1327,7 +1337,7 @@
           delta: compareDelta(current.conversion, previous?.conversion || 0),
           description: 'Actionable lead metric. Easier to influence quickly than total revenue.',
           values: monthly.map((item) => item.conversion),
-          color: '#4d9de0',
+          color: 'var(--chart-sky)',
         },
         {
           label: 'Revenue / Visitor',
@@ -1335,7 +1345,7 @@
           delta: compareDelta(current.visitors ? current.revenue / current.visitors : 0, previous?.visitors ? previous.revenue / previous.visitors : 0),
           description: 'Channel and landing quality metric. Combines traffic and commercial output into one comparable number.',
           values: monthly.map((item) => (item.visitors ? item.revenue / item.visitors : 0)),
-          color: '#d37ab3',
+          color: 'var(--chart-rose)',
         },
       ];
 
@@ -1364,9 +1374,20 @@
       }).join(' ');
       return `
         <svg class="sparkline" viewBox="0 0 180 56" preserveAspectRatio="none">
+          <polyline fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" points="${points}"></polyline>
           <polyline fill="none" stroke="${color}" stroke-width="3" points="${points}"></polyline>
         </svg>
       `;
+    }
+
+    function getTrendPalette(metric) {
+      if (metric === 'orders') {
+        return { stroke: 'var(--chart-mint)', soft: 'var(--chart-mint-soft)' };
+      }
+      if (metric === 'conversion') {
+        return { stroke: 'var(--chart-sky)', soft: 'var(--chart-sky-soft)' };
+      }
+      return { stroke: 'var(--chart-lavender)', soft: 'var(--chart-lavender-soft)' };
     }
 
     function renderTrend(rows) {
@@ -1406,6 +1427,7 @@
       const path = pathPoints.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ');
       const maxPoint = pathPoints.reduce((best, point) => (point.value > best.value ? point : best), pathPoints[0]);
       const minPoint = pathPoints.reduce((best, point) => (point.value < best.value ? point : best), pathPoints[0]);
+      const palette = getTrendPalette(metric);
 
       const yTicks = [0, 0.5, 1].map((ratio) => {
         const value = max - (max - min) * ratio;
@@ -1414,16 +1436,25 @@
       });
 
       chart.innerHTML = `
+        <defs>
+          <linearGradient id="trendAreaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="${palette.soft}" stop-opacity="1"></stop>
+            <stop offset="100%" stop-color="${palette.soft}" stop-opacity="0.15"></stop>
+          </linearGradient>
+        </defs>
         ${yTicks.map((tick) => `
           <line class="axis-line" x1="${margin.left}" y1="${tick.y}" x2="${width - margin.right}" y2="${tick.y}"></line>
           <text class="axis-label" x="${margin.left - 10}" y="${tick.y + 4}" text-anchor="end">${mode === 'growth' || metric === 'conversion' ? tick.value.toFixed(1) + '%' : formatCompactCurrency(tick.value)}</text>
         `).join('')}
         ${pathPoints.map((point) => `<text class="axis-label" x="${point.x}" y="${height - 18}" text-anchor="middle">${point.label}</text>`).join('')}
-        <path class="line-secondary" d="${path}"></path>
-        <path class="line-primary" d="${path}"></path>
+        <path fill="url(#trendAreaGradient)" d="${path} L ${pathPoints[pathPoints.length - 1].x} ${margin.top + innerHeight} L ${pathPoints[0].x} ${margin.top + innerHeight} Z"></path>
+        <g style="--chart-color:${palette.stroke}; --chart-color-soft:${palette.soft};">
+          <path class="line-secondary" d="${path}"></path>
+          <path class="line-primary" d="${path}"></path>
+        </g>
         ${pathPoints.map((point) => {
           const pointClass = point.label === maxPoint.label ? 'max-point' : point.label === minPoint.label ? 'min-point' : 'point';
-          return `<circle class="${pointClass}" cx="${point.x}" cy="${point.y}" r="6"></circle>`;
+          return `<circle class="${pointClass}" style="--chart-color:${palette.stroke};" cx="${point.x}" cy="${point.y}" r="6"></circle>`;
         }).join('')}
       `;
 
@@ -1492,9 +1523,9 @@
           const revenue = sum(items, 'revenue');
           const profit = sum(items, 'profit');
           const margin = revenue ? (profit / revenue) * 100 : 0;
-          const intensity = Math.min(0.85, 0.18 + (revenue / Math.max(sum(rows, 'revenue'), 1)) * 1.8);
+          const intensity = Math.min(0.82, 0.16 + (revenue / Math.max(sum(rows, 'revenue'), 1)) * 1.6);
           cells.push(`
-            <div class="matrix-cell" style="background: rgba(111, 99, 190, ${intensity});">
+            <div class="matrix-cell" style="background: rgba(125, 106, 199, ${intensity}); border-color: rgba(255,255,255,0.24);">
               <div class="matrix-label">${segment}</div>
               <div class="matrix-value">${formatCompactCurrency(revenue)}</div>
               <div class="matrix-subvalue">Margin ${formatPercent(margin)}</div>
