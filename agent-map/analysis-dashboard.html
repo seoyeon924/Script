@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Data Analyst OS - Interactive Analysis Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+    :root {
+      --page-bg: #dfe4eb;
+      --shell-bg: #edf1f5;
+      --sidebar-bg: #3e4761;
+      --sidebar-border: rgba(255, 255, 255, 0.08);
+      --panel-bg: rgba(255, 255, 255, 0.76);
+      --panel-border: rgba(56, 67, 91, 0.08);
+      --panel-shadow: 0 18px 40px rgba(29, 39, 59, 0.08);
+      --text-main: #303544;
+      --text-soft: #71798b;
+      --text-faint: #98a0af;
+      --accent-main: #6f63be;
+      --accent-mint: #bfe8db;
+      --accent-rose: #f4d9e0;
+      --accent-cream: #f7efd8;
+      --accent-sky: #d9e8fb;
+      --accent-ink: #49516b;
+      --positive: #45b37d;
+      --negative: #e46b73;
+      --warning: #e0a74a;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top left, rgba(111, 99, 190, 0.12), transparent 30%), var(--page-bg);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      min-height: calc(100vh - 48px);
+      background: var(--shell-bg);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 24px 70px rgba(42, 51, 69, 0.14);
+    }
+
+    .sidebar {
+      background: linear-gradient(180deg, #44506b 0%, #363e57 100%);
+      color: #f4f6fa;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      border-right: 1px solid var(--sidebar-border);
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 14px;
+    }
+
+    .sidebar-title {
+      font-family: 'Barlow', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.02;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-subtitle {
+      font-size: 15px;
+      line-height: 1.55;
+      color: rgba(244, 246, 250, 0.74);
+    }
+
+    .sidebar-section {
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(244, 246, 250, 0.58);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .run-meta {
+      display: grid;
+      gap: 10px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(244, 246, 250, 0.82);
+    }
+
+    .meta-row strong {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(244, 246, 250, 0.48);
+      margin-bottom: 4px;
+    }
+
+    .filter-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .filter-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+      color: rgba(244, 246, 250, 0.74);
+      font-weight: 600;
+    }
+
+    .filter-group select,
+    .filter-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .filter-group select option {
+      color: #1f2431;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .sidebar-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .sidebar-button {
+      border: none;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .sidebar-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .sidebar-button.primary {
+      background: #fff;
+      color: #31384a;
+    }
+
+    .sidebar-button.ghost {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .action-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .sidebar-action {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .sidebar-action-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-action-priority {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffced7;
+    }
+
+    .sidebar-action-owner {
+      font-size: 11px;
+      color: rgba(244, 246, 250, 0.62);
+    }
+
+    .sidebar-action-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.45;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-action-reason {
+      font-size: 12px;
+      line-height: 1.6;
+      color: rgba(244, 246, 250, 0.74);
+    }
+
+    .content {
+      padding: 28px;
+      overflow: auto;
+    }
+
+    .content-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    .content-title {
+      font-family: 'Barlow', sans-serif;
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .content-subtitle {
+      max-width: 760px;
+      font-size: 15px;
+      color: var(--text-soft);
+      line-height: 1.65;
+    }
+
+    .content-meta {
+      text-align: right;
+      display: grid;
+      gap: 8px;
+      justify-items: end;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(56, 67, 91, 0.08);
+      box-shadow: var(--panel-shadow);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-ink);
+    }
+
+    .tab-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .tab-button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--accent-ink);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .tab-button.active {
+      background: #4d5875;
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(77, 88, 117, 0.18);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--panel-shadow);
+    }
+
+    .kpi-card {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      min-height: 172px;
+    }
+
+    .kpi-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-ink);
+    }
+
+    .kpi-value {
+      font-family: 'Barlow', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 0.95;
+      color: var(--text-main);
+    }
+
+    .kpi-delta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      width: fit-content;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .kpi-delta.positive { background: rgba(69, 179, 125, 0.12); color: var(--positive); }
+    .kpi-delta.negative { background: rgba(228, 107, 115, 0.12); color: var(--negative); }
+    .kpi-delta.flat { background: rgba(73, 81, 107, 0.1); color: var(--accent-ink); }
+
+    .kpi-desc {
+      font-size: 12px;
+      color: var(--text-soft);
+      line-height: 1.55;
+      min-height: 38px;
+    }
+
+    .sparkline {
+      width: 100%;
+      height: 56px;
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.85fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .chart-card,
+    .insight-card,
+    .table-card {
+      padding: 18px 18px 20px;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-family: 'Barlow', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.05;
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--text-soft);
+      max-width: 700px;
+    }
+
+    .card-note {
+      font-size: 11px;
+      color: var(--text-faint);
+      line-height: 1.55;
+      text-align: right;
+      min-width: 160px;
+    }
+
+    .toggle-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .toggle-button {
+      border: 1px solid rgba(56, 67, 91, 0.08);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-ink);
+      cursor: pointer;
+    }
+
+    .toggle-button.active {
+      background: var(--accent-ink);
+      color: #fff;
+    }
+
+    svg.chart {
+      width: 100%;
+      height: 320px;
+      display: block;
+      overflow: visible;
+    }
+
+    .axis-label {
+      font-size: 11px;
+      fill: #7f8797;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .axis-line {
+      stroke: rgba(73, 81, 107, 0.12);
+      stroke-width: 1;
+    }
+
+    .line-primary {
+      fill: none;
+      stroke: #6f63be;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .line-secondary {
+      fill: none;
+      stroke: rgba(111, 99, 190, 0.2);
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .point {
+      fill: #fff;
+      stroke: #6f63be;
+      stroke-width: 2;
+    }
+
+    .max-point { fill: var(--positive); stroke: #fff; stroke-width: 3; }
+    .min-point { fill: var(--negative); stroke: #fff; stroke-width: 3; }
+
+    .bar-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(112px, 0.58fr) minmax(0, 1fr) 88px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .bar-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .bar-track {
+      height: 16px;
+      background: rgba(73, 81, 107, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .bar-fill.max { background: linear-gradient(90deg, #9cd9be 0%, #45b37d 100%); }
+    .bar-fill.min { background: linear-gradient(90deg, #f1cad1 0%, #e46b73 100%); }
+    .bar-fill.mid { background: linear-gradient(90deg, #d7d0ef 0%, #6f63be 100%); }
+
+    .bar-value {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-ink);
+      text-align: right;
+    }
+
+    .callout-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .callout {
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(56, 67, 91, 0.08);
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+
+    .callout strong {
+      color: var(--text-main);
+    }
+
+    .driver-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 140px repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      align-items: stretch;
+      margin-top: 8px;
+    }
+
+    .matrix-cell {
+      border-radius: 14px;
+      padding: 12px 10px;
+      min-height: 74px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(56, 67, 91, 0.08);
+    }
+
+    .matrix-header {
+      background: rgba(73, 81, 107, 0.08);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-ink);
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .matrix-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .matrix-value {
+      font-family: 'Barlow', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .matrix-subvalue {
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .action-board {
+      display: grid;
+      gap: 12px;
+    }
+
+    .action-card {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(56, 67, 91, 0.08);
+    }
+
+    .action-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .action-priority {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-main);
+    }
+
+    .action-impact {
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .action-impact.high { background: rgba(69, 179, 125, 0.12); color: var(--positive); }
+    .action-impact.medium { background: rgba(224, 167, 74, 0.12); color: var(--warning); }
+    .action-impact.low { background: rgba(228, 107, 115, 0.12); color: var(--negative); }
+
+    .action-title {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+
+    .action-owner {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+
+    .action-reason {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+
+    .insight-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .insight-item {
+      display: flex;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(56, 67, 91, 0.08);
+    }
+
+    .insight-index {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: var(--accent-sky);
+      color: #3962a8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex: none;
+    }
+
+    .insight-copy {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--text-soft);
+    }
+
+    .table-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .table-summary {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border-radius: 18px;
+      border: 1px solid rgba(56, 67, 91, 0.08);
+      background: rgba(255, 255, 255, 0.52);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+    }
+
+    th,
+    td {
+      padding: 13px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(56, 67, 91, 0.08);
+      font-size: 13px;
+      color: var(--text-main);
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: rgba(236, 240, 245, 0.94);
+      color: var(--accent-ink);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      z-index: 1;
+    }
+
+    tr:hover td {
+      background: rgba(111, 99, 190, 0.04);
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .empty-state {
+      padding: 28px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px dashed rgba(56, 67, 91, 0.12);
+      color: var(--text-soft);
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    @media (max-width: 1440px) {
+      .kpi-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .layout-grid,
+      .driver-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--sidebar-border);
+      }
+    }
+
+    @media (max-width: 840px) {
+      body {
+        padding: 12px;
+      }
+
+      .content {
+        padding: 18px;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-grid,
+      .matrix,
+      .progress-stage-row {
+        grid-template-columns: 1fr;
+      }
+
+      .content-header {
+        flex-direction: column;
+      }
+
+      .content-meta {
+        justify-items: start;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div>
+        <div class="brand-mark">▥</div>
+        <div class="sidebar-title">DA Executive Dashboard</div>
+        <div class="sidebar-subtitle">
+          General to specific. This view turns the latest DA flow into a decision dashboard with comparable KPIs,
+          driver analysis, experiment readout, and prioritized actions.
+        </div>
+      </div>
+
+      <section class="sidebar-section">
+        <div class="sidebar-label">Latest Run</div>
+        <div class="run-meta" id="runMetaBlock"></div>
+      </section>
+
+      <section class="sidebar-section">
+        <div class="sidebar-label">Filters</div>
+        <div class="filter-stack">
+          <div class="filter-grid">
+            <div class="filter-group">
+              <label for="dateFrom">From</label>
+              <input id="dateFrom" type="date">
+            </div>
+            <div class="filter-group">
+              <label for="dateTo">To</label>
+              <input id="dateTo" type="date">
+            </div>
+          </div>
+          <div class="filter-group">
+            <label for="regionFilter">Region</label>
+            <select id="regionFilter"></select>
+          </div>
+          <div class="filter-group">
+            <label for="segmentFilter">Segment</label>
+            <select id="segmentFilter"></select>
+          </div>
+          <div class="filter-group">
+            <label for="categoryFilter">Category</label>
+            <select id="categoryFilter"></select>
+          </div>
+          <div class="filter-group">
+            <label for="channelFilter">Channel</label>
+            <select id="channelFilter"></select>
+          </div>
+          <div class="sidebar-actions">
+            <button class="sidebar-button primary" id="applyFilters">Apply Filters</button>
+            <button class="sidebar-button ghost" id="resetFilters">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="sidebar-section">
+        <div class="sidebar-label">Action Board</div>
+        <div class="action-list" id="sidebarActions"></div>
+      </section>
+    </aside>
+
+    <main class="content">
+      <div class="content-header">
+        <div>
+          <div class="content-title">Interactive Analysis Dashboard</div>
+          <div class="content-subtitle">
+            This dashboard is designed for operators and executives to read the latest run fast: headline business
+            health first, then root-cause drivers, then concrete actions. Every chart includes a short explanation,
+            explicit axis logic, and max/min emphasis to reduce ambiguity.
+          </div>
+        </div>
+        <div class="content-meta">
+          <div class="pill" id="statusPill">Loading run status</div>
+          <div class="pill">Source: <span id="dataSourceName">latest input</span></div>
+        </div>
+      </div>
+
+      <div class="tab-row">
+        <button class="tab-button active" data-tab-target="overviewTab">Overview</button>
+        <button class="tab-button" data-tab-target="tableTab">Data Table</button>
+      </div>
+
+      <section class="tab-panel active" id="overviewTab">
+        <div class="kpi-grid" id="kpiGrid"></div>
+
+        <div class="layout-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Trend View</div>
+                <div class="card-desc">
+                  X-axis uses calendar month. Y-axis switches between absolute values and relative change so the same
+                  trend can be read both for scale and momentum. Max and min months are explicitly marked.
+                </div>
+              </div>
+              <div class="card-note" id="trendAxisNote">X: month<br>Y: revenue</div>
+            </div>
+            <div class="toggle-row">
+              <button class="toggle-button active" data-trend-metric="revenue">Revenue</button>
+              <button class="toggle-button" data-trend-metric="orders">Orders</button>
+              <button class="toggle-button" data-trend-metric="conversion">Conversion</button>
+              <button class="toggle-button active" data-trend-mode="absolute">Absolute</button>
+              <button class="toggle-button" data-trend-mode="growth">Growth %</button>
+            </div>
+            <svg class="chart" id="trendChart" viewBox="0 0 860 320" preserveAspectRatio="none"></svg>
+            <div class="callout-grid" id="trendCallouts"></div>
+          </section>
+
+          <section class="card insight-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Decision Focus</div>
+                <div class="card-desc">
+                  These are the most actionable readings from the current filter context. The goal is to translate the
+                  data into budget, pricing, growth, and rollout decisions without requiring manual interpretation.
+                </div>
+              </div>
+            </div>
+            <div class="insight-list" id="insightList"></div>
+          </section>
+        </div>
+
+        <div class="driver-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Category Comparison</div>
+                <div class="card-desc">
+                  X-axis ranks product categories. Y-axis is total revenue for filtered data. This is appropriate
+                  because category-level comparison is ordinal and should be read by distance and relative share.
+                </div>
+              </div>
+              <div class="card-note">Max in green<br>Min in red</div>
+            </div>
+            <div class="bar-list" id="categoryBars"></div>
+          </section>
+
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Region Efficiency</div>
+                <div class="card-desc">
+                  X-axis uses region. Bar length represents profit margin, not just revenue, so weaker gross sales can
+                  still rank well if efficiency is stronger. This keeps the chart more actionable for optimization.
+                </div>
+              </div>
+              <div class="card-note">Y: margin %<br>Use with volume context</div>
+            </div>
+            <div class="bar-list" id="regionBars"></div>
+          </section>
+        </div>
+
+        <div class="layout-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Segment x Region Matrix</div>
+                <div class="card-desc">
+                  Rows are customer segments and columns are regions. Each cell shows revenue first, then profit
+                  margin. This matrix is useful because it reveals both where scale exists and where scale is healthy.
+                </div>
+              </div>
+              <div class="card-note">Primary: revenue<br>Secondary: margin</div>
+            </div>
+            <div class="matrix" id="segmentRegionMatrix"></div>
+          </section>
+
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Channel and Experiment</div>
+                <div class="card-desc">
+                  Channel bars emphasize revenue per visitor, which is easier to move operationally than total revenue.
+                  The experiment card summarizes whether the winning variant is statistically usable.
+                </div>
+              </div>
+            </div>
+            <div class="bar-list" id="channelBars"></div>
+            <div class="callout-grid" id="experimentCard"></div>
+          </section>
+        </div>
+
+        <section class="card chart-card">
+          <div class="card-top">
+            <div>
+              <div class="card-title">Action Plan</div>
+              <div class="card-desc">
+                Action items are ranked by impact and tied back to a data-based reason. This section should be read
+                after headline KPIs and driver charts so the user understands both what to do and why it matters now.
+              </div>
+            </div>
+            <div class="card-note">Owner + reason included</div>
+          </div>
+          <div class="action-board" id="actionBoard"></div>
+        </section>
+      </section>
+
+      <section class="tab-panel" id="tableTab">
+        <section class="card table-card">
+          <div class="card-top">
+            <div>
+              <div class="card-title">Detailed Source Table</div>
+              <div class="card-desc">
+                This page is the audit layer. It shows the exact filtered rows behind the aggregated charts so operators
+                can validate what was counted and designers can inspect field structure.
+              </div>
+            </div>
+            <div class="card-note" id="tableMeta">0 rows</div>
+          </div>
+          <div class="table-toolbar">
+            <div class="table-summary" id="tableSummary">
+              Showing the filtered dataset used for all cards and charts.
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead id="tableHead"></thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const statusUrl = './runs/latest/status.json';
+    const kpiUrl = './runs/latest/outputs/kpi_summary.json';
+    const abUrl = './runs/latest/outputs/ab_test_summary.json';
+    const actionUrl = './runs/latest/outputs/action_plan.json';
+    const outputsUrl = './runs/latest/outputs/index.json';
+
+    const dashboardState = {
+      rawRows: [],
+      filteredRows: [],
+      status: null,
+      kpis: null,
+      ab: null,
+      actions: [],
+      outputs: [],
+      filters: {
+        dateFrom: '',
+        dateTo: '',
+        region: 'All',
+        segment: 'All',
+        category: 'All',
+        channel: 'All',
+      },
+      trendMetric: 'revenue',
+      trendMode: 'absolute',
+      activeTab: 'overviewTab',
+    };
+
+    function parseCsv(text) {
+      const lines = text.trim().split(/\r?\n/);
+      const headers = lines.shift().split(',');
+      return lines.map((line) => {
+        const values = line.split(',');
+        const row = {};
+        headers.forEach((header, index) => {
+          row[header] = values[index] ?? '';
+        });
+        row.date = new Date(row.date);
+        ['visitors', 'orders', 'revenue', 'cost', 'discount'].forEach((key) => {
+          row[key] = Number(row[key] || 0);
+        });
+        row.profit = row.revenue - row.cost;
+        row.margin = row.revenue ? (row.profit / row.revenue) * 100 : 0;
+        row.conversion = row.visitors ? (row.orders / row.visitors) * 100 : 0;
+        row.aov = row.orders ? row.revenue / row.orders : 0;
+        row.revenuePerVisitor = row.visitors ? row.revenue / row.visitors : 0;
+        return row;
+      });
+    }
+
+    function groupBy(items, keyFn) {
+      const map = new Map();
+      items.forEach((item) => {
+        const key = keyFn(item);
+        const current = map.get(key) || [];
+        current.push(item);
+        map.set(key, current);
+      });
+      return map;
+    }
+
+    function sum(items, field) {
+      return items.reduce((total, item) => total + (Number(item[field]) || 0), 0);
+    }
+
+    function average(items, field) {
+      return items.length ? sum(items, field) / items.length : 0;
+    }
+
+    function formatCompactCurrency(value) {
+      const abs = Math.abs(value);
+      if (abs >= 1000000) return `$${(value / 1000000).toFixed(1)}M`;
+      if (abs >= 1000) return `$${(value / 1000).toFixed(0)}K`;
+      return `$${value.toFixed(0)}`;
+    }
+
+    function formatPercent(value) {
+      return `${value.toFixed(1)}%`;
+    }
+
+    function formatDate(date) {
+      return date instanceof Date && !Number.isNaN(date.valueOf())
+        ? date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        : '—';
+    }
+
+    function monthKey(date) {
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    }
+
+    function monthLabel(value) {
+      const [year, month] = value.split('-');
+      return new Date(Number(year), Number(month) - 1, 1).toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+    }
+
+    function compareDelta(current, previous) {
+      if (!previous) return { value: 0, tone: 'flat', label: 'No prior baseline' };
+      const delta = ((current - previous) / previous) * 100;
+      return {
+        value: delta,
+        tone: delta > 0.25 ? 'positive' : delta < -0.25 ? 'negative' : 'flat',
+        label: `${delta >= 0 ? '+' : ''}${delta.toFixed(1)}% vs prior month`,
+      };
+    }
+
+    function getInputCsvPath(status) {
+      const firstInput = (status?.inputs || [])[0];
+      if (firstInput?.name) {
+        return `./runs/latest/input/${encodeURIComponent(firstInput.name)}`;
+      }
+      return './runs/latest/input/sample_sales.csv';
+    }
+
+    async function loadData() {
+      try {
+        const statusResponse = await fetch(statusUrl, { cache: 'no-store' });
+        if (!statusResponse.ok) throw new Error('status.json missing');
+        dashboardState.status = await statusResponse.json();
+
+        const inputPath = getInputCsvPath(dashboardState.status);
+        const [csvResponse, kpiResponse, abResponse, actionResponse, outputsResponse] = await Promise.all([
+          fetch(inputPath, { cache: 'no-store' }),
+          fetch(kpiUrl, { cache: 'no-store' }),
+          fetch(abUrl, { cache: 'no-store' }),
+          fetch(actionUrl, { cache: 'no-store' }),
+          fetch(outputsUrl, { cache: 'no-store' }),
+        ]);
+
+        if (!csvResponse.ok) throw new Error('input csv missing');
+
+        dashboardState.rawRows = parseCsv(await csvResponse.text());
+        dashboardState.kpis = kpiResponse.ok ? await kpiResponse.json() : null;
+        dashboardState.ab = abResponse.ok ? await abResponse.json() : null;
+        dashboardState.actions = actionResponse.ok ? ((await actionResponse.json()).actions || []) : [];
+        dashboardState.outputs = outputsResponse.ok ? ((await outputsResponse.json()).outputs || []) : [];
+
+        initializeFilters();
+        applyFilters();
+      } catch (error) {
+        console.error(error);
+        document.body.innerHTML = '<div class="empty-state" style="max-width:720px;margin:80px auto;">Interactive dashboard could not load the latest run assets. Run the DA flow once and ensure runs/latest is populated.</div>';
+      }
+    }
+
+    function initializeFilters() {
+      if (!dashboardState.rawRows.length) return;
+      const rows = dashboardState.rawRows;
+      const minDate = rows.reduce((min, row) => (row.date < min ? row.date : min), rows[0].date);
+      const maxDate = rows.reduce((max, row) => (row.date > max ? row.date : max), rows[0].date);
+      dashboardState.filters.dateFrom = minDate.toISOString().slice(0, 10);
+      dashboardState.filters.dateTo = maxDate.toISOString().slice(0, 10);
+
+      const selectConfig = [
+        ['regionFilter', 'region'],
+        ['segmentFilter', 'segment'],
+        ['categoryFilter', 'category'],
+        ['channelFilter', 'channel'],
+      ];
+
+      selectConfig.forEach(([id, key]) => {
+        const select = document.getElementById(id);
+        const values = ['All', ...Array.from(new Set(rows.map((row) => row[key]))).sort()];
+        select.innerHTML = values.map((value) => `<option value="${value}">${value}</option>`).join('');
+        select.value = 'All';
+      });
+
+      document.getElementById('dateFrom').value = dashboardState.filters.dateFrom;
+      document.getElementById('dateTo').value = dashboardState.filters.dateTo;
+      document.getElementById('dataSourceName').textContent = (dashboardState.status?.inputs || [])[0]?.name || 'latest input';
+    }
+
+    function readFilterValues() {
+      dashboardState.filters.dateFrom = document.getElementById('dateFrom').value;
+      dashboardState.filters.dateTo = document.getElementById('dateTo').value;
+      dashboardState.filters.region = document.getElementById('regionFilter').value;
+      dashboardState.filters.segment = document.getElementById('segmentFilter').value;
+      dashboardState.filters.category = document.getElementById('categoryFilter').value;
+      dashboardState.filters.channel = document.getElementById('channelFilter').value;
+    }
+
+    function applyFilters() {
+      readFilterValues();
+      const from = dashboardState.filters.dateFrom ? new Date(dashboardState.filters.dateFrom) : null;
+      const to = dashboardState.filters.dateTo ? new Date(dashboardState.filters.dateTo) : null;
+      const toEnd = to ? new Date(to.getTime() + 24 * 60 * 60 * 1000 - 1) : null;
+
+      dashboardState.filteredRows = dashboardState.rawRows.filter((row) => {
+        if (from && row.date < from) return false;
+        if (toEnd && row.date > toEnd) return false;
+        if (dashboardState.filters.region !== 'All' && row.region !== dashboardState.filters.region) return false;
+        if (dashboardState.filters.segment !== 'All' && row.segment !== dashboardState.filters.segment) return false;
+        if (dashboardState.filters.category !== 'All' && row.category !== dashboardState.filters.category) return false;
+        if (dashboardState.filters.channel !== 'All' && row.channel !== dashboardState.filters.channel) return false;
+        return true;
+      });
+
+      renderDashboard();
+    }
+
+    function buildMonthlySeries(rows) {
+      const grouped = groupBy(rows, (row) => monthKey(row.date));
+      return Array.from(grouped.entries())
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([key, items]) => ({
+          key,
+          label: monthLabel(key),
+          revenue: sum(items, 'revenue'),
+          orders: sum(items, 'orders'),
+          visitors: sum(items, 'visitors'),
+          conversion: sum(items, 'visitors') ? (sum(items, 'orders') / sum(items, 'visitors')) * 100 : 0,
+          profit: sum(items, 'profit'),
+          margin: sum(items, 'revenue') ? (sum(items, 'profit') / sum(items, 'revenue')) * 100 : 0,
+        }));
+    }
+
+    function renderKpis(rows) {
+      const monthly = buildMonthlySeries(rows);
+      const current = monthly[monthly.length - 1] || { revenue: 0, orders: 0, visitors: 0, conversion: 0 };
+      const previous = monthly[monthly.length - 2] || null;
+      const revenue = sum(rows, 'revenue');
+      const profit = sum(rows, 'profit');
+      const visitors = sum(rows, 'visitors');
+      const orders = sum(rows, 'orders');
+      const margin = revenue ? (profit / revenue) * 100 : 0;
+      const conversion = visitors ? (orders / visitors) * 100 : 0;
+      const aov = orders ? revenue / orders : 0;
+      const rpv = visitors ? revenue / visitors : 0;
+
+      const cards = [
+        {
+          label: 'Revenue',
+          value: formatCompactCurrency(revenue),
+          delta: compareDelta(current.revenue, previous?.revenue || 0),
+          description: 'Primary outcome metric. Best for executive scale reading, but paired with efficiency metrics below.',
+          values: monthly.map((item) => item.revenue),
+          color: '#6f63be',
+        },
+        {
+          label: 'Profit',
+          value: formatCompactCurrency(profit),
+          delta: compareDelta(current.profit, previous?.profit || 0),
+          description: 'Closer to controllable value than revenue alone because cost pressure is included.',
+          values: monthly.map((item) => item.profit),
+          color: '#45b37d',
+        },
+        {
+          label: 'Margin',
+          value: formatPercent(margin),
+          delta: compareDelta(current.margin, previous?.margin || 0),
+          description: 'Efficiency lens. Useful for identifying whether growth is high quality or discount-driven.',
+          values: monthly.map((item) => item.margin),
+          color: '#e0a74a',
+        },
+        {
+          label: 'Conversion',
+          value: formatPercent(conversion),
+          delta: compareDelta(current.conversion, previous?.conversion || 0),
+          description: 'Actionable lead metric. Easier to influence quickly than total revenue.',
+          values: monthly.map((item) => item.conversion),
+          color: '#4d9de0',
+        },
+        {
+          label: 'Revenue / Visitor',
+          value: `$${rpv.toFixed(2)}`,
+          delta: compareDelta(current.visitors ? current.revenue / current.visitors : 0, previous?.visitors ? previous.revenue / previous.visitors : 0),
+          description: 'Channel and landing quality metric. Combines traffic and commercial output into one comparable number.',
+          values: monthly.map((item) => (item.visitors ? item.revenue / item.visitors : 0)),
+          color: '#d37ab3',
+        },
+      ];
+
+      document.getElementById('kpiGrid').innerHTML = cards.map((card) => `
+        <div class="card kpi-card">
+          <div class="kpi-label">${card.label}</div>
+          <div class="kpi-value">${card.value}</div>
+          <div class="kpi-delta ${card.delta.tone}">${card.delta.label}</div>
+          <div class="kpi-desc">${card.description}</div>
+          ${renderSparkline(card.values, card.color)}
+        </div>
+      `).join('');
+    }
+
+    function renderSparkline(values, color) {
+      if (!values.length) {
+        return '<svg class="sparkline" viewBox="0 0 180 56"></svg>';
+      }
+      const max = Math.max(...values);
+      const min = Math.min(...values);
+      const range = max - min || 1;
+      const points = values.map((value, index) => {
+        const x = (index / Math.max(values.length - 1, 1)) * 180;
+        const y = 48 - ((value - min) / range) * 36;
+        return `${x},${y}`;
+      }).join(' ');
+      return `
+        <svg class="sparkline" viewBox="0 0 180 56" preserveAspectRatio="none">
+          <polyline fill="none" stroke="${color}" stroke-width="3" points="${points}"></polyline>
+        </svg>
+      `;
+    }
+
+    function renderTrend(rows) {
+      const monthly = buildMonthlySeries(rows);
+      const metric = dashboardState.trendMetric;
+      const mode = dashboardState.trendMode;
+      const series = monthly.map((item, index) => {
+        let value = item[metric];
+        if (metric === 'conversion') value = item.conversion;
+        if (mode === 'growth') {
+          const previous = monthly[index - 1];
+          value = previous && previous[metric] ? ((item[metric] - previous[metric]) / previous[metric]) * 100 : 0;
+        }
+        return { label: item.label, value };
+      });
+
+      const chart = document.getElementById('trendChart');
+      if (!series.length) {
+        chart.innerHTML = '';
+        document.getElementById('trendCallouts').innerHTML = '<div class="empty-state">No trend data available for the current filter set.</div>';
+        return;
+      }
+
+      const width = 860;
+      const height = 320;
+      const margin = { top: 24, right: 20, bottom: 52, left: 54 };
+      const innerWidth = width - margin.left - margin.right;
+      const innerHeight = height - margin.top - margin.bottom;
+      const max = Math.max(...series.map((item) => item.value));
+      const min = Math.min(...series.map((item) => item.value));
+      const range = max - min || 1;
+      const pathPoints = series.map((item, index) => {
+        const x = margin.left + (index / Math.max(series.length - 1, 1)) * innerWidth;
+        const y = margin.top + innerHeight - ((item.value - min) / range) * innerHeight;
+        return { ...item, x, y };
+      });
+      const path = pathPoints.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ');
+      const maxPoint = pathPoints.reduce((best, point) => (point.value > best.value ? point : best), pathPoints[0]);
+      const minPoint = pathPoints.reduce((best, point) => (point.value < best.value ? point : best), pathPoints[0]);
+
+      const yTicks = [0, 0.5, 1].map((ratio) => {
+        const value = max - (max - min) * ratio;
+        const y = margin.top + innerHeight * ratio;
+        return { value, y };
+      });
+
+      chart.innerHTML = `
+        ${yTicks.map((tick) => `
+          <line class="axis-line" x1="${margin.left}" y1="${tick.y}" x2="${width - margin.right}" y2="${tick.y}"></line>
+          <text class="axis-label" x="${margin.left - 10}" y="${tick.y + 4}" text-anchor="end">${mode === 'growth' || metric === 'conversion' ? tick.value.toFixed(1) + '%' : formatCompactCurrency(tick.value)}</text>
+        `).join('')}
+        ${pathPoints.map((point) => `<text class="axis-label" x="${point.x}" y="${height - 18}" text-anchor="middle">${point.label}</text>`).join('')}
+        <path class="line-secondary" d="${path}"></path>
+        <path class="line-primary" d="${path}"></path>
+        ${pathPoints.map((point) => {
+          const pointClass = point.label === maxPoint.label ? 'max-point' : point.label === minPoint.label ? 'min-point' : 'point';
+          return `<circle class="${pointClass}" cx="${point.x}" cy="${point.y}" r="6"></circle>`;
+        }).join('')}
+      `;
+
+      const valueLabel = metric === 'orders'
+        ? (value) => `${Math.round(value)}`
+        : (metric === 'conversion' || mode === 'growth')
+          ? (value) => `${value.toFixed(1)}%`
+          : (value) => formatCompactCurrency(value);
+
+      document.getElementById('trendAxisNote').innerHTML = `X: month<br>Y: ${mode === 'growth' ? `${metric} change %` : metric}`;
+      document.getElementById('trendCallouts').innerHTML = `
+        <div class="callout"><strong>Maximum:</strong> ${maxPoint.label} reached ${valueLabel(maxPoint.value)}. This is the strongest point in the filtered period and should be traced back to region, segment, and channel drivers.</div>
+        <div class="callout"><strong>Minimum:</strong> ${minPoint.label} fell to ${valueLabel(minPoint.value)}. This is the weakest point and should be used as the baseline for recovery actions.</div>
+      `;
+    }
+
+    function renderRankedBars(containerId, rows, key, valueBuilder, valueFormatter) {
+      const grouped = Array.from(groupBy(rows, (row) => row[key]).entries()).map(([label, items]) => ({
+        label,
+        value: valueBuilder(items),
+      })).sort((a, b) => b.value - a.value);
+
+      const container = document.getElementById(containerId);
+      if (!grouped.length) {
+        container.innerHTML = '<div class="empty-state">No grouped data for the current selection.</div>';
+        return;
+      }
+
+      const max = grouped[0].value;
+      const min = grouped[grouped.length - 1].value;
+      container.innerHTML = grouped.map((item) => {
+        const width = max ? (item.value / max) * 100 : 0;
+        const tone = item.value === max ? 'max' : item.value === min ? 'min' : 'mid';
+        return `
+          <div class="bar-row">
+            <div class="bar-label">${item.label}</div>
+            <div class="bar-track"><div class="bar-fill ${tone}" style="width:${width}%"></div></div>
+            <div class="bar-value">${valueFormatter(item.value)}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderMatrix(rows) {
+      const segments = Array.from(new Set(rows.map((row) => row.segment))).sort();
+      const regions = Array.from(new Set(rows.map((row) => row.region))).sort();
+      const container = document.getElementById('segmentRegionMatrix');
+
+      if (!segments.length || !regions.length) {
+        container.innerHTML = '<div class="empty-state" style="grid-column:1 / -1;">No segment-region cells available.</div>';
+        return;
+      }
+
+      const grouped = groupBy(rows, (row) => `${row.segment}__${row.region}`);
+      const cells = [];
+      cells.push('<div class="matrix-cell matrix-header"></div>');
+      regions.forEach((region) => {
+        cells.push(`<div class="matrix-cell matrix-header">${region}</div>`);
+      });
+
+      segments.forEach((segment) => {
+        cells.push(`<div class="matrix-cell matrix-header">${segment}</div>`);
+        regions.forEach((region) => {
+          const key = `${segment}__${region}`;
+          const items = grouped.get(key) || [];
+          const revenue = sum(items, 'revenue');
+          const profit = sum(items, 'profit');
+          const margin = revenue ? (profit / revenue) * 100 : 0;
+          const intensity = Math.min(0.85, 0.18 + (revenue / Math.max(sum(rows, 'revenue'), 1)) * 1.8);
+          cells.push(`
+            <div class="matrix-cell" style="background: rgba(111, 99, 190, ${intensity});">
+              <div class="matrix-label">${segment}</div>
+              <div class="matrix-value">${formatCompactCurrency(revenue)}</div>
+              <div class="matrix-subvalue">Margin ${formatPercent(margin)}</div>
+            </div>
+          `);
+        });
+      });
+
+      container.innerHTML = cells.join('');
+    }
+
+    function renderInsights(rows) {
+      const groupedCategory = Array.from(groupBy(rows, (row) => row.category).entries()).map(([key, items]) => ({
+        key,
+        revenue: sum(items, 'revenue'),
+        margin: sum(items, 'revenue') ? (sum(items, 'profit') / sum(items, 'revenue')) * 100 : 0,
+      })).sort((a, b) => b.revenue - a.revenue);
+      const groupedRegion = Array.from(groupBy(rows, (row) => row.region).entries()).map(([key, items]) => ({
+        key,
+        margin: sum(items, 'revenue') ? (sum(items, 'profit') / sum(items, 'revenue')) * 100 : 0,
+        revenue: sum(items, 'revenue'),
+      })).sort((a, b) => b.margin - a.margin);
+      const groupedCombo = Array.from(groupBy(rows, (row) => `${row.segment} / ${row.region}`).entries()).map(([key, items]) => ({
+        key,
+        revenue: sum(items, 'revenue'),
+      })).sort((a, b) => b.revenue - a.revenue);
+      const currentVariant = dashboardState.ab;
+
+      const insights = [
+        `Largest category by revenue is ${groupedCategory[0]?.key || 'n/a'} at ${formatCompactCurrency(groupedCategory[0]?.revenue || 0)}. Use this as the primary scale benchmark.`,
+        `Best regional efficiency is ${groupedRegion[0]?.key || 'n/a'} with ${formatPercent(groupedRegion[0]?.margin || 0)} margin. This is the right benchmark for quality growth.`,
+        `Top segment-region mix is ${groupedCombo[0]?.key || 'n/a'} at ${formatCompactCurrency(groupedCombo[0]?.revenue || 0)}. This should anchor the next budget or sales push.`,
+        currentVariant
+          ? `Experiment winner is ${currentVariant.group_b} with +${currentVariant.lift_pct_point.toFixed(2)} pts lift and p=${currentVariant.p_value}. This is strong enough to move toward rollout.`
+          : 'Experiment data is not available for the latest run.',
+      ];
+
+      document.getElementById('insightList').innerHTML = insights.map((copy, index) => `
+        <div class="insight-item">
+          <div class="insight-index">${index + 1}</div>
+          <div class="insight-copy">${copy}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderExperimentCard() {
+      const container = document.getElementById('experimentCard');
+      const ab = dashboardState.ab;
+      if (!ab) {
+        container.innerHTML = '<div class="empty-state">A/B test summary is not available.</div>';
+        return;
+      }
+      container.innerHTML = `
+        <div class="callout"><strong>Winning variant:</strong> ${ab.group_b} converted at ${ab.conversion_rate_b_pct.toFixed(2)}% versus ${ab.group_a} at ${ab.conversion_rate_a_pct.toFixed(2)}%.</div>
+        <div class="callout"><strong>Statistical decision:</strong> p-value is ${ab.p_value}. ${ab.significant_at_95 ? 'The result is significant at the 95% confidence level.' : 'The result is not yet significant enough for rollout.'}</div>
+      `;
+    }
+
+    function renderActions() {
+      const container = document.getElementById('actionBoard');
+      const sidebar = document.getElementById('sidebarActions');
+      const actions = dashboardState.actions || [];
+
+      if (!actions.length) {
+        container.innerHTML = '<div class="empty-state">No action plan is available.</div>';
+        sidebar.innerHTML = '<div class="empty-state" style="background:rgba(255,255,255,0.08);color:#fff;border-color:rgba(255,255,255,0.16);">No actions available.</div>';
+        return;
+      }
+
+      const actionHtml = actions.map((action) => `
+        <div class="action-card">
+          <div class="action-header">
+            <div class="action-priority">Priority ${action.priority}</div>
+            <div class="action-impact ${(action.impact || '').toLowerCase()}">${action.impact}</div>
+          </div>
+          <div class="action-title">${action.title}</div>
+          <div class="action-owner">Owner: ${action.owner}</div>
+          <div class="action-reason">${action.reason}</div>
+        </div>
+      `).join('');
+      container.innerHTML = actionHtml;
+
+      sidebar.innerHTML = actions.map((action) => `
+        <div class="sidebar-action">
+          <div class="sidebar-action-top">
+            <div class="sidebar-action-priority">P${action.priority}</div>
+            <div class="sidebar-action-owner">${action.owner}</div>
+          </div>
+          <div class="sidebar-action-title">${action.title}</div>
+          <div class="sidebar-action-reason">${action.reason}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderTable(rows) {
+      const head = document.getElementById('tableHead');
+      const body = document.getElementById('tableBody');
+      const tableMeta = document.getElementById('tableMeta');
+      const tableSummary = document.getElementById('tableSummary');
+
+      if (!rows.length) {
+        head.innerHTML = '';
+        body.innerHTML = '<tr><td colspan="12">No rows available for the current filter set.</td></tr>';
+        tableMeta.textContent = '0 rows';
+        tableSummary.textContent = 'No records match the current filter selection.';
+        return;
+      }
+
+      const columns = ['date', 'region', 'segment', 'category', 'sub_category', 'channel', 'visitors', 'orders', 'revenue', 'cost', 'profit', 'test_group'];
+      head.innerHTML = `<tr>${columns.map((column) => `<th>${column.replaceAll('_', ' ')}</th>`).join('')}</tr>`;
+      body.innerHTML = rows.map((row) => `
+        <tr>
+          <td>${formatDate(row.date)}</td>
+          <td>${row.region}</td>
+          <td>${row.segment}</td>
+          <td>${row.category}</td>
+          <td>${row.sub_category}</td>
+          <td>${row.channel}</td>
+          <td class="mono">${row.visitors.toLocaleString()}</td>
+          <td class="mono">${row.orders.toLocaleString()}</td>
+          <td class="mono">${formatCompactCurrency(row.revenue)}</td>
+          <td class="mono">${formatCompactCurrency(row.cost)}</td>
+          <td class="mono">${formatCompactCurrency(row.profit)}</td>
+          <td class="mono">${row.test_group}</td>
+        </tr>
+      `).join('');
+      tableMeta.textContent = `${rows.length} rows`;
+      tableSummary.textContent = `Filtered to ${rows.length} records from ${dashboardState.rawRows.length}. This is the audit layer behind every KPI and chart above.`;
+    }
+
+    function renderRunMeta() {
+      const status = dashboardState.status;
+      const meta = document.getElementById('runMetaBlock');
+      if (!status) {
+        meta.innerHTML = '<div class="meta-row">No run metadata available.</div>';
+        return;
+      }
+      const firstInput = (status.inputs || [])[0];
+      meta.innerHTML = `
+        <div class="meta-row"><strong>Run ID</strong>${status.run_id}</div>
+        <div class="meta-row"><strong>Status</strong>${status.overall_status} · ${status.progress.completed}/${status.progress.total} complete</div>
+        <div class="meta-row"><strong>Input</strong>${firstInput ? `${firstInput.name} · ${firstInput.rows} rows` : 'No input'}</div>
+        <div class="meta-row"><strong>Window</strong>${dashboardState.filters.dateFrom} to ${dashboardState.filters.dateTo}</div>
+      `;
+      document.getElementById('statusPill').textContent = `${status.overall_status} · ${status.current_stage === 'done' ? 'completed' : status.current_stage}`;
+    }
+
+    function renderDashboard() {
+      const rows = dashboardState.filteredRows;
+      renderRunMeta();
+      renderKpis(rows);
+      renderTrend(rows);
+      renderRankedBars('categoryBars', rows, 'category', (items) => sum(items, 'revenue'), formatCompactCurrency);
+      renderRankedBars('regionBars', rows, 'region', (items) => {
+        const revenue = sum(items, 'revenue');
+        return revenue ? (sum(items, 'profit') / revenue) * 100 : 0;
+      }, formatPercent);
+      renderRankedBars('channelBars', rows, 'channel', (items) => {
+        const visitors = sum(items, 'visitors');
+        return visitors ? sum(items, 'revenue') / visitors : 0;
+      }, (value) => `$${value.toFixed(2)}`);
+      renderMatrix(rows);
+      renderInsights(rows);
+      renderExperimentCard();
+      renderActions();
+      renderTable(rows);
+    }
+
+    function setActiveTab(tabId) {
+      dashboardState.activeTab = tabId;
+      document.querySelectorAll('.tab-button').forEach((button) => {
+        button.classList.toggle('active', button.dataset.tabTarget === tabId);
+      });
+      document.querySelectorAll('.tab-panel').forEach((panel) => {
+        panel.classList.toggle('active', panel.id === tabId);
+      });
+    }
+
+    document.getElementById('applyFilters').addEventListener('click', applyFilters);
+    document.getElementById('resetFilters').addEventListener('click', () => {
+      initializeFilters();
+      applyFilters();
+    });
+
+    document.querySelectorAll('[data-trend-metric]').forEach((button) => {
+      button.addEventListener('click', () => {
+        dashboardState.trendMetric = button.dataset.trendMetric;
+        document.querySelectorAll('[data-trend-metric]').forEach((item) => item.classList.toggle('active', item === button));
+        renderTrend(dashboardState.filteredRows);
+      });
+    });
+
+    document.querySelectorAll('[data-trend-mode]').forEach((button) => {
+      button.addEventListener('click', () => {
+        dashboardState.trendMode = button.dataset.trendMode;
+        document.querySelectorAll('[data-trend-mode]').forEach((item) => item.classList.toggle('active', item === button));
+        renderTrend(dashboardState.filteredRows);
+      });
+    });
+
+    document.querySelectorAll('.tab-button').forEach((button) => {
+      button.addEventListener('click', () => setActiveTab(button.dataset.tabTarget));
+    });
+
+    loadData();
+  </script>
+</body>
+</html>

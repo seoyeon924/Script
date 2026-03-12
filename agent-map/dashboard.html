@@ -78,6 +78,32 @@
       font-weight: 500;
     }
 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .analysis-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: var(--card-mint);
+      color: #103b33;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(16, 185, 129, 0.18);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .analysis-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(16, 185, 129, 0.18);
+    }
+
     .status-dot {
       width: 8px;
       height: 8px;
@@ -952,9 +978,12 @@
 
 <header class="header">
   <h1 class="header-title">AI Data Analyst OS <span>by <a href="https://www.linkedin.com/in/seoyeonjun/" target="_blank">Seoyeon Jun</a></span></h1>
-  <div class="status-badge">
-    <div class="status-dot processing" id="statusDot"></div>
-    <span id="statusText">Loading latest run</span>
+  <div class="header-actions">
+    <a class="analysis-link" href="./analysis-dashboard.html">Open Interactive Dashboard</a>
+    <div class="status-badge">
+      <div class="status-dot processing" id="statusDot"></div>
+      <span id="statusText">Loading latest run</span>
+    </div>
   </div>
 </header>
 
