@@ -26,16 +26,16 @@
       --accent-peach: rgba(253, 238, 232, 0.94);
       --accent-offwhite: rgba(245, 244, 240, 0.94);
       --accent-ink: #4a4a4a;
-      --chart-lavender: #7d6ac7;
-      --chart-lavender-soft: rgba(125, 106, 199, 0.18);
-      --chart-mint: #38c08b;
-      --chart-mint-soft: rgba(56, 192, 139, 0.18);
-      --chart-amber: #e1a146;
-      --chart-amber-soft: rgba(225, 161, 70, 0.18);
-      --chart-sky: #4b96d8;
-      --chart-sky-soft: rgba(75, 150, 216, 0.18);
-      --chart-rose: #d778ab;
-      --chart-rose-soft: rgba(215, 120, 171, 0.18);
+      --chart-lavender: #8d7ac7;
+      --chart-lavender-soft: rgba(141, 122, 199, 0.18);
+      --chart-mint: #58b89b;
+      --chart-mint-soft: rgba(88, 184, 155, 0.18);
+      --chart-peach: #d99b58;
+      --chart-peach-soft: rgba(217, 155, 88, 0.18);
+      --chart-rose: #d18fa6;
+      --chart-rose-soft: rgba(209, 143, 166, 0.18);
+      --chart-ink: #8c8177;
+      --chart-ink-soft: rgba(140, 129, 119, 0.18);
       --positive: #35c995;
       --negative: #ef7d86;
       --warning: #efb05d;
@@ -559,8 +559,8 @@
       border-radius: 999px;
     }
 
-    .bar-fill.max { background: linear-gradient(90deg, #9bdcbf 0%, var(--chart-mint) 100%); }
-    .bar-fill.min { background: linear-gradient(90deg, #f4c7d3 0%, var(--negative) 100%); }
+    .bar-fill.max { background: linear-gradient(90deg, #b8dece 0%, var(--chart-mint) 100%); }
+    .bar-fill.min { background: linear-gradient(90deg, #ebc6d4 0%, var(--chart-rose) 100%); }
     .bar-fill.mid { background: linear-gradient(90deg, #ddd5f2 0%, var(--chart-lavender) 100%); }
 
     .bar-value {
@@ -1329,7 +1329,7 @@
           delta: compareDelta(current.margin, previous?.margin || 0),
           description: 'Efficiency lens. Useful for identifying whether growth is high quality or discount-driven.',
           values: monthly.map((item) => item.margin),
-          color: 'var(--chart-amber)',
+          color: 'var(--chart-peach)',
         },
         {
           label: 'Conversion',
@@ -1337,7 +1337,7 @@
           delta: compareDelta(current.conversion, previous?.conversion || 0),
           description: 'Actionable lead metric. Easier to influence quickly than total revenue.',
           values: monthly.map((item) => item.conversion),
-          color: 'var(--chart-sky)',
+          color: 'var(--chart-rose)',
         },
         {
           label: 'Revenue / Visitor',
@@ -1345,7 +1345,7 @@
           delta: compareDelta(current.visitors ? current.revenue / current.visitors : 0, previous?.visitors ? previous.revenue / previous.visitors : 0),
           description: 'Channel and landing quality metric. Combines traffic and commercial output into one comparable number.',
           values: monthly.map((item) => (item.visitors ? item.revenue / item.visitors : 0)),
-          color: 'var(--chart-rose)',
+          color: 'var(--chart-ink)',
         },
       ];
 
@@ -1385,7 +1385,13 @@
         return { stroke: 'var(--chart-mint)', soft: 'var(--chart-mint-soft)' };
       }
       if (metric === 'conversion') {
-        return { stroke: 'var(--chart-sky)', soft: 'var(--chart-sky-soft)' };
+        return { stroke: 'var(--chart-rose)', soft: 'var(--chart-rose-soft)' };
+      }
+      if (metric === 'profit') {
+        return { stroke: 'var(--chart-mint)', soft: 'var(--chart-mint-soft)' };
+      }
+      if (metric === 'margin') {
+        return { stroke: 'var(--chart-peach)', soft: 'var(--chart-peach-soft)' };
       }
       return { stroke: 'var(--chart-lavender)', soft: 'var(--chart-lavender-soft)' };
     }
