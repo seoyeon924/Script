@@ -44,28 +44,26 @@
     }
 
     .header-title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      line-height: 0.95;
+    }
+
+    .header-title-main {
       font-family: 'Barlow', sans-serif;
       font-size: 28px;
       font-weight: 300;
       color: var(--text-white);
+      letter-spacing: 0.01em;
     }
 
-    .header-title span {
+    .header-title-sub {
       font-family: 'Instrument Serif', serif;
       font-style: italic;
-      font-size: 18px;
-      color: var(--text-muted);
-      margin-left: 12px;
-    }
-
-    .header-title span a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .header-title span a:hover {
-      color: var(--text-white);
+      font-size: 30px;
+      color: rgba(255, 255, 255, 0.94);
+      font-weight: 400;
     }
 
     .status-badge {
@@ -283,7 +281,7 @@
 
     /* PANELS */
     .panel {
-      background: rgba(20, 20, 20, 0.92);
+      background: var(--card-beige);
       border: 1px solid var(--border-dark);
       border-radius: 20px;
       overflow: hidden;
@@ -410,8 +408,8 @@
 
     /* OUTPUTS */
     .output-item {
-      background: rgba(20, 20, 20, 0.92);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.34);
+      border: 1px solid var(--border-dark);
       border-radius: 16px;
       overflow: hidden;
       transition: all 0.2s;
@@ -421,7 +419,7 @@
     }
 
     .output-item:hover {
-      border-color: rgba(255,255,255,0.16);
+      border-color: rgba(140, 129, 119, 0.28);
       transform: translateY(-2px);
     }
 
@@ -436,7 +434,7 @@
     }
 
     .output-header:hover {
-      background: rgba(255,255,255,0.03);
+      background: rgba(51, 51, 51, 0.03);
     }
 
     .output-title {
@@ -467,12 +465,12 @@
       font-size: 14px;
       font-weight: 600;
       line-height: 1.35;
-      color: #f3f3f3;
+      color: var(--text-dark);
     }
 
     .output-meta {
       font-size: 11px;
-      color: #9a9a9a;
+      color: var(--text-muted);
       margin-top: 2px;
       line-height: 1.45;
       white-space: normal;
@@ -480,7 +478,7 @@
     }
 
     .output-preview {
-      border-top: 1px solid rgba(255,255,255,0.08);
+      border-top: 1px solid var(--border-dark);
       background: var(--card-beige);
       display: none;
       flex: 1;
@@ -532,6 +530,7 @@
       font-family: 'Barlow', sans-serif;
       font-size: 16px;
       font-weight: 500;
+      color: var(--text-dark);
     }
 
     .report-header .badge {
@@ -997,7 +996,10 @@
 <body>
 
 <header class="header">
-  <h1 class="header-title">AI Data Analyst OS <span>by <a href="https://www.linkedin.com/in/seoyeonjun/" target="_blank">Seoyeon Jun</a></span></h1>
+  <h1 class="header-title">
+    <span class="header-title-main">AI Data Analyst OS</span>
+    <span class="header-title-sub">Activity Monitor</span>
+  </h1>
   <div class="header-actions">
     <a class="analysis-link" href="./analysis-dashboard.html">Open Interactive Dashboard</a>
     <div class="status-badge">
