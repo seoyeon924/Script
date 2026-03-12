@@ -1,0 +1,14 @@
+{
+  "name": "agent-map-tableau-public-automation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "auth": "node src/auth.js",
+    "run": "node src/run.js",
+    "debug": "PWDEBUG=1 node src/run.js"
+  },
+  "dependencies": {
+    "playwright": "^1.54.2"
+  }
+}
