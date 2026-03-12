@@ -19,7 +19,7 @@
       "title": "Validate experiment winner before full rollout",
       "owner": "Product",
       "impact": "Medium",
-      "reason": "A/B test summary is available and should be operationalized."
+      "reason": "Prepare an experiment plan using the KPI baseline."
     }
   ]
 }

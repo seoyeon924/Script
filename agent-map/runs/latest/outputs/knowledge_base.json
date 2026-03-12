@@ -19,8 +19,7 @@
   "rules": [
     "Prioritize low-margin categories for pricing review before acquisition spend increases.",
     "Promote segment-region combinations that outperform both on revenue and margin.",
-    "Translate every major insight into an explicit owner and next action.",
-    "Roll out experiment winner B only after validating downstream profit impact."
+    "Translate every major insight into an explicit owner and next action."
   ],
   "action_count": 3
 }

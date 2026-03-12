@@ -148,6 +148,7 @@ def infer_metric_columns(df: pd.DataFrame) -> Dict[str, Optional[str]]:
         "sub_category": pick("sub_category", "subcategory"),
         "region": pick("region", "market", "country"),
         "channel": pick("channel", "source", "campaign"),
+        "experiment_id": pick("experiment_id", "experiment_name", "ab_test_id", "test_id"),
         "test_group": pick("test_group", "variant", "experiment_group"),
     }
 
@@ -612,8 +613,18 @@ def run_pipeline(input_dir: Path, run_label: Optional[str] = None) -> RunContext
     }
     write_json(ctx.outputs_dir / "kpi_summary.json", metrics_payload)
 
+    experiment_id_col = metric_cols["experiment_id"]
+
     ab_test_payload = None
-    if test_group_col and visitors_col and orders_col and df[test_group_col].nunique(dropna=True) >= 2:
+    has_experiment_data = (
+        experiment_id_col
+        and test_group_col
+        and visitors_col
+        and orders_col
+        and df[experiment_id_col].notna().any()
+        and df[test_group_col].nunique(dropna=True) >= 2
+    )
+    if has_experiment_data:
         group_stats = df.groupby(test_group_col)[[orders_col, visitors_col]].sum().reset_index()
         if len(group_stats) >= 2:
             first = group_stats.iloc[0]

@@ -15,4 +15,4 @@ Prioritized next steps based on the latest DA run.
 ## P3 · Validate experiment winner before full rollout
 - Owner: Product
 - Impact: Medium
-- Why now: A/B test summary is available and should be operationalized.
+- Why now: Prepare an experiment plan using the KPI baseline.

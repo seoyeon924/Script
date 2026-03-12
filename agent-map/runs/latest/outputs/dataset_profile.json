@@ -30,6 +30,7 @@
     "sub_category": "sub_category",
     "region": "region",
     "channel": "channel",
+    "experiment_id": null,
     "test_group": "test_group"
   },
   "missing_cells": 0
