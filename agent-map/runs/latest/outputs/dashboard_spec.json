@@ -1,0 +1,34 @@
+{
+  "layout": "three-column-monitor",
+  "headline_metrics": [
+    {
+      "label": "Revenue",
+      "value": "$397K"
+    },
+    {
+      "label": "Profit",
+      "value": "$121K"
+    },
+    {
+      "label": "Margin",
+      "value": "30.6%"
+    }
+  ],
+  "charts": [
+    {
+      "title": "Revenue by Category",
+      "type": "bar",
+      "asset": "runs/latest-seeded/outputs/plots/revenue_by_category.png"
+    },
+    {
+      "title": "Revenue by Region",
+      "type": "bar",
+      "asset": "runs/latest-seeded/outputs/plots/revenue_by_region.png"
+    },
+    {
+      "title": "Monthly Revenue Trend",
+      "type": "bar",
+      "asset": "runs/latest-seeded/outputs/plots/monthly_revenue.png"
+    }
+  ]
+}

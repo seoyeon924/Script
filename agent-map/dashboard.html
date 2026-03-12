@@ -525,6 +525,12 @@
       line-height: 1.7;
     }
 
+    .json-preview pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
     .json-key { color: #7C5CBF; }
     .json-string { color: #10B981; }
     .json-number { color: #F59E0B; }
@@ -563,6 +569,41 @@
       color: #ccc;
       line-height: 1.5;
     }
+
+    .empty-state {
+      padding: 24px;
+      border: 1px dashed #333;
+      border-radius: 16px;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .panel-note {
+      margin-bottom: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .preview-image {
+      padding: 18px;
+    }
+
+    .preview-image img {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--border-dark);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .preview-caption {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
@@ -570,8 +611,8 @@
 <header class="header">
   <h1 class="header-title">AI Data Analyst OS <span>by <a href="https://www.linkedin.com/in/seoyeonjun/" target="_blank">Seoyeon Jun</a></span></h1>
   <div class="status-badge">
-    <div class="status-dot processing"></div>
-    <span>Processing @metrics</span>
+    <div class="status-dot processing" id="statusDot"></div>
+    <span id="statusText">Loading latest run</span>
   </div>
 </header>
 
@@ -580,24 +621,18 @@
   <div class="panel">
     <div class="panel-header">
       <span>Input Data</span>
-      <span class="count">1 file</span>
+      <span class="count" id="inputCount">0 files</span>
     </div>
     <div class="panel-content">
-      <div class="upload-zone" id="uploadZone">
+      <div class="upload-zone">
         <div class="upload-icon">↑</div>
         <div class="upload-text">
-          <strong>Drop files here</strong>
-          CSV, Excel, JSON
+          <strong>Put files in `agent-map/data/inbox/`</strong>
+          Then run `python3 agent-map/pipeline/run_da_flow.py`
         </div>
       </div>
-
-      <div class="file-item">
-        <div class="file-icon">XLS</div>
-        <div class="file-info">
-          <h4>data.xlsx</h4>
-          <p>1.1 MB · 3 sheets · 10,194 rows</p>
-        </div>
-      </div>
+      <div class="panel-note" id="runMeta">Waiting for run metadata.</div>
+      <div id="inputFiles"></div>
     </div>
   </div>
 
@@ -605,217 +640,255 @@
   <div class="panel">
     <div class="panel-header">
       <span>Pipeline Progress</span>
-      <span>3 / 7 completed</span>
+      <span id="progressText">0 / 7 completed</span>
     </div>
-    <div class="panel-content">
-      <div class="pipeline-stage completed stage-mint">
-        <div class="stage-indicator">⊕</div>
-        <div class="stage-info">
-          <h4>@data-ingestion</h4>
-          <p>Data loaded and validated</p>
-        </div>
-        <div class="stage-time">2.3s</div>
-      </div>
-
-      <div class="pipeline-stage completed stage-lavender">
-        <div class="stage-indicator">◈</div>
-        <div class="stage-info">
-          <h4>@eda</h4>
-          <p>Exploratory analysis complete</p>
-        </div>
-        <div class="stage-time">8.1s</div>
-      </div>
-
-      <div class="pipeline-stage completed stage-rose">
-        <div class="stage-indicator">✦</div>
-        <div class="stage-info">
-          <h4>@problem</h4>
-          <p>5 business questions generated</p>
-        </div>
-        <div class="stage-time">3.4s</div>
-      </div>
-
-      <div class="pipeline-stage processing stage-cream">
-        <div class="stage-indicator">▣</div>
-        <div class="stage-info">
-          <h4>@metrics</h4>
-          <p>Calculating KPIs...</p>
-        </div>
-        <div class="stage-time">—</div>
-      </div>
-
-      <div class="pipeline-stage pending stage-mint">
-        <div class="stage-indicator">⌘</div>
-        <div class="stage-info">
-          <h4>@analysis</h4>
-          <p>Deep analysis pending</p>
-        </div>
-        <div class="stage-time">—</div>
-      </div>
-
-      <div class="pipeline-stage pending stage-lavender">
-        <div class="stage-indicator">▦</div>
-        <div class="stage-info">
-          <h4>@dashboard</h4>
-          <p>Visualization pending</p>
-        </div>
-        <div class="stage-time">—</div>
-      </div>
-
-      <div class="pipeline-stage pending stage-mint">
-        <div class="stage-indicator">≡</div>
-        <div class="stage-info">
-          <h4>@report</h4>
-          <p>Final report pending</p>
-        </div>
-        <div class="stage-time">—</div>
-      </div>
-    </div>
+    <div class="panel-content" id="pipelineStages"></div>
   </div>
 
   <!-- OUTPUTS PANEL -->
   <div class="panel">
     <div class="panel-header">
       <span>Outputs</span>
-      <span class="count">3 ready</span>
+      <span class="count" id="outputCount">0 ready</span>
     </div>
-    <div class="panel-content">
-      
-      <!-- EDA Report -->
-      <div class="output-item expanded">
-        <div class="output-header" onclick="this.parentElement.classList.toggle('expanded')">
-          <div class="output-title">
-            <div class="output-icon eda">◇</div>
-            <div>
-              <div class="output-name">EDA Report</div>
-              <div class="output-meta">eda-report-2024-03-11.md</div>
-            </div>
-          </div>
-          <div class="output-expand">▼</div>
-        </div>
-        <div class="output-preview">
-          <div class="report-card">
-            <div class="report-header">
-              <h3>Superstore Dataset Analysis</h3>
-              <span class="badge">Completed</span>
-            </div>
-            <div class="report-metrics">
-              <div class="metric-card">
-                <div class="metric-value">$2.3M</div>
-                <div class="metric-label">Total Revenue</div>
-              </div>
-              <div class="metric-card">
-                <div class="metric-value">$292K</div>
-                <div class="metric-label">Total Profit</div>
-              </div>
-              <div class="metric-card">
-                <div class="metric-value">12.6%</div>
-                <div class="metric-label">Profit Margin</div>
-              </div>
-            </div>
-            <div class="report-insights">
-              <h4>Key Insights</h4>
-              <div class="insight-item">
-                <div class="insight-number">1</div>
-                <div><span class="insight-highlight">Technology</span> leads revenue at $840K</div>
-              </div>
-              <div class="insight-item">
-                <div class="insight-number">2</div>
-                <div><span class="insight-warning">Furniture</span> has lowest margin (2.6%)</div>
-              </div>
-              <div class="insight-item">
-                <div class="insight-number">3</div>
-                <div>Consumer segment drives <span class="insight-highlight">50.3%</span> of sales</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- KPI Summary -->
-      <div class="output-item">
-        <div class="output-header" onclick="this.parentElement.classList.toggle('expanded')">
-          <div class="output-title">
-            <div class="output-icon metrics">□</div>
-            <div>
-              <div class="output-name">KPI Summary</div>
-              <div class="output-meta">kpi-summary.json</div>
-            </div>
-          </div>
-          <div class="output-expand">▼</div>
-        </div>
-        <div class="output-preview">
-          <div class="json-preview">
-{<br>
-&nbsp;&nbsp;<span class="json-key">"total_revenue"</span>: <span class="json-number">2326534</span>,<br>
-&nbsp;&nbsp;<span class="json-key">"total_profit"</span>: <span class="json-number">292297</span>,<br>
-&nbsp;&nbsp;<span class="json-key">"profit_margin"</span>: <span class="json-number">12.6</span>,<br>
-&nbsp;&nbsp;<span class="json-key">"avg_order_value"</span>: <span class="json-number">455.23</span>,<br>
-&nbsp;&nbsp;<span class="json-key">"customer_count"</span>: <span class="json-number">804</span>,<br>
-&nbsp;&nbsp;<span class="json-key">"product_count"</span>: <span class="json-number">1862</span><br>
-}
-          </div>
-        </div>
-      </div>
-
-      <!-- Business Questions -->
-      <div class="output-item">
-        <div class="output-header" onclick="this.parentElement.classList.toggle('expanded')">
-          <div class="output-title">
-            <div class="output-icon questions">?</div>
-            <div>
-              <div class="output-name">Business Questions</div>
-              <div class="output-meta">5 questions generated</div>
-            </div>
-          </div>
-          <div class="output-expand">▼</div>
-        </div>
-        <div class="output-preview">
-          <div class="questions-list">
-            <div class="question-item">
-              <div class="question-number">1</div>
-              <div class="question-text">How can we improve Furniture category profit margin from 2.6% to industry average?</div>
-            </div>
-            <div class="question-item">
-              <div class="question-number">2</div>
-              <div class="question-text">What drives the difference in customer lifetime value between Consumer and Corporate segments?</div>
-            </div>
-            <div class="question-item">
-              <div class="question-number">3</div>
-              <div class="question-text">What is the optimal discount rate that maximizes profit without hurting volume?</div>
-            </div>
-            <div class="question-item">
-              <div class="question-number">4</div>
-              <div class="question-text">Which regions show the highest growth potential for expansion?</div>
-            </div>
-            <div class="question-item">
-              <div class="question-number">5</div>
-              <div class="question-text">Which product sub-categories have the highest repeat purchase rate?</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <div class="panel-content" id="outputsList"></div>
   </div>
 </div>
 
 <script>
-const uploadZone = document.getElementById('uploadZone');
+const statusUrl = './runs/latest/status.json';
+const outputsUrl = './runs/latest/outputs/index.json';
 
-uploadZone.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  uploadZone.classList.add('dragover');
-});
+const state = {
+  status: null,
+  outputs: [],
+};
 
-uploadZone.addEventListener('dragleave', () => {
-  uploadZone.classList.remove('dragover');
-});
+const iconSymbol = {
+  eda: '◇',
+  metrics: '□',
+  dashboard: '▦',
+  report: '≡',
+  questions: '?',
+};
 
-uploadZone.addEventListener('drop', (e) => {
-  e.preventDefault();
-  uploadZone.classList.remove('dragover');
-});
+function formatBytes(bytes) {
+  if (!bytes) return '0 B';
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let value = bytes;
+  let unitIndex = 0;
+  while (value >= 1024 && unitIndex < units.length - 1) {
+    value /= 1024;
+    unitIndex += 1;
+  }
+  return `${value.toFixed(value >= 10 || unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`;
+}
+
+function formatDuration(seconds) {
+  if (seconds == null) return '—';
+  return `${seconds.toFixed(1)}s`;
+}
+
+function formatTimestamp(value) {
+  if (!value) return '—';
+  const date = new Date(value);
+  return date.toLocaleString();
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function renderEmpty(containerId, message) {
+  document.getElementById(containerId).innerHTML = `<div class="empty-state">${escapeHtml(message)}</div>`;
+}
+
+function renderInputs() {
+  const inputs = state.status?.inputs || [];
+  document.getElementById('inputCount').textContent = `${inputs.length} file${inputs.length === 1 ? '' : 's'}`;
+  const runMeta = document.getElementById('runMeta');
+
+  if (!state.status) {
+    runMeta.textContent = 'No run metadata available.';
+    renderEmpty('inputFiles', 'Run the pipeline once to populate input metadata.');
+    return;
+  }
+
+  runMeta.textContent = `Run ${state.status.run_id} · started ${formatTimestamp(state.status.started_at)}`;
+
+  if (!inputs.length) {
+    renderEmpty('inputFiles', 'No input files detected in the latest run.');
+    return;
+  }
+
+  document.getElementById('inputFiles').innerHTML = inputs.map((file) => `
+    <div class="file-item">
+      <div class="file-icon">${escapeHtml((file.type || 'file').slice(0, 3).toUpperCase())}</div>
+      <div class="file-info">
+        <h4>${escapeHtml(file.name)}</h4>
+        <p>${formatBytes(file.size_bytes)} · ${file.rows || 0} rows · ${file.columns || 0} columns</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderStages() {
+  const stages = state.status?.stages || [];
+  const progress = state.status?.progress || { completed: 0, total: 7 };
+  document.getElementById('progressText').textContent = `${progress.completed} / ${progress.total} completed`;
+
+  if (!stages.length) {
+    renderEmpty('pipelineStages', 'No stage data available yet.');
+    return;
+  }
+
+  document.getElementById('pipelineStages').innerHTML = stages.map((stage) => `
+    <div class="pipeline-stage ${escapeHtml(stage.status)} stage-${escapeHtml(stage.color)}">
+      <div class="stage-indicator">${escapeHtml(stage.icon)}</div>
+      <div class="stage-info">
+        <h4>${escapeHtml(stage.name)}</h4>
+        <p>${escapeHtml(stage.summary || 'Pending')}</p>
+      </div>
+      <div class="stage-time">${formatDuration(stage.duration_seconds)}</div>
+    </div>
+  `).join('');
+}
+
+function renderReportPreview(preview) {
+  const metrics = (preview.metrics || []).map((metric) => `
+    <div class="metric-card">
+      <div class="metric-value">${escapeHtml(metric.value)}</div>
+      <div class="metric-label">${escapeHtml(metric.label)}</div>
+    </div>
+  `).join('');
+
+  const insights = (preview.insights || []).map((insight, index) => `
+    <div class="insight-item">
+      <div class="insight-number">${index + 1}</div>
+      <div>${escapeHtml(insight)}</div>
+    </div>
+  `).join('');
+
+  return `
+    <div class="report-card">
+      <div class="report-header">
+        <h3>${escapeHtml(preview.title || 'Report')}</h3>
+        <span class="badge">${escapeHtml(preview.badge || 'Ready')}</span>
+      </div>
+      <div class="report-metrics">${metrics}</div>
+      <div class="report-insights">
+        <h4>Key Insights</h4>
+        ${insights}
+      </div>
+    </div>
+  `;
+}
+
+function renderJsonPreview(preview) {
+  const formatted = JSON.stringify(preview.payload || {}, null, 2)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+  return `<div class="json-preview"><pre>${formatted}</pre></div>`;
+}
+
+function renderQuestionsPreview(preview) {
+  return `
+    <div class="questions-list">
+      ${(preview.questions || []).map((question, index) => `
+        <div class="question-item">
+          <div class="question-number">${index + 1}</div>
+          <div class="question-text">${escapeHtml(question)}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderImagePreview(preview) {
+  return `
+    <div class="preview-image">
+      <img src="./${escapeHtml(preview.image_path)}" alt="${escapeHtml(preview.title || 'Chart preview')}">
+      <div class="preview-caption">${escapeHtml(preview.caption || '')}</div>
+    </div>
+  `;
+}
+
+function previewHtml(output) {
+  const preview = output.preview || {};
+  if (preview.kind === 'report') return renderReportPreview(preview);
+  if (preview.kind === 'json') return renderJsonPreview(preview);
+  if (preview.kind === 'questions') return renderQuestionsPreview(preview);
+  if (preview.kind === 'image') return renderImagePreview(preview);
+  return `<div class="empty-state">No preview available for ${escapeHtml(output.name)}.</div>`;
+}
+
+function renderOutputs() {
+  document.getElementById('outputCount').textContent = `${state.outputs.length} ready`;
+  if (!state.outputs.length) {
+    renderEmpty('outputsList', 'Pipeline outputs will appear here after a successful run.');
+    return;
+  }
+
+  document.getElementById('outputsList').innerHTML = state.outputs.map((output, index) => `
+    <div class="output-item ${index === 0 ? 'expanded' : ''}">
+      <div class="output-header" onclick="this.parentElement.classList.toggle('expanded')">
+        <div class="output-title">
+          <div class="output-icon ${escapeHtml(output.icon_class || 'report')}">${iconSymbol[output.icon_class] || '•'}</div>
+          <div>
+            <div class="output-name">${escapeHtml(output.name)}</div>
+            <div class="output-meta">${escapeHtml(output.file_name)} · ${escapeHtml(output.meta || '')}</div>
+          </div>
+        </div>
+        <div class="output-expand">▼</div>
+      </div>
+      <div class="output-preview">${previewHtml(output)}</div>
+    </div>
+  `).join('');
+}
+
+function renderHeader() {
+  const statusText = document.getElementById('statusText');
+  const statusDot = document.getElementById('statusDot');
+  if (!state.status) {
+    statusText.textContent = 'No latest run found';
+    statusDot.classList.remove('processing');
+    return;
+  }
+  const currentStage = state.status.current_stage === 'done' ? 'completed' : state.status.current_stage;
+  statusText.textContent = `${state.status.overall_status} @${currentStage} · run ${state.status.run_id}`;
+  if (state.status.overall_status === 'completed') {
+    statusDot.classList.remove('processing');
+  } else {
+    statusDot.classList.add('processing');
+  }
+}
+
+async function loadDashboard() {
+  try {
+    const [statusResponse, outputsResponse] = await Promise.all([fetch(statusUrl, { cache: 'no-store' }), fetch(outputsUrl, { cache: 'no-store' })]);
+    if (!statusResponse.ok) throw new Error('status.json not found');
+    state.status = await statusResponse.json();
+    state.outputs = outputsResponse.ok ? (await outputsResponse.json()).outputs || [] : [];
+  } catch (error) {
+    console.error(error);
+    state.status = null;
+    state.outputs = [];
+  }
+
+  renderHeader();
+  renderInputs();
+  renderStages();
+  renderOutputs();
+}
+
+loadDashboard();
+setInterval(loadDashboard, 10000);
 </script>
 
 </body>

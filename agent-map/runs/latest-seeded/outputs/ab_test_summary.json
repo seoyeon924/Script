@@ -1,0 +1,10 @@
+{
+  "group_a": "A",
+  "group_b": "B",
+  "conversion_rate_a_pct": 12.03,
+  "conversion_rate_b_pct": 13.08,
+  "lift_pct_point": 1.04,
+  "z_score": 2.548,
+  "p_value": 0.0108,
+  "significant_at_95": true
+}

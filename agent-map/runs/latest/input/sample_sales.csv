@@ -1,0 +1,25 @@
+date,region,segment,category,sub_category,channel,visitors,orders,revenue,cost,discount,test_group
+2026-01-05,North America,Consumer,Technology,Software,Paid Search,1020,148,18640,12120,0.08,A
+2026-01-05,North America,Consumer,Technology,Software,Paid Search,980,164,20150,12740,0.06,B
+2026-01-09,Europe,Corporate,Furniture,Desk,Email,860,81,10980,9950,0.18,A
+2026-01-09,Europe,Corporate,Furniture,Desk,Email,845,90,11790,10120,0.16,B
+2026-01-14,Asia Pacific,SMB,Office Supplies,Paper,Organic,1310,173,14280,9110,0.05,A
+2026-01-14,Asia Pacific,SMB,Office Supplies,Paper,Organic,1290,182,14920,9370,0.04,B
+2026-01-22,North America,Corporate,Technology,Accessories,Affiliate,940,118,13860,9120,0.07,A
+2026-01-22,North America,Corporate,Technology,Accessories,Affiliate,930,122,14410,9280,0.06,B
+2026-02-03,Europe,Consumer,Furniture,Chair,Paid Social,1205,102,15120,13860,0.21,A
+2026-02-03,Europe,Consumer,Furniture,Chair,Paid Social,1180,111,16040,14120,0.19,B
+2026-02-08,Asia Pacific,Corporate,Technology,Phones,Organic,1110,149,22100,14330,0.07,A
+2026-02-08,Asia Pacific,Corporate,Technology,Phones,Organic,1095,161,23540,14880,0.06,B
+2026-02-16,Latin America,SMB,Office Supplies,Binders,Reseller,780,88,9620,6480,0.09,A
+2026-02-16,Latin America,SMB,Office Supplies,Binders,Reseller,770,93,10140,6650,0.08,B
+2026-02-21,North America,Consumer,Technology,Laptops,Direct,1440,176,32860,22680,0.05,A
+2026-02-21,North America,Consumer,Technology,Laptops,Direct,1425,191,34940,23220,0.04,B
+2026-03-02,Europe,SMB,Furniture,Storage,Paid Search,920,79,11240,10260,0.17,A
+2026-03-02,Europe,SMB,Furniture,Storage,Paid Search,905,84,11880,10510,0.15,B
+2026-03-08,Asia Pacific,Consumer,Office Supplies,Labels,Email,1260,167,13950,8820,0.04,A
+2026-03-08,Asia Pacific,Consumer,Office Supplies,Labels,Email,1230,175,14610,9010,0.03,B
+2026-03-12,Latin America,Corporate,Technology,Accessories,Affiliate,840,102,12980,8410,0.06,A
+2026-03-12,Latin America,Corporate,Technology,Accessories,Affiliate,830,108,13620,8580,0.05,B
+2026-03-18,North America,SMB,Office Supplies,Paper,Organic,1510,205,17340,10940,0.03,A
+2026-03-18,North America,SMB,Office Supplies,Paper,Organic,1480,214,18120,11110,0.02,B
