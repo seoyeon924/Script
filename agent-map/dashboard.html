@@ -8,26 +8,35 @@
     @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
     :root {
-      --bg-page: #000000;
-      --bg-card-dark: rgba(18, 18, 18, 0.94);
-      --border-dark: rgba(210, 199, 188, 0.22);
-      --card-offwhite: rgba(247,247,245,0.92);
-      --card-lavender: rgba(237,233,247,0.92);
-      --card-mint: rgba(224,245,238,0.92);
-      --card-rose: rgba(253,234,239,0.92);
-      --card-cream: rgba(255,251,235,0.92);
-      --card-beige: rgba(245, 239, 232, 0.94);
-      --accent: #10B981;
+      --bg-page: #050505;
+      --bg-card-dark: rgba(14, 14, 15, 0.94);
+      --border-dark: rgba(110, 93, 80, 0.16);
+      --border-strong: rgba(96, 79, 67, 0.24);
+      --card-offwhite: rgba(247, 244, 239, 0.96);
+      --card-lavender: rgba(237, 231, 245, 0.94);
+      --card-mint: rgba(225, 241, 236, 0.94);
+      --card-rose: rgba(247, 229, 235, 0.94);
+      --card-cream: rgba(247, 241, 226, 0.94);
+      --card-beige: rgba(239, 232, 223, 0.95);
+      --card-surface: rgba(250, 246, 240, 0.98);
+      --card-surface-2: rgba(255, 252, 247, 0.98);
+      --accent: #4fb799;
       --text-white: #FFFFFF;
-      --text-muted: #7A7A7A;
-      --text-dark: #333333;
+      --text-muted: #766c63;
+      --text-dark: #2f2b27;
+      --text-soft: #9a9086;
+      --shadow-panel: 0 22px 48px rgba(0, 0, 0, 0.18);
+      --shadow-card: 0 14px 28px rgba(42, 30, 18, 0.08);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--bg-page);
+      background:
+        radial-gradient(circle at top left, rgba(237, 231, 245, 0.08), transparent 30%),
+        radial-gradient(circle at top right, rgba(225, 241, 236, 0.08), transparent 30%),
+        var(--bg-page);
       color: var(--text-white);
       min-height: 100vh;
       padding: 32px;
@@ -85,6 +94,33 @@
       gap: 12px;
     }
 
+    .lang-toggle {
+      display: inline-flex;
+      gap: 6px;
+      padding: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .lang-button {
+      border: none;
+      background: transparent;
+      color: #c3c3c3;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-button.active {
+      background: var(--card-offwhite);
+      color: var(--text-dark);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.14);
+    }
+
     .analysis-link {
       display: inline-flex;
       align-items: center;
@@ -133,9 +169,10 @@
     .top-progress {
       margin-bottom: 20px;
       background: var(--card-beige);
-      border: 1px solid var(--border-dark);
+      border: 1px solid var(--border-strong);
       border-radius: 22px;
       padding: 18px 22px 20px;
+      box-shadow: var(--shadow-panel);
     }
 
     .top-progress-head {
@@ -179,10 +216,10 @@
       width: 100%;
       height: 14px;
       border-radius: 999px;
-      background: rgba(51, 51, 51, 0.08);
+      background: rgba(87, 74, 62, 0.08);
       overflow: hidden;
       position: relative;
-      border: 1px solid rgba(255,255,255,0.05);
+      border: 1px solid rgba(96, 79, 67, 0.08);
       margin-bottom: 16px;
     }
 
@@ -203,10 +240,10 @@
 
     .progress-chip {
       border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(96, 79, 67, 0.12);
       padding: 12px 12px 10px;
       min-height: 88px;
-      background: var(--card-offwhite);
+      background: var(--card-surface);
       transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
     }
 
@@ -219,13 +256,13 @@
     .progress-chip.stage-report { background: var(--card-mint); }
 
     .progress-chip.completed {
-      border-color: rgba(255, 255, 255, 0.34);
-      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.06);
+      border-color: rgba(96, 79, 67, 0.18);
+      box-shadow: 0 10px 24px rgba(42, 30, 18, 0.08);
     }
 
     .progress-chip.processing {
-      border-color: rgba(255, 255, 255, 0.52);
-      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.14), 0 12px 24px rgba(255, 255, 255, 0.08);
+      border-color: rgba(96, 79, 67, 0.3);
+      box-shadow: 0 0 0 2px rgba(96, 79, 67, 0.08), 0 12px 24px rgba(42, 30, 18, 0.1);
       transform: translateY(-1px);
     }
 
@@ -247,7 +284,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.08);
+      background: rgba(47, 43, 39, 0.08);
       font-size: 12px;
       font-weight: 700;
       color: #1a1a1a;
@@ -282,16 +319,17 @@
     /* PANELS */
     .panel {
       background: var(--card-beige);
-      border: 1px solid var(--border-dark);
+      border: 1px solid var(--border-strong);
       border-radius: 20px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      box-shadow: var(--shadow-panel);
     }
 
     .panel-header {
       padding: 16px 20px;
-      border-bottom: 1px solid var(--border-dark);
+      border-bottom: 1px solid rgba(96, 79, 67, 0.12);
       font-size: 10px;
       font-weight: 700;
       color: var(--text-muted);
@@ -315,7 +353,7 @@
 
     /* INPUT FILES */
     .upload-zone {
-      border: 2px dashed #333;
+      border: 1.5px dashed rgba(96, 79, 67, 0.52);
       border-radius: 16px;
       padding: 34px 28px;
       text-align: center;
@@ -324,11 +362,12 @@
       cursor: pointer;
       text-decoration: none;
       display: block;
+      background: var(--card-surface);
     }
 
     .upload-zone:hover {
-      border-color: #555;
-      background: rgba(255,255,255,0.03);
+      border-color: rgba(79, 183, 153, 0.52);
+      background: var(--card-surface-2);
     }
 
     .upload-zone.dragover {
@@ -340,13 +379,13 @@
       width: 48px;
       height: 48px;
       margin: 0 auto 12px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(47, 43, 39, 0.06);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      color: #666;
+      color: var(--text-muted);
     }
 
     .upload-text {
@@ -366,8 +405,8 @@
       align-items: center;
       gap: 14px;
       padding: 16px;
-      background: var(--card-beige);
-      border: 1px solid var(--border-dark);
+      background: var(--card-surface);
+      border: 1px solid rgba(96, 79, 67, 0.12);
       border-radius: 14px;
       margin-bottom: 10px;
       text-decoration: none;
@@ -376,8 +415,9 @@
     }
 
     .file-item:hover {
-      border-color: #4a4a4a;
+      border-color: rgba(79, 183, 153, 0.28);
       transform: translateY(-1px);
+      box-shadow: var(--shadow-card);
     }
 
     .file-icon {
@@ -408,8 +448,8 @@
 
     /* OUTPUTS */
     .output-item {
-      background: rgba(255,255,255,0.34);
-      border: 1px solid var(--border-dark);
+      background: var(--card-surface);
+      border: 1px solid rgba(96, 79, 67, 0.12);
       border-radius: 16px;
       overflow: hidden;
       transition: all 0.2s;
@@ -419,8 +459,9 @@
     }
 
     .output-item:hover {
-      border-color: rgba(140, 129, 119, 0.28);
+      border-color: rgba(79, 183, 153, 0.22);
       transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
     }
 
     .output-header {
@@ -434,7 +475,7 @@
     }
 
     .output-header:hover {
-      background: rgba(51, 51, 51, 0.03);
+      background: rgba(47, 43, 39, 0.025);
     }
 
     .output-title {
@@ -478,17 +519,17 @@
     }
 
     .output-preview {
-      border-top: 1px solid var(--border-dark);
-      background: var(--card-beige);
+      border-top: 1px solid rgba(96, 79, 67, 0.12);
+      background: var(--card-surface-2);
       display: none;
       flex: 1;
     }
 
-    .output-item.output-eda .output-preview { background: rgba(232, 224, 245, 0.9); }
-    .output-item.output-metrics .output-preview { background: rgba(255, 248, 224, 0.92); }
-    .output-item.output-dashboard .output-preview { background: rgba(224, 236, 252, 0.92); }
-    .output-item.output-report .output-preview { background: rgba(224, 245, 238, 0.92); }
-    .output-item.output-questions .output-preview { background: rgba(253, 234, 239, 0.92); }
+    .output-item.output-eda .output-preview { background: linear-gradient(180deg, rgba(237, 231, 245, 0.88) 0%, rgba(255, 252, 247, 0.98) 42%); }
+    .output-item.output-metrics .output-preview { background: linear-gradient(180deg, rgba(247, 241, 226, 0.88) 0%, rgba(255, 252, 247, 0.98) 42%); }
+    .output-item.output-dashboard .output-preview { background: linear-gradient(180deg, rgba(229, 237, 247, 0.9) 0%, rgba(255, 252, 247, 0.98) 42%); }
+    .output-item.output-report .output-preview { background: linear-gradient(180deg, rgba(225, 241, 236, 0.9) 0%, rgba(255, 252, 247, 0.98) 42%); }
+    .output-item.output-questions .output-preview { background: linear-gradient(180deg, rgba(247, 229, 235, 0.88) 0%, rgba(255, 252, 247, 0.98) 42%); }
 
     .output-item.expanded .output-preview {
       display: block;
@@ -536,8 +577,8 @@
     .report-header .badge {
       font-size: 10px;
       padding: 4px 10px;
-      background: var(--card-mint);
-      color: #0D9488;
+      background: rgba(79, 183, 153, 0.14);
+      color: #218d72;
       border-radius: 12px;
       font-weight: 600;
     }
@@ -550,8 +591,8 @@
     }
 
     .metric-card {
-      background: var(--card-beige);
-      border: 1px solid var(--border-dark);
+      background: var(--card-surface-2);
+      border: 1px solid rgba(96, 79, 67, 0.1);
       border-radius: 12px;
       padding: 12px;
       text-align: center;
@@ -574,10 +615,56 @@
     }
 
     .report-insights {
-      background: var(--card-beige);
-      border: 1px solid var(--border-dark);
+      background: rgba(255, 252, 247, 0.9);
+      border: 1px solid rgba(96, 79, 67, 0.1);
       border-radius: 12px;
       padding: 14px;
+    }
+
+    .practical-readout {
+      background: rgba(255, 252, 247, 0.9);
+      border: 1px solid rgba(96, 79, 67, 0.1);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .practical-readout h4 {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .practical-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .practical-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: #5d534b;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .practical-item-index {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(79, 183, 153, 0.12);
+      color: #218d72;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      flex: none;
+      margin-top: 1px;
     }
 
     .report-charts {
@@ -588,8 +675,8 @@
     }
 
     .report-chart-card {
-      background: var(--card-beige);
-      border: 1px solid var(--border-dark);
+      background: rgba(255, 252, 247, 0.94);
+      border: 1px solid rgba(96, 79, 67, 0.1);
       border-radius: 12px;
       padding: 10px;
     }
@@ -620,7 +707,7 @@
     .report-insights h4 {
       font-size: 11px;
       font-weight: 700;
-      color: var(--text-muted);
+      color: var(--text-soft);
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 12px;
@@ -630,9 +717,9 @@
       display: flex;
       gap: 10px;
       padding: 8px 0;
-      border-bottom: 1px solid #222;
+      border-bottom: 1px solid rgba(96, 79, 67, 0.18);
       font-size: 12px;
-      color: #555;
+      color: #5d534b;
       line-height: 1.5;
     }
 
@@ -643,13 +730,13 @@
     .insight-number {
       width: 20px;
       height: 20px;
-      background: rgba(51, 51, 51, 0.08);
+      background: rgba(47, 43, 39, 0.06);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 10px;
-      color: #888;
+      color: var(--text-soft);
       flex-shrink: 0;
     }
 
@@ -691,8 +778,8 @@
     .section-item {
       padding: 10px 12px;
       border-radius: 12px;
-      border: 1px solid var(--border-dark);
-      background: var(--card-beige);
+      border: 1px solid rgba(96, 79, 67, 0.1);
+      background: rgba(255, 252, 247, 0.94);
     }
 
     .section-item h4 {
@@ -706,7 +793,7 @@
     .section-item p {
       font-size: 12px;
       line-height: 1.6;
-      color: #555;
+      color: #5d534b;
     }
 
     .json-key { color: #7C5CBF; }
@@ -722,8 +809,8 @@
       display: flex;
       gap: 12px;
       padding: 12px;
-      background: var(--card-beige);
-      border: 1px solid var(--border-dark);
+      background: rgba(250, 246, 240, 0.96);
+      border: 1px solid rgba(96, 79, 67, 0.1);
       border-radius: 12px;
       margin-bottom: 8px;
     }
@@ -731,7 +818,7 @@
     .question-number {
       width: 28px;
       height: 28px;
-      background: var(--card-rose);
+      background: rgba(247, 229, 235, 0.94);
       border-radius: 8px;
       display: flex;
       align-items: center;
@@ -744,7 +831,7 @@
 
     .question-text {
       font-size: 13px;
-      color: #555;
+      color: #5d534b;
       line-height: 1.5;
     }
 
@@ -774,8 +861,8 @@
     }
 
     .action-card {
-      background: var(--card-beige);
-      border: 1px solid var(--border-dark);
+      background: rgba(255, 252, 247, 0.94);
+      border: 1px solid rgba(96, 79, 67, 0.1);
       border-radius: 14px;
       padding: 12px;
     }
@@ -811,24 +898,25 @@
 
     .action-meta {
       font-size: 11px;
-      color: #9dd8c7;
+      color: #4a9f87;
       margin-bottom: 8px;
     }
 
     .action-reason {
       font-size: 12px;
-      color: #555;
+      color: #5d534b;
       line-height: 1.6;
     }
 
     .empty-state {
       padding: 24px;
-      border: 1px dashed #333;
+      border: 1px dashed rgba(96, 79, 67, 0.34);
       border-radius: 16px;
       color: var(--text-muted);
       font-size: 13px;
       line-height: 1.6;
       text-align: center;
+      background: rgba(255, 252, 247, 0.68);
     }
 
     .panel-note {
@@ -854,7 +942,7 @@
     .preview-image img {
       width: 100%;
       border-radius: 14px;
-      border: 1px solid var(--border-dark);
+      border: 1px solid rgba(96, 79, 67, 0.1);
       display: block;
       margin-bottom: 10px;
     }
@@ -998,10 +1086,14 @@
 <header class="header">
   <h1 class="header-title">
     <span class="header-title-main">AI Data Analyst OS</span>
-    <span class="header-title-sub">Activity Monitor</span>
+    <span class="header-title-sub" id="headerTitleSub">Activity Monitor</span>
   </h1>
   <div class="header-actions">
-    <a class="analysis-link" href="./analysis-dashboard.html">Open Interactive Dashboard</a>
+    <div class="lang-toggle" aria-label="Language switch">
+      <button class="lang-button active" data-lang="en">EN</button>
+      <button class="lang-button" data-lang="ko">KR</button>
+    </div>
+    <a class="analysis-link" href="./analysis-dashboard.html" id="analysisLink">Open Interactive Dashboard</a>
     <div class="status-badge">
       <div class="status-dot processing" id="statusDot"></div>
       <span id="statusText">Loading latest run</span>
@@ -1012,8 +1104,8 @@
 <section class="top-progress">
   <div class="top-progress-head">
     <div>
-      <div class="top-progress-title">Pipeline Progress</div>
-      <div class="top-progress-summary"><span id="progressSummaryCount">0 / 7</span> stages completed</div>
+      <div class="top-progress-title" id="progressTitle">Pipeline Progress</div>
+      <div class="top-progress-summary"><span id="progressSummaryCount">0 / 7</span> <span id="progressSummarySuffix">stages completed</span></div>
     </div>
     <div class="top-progress-meta" id="progressSummaryMeta">Waiting for latest stage timeline.</div>
   </div>
@@ -1027,16 +1119,16 @@
   <!-- INPUT PANEL -->
   <div class="panel">
     <div class="panel-header">
-      <span>Input Data</span>
+      <span id="inputPanelTitle">Input Data</span>
       <span class="count" id="inputCount">0 files</span>
     </div>
     <div class="panel-content">
       <a class="upload-zone" href="file:///Users/shanny/Codex/Script/agent-map/data/inbox">
         <div class="upload-icon">↑</div>
         <div class="upload-text">
-          <strong>Put files in `agent-map/data/inbox/`</strong>
-          Then run `python3 agent-map/pipeline/run_da_flow.py`<br>
-          <span class="path-link">Open folder in Finder</span>
+          <strong id="uploadStrong">Put files in `agent-map/data/inbox/`</strong>
+          <span id="uploadBody">Then run `python3 agent-map/pipeline/run_da_flow.py`</span><br>
+          <span class="path-link" id="uploadLinkLabel">Open folder in Finder</span>
         </div>
       </a>
       <div class="panel-note" id="runMeta">Waiting for run metadata.</div>
@@ -1047,7 +1139,7 @@
   <!-- OUTPUTS PANEL -->
   <div class="panel">
     <div class="panel-header">
-      <span>Outputs</span>
+      <span id="outputsPanelTitle">Outputs</span>
       <span class="count" id="outputCount">0 ready</span>
     </div>
     <div class="panel-content" id="outputsList"></div>
@@ -1059,12 +1151,100 @@ const statusUrl = './runs/latest/status.json';
 const outputsUrl = './runs/latest/outputs/index.json';
 const knowledgeBaseUrl = './runs/latest/outputs/knowledge_base.json';
 const inboxFinderUrl = 'file:///Users/shanny/Codex/Script/agent-map/data/inbox';
+const localeKey = 'agentMapLocale';
 
 const state = {
   status: null,
   outputs: [],
   knowledgeBase: null,
+  locale: localStorage.getItem(localeKey) || 'en',
 };
+
+const translations = {
+  en: {
+    headerTitleSub: 'Activity Monitor',
+    analysisLink: 'Open Interactive Dashboard',
+    progressTitle: 'Pipeline Progress',
+    progressSummarySuffix: 'stages completed',
+    progressWaiting: 'Waiting for latest stage timeline.',
+    inputPanelTitle: 'Input Data',
+    outputsPanelTitle: 'Outputs',
+    uploadStrong: 'Put files in `agent-map/data/inbox/`',
+    uploadBody: 'Then run `python3 agent-map/pipeline/run_da_flow.py`',
+    uploadLinkLabel: 'Open folder in Finder',
+    loadingRun: 'Loading latest run',
+    noLatestRun: 'No latest run found',
+    noMetadata: 'No run metadata available.',
+    runPipelineOnce: 'Run the pipeline once to populate input metadata.',
+    noInputs: 'No input files detected in the latest run.',
+    file: 'file',
+    files: 'files',
+    row: 'rows',
+    column: 'columns',
+    openInFinder: 'Open in Finder',
+    ready: 'ready',
+    outputsEmpty: 'Pipeline outputs will appear here after a successful run.',
+    noPreview: 'No preview available for',
+    keyInsights: 'Key Insights',
+    practicalReadout: 'Operator Readout',
+    latestRun: 'Latest run',
+    currentStage: 'Current stage',
+    updated: 'updated',
+    completed: 'completed',
+    noStageData: 'No stage data available yet.',
+    noRunMeta: 'Waiting for run metadata.',
+    noOutputMeta: 'No latest run found'
+  },
+  ko: {
+    headerTitleSub: '활동 모니터',
+    analysisLink: '인터랙티브 분석 대시보드 열기',
+    progressTitle: '파이프라인 진행 상황',
+    progressSummarySuffix: '단계 완료',
+    progressWaiting: '최신 단계 타임라인을 기다리는 중입니다.',
+    inputPanelTitle: '입력 데이터',
+    outputsPanelTitle: '산출물',
+    uploadStrong: '`agent-map/data/inbox/`에 파일 넣기',
+    uploadBody: '`python3 agent-map/pipeline/run_da_flow.py` 실행',
+    uploadLinkLabel: 'Finder에서 폴더 열기',
+    loadingRun: '최신 실행 불러오는 중',
+    noLatestRun: '최신 실행 결과가 없습니다',
+    noMetadata: '실행 메타데이터가 없습니다.',
+    runPipelineOnce: '입력 메타데이터를 채우려면 파이프라인을 한 번 실행하세요.',
+    noInputs: '최신 실행에서 감지된 입력 파일이 없습니다.',
+    file: '개 파일',
+    files: '개 파일',
+    row: '행',
+    column: '열',
+    openInFinder: 'Finder에서 열기',
+    ready: '준비됨',
+    outputsEmpty: '파이프라인 성공 실행 후 산출물이 여기에 표시됩니다.',
+    noPreview: '미리보기를 제공하지 않습니다:',
+    keyInsights: '핵심 인사이트',
+    practicalReadout: '실무 해석',
+    latestRun: '최신 실행',
+    currentStage: '현재 단계',
+    updated: '업데이트',
+    completed: '완료',
+    noStageData: '아직 단계 데이터가 없습니다.',
+    noRunMeta: '실행 메타데이터를 기다리는 중입니다.',
+    noOutputMeta: '최신 실행 결과가 없습니다'
+  }
+};
+
+function t(key) {
+  return translations[state.locale]?.[key] || translations.en[key] || key;
+}
+
+function applyLanguage() {
+  const ids = ['headerTitleSub', 'analysisLink', 'progressTitle', 'progressSummarySuffix', 'inputPanelTitle', 'outputsPanelTitle', 'uploadStrong', 'uploadBody', 'uploadLinkLabel'];
+  ids.forEach((id) => {
+    const node = document.getElementById(id);
+    if (node) node.textContent = t(id);
+  });
+  document.querySelectorAll('.lang-button').forEach((button) => {
+    button.classList.toggle('active', button.dataset.lang === state.locale);
+  });
+}
 
 const iconSymbol = {
   eda: '◇',
@@ -1110,21 +1290,140 @@ function renderEmpty(containerId, message) {
   document.getElementById(containerId).innerHTML = `<div class="empty-state">${escapeHtml(message)}</div>`;
 }
 
+function practicalBullets(output, preview) {
+  const sections = preview.sections || [];
+  const metrics = preview.metrics || [];
+  if (output.id === 'dataset-profile') {
+    const schema = sections.find((item) => item.heading.toLowerCase().includes('schema'))?.body || '';
+    return state.locale === 'ko'
+      ? [
+          `데이터 구조 기준은 ${schema || '스키마 확인 필요'}입니다. 이후 KPI/차트 해석 전 구조 안정성을 먼저 보는 용도입니다.`,
+          `결측치가 거의 없으면 현재 파이프라인은 품질 점검보다 의사결정용 해석에 더 시간을 써도 됩니다.`,
+          `범주형 컬럼은 지역·세그먼트·카테고리 축 비교가 가능하다는 의미라, 실무 대시보드 드릴다운 설계가 가능합니다.`
+        ]
+      : [
+          `The operating baseline is ${schema || 'schema validation required'}. Use this card to confirm structure before reading KPI movement.`,
+          `Low missingness means the pipeline can focus on decision quality instead of cleanup triage.`,
+          `The categorical fields support real drill-down across region, segment, and category, which is enough for an operator-facing dashboard layer.`
+        ];
+  }
+  if (output.id === 'kpi-summary') {
+    const revenue = metrics[0]?.value || '';
+    const profit = metrics[1]?.value || '';
+    const margin = metrics[2]?.value || '';
+    return state.locale === 'ko'
+      ? [
+          `${revenue} 매출은 규모 판단용이고, ${profit} 이익과 ${margin} 마진이 함께 좋아야 실제로 확장 가능한 성장입니다.`,
+          `운영 우선순위는 총매출보다 마진과 방문자당 매출 같이 움직이기 쉬운 선행지표에 두는 편이 좋습니다.`,
+          `이 카드의 목적은 '지금 더 태워도 되는가'와 '효율이 무너졌는가'를 10초 안에 판단하게 하는 것입니다.`
+        ]
+      : [
+          `${revenue} revenue is scale, but ${profit} profit and ${margin} margin determine whether that scale is worth expanding.`,
+          `Use this card to anchor the operating debate around controllable lead metrics, not just top-line output.`,
+          `The goal is to answer in under 10 seconds whether growth is healthy enough to fund, defend, or slow down.`
+        ];
+  }
+  if (output.id === 'eda-report') {
+    return state.locale === 'ko'
+      ? [
+          `이 카드의 핵심은 '어디가 제일 크고, 어디가 제일 약한가'를 먼저 고정하는 것입니다.`,
+          `상위 카테고리와 지역은 예산 확대 후보이고, 최저 마진 카테고리는 가격·원가 점검 우선순위입니다.`,
+          `EDA는 탐색이 아니라 이후 액션 플랜의 근거를 만드는 단계로 읽어야 합니다.`
+        ]
+      : [
+          `This card should lock the scale leader, the efficiency leader, and the weakest point before any downstream recommendation.`,
+          `Top categories and regions are expansion candidates; the weakest-margin slice is the pricing or cost intervention target.`,
+          `Read EDA here as operating evidence, not as exploratory output for its own sake.`
+        ];
+  }
+  if (output.id === 'business-questions') {
+    return state.locale === 'ko'
+      ? [
+          `질문은 보고서 제목이 아니라 실제 의사결정 쟁점이어야 합니다. 각 항목은 예산, 가격, 채널, 롤아웃 중 하나로 연결되어야 합니다.`,
+          `좋은 질문은 비교 가능해야 하므로 세그먼트·지역·카테고리 축이 포함되어야 합니다.`,
+          `이 목록은 경영진 요약보다 실무 액션 큐에 더 가깝게 읽는 편이 맞습니다.`
+        ]
+      : [
+          `These questions are decision prompts, not report filler. Each one should map to budget, pricing, channel, or rollout action.`,
+          `They are phrased comparatively on purpose so the dashboard can rank and prioritize instead of merely describe.`,
+          `Treat this list as the operating queue for analysis, not as abstract strategy language.`
+        ];
+  }
+  if (output.id === 'analysis-report' || output.id === 'executive-report') {
+    return state.locale === 'ko'
+      ? [
+          `이 리포트는 규모가 큰 곳과 효율이 좋은 곳을 함께 보여줘 '어디를 더 밀어야 하는가'를 답하게 합니다.`,
+          `최신 월 추세 악화가 보이면 즉시 채널 믹스, 할인 정책, 지역별 성과 분해로 이어져야 합니다.`,
+          `경영진용 요약이라도 항상 '다음 액션과 담당자'가 따라붙어야 의미가 있습니다.`
+        ]
+      : [
+          `This report matters only if it connects scale, efficiency, and momentum into a single budget or rollout direction.`,
+          `When the latest month weakens, the next move should be mix decomposition by channel, discount policy, and geography.`,
+          `Even executive synthesis should end in an owner and next action, otherwise it stays descriptive.`
+        ];
+  }
+  if (output.id === 'dashboard-spec') {
+    return state.locale === 'ko'
+      ? [
+          `이 카드는 시각화 자산 목록이 아니라, 실무 대시보드가 어떤 흐름으로 읽혀야 하는지에 대한 설계 명세입니다.`,
+          `차트 수보다 중요한 것은 'KPI → 원인 → 액션' 순서가 유지되는지입니다.`,
+          `현재 스펙은 카테고리·지역·추세 3축으로 충분히 운영용 1차 화면을 구성할 수 있습니다.`
+        ]
+      : [
+          `Read this as a decision-system spec, not as a list of chart assets.`,
+          `The core requirement is preserving the flow from KPI to driver to action, not simply adding more charts.`,
+          `The current category, region, and trend trio is enough to anchor an operator-facing first screen.`
+        ];
+  }
+  if (output.id === 'action-plan') {
+    return state.locale === 'ko'
+      ? [
+          `좋은 액션 플랜은 영향도 순서와 담당자가 동시에 보입니다. 그래서 바로 실행 논의로 넘어갈 수 있어야 합니다.`,
+          `이 카드에서는 특히 저마진 카테고리, 강한 세그먼트-지역 조합, 실험 롤아웃 후보를 먼저 다루는 것이 맞습니다.`,
+          `우선순위가 높아도 근거가 약하면 보류해야 하므로 이유 문구를 함께 읽어야 합니다.`
+        ]
+      : [
+          `A usable action plan ranks impact and owner in the same frame so execution discussion can start immediately.`,
+          `The right ordering here is margin repair first, then scaling the strongest segment-region mix, then experiment rollout discipline.`,
+          `High priority without evidence should still be blocked, which is why the reason field matters as much as the rank.`
+        ];
+  }
+  return [];
+}
+
+function renderPracticalReadout(output, preview) {
+  const bullets = practicalBullets(output, preview);
+  if (!bullets.length) return '';
+  return `
+    <div class="practical-readout">
+      <h4>${escapeHtml(t('practicalReadout'))}</h4>
+      <div class="practical-list">
+        ${bullets.map((item, index) => `
+          <div class="practical-item">
+            <div class="practical-item-index">${index + 1}</div>
+            <div>${escapeHtml(item)}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
 function renderInputs() {
   const inputs = state.status?.inputs || [];
-  document.getElementById('inputCount').textContent = `${inputs.length} file${inputs.length === 1 ? '' : 's'}`;
+  document.getElementById('inputCount').textContent = state.locale === 'ko' ? `${inputs.length}${t('files')}` : `${inputs.length} file${inputs.length === 1 ? '' : 's'}`;
   const runMeta = document.getElementById('runMeta');
 
   if (!state.status) {
-    runMeta.textContent = 'No run metadata available.';
-    renderEmpty('inputFiles', 'Run the pipeline once to populate input metadata.');
+    runMeta.textContent = t('noMetadata');
+    renderEmpty('inputFiles', t('runPipelineOnce'));
     return;
   }
 
   runMeta.textContent = `Run ${state.status.run_id} · started ${formatTimestamp(state.status.started_at)}`;
 
   if (!inputs.length) {
-    renderEmpty('inputFiles', 'No input files detected in the latest run.');
+    renderEmpty('inputFiles', t('noInputs'));
     return;
   }
 
@@ -1133,7 +1432,7 @@ function renderInputs() {
       <div class="file-icon">${escapeHtml((file.type || 'file').slice(0, 3).toUpperCase())}</div>
       <div class="file-info">
         <h4>${escapeHtml(file.name)}</h4>
-        <p>${formatBytes(file.size_bytes)} · ${file.rows || 0} rows · ${file.columns || 0} columns · Open in Finder</p>
+        <p>${formatBytes(file.size_bytes)} · ${file.rows || 0} ${t('row')} · ${file.columns || 0} ${t('column')} · ${t('openInFinder')}</p>
       </div>
     </a>
   `).join('');
@@ -1181,8 +1480,8 @@ function renderStages() {
   document.getElementById('progressFill').style.width = `${progress.total ? (progress.completed / progress.total) * 100 : 0}%`;
 
   if (!stages.length) {
-    renderEmpty('topProgressStages', 'No stage data available yet.');
-    document.getElementById('progressSummaryMeta').textContent = 'Waiting for latest stage timeline.';
+    renderEmpty('topProgressStages', t('noStageData'));
+    document.getElementById('progressSummaryMeta').textContent = t('progressWaiting');
     return;
   }
 
@@ -1190,8 +1489,8 @@ function renderStages() {
   const completedAt = state.status?.finished_at ? formatTimestamp(state.status.finished_at) : 'In progress';
   document.getElementById('progressSummaryMeta').textContent =
     activeStage
-      ? `Current stage ${activeStage.name} · ${activeStage.summary || 'Running'}`
-      : `Latest run ${state.status?.overall_status || 'pending'} · updated ${completedAt}`;
+      ? `${t('currentStage')} ${activeStage.name} · ${activeStage.summary || 'Running'}`
+      : `${t('latestRun')} ${state.status?.overall_status || 'pending'} · ${t('updated')} ${completedAt}`;
 
   document.getElementById('topProgressStages').innerHTML = stages.map((stage) => `
     <div class="progress-chip stage-${escapeHtml(stage.id)} ${escapeHtml(stage.status)}">
@@ -1204,7 +1503,7 @@ function renderStages() {
   `).join('');
 }
 
-function renderReportPreview(preview) {
+function renderReportPreview(output, preview) {
   const metrics = (preview.metrics || []).map((metric) => `
     <div class="metric-card">
       <div class="metric-value">${escapeHtml(metric.value)}</div>
@@ -1229,13 +1528,14 @@ function renderReportPreview(preview) {
 
   return `
     <div class="report-card">
+      ${renderPracticalReadout(output, preview)}
       <div class="report-header">
         <h3>${escapeHtml(preview.title || 'Report')}</h3>
         <span class="badge">${escapeHtml(preview.badge || 'Ready')}</span>
       </div>
       <div class="report-metrics">${metrics}</div>
       <div class="report-insights">
-        <h4>Key Insights</h4>
+        <h4>${escapeHtml(t('keyInsights'))}</h4>
         ${insights}
       </div>
       ${charts ? `<div class="report-charts">${charts}</div>` : ''}
@@ -1243,7 +1543,7 @@ function renderReportPreview(preview) {
   `;
 }
 
-function renderSectionPreview(preview) {
+function renderSectionPreview(output, preview) {
   const metrics = (preview.metrics || []).length ? (preview.metrics || []).map((metric) => `
     <div class="metric-card">
       <div class="metric-value">${escapeHtml(metric.value)}</div>
@@ -1260,6 +1560,7 @@ function renderSectionPreview(preview) {
 
   return `
     <div class="section-preview">
+      ${renderPracticalReadout(output, preview)}
       <div class="report-header">
         <h3>${escapeHtml(preview.title || 'Summary')}</h3>
         <span class="badge">${escapeHtml(preview.badge || 'Ready')}</span>
@@ -1270,9 +1571,10 @@ function renderSectionPreview(preview) {
   `;
 }
 
-function renderQuestionsPreview(preview) {
+function renderQuestionsPreview(output, preview) {
   return `
     <div class="questions-list">
+      ${renderPracticalReadout(output, preview)}
       ${(preview.questions || []).map((question, index) => `
         <div class="question-item">
           <div class="question-number">${index + 1}</div>
@@ -1283,9 +1585,10 @@ function renderQuestionsPreview(preview) {
   `;
 }
 
-function renderActionPlanPreview(preview) {
+function renderActionPlanPreview(output, preview) {
   return `
     <div class="action-plan-preview">
+      ${renderPracticalReadout(output, preview)}
       <div class="action-plan-title">Action Plan</div>
       <div class="action-plan-subtitle">Prioritized next steps based on the latest DA flow run.</div>
       <div class="action-cards">
@@ -1316,18 +1619,18 @@ function renderImagePreview(preview) {
 
 function previewHtml(output) {
   const preview = output.preview || {};
-  if (preview.kind === 'eda-report') return renderReportPreview(preview);
-  if (preview.kind === 'report') return renderReportPreview(preview);
-  if (preview.kind === 'sections') return renderSectionPreview(preview);
-  if (preview.kind === 'questions') return renderQuestionsPreview(preview);
-  if (preview.kind === 'action-plan') return renderActionPlanPreview(preview);
-  return `<div class="empty-state">No preview available for ${escapeHtml(output.name)}.</div>`;
+  if (preview.kind === 'eda-report') return renderReportPreview(output, preview);
+  if (preview.kind === 'report') return renderReportPreview(output, preview);
+  if (preview.kind === 'sections') return renderSectionPreview(output, preview);
+  if (preview.kind === 'questions') return renderQuestionsPreview(output, preview);
+  if (preview.kind === 'action-plan') return renderActionPlanPreview(output, preview);
+  return `<div class="empty-state">${escapeHtml(t('noPreview'))} ${escapeHtml(output.name)}.</div>`;
 }
 
 function renderOutputs() {
-  document.getElementById('outputCount').textContent = `${state.outputs.length} ready`;
+  document.getElementById('outputCount').textContent = state.locale === 'ko' ? `${state.outputs.length} ${t('ready')}` : `${state.outputs.length} ${t('ready')}`;
   if (!state.outputs.length) {
-    renderEmpty('outputsList', 'Pipeline outputs will appear here after a successful run.');
+    renderEmpty('outputsList', t('outputsEmpty'));
     return;
   }
 
@@ -1352,7 +1655,7 @@ function renderHeader() {
   const statusText = document.getElementById('statusText');
   const statusDot = document.getElementById('statusDot');
   if (!state.status) {
-    statusText.textContent = 'No latest run found';
+    statusText.textContent = t('noLatestRun');
     statusDot.classList.remove('processing');
     return;
   }
@@ -1389,6 +1692,19 @@ async function loadDashboard() {
   renderOutputs();
 }
 
+document.querySelectorAll('.lang-button').forEach((button) => {
+  button.addEventListener('click', () => {
+    state.locale = button.dataset.lang;
+    localStorage.setItem(localeKey, state.locale);
+    applyLanguage();
+    renderHeader();
+    renderInputs();
+    renderStages();
+    renderOutputs();
+  });
+});
+
+applyLanguage();
 loadDashboard();
 setInterval(loadDashboard, 10000);
 </script>

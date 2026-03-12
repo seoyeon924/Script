@@ -699,6 +699,197 @@
       gap: 10px;
     }
 
+    .advanced-grid {
+      margin-top: 12px;
+    }
+
+    .mini-chart {
+      height: 180px;
+    }
+
+    .cohort-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .cohort-row {
+      display: grid;
+      grid-template-columns: 92px repeat(auto-fit, minmax(56px, 1fr));
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .cohort-label,
+    .cohort-cell {
+      border-radius: 14px;
+      border: 1px solid rgba(140, 129, 119, 0.1);
+      min-height: 54px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .cohort-label {
+      background: rgba(255, 255, 255, 0.62);
+      color: var(--text-main);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .cohort-cell {
+      flex-direction: column;
+      gap: 2px;
+      color: var(--text-main);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .cohort-cell span {
+      font-size: 10px;
+      color: var(--text-soft);
+      font-weight: 600;
+    }
+
+    .funnel-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .funnel-step {
+      background: rgba(255, 252, 247, 0.94);
+      border: 1px solid rgba(140, 129, 119, 0.12);
+      border-radius: 18px;
+      padding: 16px 14px;
+      display: grid;
+      gap: 8px;
+      min-height: 132px;
+    }
+
+    .funnel-step-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .funnel-step-value {
+      font-family: 'Barlow', sans-serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1;
+    }
+
+    .funnel-step-meta {
+      font-size: 12px;
+      color: var(--text-soft);
+      line-height: 1.45;
+    }
+
+    .funnel-step-rate {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(88, 184, 155, 0.12);
+      color: var(--accent-main);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .segment-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .segment-summary-card {
+      background: rgba(255, 252, 247, 0.94);
+      border: 1px solid rgba(140, 129, 119, 0.12);
+      border-radius: 18px;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .segment-summary-title {
+      font-family: 'Barlow', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .segment-summary-kpi {
+      display: grid;
+      gap: 6px;
+    }
+
+    .segment-summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .segment-summary-row strong {
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .cluster-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .cluster-card {
+      background: rgba(255, 252, 247, 0.94);
+      border: 1px solid rgba(140, 129, 119, 0.12);
+      border-radius: 18px;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .cluster-tag {
+      display: inline-flex;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      background: rgba(88, 184, 155, 0.12);
+    }
+
+    .cluster-name {
+      font-family: 'Barlow', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .cluster-desc,
+    .cluster-metrics {
+      font-size: 12px;
+      color: var(--text-soft);
+      line-height: 1.5;
+    }
+
+    .cluster-metrics strong {
+      color: var(--text-main);
+    }
+
     .action-card {
       padding: 12px;
       border-radius: 18px;
@@ -880,6 +1071,12 @@
         grid-template-columns: 1fr;
       }
 
+      .funnel-steps,
+      .segment-summary-grid,
+      .cluster-grid {
+        grid-template-columns: 1fr;
+      }
+
       .action-board {
         grid-template-columns: 1fr;
       }
@@ -912,6 +1109,10 @@
       .filter-grid,
       .matrix,
       .progress-stage-row {
+        grid-template-columns: 1fr;
+      }
+
+      .cohort-row {
         grid-template-columns: 1fr;
       }
 
@@ -1126,6 +1327,121 @@
           </div>
           <div class="action-board" id="actionBoard"></div>
         </section>
+
+        <div class="driver-grid advanced-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="cohortTitle">Operational Cohort</div>
+                <div class="card-desc" id="cohortDesc">
+                  Entity-level cohort heatmap built from recurring segment-region-channel combinations. This is a practical retention proxy when customer IDs are unavailable.
+                </div>
+              </div>
+              <div class="card-note" id="cohortNote">Rows: cohort month<br>Cols: M0-Mn retention</div>
+            </div>
+            <div class="cohort-grid" id="cohortGrid"></div>
+          </section>
+
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="retentionTitle">Retention Curve</div>
+                <div class="card-desc" id="retentionDesc">
+                  Average retention by cohort age. This answers whether value decays too quickly after the first commercial touchpoint.
+                </div>
+              </div>
+              <div class="card-note" id="retentionNote">X: cohort age<br>Y: retained revenue %</div>
+            </div>
+            <svg class="chart mini-chart" id="retentionChart" viewBox="0 0 520 210" preserveAspectRatio="none"></svg>
+            <div class="callout-grid" id="retentionCallouts"></div>
+          </section>
+        </div>
+
+        <div class="driver-grid advanced-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="funnelTitle">Funnel Analysis</div>
+                <div class="card-desc" id="funnelDesc">
+                  Proxy funnel derived from traffic and order performance. Use it to identify where demand is leaking before conversion.
+                </div>
+              </div>
+              <div class="card-note" id="funnelNote">Proxy stages from visitors/orders</div>
+            </div>
+            <div class="funnel-steps" id="funnelSteps"></div>
+          </section>
+
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="segmentHealthTitle">Customer Segment Analysis</div>
+                <div class="card-desc" id="segmentHealthDesc">
+                  Compare segments on scale, efficiency, and conversion to decide which segment deserves more demand and which needs margin repair.
+                </div>
+              </div>
+              <div class="card-note" id="segmentHealthNote">Revenue + margin + CVR</div>
+            </div>
+            <div class="segment-summary-grid" id="segmentSummaryGrid"></div>
+          </section>
+        </div>
+
+        <div class="driver-grid advanced-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="repeatTitle">Repurchase Cycle</div>
+                <div class="card-desc" id="repeatDesc">
+                  Commercial repeat cadence by segment. This is useful for timing remarketing, replenishment, and outbound follow-up windows.
+                </div>
+              </div>
+              <div class="card-note" id="repeatNote">Average gap between recurring entities</div>
+            </div>
+            <div class="bar-list" id="repurchaseBars"></div>
+          </section>
+
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="forecastTitle">Revenue Time-Series Forecast</div>
+                <div class="card-desc" id="forecastDesc">
+                  Historical revenue plus short-horizon forecast. Use this as a directional planning view, not as a finance close forecast.
+                </div>
+              </div>
+              <div class="card-note" id="forecastNote">Solid: actual<br>Dashed: forecast</div>
+            </div>
+            <svg class="chart mini-chart" id="forecastChart" viewBox="0 0 520 210" preserveAspectRatio="none"></svg>
+            <div class="callout-grid" id="forecastCallouts"></div>
+          </section>
+        </div>
+
+        <div class="driver-grid advanced-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="clusterTitle">AI Segmentation</div>
+                <div class="card-desc" id="clusterDesc">
+                  K-means segmentation on commercial behavior features. This groups similar revenue-quality profiles to support differentiated playbooks.
+                </div>
+              </div>
+              <div class="card-note" id="clusterNote">Model: K-means on value/efficiency features</div>
+            </div>
+            <div class="cluster-grid" id="clusterGrid"></div>
+          </section>
+
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="ltvTitle">LTV / CAC Lens</div>
+                <div class="card-desc" id="ltvDesc">
+                  Proxy LTV/CAC comparison by channel to see where acquisition economics are healthy enough to scale.
+                </div>
+              </div>
+              <div class="card-note" id="ltvNote">Proxy economics from margin and repeat factor</div>
+            </div>
+            <div class="bar-list" id="ltvBars"></div>
+            <div class="callout-grid" id="ltvCallouts"></div>
+          </section>
+        </div>
       </section>
 
       <section class="tab-panel" id="tableTab">
@@ -1182,7 +1498,7 @@
       trendMetric: 'revenue',
       trendMode: 'absolute',
       activeTab: 'overviewTab',
-      locale: 'en',
+      locale: localStorage.getItem('agentMapLocale') || 'en',
     };
 
     const translations = {
@@ -1228,6 +1544,30 @@
         actionTitle: 'Action Plan',
         actionDesc: 'Action items are ranked by impact and tied back to a data-based reason. This section should be read after headline KPIs and driver charts so the user understands both what to do and why it matters now.',
         actionNote: 'Owner + reason included',
+        cohortTitle: 'Operational Cohort',
+        cohortDesc: 'Entity-level cohort heatmap built from recurring segment-region-channel combinations. This is a practical retention proxy when customer IDs are unavailable.',
+        cohortNote: 'Rows: cohort month<br>Cols: M0-Mn retention',
+        retentionTitle: 'Retention Curve',
+        retentionDesc: 'Average retention by cohort age. This answers whether value decays too quickly after the first commercial touchpoint.',
+        retentionNote: 'X: cohort age<br>Y: retained revenue %',
+        funnelTitle: 'Funnel Analysis',
+        funnelDesc: 'Proxy funnel derived from traffic and order performance. Use it to identify where demand is leaking before conversion.',
+        funnelNote: 'Proxy stages from visitors/orders',
+        segmentHealthTitle: 'Customer Segment Analysis',
+        segmentHealthDesc: 'Compare segments on scale, efficiency, and conversion to decide which segment deserves more demand and which needs margin repair.',
+        segmentHealthNote: 'Revenue + margin + CVR',
+        repeatTitle: 'Repurchase Cycle',
+        repeatDesc: 'Commercial repeat cadence by segment. This is useful for timing remarketing, replenishment, and outbound follow-up windows.',
+        repeatNote: 'Average gap between recurring entities',
+        forecastTitle: 'Revenue Time-Series Forecast',
+        forecastDesc: 'Historical revenue plus short-horizon forecast. Use this as a directional planning view, not as a finance close forecast.',
+        forecastNote: 'Solid: actual<br>Dashed: forecast',
+        clusterTitle: 'AI Segmentation',
+        clusterDesc: 'K-means segmentation on commercial behavior features. This groups similar revenue-quality profiles to support differentiated playbooks.',
+        clusterNote: 'Model: K-means on value/efficiency features',
+        ltvTitle: 'LTV / CAC Lens',
+        ltvDesc: 'Proxy LTV/CAC comparison by channel to see where acquisition economics are healthy enough to scale.',
+        ltvNote: 'Proxy economics from margin and repeat factor',
         tableTitle: 'Detailed Source Table',
         tableDesc: 'This page is the audit layer. It shows the exact filtered rows behind the aggregated charts so operators can validate what was counted and designers can inspect field structure.',
         statusLoading: 'Loading run status',
@@ -1275,6 +1615,30 @@
         actionTitle: '액션 플랜',
         actionDesc: '액션은 영향도 순으로 정렬되며, 각 항목은 데이터 기반 이유와 연결됩니다. 상단 KPI와 드라이버 차트를 읽은 뒤 바로 실행 판단으로 이어지도록 설계했습니다.',
         actionNote: '담당자 + 근거 포함',
+        cohortTitle: '운영 코호트',
+        cohortDesc: '반복 등장하는 세그먼트-지역-채널 조합을 기준으로 만든 코호트 히트맵입니다. 고객 ID가 없을 때 쓰는 실무형 리텐션 프록시입니다.',
+        cohortNote: '행: 코호트 월<br>열: M0-Mn 유지율',
+        retentionTitle: '리텐션 곡선',
+        retentionDesc: '코호트 나이별 평균 유지율입니다. 첫 상업 접점 이후 가치가 너무 빨리 감소하는지 확인하는 용도입니다.',
+        retentionNote: 'X: 코호트 나이<br>Y: 유지 매출 %',
+        funnelTitle: '퍼널 분석',
+        funnelDesc: '트래픽과 주문 성과에서 만든 프록시 퍼널입니다. 전환 전 어디에서 수요가 새는지 확인하는 데 사용합니다.',
+        funnelNote: '방문/주문 기반 프록시 단계',
+        segmentHealthTitle: '고객 세그먼트 분석',
+        segmentHealthDesc: '세그먼트별 규모, 효율, 전환을 함께 비교해 더 밀어야 할 세그먼트와 마진 보정이 필요한 세그먼트를 구분합니다.',
+        segmentHealthNote: '매출 + 이익률 + 전환율',
+        repeatTitle: '재구매 주기',
+        repeatDesc: '세그먼트별 상업 반복 주기입니다. 리마케팅, 리필 타이밍, 아웃바운드 후속 접점 간격 설정에 유용합니다.',
+        repeatNote: '반복 엔티티 평균 간격',
+        forecastTitle: '매출 시계열 예측',
+        forecastDesc: '과거 매출과 단기 예측을 함께 보여줍니다. 재무 마감 예측이 아니라 방향성 계획용으로 읽어야 합니다.',
+        forecastNote: '실선: 실제<br>점선: 예측',
+        clusterTitle: 'AI 세그멘테이션',
+        clusterDesc: '상업 행동 피처 기반 K-means 세그멘테이션입니다. 비슷한 수익 질 프로필을 묶어 차별화된 운영 플레이북을 설계합니다.',
+        clusterNote: '모델: 가치/효율 피처 K-means',
+        ltvTitle: 'LTV / CAC 분석',
+        ltvDesc: '채널별 프록시 LTV/CAC 비교입니다. 어느 채널의 획득 경제성이 더 확장 가능한지 판단합니다.',
+        ltvNote: '이익률·반복계수 기반 프록시 경제성',
         tableTitle: '상세 원본 테이블',
         tableDesc: '이 페이지는 감사 레이어입니다. 집계 차트 뒤에 있는 실제 필터링 행을 그대로 보여줘 운영자와 디자이너가 집계 기준을 검증할 수 있습니다.',
         statusLoading: '실행 상태 불러오는 중',
@@ -1294,7 +1658,10 @@
         'trendTitle', 'trendDesc', 'toggleRevenue', 'toggleOrders', 'toggleConversion', 'toggleAbsolute',
         'toggleGrowth', 'decisionTitle', 'decisionDesc', 'categoryTitle', 'categoryDesc', 'regionTitle',
         'regionDesc', 'matrixTitle', 'matrixDesc', 'channelTitle', 'channelDesc', 'actionTitle',
-        'actionDesc', 'tableTitle', 'tableDesc'
+        'actionDesc', 'cohortTitle', 'cohortDesc', 'retentionTitle', 'retentionDesc', 'funnelTitle',
+        'funnelDesc', 'segmentHealthTitle', 'segmentHealthDesc', 'repeatTitle', 'repeatDesc',
+        'forecastTitle', 'forecastDesc', 'clusterTitle', 'clusterDesc', 'ltvTitle', 'ltvDesc',
+        'tableTitle', 'tableDesc'
       ];
       ids.forEach((id) => {
         const node = document.getElementById(id);
@@ -1304,6 +1671,14 @@
       document.getElementById('regionNote').innerHTML = t('regionNote');
       document.getElementById('matrixNote').innerHTML = t('matrixNote');
       document.getElementById('actionNote').innerHTML = t('actionNote');
+      document.getElementById('cohortNote').innerHTML = t('cohortNote');
+      document.getElementById('retentionNote').innerHTML = t('retentionNote');
+      document.getElementById('funnelNote').innerHTML = t('funnelNote');
+      document.getElementById('segmentHealthNote').innerHTML = t('segmentHealthNote');
+      document.getElementById('repeatNote').innerHTML = t('repeatNote');
+      document.getElementById('forecastNote').innerHTML = t('forecastNote');
+      document.getElementById('clusterNote').innerHTML = t('clusterNote');
+      document.getElementById('ltvNote').innerHTML = t('ltvNote');
       document.querySelectorAll('.lang-button').forEach((button) => {
         button.classList.toggle('active', button.dataset.lang === dashboardState.locale);
       });
@@ -1687,6 +2062,446 @@
         `;
     }
 
+    function addMonths(monthValue, offset) {
+      const [year, month] = monthValue.split('-').map(Number);
+      const date = new Date(year, month - 1 + offset, 1);
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    }
+
+    function buildEntitySeries(rows) {
+      const entityMap = new Map();
+      rows.forEach((row) => {
+        const id = [row.segment, row.region, row.channel].join(' | ');
+        const month = monthKey(row.date);
+        if (!entityMap.has(id)) {
+          entityMap.set(id, { id, segment: row.segment, region: row.region, channel: row.channel, monthly: new Map() });
+        }
+        const entity = entityMap.get(id);
+        const current = entity.monthly.get(month) || { revenue: 0, profit: 0, visitors: 0, orders: 0, discount: 0, count: 0 };
+        current.revenue += row.revenue;
+        current.profit += row.profit;
+        current.visitors += row.visitors;
+        current.orders += row.orders;
+        current.discount += row.discount;
+        current.count += 1;
+        entity.monthly.set(month, current);
+      });
+
+      return Array.from(entityMap.values()).map((entity) => {
+        const months = Array.from(entity.monthly.keys()).sort();
+        return {
+          ...entity,
+          cohortMonth: months[0],
+          months,
+          monthly: entity.monthly,
+        };
+      });
+    }
+
+    function buildOperationalCohort(rows) {
+      const entities = buildEntitySeries(rows);
+      const allMonths = Array.from(new Set(rows.map((row) => monthKey(row.date)))).sort();
+      const cohortMap = new Map();
+      entities.forEach((entity) => {
+        const arr = cohortMap.get(entity.cohortMonth) || [];
+        arr.push(entity);
+        cohortMap.set(entity.cohortMonth, arr);
+      });
+      return {
+        months: allMonths,
+        cohorts: Array.from(cohortMap.entries()).sort(([a], [b]) => a.localeCompare(b)).map(([cohort, cohortEntities]) => {
+          const baseRevenue = cohortEntities.reduce((total, entity) => total + (entity.monthly.get(cohort)?.revenue || 0), 0);
+          const values = allMonths
+            .filter((month) => month >= cohort)
+            .map((month, index) => {
+              const currentRevenue = cohortEntities.reduce((total, entity) => total + (entity.monthly.get(month)?.revenue || 0), 0);
+              return {
+                offset: index,
+                month,
+                revenue: currentRevenue,
+                retention: baseRevenue ? (currentRevenue / baseRevenue) * 100 : 0,
+              };
+            });
+          return { cohort, baseRevenue, size: cohortEntities.length, values };
+        }),
+      };
+    }
+
+    function renderOperationalCohort(rows) {
+      const container = document.getElementById('cohortGrid');
+      const cohortData = buildOperationalCohort(rows);
+      if (!cohortData.cohorts.length) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '코호트 데이터를 만들 수 없습니다.' : 'Cohort data is not available for the current filter set.'}</div>`;
+        return;
+      }
+      container.innerHTML = cohortData.cohorts.map((cohortRow) => `
+        <div class="cohort-row">
+          <div class="cohort-label">${monthLabel(cohortRow.cohort)}<span>${cohortRow.size} ${dashboardState.locale === 'ko' ? '엔티티' : 'entities'}</span></div>
+          ${cohortRow.values.map((cell) => {
+            const alpha = Math.max(0.12, Math.min(0.78, cell.retention / 110));
+            return `
+              <div class="cohort-cell" style="background: rgba(88, 184, 155, ${alpha});">
+                <div>M${cell.offset}</div>
+                <span>${cell.retention.toFixed(0)}%</span>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `).join('');
+    }
+
+    function renderRetentionCurve(rows) {
+      const cohortData = buildOperationalCohort(rows);
+      const chart = document.getElementById('retentionChart');
+      const callouts = document.getElementById('retentionCallouts');
+      if (!cohortData.cohorts.length) {
+        chart.innerHTML = '';
+        callouts.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '리텐션 데이터가 없습니다.' : 'Retention data is not available.'}</div>`;
+        return;
+      }
+      const offsets = [];
+      cohortData.cohorts.forEach((cohort) => {
+        cohort.values.forEach((value) => {
+          offsets[value.offset] = offsets[value.offset] || [];
+          offsets[value.offset].push(value.retention);
+        });
+      });
+      const series = offsets.map((values, offset) => ({
+        label: `M${offset}`,
+        value: values.reduce((a, b) => a + b, 0) / values.length,
+      })).filter(Boolean);
+      drawMiniLineChart(chart, series, true);
+      const best = series.reduce((a, b) => (a.value > b.value ? a : b), series[0]);
+      const latest = series[series.length - 1];
+      callouts.innerHTML = dashboardState.locale === 'ko'
+        ? `
+          <div class="callout"><strong>초기 유지:</strong> ${best.label} 시점 평균 유지율은 ${best.value.toFixed(1)}%입니다. 첫 접점 이후 초기 유지력 기준선입니다.</div>
+          <div class="callout"><strong>장기 감쇠:</strong> ${latest.label} 시점은 ${latest.value.toFixed(1)}%입니다. 재활성화나 반복 구매 장치가 필요한 구간입니다.</div>
+        `
+        : `
+          <div class="callout"><strong>Early retention:</strong> ${best.label} averages ${best.value.toFixed(1)}% retained revenue. This is the baseline for first-touch quality.</div>
+          <div class="callout"><strong>Decay point:</strong> ${latest.label} lands at ${latest.value.toFixed(1)}%. This is the stage where reactivation or repeat triggers matter most.</div>
+        `;
+    }
+
+    function renderFunnel(rows) {
+      const container = document.getElementById('funnelSteps');
+      const visitors = sum(rows, 'visitors');
+      const orders = sum(rows, 'orders');
+      const conversionRate = visitors ? orders / visitors : 0;
+      const engaged = Math.max(orders, Math.round(visitors * Math.min(0.78, Math.max(0.4, conversionRate * 4.8))));
+      const intent = Math.max(orders, Math.round(visitors * Math.min(0.42, Math.max(0.18, conversionRate * 2.8))));
+      const checkout = Math.max(orders, Math.round(visitors * Math.min(0.22, Math.max(0.08, conversionRate * 1.6))));
+      const steps = [
+        { label: dashboardState.locale === 'ko' ? '방문' : 'Visitors', value: visitors, note: dashboardState.locale === 'ko' ? '실제 트래픽' : 'Observed traffic' },
+        { label: dashboardState.locale === 'ko' ? '관심' : 'Engaged', value: engaged, note: dashboardState.locale === 'ko' ? '참여 프록시' : 'Engagement proxy' },
+        { label: dashboardState.locale === 'ko' ? '구매 의도' : 'Intent', value: intent, note: dashboardState.locale === 'ko' ? '체크아웃 의도 프록시' : 'Checkout intent proxy' },
+        { label: dashboardState.locale === 'ko' ? '주문' : 'Orders', value: orders, note: dashboardState.locale === 'ko' ? '실제 주문' : 'Observed orders' },
+      ];
+      container.innerHTML = steps.map((step, index) => {
+        const prior = steps[index - 1]?.value || step.value;
+        const rate = prior ? (step.value / prior) * 100 : 100;
+        return `
+          <div class="funnel-step">
+            <div class="funnel-step-label">${step.label}</div>
+            <div class="funnel-step-value">${step.value.toLocaleString()}</div>
+            <div class="funnel-step-meta">${step.note}</div>
+            <div class="funnel-step-rate">${rate.toFixed(1)}%</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderSegmentHealth(rows) {
+      const grouped = Array.from(groupBy(rows, (row) => row.segment).entries()).map(([segment, items]) => {
+        const revenue = sum(items, 'revenue');
+        const visitors = sum(items, 'visitors');
+        const orders = sum(items, 'orders');
+        const profit = sum(items, 'profit');
+        return {
+          segment,
+          revenue,
+          margin: revenue ? (profit / revenue) * 100 : 0,
+          conversion: visitors ? (orders / visitors) * 100 : 0,
+          rpv: visitors ? revenue / visitors : 0,
+        };
+      }).sort((a, b) => b.revenue - a.revenue);
+      const container = document.getElementById('segmentSummaryGrid');
+      if (!grouped.length) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '세그먼트 데이터가 없습니다.' : 'No segment data available.'}</div>`;
+        return;
+      }
+      container.innerHTML = grouped.map((item) => `
+        <div class="segment-summary-card">
+          <div class="segment-summary-title">${item.segment}</div>
+          <div class="segment-summary-kpi">
+            <div class="segment-summary-row"><span>${dashboardState.locale === 'ko' ? '매출' : 'Revenue'}</span><strong>${formatCompactCurrency(item.revenue)}</strong></div>
+            <div class="segment-summary-row"><span>${dashboardState.locale === 'ko' ? '이익률' : 'Margin'}</span><strong>${formatPercent(item.margin)}</strong></div>
+            <div class="segment-summary-row"><span>${dashboardState.locale === 'ko' ? '전환율' : 'Conversion'}</span><strong>${formatPercent(item.conversion)}</strong></div>
+            <div class="segment-summary-row"><span>${dashboardState.locale === 'ko' ? '방문자당 매출' : 'Revenue / Visitor'}</span><strong>$${item.rpv.toFixed(2)}</strong></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderRepurchaseCycle(rows) {
+      const entities = buildEntitySeries(rows);
+      const gapsBySegment = new Map();
+      entities.forEach((entity) => {
+        const dates = Array.from(new Set(rows.filter((row) => row.segment === entity.segment && row.region === entity.region && row.channel === entity.channel).map((row) => row.date.getTime()))).sort((a, b) => a - b);
+        for (let i = 1; i < dates.length; i += 1) {
+          const gap = (dates[i] - dates[i - 1]) / (1000 * 60 * 60 * 24);
+          const arr = gapsBySegment.get(entity.segment) || [];
+          arr.push(gap);
+          gapsBySegment.set(entity.segment, arr);
+        }
+      });
+      const grouped = Array.from(gapsBySegment.entries()).map(([segment, gaps]) => ({
+        label: segment,
+        value: gaps.reduce((a, b) => a + b, 0) / gaps.length,
+      })).sort((a, b) => a.value - b.value);
+      const container = document.getElementById('repurchaseBars');
+      if (!grouped.length) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '반복 주기를 계산할 충분한 이력이 없습니다.' : 'Not enough recurring history to estimate repeat cadence.'}</div>`;
+        return;
+      }
+      const max = grouped[grouped.length - 1].value || 1;
+      container.innerHTML = grouped.map((item) => `
+        <div class="bar-row">
+          <div class="bar-label">${item.label}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${(item.value / max) * 100}%; background:linear-gradient(90deg, rgba(88,184,155,0.18) 0%, rgba(88,184,155,0.72) 100%);"></div></div>
+          <div class="bar-value">${item.value.toFixed(1)}d</div>
+        </div>
+      `).join('');
+    }
+
+    function linearForecast(series, steps = 3) {
+      const n = series.length;
+      const xs = series.map((_, index) => index);
+      const ys = series.map((item) => item.revenue);
+      const sumX = xs.reduce((a, b) => a + b, 0);
+      const sumY = ys.reduce((a, b) => a + b, 0);
+      const sumXY = xs.reduce((total, x, index) => total + x * ys[index], 0);
+      const sumXX = xs.reduce((total, x) => total + x * x, 0);
+      const slope = (n * sumXY - sumX * sumY) / Math.max((n * sumXX - sumX * sumX), 1);
+      const intercept = (sumY - slope * sumX) / Math.max(n, 1);
+      return Array.from({ length: steps }, (_, index) => {
+        const x = n + index;
+        const value = Math.max(0, intercept + slope * x);
+        const lastMonth = series[series.length - 1]?.key;
+        return {
+          key: addMonths(lastMonth, index + 1),
+          label: monthLabel(addMonths(lastMonth, index + 1)),
+          revenue: value,
+        };
+      });
+    }
+
+    function drawMiniLineChart(svg, series, percentMode = false, forecastSeries = []) {
+      if (!series.length) {
+        svg.innerHTML = '';
+        return;
+      }
+      const width = 520;
+      const height = 210;
+      const margin = { top: 18, right: 16, bottom: 34, left: 44 };
+      const allSeries = [...series, ...forecastSeries];
+      const values = allSeries.map((item) => item.value ?? item.revenue);
+      const max = Math.max(...values);
+      const min = Math.min(...values);
+      const range = max - min || 1;
+      const makePoints = (items, xOffset = 0) => items.map((item, index) => {
+        const x = margin.left + ((index + xOffset) / Math.max(allSeries.length - 1, 1)) * (width - margin.left - margin.right);
+        const rawValue = item.value ?? item.revenue;
+        const y = margin.top + (height - margin.top - margin.bottom) - ((rawValue - min) / range) * (height - margin.top - margin.bottom);
+        return { x, y, label: item.label, value: rawValue };
+      });
+      const historyPoints = makePoints(series);
+      const forecastPoints = makePoints(forecastSeries, Math.max(series.length - 1, 0));
+      const historyPath = historyPoints.map((p, idx) => `${idx === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+      const forecastPath = forecastPoints.length ? `M ${historyPoints[historyPoints.length - 1].x} ${historyPoints[historyPoints.length - 1].y} ${forecastPoints.map((p) => `L ${p.x} ${p.y}`).join(' ')}` : '';
+      svg.innerHTML = `
+        ${historyPoints.map((point) => `<text class="axis-label" x="${point.x}" y="${height - 12}" text-anchor="middle">${point.label}</text>`).join('')}
+        ${forecastPoints.map((point) => `<text class="axis-label" x="${point.x}" y="${height - 12}" text-anchor="middle">${point.label}</text>`).join('')}
+        <path class="line-secondary" style="--chart-color:var(--chart-mint);--chart-color-soft:var(--chart-mint-soft);" d="${historyPath}"></path>
+        <path class="line-primary" style="--chart-color:var(--chart-mint);--chart-color-soft:var(--chart-mint-soft);" d="${historyPath}"></path>
+        ${forecastPath ? `<path d="${forecastPath}" fill="none" stroke="var(--chart-ink)" stroke-width="2.5" stroke-dasharray="6 6" stroke-linecap="round"></path>` : ''}
+        ${historyPoints.map((point) => `<circle class="point" style="--chart-color:var(--chart-mint);" cx="${point.x}" cy="${point.y}" r="5"></circle>`).join('')}
+        ${forecastPoints.map((point) => `<circle class="point" style="--chart-color:var(--chart-rose);" cx="${point.x}" cy="${point.y}" r="5"></circle>`).join('')}
+      `;
+    }
+
+    function renderForecast(rows) {
+      const monthly = buildMonthlySeries(rows);
+      const chart = document.getElementById('forecastChart');
+      const callouts = document.getElementById('forecastCallouts');
+      if (monthly.length < 2) {
+        chart.innerHTML = '';
+        callouts.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '예측을 만들기 위한 시계열 포인트가 부족합니다.' : 'Not enough time points to build a forecast.'}</div>`;
+        return;
+      }
+      const forecast = linearForecast(monthly, 2);
+      drawMiniLineChart(chart, monthly.map((item) => ({ label: item.label, value: item.revenue })), false, forecast.map((item) => ({ label: item.label, value: item.revenue })));
+      const next = forecast[0];
+      const latest = monthly[monthly.length - 1];
+      const delta = latest.revenue ? ((next.revenue - latest.revenue) / latest.revenue) * 100 : 0;
+      callouts.innerHTML = dashboardState.locale === 'ko'
+        ? `
+          <div class="callout"><strong>다음 예측:</strong> ${next.label} 예상 매출은 ${formatCompactCurrency(next.revenue)}입니다. 현재 추세 연장 기준입니다.</div>
+          <div class="callout"><strong>신뢰 수준:</strong> 관측 월 수가 ${monthly.length}개라 신뢰도는 낮습니다. 방향성 계획용으로만 써야 합니다.</div>
+        `
+        : `
+          <div class="callout"><strong>Next projection:</strong> ${next.label} is forecast at ${formatCompactCurrency(next.revenue)}, which is ${delta >= 0 ? 'up' : 'down'} ${Math.abs(delta).toFixed(1)}% from the latest actual.</div>
+          <div class="callout"><strong>Confidence:</strong> Only ${monthly.length} observed months are available, so this should be read as directional planning rather than a finance-grade forecast.</div>
+        `;
+    }
+
+    function standardize(points) {
+      if (!points.length) return points;
+      const keys = Object.keys(points[0].features);
+      const stats = Object.fromEntries(keys.map((key) => {
+        const values = points.map((point) => point.features[key]);
+        const mean = values.reduce((a, b) => a + b, 0) / values.length;
+        const variance = values.reduce((a, b) => a + ((b - mean) ** 2), 0) / values.length;
+        return [key, { mean, std: Math.sqrt(variance) || 1 }];
+      }));
+      return points.map((point) => ({
+        ...point,
+        vector: keys.map((key) => (point.features[key] - stats[key].mean) / stats[key].std),
+      }));
+    }
+
+    function runKMeans(points, k = 3, iterations = 10) {
+      if (points.length <= k) return points.map((point, index) => ({ ...point, cluster: index }));
+      let centroids = points.slice(0, k).map((point) => [...point.vector]);
+      let assigned = points.map((point) => ({ ...point, cluster: 0 }));
+      for (let i = 0; i < iterations; i += 1) {
+        assigned = points.map((point) => {
+          let bestCluster = 0;
+          let bestDistance = Infinity;
+          centroids.forEach((centroid, clusterIndex) => {
+            const distance = centroid.reduce((total, value, idx) => total + ((value - point.vector[idx]) ** 2), 0);
+            if (distance < bestDistance) {
+              bestDistance = distance;
+              bestCluster = clusterIndex;
+            }
+          });
+          return { ...point, cluster: bestCluster };
+        });
+        centroids = centroids.map((centroid, clusterIndex) => {
+          const members = assigned.filter((point) => point.cluster === clusterIndex);
+          if (!members.length) return centroid;
+          return centroid.map((_, idx) => members.reduce((total, member) => total + member.vector[idx], 0) / members.length);
+        });
+      }
+      return assigned;
+    }
+
+    function renderAiSegmentation(rows) {
+      const entities = buildEntitySeries(rows).map((entity) => {
+        const items = Array.from(entity.monthly.values());
+        const revenue = items.reduce((total, item) => total + item.revenue, 0);
+        const profit = items.reduce((total, item) => total + item.profit, 0);
+        const visitors = items.reduce((total, item) => total + item.visitors, 0);
+        const orders = items.reduce((total, item) => total + item.orders, 0);
+        const avgDiscount = items.reduce((total, item) => total + item.discount / item.count, 0) / Math.max(items.length, 1);
+        return {
+          entity: entity.id,
+          features: {
+            revenuePerVisitor: visitors ? revenue / visitors : 0,
+            conversion: visitors ? orders / visitors : 0,
+            margin: revenue ? profit / revenue : 0,
+            aov: orders ? revenue / orders : 0,
+            discount: avgDiscount,
+          }
+        };
+      });
+      const container = document.getElementById('clusterGrid');
+      if (entities.length < 3) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '세그멘테이션을 위한 엔티티 수가 부족합니다.' : 'Not enough entities for model-based segmentation.'}</div>`;
+        return;
+      }
+      const standardized = standardize(entities);
+      const clustered = runKMeans(standardized, 3, 12);
+      const groups = Array.from({ length: 3 }, (_, cluster) => clustered.filter((point) => point.cluster === cluster)).filter((group) => group.length);
+      const labels = dashboardState.locale === 'ko'
+        ? ['고가치 효율군', '확장형 볼륨군', '할인 민감군']
+        : ['High Value Efficient', 'Scale Volume', 'Discount Sensitive'];
+      const descriptions = dashboardState.locale === 'ko'
+        ? [
+            '방문자당 가치와 마진이 모두 높은 군집입니다. 확장 예산 우선순위 후보입니다.',
+            '규모는 크지만 효율 보정이 필요한 군집입니다. 가격·채널 최적화가 함께 필요합니다.',
+            '할인 의존도가 높은 군집입니다. 수익성 방어가 선행되어야 합니다.'
+          ]
+        : [
+            'High value and high efficiency. This is the best candidate for incremental budget.',
+            'Large enough to matter but still needs efficiency repair before scale pushes harder.',
+            'Discount-sensitive profile. Protect margin before spending more to acquire it.'
+          ];
+      container.innerHTML = groups.map((group, index) => {
+        const size = group.length;
+        const avg = (key) => group.reduce((total, point) => total + point.features[key], 0) / size;
+        return `
+          <div class="cluster-card">
+            <div class="cluster-tag">Cluster ${index + 1}</div>
+            <div class="cluster-name">${labels[index] || `Cluster ${index + 1}`}</div>
+            <div class="cluster-desc">${descriptions[index] || ''}</div>
+            <div class="cluster-metrics"><strong>${dashboardState.locale === 'ko' ? '엔티티 수' : 'Members'}:</strong> ${size}</div>
+            <div class="cluster-metrics"><strong>${dashboardState.locale === 'ko' ? '평균 이익률' : 'Avg margin'}:</strong> ${formatPercent(avg('margin') * 100)}</div>
+            <div class="cluster-metrics"><strong>${dashboardState.locale === 'ko' ? '평균 전환율' : 'Avg conversion'}:</strong> ${formatPercent(avg('conversion') * 100)}</div>
+            <div class="cluster-metrics"><strong>${dashboardState.locale === 'ko' ? '방문자당 매출' : 'Revenue / visitor'}:</strong> $${avg('revenuePerVisitor').toFixed(2)}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderLtvCac(rows) {
+      const grouped = Array.from(groupBy(rows, (row) => row.channel).entries()).map(([channel, items]) => {
+        const revenue = sum(items, 'revenue');
+        const profit = sum(items, 'profit');
+        const cost = sum(items, 'cost');
+        const orders = sum(items, 'orders');
+        const aov = orders ? revenue / orders : 0;
+        const margin = revenue ? profit / revenue : 0;
+        const entityCount = new Set(items.map((row) => `${row.segment}|${row.region}|${row.channel}`)).size || 1;
+        const repeatFactor = Math.max(1, items.length / entityCount);
+        const ltvProxy = aov * margin * Math.max(1.2, repeatFactor);
+        const cacProxy = orders ? cost / orders : 0;
+        return {
+          label: channel,
+          ltvProxy,
+          cacProxy,
+          ratio: cacProxy ? ltvProxy / cacProxy : 0,
+        };
+      }).sort((a, b) => b.ratio - a.ratio);
+      const container = document.getElementById('ltvBars');
+      const callouts = document.getElementById('ltvCallouts');
+      if (!grouped.length) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? 'LTV/CAC 데이터를 계산할 수 없습니다.' : 'LTV/CAC data is not available.'}</div>`;
+        callouts.innerHTML = '';
+        return;
+      }
+      const max = grouped[0].ratio || 1;
+      container.innerHTML = grouped.map((item, index) => `
+        <div class="bar-row">
+          <div class="bar-label">${item.label}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${(item.ratio / max) * 100}%; background:${index === grouped.length - 1 ? 'linear-gradient(90deg, #ebc6d4 0%, var(--chart-rose) 100%)' : 'linear-gradient(90deg, #b8dece 0%, var(--chart-mint) 100%)'};"></div></div>
+          <div class="bar-value">${item.ratio.toFixed(2)}x</div>
+        </div>
+      `).join('');
+      const best = grouped[0];
+      const weakest = grouped[grouped.length - 1];
+      callouts.innerHTML = dashboardState.locale === 'ko'
+        ? `
+          <div class="callout"><strong>최적 채널:</strong> ${best.label}의 프록시 LTV/CAC는 ${best.ratio.toFixed(2)}x입니다. 현재 기준에서 가장 확장 가능성이 높습니다.</div>
+          <div class="callout"><strong>주의 채널:</strong> ${weakest.label}은 ${weakest.ratio.toFixed(2)}x입니다. CAC 대비 가치가 약해 예산 확대 전 점검이 필요합니다.</div>
+        `
+        : `
+          <div class="callout"><strong>Best channel:</strong> ${best.label} posts a proxy LTV/CAC of ${best.ratio.toFixed(2)}x. This is the strongest scale candidate right now.</div>
+          <div class="callout"><strong>Watch list:</strong> ${weakest.label} sits at ${weakest.ratio.toFixed(2)}x. Acquisition economics are weaker and should be reviewed before adding budget.</div>
+        `;
+    }
+
     function renderRankedBars(containerId, rows, key, valueBuilder, valueFormatter) {
       const grouped = Array.from(groupBy(rows, (row) => row[key]).entries()).map(([label, items]) => ({
         label,
@@ -1928,6 +2743,14 @@
       renderInsights(rows);
       renderExperimentCard();
       renderActions();
+      renderOperationalCohort(rows);
+      renderRetentionCurve(rows);
+      renderFunnel(rows);
+      renderSegmentHealth(rows);
+      renderRepurchaseCycle(rows);
+      renderForecast(rows);
+      renderAiSegmentation(rows);
+      renderLtvCac(rows);
       renderTable(rows);
     }
 
@@ -1949,6 +2772,7 @@
     document.querySelectorAll('.lang-button').forEach((button) => {
       button.addEventListener('click', () => {
         dashboardState.locale = button.dataset.lang;
+        localStorage.setItem('agentMapLocale', dashboardState.locale);
         applyLanguage();
         initializeFilters();
         applyFilters();

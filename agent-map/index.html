@@ -99,6 +99,37 @@
       font-size: 12px;
       line-height: 1.6;
       max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      gap: 6px;
+      padding: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .lang-button {
+      border: none;
+      background: transparent;
+      color: #b2b2b2;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-button.active {
+      background: var(--color-offwhite);
+      color: var(--color-ink);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
     }
 
     .stats-row {
@@ -187,6 +218,8 @@
     /* ─── MAIN GRID ─── */
     .main-wrapper {
       position: relative;
+      width: min(100%, 1680px);
+      margin: 0 auto;
     }
 
     .svg-layer {
@@ -215,11 +248,12 @@
 
     .main-grid {
       display: grid;
-      grid-template-columns: 130px 120px 400px 140px 180px;
-      gap: 40px;
+      grid-template-columns: minmax(150px, 0.9fr) minmax(150px, 0.9fr) minmax(580px, 3.35fr) minmax(180px, 1.15fr) minmax(250px, 1.35fr);
+      gap: 28px;
       align-items: start;
       position: relative;
       z-index: 1;
+      width: 100%;
     }
 
     /* ─── COLUMN LABELS ─── */
@@ -651,20 +685,24 @@
 <header class="header">
   <div class="header-left">
     <div class="hero-line1">AI Data Analyst OS <span class="hero-by">by <a href="https://www.linkedin.com/in/seoyeonjun/" target="_blank">Seoyeon Jun</a></span></div>
-    <div class="hero-line2">Automation flow map</div>
+    <div class="hero-line2" id="heroLine2">Automation flow map</div>
     <div class="stats-row">
-      <div class="stat"><strong>10</strong> Agents</div>
-      <div class="stat"><strong>38</strong> Tasks</div>
-      <div class="stat"><strong>7</strong> Outputs</div>
-      <a class="dashboard-link" href="./dashboard.html">Go to Dashboard</a>
+      <div class="stat"><strong>10</strong> <span id="statAgents">Agents</span></div>
+      <div class="stat"><strong>38</strong> <span id="statTasks">Tasks</span></div>
+      <div class="stat"><strong>7</strong> <span id="statOutputs">Outputs</span></div>
+      <a class="dashboard-link" href="./dashboard.html" id="dashboardLink">Go to Dashboard</a>
     </div>
     <div class="header-status" id="headerStatus">
       <span class="status-dot" id="headerStatusDot"></span>
-      <span><strong>Flow monitor</strong> Waiting for latest run status</span>
+      <span><strong id="flowMonitorLabel">Flow monitor</strong> <span id="flowMonitorStatusText">Waiting for latest run status</span></span>
     </div>
   </div>
   <div class="header-right">
-    End-to-end data analysis automation. From raw data to actionable insights, fully orchestrated by AI agents.
+    <div class="lang-toggle" aria-label="Language switch">
+      <button class="lang-button active" data-lang="en">EN</button>
+      <button class="lang-button" data-lang="ko">KR</button>
+    </div>
+    <span id="headerTagline">End-to-end data analysis automation. From raw data to actionable insights, fully orchestrated by AI agents.</span>
   </div>
 </header>
 
@@ -675,7 +713,7 @@
 
   <!-- INPUT -->
   <div>
-    <div class="col-label">Input</div>
+    <div class="col-label" id="labelInput">Input</div>
     <div class="card card-dark input-card">
       <div class="input-grid">
         <div class="input-item">
@@ -708,7 +746,7 @@
 
   <!-- ORCHESTRATOR -->
   <div>
-    <div class="col-label">Orchestrator</div>
+    <div class="col-label" id="labelOrchestrator">Orchestrator</div>
     <div class="card orch-card">
       <div class="orch-icon">
         <img src="claude-logo.png" alt="Claude Code" style="width: 40px; height: 40px; object-fit: contain;">
@@ -720,7 +758,7 @@
 
   <!-- DEPARTMENTS -->
   <div>
-    <div class="col-label">Departments & Agents</div>
+    <div class="col-label" id="labelDepartments">Departments & Agents</div>
     <div class="dept-grid">
 
       <!-- Row 1 -->
@@ -909,7 +947,7 @@
 
   <!-- OUTPUTS -->
   <div>
-    <div class="col-label">Outputs</div>
+    <div class="col-label" id="labelOutputs">Outputs</div>
     <div class="card card-cream output-card">
       <div class="output-grid">
         <div class="output-item" data-from="eda">
@@ -946,16 +984,16 @@
 
   <!-- FEEDBACK -->
   <div id="feedbackCol">
-    <div class="col-label">Feedback</div>
+    <div class="col-label" id="labelFeedback">Feedback</div>
     <div class="card card-peach feedback-card" id="feedbackCard">
       <div class="feedback-icon">
         <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
       </div>
-      <div class="feedback-title">Knowledge Base</div>
-      <div class="feedback-desc">Learns from analysis results.<br>System gets smarter over time.</div>
-      <span class="feedback-badge">Self-Improving</span>
+      <div class="feedback-title" id="feedbackTitle">Knowledge Base</div>
+      <div class="feedback-desc" id="feedbackDesc">Learns from analysis results.<br>System gets smarter over time.</div>
+      <span class="feedback-badge" id="feedbackBadge">Self-Improving</span>
       <div class="feedback-monitor">
-        <div class="feedback-monitor-label">Latest Run</div>
+        <div class="feedback-monitor-label" id="feedbackMonitorLabel">Latest Run</div>
         <div class="feedback-monitor-text" id="feedbackMonitorText">Waiting for synchronized run context.</div>
       </div>
     </div>
@@ -965,6 +1003,89 @@
 </div>
 
 <script>
+const localeKey = 'agentMapLocale';
+const flowTranslations = {
+  en: {
+    heroLine2: 'Automation flow map',
+    statAgents: 'Agents',
+    statTasks: 'Tasks',
+    statOutputs: 'Outputs',
+    dashboardLink: 'Go to Dashboard',
+    flowMonitorLabel: 'Flow monitor',
+    flowWaiting: 'Waiting for latest run status',
+    flowLoadError: 'Unable to load latest run status',
+    headerTagline: 'End-to-end data analysis automation. From raw data to actionable insights, fully orchestrated by AI agents.',
+    labelInput: 'Input',
+    labelOrchestrator: 'Orchestrator',
+    labelDepartments: 'Departments & Agents',
+    labelOutputs: 'Outputs',
+    labelFeedback: 'Feedback',
+    feedbackTitle: 'Knowledge Base',
+    feedbackDesc: 'Learns from analysis results.<br>System gets smarter over time.',
+    feedbackBadge: 'Self-Improving',
+    feedbackMonitorLabel: 'Latest Run',
+    feedbackMonitorWaiting: 'Waiting for synchronized run context.',
+    allStagesComplete: 'All stages complete',
+    pending: 'Pending',
+    complete: 'complete',
+    inputFilesSynced: 'input files synced',
+    latestState: 'latest state'
+  },
+  ko: {
+    heroLine2: '자동화 플로우 맵',
+    statAgents: '에이전트',
+    statTasks: '작업',
+    statOutputs: '산출물',
+    dashboardLink: '대시보드로 이동',
+    flowMonitorLabel: '플로우 모니터',
+    flowWaiting: '최신 실행 상태를 기다리는 중',
+    flowLoadError: '최신 실행 상태를 불러오지 못했습니다',
+    headerTagline: '원천 데이터에서 실행 가능한 인사이트까지, AI 에이전트가 전체 데이터 분석 흐름을 오케스트레이션합니다.',
+    labelInput: '입력',
+    labelOrchestrator: '오케스트레이터',
+    labelDepartments: '부서 및 에이전트',
+    labelOutputs: '산출물',
+    labelFeedback: '피드백',
+    feedbackTitle: '지식 베이스',
+    feedbackDesc: '분석 결과를 학습하고,<br>시스템은 점점 더 똑똑해집니다.',
+    feedbackBadge: '자가 개선',
+    feedbackMonitorLabel: '최신 실행',
+    feedbackMonitorWaiting: '동기화된 실행 컨텍스트를 기다리는 중입니다.',
+    allStagesComplete: '모든 단계 완료',
+    pending: '대기 중',
+    complete: '완료',
+    inputFilesSynced: '개 입력 파일 동기화',
+    latestState: '최신 상태'
+  }
+};
+
+let flowLocale = localStorage.getItem(localeKey) || 'en';
+
+function tf(key) {
+  return flowTranslations[flowLocale]?.[key] || flowTranslations.en[key] || key;
+}
+
+function applyFlowLanguage() {
+  const ids = [
+    'heroLine2', 'statAgents', 'statTasks', 'statOutputs', 'dashboardLink', 'labelInput',
+    'labelOrchestrator', 'labelDepartments', 'labelOutputs', 'labelFeedback', 'feedbackTitle',
+    'feedbackBadge', 'feedbackMonitorLabel', 'flowMonitorLabel', 'headerTagline'
+  ];
+  ids.forEach((id) => {
+    const node = document.getElementById(id);
+    if (node) node.textContent = tf(id);
+  });
+  const feedbackDesc = document.getElementById('feedbackDesc');
+  if (feedbackDesc) feedbackDesc.innerHTML = tf('feedbackDesc');
+  const statusText = document.getElementById('flowMonitorStatusText');
+  if (statusText && !statusText.dataset.dynamic) statusText.textContent = tf('flowWaiting');
+  const feedbackMonitorText = document.getElementById('feedbackMonitorText');
+  if (feedbackMonitorText && !feedbackMonitorText.dataset.dynamic) feedbackMonitorText.textContent = tf('feedbackMonitorWaiting');
+  document.querySelectorAll('.lang-button').forEach((button) => {
+    button.classList.toggle('active', button.dataset.lang === flowLocale);
+  });
+}
+
 function drawFlowLines() {
   const svg = document.getElementById('svgLayer');
   const wrapper = document.querySelector('.main-wrapper');
@@ -1138,31 +1259,43 @@ async function syncFlowMonitoring() {
     setMonitorState(feedbackCard, overallStatus);
 
     const headerStatus = document.getElementById('headerStatus');
-    const headerStatusDot = document.getElementById('headerStatusDot');
-    const activeLabel = activeStage ? activeStage.name : (overallStatus === 'completed' ? 'All stages complete' : 'Pending');
+    const activeLabel = activeStage ? activeStage.name : (overallStatus === 'completed' ? tf('allStagesComplete') : tf('pending'));
     headerStatus.innerHTML = `
       <span class="status-dot ${overallStatus} ${activeStage ? 'processing' : ''}" id="headerStatusDot"></span>
-      <span><strong>Flow monitor</strong> ${completedCount} / ${totalCount} complete · ${activeLabel}</span>
+      <span><strong id="flowMonitorLabel">${tf('flowMonitorLabel')}</strong> <span id="flowMonitorStatusText" data-dynamic="true">${completedCount} / ${totalCount} ${tf('complete')} · ${activeLabel}</span></span>
     `;
 
     const feedbackMonitorText = document.getElementById('feedbackMonitorText');
     const runTime = status.finished_at || status.started_at || '';
     const inputCount = Array.isArray(status.inputs) ? status.inputs.length : 0;
-    feedbackMonitorText.textContent = `${inputCount} input file${inputCount === 1 ? '' : 's'} synced · latest state ${overallStatus} · ${runTime}`;
+    feedbackMonitorText.dataset.dynamic = 'true';
+    feedbackMonitorText.textContent = flowLocale === 'ko'
+      ? `${inputCount}${tf('inputFilesSynced')} · ${tf('latestState')} ${overallStatus} · ${runTime}`
+      : `${inputCount} input file${inputCount === 1 ? '' : 's'} synced · latest state ${overallStatus} · ${runTime}`;
   } catch (error) {
     const headerStatus = document.getElementById('headerStatus');
     if (headerStatus) {
-      headerStatus.innerHTML = '<span class="status-dot failed"></span><span><strong>Flow monitor</strong> Unable to load latest run status</span>';
+      headerStatus.innerHTML = `<span class="status-dot failed"></span><span><strong id="flowMonitorLabel">${tf('flowMonitorLabel')}</strong> <span id="flowMonitorStatusText">${tf('flowLoadError')}</span></span>`;
     }
     const feedbackMonitorText = document.getElementById('feedbackMonitorText');
     if (feedbackMonitorText) {
-      feedbackMonitorText.textContent = 'Latest run status could not be loaded from runs/latest/status.json.';
+      feedbackMonitorText.textContent = tf('flowLoadError');
     }
   } finally {
     drawFlowLines();
   }
 }
 
+document.querySelectorAll('.lang-button').forEach((button) => {
+  button.addEventListener('click', () => {
+    flowLocale = button.dataset.lang;
+    localStorage.setItem(localeKey, flowLocale);
+    applyFlowLanguage();
+    syncFlowMonitoring();
+  });
+});
+
+applyFlowLanguage();
 window.addEventListener('load', () => {
   setTimeout(drawFlowLines, 300);
   setTimeout(syncFlowMonitoring, 320);
