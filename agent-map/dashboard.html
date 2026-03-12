@@ -103,6 +103,147 @@
       min-height: calc(100vh - 140px);
     }
 
+    .top-progress {
+      margin-bottom: 20px;
+      background: linear-gradient(180deg, rgba(20, 20, 20, 0.96) 0%, rgba(15, 15, 15, 0.96) 100%);
+      border: 1px solid var(--border-dark);
+      border-radius: 22px;
+      padding: 18px 22px 20px;
+    }
+
+    .top-progress-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .top-progress-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+    }
+
+    .top-progress-summary {
+      font-family: 'Barlow', sans-serif;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--text-white);
+      line-height: 1.05;
+    }
+
+    .top-progress-summary span {
+      color: var(--accent);
+    }
+
+    .top-progress-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      text-align: right;
+    }
+
+    .progress-rail {
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 16px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #c7e7de 0%, #9bd8c6 45%, #10B981 100%);
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.24);
+      transition: width 0.35s ease;
+    }
+
+    .progress-stage-row {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .progress-chip {
+      border-radius: 16px;
+      border: 1px solid transparent;
+      padding: 12px 12px 10px;
+      min-height: 88px;
+      background: rgba(255,255,255,0.03);
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .progress-chip.completed {
+      background: rgba(224, 245, 238, 0.9);
+      border-color: rgba(13, 148, 136, 0.22);
+    }
+
+    .progress-chip.processing {
+      background: rgba(255, 251, 235, 0.92);
+      border-color: rgba(245, 158, 11, 0.28);
+      transform: translateY(-1px);
+    }
+
+    .progress-chip.pending {
+      opacity: 0.56;
+    }
+
+    .progress-chip-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .progress-chip-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.08);
+      font-size: 12px;
+      font-weight: 700;
+      color: #1a1a1a;
+      flex: none;
+    }
+
+    .progress-chip-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-white);
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    .progress-chip.completed .progress-chip-name,
+    .progress-chip.processing .progress-chip-name {
+      color: #1f1f1f;
+    }
+
+    .progress-chip-detail {
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .progress-chip.completed .progress-chip-detail,
+    .progress-chip.processing .progress-chip-detail {
+      color: #4d4d4d;
+    }
+
     /* PANELS */
     .panel {
       background: var(--bg-card-dark);
@@ -234,7 +375,7 @@
       display: flex;
       align-items: flex-start;
       gap: 14px;
-      padding: 16px 18px;
+      padding: 13px 14px;
       border-radius: 14px;
       margin-bottom: 8px;
       transition: all 0.3s;
@@ -257,8 +398,8 @@
     }
 
     .stage-indicator {
-      width: 40px;
-      height: 40px;
+      width: 34px;
+      height: 34px;
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -317,7 +458,7 @@
     }
 
     .stage-info h4 {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       margin-bottom: 4px;
       font-family: 'JetBrains Mono', monospace;
@@ -325,13 +466,13 @@
     }
 
     .stage-info p {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
       line-height: 1.5;
     }
 
     .stage-time {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
       font-family: 'JetBrains Mono', monospace;
       padding-top: 2px;
@@ -878,6 +1019,10 @@
         grid-template-columns: minmax(290px, 0.95fr) minmax(250px, 1fr) minmax(0, 1.6fr);
       }
 
+      .progress-stage-row {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
       .outputs-gallery {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -891,6 +1036,18 @@
       .grid {
         grid-template-columns: 1fr;
         height: auto;
+      }
+
+      .top-progress-head {
+        flex-direction: column;
+      }
+
+      .top-progress-meta {
+        text-align: left;
+      }
+
+      .progress-stage-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .outputs-gallery {
@@ -908,6 +1065,20 @@
     <span id="statusText">Loading latest run</span>
   </div>
 </header>
+
+<section class="top-progress">
+  <div class="top-progress-head">
+    <div>
+      <div class="top-progress-title">Pipeline Progress</div>
+      <div class="top-progress-summary"><span id="progressSummaryCount">0 / 7</span> stages completed</div>
+    </div>
+    <div class="top-progress-meta" id="progressSummaryMeta">Waiting for latest stage timeline.</div>
+  </div>
+  <div class="progress-rail">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-stage-row" id="topProgressStages"></div>
+</section>
 
 <div class="grid">
   <!-- INPUT PANEL -->
@@ -1074,11 +1245,32 @@ function renderStages() {
   const stages = state.status?.stages || [];
   const progress = state.status?.progress || { completed: 0, total: 7 };
   document.getElementById('progressText').textContent = `${progress.completed} / ${progress.total} completed`;
+  document.getElementById('progressSummaryCount').textContent = `${progress.completed} / ${progress.total}`;
+  document.getElementById('progressFill').style.width = `${progress.total ? (progress.completed / progress.total) * 100 : 0}%`;
 
   if (!stages.length) {
     renderEmpty('pipelineStages', 'No stage data available yet.');
+    renderEmpty('topProgressStages', 'No stage data available yet.');
+    document.getElementById('progressSummaryMeta').textContent = 'Waiting for latest stage timeline.';
     return;
   }
+
+  const activeStage = stages.find((stage) => stage.status === 'processing' || stage.status === 'running');
+  const completedAt = state.status?.finished_at ? formatTimestamp(state.status.finished_at) : 'In progress';
+  document.getElementById('progressSummaryMeta').textContent =
+    activeStage
+      ? `Current stage ${activeStage.name} · ${activeStage.summary || 'Running'}`
+      : `Latest run ${state.status?.overall_status || 'pending'} · updated ${completedAt}`;
+
+  document.getElementById('topProgressStages').innerHTML = stages.map((stage) => `
+    <div class="progress-chip ${escapeHtml(stage.status)}">
+      <div class="progress-chip-head">
+        <div class="progress-chip-icon">${escapeHtml(stage.icon)}</div>
+        <div class="progress-chip-name">${escapeHtml(stage.name)}</div>
+      </div>
+      <div class="progress-chip-detail">${escapeHtml(stage.summary || 'Pending')}</div>
+    </div>
+  `).join('');
 
   document.getElementById('pipelineStages').innerHTML = stages.map((stage) => `
     <div class="pipeline-stage ${escapeHtml(stage.status)} stage-${escapeHtml(stage.color)}">
