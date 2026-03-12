@@ -9,8 +9,8 @@
 
     :root {
       --bg-page: #000000;
-      --bg-card-dark: rgba(245, 239, 232, 0.94);
-      --border-dark: rgba(210, 199, 188, 0.42);
+      --bg-card-dark: rgba(18, 18, 18, 0.94);
+      --border-dark: rgba(210, 199, 188, 0.22);
       --card-offwhite: rgba(247,247,245,0.92);
       --card-lavender: rgba(237,233,247,0.92);
       --card-mint: rgba(224,245,238,0.92);
@@ -78,7 +78,7 @@
       border-radius: 24px;
       font-size: 13px;
       font-weight: 500;
-      color: var(--text-dark);
+      color: var(--text-white);
     }
 
     .header-actions {
@@ -283,7 +283,7 @@
 
     /* PANELS */
     .panel {
-      background: var(--card-beige);
+      background: rgba(20, 20, 20, 0.92);
       border: 1px solid var(--border-dark);
       border-radius: 20px;
       overflow: hidden;
@@ -330,7 +330,7 @@
 
     .upload-zone:hover {
       border-color: #555;
-      background: rgba(51, 51, 51, 0.03);
+      background: rgba(255,255,255,0.03);
     }
 
     .upload-zone.dragover {
@@ -342,7 +342,7 @@
       width: 48px;
       height: 48px;
       margin: 0 auto 12px;
-      background: rgba(51, 51, 51, 0.08);
+      background: rgba(255,255,255,0.08);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -358,7 +358,7 @@
     }
 
     .upload-text strong {
-      color: var(--text-white);
+      color: var(--text-dark);
       display: block;
       margin-bottom: 4px;
     }
@@ -368,7 +368,7 @@
       align-items: center;
       gap: 14px;
       padding: 16px;
-      background: rgba(255,255,255,0.32);
+      background: var(--card-beige);
       border: 1px solid var(--border-dark);
       border-radius: 14px;
       margin-bottom: 10px;
@@ -399,6 +399,7 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 3px;
+      color: var(--text-dark);
     }
 
     .file-info p {
@@ -409,8 +410,8 @@
 
     /* OUTPUTS */
     .output-item {
-      background: var(--card-beige);
-      border: 1px solid var(--border-dark);
+      background: rgba(20, 20, 20, 0.92);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 16px;
       overflow: hidden;
       transition: all 0.2s;
@@ -420,7 +421,7 @@
     }
 
     .output-item:hover {
-      border-color: #444;
+      border-color: rgba(255,255,255,0.16);
       transform: translateY(-2px);
     }
 
@@ -435,7 +436,7 @@
     }
 
     .output-header:hover {
-      background: rgba(51, 51, 51, 0.03);
+      background: rgba(255,255,255,0.03);
     }
 
     .output-title {
@@ -466,11 +467,12 @@
       font-size: 14px;
       font-weight: 600;
       line-height: 1.35;
+      color: #f3f3f3;
     }
 
     .output-meta {
       font-size: 11px;
-      color: var(--text-muted);
+      color: #9a9a9a;
       margin-top: 2px;
       line-height: 1.45;
       white-space: normal;
@@ -478,11 +480,17 @@
     }
 
     .output-preview {
-      border-top: 1px solid var(--border-dark);
-      background: rgba(255,255,255,0.42);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: var(--card-beige);
       display: none;
       flex: 1;
     }
+
+    .output-item.output-eda .output-preview { background: rgba(232, 224, 245, 0.9); }
+    .output-item.output-metrics .output-preview { background: rgba(255, 248, 224, 0.92); }
+    .output-item.output-dashboard .output-preview { background: rgba(224, 236, 252, 0.92); }
+    .output-item.output-report .output-preview { background: rgba(224, 245, 238, 0.92); }
+    .output-item.output-questions .output-preview { background: rgba(253, 234, 239, 0.92); }
 
     .output-item.expanded .output-preview {
       display: block;
@@ -543,7 +551,7 @@
     }
 
     .metric-card {
-      background: rgba(255,255,255,0.38);
+      background: var(--card-beige);
       border: 1px solid var(--border-dark);
       border-radius: 12px;
       padding: 12px;
@@ -567,7 +575,7 @@
     }
 
     .report-insights {
-      background: rgba(255,255,255,0.38);
+      background: var(--card-beige);
       border: 1px solid var(--border-dark);
       border-radius: 12px;
       padding: 14px;
@@ -581,7 +589,7 @@
     }
 
     .report-chart-card {
-      background: rgba(255,255,255,0.38);
+      background: var(--card-beige);
       border: 1px solid var(--border-dark);
       border-radius: 12px;
       padding: 10px;
@@ -685,7 +693,7 @@
       padding: 10px 12px;
       border-radius: 12px;
       border: 1px solid var(--border-dark);
-      background: rgba(255,255,255,0.38);
+      background: var(--card-beige);
     }
 
     .section-item h4 {
@@ -715,7 +723,7 @@
       display: flex;
       gap: 12px;
       padding: 12px;
-      background: rgba(255,255,255,0.38);
+      background: var(--card-beige);
       border: 1px solid var(--border-dark);
       border-radius: 12px;
       margin-bottom: 8px;
@@ -767,7 +775,7 @@
     }
 
     .action-card {
-      background: rgba(255,255,255,0.38);
+      background: var(--card-beige);
       border: 1px solid var(--border-dark);
       border-radius: 14px;
       padding: 12px;
@@ -837,7 +845,7 @@
     }
 
     .path-link:hover {
-      color: var(--text-white);
+      color: var(--text-dark);
     }
 
     .preview-image {
@@ -1322,7 +1330,7 @@ function renderOutputs() {
   }
 
   document.getElementById('outputsList').innerHTML = `<div class="outputs-gallery">${state.outputs.map((output) => `
-    <div class="output-item expanded">
+    <div class="output-item output-${escapeHtml(output.icon_class || 'report')} expanded">
       <div class="output-header" onclick="this.parentElement.classList.toggle('expanded')">
         <div class="output-title">
           <div class="output-icon ${escapeHtml(output.icon_class || 'report')}">${iconSymbol[output.icon_class] || '•'}</div>
