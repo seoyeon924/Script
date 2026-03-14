@@ -16,6 +16,10 @@ status: ✅ 대본완성
 
 ## 오프닝 (1분)
 
+설치 끝났죠? 그런데 하나 불편한 게 있습니다.
+세션을 새로 열면 클로드가 이전 프로젝트 내용을 기억 못합니다.
+그걸 해결하는 게 클로드엠디입니다.
+
 > 📎 **참고 링크**
 > - [Claude Code 메모리 공식 문서](https://docs.anthropic.com/en/docs/claude-code/memory) — CLAUDE.md 작성 가이드
 > - [Project Context 문서](https://docs.anthropic.com/en/docs/claude-code/project-context) — 프로젝트 컨텍스트 설정
