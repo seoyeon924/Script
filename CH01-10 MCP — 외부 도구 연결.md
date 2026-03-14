@@ -156,7 +156,7 @@ claude mcp add --transport http notion https://mcp.notion.com/mcp
 | 01 | 클로드 코드 = 에이전틱 AI | `curl -fsSL https://claude.ai/install.sh \| bash` |
 | 02 | CLAUDE.md = 프로젝트 메모리 | `CLAUDE.md` 파일 작성 |
 | 03 | Plan 모드 = 계획 먼저 확인 | `--permission-mode plan` |
-| 04 | 슬래시 커맨드 | `/compact`, `/clear`, `/review` |
+| 04 | 슬래시 커맨드 | `/compact`, `/clear`, `/diff` |
 | 05 | 토큰 절약 | `--model haiku`, `/compact` |
 | 06 | 훅 = 자동화 트리거 | `settings.json` |
 | 07 | 서브에이전트 = 역할 분리 | `.claude/agents/` |
