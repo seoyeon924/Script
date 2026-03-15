@@ -1,0 +1,2802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Data Analyst OS - Interactive Analysis Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+    :root {
+      --page-bg: #000000;
+      --shell-bg: #000000;
+      --sidebar-bg: #000000;
+      --sidebar-border: rgba(255, 255, 255, 0.08);
+      --panel-bg: rgba(247, 243, 238, 0.98);
+      --panel-border: rgba(108, 92, 79, 0.12);
+      --panel-shadow: 0 20px 38px rgba(0, 0, 0, 0.12);
+      --text-main: #2f2a25;
+      --text-soft: #62594f;
+      --text-faint: #8d8379;
+      --accent-main: #57b497;
+      --accent-mint: rgba(225, 241, 236, 0.98);
+      --accent-rose: rgba(244, 227, 233, 0.96);
+      --accent-cream: rgba(248, 244, 235, 0.96);
+      --accent-sky: rgba(240, 243, 245, 0.96);
+      --accent-peach: rgba(244, 236, 229, 0.96);
+      --accent-offwhite: rgba(252, 249, 244, 0.98);
+      --accent-ink: #4a433d;
+      --chart-lavender: #8f8074;
+      --chart-lavender-soft: rgba(143, 128, 116, 0.14);
+      --chart-mint: #57b497;
+      --chart-mint-soft: rgba(87, 180, 151, 0.16);
+      --chart-peach: #7ca899;
+      --chart-peach-soft: rgba(124, 168, 153, 0.14);
+      --chart-rose: #d694aa;
+      --chart-rose-soft: rgba(214, 148, 170, 0.16);
+      --chart-ink: #8f8074;
+      --chart-ink-soft: rgba(143, 128, 116, 0.14);
+      --positive: #35c995;
+      --negative: #ef7d86;
+      --warning: #efb05d;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #000000;
+      color: #f5f5f5;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 18px 22px 22px;
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: minmax(320px, 360px) minmax(0, 1fr);
+      min-height: calc(100vh - 36px);
+      background: var(--shell-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+    }
+
+    .sidebar {
+      background: #000000;
+      color: #f5f5f5;
+      padding: 20px 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-right: 1px solid var(--sidebar-border);
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #f5f5f5;
+    }
+
+    .sidebar-title-wrap {
+      margin-bottom: 8px;
+    }
+
+    .sidebar-hero-line1 {
+      font-family: 'Barlow', sans-serif;
+      font-size: 36px;
+      font-weight: 300;
+      line-height: 1.02;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-hero-line2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 36px;
+      font-style: italic;
+      line-height: 1.02;
+      color: rgba(255, 255, 255, 0.96);
+      margin-bottom: 10px;
+    }
+
+    .sidebar-subtitle {
+      font-size: 13px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.62);
+    }
+
+    .sidebar-section {
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .sidebar-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.52);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .run-meta {
+      display: grid;
+      gap: 8px;
+      font-size: 12px;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.76);
+    }
+
+    .meta-row strong {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.48);
+      margin-bottom: 2px;
+    }
+
+    .filter-stack {
+      display: grid;
+      gap: 8px;
+    }
+
+    .filter-group label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.66);
+      font-weight: 600;
+    }
+
+    .filter-group select,
+    .filter-group input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.06);
+      color: #f5f5f5;
+      font-size: 12px;
+      outline: none;
+      min-width: 0;
+    }
+
+    .filter-group select option {
+      color: #1f2431;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+    }
+
+    .sidebar-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .sidebar-button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      flex: 1 1 140px;
+      min-width: 0;
+    }
+
+    .sidebar-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .sidebar-button.primary {
+      background: var(--accent-mint);
+      color: var(--text-main);
+      box-shadow: 0 10px 24px rgba(87, 180, 151, 0.14);
+    }
+
+    .sidebar-button.ghost {
+      background: rgba(255, 255, 255, 0.06);
+      color: #f5f5f5;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .action-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .sidebar-action {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .sidebar-action-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-action-priority {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffb9ca;
+    }
+
+    .sidebar-action-owner {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.48);
+    }
+
+    .sidebar-action-title {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.45;
+      margin-bottom: 6px;
+      color: #ffffff;
+    }
+
+    .sidebar-action-reason {
+      font-size: 11px;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.62);
+    }
+
+    .content {
+      padding: 20px;
+      overflow: auto;
+      background: #000000;
+    }
+
+    .content-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+
+    .content-title {
+      font-family: 'Barlow', sans-serif;
+      font-size: 34px;
+      font-weight: 300;
+      line-height: 1;
+      margin-bottom: 6px;
+      color: #ffffff;
+    }
+
+    .content-subtitle {
+      max-width: 760px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.66);
+      line-height: 1.45;
+    }
+
+    .content-meta {
+      text-align: right;
+      display: grid;
+      gap: 6px;
+      justify-items: end;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      gap: 8px;
+      padding: 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .lang-button {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: transparent;
+      color: #d2d2d2;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .lang-button.active {
+      background: var(--accent-mint);
+      color: var(--text-main);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: none;
+      font-size: 12px;
+      font-weight: 700;
+      color: #d2d2d2;
+    }
+
+    .tab-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tab-button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #d5d5d5;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .tab-button.active {
+      background: var(--accent-mint);
+      color: var(--text-main);
+      box-shadow: 0 12px 24px rgba(88, 184, 155, 0.16);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--panel-shadow);
+    }
+
+    .kpi-grid .kpi-card,
+    .layout-grid > .chart-card:first-child,
+    .layout-grid > .insight-card,
+    .driver-grid > .chart-card:nth-child(1),
+    .driver-grid > .chart-card:nth-child(2),
+    .driver-grid + .driver-grid > .chart-card:nth-child(1),
+    .driver-grid + .driver-grid > .chart-card:nth-child(2),
+    .action-board .action-card:nth-child(odd),
+    .action-board .action-card:nth-child(even) { background: var(--accent-offwhite); }
+
+    .kpi-card {
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+      min-height: 140px;
+    }
+
+    .kpi-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-ink);
+    }
+
+    .kpi-value {
+      font-family: 'Barlow', sans-serif;
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 0.95;
+      color: var(--text-main);
+    }
+
+    .kpi-delta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      width: fit-content;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .kpi-delta.positive { background: rgba(69, 179, 125, 0.12); color: var(--positive); }
+    .kpi-delta.negative { background: rgba(228, 107, 115, 0.12); color: var(--negative); }
+    .kpi-delta.flat { background: rgba(73, 81, 107, 0.1); color: var(--accent-ink); }
+
+    .kpi-desc {
+      font-size: 11px;
+      color: var(--text-soft);
+      line-height: 1.4;
+      min-height: 30px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .sparkline {
+      width: 100%;
+      height: 42px;
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.62fr) minmax(300px, 0.78fr);
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: stretch;
+    }
+
+    .chart-card,
+    .insight-card,
+    .table-card {
+      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .insight-card {
+      justify-content: flex-start;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-family: 'Barlow', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.05;
+      margin-bottom: 4px;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--text-soft);
+      max-width: 700px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-note {
+      font-size: 10px;
+      color: var(--text-faint);
+      line-height: 1.4;
+      text-align: right;
+      min-width: 128px;
+    }
+
+    .toggle-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .toggle-button {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.52);
+      padding: 7px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent-ink);
+      cursor: pointer;
+    }
+
+    .toggle-button.active {
+      background: #2a2a2a;
+      color: #fff;
+    }
+
+    svg.chart {
+      width: 100%;
+      height: 204px;
+      display: block;
+      overflow: visible;
+    }
+
+    .axis-label {
+      font-size: 11px;
+      fill: #7f8797;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .axis-line {
+      stroke: rgba(73, 81, 107, 0.12);
+      stroke-width: 1;
+    }
+
+    .line-primary {
+      fill: none;
+      stroke: var(--chart-color, var(--chart-lavender));
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .line-secondary {
+      fill: none;
+      stroke: var(--chart-color-soft, var(--chart-lavender-soft));
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .point {
+      fill: #fff;
+      stroke: var(--chart-color, var(--chart-lavender));
+      stroke-width: 2;
+    }
+
+    .max-point { fill: var(--positive); stroke: #fff; stroke-width: 3; }
+    .min-point { fill: var(--negative); stroke: #fff; stroke-width: 3; }
+
+    .bar-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(112px, 0.58fr) minmax(0, 1fr) 88px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .bar-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .bar-track {
+      height: 14px;
+      background: rgba(73, 81, 107, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .bar-fill.max { background: linear-gradient(90deg, #b8dece 0%, var(--chart-mint) 100%); }
+    .bar-fill.min { background: linear-gradient(90deg, #ebc6d4 0%, var(--chart-rose) 100%); }
+    .bar-fill.mid { background: linear-gradient(90deg, rgba(88, 184, 155, 0.14) 0%, rgba(88, 184, 155, 0.44) 100%); }
+
+    .bar-value {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-ink);
+      text-align: right;
+    }
+
+    .callout-grid {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .callout {
+      border-radius: 16px;
+      padding: 11px 12px;
+      background: rgba(255, 255, 255, 0.46);
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--text-soft);
+    }
+
+    .callout strong {
+      color: var(--text-main);
+    }
+
+    .driver-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: stretch;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 140px repeat(4, minmax(0, 1fr));
+      gap: 6px;
+      align-items: stretch;
+      margin-top: 8px;
+    }
+
+    .matrix-cell {
+      border-radius: 14px;
+      padding: 10px 8px;
+      min-height: 62px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(56, 67, 91, 0.08);
+    }
+
+    .matrix-header {
+      background: rgba(73, 81, 107, 0.08);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-ink);
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .matrix-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .matrix-value {
+      font-family: 'Barlow', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .matrix-subvalue {
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .action-board {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .advanced-grid {
+      margin-top: 12px;
+    }
+
+    .mini-chart {
+      height: 180px;
+    }
+
+    .cohort-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .cohort-row {
+      display: grid;
+      grid-template-columns: 92px repeat(auto-fit, minmax(56px, 1fr));
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .cohort-label,
+    .cohort-cell {
+      border-radius: 14px;
+      border: 1px solid rgba(140, 129, 119, 0.1);
+      min-height: 54px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .cohort-label {
+      background: rgba(255, 255, 255, 0.62);
+      color: var(--text-main);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .cohort-cell {
+      flex-direction: column;
+      gap: 2px;
+      color: var(--text-main);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .cohort-cell span {
+      font-size: 10px;
+      color: var(--text-soft);
+      font-weight: 600;
+    }
+
+    .funnel-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .funnel-step {
+      background: rgba(255, 252, 247, 0.94);
+      border: 1px solid rgba(140, 129, 119, 0.12);
+      border-radius: 18px;
+      padding: 16px 14px;
+      display: grid;
+      gap: 8px;
+      min-height: 132px;
+    }
+
+    .funnel-step-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .funnel-step-value {
+      font-family: 'Barlow', sans-serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1;
+    }
+
+    .funnel-step-meta {
+      font-size: 12px;
+      color: var(--text-soft);
+      line-height: 1.45;
+    }
+
+    .funnel-step-rate {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(88, 184, 155, 0.12);
+      color: var(--accent-main);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .segment-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .segment-summary-card {
+      background: rgba(255, 252, 247, 0.94);
+      border: 1px solid rgba(140, 129, 119, 0.12);
+      border-radius: 18px;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .segment-summary-title {
+      font-family: 'Barlow', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .segment-summary-kpi {
+      display: grid;
+      gap: 6px;
+    }
+
+    .segment-summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .segment-summary-row strong {
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .cluster-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .cluster-card {
+      background: rgba(255, 252, 247, 0.94);
+      border: 1px solid rgba(140, 129, 119, 0.12);
+      border-radius: 18px;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .cluster-tag {
+      display: inline-flex;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      background: rgba(88, 184, 155, 0.12);
+    }
+
+    .cluster-name {
+      font-family: 'Barlow', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .cluster-desc,
+    .cluster-metrics {
+      font-size: 12px;
+      color: var(--text-soft);
+      line-height: 1.5;
+    }
+
+    .cluster-metrics strong {
+      color: var(--text-main);
+    }
+
+    .action-card {
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.32);
+    }
+
+    .action-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .action-priority {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-main);
+    }
+
+    .action-impact {
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .action-impact.high { background: rgba(69, 179, 125, 0.12); color: var(--positive); }
+    .action-impact.medium { background: rgba(224, 167, 74, 0.12); color: var(--warning); }
+    .action-impact.low { background: rgba(228, 107, 115, 0.12); color: var(--negative); }
+
+    .action-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+
+    .action-owner {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+
+    .action-reason {
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--text-soft);
+    }
+
+    .insight-list {
+      display: grid;
+      gap: 6px;
+      margin-top: 6px;
+      flex: 1;
+      align-content: start;
+    }
+
+    #channelBars,
+    #categoryBars,
+    #regionBars,
+    #segmentRegionMatrix,
+    #actionBoard {
+      flex: 1;
+      align-content: start;
+    }
+
+    #experimentCard,
+    #trendCallouts {
+      margin-top: auto;
+    }
+
+    .insight-item {
+      display: flex;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .insight-index {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: rgba(232, 224, 245, 0.9);
+      color: var(--accent-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex: none;
+    }
+
+    .insight-copy {
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--text-soft);
+    }
+
+    .table-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .table-summary {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      background: rgba(255, 255, 255, 0.56);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+    }
+
+    th,
+    td {
+      padding: 13px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(56, 67, 91, 0.08);
+      font-size: 13px;
+      color: var(--text-main);
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: rgba(245, 244, 240, 0.98);
+      color: var(--accent-ink);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      z-index: 1;
+    }
+
+    tr:hover td {
+      background: rgba(232, 224, 245, 0.24);
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .empty-state {
+      padding: 28px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.48);
+      border: 1px dashed rgba(255, 255, 255, 0.24);
+      color: var(--text-soft);
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    @media (max-width: 1440px) {
+      .kpi-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .layout-grid,
+      .driver-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .funnel-steps,
+      .segment-summary-grid,
+      .cluster-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .action-board {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--sidebar-border);
+      }
+    }
+
+    @media (max-width: 840px) {
+      body {
+        padding: 12px;
+      }
+
+      .content {
+        padding: 18px;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-grid,
+      .matrix,
+      .progress-stage-row {
+        grid-template-columns: 1fr;
+      }
+
+      .cohort-row {
+        grid-template-columns: 1fr;
+      }
+
+      .content-header {
+        flex-direction: column;
+      }
+
+      .content-meta {
+        justify-items: start;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div>
+        <div class="brand-mark">▥</div>
+        <div class="sidebar-title-wrap" id="sidebarTitleWrap">
+          <div class="sidebar-hero-line1">AI Data Analyst OS</div>
+          <div class="sidebar-hero-line2">Dashboard</div>
+        </div>
+        <div class="sidebar-subtitle" id="sidebarSubtitle">
+          General to specific. This view turns the latest DA flow into a decision dashboard with comparable KPIs,
+          driver analysis, experiment readout, and prioritized actions.
+        </div>
+      </div>
+
+      <section class="sidebar-section">
+        <div class="sidebar-label" id="labelLatestRun">Latest Run</div>
+        <div class="run-meta" id="runMetaBlock"></div>
+      </section>
+
+      <section class="sidebar-section">
+        <div class="sidebar-label" id="labelFilters">Filters</div>
+        <div class="filter-stack">
+          <div class="filter-grid">
+            <div class="filter-group">
+              <label for="dateFrom" id="labelDateFrom">From</label>
+              <input id="dateFrom" type="date">
+            </div>
+            <div class="filter-group">
+              <label for="dateTo" id="labelDateTo">To</label>
+              <input id="dateTo" type="date">
+            </div>
+          </div>
+          <div class="filter-group">
+            <label for="regionFilter" id="labelRegion">Region</label>
+            <select id="regionFilter"></select>
+          </div>
+          <div class="filter-group">
+            <label for="segmentFilter" id="labelSegment">Segment</label>
+            <select id="segmentFilter"></select>
+          </div>
+          <div class="filter-group">
+            <label for="categoryFilter" id="labelCategory">Category</label>
+            <select id="categoryFilter"></select>
+          </div>
+          <div class="filter-group">
+            <label for="channelFilter" id="labelChannel">Channel</label>
+            <select id="channelFilter"></select>
+          </div>
+          <div class="sidebar-actions">
+            <button class="sidebar-button primary" id="applyFilters">Apply Filters</button>
+            <button class="sidebar-button ghost" id="resetFilters">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="sidebar-section">
+        <div class="sidebar-label" id="labelActionBoard">Action Board</div>
+        <div class="action-list" id="sidebarActions"></div>
+      </section>
+    </aside>
+
+    <main class="content">
+      <div class="content-header">
+        <div>
+          <div class="content-title" id="contentTitle">Interactive Analysis Dashboard</div>
+          <div class="content-subtitle" id="contentSubtitle">
+            This dashboard is designed for operators and executives to read the latest run fast: headline business
+            health first, then root-cause drivers, then concrete actions. Every chart includes a short explanation,
+            explicit axis logic, and max/min emphasis to reduce ambiguity.
+          </div>
+        </div>
+        <div class="content-meta">
+          <div class="lang-toggle" aria-label="Language switch">
+            <button class="lang-button active" data-lang="en">EN</button>
+            <button class="lang-button" data-lang="ko">KR</button>
+          </div>
+          <div class="pill" id="statusPill">Loading run status</div>
+          <div class="pill"><span id="labelSource">Source</span>: <span id="dataSourceName">latest input</span></div>
+        </div>
+      </div>
+
+      <div class="tab-row">
+        <button class="tab-button active" data-tab-target="overviewTab" id="tabOverview">Overview</button>
+        <button class="tab-button" data-tab-target="tableTab" id="tabDataTable">Data Table</button>
+      </div>
+
+      <section class="tab-panel active" id="overviewTab">
+        <div class="kpi-grid" id="kpiGrid"></div>
+
+        <div class="layout-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="trendTitle">Trend View</div>
+                <div class="card-desc" id="trendDesc">
+                  X-axis uses calendar month. Y-axis switches between absolute values and relative change so the same
+                  trend can be read both for scale and momentum. Max and min months are explicitly marked.
+                </div>
+              </div>
+              <div class="card-note" id="trendAxisNote">X: month<br>Y: revenue</div>
+            </div>
+            <div class="toggle-row">
+              <button class="toggle-button active" data-trend-metric="revenue" id="toggleRevenue">Revenue</button>
+              <button class="toggle-button" data-trend-metric="orders" id="toggleOrders">Orders</button>
+              <button class="toggle-button" data-trend-metric="conversion" id="toggleConversion">Conversion</button>
+              <button class="toggle-button active" data-trend-mode="absolute" id="toggleAbsolute">Absolute</button>
+              <button class="toggle-button" data-trend-mode="growth" id="toggleGrowth">Growth %</button>
+            </div>
+            <svg class="chart" id="trendChart" viewBox="0 0 860 248" preserveAspectRatio="none"></svg>
+            <div class="callout-grid" id="trendCallouts"></div>
+          </section>
+
+          <section class="card insight-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="decisionTitle">Decision Focus</div>
+                <div class="card-desc" id="decisionDesc">
+                  These are the most actionable readings from the current filter context. The goal is to translate the
+                  data into budget, pricing, growth, and rollout decisions without requiring manual interpretation.
+                </div>
+              </div>
+            </div>
+            <div class="insight-list" id="insightList"></div>
+          </section>
+        </div>
+
+        <div class="driver-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="categoryTitle">Category Comparison</div>
+                <div class="card-desc" id="categoryDesc">
+                  X-axis ranks product categories. Y-axis is total revenue for filtered data. This is appropriate
+                  because category-level comparison is ordinal and should be read by distance and relative share.
+                </div>
+              </div>
+              <div class="card-note" id="categoryNote">Max in green<br>Min in pink</div>
+            </div>
+            <div class="bar-list" id="categoryBars"></div>
+          </section>
+
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="regionTitle">Region Efficiency</div>
+                <div class="card-desc" id="regionDesc">
+                  X-axis uses region. Bar length represents profit margin, not just revenue, so weaker gross sales can
+                  still rank well if efficiency is stronger. This keeps the chart more actionable for optimization.
+                </div>
+              </div>
+              <div class="card-note" id="regionNote">Y: margin %<br>Use with volume context</div>
+            </div>
+            <div class="bar-list" id="regionBars"></div>
+          </section>
+        </div>
+
+        <div class="layout-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="matrixTitle">Segment x Region Matrix</div>
+                <div class="card-desc" id="matrixDesc">
+                  Rows are customer segments and columns are regions. Each cell shows revenue first, then profit
+                  margin. This matrix is useful because it reveals both where scale exists and where scale is healthy.
+                </div>
+              </div>
+              <div class="card-note" id="matrixNote">Primary: revenue<br>Secondary: margin</div>
+            </div>
+            <div class="matrix" id="segmentRegionMatrix"></div>
+          </section>
+
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="channelTitle">Channel and Experiment</div>
+                <div class="card-desc" id="channelDesc">
+                  Channel bars emphasize revenue per visitor, which is easier to move operationally than total revenue.
+                  The experiment card summarizes whether the winning variant is statistically usable.
+                </div>
+              </div>
+            </div>
+            <div class="bar-list" id="channelBars"></div>
+            <div class="callout-grid" id="experimentCard"></div>
+          </section>
+        </div>
+
+        <section class="card chart-card">
+          <div class="card-top">
+            <div>
+              <div class="card-title" id="actionTitle">Action Plan</div>
+              <div class="card-desc" id="actionDesc">
+                Action items are ranked by impact and tied back to a data-based reason. This section should be read
+                after headline KPIs and driver charts so the user understands both what to do and why it matters now.
+              </div>
+            </div>
+            <div class="card-note" id="actionNote">Owner + reason included</div>
+          </div>
+          <div class="action-board" id="actionBoard"></div>
+        </section>
+
+        <div class="driver-grid advanced-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="cohortTitle">Operational Cohort</div>
+                <div class="card-desc" id="cohortDesc">
+                  Entity-level cohort heatmap built from recurring segment-region-channel combinations. This is a practical retention proxy when customer IDs are unavailable.
+                </div>
+              </div>
+              <div class="card-note" id="cohortNote">Rows: cohort month<br>Cols: M0-Mn retention</div>
+            </div>
+            <div class="cohort-grid" id="cohortGrid"></div>
+          </section>
+
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="retentionTitle">Retention Curve</div>
+                <div class="card-desc" id="retentionDesc">
+                  Average retention by cohort age. This answers whether value decays too quickly after the first commercial touchpoint.
+                </div>
+              </div>
+              <div class="card-note" id="retentionNote">X: cohort age<br>Y: retained revenue %</div>
+            </div>
+            <svg class="chart mini-chart" id="retentionChart" viewBox="0 0 520 210" preserveAspectRatio="none"></svg>
+            <div class="callout-grid" id="retentionCallouts"></div>
+          </section>
+        </div>
+
+        <div class="driver-grid advanced-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="funnelTitle">Funnel Analysis</div>
+                <div class="card-desc" id="funnelDesc">
+                  Proxy funnel derived from traffic and order performance. Use it to identify where demand is leaking before conversion.
+                </div>
+              </div>
+              <div class="card-note" id="funnelNote">Proxy stages from visitors/orders</div>
+            </div>
+            <div class="funnel-steps" id="funnelSteps"></div>
+          </section>
+
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="segmentHealthTitle">Customer Segment Analysis</div>
+                <div class="card-desc" id="segmentHealthDesc">
+                  Compare segments on scale, efficiency, and conversion to decide which segment deserves more demand and which needs margin repair.
+                </div>
+              </div>
+              <div class="card-note" id="segmentHealthNote">Revenue + margin + CVR</div>
+            </div>
+            <div class="segment-summary-grid" id="segmentSummaryGrid"></div>
+          </section>
+        </div>
+
+        <div class="driver-grid advanced-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="repeatTitle">Repurchase Cycle</div>
+                <div class="card-desc" id="repeatDesc">
+                  Commercial repeat cadence by segment. This is useful for timing remarketing, replenishment, and outbound follow-up windows.
+                </div>
+              </div>
+              <div class="card-note" id="repeatNote">Average gap between recurring entities</div>
+            </div>
+            <div class="bar-list" id="repurchaseBars"></div>
+          </section>
+
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="forecastTitle">Revenue Time-Series Forecast</div>
+                <div class="card-desc" id="forecastDesc">
+                  Historical revenue plus short-horizon forecast. Use this as a directional planning view, not as a finance close forecast.
+                </div>
+              </div>
+              <div class="card-note" id="forecastNote">Solid: actual<br>Dashed: forecast</div>
+            </div>
+            <svg class="chart mini-chart" id="forecastChart" viewBox="0 0 520 210" preserveAspectRatio="none"></svg>
+            <div class="callout-grid" id="forecastCallouts"></div>
+          </section>
+        </div>
+
+        <div class="driver-grid advanced-grid">
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="clusterTitle">AI Segmentation</div>
+                <div class="card-desc" id="clusterDesc">
+                  K-means segmentation on commercial behavior features. This groups similar revenue-quality profiles to support differentiated playbooks.
+                </div>
+              </div>
+              <div class="card-note" id="clusterNote">Model: K-means on value/efficiency features</div>
+            </div>
+            <div class="cluster-grid" id="clusterGrid"></div>
+          </section>
+
+          <section class="card chart-card">
+            <div class="card-top">
+              <div>
+                <div class="card-title" id="ltvTitle">LTV / CAC Lens</div>
+                <div class="card-desc" id="ltvDesc">
+                  Proxy LTV/CAC comparison by channel to see where acquisition economics are healthy enough to scale.
+                </div>
+              </div>
+              <div class="card-note" id="ltvNote">Proxy economics from margin and repeat factor</div>
+            </div>
+            <div class="bar-list" id="ltvBars"></div>
+            <div class="callout-grid" id="ltvCallouts"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="tableTab">
+        <section class="card table-card">
+          <div class="card-top">
+            <div>
+              <div class="card-title" id="tableTitle">Detailed Source Table</div>
+              <div class="card-desc" id="tableDesc">
+                This page is the audit layer. It shows the exact filtered rows behind the aggregated charts so operators
+                can validate what was counted and designers can inspect field structure.
+              </div>
+            </div>
+            <div class="card-note" id="tableMeta">0 rows</div>
+          </div>
+          <div class="table-toolbar">
+            <div class="table-summary" id="tableSummary">
+              Showing the filtered dataset used for all cards and charts.
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead id="tableHead"></thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const statusUrl = './runs/latest/status.json';
+    const kpiUrl = './runs/latest/outputs/kpi_summary.json';
+    const abUrl = './runs/latest/outputs/ab_test_summary.json';
+    const actionUrl = './runs/latest/outputs/action_plan.json';
+    const outputsUrl = './runs/latest/outputs/index.json';
+
+    const dashboardState = {
+      rawRows: [],
+      filteredRows: [],
+      status: null,
+      kpis: null,
+      ab: null,
+      actions: [],
+      outputs: [],
+      filters: {
+        dateFrom: '',
+        dateTo: '',
+        region: 'All',
+        segment: 'All',
+        category: 'All',
+        channel: 'All',
+      },
+      trendMetric: 'revenue',
+      trendMode: 'absolute',
+      activeTab: 'overviewTab',
+      locale: localStorage.getItem('agentMapLocale') || 'en',
+    };
+
+    const translations = {
+      en: {
+        sidebarTitle: 'DA Executive Dashboard',
+        sidebarSubtitle: 'General to specific. This view turns the latest DA flow into a decision dashboard with comparable KPIs, driver analysis, experiment readout, and prioritized actions.',
+        labelLatestRun: 'Latest Run',
+        labelFilters: 'Filters',
+        labelDateFrom: 'From',
+        labelDateTo: 'To',
+        labelRegion: 'Region',
+        labelSegment: 'Segment',
+        labelCategory: 'Category',
+        labelChannel: 'Channel',
+        applyFilters: 'Apply Filters',
+        resetFilters: 'Reset',
+        labelActionBoard: 'Action Board',
+        contentTitle: 'Interactive Analysis Dashboard',
+        contentSubtitle: 'This dashboard is designed for operators and executives to read the latest run fast: headline business health first, then root-cause drivers, then concrete actions. Every chart includes a short explanation, explicit axis logic, and max/min emphasis to reduce ambiguity.',
+        labelSource: 'Source',
+        tabOverview: 'Overview',
+        tabDataTable: 'Data Table',
+        trendTitle: 'Trend View',
+        trendDesc: 'X-axis uses calendar month. Y-axis switches between absolute values and relative change so the same trend can be read both for scale and momentum. Max and min months are explicitly marked.',
+        toggleRevenue: 'Revenue',
+        toggleOrders: 'Orders',
+        toggleConversion: 'Conversion',
+        toggleAbsolute: 'Absolute',
+        toggleGrowth: 'Growth %',
+        decisionTitle: 'Decision Focus',
+        decisionDesc: 'These are the most actionable readings from the current filter context. The goal is to translate the data into budget, pricing, growth, and rollout decisions without requiring manual interpretation.',
+        categoryTitle: 'Category Comparison',
+        categoryDesc: 'X-axis ranks product categories. Y-axis is total revenue for filtered data. This is appropriate because category-level comparison is ordinal and should be read by distance and relative share.',
+        categoryNote: 'Max in mint<br>Min in pink',
+        regionTitle: 'Region Efficiency',
+        regionDesc: 'X-axis uses region. Bar length represents profit margin, not just revenue, so weaker gross sales can still rank well if efficiency is stronger. This keeps the chart more actionable for optimization.',
+        regionNote: 'Y: margin %<br>Use with volume context',
+        matrixTitle: 'Segment x Region Matrix',
+        matrixDesc: 'Rows are customer segments and columns are regions. Each cell shows revenue first, then profit margin. This matrix is useful because it reveals both where scale exists and where scale is healthy.',
+        matrixNote: 'Primary: revenue<br>Secondary: margin',
+        channelTitle: 'Channel and Experiment',
+        channelDesc: 'Channel bars emphasize revenue per visitor, which is easier to move operationally than total revenue. The experiment card summarizes whether the winning variant is statistically usable.',
+        actionTitle: 'Action Plan',
+        actionDesc: 'Action items are ranked by impact and tied back to a data-based reason. This section should be read after headline KPIs and driver charts so the user understands both what to do and why it matters now.',
+        actionNote: 'Owner + reason included',
+        cohortTitle: 'Operational Cohort',
+        cohortDesc: 'Entity-level cohort heatmap built from recurring segment-region-channel combinations. This is a practical retention proxy when customer IDs are unavailable.',
+        cohortNote: 'Rows: cohort month<br>Cols: M0-Mn retention',
+        retentionTitle: 'Retention Curve',
+        retentionDesc: 'Average retention by cohort age. This answers whether value decays too quickly after the first commercial touchpoint.',
+        retentionNote: 'X: cohort age<br>Y: retained revenue %',
+        funnelTitle: 'Funnel Analysis',
+        funnelDesc: 'Proxy funnel derived from traffic and order performance. Use it to identify where demand is leaking before conversion.',
+        funnelNote: 'Proxy stages from visitors/orders',
+        segmentHealthTitle: 'Customer Segment Analysis',
+        segmentHealthDesc: 'Compare segments on scale, efficiency, and conversion to decide which segment deserves more demand and which needs margin repair.',
+        segmentHealthNote: 'Revenue + margin + CVR',
+        repeatTitle: 'Repurchase Cycle',
+        repeatDesc: 'Commercial repeat cadence by segment. This is useful for timing remarketing, replenishment, and outbound follow-up windows.',
+        repeatNote: 'Average gap between recurring entities',
+        forecastTitle: 'Revenue Time-Series Forecast',
+        forecastDesc: 'Historical revenue plus short-horizon forecast. Use this as a directional planning view, not as a finance close forecast.',
+        forecastNote: 'Solid: actual<br>Dashed: forecast',
+        clusterTitle: 'AI Segmentation',
+        clusterDesc: 'K-means segmentation on commercial behavior features. This groups similar revenue-quality profiles to support differentiated playbooks.',
+        clusterNote: 'Model: K-means on value/efficiency features',
+        ltvTitle: 'LTV / CAC Lens',
+        ltvDesc: 'Proxy LTV/CAC comparison by channel to see where acquisition economics are healthy enough to scale.',
+        ltvNote: 'Proxy economics from margin and repeat factor',
+        tableTitle: 'Detailed Source Table',
+        tableDesc: 'This page is the audit layer. It shows the exact filtered rows behind the aggregated charts so operators can validate what was counted and designers can inspect field structure.',
+        statusLoading: 'Loading run status',
+        dataSourceName: 'latest input',
+      },
+      ko: {
+        sidebarTitle: 'DA 운영 대시보드',
+        sidebarSubtitle: '큰 흐름에서 세부 원인까지 바로 읽을 수 있도록, 최신 DA 플로우를 비교 가능한 KPI, 드라이버 분석, 실험 요약, 우선순위 액션으로 정리한 화면입니다.',
+        labelLatestRun: '최신 실행',
+        labelFilters: '필터',
+        labelDateFrom: '시작일',
+        labelDateTo: '종료일',
+        labelRegion: '지역',
+        labelSegment: '세그먼트',
+        labelCategory: '카테고리',
+        labelChannel: '채널',
+        applyFilters: '필터 적용',
+        resetFilters: '초기화',
+        labelActionBoard: '액션 보드',
+        contentTitle: '인터랙티브 분석 대시보드',
+        contentSubtitle: '최신 실행 결과를 빠르게 읽을 수 있도록 핵심 지표, 원인 드라이버, 구체적 액션 순서로 구성했습니다. 모든 차트에는 설명, 축 기준, 최대/최소 강조를 넣어 해석 비용을 줄였습니다.',
+        labelSource: '데이터 소스',
+        tabOverview: '개요',
+        tabDataTable: '데이터 테이블',
+        trendTitle: '트렌드 뷰',
+        trendDesc: 'X축은 월 기준 시간 흐름, Y축은 절대값과 증감률을 전환해 읽을 수 있습니다. 최대값과 최소값 월은 명확히 표시됩니다.',
+        toggleRevenue: '매출',
+        toggleOrders: '주문수',
+        toggleConversion: '전환율',
+        toggleAbsolute: '절대값',
+        toggleGrowth: '증감률',
+        decisionTitle: '디시전 포커스',
+        decisionDesc: '현재 필터 기준에서 가장 바로 액션 가능한 해석만 모았습니다. 수동 해석 없이 예산, 가격, 성장, 롤아웃 결정을 내릴 수 있도록 구성했습니다.',
+        categoryTitle: '카테고리 비교',
+        categoryDesc: 'X축은 카테고리 순위, Y축은 필터 기준 총매출입니다. 범주 비교는 거리와 상대 비중으로 읽는 것이 적합합니다.',
+        categoryNote: '최대값 민트<br>최소값 핑크',
+        regionTitle: '지역 효율',
+        regionDesc: 'X축은 지역, 막대 길이는 매출이 아니라 이익률입니다. 총매출이 낮아도 효율이 높으면 좋은 최적화 대상이 됩니다.',
+        regionNote: 'Y: 이익률 %<br>볼륨과 함께 해석',
+        matrixTitle: '세그먼트 x 지역 매트릭스',
+        matrixDesc: '행은 고객 세그먼트, 열은 지역입니다. 각 셀은 매출과 이익률을 함께 보여줘 규모와 건강도를 동시에 읽게 합니다.',
+        matrixNote: '주지표: 매출<br>보조지표: 이익률',
+        channelTitle: '채널 및 실험',
+        channelDesc: '채널 막대는 방문자당 매출을 보여주며, 총매출보다 운영적으로 더 빨리 움직일 수 있는 지표입니다. 실험 카드에는 롤아웃 가능 여부를 함께 요약합니다.',
+        actionTitle: '액션 플랜',
+        actionDesc: '액션은 영향도 순으로 정렬되며, 각 항목은 데이터 기반 이유와 연결됩니다. 상단 KPI와 드라이버 차트를 읽은 뒤 바로 실행 판단으로 이어지도록 설계했습니다.',
+        actionNote: '담당자 + 근거 포함',
+        cohortTitle: '운영 코호트',
+        cohortDesc: '반복 등장하는 세그먼트-지역-채널 조합을 기준으로 만든 코호트 히트맵입니다. 고객 ID가 없을 때 쓰는 실무형 리텐션 프록시입니다.',
+        cohortNote: '행: 코호트 월<br>열: M0-Mn 유지율',
+        retentionTitle: '리텐션 곡선',
+        retentionDesc: '코호트 나이별 평균 유지율입니다. 첫 상업 접점 이후 가치가 너무 빨리 감소하는지 확인하는 용도입니다.',
+        retentionNote: 'X: 코호트 나이<br>Y: 유지 매출 %',
+        funnelTitle: '퍼널 분석',
+        funnelDesc: '트래픽과 주문 성과에서 만든 프록시 퍼널입니다. 전환 전 어디에서 수요가 새는지 확인하는 데 사용합니다.',
+        funnelNote: '방문/주문 기반 프록시 단계',
+        segmentHealthTitle: '고객 세그먼트 분석',
+        segmentHealthDesc: '세그먼트별 규모, 효율, 전환을 함께 비교해 더 밀어야 할 세그먼트와 마진 보정이 필요한 세그먼트를 구분합니다.',
+        segmentHealthNote: '매출 + 이익률 + 전환율',
+        repeatTitle: '재구매 주기',
+        repeatDesc: '세그먼트별 상업 반복 주기입니다. 리마케팅, 리필 타이밍, 아웃바운드 후속 접점 간격 설정에 유용합니다.',
+        repeatNote: '반복 엔티티 평균 간격',
+        forecastTitle: '매출 시계열 예측',
+        forecastDesc: '과거 매출과 단기 예측을 함께 보여줍니다. 재무 마감 예측이 아니라 방향성 계획용으로 읽어야 합니다.',
+        forecastNote: '실선: 실제<br>점선: 예측',
+        clusterTitle: 'AI 세그멘테이션',
+        clusterDesc: '상업 행동 피처 기반 K-means 세그멘테이션입니다. 비슷한 수익 질 프로필을 묶어 차별화된 운영 플레이북을 설계합니다.',
+        clusterNote: '모델: 가치/효율 피처 K-means',
+        ltvTitle: 'LTV / CAC 분석',
+        ltvDesc: '채널별 프록시 LTV/CAC 비교입니다. 어느 채널의 획득 경제성이 더 확장 가능한지 판단합니다.',
+        ltvNote: '이익률·반복계수 기반 프록시 경제성',
+        tableTitle: '상세 원본 테이블',
+        tableDesc: '이 페이지는 감사 레이어입니다. 집계 차트 뒤에 있는 실제 필터링 행을 그대로 보여줘 운영자와 디자이너가 집계 기준을 검증할 수 있습니다.',
+        statusLoading: '실행 상태 불러오는 중',
+        dataSourceName: '최신 입력 데이터',
+      },
+    };
+
+    function t(key) {
+      return translations[dashboardState.locale]?.[key] || translations.en[key] || key;
+    }
+
+    function applyLanguage() {
+      const ids = [
+        'sidebarSubtitle', 'labelLatestRun', 'labelFilters', 'labelDateFrom', 'labelDateTo',
+        'labelRegion', 'labelSegment', 'labelCategory', 'labelChannel', 'applyFilters', 'resetFilters',
+        'labelActionBoard', 'contentTitle', 'contentSubtitle', 'labelSource', 'tabOverview', 'tabDataTable',
+        'trendTitle', 'trendDesc', 'toggleRevenue', 'toggleOrders', 'toggleConversion', 'toggleAbsolute',
+        'toggleGrowth', 'decisionTitle', 'decisionDesc', 'categoryTitle', 'categoryDesc', 'regionTitle',
+        'regionDesc', 'matrixTitle', 'matrixDesc', 'channelTitle', 'channelDesc', 'actionTitle',
+        'actionDesc', 'cohortTitle', 'cohortDesc', 'retentionTitle', 'retentionDesc', 'funnelTitle',
+        'funnelDesc', 'segmentHealthTitle', 'segmentHealthDesc', 'repeatTitle', 'repeatDesc',
+        'forecastTitle', 'forecastDesc', 'clusterTitle', 'clusterDesc', 'ltvTitle', 'ltvDesc',
+        'tableTitle', 'tableDesc'
+      ];
+      ids.forEach((id) => {
+        const node = document.getElementById(id);
+        if (node) node.textContent = t(id);
+      });
+      document.getElementById('categoryNote').innerHTML = t('categoryNote');
+      document.getElementById('regionNote').innerHTML = t('regionNote');
+      document.getElementById('matrixNote').innerHTML = t('matrixNote');
+      document.getElementById('actionNote').innerHTML = t('actionNote');
+      document.getElementById('cohortNote').innerHTML = t('cohortNote');
+      document.getElementById('retentionNote').innerHTML = t('retentionNote');
+      document.getElementById('funnelNote').innerHTML = t('funnelNote');
+      document.getElementById('segmentHealthNote').innerHTML = t('segmentHealthNote');
+      document.getElementById('repeatNote').innerHTML = t('repeatNote');
+      document.getElementById('forecastNote').innerHTML = t('forecastNote');
+      document.getElementById('clusterNote').innerHTML = t('clusterNote');
+      document.getElementById('ltvNote').innerHTML = t('ltvNote');
+      document.querySelectorAll('.lang-button').forEach((button) => {
+        button.classList.toggle('active', button.dataset.lang === dashboardState.locale);
+      });
+    }
+
+    function parseCsv(text) {
+      const lines = text.trim().split(/\r?\n/);
+      const headers = lines.shift().split(',');
+      return lines.map((line) => {
+        const values = line.split(',');
+        const row = {};
+        headers.forEach((header, index) => {
+          row[header] = values[index] ?? '';
+        });
+        row.date = new Date(row.date);
+        ['visitors', 'orders', 'revenue', 'cost', 'discount'].forEach((key) => {
+          row[key] = Number(row[key] || 0);
+        });
+        row.profit = row.revenue - row.cost;
+        row.margin = row.revenue ? (row.profit / row.revenue) * 100 : 0;
+        row.conversion = row.visitors ? (row.orders / row.visitors) * 100 : 0;
+        row.aov = row.orders ? row.revenue / row.orders : 0;
+        row.revenuePerVisitor = row.visitors ? row.revenue / row.visitors : 0;
+        return row;
+      });
+    }
+
+    function groupBy(items, keyFn) {
+      const map = new Map();
+      items.forEach((item) => {
+        const key = keyFn(item);
+        const current = map.get(key) || [];
+        current.push(item);
+        map.set(key, current);
+      });
+      return map;
+    }
+
+    function sum(items, field) {
+      return items.reduce((total, item) => total + (Number(item[field]) || 0), 0);
+    }
+
+    function average(items, field) {
+      return items.length ? sum(items, field) / items.length : 0;
+    }
+
+    function formatCompactCurrency(value) {
+      const abs = Math.abs(value);
+      if (abs >= 1000000) return `$${(value / 1000000).toFixed(1)}M`;
+      if (abs >= 1000) return `$${(value / 1000).toFixed(0)}K`;
+      return `$${value.toFixed(0)}`;
+    }
+
+    function formatPercent(value) {
+      return `${value.toFixed(1)}%`;
+    }
+
+    function formatDate(date) {
+      return date instanceof Date && !Number.isNaN(date.valueOf())
+        ? date.toLocaleDateString(dashboardState.locale === 'ko' ? 'ko-KR' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        : '—';
+    }
+
+    function monthKey(date) {
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    }
+
+    function monthLabel(value) {
+      const [year, month] = value.split('-');
+      return new Date(Number(year), Number(month) - 1, 1).toLocaleDateString(dashboardState.locale === 'ko' ? 'ko-KR' : 'en-US', { month: 'short', year: '2-digit' });
+    }
+
+    function compareDelta(current, previous) {
+      if (!previous) return { value: 0, tone: 'flat', label: dashboardState.locale === 'ko' ? '비교 기준 없음' : 'No prior baseline' };
+      const delta = ((current - previous) / previous) * 100;
+      return {
+        value: delta,
+        tone: delta > 0.25 ? 'positive' : delta < -0.25 ? 'negative' : 'flat',
+        label: dashboardState.locale === 'ko'
+          ? `${delta >= 0 ? '+' : ''}${delta.toFixed(1)}% 전월 대비`
+          : `${delta >= 0 ? '+' : ''}${delta.toFixed(1)}% vs prior month`,
+      };
+    }
+
+    function getInputCsvPath(status) {
+      const firstInput = (status?.inputs || [])[0];
+      if (firstInput?.name) {
+        return `./runs/latest/input/${encodeURIComponent(firstInput.name)}`;
+      }
+      return './runs/latest/input/sample_sales.csv';
+    }
+
+    async function loadData() {
+      try {
+        const statusResponse = await fetch(statusUrl, { cache: 'no-store' });
+        if (!statusResponse.ok) throw new Error('status.json missing');
+        dashboardState.status = await statusResponse.json();
+
+        const inputPath = getInputCsvPath(dashboardState.status);
+        const [csvResponse, kpiResponse, abResponse, actionResponse, outputsResponse] = await Promise.all([
+          fetch(inputPath, { cache: 'no-store' }),
+          fetch(kpiUrl, { cache: 'no-store' }),
+          fetch(abUrl, { cache: 'no-store' }),
+          fetch(actionUrl, { cache: 'no-store' }),
+          fetch(outputsUrl, { cache: 'no-store' }),
+        ]);
+
+        if (!csvResponse.ok) throw new Error('input csv missing');
+
+        dashboardState.rawRows = parseCsv(await csvResponse.text());
+        dashboardState.kpis = kpiResponse.ok ? await kpiResponse.json() : null;
+        dashboardState.ab = abResponse.ok ? await abResponse.json() : null;
+        dashboardState.actions = actionResponse.ok ? ((await actionResponse.json()).actions || []) : [];
+        dashboardState.outputs = outputsResponse.ok ? ((await outputsResponse.json()).outputs || []) : [];
+
+        applyLanguage();
+        initializeFilters();
+        applyFilters();
+      } catch (error) {
+        console.error(error);
+        document.body.innerHTML = `<div class="empty-state" style="max-width:720px;margin:80px auto;">${dashboardState.locale === 'ko' ? '최신 실행 결과를 불러오지 못했습니다. DA 플로우를 한 번 실행해 runs/latest가 채워졌는지 확인하세요.' : 'Interactive dashboard could not load the latest run assets. Run the DA flow once and ensure runs/latest is populated.'}</div>`;
+      }
+    }
+
+    function initializeFilters() {
+      if (!dashboardState.rawRows.length) return;
+      const rows = dashboardState.rawRows;
+      const minDate = rows.reduce((min, row) => (row.date < min ? row.date : min), rows[0].date);
+      const maxDate = rows.reduce((max, row) => (row.date > max ? row.date : max), rows[0].date);
+      dashboardState.filters.dateFrom = minDate.toISOString().slice(0, 10);
+      dashboardState.filters.dateTo = maxDate.toISOString().slice(0, 10);
+
+      const selectConfig = [
+        ['regionFilter', 'region'],
+        ['segmentFilter', 'segment'],
+        ['categoryFilter', 'category'],
+        ['channelFilter', 'channel'],
+      ];
+
+      selectConfig.forEach(([id, key]) => {
+        const select = document.getElementById(id);
+        const values = ['All', ...Array.from(new Set(rows.map((row) => row[key]))).sort()];
+        select.innerHTML = values.map((value) => `<option value="${value}">${value === 'All' ? (dashboardState.locale === 'ko' ? '전체' : 'All') : value}</option>`).join('');
+        select.value = 'All';
+      });
+
+      document.getElementById('dateFrom').value = dashboardState.filters.dateFrom;
+      document.getElementById('dateTo').value = dashboardState.filters.dateTo;
+      document.getElementById('dataSourceName').textContent = (dashboardState.status?.inputs || [])[0]?.name || t('dataSourceName');
+    }
+
+    function readFilterValues() {
+      dashboardState.filters.dateFrom = document.getElementById('dateFrom').value;
+      dashboardState.filters.dateTo = document.getElementById('dateTo').value;
+      dashboardState.filters.region = document.getElementById('regionFilter').value;
+      dashboardState.filters.segment = document.getElementById('segmentFilter').value;
+      dashboardState.filters.category = document.getElementById('categoryFilter').value;
+      dashboardState.filters.channel = document.getElementById('channelFilter').value;
+    }
+
+    function applyFilters() {
+      readFilterValues();
+      const from = dashboardState.filters.dateFrom ? new Date(dashboardState.filters.dateFrom) : null;
+      const to = dashboardState.filters.dateTo ? new Date(dashboardState.filters.dateTo) : null;
+      const toEnd = to ? new Date(to.getTime() + 24 * 60 * 60 * 1000 - 1) : null;
+
+      dashboardState.filteredRows = dashboardState.rawRows.filter((row) => {
+        if (from && row.date < from) return false;
+        if (toEnd && row.date > toEnd) return false;
+        if (dashboardState.filters.region !== 'All' && row.region !== dashboardState.filters.region) return false;
+        if (dashboardState.filters.segment !== 'All' && row.segment !== dashboardState.filters.segment) return false;
+        if (dashboardState.filters.category !== 'All' && row.category !== dashboardState.filters.category) return false;
+        if (dashboardState.filters.channel !== 'All' && row.channel !== dashboardState.filters.channel) return false;
+        return true;
+      });
+
+      renderDashboard();
+    }
+
+    function buildMonthlySeries(rows) {
+      const grouped = groupBy(rows, (row) => monthKey(row.date));
+      return Array.from(grouped.entries())
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([key, items]) => ({
+          key,
+          label: monthLabel(key),
+          revenue: sum(items, 'revenue'),
+          orders: sum(items, 'orders'),
+          visitors: sum(items, 'visitors'),
+          conversion: sum(items, 'visitors') ? (sum(items, 'orders') / sum(items, 'visitors')) * 100 : 0,
+          profit: sum(items, 'profit'),
+          margin: sum(items, 'revenue') ? (sum(items, 'profit') / sum(items, 'revenue')) * 100 : 0,
+        }));
+    }
+
+    function sparklineColorForTone(tone) {
+      if (tone === 'positive') return 'var(--chart-mint)';
+      if (tone === 'negative') return 'var(--chart-rose)';
+      return 'var(--chart-ink)';
+    }
+
+    function renderKpis(rows) {
+      const monthly = buildMonthlySeries(rows);
+      const current = monthly[monthly.length - 1] || { revenue: 0, orders: 0, visitors: 0, conversion: 0 };
+      const previous = monthly[monthly.length - 2] || null;
+      const revenue = sum(rows, 'revenue');
+      const profit = sum(rows, 'profit');
+      const visitors = sum(rows, 'visitors');
+      const orders = sum(rows, 'orders');
+      const margin = revenue ? (profit / revenue) * 100 : 0;
+      const conversion = visitors ? (orders / visitors) * 100 : 0;
+      const aov = orders ? revenue / orders : 0;
+      const rpv = visitors ? revenue / visitors : 0;
+
+      const cards = [
+        {
+          label: 'Revenue',
+          value: formatCompactCurrency(revenue),
+          delta: compareDelta(current.revenue, previous?.revenue || 0),
+          description: 'Primary outcome metric. Best for executive scale reading, but paired with efficiency metrics below.',
+          values: monthly.map((item) => item.revenue),
+        },
+        {
+          label: 'Profit',
+          value: formatCompactCurrency(profit),
+          delta: compareDelta(current.profit, previous?.profit || 0),
+          description: 'Closer to controllable value than revenue alone because cost pressure is included.',
+          values: monthly.map((item) => item.profit),
+        },
+        {
+          label: 'Margin',
+          value: formatPercent(margin),
+          delta: compareDelta(current.margin, previous?.margin || 0),
+          description: 'Efficiency lens. Useful for identifying whether growth is high quality or discount-driven.',
+          values: monthly.map((item) => item.margin),
+        },
+        {
+          label: 'Conversion',
+          value: formatPercent(conversion),
+          delta: compareDelta(current.conversion, previous?.conversion || 0),
+          description: 'Actionable lead metric. Easier to influence quickly than total revenue.',
+          values: monthly.map((item) => item.conversion),
+        },
+        {
+          label: 'Revenue / Visitor',
+          value: `$${rpv.toFixed(2)}`,
+          delta: compareDelta(current.visitors ? current.revenue / current.visitors : 0, previous?.visitors ? previous.revenue / previous.visitors : 0),
+          description: 'Channel and landing quality metric. Combines traffic and commercial output into one comparable number.',
+          values: monthly.map((item) => (item.visitors ? item.revenue / item.visitors : 0)),
+        },
+      ];
+
+      document.getElementById('kpiGrid').innerHTML = cards.map((card) => `
+        <div class="card kpi-card">
+          <div class="kpi-label">${card.label}</div>
+          <div class="kpi-value">${card.value}</div>
+          <div class="kpi-delta ${card.delta.tone}">${card.delta.label}</div>
+          <div class="kpi-desc">${card.description}</div>
+          ${renderSparkline(card.values, sparklineColorForTone(card.delta.tone))}
+        </div>
+      `).join('');
+    }
+
+    function renderSparkline(values, color) {
+      if (!values.length) {
+        return '<svg class="sparkline" viewBox="0 0 180 56"></svg>';
+      }
+      const max = Math.max(...values);
+      const min = Math.min(...values);
+      const range = max - min || 1;
+      const points = values.map((value, index) => {
+        const x = (index / Math.max(values.length - 1, 1)) * 180;
+        const y = 48 - ((value - min) / range) * 36;
+        return `${x},${y}`;
+      }).join(' ');
+      return `
+        <svg class="sparkline" viewBox="0 0 180 56" preserveAspectRatio="none">
+          <polyline fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" points="${points}"></polyline>
+          <polyline fill="none" stroke="${color}" stroke-width="3" points="${points}"></polyline>
+        </svg>
+      `;
+    }
+
+    function getTrendPalette(metric) {
+      if (metric === 'conversion') {
+        return { stroke: 'var(--chart-ink)', soft: 'var(--chart-ink-soft)' };
+      }
+      return { stroke: 'var(--chart-mint)', soft: 'var(--chart-mint-soft)' };
+    }
+
+    function renderTrend(rows) {
+      const monthly = buildMonthlySeries(rows);
+      const metric = dashboardState.trendMetric;
+      const mode = dashboardState.trendMode;
+      const series = monthly.map((item, index) => {
+        let value = item[metric];
+        if (metric === 'conversion') value = item.conversion;
+        if (mode === 'growth') {
+          const previous = monthly[index - 1];
+          value = previous && previous[metric] ? ((item[metric] - previous[metric]) / previous[metric]) * 100 : 0;
+        }
+        return { label: item.label, value };
+      });
+
+      const chart = document.getElementById('trendChart');
+      if (!series.length) {
+        chart.innerHTML = '';
+        document.getElementById('trendCallouts').innerHTML = '<div class="empty-state">No trend data available for the current filter set.</div>';
+        return;
+      }
+
+      const width = 860;
+      const height = 248;
+      const margin = { top: 24, right: 20, bottom: 52, left: 54 };
+      const innerWidth = width - margin.left - margin.right;
+      const innerHeight = height - margin.top - margin.bottom;
+      const max = Math.max(...series.map((item) => item.value));
+      const min = Math.min(...series.map((item) => item.value));
+      const range = max - min || 1;
+      const pathPoints = series.map((item, index) => {
+        const x = margin.left + (index / Math.max(series.length - 1, 1)) * innerWidth;
+        const y = margin.top + innerHeight - ((item.value - min) / range) * innerHeight;
+        return { ...item, x, y };
+      });
+      const path = pathPoints.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ');
+      const maxPoint = pathPoints.reduce((best, point) => (point.value > best.value ? point : best), pathPoints[0]);
+      const minPoint = pathPoints.reduce((best, point) => (point.value < best.value ? point : best), pathPoints[0]);
+      const palette = getTrendPalette(metric);
+
+      const yTicks = [0, 0.5, 1].map((ratio) => {
+        const value = max - (max - min) * ratio;
+        const y = margin.top + innerHeight * ratio;
+        return { value, y };
+      });
+
+      chart.innerHTML = `
+        <defs>
+          <linearGradient id="trendAreaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="${palette.soft}" stop-opacity="1"></stop>
+            <stop offset="100%" stop-color="${palette.soft}" stop-opacity="0.15"></stop>
+          </linearGradient>
+        </defs>
+        ${yTicks.map((tick) => `
+          <line class="axis-line" x1="${margin.left}" y1="${tick.y}" x2="${width - margin.right}" y2="${tick.y}"></line>
+          <text class="axis-label" x="${margin.left - 10}" y="${tick.y + 4}" text-anchor="end">${mode === 'growth' || metric === 'conversion' ? tick.value.toFixed(1) + '%' : formatCompactCurrency(tick.value)}</text>
+        `).join('')}
+        ${pathPoints.map((point) => `<text class="axis-label" x="${point.x}" y="${height - 18}" text-anchor="middle">${point.label}</text>`).join('')}
+        <path fill="url(#trendAreaGradient)" d="${path} L ${pathPoints[pathPoints.length - 1].x} ${margin.top + innerHeight} L ${pathPoints[0].x} ${margin.top + innerHeight} Z"></path>
+        <g style="--chart-color:${palette.stroke}; --chart-color-soft:${palette.soft};">
+          <path class="line-secondary" d="${path}"></path>
+          <path class="line-primary" d="${path}"></path>
+        </g>
+        ${pathPoints.map((point) => {
+          const pointClass = point.label === maxPoint.label ? 'max-point' : point.label === minPoint.label ? 'min-point' : 'point';
+          return `<circle class="${pointClass}" style="--chart-color:${palette.stroke};" cx="${point.x}" cy="${point.y}" r="6"></circle>`;
+        }).join('')}
+      `;
+
+      const valueLabel = metric === 'orders'
+        ? (value) => `${Math.round(value)}`
+        : (metric === 'conversion' || mode === 'growth')
+          ? (value) => `${value.toFixed(1)}%`
+          : (value) => formatCompactCurrency(value);
+
+      const metricLabels = {
+        revenue: dashboardState.locale === 'ko' ? '매출' : 'revenue',
+        orders: dashboardState.locale === 'ko' ? '주문수' : 'orders',
+        conversion: dashboardState.locale === 'ko' ? '전환율' : 'conversion',
+      };
+      document.getElementById('trendAxisNote').innerHTML = dashboardState.locale === 'ko'
+        ? `X: 월<br>Y: ${mode === 'growth' ? `${metricLabels[metric]} 증감률` : metricLabels[metric]}`
+        : `X: month<br>Y: ${mode === 'growth' ? `${metricLabels[metric]} change %` : metricLabels[metric]}`;
+      document.getElementById('trendCallouts').innerHTML = dashboardState.locale === 'ko'
+        ? `
+          <div class="callout"><strong>최대값:</strong> ${maxPoint.label}에 ${valueLabel(maxPoint.value)}를 기록했습니다. 현재 필터 기준에서 가장 강한 시점입니다.</div>
+          <div class="callout"><strong>최소값:</strong> ${minPoint.label}에 ${valueLabel(minPoint.value)}까지 내려갔습니다. 회복 액션의 기준선으로 봐야 합니다.</div>
+        `
+        : `
+          <div class="callout"><strong>Maximum:</strong> ${maxPoint.label} reached ${valueLabel(maxPoint.value)}. This is the strongest point in the filtered period.</div>
+          <div class="callout"><strong>Minimum:</strong> ${minPoint.label} fell to ${valueLabel(minPoint.value)}. This is the weakest point and should be used as the recovery baseline.</div>
+        `;
+    }
+
+    function addMonths(monthValue, offset) {
+      const [year, month] = monthValue.split('-').map(Number);
+      const date = new Date(year, month - 1 + offset, 1);
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    }
+
+    function buildEntitySeries(rows) {
+      const entityMap = new Map();
+      rows.forEach((row) => {
+        const id = [row.segment, row.region, row.channel].join(' | ');
+        const month = monthKey(row.date);
+        if (!entityMap.has(id)) {
+          entityMap.set(id, { id, segment: row.segment, region: row.region, channel: row.channel, monthly: new Map() });
+        }
+        const entity = entityMap.get(id);
+        const current = entity.monthly.get(month) || { revenue: 0, profit: 0, visitors: 0, orders: 0, discount: 0, count: 0 };
+        current.revenue += row.revenue;
+        current.profit += row.profit;
+        current.visitors += row.visitors;
+        current.orders += row.orders;
+        current.discount += row.discount;
+        current.count += 1;
+        entity.monthly.set(month, current);
+      });
+
+      return Array.from(entityMap.values()).map((entity) => {
+        const months = Array.from(entity.monthly.keys()).sort();
+        return {
+          ...entity,
+          cohortMonth: months[0],
+          months,
+          monthly: entity.monthly,
+        };
+      });
+    }
+
+    function buildOperationalCohort(rows) {
+      const entities = buildEntitySeries(rows);
+      const allMonths = Array.from(new Set(rows.map((row) => monthKey(row.date)))).sort();
+      const cohortMap = new Map();
+      entities.forEach((entity) => {
+        const arr = cohortMap.get(entity.cohortMonth) || [];
+        arr.push(entity);
+        cohortMap.set(entity.cohortMonth, arr);
+      });
+      return {
+        months: allMonths,
+        cohorts: Array.from(cohortMap.entries()).sort(([a], [b]) => a.localeCompare(b)).map(([cohort, cohortEntities]) => {
+          const baseRevenue = cohortEntities.reduce((total, entity) => total + (entity.monthly.get(cohort)?.revenue || 0), 0);
+          const values = allMonths
+            .filter((month) => month >= cohort)
+            .map((month, index) => {
+              const currentRevenue = cohortEntities.reduce((total, entity) => total + (entity.monthly.get(month)?.revenue || 0), 0);
+              return {
+                offset: index,
+                month,
+                revenue: currentRevenue,
+                retention: baseRevenue ? (currentRevenue / baseRevenue) * 100 : 0,
+              };
+            });
+          return { cohort, baseRevenue, size: cohortEntities.length, values };
+        }),
+      };
+    }
+
+    function renderOperationalCohort(rows) {
+      const container = document.getElementById('cohortGrid');
+      const cohortData = buildOperationalCohort(rows);
+      if (!cohortData.cohorts.length) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '코호트 데이터를 만들 수 없습니다.' : 'Cohort data is not available for the current filter set.'}</div>`;
+        return;
+      }
+      container.innerHTML = cohortData.cohorts.map((cohortRow) => `
+        <div class="cohort-row">
+          <div class="cohort-label">${monthLabel(cohortRow.cohort)}<span>${cohortRow.size} ${dashboardState.locale === 'ko' ? '엔티티' : 'entities'}</span></div>
+          ${cohortRow.values.map((cell) => {
+            const alpha = Math.max(0.12, Math.min(0.78, cell.retention / 110));
+            return `
+              <div class="cohort-cell" style="background: rgba(88, 184, 155, ${alpha});">
+                <div>M${cell.offset}</div>
+                <span>${cell.retention.toFixed(0)}%</span>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `).join('');
+    }
+
+    function renderRetentionCurve(rows) {
+      const cohortData = buildOperationalCohort(rows);
+      const chart = document.getElementById('retentionChart');
+      const callouts = document.getElementById('retentionCallouts');
+      if (!cohortData.cohorts.length) {
+        chart.innerHTML = '';
+        callouts.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '리텐션 데이터가 없습니다.' : 'Retention data is not available.'}</div>`;
+        return;
+      }
+      const offsets = [];
+      cohortData.cohorts.forEach((cohort) => {
+        cohort.values.forEach((value) => {
+          offsets[value.offset] = offsets[value.offset] || [];
+          offsets[value.offset].push(value.retention);
+        });
+      });
+      const series = offsets.map((values, offset) => ({
+        label: `M${offset}`,
+        value: values.reduce((a, b) => a + b, 0) / values.length,
+      })).filter(Boolean);
+      drawMiniLineChart(chart, series, true);
+      const best = series.reduce((a, b) => (a.value > b.value ? a : b), series[0]);
+      const latest = series[series.length - 1];
+      callouts.innerHTML = dashboardState.locale === 'ko'
+        ? `
+          <div class="callout"><strong>초기 유지:</strong> ${best.label} 시점 평균 유지율은 ${best.value.toFixed(1)}%입니다. 첫 접점 이후 초기 유지력 기준선입니다.</div>
+          <div class="callout"><strong>장기 감쇠:</strong> ${latest.label} 시점은 ${latest.value.toFixed(1)}%입니다. 재활성화나 반복 구매 장치가 필요한 구간입니다.</div>
+        `
+        : `
+          <div class="callout"><strong>Early retention:</strong> ${best.label} averages ${best.value.toFixed(1)}% retained revenue. This is the baseline for first-touch quality.</div>
+          <div class="callout"><strong>Decay point:</strong> ${latest.label} lands at ${latest.value.toFixed(1)}%. This is the stage where reactivation or repeat triggers matter most.</div>
+        `;
+    }
+
+    function renderFunnel(rows) {
+      const container = document.getElementById('funnelSteps');
+      const visitors = sum(rows, 'visitors');
+      const orders = sum(rows, 'orders');
+      const conversionRate = visitors ? orders / visitors : 0;
+      const engaged = Math.max(orders, Math.round(visitors * Math.min(0.78, Math.max(0.4, conversionRate * 4.8))));
+      const intent = Math.max(orders, Math.round(visitors * Math.min(0.42, Math.max(0.18, conversionRate * 2.8))));
+      const checkout = Math.max(orders, Math.round(visitors * Math.min(0.22, Math.max(0.08, conversionRate * 1.6))));
+      const steps = [
+        { label: dashboardState.locale === 'ko' ? '방문' : 'Visitors', value: visitors, note: dashboardState.locale === 'ko' ? '실제 트래픽' : 'Observed traffic' },
+        { label: dashboardState.locale === 'ko' ? '관심' : 'Engaged', value: engaged, note: dashboardState.locale === 'ko' ? '참여 프록시' : 'Engagement proxy' },
+        { label: dashboardState.locale === 'ko' ? '구매 의도' : 'Intent', value: intent, note: dashboardState.locale === 'ko' ? '체크아웃 의도 프록시' : 'Checkout intent proxy' },
+        { label: dashboardState.locale === 'ko' ? '주문' : 'Orders', value: orders, note: dashboardState.locale === 'ko' ? '실제 주문' : 'Observed orders' },
+      ];
+      container.innerHTML = steps.map((step, index) => {
+        const prior = steps[index - 1]?.value || step.value;
+        const rate = prior ? (step.value / prior) * 100 : 100;
+        return `
+          <div class="funnel-step">
+            <div class="funnel-step-label">${step.label}</div>
+            <div class="funnel-step-value">${step.value.toLocaleString()}</div>
+            <div class="funnel-step-meta">${step.note}</div>
+            <div class="funnel-step-rate">${rate.toFixed(1)}%</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderSegmentHealth(rows) {
+      const grouped = Array.from(groupBy(rows, (row) => row.segment).entries()).map(([segment, items]) => {
+        const revenue = sum(items, 'revenue');
+        const visitors = sum(items, 'visitors');
+        const orders = sum(items, 'orders');
+        const profit = sum(items, 'profit');
+        return {
+          segment,
+          revenue,
+          margin: revenue ? (profit / revenue) * 100 : 0,
+          conversion: visitors ? (orders / visitors) * 100 : 0,
+          rpv: visitors ? revenue / visitors : 0,
+        };
+      }).sort((a, b) => b.revenue - a.revenue);
+      const container = document.getElementById('segmentSummaryGrid');
+      if (!grouped.length) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '세그먼트 데이터가 없습니다.' : 'No segment data available.'}</div>`;
+        return;
+      }
+      container.innerHTML = grouped.map((item) => `
+        <div class="segment-summary-card">
+          <div class="segment-summary-title">${item.segment}</div>
+          <div class="segment-summary-kpi">
+            <div class="segment-summary-row"><span>${dashboardState.locale === 'ko' ? '매출' : 'Revenue'}</span><strong>${formatCompactCurrency(item.revenue)}</strong></div>
+            <div class="segment-summary-row"><span>${dashboardState.locale === 'ko' ? '이익률' : 'Margin'}</span><strong>${formatPercent(item.margin)}</strong></div>
+            <div class="segment-summary-row"><span>${dashboardState.locale === 'ko' ? '전환율' : 'Conversion'}</span><strong>${formatPercent(item.conversion)}</strong></div>
+            <div class="segment-summary-row"><span>${dashboardState.locale === 'ko' ? '방문자당 매출' : 'Revenue / Visitor'}</span><strong>$${item.rpv.toFixed(2)}</strong></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderRepurchaseCycle(rows) {
+      const entities = buildEntitySeries(rows);
+      const gapsBySegment = new Map();
+      entities.forEach((entity) => {
+        const dates = Array.from(new Set(rows.filter((row) => row.segment === entity.segment && row.region === entity.region && row.channel === entity.channel).map((row) => row.date.getTime()))).sort((a, b) => a - b);
+        for (let i = 1; i < dates.length; i += 1) {
+          const gap = (dates[i] - dates[i - 1]) / (1000 * 60 * 60 * 24);
+          const arr = gapsBySegment.get(entity.segment) || [];
+          arr.push(gap);
+          gapsBySegment.set(entity.segment, arr);
+        }
+      });
+      const grouped = Array.from(gapsBySegment.entries()).map(([segment, gaps]) => ({
+        label: segment,
+        value: gaps.reduce((a, b) => a + b, 0) / gaps.length,
+      })).sort((a, b) => a.value - b.value);
+      const container = document.getElementById('repurchaseBars');
+      if (!grouped.length) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '반복 주기를 계산할 충분한 이력이 없습니다.' : 'Not enough recurring history to estimate repeat cadence.'}</div>`;
+        return;
+      }
+      const max = grouped[grouped.length - 1].value || 1;
+      container.innerHTML = grouped.map((item) => `
+        <div class="bar-row">
+          <div class="bar-label">${item.label}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${(item.value / max) * 100}%; background:linear-gradient(90deg, rgba(88,184,155,0.18) 0%, rgba(88,184,155,0.72) 100%);"></div></div>
+          <div class="bar-value">${item.value.toFixed(1)}d</div>
+        </div>
+      `).join('');
+    }
+
+    function linearForecast(series, steps = 3) {
+      const n = series.length;
+      const xs = series.map((_, index) => index);
+      const ys = series.map((item) => item.revenue);
+      const sumX = xs.reduce((a, b) => a + b, 0);
+      const sumY = ys.reduce((a, b) => a + b, 0);
+      const sumXY = xs.reduce((total, x, index) => total + x * ys[index], 0);
+      const sumXX = xs.reduce((total, x) => total + x * x, 0);
+      const slope = (n * sumXY - sumX * sumY) / Math.max((n * sumXX - sumX * sumX), 1);
+      const intercept = (sumY - slope * sumX) / Math.max(n, 1);
+      return Array.from({ length: steps }, (_, index) => {
+        const x = n + index;
+        const value = Math.max(0, intercept + slope * x);
+        const lastMonth = series[series.length - 1]?.key;
+        return {
+          key: addMonths(lastMonth, index + 1),
+          label: monthLabel(addMonths(lastMonth, index + 1)),
+          revenue: value,
+        };
+      });
+    }
+
+    function drawMiniLineChart(svg, series, percentMode = false, forecastSeries = []) {
+      if (!series.length) {
+        svg.innerHTML = '';
+        return;
+      }
+      const width = 520;
+      const height = 210;
+      const margin = { top: 18, right: 16, bottom: 34, left: 44 };
+      const allSeries = [...series, ...forecastSeries];
+      const values = allSeries.map((item) => item.value ?? item.revenue);
+      const max = Math.max(...values);
+      const min = Math.min(...values);
+      const range = max - min || 1;
+      const makePoints = (items, xOffset = 0) => items.map((item, index) => {
+        const x = margin.left + ((index + xOffset) / Math.max(allSeries.length - 1, 1)) * (width - margin.left - margin.right);
+        const rawValue = item.value ?? item.revenue;
+        const y = margin.top + (height - margin.top - margin.bottom) - ((rawValue - min) / range) * (height - margin.top - margin.bottom);
+        return { x, y, label: item.label, value: rawValue };
+      });
+      const historyPoints = makePoints(series);
+      const forecastPoints = makePoints(forecastSeries, Math.max(series.length - 1, 0));
+      const historyPath = historyPoints.map((p, idx) => `${idx === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+      const forecastPath = forecastPoints.length ? `M ${historyPoints[historyPoints.length - 1].x} ${historyPoints[historyPoints.length - 1].y} ${forecastPoints.map((p) => `L ${p.x} ${p.y}`).join(' ')}` : '';
+      svg.innerHTML = `
+        ${historyPoints.map((point) => `<text class="axis-label" x="${point.x}" y="${height - 12}" text-anchor="middle">${point.label}</text>`).join('')}
+        ${forecastPoints.map((point) => `<text class="axis-label" x="${point.x}" y="${height - 12}" text-anchor="middle">${point.label}</text>`).join('')}
+        <path class="line-secondary" style="--chart-color:var(--chart-mint);--chart-color-soft:var(--chart-mint-soft);" d="${historyPath}"></path>
+        <path class="line-primary" style="--chart-color:var(--chart-mint);--chart-color-soft:var(--chart-mint-soft);" d="${historyPath}"></path>
+        ${forecastPath ? `<path d="${forecastPath}" fill="none" stroke="var(--chart-ink)" stroke-width="2.5" stroke-dasharray="6 6" stroke-linecap="round"></path>` : ''}
+        ${historyPoints.map((point) => `<circle class="point" style="--chart-color:var(--chart-mint);" cx="${point.x}" cy="${point.y}" r="5"></circle>`).join('')}
+        ${forecastPoints.map((point) => `<circle class="point" style="--chart-color:var(--chart-rose);" cx="${point.x}" cy="${point.y}" r="5"></circle>`).join('')}
+      `;
+    }
+
+    function renderForecast(rows) {
+      const monthly = buildMonthlySeries(rows);
+      const chart = document.getElementById('forecastChart');
+      const callouts = document.getElementById('forecastCallouts');
+      if (monthly.length < 2) {
+        chart.innerHTML = '';
+        callouts.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '예측을 만들기 위한 시계열 포인트가 부족합니다.' : 'Not enough time points to build a forecast.'}</div>`;
+        return;
+      }
+      const forecast = linearForecast(monthly, 2);
+      drawMiniLineChart(chart, monthly.map((item) => ({ label: item.label, value: item.revenue })), false, forecast.map((item) => ({ label: item.label, value: item.revenue })));
+      const next = forecast[0];
+      const latest = monthly[monthly.length - 1];
+      const delta = latest.revenue ? ((next.revenue - latest.revenue) / latest.revenue) * 100 : 0;
+      callouts.innerHTML = dashboardState.locale === 'ko'
+        ? `
+          <div class="callout"><strong>다음 예측:</strong> ${next.label} 예상 매출은 ${formatCompactCurrency(next.revenue)}입니다. 현재 추세 연장 기준입니다.</div>
+          <div class="callout"><strong>신뢰 수준:</strong> 관측 월 수가 ${monthly.length}개라 신뢰도는 낮습니다. 방향성 계획용으로만 써야 합니다.</div>
+        `
+        : `
+          <div class="callout"><strong>Next projection:</strong> ${next.label} is forecast at ${formatCompactCurrency(next.revenue)}, which is ${delta >= 0 ? 'up' : 'down'} ${Math.abs(delta).toFixed(1)}% from the latest actual.</div>
+          <div class="callout"><strong>Confidence:</strong> Only ${monthly.length} observed months are available, so this should be read as directional planning rather than a finance-grade forecast.</div>
+        `;
+    }
+
+    function standardize(points) {
+      if (!points.length) return points;
+      const keys = Object.keys(points[0].features);
+      const stats = Object.fromEntries(keys.map((key) => {
+        const values = points.map((point) => point.features[key]);
+        const mean = values.reduce((a, b) => a + b, 0) / values.length;
+        const variance = values.reduce((a, b) => a + ((b - mean) ** 2), 0) / values.length;
+        return [key, { mean, std: Math.sqrt(variance) || 1 }];
+      }));
+      return points.map((point) => ({
+        ...point,
+        vector: keys.map((key) => (point.features[key] - stats[key].mean) / stats[key].std),
+      }));
+    }
+
+    function runKMeans(points, k = 3, iterations = 10) {
+      if (points.length <= k) return points.map((point, index) => ({ ...point, cluster: index }));
+      let centroids = points.slice(0, k).map((point) => [...point.vector]);
+      let assigned = points.map((point) => ({ ...point, cluster: 0 }));
+      for (let i = 0; i < iterations; i += 1) {
+        assigned = points.map((point) => {
+          let bestCluster = 0;
+          let bestDistance = Infinity;
+          centroids.forEach((centroid, clusterIndex) => {
+            const distance = centroid.reduce((total, value, idx) => total + ((value - point.vector[idx]) ** 2), 0);
+            if (distance < bestDistance) {
+              bestDistance = distance;
+              bestCluster = clusterIndex;
+            }
+          });
+          return { ...point, cluster: bestCluster };
+        });
+        centroids = centroids.map((centroid, clusterIndex) => {
+          const members = assigned.filter((point) => point.cluster === clusterIndex);
+          if (!members.length) return centroid;
+          return centroid.map((_, idx) => members.reduce((total, member) => total + member.vector[idx], 0) / members.length);
+        });
+      }
+      return assigned;
+    }
+
+    function renderAiSegmentation(rows) {
+      const entities = buildEntitySeries(rows).map((entity) => {
+        const items = Array.from(entity.monthly.values());
+        const revenue = items.reduce((total, item) => total + item.revenue, 0);
+        const profit = items.reduce((total, item) => total + item.profit, 0);
+        const visitors = items.reduce((total, item) => total + item.visitors, 0);
+        const orders = items.reduce((total, item) => total + item.orders, 0);
+        const avgDiscount = items.reduce((total, item) => total + item.discount / item.count, 0) / Math.max(items.length, 1);
+        return {
+          entity: entity.id,
+          features: {
+            revenuePerVisitor: visitors ? revenue / visitors : 0,
+            conversion: visitors ? orders / visitors : 0,
+            margin: revenue ? profit / revenue : 0,
+            aov: orders ? revenue / orders : 0,
+            discount: avgDiscount,
+          }
+        };
+      });
+      const container = document.getElementById('clusterGrid');
+      if (entities.length < 3) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '세그멘테이션을 위한 엔티티 수가 부족합니다.' : 'Not enough entities for model-based segmentation.'}</div>`;
+        return;
+      }
+      const standardized = standardize(entities);
+      const clustered = runKMeans(standardized, 3, 12);
+      const groups = Array.from({ length: 3 }, (_, cluster) => clustered.filter((point) => point.cluster === cluster)).filter((group) => group.length);
+      const labels = dashboardState.locale === 'ko'
+        ? ['고가치 효율군', '확장형 볼륨군', '할인 민감군']
+        : ['High Value Efficient', 'Scale Volume', 'Discount Sensitive'];
+      const descriptions = dashboardState.locale === 'ko'
+        ? [
+            '방문자당 가치와 마진이 모두 높은 군집입니다. 확장 예산 우선순위 후보입니다.',
+            '규모는 크지만 효율 보정이 필요한 군집입니다. 가격·채널 최적화가 함께 필요합니다.',
+            '할인 의존도가 높은 군집입니다. 수익성 방어가 선행되어야 합니다.'
+          ]
+        : [
+            'High value and high efficiency. This is the best candidate for incremental budget.',
+            'Large enough to matter but still needs efficiency repair before scale pushes harder.',
+            'Discount-sensitive profile. Protect margin before spending more to acquire it.'
+          ];
+      container.innerHTML = groups.map((group, index) => {
+        const size = group.length;
+        const avg = (key) => group.reduce((total, point) => total + point.features[key], 0) / size;
+        return `
+          <div class="cluster-card">
+            <div class="cluster-tag">Cluster ${index + 1}</div>
+            <div class="cluster-name">${labels[index] || `Cluster ${index + 1}`}</div>
+            <div class="cluster-desc">${descriptions[index] || ''}</div>
+            <div class="cluster-metrics"><strong>${dashboardState.locale === 'ko' ? '엔티티 수' : 'Members'}:</strong> ${size}</div>
+            <div class="cluster-metrics"><strong>${dashboardState.locale === 'ko' ? '평균 이익률' : 'Avg margin'}:</strong> ${formatPercent(avg('margin') * 100)}</div>
+            <div class="cluster-metrics"><strong>${dashboardState.locale === 'ko' ? '평균 전환율' : 'Avg conversion'}:</strong> ${formatPercent(avg('conversion') * 100)}</div>
+            <div class="cluster-metrics"><strong>${dashboardState.locale === 'ko' ? '방문자당 매출' : 'Revenue / visitor'}:</strong> $${avg('revenuePerVisitor').toFixed(2)}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderLtvCac(rows) {
+      const grouped = Array.from(groupBy(rows, (row) => row.channel).entries()).map(([channel, items]) => {
+        const revenue = sum(items, 'revenue');
+        const profit = sum(items, 'profit');
+        const cost = sum(items, 'cost');
+        const orders = sum(items, 'orders');
+        const aov = orders ? revenue / orders : 0;
+        const margin = revenue ? profit / revenue : 0;
+        const entityCount = new Set(items.map((row) => `${row.segment}|${row.region}|${row.channel}`)).size || 1;
+        const repeatFactor = Math.max(1, items.length / entityCount);
+        const ltvProxy = aov * margin * Math.max(1.2, repeatFactor);
+        const cacProxy = orders ? cost / orders : 0;
+        return {
+          label: channel,
+          ltvProxy,
+          cacProxy,
+          ratio: cacProxy ? ltvProxy / cacProxy : 0,
+        };
+      }).sort((a, b) => b.ratio - a.ratio);
+      const container = document.getElementById('ltvBars');
+      const callouts = document.getElementById('ltvCallouts');
+      if (!grouped.length) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? 'LTV/CAC 데이터를 계산할 수 없습니다.' : 'LTV/CAC data is not available.'}</div>`;
+        callouts.innerHTML = '';
+        return;
+      }
+      const max = grouped[0].ratio || 1;
+      container.innerHTML = grouped.map((item, index) => `
+        <div class="bar-row">
+          <div class="bar-label">${item.label}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${(item.ratio / max) * 100}%; background:${index === grouped.length - 1 ? 'linear-gradient(90deg, #ebc6d4 0%, var(--chart-rose) 100%)' : 'linear-gradient(90deg, #b8dece 0%, var(--chart-mint) 100%)'};"></div></div>
+          <div class="bar-value">${item.ratio.toFixed(2)}x</div>
+        </div>
+      `).join('');
+      const best = grouped[0];
+      const weakest = grouped[grouped.length - 1];
+      callouts.innerHTML = dashboardState.locale === 'ko'
+        ? `
+          <div class="callout"><strong>최적 채널:</strong> ${best.label}의 프록시 LTV/CAC는 ${best.ratio.toFixed(2)}x입니다. 현재 기준에서 가장 확장 가능성이 높습니다.</div>
+          <div class="callout"><strong>주의 채널:</strong> ${weakest.label}은 ${weakest.ratio.toFixed(2)}x입니다. CAC 대비 가치가 약해 예산 확대 전 점검이 필요합니다.</div>
+        `
+        : `
+          <div class="callout"><strong>Best channel:</strong> ${best.label} posts a proxy LTV/CAC of ${best.ratio.toFixed(2)}x. This is the strongest scale candidate right now.</div>
+          <div class="callout"><strong>Watch list:</strong> ${weakest.label} sits at ${weakest.ratio.toFixed(2)}x. Acquisition economics are weaker and should be reviewed before adding budget.</div>
+        `;
+    }
+
+    function renderRankedBars(containerId, rows, key, valueBuilder, valueFormatter) {
+      const grouped = Array.from(groupBy(rows, (row) => row[key]).entries()).map(([label, items]) => ({
+        label,
+        value: valueBuilder(items),
+      })).sort((a, b) => b.value - a.value);
+
+      const container = document.getElementById(containerId);
+      if (!grouped.length) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '현재 선택에서 그룹 데이터가 없습니다.' : 'No grouped data for the current selection.'}</div>`;
+        return;
+      }
+
+      const max = grouped[0].value;
+      const min = grouped[grouped.length - 1].value;
+      const palettes = [
+        'linear-gradient(90deg, rgba(88, 184, 155, 0.26) 0%, rgba(88, 184, 155, 0.76) 100%)',
+        'linear-gradient(90deg, rgba(88, 184, 155, 0.2) 0%, rgba(88, 184, 155, 0.62) 100%)',
+        'linear-gradient(90deg, rgba(88, 184, 155, 0.16) 0%, rgba(88, 184, 155, 0.52) 100%)',
+        'linear-gradient(90deg, rgba(88, 184, 155, 0.12) 0%, rgba(88, 184, 155, 0.42) 100%)',
+        'linear-gradient(90deg, rgba(140, 129, 119, 0.14) 0%, rgba(140, 129, 119, 0.42) 100%)',
+      ];
+      container.innerHTML = grouped.map((item, index) => {
+        const width = max ? (item.value / max) * 100 : 0;
+        let fill = 'linear-gradient(90deg, #b8dece 0%, var(--chart-mint) 100%)';
+        if (item.value === min) fill = 'linear-gradient(90deg, #ebc6d4 0%, var(--chart-rose) 100%)';
+        if (item.value !== max && item.value !== min) fill = palettes[index % palettes.length];
+        return `
+          <div class="bar-row">
+            <div class="bar-label">${item.label}</div>
+            <div class="bar-track"><div class="bar-fill" style="width:${width}%; background:${fill};"></div></div>
+            <div class="bar-value">${valueFormatter(item.value)}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderMatrix(rows) {
+      const segments = Array.from(new Set(rows.map((row) => row.segment))).sort();
+      const regions = Array.from(new Set(rows.map((row) => row.region))).sort();
+      const container = document.getElementById('segmentRegionMatrix');
+
+      if (!segments.length || !regions.length) {
+        container.innerHTML = `<div class="empty-state" style="grid-column:1 / -1;">${dashboardState.locale === 'ko' ? '세그먼트-지역 셀이 없습니다.' : 'No segment-region cells available.'}</div>`;
+        return;
+      }
+
+      const grouped = groupBy(rows, (row) => `${row.segment}__${row.region}`);
+      const cells = [];
+      cells.push('<div class="matrix-cell matrix-header"></div>');
+      regions.forEach((region) => {
+        cells.push(`<div class="matrix-cell matrix-header">${region}</div>`);
+      });
+
+      segments.forEach((segment) => {
+        cells.push(`<div class="matrix-cell matrix-header">${segment}</div>`);
+        regions.forEach((region, regionIndex) => {
+          const key = `${segment}__${region}`;
+          const items = grouped.get(key) || [];
+          const revenue = sum(items, 'revenue');
+          const profit = sum(items, 'profit');
+          const margin = revenue ? (profit / revenue) * 100 : 0;
+          const intensity = Math.min(0.82, 0.16 + (revenue / Math.max(sum(rows, 'revenue'), 1)) * 1.35);
+          const mintAlpha = Math.min(0.78, 0.14 + intensity);
+          cells.push(`
+            <div class="matrix-cell" style="background: rgba(88, 184, 155, ${mintAlpha}); border-color: rgba(88, 184, 155, 0.34);">
+              <div class="matrix-label">${segment}</div>
+              <div class="matrix-value">${formatCompactCurrency(revenue)}</div>
+              <div class="matrix-subvalue">${dashboardState.locale === 'ko' ? '이익률' : 'Margin'} ${formatPercent(margin)}</div>
+            </div>
+          `);
+        });
+      });
+
+      container.innerHTML = cells.join('');
+    }
+
+    function renderInsights(rows) {
+      const groupedCategory = Array.from(groupBy(rows, (row) => row.category).entries()).map(([key, items]) => ({
+        key,
+        revenue: sum(items, 'revenue'),
+        margin: sum(items, 'revenue') ? (sum(items, 'profit') / sum(items, 'revenue')) * 100 : 0,
+      })).sort((a, b) => b.revenue - a.revenue);
+      const groupedRegion = Array.from(groupBy(rows, (row) => row.region).entries()).map(([key, items]) => ({
+        key,
+        margin: sum(items, 'revenue') ? (sum(items, 'profit') / sum(items, 'revenue')) * 100 : 0,
+        revenue: sum(items, 'revenue'),
+      })).sort((a, b) => b.margin - a.margin);
+      const groupedCombo = Array.from(groupBy(rows, (row) => `${row.segment} / ${row.region}`).entries()).map(([key, items]) => ({
+        key,
+        revenue: sum(items, 'revenue'),
+      })).sort((a, b) => b.revenue - a.revenue);
+      const currentVariant = dashboardState.ab;
+
+      const insights = dashboardState.locale === 'ko'
+        ? [
+          `최대 매출 카테고리는 ${groupedCategory[0]?.key || 'n/a'}이며 ${formatCompactCurrency(groupedCategory[0]?.revenue || 0)}입니다. 규모 기준 벤치마크로 봐야 합니다.`,
+          `가장 효율적인 지역은 ${groupedRegion[0]?.key || 'n/a'}이며 이익률은 ${formatPercent(groupedRegion[0]?.margin || 0)}입니다. 질 좋은 성장의 기준점입니다.`,
+          `가장 큰 세그먼트-지역 조합은 ${groupedCombo[0]?.key || 'n/a'}이며 ${formatCompactCurrency(groupedCombo[0]?.revenue || 0)}입니다. 다음 예산/세일즈 푸시의 기준점입니다.`,
+          currentVariant
+            ? `실험 우승안은 ${currentVariant.group_b}이며 리프트는 +${currentVariant.lift_pct_point.toFixed(2)}%p, p값은 ${currentVariant.p_value}입니다. 롤아웃 판단에 쓸 수 있습니다.`
+            : '최신 실행에는 실험 데이터가 없습니다.',
+        ]
+        : [
+          `Largest category by revenue is ${groupedCategory[0]?.key || 'n/a'} at ${formatCompactCurrency(groupedCategory[0]?.revenue || 0)}. Use this as the primary scale benchmark.`,
+          `Best regional efficiency is ${groupedRegion[0]?.key || 'n/a'} with ${formatPercent(groupedRegion[0]?.margin || 0)} margin. This is the right benchmark for quality growth.`,
+          `Top segment-region mix is ${groupedCombo[0]?.key || 'n/a'} at ${formatCompactCurrency(groupedCombo[0]?.revenue || 0)}. This should anchor the next budget or sales push.`,
+          currentVariant
+            ? `Experiment winner is ${currentVariant.group_b} with +${currentVariant.lift_pct_point.toFixed(2)} pts lift and p=${currentVariant.p_value}. This is strong enough to move toward rollout.`
+            : 'Experiment data is not available for the latest run.',
+        ];
+
+      document.getElementById('insightList').innerHTML = insights.map((copy, index) => `
+        <div class="insight-item">
+          <div class="insight-index">${index + 1}</div>
+          <div class="insight-copy">${copy}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderExperimentCard() {
+      const container = document.getElementById('experimentCard');
+      const ab = dashboardState.ab;
+      if (!ab) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? 'A/B 테스트 요약이 없습니다.' : 'A/B test summary is not available.'}</div>`;
+        return;
+      }
+      container.innerHTML = `
+        <div class="callout"><strong>${dashboardState.locale === 'ko' ? '우승안' : 'Winning variant'}:</strong> ${ab.group_b} ${dashboardState.locale === 'ko' ? `전환율 ${ab.conversion_rate_b_pct.toFixed(2)}%로 ${ab.group_a}의 ${ab.conversion_rate_a_pct.toFixed(2)}%를 앞섰습니다.` : `converted at ${ab.conversion_rate_b_pct.toFixed(2)}% versus ${ab.group_a} at ${ab.conversion_rate_a_pct.toFixed(2)}%.`}</div>
+        <div class="callout"><strong>${dashboardState.locale === 'ko' ? '통계 판단' : 'Statistical decision'}:</strong> p-value ${dashboardState.locale === 'ko' ? '는' : 'is'} ${ab.p_value}. ${ab.significant_at_95 ? (dashboardState.locale === 'ko' ? '95% 신뢰수준에서 유의합니다.' : 'The result is significant at the 95% confidence level.') : (dashboardState.locale === 'ko' ? '아직 롤아웃할 만큼 충분히 유의하지 않습니다.' : 'The result is not yet significant enough for rollout.')}</div>
+      `;
+    }
+
+    function renderActions() {
+      const container = document.getElementById('actionBoard');
+      const sidebar = document.getElementById('sidebarActions');
+      const actions = dashboardState.actions || [];
+
+      if (!actions.length) {
+        container.innerHTML = `<div class="empty-state">${dashboardState.locale === 'ko' ? '액션 플랜이 없습니다.' : 'No action plan is available.'}</div>`;
+        sidebar.innerHTML = `<div class="empty-state" style="background:rgba(255,255,255,0.08);color:#fff;border-color:rgba(255,255,255,0.16);">${dashboardState.locale === 'ko' ? '액션이 없습니다.' : 'No actions available.'}</div>`;
+        return;
+      }
+
+      const actionHtml = actions.map((action) => `
+        <div class="action-card">
+          <div class="action-header">
+            <div class="action-priority">${dashboardState.locale === 'ko' ? '우선순위' : 'Priority'} ${action.priority}</div>
+            <div class="action-impact ${(action.impact || '').toLowerCase()}">${action.impact}</div>
+          </div>
+          <div class="action-title">${action.title}</div>
+          <div class="action-owner">${dashboardState.locale === 'ko' ? '담당' : 'Owner'}: ${action.owner}</div>
+          <div class="action-reason">${action.reason}</div>
+        </div>
+      `).join('');
+      container.innerHTML = actionHtml;
+
+      sidebar.innerHTML = actions.map((action) => `
+        <div class="sidebar-action">
+          <div class="sidebar-action-top">
+            <div class="sidebar-action-priority">P${action.priority}</div>
+            <div class="sidebar-action-owner">${action.owner}</div>
+          </div>
+          <div class="sidebar-action-title">${action.title}</div>
+          <div class="sidebar-action-reason">${action.reason}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderTable(rows) {
+      const head = document.getElementById('tableHead');
+      const body = document.getElementById('tableBody');
+      const tableMeta = document.getElementById('tableMeta');
+      const tableSummary = document.getElementById('tableSummary');
+
+      if (!rows.length) {
+        head.innerHTML = '';
+        body.innerHTML = `<tr><td colspan="12">${dashboardState.locale === 'ko' ? '현재 필터 조건에 해당하는 행이 없습니다.' : 'No rows available for the current filter set.'}</td></tr>`;
+        tableMeta.textContent = dashboardState.locale === 'ko' ? '0행' : '0 rows';
+        tableSummary.textContent = dashboardState.locale === 'ko' ? '현재 필터 조건과 일치하는 데이터가 없습니다.' : 'No records match the current filter selection.';
+        return;
+      }
+
+      const columns = ['date', 'region', 'segment', 'category', 'sub_category', 'channel', 'visitors', 'orders', 'revenue', 'cost', 'profit', 'test_group'];
+      head.innerHTML = `<tr>${columns.map((column) => `<th>${column.replaceAll('_', ' ')}</th>`).join('')}</tr>`;
+      body.innerHTML = rows.map((row) => `
+        <tr>
+          <td>${formatDate(row.date)}</td>
+          <td>${row.region}</td>
+          <td>${row.segment}</td>
+          <td>${row.category}</td>
+          <td>${row.sub_category}</td>
+          <td>${row.channel}</td>
+          <td class="mono">${row.visitors.toLocaleString()}</td>
+          <td class="mono">${row.orders.toLocaleString()}</td>
+          <td class="mono">${formatCompactCurrency(row.revenue)}</td>
+          <td class="mono">${formatCompactCurrency(row.cost)}</td>
+          <td class="mono">${formatCompactCurrency(row.profit)}</td>
+          <td class="mono">${row.test_group}</td>
+        </tr>
+      `).join('');
+      tableMeta.textContent = dashboardState.locale === 'ko' ? `${rows.length}행` : `${rows.length} rows`;
+      tableSummary.textContent = dashboardState.locale === 'ko'
+        ? `전체 ${dashboardState.rawRows.length}건 중 ${rows.length}건으로 필터링된 결과입니다. 위 KPI와 차트의 기준 데이터입니다.`
+        : `Filtered to ${rows.length} records from ${dashboardState.rawRows.length}. This is the audit layer behind every KPI and chart above.`;
+    }
+
+    function renderRunMeta() {
+      const status = dashboardState.status;
+      const meta = document.getElementById('runMetaBlock');
+      if (!status) {
+        meta.innerHTML = `<div class="meta-row">${dashboardState.locale === 'ko' ? '실행 메타데이터가 없습니다.' : 'No run metadata available.'}</div>`;
+        return;
+      }
+      const firstInput = (status.inputs || [])[0];
+      meta.innerHTML = `
+        <div class="meta-row"><strong>${dashboardState.locale === 'ko' ? '실행 ID' : 'Run ID'}</strong>${status.run_id}</div>
+        <div class="meta-row"><strong>${dashboardState.locale === 'ko' ? '상태' : 'Status'}</strong>${status.overall_status} · ${status.progress.completed}/${status.progress.total} ${dashboardState.locale === 'ko' ? '완료' : 'complete'}</div>
+        <div class="meta-row"><strong>${dashboardState.locale === 'ko' ? '입력 데이터' : 'Input'}</strong>${firstInput ? `${firstInput.name} · ${firstInput.rows} ${dashboardState.locale === 'ko' ? '행' : 'rows'}` : (dashboardState.locale === 'ko' ? '입력 없음' : 'No input')}</div>
+        <div class="meta-row"><strong>${dashboardState.locale === 'ko' ? '기간' : 'Window'}</strong>${dashboardState.filters.dateFrom} to ${dashboardState.filters.dateTo}</div>
+      `;
+      document.getElementById('statusPill').textContent = `${status.overall_status} · ${status.current_stage === 'done' ? (dashboardState.locale === 'ko' ? '완료' : 'completed') : status.current_stage}`;
+    }
+
+    function renderDashboard() {
+      const rows = dashboardState.filteredRows;
+      renderRunMeta();
+      renderKpis(rows);
+      renderTrend(rows);
+      renderRankedBars('categoryBars', rows, 'category', (items) => sum(items, 'revenue'), formatCompactCurrency);
+      renderRankedBars('regionBars', rows, 'region', (items) => {
+        const revenue = sum(items, 'revenue');
+        return revenue ? (sum(items, 'profit') / revenue) * 100 : 0;
+      }, formatPercent);
+      renderRankedBars('channelBars', rows, 'channel', (items) => {
+        const visitors = sum(items, 'visitors');
+        return visitors ? sum(items, 'revenue') / visitors : 0;
+      }, (value) => `$${value.toFixed(2)}`);
+      renderMatrix(rows);
+      renderInsights(rows);
+      renderExperimentCard();
+      renderActions();
+      renderOperationalCohort(rows);
+      renderRetentionCurve(rows);
+      renderFunnel(rows);
+      renderSegmentHealth(rows);
+      renderRepurchaseCycle(rows);
+      renderForecast(rows);
+      renderAiSegmentation(rows);
+      renderLtvCac(rows);
+      renderTable(rows);
+    }
+
+    function setActiveTab(tabId) {
+      dashboardState.activeTab = tabId;
+      document.querySelectorAll('.tab-button').forEach((button) => {
+        button.classList.toggle('active', button.dataset.tabTarget === tabId);
+      });
+      document.querySelectorAll('.tab-panel').forEach((panel) => {
+        panel.classList.toggle('active', panel.id === tabId);
+      });
+    }
+
+    document.getElementById('applyFilters').addEventListener('click', applyFilters);
+    document.getElementById('resetFilters').addEventListener('click', () => {
+      initializeFilters();
+      applyFilters();
+    });
+    document.querySelectorAll('.lang-button').forEach((button) => {
+      button.addEventListener('click', () => {
+        dashboardState.locale = button.dataset.lang;
+        localStorage.setItem('agentMapLocale', dashboardState.locale);
+        applyLanguage();
+        initializeFilters();
+        applyFilters();
+      });
+    });
+
+    document.querySelectorAll('[data-trend-metric]').forEach((button) => {
+      button.addEventListener('click', () => {
+        dashboardState.trendMetric = button.dataset.trendMetric;
+        document.querySelectorAll('[data-trend-metric]').forEach((item) => item.classList.toggle('active', item === button));
+        renderTrend(dashboardState.filteredRows);
+      });
+    });
+
+    document.querySelectorAll('[data-trend-mode]').forEach((button) => {
+      button.addEventListener('click', () => {
+        dashboardState.trendMode = button.dataset.trendMode;
+        document.querySelectorAll('[data-trend-mode]').forEach((item) => item.classList.toggle('active', item === button));
+        renderTrend(dashboardState.filteredRows);
+      });
+    });
+
+    document.querySelectorAll('.tab-button').forEach((button) => {
+      button.addEventListener('click', () => setActiveTab(button.dataset.tabTarget));
+    });
+
+    loadData();
+  </script>
+</body>
+</html>
