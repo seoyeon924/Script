@@ -40,17 +40,20 @@ status: ✅ 대본완성
 
 ## 직접 해보기
 
-> **💡 이 클립만 따로 시작한다면** — 먼저 클로드에게 데이터 생성 요청
+> **💡 이 클립만 따로 시작한다면** — 먼저 실행해서 데이터 생성
 > ```bash
-> mkdir -p ~/retention-project/data/raw ~/retention-project/data/output ~/retention-project/charts ~/retention-project/reports
-> cd ~/retention-project
-> claude
-> ```
-> 클로드에게:
-> ```
-> 코호트 리텐션 분석용 샘플 데이터 생성해줘.
-> 가입 고객 2,000명, 12개월 구독 기록. 컬럼: user_id, cohort_month, order_month, revenue.
-> 1개월 리텐션 60%, 매월 10%씩 감소. data/raw/orders.csv 저장.
+> mkdir -p ~/retention-project/data/raw ~/retention-project/data/output ~/retention-project/charts ~/retention-project/reports && cd ~/retention-project
+> python3 -c "
+> import pandas as pd, random; random.seed(42); rows = []
+> for uid in range(2000):
+>     cohort = random.randint(1,12)
+>     for month in range(cohort, 13):
+>         age = month - cohort
+>         ret = 1.0 if age==0 else max(0.05, 0.6*(0.9**(age-1)))
+>         if random.random() < ret:
+>             rows.append({'user_id':f'U{uid:04d}','cohort_month':f'2024-{cohort:02d}','order_month':f'2024-{month:02d}','revenue':random.randint(15000,80000)})
+> pd.DataFrame(rows).to_csv('data/raw/orders.csv',index=False); print('생성 완료:', len(rows), '행')
+> "
 > ```
 
 

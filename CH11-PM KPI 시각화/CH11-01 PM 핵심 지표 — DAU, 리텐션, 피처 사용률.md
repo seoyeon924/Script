@@ -60,9 +60,22 @@ Day 30: 가입 후 30일째 다시 온 비율
 **목표**: 서비스 사용 로그에서 PM 핵심 지표를 추출합니다.
 
 **준비 (터미널에 복붙)**
+
+> 아래 코드로 서비스 사용 로그 샘플 데이터를 즉시 생성합니다.
+
 ```bash
-mkdir ~/pm-project && cd ~/pm-project
-mkdir -p data/raw data/output charts reports
+mkdir -p ~/pm-project/data/raw ~/pm-project/data/output ~/pm-project/charts ~/pm-project/reports
+cd ~/pm-project
+python3 -c "
+import pandas as pd, random; from datetime import date, timedelta; random.seed(42)
+features = ['검색','추천','즐겨찾기','공유','설정']; start = date(2024,1,1); rows = []
+for uid in range(1000):
+    for day in range(90):
+        rate = 0.6 if day<3 else (max(0.2, 0.6-(day-3)*0.012) if day<30 else 0.2)
+        if random.random() < rate:
+            rows.append({'user_id':f'U{uid:04d}','date':str(start+timedelta(days=day)),'feature_used':random.choice(features)})
+pd.DataFrame(rows).to_csv('data/raw/user_logs.csv',index=False); print('생성 완료:', len(rows), '행')
+"
 claude
 ```
 
