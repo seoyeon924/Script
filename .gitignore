@@ -1,5 +1,0 @@
-*.bak
-.DS_Store
-.netlify/
-__pycache__/
-*.pyc
