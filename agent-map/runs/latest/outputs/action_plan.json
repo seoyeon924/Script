@@ -1,0 +1,25 @@
+{
+  "actions": [
+    {
+      "priority": 1,
+      "title": "Reduce discount pressure in low-margin categories",
+      "owner": "Pricing",
+      "impact": "High",
+      "reason": "Furniture has the weakest margin at 10.7%."
+    },
+    {
+      "priority": 2,
+      "title": "Scale the strongest segment-region mix",
+      "owner": "Growth",
+      "impact": "High",
+      "reason": "Consumer is the top segment by revenue at $166K."
+    },
+    {
+      "priority": 3,
+      "title": "Validate experiment winner before full rollout",
+      "owner": "Product",
+      "impact": "Medium",
+      "reason": "Prepare an experiment plan using the KPI baseline."
+    }
+  ]
+}

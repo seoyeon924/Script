@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='utf-8'?>
+<workbook original-version="2024.1" source-build="agent-map-codex" source-platform="mac" version="2024.1">
+  <document-format-change-manifest>
+    <_.fcp.AccessibleZoneTabOrder.true...style />
+  </document-format-change-manifest><preferences>
+    <preference name="ui.encoding.shelf.height" value="24" />
+  </preferences><datasources>
+    <datasource caption="AgentMap Data" inline="true" name="federated.1" version="18.1">
+      <connection class="textscan" dbname="sample_sales.csv" directory="Data" filename="sample_sales.csv" />
+      <metadata-records>
+        <metadata-record class="column">
+          <local-name>date</local-name>
+          <remote-name>date</remote-name>
+          <remote-type>wstring</remote-type>
+        </metadata-record><metadata-record class="column">
+          <local-name>region</local-name>
+          <remote-name>region</remote-name>
+          <remote-type>wstring</remote-type>
+        </metadata-record><metadata-record class="column">
+          <local-name>segment</local-name>
+          <remote-name>segment</remote-name>
+          <remote-type>wstring</remote-type>
+        </metadata-record><metadata-record class="column">
+          <local-name>category</local-name>
+          <remote-name>category</remote-name>
+          <remote-type>wstring</remote-type>
+        </metadata-record><metadata-record class="column">
+          <local-name>sub_category</local-name>
+          <remote-name>sub_category</remote-name>
+          <remote-type>wstring</remote-type>
+        </metadata-record><metadata-record class="column">
+          <local-name>channel</local-name>
+          <remote-name>channel</remote-name>
+          <remote-type>wstring</remote-type>
+        </metadata-record><metadata-record class="column">
+          <local-name>visitors</local-name>
+          <remote-name>visitors</remote-name>
+          <remote-type>real</remote-type>
+        </metadata-record><metadata-record class="column">
+          <local-name>orders</local-name>
+          <remote-name>orders</remote-name>
+          <remote-type>real</remote-type>
+        </metadata-record><metadata-record class="column">
+          <local-name>revenue</local-name>
+          <remote-name>revenue</remote-name>
+          <remote-type>real</remote-type>
+        </metadata-record><metadata-record class="column">
+          <local-name>cost</local-name>
+          <remote-name>cost</remote-name>
+          <remote-type>real</remote-type>
+        </metadata-record><metadata-record class="column">
+          <local-name>discount</local-name>
+          <remote-name>discount</remote-name>
+          <remote-type>real</remote-type>
+        </metadata-record><metadata-record class="column">
+          <local-name>test_group</local-name>
+          <remote-name>test_group</remote-name>
+          <remote-type>wstring</remote-type>
+        </metadata-record>
+      </metadata-records>
+    </datasource>
+  </datasources><worksheets>
+    <worksheet name="Executive Overview">
+      <layout-options />
+      <table>
+        <view>
+          <datasource-dependencies datasource="federated.1">
+            <column caption="Revenue" datatype="real" name="[revenue]" role="measure" type="quantitative" />
+            <column caption="Profit Margin" datatype="real" name="[profit_margin]" role="measure" type="quantitative" />
+            <column caption="Conversion Rate" datatype="real" name="[conversion_rate]" role="measure" type="quantitative" />
+            <column caption="Average Order Value" datatype="real" name="[average_order_value]" role="measure" type="quantitative" />
+          </datasource-dependencies>
+        </view>
+      </table>
+    </worksheet><worksheet name="Drivers &amp; Diagnostics">
+      <layout-options />
+      <table>
+        <view>
+          <datasource-dependencies datasource="federated.1">
+            <column caption="Revenue" datatype="real" name="[revenue]" role="measure" type="quantitative" />
+            <column caption="Profit Margin" datatype="real" name="[profit_margin]" role="measure" type="quantitative" />
+            <column caption="Conversion Rate" datatype="real" name="[conversion_rate]" role="measure" type="quantitative" />
+            <column caption="Average Order Value" datatype="real" name="[average_order_value]" role="measure" type="quantitative" />
+          </datasource-dependencies>
+        </view>
+      </table>
+    </worksheet><worksheet name="Action Board">
+      <layout-options />
+      <table>
+        <view>
+          <datasource-dependencies datasource="federated.1">
+            <column caption="Revenue" datatype="real" name="[revenue]" role="measure" type="quantitative" />
+            <column caption="Profit Margin" datatype="real" name="[profit_margin]" role="measure" type="quantitative" />
+            <column caption="Conversion Rate" datatype="real" name="[conversion_rate]" role="measure" type="quantitative" />
+            <column caption="Average Order Value" datatype="real" name="[average_order_value]" role="measure" type="quantitative" />
+          </datasource-dependencies>
+        </view>
+      </table>
+    </worksheet><worksheet name="Data Table">
+      <layout-options />
+      <table>
+        <view>
+          <datasource-dependencies datasource="federated.1">
+            <column caption="Revenue" datatype="real" name="[revenue]" role="measure" type="quantitative" />
+            <column caption="Profit Margin" datatype="real" name="[profit_margin]" role="measure" type="quantitative" />
+            <column caption="Conversion Rate" datatype="real" name="[conversion_rate]" role="measure" type="quantitative" />
+            <column caption="Average Order Value" datatype="real" name="[average_order_value]" role="measure" type="quantitative" />
+          </datasource-dependencies>
+        </view>
+      </table>
+    </worksheet>
+  </worksheets><dashboards>
+    <dashboard name="Executive Overview">
+      <style>
+        <style-rule element="dashboard" />
+      </style><zones>
+        <zone id="1" name="KPI cards with sparkline and delta" type-v2="layout-basic" x="0" y="0" w="1200" h="100">KPI cards with sparkline and delta</zone>
+        <zone id="2" name="Trend line section" type-v2="layout-basic" x="0" y="120" w="1200" h="100">Trend line section</zone>
+        <zone id="3" name="Category and region comparison" type-v2="layout-basic" x="0" y="240" w="1200" h="100">Category and region comparison</zone>
+        <zone id="4" name="Action summary card" type-v2="layout-basic" x="0" y="360" w="1200" h="100">Action summary card</zone>
+      </zones>
+    </dashboard><dashboard name="Drivers &amp; Diagnostics">
+      <style>
+        <style-rule element="dashboard" />
+      </style><zones>
+        <zone id="1" name="Funnel efficiency view" type-v2="layout-basic" x="0" y="0" w="1200" h="100">Funnel efficiency view</zone>
+        <zone id="2" name="A/B test lift card" type-v2="layout-basic" x="0" y="120" w="1200" h="100">A/B test lift card</zone>
+        <zone id="3" name="Region/category ranking with max/min emphasis" type-v2="layout-basic" x="0" y="240" w="1200" h="100">Region/category ranking with max/min emphasis</zone>
+        <zone id="4" name="Knowledge base insights" type-v2="layout-basic" x="0" y="360" w="1200" h="100">Knowledge base insights</zone>
+      </zones>
+    </dashboard><dashboard name="Action Board">
+      <style>
+        <style-rule element="dashboard" />
+      </style><zones>
+        <zone id="1" name="Prioritized action cards" type-v2="layout-basic" x="0" y="0" w="1200" h="100">Prioritized action cards</zone>
+        <zone id="2" name="Actionable leading indicators" type-v2="layout-basic" x="0" y="120" w="1200" h="100">Actionable leading indicators</zone>
+        <zone id="3" name="Owner-based execution table" type-v2="layout-basic" x="0" y="240" w="1200" h="100">Owner-based execution table</zone>
+      </zones>
+    </dashboard><dashboard name="Data Table">
+      <style>
+        <style-rule element="dashboard" />
+      </style><zones>
+        <zone id="1" name="Detailed text table" type-v2="layout-basic" x="0" y="0" w="1200" h="100">Detailed text table</zone>
+        <zone id="2" name="Download/export affordance" type-v2="layout-basic" x="0" y="120" w="1200" h="100">Download/export affordance</zone>
+      </zones>
+    </dashboard>
+  </dashboards><windows>
+    <window class="dashboard" name="Executive Overview" />
+  </windows>
+</workbook>

@@ -1,0 +1,115 @@
+{
+  "run_id": "latest-seeded",
+  "started_at": "2026-03-12T07:10:11.127628+00:00",
+  "finished_at": "2026-03-12T07:10:12.138455+00:00",
+  "overall_status": "completed",
+  "current_stage": "done",
+  "inputs": [
+    {
+      "name": "sample_sales.csv",
+      "type": "csv",
+      "size_bytes": 2180,
+      "rows": 24,
+      "columns": 12,
+      "column_names": [
+        "date",
+        "region",
+        "segment",
+        "category",
+        "sub_category",
+        "channel",
+        "visitors",
+        "orders",
+        "revenue",
+        "cost",
+        "discount",
+        "test_group"
+      ],
+      "source": "data/samples/sample_sales.csv",
+      "active": true
+    }
+  ],
+  "progress": {
+    "completed": 7,
+    "total": 7
+  },
+  "stages": [
+    {
+      "id": "data-ingestion",
+      "name": "@data-ingestion",
+      "icon": "⊕",
+      "color": "mint",
+      "status": "completed",
+      "summary": "Loaded 24 rows and 14 columns",
+      "started_at": "2026-03-12T07:10:11.142980+00:00",
+      "completed_at": "2026-03-12T07:10:11.146047+00:00",
+      "duration_seconds": 0.0
+    },
+    {
+      "id": "eda",
+      "name": "@eda",
+      "icon": "◈",
+      "color": "lavender",
+      "status": "completed",
+      "summary": "Built EDA report with 3 core findings",
+      "started_at": "2026-03-12T07:10:11.146375+00:00",
+      "completed_at": "2026-03-12T07:10:11.769201+00:00",
+      "duration_seconds": 0.62
+    },
+    {
+      "id": "problem",
+      "name": "@problem",
+      "icon": "✦",
+      "color": "rose",
+      "status": "completed",
+      "summary": "Generated 5 questions and 3 hypotheses",
+      "started_at": "2026-03-12T07:10:11.769515+00:00",
+      "completed_at": "2026-03-12T07:10:11.770285+00:00",
+      "duration_seconds": 0.0
+    },
+    {
+      "id": "metrics",
+      "name": "@metrics",
+      "icon": "▣",
+      "color": "cream",
+      "status": "completed",
+      "summary": "Calculated KPI layer and A/B test summary",
+      "started_at": "2026-03-12T07:10:11.770574+00:00",
+      "completed_at": "2026-03-12T07:10:11.777151+00:00",
+      "duration_seconds": 0.01
+    },
+    {
+      "id": "analysis",
+      "name": "@analysis",
+      "icon": "⌘",
+      "color": "mint",
+      "status": "completed",
+      "summary": "Completed 3 analytical findings",
+      "started_at": "2026-03-12T07:10:11.777519+00:00",
+      "completed_at": "2026-03-12T07:10:12.131080+00:00",
+      "duration_seconds": 0.35
+    },
+    {
+      "id": "dashboard",
+      "name": "@dashboard",
+      "icon": "▦",
+      "color": "lavender",
+      "status": "completed",
+      "summary": "Dashboard spec and chart assets generated",
+      "started_at": "2026-03-12T07:10:12.131588+00:00",
+      "completed_at": "2026-03-12T07:10:12.133095+00:00",
+      "duration_seconds": 0.0
+    },
+    {
+      "id": "report",
+      "name": "@report",
+      "icon": "≡",
+      "color": "mint",
+      "status": "completed",
+      "summary": "Executive report and action plan completed",
+      "started_at": "2026-03-12T07:10:12.133401+00:00",
+      "completed_at": "2026-03-12T07:10:12.138105+00:00",
+      "duration_seconds": 0.0
+    }
+  ]
+}

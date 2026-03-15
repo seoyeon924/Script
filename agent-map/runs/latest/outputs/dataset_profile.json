@@ -1,0 +1,37 @@
+{
+  "rows": 24,
+  "columns": 14,
+  "numeric_columns": [
+    "visitors",
+    "orders",
+    "revenue",
+    "cost",
+    "discount"
+  ],
+  "categorical_columns": [
+    "date",
+    "region",
+    "segment",
+    "category",
+    "sub_category",
+    "channel",
+    "test_group",
+    "profit",
+    "month"
+  ],
+  "date_column": "date",
+  "metric_mapping": {
+    "revenue": "revenue",
+    "cost": "cost",
+    "orders": "orders",
+    "visitors": "visitors",
+    "segment": "segment",
+    "category": "category",
+    "sub_category": "sub_category",
+    "region": "region",
+    "channel": "channel",
+    "experiment_id": null,
+    "test_group": "test_group"
+  },
+  "missing_cells": 0
+}

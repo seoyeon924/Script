@@ -1,0 +1,394 @@
+{
+  "run_id": "latest-seeded",
+  "outputs": [
+    {
+      "id": "dataset-profile",
+      "name": "Dataset Profile",
+      "file_name": "dataset_profile.json",
+      "relative_path": "runs/latest-seeded/outputs/dataset_profile.json",
+      "type": "json",
+      "status": "ready",
+      "icon_class": "metrics",
+      "meta": "24 rows · 14 columns",
+      "preview": {
+        "kind": "sections",
+        "title": "Dataset Profile",
+        "badge": "Loaded",
+        "metrics": [
+          {
+            "value": "24",
+            "label": "Rows"
+          },
+          {
+            "value": "14",
+            "label": "Columns"
+          },
+          {
+            "value": "0",
+            "label": "Missing"
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Schema",
+            "body": "24 rows · 14 columns · date column: date"
+          },
+          {
+            "heading": "Numeric Columns",
+            "body": "visitors, orders, revenue, cost, discount"
+          },
+          {
+            "heading": "Categorical Columns",
+            "body": "date, region, segment, category, sub_category, channel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "eda-report",
+      "name": "EDA Report",
+      "file_name": "eda_report.md",
+      "relative_path": "runs/latest-seeded/outputs/eda_report.md",
+      "type": "markdown",
+      "status": "ready",
+      "icon_class": "eda",
+      "meta": "3 insights · 24 rows",
+      "preview": {
+        "kind": "eda-report",
+        "title": "EDA Report",
+        "badge": "Completed",
+        "metrics": [
+          {
+            "value": "24",
+            "label": "Rows"
+          },
+          {
+            "value": "14",
+            "label": "Columns"
+          },
+          {
+            "value": "0",
+            "label": "Missing"
+          }
+        ],
+        "insights": [
+          "Technology leads revenue at $207K.",
+          "North America is the strongest region by revenue at $170K.",
+          "Furniture has the weakest margin at 10.7%."
+        ],
+        "charts": [
+          {
+            "title": "Revenue by Category",
+            "image_path": "runs/latest-seeded/outputs/plots/revenue_by_category.png",
+            "caption": "Auto-generated from the current run."
+          },
+          {
+            "title": "Revenue by Region",
+            "image_path": "runs/latest-seeded/outputs/plots/eda_revenue_by_region.png",
+            "caption": "Regional EDA slice."
+          },
+          {
+            "title": "Monthly Revenue Trend",
+            "image_path": "runs/latest-seeded/outputs/plots/eda_monthly_revenue.png",
+            "caption": "Trend over time."
+          }
+        ]
+      }
+    },
+    {
+      "id": "business-questions",
+      "name": "Business Questions",
+      "file_name": "problem_definition.md",
+      "relative_path": "runs/latest-seeded/outputs/problem_definition.md",
+      "type": "markdown",
+      "status": "ready",
+      "icon_class": "questions",
+      "meta": "5 questions generated",
+      "preview": {
+        "kind": "questions",
+        "questions": [
+          "Which segment drives the best revenue efficiency and should receive more budget?",
+          "Which category has the weakest profit margin and requires pricing or cost intervention?",
+          "Which region is underperforming relative to its traffic volume?",
+          "What trend changes appear in the latest month compared with the prior period?",
+          "Which channel or experiment variant should be scaled next quarter?"
+        ]
+      }
+    },
+    {
+      "id": "kpi-summary",
+      "name": "KPI Summary",
+      "file_name": "kpi_summary.json",
+      "relative_path": "runs/latest-seeded/outputs/kpi_summary.json",
+      "type": "json",
+      "status": "ready",
+      "icon_class": "metrics",
+      "meta": "$397K revenue · 30.6% margin",
+      "preview": {
+        "kind": "sections",
+        "title": "KPI Summary",
+        "badge": "Benchmarked",
+        "metrics": [
+          {
+            "value": "$397K",
+            "label": "Revenue"
+          },
+          {
+            "value": "$121K",
+            "label": "Profit"
+          },
+          {
+            "value": "30.6%",
+            "label": "Margin"
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Revenue",
+            "body": "$397K from 3,283 orders."
+          },
+          {
+            "heading": "Profit",
+            "body": "$121K total profit with 30.6% margin."
+          },
+          {
+            "heading": "Conversion",
+            "body": "12.55% conversion rate and $120.97 AOV."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ab-test-summary",
+      "name": "A/B Test",
+      "file_name": "ab_test_summary.json",
+      "relative_path": "runs/latest-seeded/outputs/ab_test_summary.json",
+      "type": "json",
+      "status": "ready",
+      "icon_class": "questions",
+      "meta": "B vs A · p=0.0108",
+      "preview": {
+        "kind": "sections",
+        "title": "A/B Test",
+        "badge": "Measured",
+        "metrics": [
+          {
+            "value": "12.03%",
+            "label": "A"
+          },
+          {
+            "value": "13.08%",
+            "label": "B"
+          },
+          {
+            "value": "0.0108",
+            "label": "p-value"
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Variant Lift",
+            "body": "B improved conversion by +1.04 pts versus A."
+          },
+          {
+            "heading": "Significance",
+            "body": "z-score 2.548 · p-value 0.0108."
+          },
+          {
+            "heading": "Decision",
+            "body": "Statistically significant at 95% confidence."
+          }
+        ]
+      }
+    },
+    {
+      "id": "analysis-report",
+      "name": "Analysis Report",
+      "file_name": "analysis_report.md",
+      "relative_path": "runs/latest-seeded/outputs/analysis_report.md",
+      "type": "markdown",
+      "status": "ready",
+      "icon_class": "report",
+      "meta": "3 findings synthesized",
+      "preview": {
+        "kind": "report",
+        "title": "Analysis Report",
+        "badge": "Deep Dive",
+        "metrics": [
+          {
+            "value": "$397K",
+            "label": "Revenue"
+          },
+          {
+            "value": "$121K",
+            "label": "Profit"
+          },
+          {
+            "value": "30.6%",
+            "label": "Margin"
+          }
+        ],
+        "insights": [
+          "Consumer is the top segment by revenue at $166K.",
+          "Asia Pacific has the highest regional margin at 36.6%.",
+          "Latest month revenue changed -30.8% versus the prior month."
+        ]
+      }
+    },
+    {
+      "id": "dashboard-spec",
+      "name": "Dashboard Spec",
+      "file_name": "dashboard_spec.json",
+      "relative_path": "runs/latest-seeded/outputs/dashboard_spec.json",
+      "type": "json",
+      "status": "ready",
+      "icon_class": "dashboard",
+      "meta": "3 charts configured",
+      "preview": {
+        "kind": "sections",
+        "title": "Dashboard Spec",
+        "badge": "Prepared",
+        "metrics": [
+          {
+            "label": "Revenue",
+            "value": "$397K"
+          },
+          {
+            "label": "Profit",
+            "value": "$121K"
+          },
+          {
+            "label": "Margin",
+            "value": "30.6%"
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Revenue by Category",
+            "body": "bar chart wired to revenue_by_category.png."
+          },
+          {
+            "heading": "Revenue by Region",
+            "body": "bar chart wired to revenue_by_region.png."
+          },
+          {
+            "heading": "Monthly Revenue Trend",
+            "body": "bar chart wired to monthly_revenue.png."
+          }
+        ]
+      }
+    },
+    {
+      "id": "executive-report",
+      "name": "Executive Report",
+      "file_name": "executive_report.md",
+      "relative_path": "runs/latest-seeded/outputs/executive_report.md",
+      "type": "markdown",
+      "status": "ready",
+      "icon_class": "report",
+      "meta": "3 actions prioritized",
+      "preview": {
+        "kind": "report",
+        "title": "Executive Report",
+        "badge": "Ready",
+        "metrics": [
+          {
+            "value": "$397K",
+            "label": "Revenue"
+          },
+          {
+            "value": "$121K",
+            "label": "Profit"
+          },
+          {
+            "value": "30.6%",
+            "label": "Margin"
+          }
+        ],
+        "insights": [
+          "Reduce discount pressure in low-margin categories",
+          "Scale the strongest segment-region mix",
+          "Validate experiment winner before full rollout"
+        ]
+      }
+    },
+    {
+      "id": "action-plan",
+      "name": "Action Plan",
+      "file_name": "action_plan.md",
+      "relative_path": "runs/latest-seeded/outputs/action_plan.md",
+      "type": "markdown",
+      "status": "ready",
+      "icon_class": "report",
+      "meta": "Prioritized next steps",
+      "preview": {
+        "kind": "action-plan",
+        "actions": [
+          {
+            "priority": 1,
+            "title": "Reduce discount pressure in low-margin categories",
+            "owner": "Pricing",
+            "impact": "High",
+            "reason": "Furniture has the weakest margin at 10.7%."
+          },
+          {
+            "priority": 2,
+            "title": "Scale the strongest segment-region mix",
+            "owner": "Growth",
+            "impact": "High",
+            "reason": "Consumer is the top segment by revenue at $166K."
+          },
+          {
+            "priority": 3,
+            "title": "Validate experiment winner before full rollout",
+            "owner": "Product",
+            "impact": "Medium",
+            "reason": "A/B test summary is available and should be operationalized."
+          }
+        ]
+      }
+    },
+    {
+      "id": "knowledge-base",
+      "name": "Knowledge Base",
+      "file_name": "knowledge_base.json",
+      "relative_path": "runs/latest-seeded/outputs/knowledge_base.json",
+      "type": "json",
+      "status": "ready",
+      "icon_class": "questions",
+      "meta": "3 actions remembered",
+      "preview": {
+        "kind": "sections",
+        "title": "Knowledge Base",
+        "badge": "Learning",
+        "metrics": [],
+        "sections": [
+          {
+            "heading": "Dataset shape",
+            "body": "24 rows across 14 columns were processed in the latest run."
+          },
+          {
+            "heading": "Revenue baseline",
+            "body": "Revenue is $397K with 30.6% margin."
+          },
+          {
+            "heading": "Top analytical signal",
+            "body": "Consumer is the top segment by revenue at $166K."
+          },
+          {
+            "heading": "Rule",
+            "body": "Prioritize low-margin categories for pricing review before acquisition spend increases."
+          },
+          {
+            "heading": "Rule",
+            "body": "Promote segment-region combinations that outperform both on revenue and margin."
+          },
+          {
+            "heading": "Rule",
+            "body": "Translate every major insight into an explicit owner and next action."
+          }
+        ]
+      }
+    }
+  ]
+}

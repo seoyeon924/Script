@@ -1,0 +1,8 @@
+{
+  "metric_framework": "runs/latest/outputs/tableau/tableau_metric_framework.md",
+  "design_brief": "runs/latest/outputs/tableau/tableau_design_brief.md",
+  "tableau_spec": "runs/latest/outputs/tableau/tableau_spec.json",
+  "wireframe": "runs/latest/outputs/tableau/tableau_wireframe.html",
+  "twb": "runs/latest/outputs/tableau/agent_map_exec_dashboard.twb",
+  "twbx": "runs/latest/outputs/tableau/agent_map_exec_dashboard.twbx"
+}
