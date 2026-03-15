@@ -1,12 +1,12 @@
 ---
-title: CH01-06 훅(Hooks) — 작업 자동화 트리거
+title: CH01-08 훅(Hooks) — 작업 자동화 트리거
 chapter: CH01
-clip: 06
+clip: 08
 time: 12분
 type: 슬라이드 + 실습
 ---
 
-# CH01-06 훅(Hooks) — 작업 자동화 트리거
+# CH01-08 훅(Hooks) — 작업 자동화 트리거
 
 ## 클립 목표
 

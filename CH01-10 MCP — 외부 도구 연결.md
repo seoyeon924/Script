@@ -1,12 +1,12 @@
 ---
-title: CH01-08 MCP — 외부 도구 연결
+title: CH01-10 MCP — 외부 도구 연결
 chapter: CH01
-clip: 08
+clip: 10
 time: 10분
 type: 슬라이드 + 실습
 ---
 
-# CH01-08 MCP — 외부 도구 연결
+# CH01-10 MCP — 외부 도구 연결
 
 ## 클립 목표
 
