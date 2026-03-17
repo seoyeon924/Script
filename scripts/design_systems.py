@@ -97,18 +97,66 @@ PILL_PX      = s(20)    # pill 좌우 패딩
 PILL_PY      = s(8)     # pill 상하 패딩
 PILL_R       = s(4)     # pill radius
 
-# ── 폰트 크기 ────────────────────────────────────────────────
+# ── Pretendard 폰트 경로 ─────────────────────────────────────
+FONTS = {
+    "regular":  "/Users/sy/Library/Fonts/Pretendard-Regular.otf",
+    "semibold": "/Users/sy/Library/Fonts/Pretendard-SemiBold.otf",
+    "bold":     "/Users/sy/Library/Fonts/Pretendard-Bold.otf",
+    "fallback": "/System/Library/Fonts/AppleSDGothicNeo.ttc",
+}
+
+# ── 폰트 크기 위계 (레퍼런스 분석 기반, ×S 스케일)
+# 라벨:타이틀:서브라벨:본문:메타 = 14:30:18:14:12
+# ────────────────────────────────────────────────────────────
 FS = {
-    "category": s(14),    # "Painpoint 2" / "Research"
-    "h1":       s(26),    # 메인 타이틀
-    "h2":       s(22),    # 섹션 헤딩
-    "h3":       s(17),    # 서브 헤딩, 번호리스트 제목
-    "body":     s(14),    # 본문
-    "sm":       s(13),    # 설명, 캡션
-    "tag":      s(13),    # pill 태그
-    "num":      s(17),    # 01/02/03 번호
-    "num_big":  s(42),    # 결과 테이블 숫자
-    "xs":       s(11),    # 각주
+    "category": s(14),    # "Chapter 01" — Regular, #888
+    "h1":       s(30),    # 메인 타이틀 — Bold, #1A1A1A  (레퍼런스: 28-32px)
+    "h2":       s(22),    # 섹션 헤딩 — Bold, #1A1A1A
+    "h3":       s(18),    # 서브라벨/번호제목 — SemiBold, #1A1A1A  (레퍼런스: 16-18px)
+    "body":     s(14),    # 본문 — Regular, #333333  (레퍼런스: 14-15px)
+    "sm":       s(13),    # 설명/캡션 — Regular, #333-#444
+    "tag":      s(13),    # pill 태그 — SemiBold
+    "num":      s(18),    # 01/02/03 번호 — SemiBold
+    "num_big":  s(42),    # 결과 테이블 숫자 — Bold
+    "xs":       s(12),    # 메타/각주 — Regular, #888  (레퍼런스: 12-13px)
+}
+
+# ── 타이포 스타일 매핑 ────────────────────────────────────────
+# weight: "regular" | "semibold" | "bold"
+FW = {
+    "category": "regular",
+    "h1":       "bold",
+    "h2":       "bold",
+    "h3":       "semibold",
+    "body":     "regular",
+    "sm":       "regular",
+    "tag":      "semibold",
+    "num":      "semibold",
+    "num_big":  "bold",
+    "xs":       "regular",
+}
+
+# ── 색상 위계 (레퍼런스 분석 기반) ───────────────────────────
+GRAY_COLOR = {
+    "category": (136, 136, 136),   # #888888 — 라벨
+    "h1":       (17, 17, 17),      # #111111 — 타이틀
+    "h2":       (26, 26, 26),      # #1A1A1A
+    "h3":       (26, 26, 26),      # #1A1A1A — 서브라벨
+    "body":     (51, 51, 51),      # #333333 — 본문
+    "sm":       (68, 68, 68),      # #444444 — 설명
+    "meta":     (136, 136, 136),   # #888888 — 메타
+    "xs":       (170, 170, 170),   # #AAAAAA — 각주
+}
+
+ORANGE_COLOR = {
+    "category": (152, 136, 118),   # 웜톤 그레이
+    "h1":       (26, 20, 14),      # 딥 웜 블랙
+    "h2":       (34, 28, 20),
+    "h3":       (34, 28, 20),
+    "body":     (68, 56, 46),      # 웜 다크 그레이
+    "sm":       (85, 72, 60),
+    "meta":     (152, 136, 118),
+    "xs":       (176, 162, 148),
 }
 
 DESIGN_SYSTEMS = {
