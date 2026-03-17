@@ -3,3 +3,7 @@
 .netlify/
 __pycache__/
 *.pyc
+
+# ElevenLabs 보안 파일
+.elevenlabs.env
+*.env
