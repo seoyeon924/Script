@@ -173,8 +173,10 @@ d   = ImageDraw.Draw(img)
 # 헤더
 # ════════════════════════════════════════════════════════════════
 tx = MARGIN; ty = 44
-w1 = text(d, tx, ty, "클로드 코드", HT, "b", BLACK)
-text(d, tx+w1+16, ty, "워크플로우 치트시트", HT, "b", OD)
+_f_ht = F(HT, "b")
+w1 = tw(d, "클로드 코드", _f_ht)
+text(d, tx, ty, "클로드 코드", HT, "b", BLACK)
+text(d, tx+w1+20, ty, "워크플로우 치트시트", HT, "b", OD)
 
 sy = ty + th(d,"A",F(HT,"b")) + 14
 text(d, tx, sy,
@@ -285,24 +287,50 @@ bullets(d, x3, cy3, [
 cy5, P5 = card(d, X1, R2Y, COL_W, H2, 5, "프로젝트 파일 구조")
 x5=X1+P5; w5=COL_W-P5*2
 
-code(d, x5, cy5, w5, [
+# 설정 스코프 4단계 라벨
+cy5+=4
+scope_data = [
+    ("Managed", "server / plist", "조직 전체 강제 적용"),
+    ("User",    "~/.claude/",     "개인, 모든 프로젝트"),
+    ("Project", ".claude/",       "팀 공유 (git 커밋)"),
+    ("Local",   "settings.local.json", "개인 × 이 프로젝트"),
+]
+for lbl, path, desc in scope_data:
+    lx = x5
+    pw, ph = pill(d, lx, cy5, lbl, sz=16, bg=CODE_BG, fg=OD, r=5)
+    lx += pw + 10
+    text(d, lx, cy5+2, path, CD, "sb", BLACK)
+    path_w = tw(d, path, F(CD, "sb"))
+    text(d, lx + path_w + 10, cy5+4, "← "+desc, 16, "r", DIM_C)
+    cy5 += ph + 8
+cy5 += 14
+rule(d, x5, cy5, w5); cy5 += 18
+
+# 터미널 트리
+cy5 += 8
+cy5 = code(d, x5, cy5, w5, [
     "your-project/",
-    "  CLAUDE.md",
-    "  .claude/",
-    "    settings.json",
-    "    settings.local.json",
-    "    skills/",
-    "      code-review/",
-    "        SKILL.md",
-    "      testing/",
-    "        SKILL.md",
-    "      helpers.py",
-    "  commands/",
-    "    deploy.md",
-    "  agents/",
-    "    security-reviewer.md",
-    "  .gitignore",
-])
+    "├── CLAUDE.md              ← 프로젝트 메모리",
+    "├── .claude/",
+    "│   ├── settings.json      ← 팀 설정 (git 공유)",
+    "│   ├── settings.local.json  ← 개인 (gitignore)",
+    "│   ├── rules/             ← 파일 유형별 규칙",
+    "│   │   ├── *.test.ts.md",
+    "│   │   └── api-routes.md",
+    "│   ├── skills/",
+    "│   │   ├── code-review/",
+    "│   │   │   ├── SKILL.md   ← 핵심 지침서 (필수)",
+    "│   │   │   └── reference.md",
+    "│   │   └── testing/",
+    "│   │       └── SKILL.md",
+    "│   └── commands/          ← 커스텀 슬래시 커맨드",
+    "│       ├── deploy.md      ← /deploy",
+    "│       └── review.md      ← /review",
+    "└── .gitignore",
+]) + 18
+
+rule(d, x5, cy5, w5); cy5 += 18
+text(d, x5, cy5, "⚑  settings.local.json 은 반드시 .gitignore 에 추가", BD, "r", OD)
 
 # ════════════════════════════════════════════════════════════════
 # ⑥ 스킬 추가
@@ -320,6 +348,19 @@ for lbl,path in [("프로젝트 스킬", ".claude/skills/<name>/SKILL.md"),
     cy6=code(d, x6, cy6, w6, [path])+12
 
 cy6+=8; rule(d, x6, cy6, w6); cy6+=16
+
+# 스킬 폴더 트리 추가
+cy6+=8
+cy6=code(d, x6, cy6, w6, [
+    ".claude/skills/my-skill/",
+    "  SKILL.md          ← 핵심 지침서 (필수, 1개)",
+    "  reference.md      ← 참고 자료 (선택)",
+    "  examples.md       ← 예제 모음",
+    "  scripts/",
+    "    helper.py       ← 실행 스크립트",
+])+14
+rule(d, x6, cy6, w6); cy6+=16
+
 text(d, x6, cy6,
      "Description 필드가 자동 활성화에 핵심입니다.",
      BD, "r", OD); cy6+=36
