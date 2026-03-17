@@ -99,15 +99,13 @@ def new_slide():
     return img,d
 
 def left_col(d, category, title, desc="", title_sz=42):
-    """레퍼런스 스타일 좌측 컬럼: 소라벨 → 대형 볼드 제목 → 회색 설명"""
+    """좌/우 분할용 좌측 컬럼: 소라벨 → 대형 볼드 제목 → 회색 설명"""
     y=72
-    # 카테고리 라벨 (작고 어두운 배지)
     f_cat=F(13,"sb")
     cw=tw(d,category,f_cat)+16; ch_=th(d,category,f_cat)+8
     d.rectangle([LEFT_X,y,LEFT_X+cw,y+ch_],fill=BADGE)
     d.text((LEFT_X+8,y+4),category,font=f_cat,fill=WHITE)
     y+=ch_+16
-    # 메인 제목 (대형 볼드, 좌측폭 내 자동 줄바꿈)
     f_t=F(title_sz,"b")
     words=title.split(); lines=[]; cur=""
     for w in words:
@@ -118,10 +116,30 @@ def left_col(d, category, title, desc="", title_sz=42):
     for line in lines:
         d.text((LEFT_X,y),line,font=f_t,fill=C900); y+=int(th(d,line,f_t)*1.2)
     y+=20
-    # 설명 텍스트
     if desc:
         y=wT(d,LEFT_X,y,desc,16,"r",C500,LEFT_W,lh=1.7)
-    return y  # 좌측 콘텐츠 끝 y
+    return y
+
+# 전체 폭 레이아웃 마진
+FULL_X  = 72          # 전체 폭 시작
+FULL_W  = W - FULL_X*2
+
+def top_header(d, category, title, desc="", title_sz=38):
+    """전체 폭 레이아웃용 상단 헤더: 좌상단 소라벨 + 볼드 제목 + 설명 → 콘텐츠 Y 반환"""
+    y=56
+    f_cat=F(13,"sb")
+    cw=tw(d,category,f_cat)+16; ch_=th(d,category,f_cat)+8
+    d.rectangle([FULL_X,y,FULL_X+cw,y+ch_],fill=BADGE)
+    d.text((FULL_X+8,y+4),category,font=f_cat,fill=WHITE)
+    y+=ch_+10
+    f_t=F(title_sz,"b")
+    d.text((FULL_X,y),title,font=f_t,fill=C900)
+    y+=th(d,title,f_t)+10
+    if desc:
+        y=wT(d,FULL_X,y,desc,15,"r",C500,FULL_W*0.55,lh=1.5)
+    y+=24
+    hline(d,FULL_X,y,FULL_W,C100)
+    return y+20   # 콘텐츠 시작 Y
 
 def page_num(d, n, total):
     f=F(16,"r")
@@ -134,14 +152,25 @@ def save(img, filename):
     print(f"✓ {path}")
 
 # ══════════════════════════════════════════════════════════════
-# SLIDE 01 — 챕터 타이틀
+# SLIDE 01 — 챕터 타이틀 (전체 폭 레이아웃)
 # ══════════════════════════════════════════════════════════════
 img,d=new_slide()
 
-left_col(d,"CHAPTER 01","클로드 코드\n첫 걸음","에이전트 구조, 설치, 워크플로우, 스킬, 비용 관리까지 실무에서 바로 쓰는 흐름을 배웁니다.",title_sz=46)
+# 상단: 대형 제목 블록
+y=56
+f_cat=F(13,"sb")
+cw_=tw(d,"CHAPTER 01",f_cat)+16; ch__=th(d,"CHAPTER 01",f_cat)+8
+d.rectangle([FULL_X,y,FULL_X+cw_,y+ch__],fill=BADGE)
+d.text((FULL_X+8,y+4),"CHAPTER 01",font=f_cat,fill=WHITE)
+y+=ch__+12
+f_big=F(72,"b")
+d.text((FULL_X,y),"클로드 코드 첫 걸음",font=f_big,fill=C900)
+y+=th(d,"클로드 코드 첫 걸음",f_big)+12
+wT(d,FULL_X,y,"에이전트 구조 · 설치 · 워크플로우 · 스킬 · 비용 관리까지 실무에서 바로 쓰는 흐름을 배웁니다.",18,"r",C500,FULL_W*0.7)
+y+=52
+hline(d,FULL_X,y,FULL_W,C100); y+=28
 
-# 우측: 클립 목록 (레퍼런스 3의 번호 리스트 스타일)
-hline(d,RIGHT_X,72,RIGHT_W,C900,2)
+# 클립 목록 — 2열 그리드 전체 폭
 clips=[
     ("01","클로드 코드란 무엇인가","에이전트 구조 · 15분"),
     ("02","설치 & 첫 번째 세션","macOS/Linux · 15분"),
@@ -151,17 +180,14 @@ clips=[
     ("06","슬래시 커맨드 완전 정리","핵심 커맨드 8개 · 15분"),
     ("07","토큰 절약과 비용 관리","프롬프트 캐싱 · 요금제 · 20분"),
 ]
-cy=88
-for num,title,sub in clips:
-    f_n=F(13,"sb"); f_t=F(22,"sb"); f_s=F(15,"r")
-    # 번호
-    d.text((RIGHT_X,cy),num,font=f_n,fill=C300)
-    # 제목
-    d.text((RIGHT_X+52,cy-2),title,font=f_t,fill=C900)
-    # 서브
-    d.text((RIGHT_X+52,cy+30),sub,font=f_s,fill=C500)
-    cy+=76
-    hline(d,RIGHT_X+52,cy-10,RIGHT_W-52,C100)
+COL2=(FULL_W-40)//2; ROW_H2=76
+for i,(num,title,sub) in enumerate(clips):
+    col=i%2; row=i//2
+    cx=FULL_X+col*(COL2+40); cy=y+row*ROW_H2
+    T(d,cx,cy+20,num,13,"sb",C300)
+    d.text((cx+48,cy+10),title,font=F(22,"sb"),fill=C900)
+    d.text((cx+48,cy+38),sub,font=F(15,"r"),fill=C500)
+    hline(d,cx+48,cy+ROW_H2-4,COL2-48,C100)
 
 page_num(d,1,7)
 save(img,"01_title.png")
@@ -210,14 +236,17 @@ page_num(d,2,7)
 save(img,"02_comparison.png")
 
 # ══════════════════════════════════════════════════════════════
-# SLIDE 03 — 에이전트 루프 (레퍼런스 2 저니맵 스타일)
+# SLIDE 03 — 에이전트 루프 (전체 폭 · 저니맵 스타일)
 # ══════════════════════════════════════════════════════════════
 img,d=new_slide()
-left_col(d,"CH01-01","에이전트 루프란","목표를 받아 계획하고, 도구를 선택해 실행한 뒤 결과를 검증하는 과정이 반복됩니다.")
+cy_s=top_header(d,"CH01-01","에이전트 루프","목표를 받아 계획하고, 도구를 선택해 실행한 뒤 결과를 검증하는 과정이 반복됩니다.",title_sz=36)
 
-hline(d,RIGHT_X,72,RIGHT_W,C900,2)
+# ── 저니맵 스타일 라벨 행 ──────────────────────────
+T(d,FULL_X,cy_s,"Action",14,"sb",C300)
+hline(d,FULL_X+72,cy_s+8,FULL_W-72,C100)
+cy_s+=34
 
-# 저니맵 스타일 수평 플로우 (레퍼런스 2)
+# 수평 플로우 (전체 폭)
 steps=[
     ("사용자 지시","요청 전달"),
     ("계획","순서·방법 결정"),
@@ -226,58 +255,41 @@ steps=[
     ("결과 확인","성공 여부 검증"),
     ("완료","보고 또는 반복"),
 ]
-n=len(steps)
-STEP_W=RIGHT_W//n; sy=100
-
-# 스텝 라벨 행 (Action 행)
-f_row=F(13,"sb"); f_sl=F(17,"sb"); f_sd=F(14,"r")
-T(d,RIGHT_X-60,sy+24,"Action",13,"sb",C300)
-hline(d,RIGHT_X,sy,RIGHT_W,C900,1)  # 상단 선
-
-# 각 스텝
-arrow_y=sy+80
+n=len(steps); STEP_W=FULL_W//n; ARR_Y=cy_s+72
 for i,(title,desc) in enumerate(steps):
-    sx=RIGHT_X+i*STEP_W
-    cx=sx+STEP_W//2
-    # 스텝 원
-    is_first=(i==0)
-    r=20
+    sx=FULL_X+i*STEP_W; cx=sx+STEP_W//2
+    is_first=(i==0); r=22
     fill=C900 if is_first else C050
-    outline=C900
-    d.ellipse([cx-r,arrow_y-r,cx+r,arrow_y+r],fill=fill,outline=outline,width=2)
-    # 번호
-    nd=str(i+1); f_n=F(17,"b")
-    d.text((cx-tw(d,nd,f_n)//2,arrow_y-th(d,nd,f_n)//2),nd,font=f_n,fill=WHITE if is_first else C700)
-    # 화살표
+    d.ellipse([cx-r,ARR_Y-r,cx+r,ARR_Y+r],fill=fill,outline=C900,width=2)
+    nd=str(i+1); fn=F(18,"b")
+    d.text((cx-tw(d,nd,fn)//2,ARR_Y-th(d,nd,fn)//2),nd,font=fn,fill=WHITE if is_first else C700)
     if i<n-1:
-        ax=sx+STEP_W-4; ay=arrow_y
-        d.line([(cx+r+2,ay),(ax,ay)],fill=C300,width=1)
-        d.polygon([(ax,ay-5),(ax+8,ay),(ax,ay+5)],fill=C300)
-    # 타이틀
-    T(d,cx,arrow_y+r+14,title,17,"sb",C900,"center")
-    # 설명
-    T(d,cx,arrow_y+r+40,desc,14,"r",C500,"center")
+        ax_s=cx+r+4; ax_e=FULL_X+(i+1)*STEP_W+((i+1)*STEP_W//2)-r-4
+        ay=ARR_Y
+        d.line([(ax_s,ay),(ax_e,ay)],fill=C300,width=1)
+        d.polygon([(ax_e,ay-5),(ax_e+8,ay),(ax_e,ay+5)],fill=C300)
+    T(d,cx,ARR_Y+r+14,title,18,"sb",C900,"center")
+    T(d,cx,ARR_Y+r+40,desc,14,"r",C500,"center")
 
-# 하단 선 + "반복" 라벨
-loop_y=arrow_y+80
-hline(d,RIGHT_X,loop_y,RIGHT_W,C100)
-T(d,RIGHT_X+RIGHT_W//2,loop_y+12,"↑  이 과정이 반복 → 에이전트 루프(Agent Loop)",16,"r",C500,"center")
+loop_y=ARR_Y+100
+hline(d,FULL_X,loop_y,FULL_W,C100)
+T(d,FULL_X+FULL_W//2,loop_y+14,"↑  이 과정이 반복되는 것을 에이전트 루프(Agent Loop)라고 합니다",16,"r",C500,"center")
 
-# 도구 요약 (3열)
+# ── 도구 요약 3열 (전체 폭) ──────────────────────
 tool_y=loop_y+56
-hline(d,RIGHT_X,tool_y,RIGHT_W,C100)
-T(d,RIGHT_X,tool_y+16,"클로드 코드가 가진 도구",14,"sb",C300)
-CW3=RIGHT_W//3
+hline(d,FULL_X,tool_y,FULL_W,C100)
+T(d,FULL_X,tool_y+14,"클로드 코드가 루프에서 사용하는 도구",13,"sb",C300)
+CW3=FULL_W//3; ty_base=tool_y+50
 for i,(cat,items) in enumerate([
     ("파일 관련",["파일 읽기 (Read)","파일 쓰기 (Write)","파일 검색 (Glob)"]),
-    ("실행 관련",["터미널 명령어 (Bash)","코드 실행 (Python)"]),
+    ("실행 관련",["터미널 명령어 (Bash)","코드 실행 (Python/Shell)"]),
     ("검색 관련",["코드베이스 검색","웹 검색 (설정 시)"]),
 ]):
-    cx3=RIGHT_X+i*CW3; ty3=tool_y+44
-    T(d,cx3,ty3,cat,15,"sb",C700); ty3+=24
+    cx3=FULL_X+i*CW3; ty3=ty_base
+    T(d,cx3,ty3,cat,16,"sb",C700); ty3+=26
     for item in items:
         T(d,cx3,ty3,"·  "+item,15,"r",C500); ty3+=26
-    if i<2: hline(d,RIGHT_X+i*CW3+CW3,tool_y+44,1,C100,H-tool_y-72)
+    if i<2: hline(d,FULL_X+i*CW3+CW3,tool_y+48,1,C100,H-tool_y-60)
 
 page_num(d,3,7)
 save(img,"03_agent_loop.png")
@@ -380,37 +392,35 @@ page_num(d,5,7)
 save(img,"05_claude_md.png")
 
 # ══════════════════════════════════════════════════════════════
-# SLIDE 06 — 슬래시 커맨드
+# SLIDE 06 — 슬래시 커맨드 (전체 폭 테이블)
 # ══════════════════════════════════════════════════════════════
 img,d=new_slide()
-left_col(d,"CH01-06","슬래시 커맨드","세션 안에서 동작을 제어하는 명령어. / 로 시작하며 자동완성을 지원합니다.")
-
-hline(d,RIGHT_X,72,RIGHT_W,C900,2)
+cy_s=top_header(d,"CH01-06","슬래시 커맨드","세션 안에서 동작을 제어하는 명령어. / 로 시작하며 탭 자동완성을 지원합니다.",title_sz=36)
 
 # 3열 헤더
-C1=RIGHT_X; C2=RIGHT_X+240; C3=RIGHT_X+820
-T(d,C1,84,"커맨드",13,"sb",C300); T(d,C2,84,"기능",13,"sb",C300); T(d,C3,84,"언제",13,"sb",C300)
-hline(d,RIGHT_X,104,RIGHT_W,C900,1)
+C1=FULL_X; C2=FULL_X+240; C3=FULL_X+900
+T(d,C1,cy_s,"커맨드",13,"sb",C300); T(d,C2,cy_s,"기능 설명",13,"sb",C300); T(d,C3,cy_s,"언제 쓰나",13,"sb",C300)
+hline(d,FULL_X,cy_s+22,FULL_W,C900,1); ry=cy_s+30
 
 cmds=[
     ("/init",    "프로젝트 분석 후 CLAUDE.md 자동 생성",       "처음 시작 시 한 번"),
-    ("/compact", "긴 대화 요약 — 토큰·비용 절약",             "대화 길어질 때"),
-    ("/clear",   "대화 초기화 — 새 작업 시작",               "새 기능 작업 전"),
-    ("/config",  "설정 화면 열기 (모델·권한 등)",              "설정 변경 시"),
-    ("/doctor",  "설치 상태·인증 확인",                       "오류 발생 첫 점검"),
-    ("/help",    "사용 가능한 커맨드 전체 목록",               "모르는 게 있을 때"),
+    ("/compact", "긴 대화 요약 — 토큰·비용 절약",             "대화가 길어질 때"),
+    ("/clear",   "대화 기록 초기화 — 새 작업 시작",           "새 기능 작업 전"),
+    ("/config",  "설정 화면 열기 (모델·권한 등)",              "설정 변경 필요 시"),
+    ("/doctor",  "설치 상태·버전·인증 상태 확인",              "오류 발생 시 첫 점검"),
+    ("/help",    "사용 가능한 커맨드 전체 목록 표시",           "모르는 게 있을 때"),
     ("/review",  "현재 변경사항 코드 리뷰 요청",               "커밋 전 검토"),
     ("/memory",  "메모리 파일 목록 확인 및 편집",             "CLAUDE.md 관리"),
 ]
-ry=112
+ROW_H_C=56
 for i,(cmd,desc,when) in enumerate(cmds):
     bg=WHITE if i%2==0 else C050
-    d.rectangle([RIGHT_X,ry,RIGHT_X+RIGHT_W,ry+54],fill=bg)
-    d.text((C1+4,ry+15),cmd,font=F(20,"mono"),fill=C700)
-    T(d,C2,ry+17,desc,18,"r",C900)
-    T(d,C3,ry+19,when,16,"r",C500)
-    ry+=54
-hline(d,RIGHT_X,ry,RIGHT_W,C100)
+    d.rectangle([FULL_X,ry,FULL_X+FULL_W,ry+ROW_H_C],fill=bg)
+    d.text((C1+4,ry+16),cmd,font=F(21,"mono"),fill=C700)
+    T(d,C2,ry+18,desc,19,"r",C900)
+    T(d,C3,ry+20,when,16,"r",C500)
+    ry+=ROW_H_C
+hline(d,FULL_X,ry,FULL_W,C100)
 
 page_num(d,6,7)
 save(img,"06_commands.png")
