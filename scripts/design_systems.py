@@ -69,6 +69,26 @@ DESIGN_SYSTEMS = {
         "font_style":   "modern_sans",
     },
 
+    "gray": {
+        "name": "Gray",
+        "desc": "Korean PPT Minimal — 화이트 배경, 차콜 액센트, 좌측 사이드바 레이아웃",
+        "bg":           (255, 255, 255),   # #FFFFFF
+        "bg_card":      (242, 242, 242),   # #F2F2F2
+        "bg_section":   (247, 247, 247),   # #F7F7F7
+        "bg_sidebar":   (255, 255, 255),   # 사이드바도 순백
+        "text_primary": (26, 26, 26),      # #1A1A1A
+        "text_secondary":(119, 119, 119),  # #777777
+        "text_dim":     (170, 170, 170),   # #AAAAAA
+        "text_label":   (119, 119, 119),   # 카테고리 라벨
+        "accent":       (51, 51, 51),      # #333333 차콜
+        "accent_light": (242, 242, 242),   # 연한 회색
+        "border":       (217, 217, 217),   # #D9D9D9
+        "bar_top":      (51, 51, 51),      # 없거나 미세한 라인
+        "sidebar_ratio": 0.22,             # 좌측 22%
+        "font_style":   "korean_ppt",
+        "layout":       "sidebar",         # 사이드바 레이아웃
+    },
+
     "gradient": {
         "name": "Gradient",
         "desc": "Bold Gradient — 퍼플→블루 그라디언트, 글로우 효과",
