@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>강의 슬라이드 — DataBridge × Fastcampus</title>
+<style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #F5F5F5;
+  --card:    #FFFFFF;
+  --border:  #E0E0E0;
+  --acc:     #1E1E1E;
+  --point:   #3264C8;
+  --point-lt:#EBF0FB;
+  --dim:     #888888;
+  --body:    #333333;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html, body { height: 100%; background: var(--bg); font-family: 'Pretendard', -apple-system, sans-serif; color: var(--body); }
+
+/* ══ SCREENS ══ */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: block; }
+
+/* ══ HOME ══ */
+#home { background: var(--bg); }
+
+.home-header {
+  background: var(--acc);
+  padding: 48px 24px 36px;
+  color: white;
+}
+.home-header .badge {
+  display: inline-block;
+  background: var(--point);
+  font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 3px;
+  margin-bottom: 12px; letter-spacing: .06em;
+}
+.home-header h1 { font-size: clamp(22px, 5vw, 32px); font-weight: 700; line-height: 1.3; }
+.home-header p  { font-size: 14px; color: rgba(255,255,255,.5); margin-top: 8px; }
+
+.home-body { padding: 24px 16px 40px; max-width: 600px; margin: 0 auto; }
+.home-body h2 { font-size: 13px; font-weight: 700; color: var(--dim); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 14px; }
+
+.chapter-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 16px;
+  transition: box-shadow .15s, transform .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.chapter-card:active { transform: scale(.98); box-shadow: none; }
+@media (hover:hover) { .chapter-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); } }
+
+.ch-badge {
+  width: 52px; height: 52px; flex-shrink: 0;
+  background: var(--acc);
+  border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: white;
+}
+.ch-badge .num { font-size: 20px; font-weight: 700; line-height: 1; }
+.ch-badge .label { font-size: 9px; opacity: .5; margin-top: 1px; }
+
+.ch-info { flex: 1; min-width: 0; }
+.ch-info h3 { font-size: 16px; font-weight: 600; color: var(--acc); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ch-info p  { font-size: 13px; color: var(--dim); margin-top: 4px; }
+.ch-info .tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.tag { font-size: 11px; background: var(--point-lt); color: var(--point); padding: 2px 8px; border-radius: 3px; font-weight: 600; }
+.ch-arrow { color: var(--border); font-size: 18px; flex-shrink: 0; }
+
+/* ══ CHAPTER (슬라이드 목록) ══ */
+#chapter { background: var(--bg); }
+
+.chapter-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  display: flex; align-items: center; gap: 12px;
+  height: 56px; position: sticky; top: 0; z-index: 10;
+}
+.btn-back {
+  width: 36px; height: 36px;
+  border: none; background: none; cursor: pointer;
+  font-size: 20px; color: var(--acc);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-back:active { background: var(--bg); }
+.chapter-header-title { font-size: 16px; font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chapter-header-count { font-size: 13px; color: var(--dim); flex-shrink: 0; }
+
+.slide-grid {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  max-width: 600px; margin: 0 auto;
+}
+@media (min-width: 480px) { .slide-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.slide-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.slide-card:active { transform: scale(.97); }
+.slide-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+.slide-card-info { padding: 10px 12px; }
+.slide-card-num  { font-size: 11px; font-weight: 700; color: var(--point); }
+.slide-card-name { font-size: 13px; font-weight: 500; color: var(--acc); margin-top: 2px; line-height: 1.3; }
+
+/* ══ VIEWER (풀 슬라이드) ══ */
+#viewer {
+  background: #111;
+  display: none;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+}
+#viewer.active { display: flex; }
+
+.viewer-header {
+  background: #1A1A1A;
+  padding: 0 12px;
+  height: 48px;
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.viewer-header .btn-back-viewer {
+  width: 32px; height: 32px;
+  border: none; background: none; cursor: pointer;
+  color: white; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.viewer-title { flex: 1; font-size: 13px; color: rgba(255,255,255,.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.viewer-page  { font-size: 13px; color: rgba(255,255,255,.4); flex-shrink: 0; }
+
+.slide-area {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.slide-area img {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+  user-select: none; -webkit-user-select: none;
+}
+
+/* 스와이프 영역 */
+.swipe-zone-left, .swipe-zone-right {
+  position: absolute; top: 0; bottom: 0; width: 30%;
+  cursor: pointer; z-index: 5;
+  display: flex; align-items: center;
+}
+.swipe-zone-left  { left: 0; justify-content: flex-start; padding-left: 12px; }
+.swipe-zone-right { right: 0; justify-content: flex-end; padding-right: 12px; }
+
+.swipe-btn {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,.12);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: white;
+  opacity: 0;
+  transition: opacity .2s;
+  pointer-events: none;
+}
+.slide-area:hover .swipe-btn { opacity: 1; }
+
+.viewer-footer {
+  background: #1A1A1A;
+  padding: 10px 12px calc(10px + var(--safe-bottom));
+  display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0;
+  overflow-x: auto;
+}
+.viewer-footer::-webkit-scrollbar { display: none; }
+
+.thumb-strip {
+  display: flex; gap: 6px;
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.thumb-strip::-webkit-scrollbar { display: none; }
+
+.thumb {
+  flex-shrink: 0;
+  width: 80px; height: 45px;
+  border-radius: 4px; overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.thumb.active { border-color: var(--point); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+/* 터치 슬라이드 애니메이션 */
+.slide-area img.slide-in-right { animation: slideInRight .2s ease; }
+.slide-area img.slide-in-left  { animation: slideInLeft .2s ease; }
+@keyframes slideInRight { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes slideInLeft  { from { transform: translateX(-40px); opacity: 0; } to { transform: none; opacity: 1; } }
+</style>
+</head>
+<body>
+
+<!-- ── HOME ── -->
+<div id="home" class="screen active">
+  <div class="home-header">
+    <div class="badge">FASTCAMPUS × DATABRIDGE</div>
+    <h1>클로드 코드 실무 완성</h1>
+    <p>챕터를 선택해 슬라이드를 확인하세요</p>
+  </div>
+  <div class="home-body">
+    <h2>강의 목차</h2>
+    <div id="chapterList"></div>
+  </div>
+</div>
+
+<!-- ── CHAPTER ── -->
+<div id="chapter" class="screen">
+  <div class="chapter-header">
+    <button class="btn-back" onclick="goHome()">&#8592;</button>
+    <div class="chapter-header-title" id="chTitle">챕터</div>
+    <div class="chapter-header-count" id="chCount"></div>
+  </div>
+  <div class="slide-grid" id="slideGrid"></div>
+</div>
+
+<!-- ── VIEWER ── -->
+<div id="viewer" class="screen">
+  <div class="viewer-header">
+    <button class="btn-back-viewer" onclick="closeViewer()">&#8592;</button>
+    <div class="viewer-title" id="viewerTitle"></div>
+    <div class="viewer-page" id="viewerPage"></div>
+  </div>
+  <div class="slide-area" id="slideArea">
+    <div class="swipe-zone-left" onclick="go(-1)"><div class="swipe-btn">&#8592;</div></div>
+    <img id="mainImg" src="" alt="슬라이드" />
+    <div class="swipe-zone-right" onclick="go(1)"><div class="swipe-btn">&#8594;</div></div>
+  </div>
+  <div class="viewer-footer">
+    <div class="thumb-strip" id="thumbStrip"></div>
+  </div>
+</div>
+
+<script>
+// ── 데이터 ──────────────────────────────────────────────
+const CHAPTERS = [
+  {
+    id: "CH01",
+    title: "클로드 코드 첫 걸음",
+    desc: "에이전트 구조 · 설치 · 워크플로우",
+    tags: ["에이전트","설치","CLAUDE.md","비용"],
+    slides: [
+      { file:"01_title.png",      name:"챕터 개요" },
+      { file:"02_comparison.png", name:"ChatGPT vs Claude Code" },
+      { file:"03_agent_loop.png", name:"에이전트 루프" },
+      { file:"04_install.png",    name:"설치 & 첫 실행" },
+      { file:"05_claude_md.png",  name:"CLAUDE.md 개요" },
+      { file:"06_commands.png",   name:"슬래시 커맨드" },
+      { file:"07_cost.png",       name:"토큰·비용 관리" },
+    ]
+  },
+  // 추가 챕터 준비 중
+  {
+    id: "CH02", title: "서브에이전트 시스템", desc: "병렬 작업 · 에이전트 위임", tags: ["서브에이전트","병렬"], slides: [], coming: true
+  },
+  {
+    id: "CH03", title: "실무 자동화", desc: "데이터 분석 · 보고서 자동화", tags: ["자동화","데이터"], slides: [], coming: true
+  },
+];
+
+let curChapter = null;
+let curSlide   = 0;
+let touchStartX = 0;
+
+// ── 홈 렌더 ─────────────────────────────────────────────
+const list = document.getElementById("chapterList");
+CHAPTERS.forEach((ch, ci) => {
+  const el = document.createElement("div");
+  el.className = "chapter-card";
+  el.innerHTML = `
+    <div class="ch-badge">
+      <span class="num">${ci+1}</span>
+      <span class="label">CH0${ci+1}</span>
+    </div>
+    <div class="ch-info">
+      <h3>${ch.title}</h3>
+      <p>${ch.desc}</p>
+      <div class="tags">
+        ${ch.tags.map(t=>`<span class="tag">${t}</span>`).join("")}
+        ${ch.coming?'<span class="tag" style="background:#f5f5f5;color:#aaa">준비 중</span>':'<span class="tag" style="background:#e8f5e9;color:#2e7d32">'+ch.slides.length+'장</span>'}
+      </div>
+    </div>
+    <div class="ch-arrow">›</div>`;
+  if (!ch.coming) el.onclick = () => openChapter(ci);
+  list.appendChild(el);
+});
+
+// ── 챕터 화면 ────────────────────────────────────────────
+function openChapter(ci) {
+  curChapter = ci;
+  const ch = CHAPTERS[ci];
+  document.getElementById("chTitle").textContent  = `${ch.id} · ${ch.title}`;
+  document.getElementById("chCount").textContent  = `${ch.slides.length}장`;
+  const grid = document.getElementById("slideGrid");
+  grid.innerHTML = "";
+  ch.slides.forEach((s, si) => {
+    const el = document.createElement("div");
+    el.className = "slide-card";
+    el.innerHTML = `
+      <img src="${s.file}" alt="${s.name}" loading="lazy">
+      <div class="slide-card-info">
+        <div class="slide-card-num">${String(si+1).padStart(2,"0")}</div>
+        <div class="slide-card-name">${s.name}</div>
+      </div>`;
+    el.onclick = () => openViewer(si);
+    grid.appendChild(el);
+  });
+  showScreen("chapter");
+}
+
+// ── 뷰어 ─────────────────────────────────────────────────
+function openViewer(si) {
+  curSlide = si;
+  buildThumbs();
+  renderViewer("right");
+  showScreen("viewer");
+}
+
+function buildThumbs() {
+  const ch = CHAPTERS[curChapter];
+  const strip = document.getElementById("thumbStrip");
+  strip.innerHTML = "";
+  ch.slides.forEach((s, i) => {
+    const el = document.createElement("div");
+    el.className = "thumb" + (i===curSlide?" active":"");
+    el.innerHTML = `<img src="${s.file}" alt="">`;
+    el.onclick = () => { const dir=i>curSlide?"right":"left"; curSlide=i; renderViewer(dir); };
+    strip.appendChild(el);
+  });
+}
+
+function renderViewer(dir="right") {
+  const ch = CHAPTERS[curChapter];
+  const s  = ch.slides[curSlide];
+  const img = document.getElementById("mainImg");
+  img.className = "";
+  void img.offsetWidth;
+  img.src = s.file;
+  img.className = dir==="right" ? "slide-in-right" : "slide-in-left";
+  document.getElementById("viewerTitle").textContent = `${ch.id}  ${s.name}`;
+  document.getElementById("viewerPage").textContent  = `${curSlide+1} / ${ch.slides.length}`;
+  document.querySelectorAll(".thumb").forEach((el,i) => {
+    el.classList.toggle("active", i===curSlide);
+    if(i===curSlide) el.scrollIntoView({inline:"nearest",behavior:"smooth"});
+  });
+}
+
+function go(dir) {
+  const ch = CHAPTERS[curChapter];
+  const next = curSlide + dir;
+  if (next < 0 || next >= ch.slides.length) return;
+  curSlide = next;
+  renderViewer(dir > 0 ? "right" : "left");
+}
+
+function closeViewer() { showScreen("chapter"); }
+function goHome()      { showScreen("home"); }
+
+// ── 터치 스와이프 ────────────────────────────────────────
+const slideArea = document.getElementById("slideArea");
+slideArea.addEventListener("touchstart", e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+slideArea.addEventListener("touchend",   e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+// ── 키보드 ───────────────────────────────────────────────
+document.addEventListener("keydown", e => {
+  if (!document.getElementById("viewer").classList.contains("active")) return;
+  if (e.key==="ArrowLeft")  go(-1);
+  if (e.key==="ArrowRight") go(1);
+  if (e.key==="Escape")     closeViewer();
+});
+
+// ── 화면 전환 ────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
