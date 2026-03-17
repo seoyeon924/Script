@@ -48,12 +48,14 @@ FP = {
     "r":  "/Users/sy/Library/Fonts/Pretendard-Regular.otf",
     "sb": "/Users/sy/Library/Fonts/Pretendard-SemiBold.otf",
     "b":  "/Users/sy/Library/Fonts/Pretendard-Bold.otf",
+    "mono": "/System/Library/Fonts/Menlo.ttc",
 }
 _fc = {}
 def F(sz, wt="r"):
     k = (sz, wt)
     if k not in _fc:
-        try: _fc[k] = ImageFont.truetype(FP.get(wt, FP["r"]), sz)
+        path = FP.get(wt, FP["r"])
+        try: _fc[k] = ImageFont.truetype(path, sz)
         except: _fc[k] = ImageFont.load_default()
     return _fc[k]
 
@@ -110,12 +112,22 @@ CODE_LH = 34   # 코드 라인 높이
 CODE_PAD= 20   # 코드 블록 패딩
 
 def code(d, x, y, w, lines, bg=CODE_BG):
+    """코드 블록: 트리/ASCII는 Menlo, ← 이후 한글 주석은 Pretendard로 분리 렌더링"""
     bh = CODE_PAD*2 + len(lines)*CODE_LH
     d.rounded_rectangle([x,y,x+w,y+bh], radius=8, fill=bg)
     cy = y+CODE_PAD
-    f = F(CD,"sb")
+    f_mono = F(CD, "mono")
+    f_ko   = F(CD-2, "r")   # Pretendard, 한글 주석용
     for line in lines:
-        d.text((x+CODE_PAD, cy), line, font=f, fill=CODE_C)
+        if "←" in line:
+            parts = line.split("←", 1)
+            main  = parts[0].rstrip()
+            annot = "← " + parts[1].strip()
+            d.text((x+CODE_PAD, cy), main, font=f_mono, fill=CODE_C)
+            main_w = d.textbbox((0,0), main, font=f_mono)[2]
+            d.text((x+CODE_PAD + main_w + 6, cy+2), annot, font=f_ko, fill=DIM_C)
+        else:
+            d.text((x+CODE_PAD, cy), line, font=f_mono, fill=CODE_C)
         cy += CODE_LH
     return y+bh
 
