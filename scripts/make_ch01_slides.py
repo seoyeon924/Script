@@ -30,7 +30,7 @@ FP = {
     "r":  "/Users/sy/Library/Fonts/Pretendard-Regular.otf",
     "sb": "/Users/sy/Library/Fonts/Pretendard-SemiBold.otf",
     "b":  "/Users/sy/Library/Fonts/Pretendard-Bold.otf",
-    "eb": "/Users/sy/Library/Fonts/Pretendard-ExtraBold.otf",
+    
     "mono": "/System/Library/Fonts/Menlo.ttc",
 }
 _fc = {}
@@ -154,7 +154,7 @@ for i in range(0,H,60):
 CX=W//2+40
 d.rectangle([CX-320,300,CX+320,316], fill=ORANGE)
 text(d, CX, 340, "CH01", 36, "b", ORANGE, "center")
-text(d, CX, 395, "클로드 코드 첫 걸음", 78, "eb", BLACK, "center")
+text(d, CX, 395, "클로드 코드 첫 걸음", 78, "b", BLACK, "center")
 text(d, CX, 498, "에이전트 구조 · 설치 · 워크플로우 · 스킬 · 비용 관리", 28, "r", DIM, "center")
 
 # 클립 목록 카드
