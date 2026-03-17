@@ -150,7 +150,7 @@ S1H = (CARD_PAD + BR*2 + 16 + CODE_PAD*2 + CODE_LH      # header + code1(1줄)
        + th(Image.new("RGB",(1,1)), "", "xy")[0] if False else  # dummy
        0) or 390   # 직접 설정
 
-S1H = 390
+S1H = 440
 # S4 = 7 bullets × 40 + card header
 S4_CONTENT = 7*BL_LH
 S4H = CARD_PAD + BR*2 + 16 + S4_CONTENT + CARD_PAD + 20
@@ -160,11 +160,10 @@ H1 = S1H + 28 + S4H   # 390+28+440 = 858
 
 # S6 = 스킬, S7 = 아이디어
 S6H = 750
-S7H = 310
-H2  = S6H + 28 + S7H   # 750+28+310 = 1088
-# → S5, S8, S9도 H2에 맞춤
-S8H = 640
-S9H = H2 - S8H - 28    # 420
+S7H = 522
+H2  = S6H + 28 + S7H   # col2 기준
+S8H = 760
+S9H = H2 - S8H - 28    # col3 기준
 
 H3 = 420
 
@@ -203,14 +202,16 @@ cy, P = card(d, X1, R1Y, COL_W, S1H, 1, "시작하기")
 x = X1+P; w = COL_W-P*2
 
 cy = code(d, x, cy, w,
-    ["curl -fsSL https://claude.ai/install.sh | bash"]) + 18
+    ["curl -fsSL https://claude.ai/install.sh | bash"]) + 10
+
+text(d, x, cy, "한 번 설치 후 어떤 프로젝트에서나 claude 명령 사용 가능", DM, "r", DIM_C); cy+=28
 
 cy = code(d, x, cy, w,
-    ["cd your-project",
-     "claude",
-     "/init"]) + 18
+    ["cd your-project   ← 프로젝트 폴더 이동",
+     "claude            ← 클로드 세션 시작",
+     "/init             ← CLAUDE.md 자동 생성"]) + 14
 
-text(d, x, cy, "코드베이스를 스캔하고 스타터 메모리 파일을 생성합니다.",
+text(d, x, cy, "코드베이스를 스캔해 프로젝트 구조·명령어·규칙을 CLAUDE.md에 자동 저장. 매 세션 시작 시 자동 로드.",
      BD, "r", BODY_C)
 
 # ════════════════════════════════════════════════════════════════
@@ -218,13 +219,13 @@ text(d, x, cy, "코드베이스를 스캔하고 스타터 메모리 파일을 �
 # ════════════════════════════════════════════════════════════════
 cy4, P4 = card(d, X1, R1Y+S1H+28, COL_W, S4H, 4, "CLAUDE.md 모범 사례")
 bullets(d, X1+P4, cy4, [
-    "/init 실행 후 출력 다듬기",
-    "지시사항 구체적으로 작성",
-    "클로드가 추론 불가한 주의사항 추가",
-    "@파일명으로 문서 참조",
-    "워크플로우 규칙 추가",
-    "메모리 간결하게 유지",
-    "팀 공유를 위해 Git에 커밋",
+    "/init 생성 후 불필요한 줄 직접 정리",
+    "Python 3.11, 탭 2칸 등 구체적으로 명시",
+    "원본 데이터 수정 금지 등 명시적 금지 추가",
+    "@파일명으로 설계 문서·설정 파일 참조",
+    "PR→리뷰→커밋 순서 등 워크플로우 기록",
+    "항목 최소화 · 200줄 이하로 유지",
+    "팀 공유 규칙은 Git에 커밋해 동기화",
 ])
 
 # ════════════════════════════════════════════════════════════════
@@ -361,43 +362,32 @@ for lbl,path in [("프로젝트 스킬", ".claude/skills/<name>/SKILL.md"),
 
 cy6+=8; rule(d, x6, cy6, w6); cy6+=16
 
-# 스킬 폴더 트리 추가
-cy6+=8
-cy6=code(d, x6, cy6, w6, [
-    ".claude/skills/my-skill/",
-    "  SKILL.md          ← 핵심 지침서 (필수, 1개)",
-    "  reference.md      ← 참고 자료 (선택)",
-    "  examples.md       ← 예제 모음",
-    "  scripts/",
-    "    helper.py       ← 실행 스크립트",
-])+14
-rule(d, x6, cy6, w6); cy6+=16
-
 text(d, x6, cy6,
      "Description 필드가 자동 활성화에 핵심입니다.",
      BD, "r", OD); cy6+=36
 
 cy6=code(d, x6, cy6, w6, [
-    "name: testing patterns",
-    "description: Jest testing patterns",
+    "name: code-review-guide",
+    "description: PR review automation patterns",
     "allowed tools: Read, Grep, Glob",
 ])+14
 
 code(d, x6, cy6, w6, [
-    "# Testing Patterns",
-    "Use describe + it + AAA pattern",
-    "Use factory mocks",
+    "├── SKILL.md        ← 핵심 지침서 (필수, 1개)",
+    "├── reference.md    ← 참고 자료 (선택)",
+    "└── scripts/",
+    "    └── helper.py   ← 실행 스크립트",
 ])
 
 # ════════════════════════════════════════════════════════════════
 # ⑦ AI 엔지니어 스킬 아이디어
 # ════════════════════════════════════════════════════════════════
-cy7, P7 = card(d, X2, R2Y+S6H+28, COL_W, S7H, 7, "AI 엔지니어를 위한 스킬 아이디어")
+cy7, P7 = card(d, X2, R2Y+S6H+28, COL_W, S7H, 7, "유용한 스킬 아이디어")
 x7=X2+P7; half7=(COL_W-P7*2)//2
 f_bl=F(BL,"r")
-for i,(a,b) in enumerate([("code-review","docker-deploy"),
-                           ("testing patterns","codebase-visualizer"),
-                           ("commit messages","api-design")]):
+for i,(a,b) in enumerate([("코드 리뷰 자동화", "도커 배포 가이드"),
+                           ("테스트 패턴 모음", "코드베이스 시각화"),
+                           ("커밋 메시지 규칙", "API 설계 표준")]):
     iy=cy7+i*44
     d.text((x7,       iy), "○ "+a, font=f_bl, fill=BODY_C)
     d.text((x7+half7, iy), "○ "+b, font=f_bl, fill=BODY_C)
@@ -408,17 +398,24 @@ for i,(a,b) in enumerate([("code-review","docker-deploy"),
 cy8, P8 = card(d, X3, R2Y, COL_W, S8H, 8, "훅 설정하기")
 x8=X3+P8; w8=COL_W-P8*2
 
-text(d, x8, cy8, "훅 = 결정론적 콜백", BD, "r", BODY_C); cy8+=32
+text(d, x8, cy8, "특정 이벤트 발생 시 셸 커맨드를 자동 실행하는 트리거.", BD, "r", BODY_C); cy8+=36
 
-bx8=x8
-for tag in ["PreToolUse","PostToolUse","Notification"]:
-    pw,ph=pill(d, bx8, cy8, tag); bx8+=pw+8
-cy8+=ph+16
+# 훅 타입 설명
+hook_types = [
+    ("PreToolUse",    "도구 실행 전  · 승인·차단 가능"),
+    ("PostToolUse",   "도구 실행 후  · 결과 검증·후처리"),
+    ("Notification",  "완료·오류 알림 · 슬랙 등 연동"),
+]
+for tag, desc in hook_types:
+    pw, ph = pill(d, x8, cy8, tag)
+    text(d, x8+pw+12, cy8+3, desc, DM, "r", DIM_C)
+    cy8 += ph + 10
+cy8 += 8
 
 cy8=code(d, x8, cy8, w8, [
     '"hooks": {',
     '  "PreToolUse": [{',
-    '    "matcher": "Bash",',
+    '    "matcher": "Bash",  ← Bash 도구에만 적용',
     '    "hooks": [{',
     '      "type": "command",',
     '      "command": "scripts/sec.sh",',
@@ -426,12 +423,10 @@ cy8=code(d, x8, cy8, w8, [
     '    }]',
     '  }]',
     '}',
-])+16
+])+14
 
-text(d, x8, cy8, "Exit codes:", BD, "sb", BLACK)
-ex8 = x8+tw(d,"Exit codes:",F(BD,"sb"))+12
-for s,bg in [("0  allow",(165,165,165)),("2  block",ORANGE)]:
-    pw2,ph2=pill(d, ex8, cy8-4, s, bg=bg); ex8+=pw2+8
+text(d, x8, cy8, "Exit code  0 = 계속 진행   /   2 = 실행 차단", DM, "r", BODY_C); cy8+=30
+text(d, x8, cy8, "matcher 생략 시 모든 도구에 적용됩니다.", DM, "r", DIM_C)
 
 # ════════════════════════════════════════════════════════════════
 # ⑨ 권한 & 안전
@@ -439,17 +434,19 @@ for s,bg in [("0  allow",(165,165,165)),("2  block",ORANGE)]:
 cy9, P9 = card(d, X3, R2Y+S8H+28, COL_W, S9H, 9, "권한 & 안전")
 x9=X3+P9; w9=COL_W-P9*2
 
+text(d, x9, cy9, "settings.json 에서 허용·차단 규칙 설정.", BD, "r", BODY_C); cy9+=34
+
 code(d, x9, cy9, w9, [
-    '{',
-    '  "permissions": {',
-    '    "allow": [',
-    '      "Read:*",',
-    '      "Bash:git:*",',
-    '      "Write:*:*.md"],',
-    '    "deny": [',
-    '      "Read:env:*",',
-    '      "Bash:sudo:*"]',
-    '  }',
+    '"permissions": {',
+    '  "allow": [',
+    '    "Read:*",         ← 모든 파일 읽기 허용',
+    '    "Bash:git:*",     ← git 명령어만 실행 가능',
+    '    "Write:*:*.md"    ← .md 파일만 쓰기 허용',
+    '  ],',
+    '  "deny": [',
+    '    "Read:env:*",     ← 환경변수 읽기 금지',
+    '    "Bash:sudo:*"     ← sudo 명령어 전면 차단',
+    '  ]',
     '}',
 ])
 
@@ -459,10 +456,10 @@ code(d, x9, cy9, w9, [
 cy10, P10 = card(d, X1, R3Y, COL_W, H3, 10, "4계층 아키텍처")
 x10=X1+P10; w10=COL_W-P10*2
 
-layers=[("L1  CLAUDE.md",  "영구 컨텍스트와 규칙"),
-        ("L2  스킬",        "자동 호출 지식 팩"),
-        ("L3  훅",          "안전 게이트와 자동화"),
-        ("L4  에이전트",    "자체 컨텍스트를 가진 서브에이전트")]
+layers=[("L1  CLAUDE.md",  "매 세션 자동 로드 — 팀 전체 규칙·컨텍스트 공유"),
+        ("L2  스킬",        "자연어로 자동 호출 — 도구·프레임워크 전문 지식 패키지"),
+        ("L3  훅",          "도구 실행 전·후 자동 검증 — 보안 게이트·알림"),
+        ("L4  에이전트",    "독립 컨텍스트로 복잡한 작업을 병렬 처리")]
 LH10=68
 for i,(lbl,desc) in enumerate(layers):
     ly=cy10+i*LH10
@@ -478,22 +475,24 @@ cy11, P11 = card(d, X2, R3Y, COL_W, H3, 11, "일일 워크플로우 패턴")
 x11=X2+P11; w11=COL_W-P11*2
 
 steps=[
-    "cd project && claude",
-    "Shift + Tab + Tab   Plan Mode",
-    "기능 의도 서술",
-    "Shift + Tab   Auto Accept",
-    "/compact",
-    "Esc Esc   rewind",
-    "자주 커밋",
-    "기능마다 새 세션 시작",
+    ("cd project && claude",         "프로젝트 폴더에서 세션 시작"),
+    ("Shift+Tab+Tab  → Plan Mode",   "실행 전 계획 먼저 검토·수정"),
+    ("기능 의도를 명확히 설명",        "원하는 결과 + 맥락 함께 전달"),
+    ("Shift+Tab  → Auto Accept",     "파일 수정 자동 수락 ON"),
+    ("/compact",                      "긴 대화 요약 — 토큰 절약"),
+    ("Esc Esc  → rewind",            "직전 작업 취소·되감기"),
+    ("자주 커밋 (기능 단위)",          "복구 가능한 체크포인트 확보"),
+    ("기능마다 새 세션 시작",          "컨텍스트 오염 방지"),
 ]
 LH11=38
-for i,step in enumerate(steps):
+sp11 = int(w11 * 0.52)
+for i,(step, hint) in enumerate(steps):
     sy11=cy11+i*LH11
     bg11=CODE_BG if i%2==0 else (248,240,230)
     d.rounded_rectangle([x11,sy11,x11+w11,sy11+LH11-2], radius=5, fill=bg11)
-    text(d, x11+16, sy11+8, step, DM,
-         "r" if i%2==0 else "sb", BLACK)
+    d.rectangle([x11+sp11-1,sy11,x11+sp11,sy11+LH11-2], fill=BORDER)
+    text(d, x11+12, sy11+9, step, 18, "sb", BLACK)
+    text(d, x11+sp11+12, sy11+9, hint, 18, "r", DIM_C)
 
 # ════════════════════════════════════════════════════════════════
 # ⑫ 빠른 참조
@@ -501,12 +500,12 @@ for i,step in enumerate(steps):
 cy12, P12 = card(d, X3, R3Y, COL_W, H3, 12, "빠른 참조")
 x12=X3+P12; w12=COL_W-P12*2
 
-ref=[("/init",     "CLAUDE.md 생성"),
-     ("/doccat",   "설치 확인"),
-     ("/compact",  "컨텍스트 압축"),
-     ("Shift+Tab", "자동 수락 전환"),
-     ("Tab",       "확장 사고 전환"),
-     ("Esc Esc",   "메뉴 되감기")]
+ref=[("/init",      "프로젝트 분석 후 CLAUDE.md 자동 생성"),
+     ("/compact",   "대화 요약 — 토큰·비용 절약"),
+     ("/config",    "설정 화면 열기"),
+     ("Shift+Tab",  "파일 수정 자동 수락 ON/OFF"),
+     ("Tab",        "확장 사고(Extended Thinking) 전환"),
+     ("Esc Esc",    "현재 작업 되감기·취소")]
 sp12=w12//2; LH12=46
 for i,(cmd,desc) in enumerate(ref):
     ry=cy12+i*LH12
