@@ -488,16 +488,19 @@ for k,v in [("입력 토큰 할인","90%"),("자동 적용 여부","설정 없�
 HL(d,RX7,ry3,RW7,C100); ry3+=36
 
 T(d,RX7,ry3,"구독 요금제",18,"sb",C300); ry3+=28
-HL(d,RX7,ry3,RW7,C900,1); ry3+=14
+HL(d,RX7,ry3,RW7,C900,1); ry3+=4
 for plan,price,note in [
     ("Pro","$20 / 월","개인 실습용"),
     ("Max","$100 / 월","실무·팀 협업"),
     ("API","사용량 과금","프로그래밍 연동"),
 ]:
+    ry3+=20                                          # 행 상단 여백
     T(d,RX7,ry3,plan,22,"sb",C900)
     T(d,RX7+RW7,ry3,price,22,"sb",C700,"right")
-    T(d,RX7,ry3+30,note,18,"r",C500)
-    ry3+=66; HL(d,RX7,ry3,RW7,C100)
+    ry3+=34                                          # 제목 아래 여백
+    T(d,RX7,ry3,note,18,"r",C500)
+    ry3+=38                                          # 부제목 아래 여백
+    HL(d,RX7,ry3,RW7,C100)
 
 pg(d,7,7); save(img,"07_cost.png")
 print(f"\n✅ v3 슬라이드 7장 완료")
