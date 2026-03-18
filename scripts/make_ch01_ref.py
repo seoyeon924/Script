@@ -382,11 +382,8 @@ code_block(d,MX,ry,HALF4,["claude --version"])
 # 구분선
 VL(d,VX4,cy_s-10,H-60)
 
-# 우 — 연하늘색 배경
-d.rectangle([RX4-18, cy_s-18, W-MX+12, H-44], fill=LBLUE)
-
 # 우 — 첫 실행
-T(d,RX4,cy_s,"첫 실행 순서",18,"sb",BLUE_T)
+T(d,RX4,cy_s,"첫 실행 순서",18,"sb",C300)
 HL(d,RX4,cy_s+26,RW4,C100); ry4=cy_s+36
 steps4=[
     ("01","claude  입력","터미널에서 클로드 세션 시작"),
@@ -397,10 +394,10 @@ steps4=[
 ]
 RH4=int((H-ry4-60)/len(steps4))
 for num,step,desc in steps4:
-    T(d,RX4,ry4+RH4//2-22,num,18,"sb",BLUE_T)
+    T(d,RX4,ry4+RH4//2-22,num,18,"sb",C300)
     d.text((RX4+58,ry4+RH4//2-28),step,font=F(30,"sb"),fill=C900)
-    d.text((RX4+58,ry4+RH4//2+10),desc,font=F(22,"r"),fill=C700)
-    ry4+=RH4; HL(d,RX4+58,ry4-4,RW4-58,LBLUE2)
+    d.text((RX4+58,ry4+RH4//2+10),desc,font=F(22,"r"),fill=C500)
+    ry4+=RH4; HL(d,RX4+58,ry4-4,RW4-58,C100)
 
 pg(d,4,7); save(img,"04_install.png")
 
@@ -434,11 +431,8 @@ wT(d,MX,ry,"→  /init 치면 클로드가 프로젝트 구조를 보고 알아�
 # 구분선
 VL(d,VX5,cy_s-10,H-60)
 
-# 우 — 연하늘색 배경
-d.rectangle([RX5-18, cy_s-18, W-MX+12, H-44], fill=LBLUE)
-
 # 우 — 코드블록
-T(d,RX5,cy_s,"작성 예시",18,"sb",BLUE_T); cy_s+=34
+T(d,RX5,cy_s,"작성 예시",18,"sb",C300); cy_s+=34
 code_block(d,RX5,cy_s,RW5,[
     "# 프로젝트: DataBridge 분석 툴",
     "FastAPI + React + PostgreSQL",
@@ -542,12 +536,8 @@ for pi,(plan,price,note) in enumerate([
     ("API","사용량 과금","프로그래밍 연동"),
 ]):
     ry3+=20                                          # 행 상단 여백
-    row_bg = LBLUE if pi==0 else WHITE
-    d.rectangle([RX7-8, ry3-16, RX7+RW7+8, ry3+60], fill=row_bg)
-    plan_c = BLUE_T if pi==0 else C900
-    price_c = BLUE_T if pi==0 else C700
-    T(d,RX7,ry3,plan,22,"sb",plan_c)
-    T(d,RX7+RW7,ry3,price,22,"sb",price_c,"right")
+    T(d,RX7,ry3,plan,22,"sb",C900)
+    T(d,RX7+RW7,ry3,price,22,"sb",C700,"right")
     ry3+=34                                          # 제목 아래 여백
     T(d,RX7,ry3,note,18,"r",C500)
     ry3+=38                                          # 부제목 아래 여백
