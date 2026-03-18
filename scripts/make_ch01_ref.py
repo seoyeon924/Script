@@ -66,6 +66,24 @@ def HL(d, x, y, w, color=C100, h=1):
 def VL(d, x, y1, y2, color=C100):
     d.rectangle([int(x),int(y1),int(x+1),int(y2)],fill=color)
 
+def _code_mixed(d, x, y, line, f_mono, f_kr, color):
+    """코드블록 내 한글/영문 혼합 렌더링 — Menlo는 한글 미지원이므로 분리 처리"""
+    if not any('\uac00' <= c <= '\ud7a3' for c in line):
+        d.text((int(x), int(y)), line, font=f_mono, fill=color)
+        return
+    segs = []; cur = ""; cur_kr = None
+    for c in line:
+        kr = '\uac00' <= c <= '\ud7a3' or '\u3131' <= c <= '\u314e'
+        if cur_kr is None: cur_kr = kr; cur = c
+        elif kr == cur_kr: cur += c
+        else: segs.append((cur, cur_kr)); cur = c; cur_kr = kr
+    if cur: segs.append((cur, cur_kr))
+    cx = x
+    for seg, kr in segs:
+        f = f_kr if kr else f_mono
+        d.text((int(cx), int(y)), seg, font=f, fill=color)
+        cx += tw(d, seg, f)
+
 def code_block(d, x, y, w, lines):
     """코드 블록 — 큰 폰트, 넉넉한 패딩"""
     PAD=28; LH=46
@@ -82,7 +100,7 @@ def code_block(d, x, y, w, lines):
             mw=tw(d,main,f_m)
             d.text((x+PAD+mw+12,cy+3),annot,font=f_k,fill=C300)
         else:
-            d.text((x+PAD,cy),line,font=f_m,fill=C700)
+            _code_mixed(d,x+PAD,cy,line,f_m,f_k,C700)
         cy+=LH
     return y+bh
 
@@ -182,7 +200,7 @@ T(d, RX_T, ty, "클로드 코드", 80, "b", C900)
 ty += th(d, "클로드 코드", F(80, "b")) + 4
 T(d, RX_T, ty, "첫 걸음", 80, "b", C500)
 ty += th(d, "첫 걸음", F(80, "b")) + 28
-wT(d, RX_T, ty, "에이전트 구조부터 비용 관리까지 실무에서 바로 쓰는 흐름을 배웁니다.", 21, "r", C500, RW_T)
+wT(d, RX_T, ty, "에이전트 루프부터 비용 관리까지, 실무에서 바로 써먹는 핵심만 담았어요.", 21, "r", C500, RW_T)
 ty += 56
 HL(d, RX_T, ty, RW_T, C100, 1)
 ty += 36
@@ -212,17 +230,17 @@ pg(d, 1, 7)
 save(img, "01_title.png")
 
 # ══════════════════════════════════════════════════════════════
-# SLIDE 02 — ChatGPT vs Claude Code
+# SLIDE 02 — ChatGPT vs Claude Code (풀와이드)
 # ══════════════════════════════════════════════════════════════
 img,d=new_slide()
-left_col(d,"CH01-01","두 가지\n도구의 차이","같은 AI처럼 보이지만 구조가 완전히 다릅니다.")
+cy_s=top_header(d,"CH01-01","두 가지 도구의 차이","겉보기엔 둘 다 AI인데, 동작 방식이 완전히 달라요.")
 
-HL(d,RX,72,RW,C900,2)
-
-HALF=(RW-40)//2; rx2=RX+HALF+40
-T(d,RX+HALF//2,82,"ChatGPT",26,"b",C500,"center")
-T(d,rx2+HALF//2,82,"Claude Code",26,"b",C900,"center")
-HL(d,RX,122,RW,C100); ry=134
+# 3열 헤더: 구분 / ChatGPT / Claude Code
+COL0=MX; COL1=MX+340; COL2=MX+340+int(FW*0.38)
+T(d,COL0,cy_s,"구분",18,"sb",C300)
+T(d,COL1,cy_s,"ChatGPT",22,"sb",C500)
+T(d,COL2,cy_s,"Claude Code",22,"sb",C900)
+cy_s+=30; HL(d,MX,cy_s,FW,C900,1); ry=cy_s+12
 
 rows=[
     ("실행 방식","웹 브라우저 대화창","터미널 (명령줄 인터페이스)"),
@@ -231,14 +249,17 @@ rows=[
     ("프로젝트 기억","세션 종료 시 초기화","CLAUDE.md로 영구 기억 유지"),
     ("작업 자동화","사람이 결과를 직접 적용","계획→실행→검증 루프 자동 처리"),
 ]
-for label,left_v,right_v in rows:
-    T(d,RX,ry+46,label,18,"sb",C300)
-    T(d,RX+HALF//2,ry+42,left_v,24,"r",C500,"center")
-    T(d,rx2+HALF//2,ry+42,right_v,24,"sb",C900,"center")
-    ry+=128; HL(d,RX,ry,RW,C100)
+RH2=int((H-ry-140)/len(rows))
+for i,(label,lv,rv) in enumerate(rows):
+    bg=WHITE if i%2==0 else C050
+    d.rectangle([MX,ry,MX+FW,ry+RH2],fill=bg)
+    T(d,COL0,ry+RH2//2-12,label,22,"sb",C700)
+    T(d,COL1,ry+RH2//2-14,lv,24,"r",C500)
+    T(d,COL2,ry+RH2//2-14,rv,24,"sb",C900)
+    ry+=RH2
 
-ry+=32
-wT(d,RX,ry,"→  ChatGPT는 '조언'을 주는 도구이고, Claude Code는 '직접 작업'을 수행하는 에이전트입니다.",22,"r",C700,RW)
+HL(d,MX,ry,FW,C100); ry+=28
+wT(d,MX,ry,"→  ChatGPT는 조언해주는 도구, Claude Code는 직접 손 대는 에이전트예요.",22,"r",C700,FW)
 
 pg(d,2,7); save(img,"02_comparison.png")
 
@@ -246,7 +267,7 @@ pg(d,2,7); save(img,"02_comparison.png")
 # SLIDE 03 — 에이전트 루프 (전체 폭)
 # ══════════════════════════════════════════════════════════════
 img,d=new_slide()
-cy_s=top_header(d,"CH01-01","에이전트 루프","목표를 받아 계획하고, 도구를 선택해 실행한 뒤 결과를 검증하는 과정이 반복됩니다.")
+cy_s=top_header(d,"CH01-01","에이전트 루프","목표를 받으면 스스로 계획하고, 도구를 골라 실행하고, 결과를 확인하는 과정이 반복돼요.")
 
 T(d,MX,cy_s,"Action",18,"sb",C300)
 HL(d,MX+80,cy_s+10,FW-80,C100); cy_s+=44
@@ -276,11 +297,11 @@ for i,(title,desc) in enumerate(steps):
 
 loop_y=ARR_Y+150
 HL(d,MX,loop_y,FW,C100)
-T(d,MX+FW//2,loop_y+16,"↑  이 과정이 반복되는 것을 에이전트 루프(Agent Loop)라고 합니다",20,"r",C500,"center")
+T(d,MX+FW//2,loop_y+16,"↑  이 반복 과정을 에이전트 루프(Agent Loop)라고 해요",20,"r",C500,"center")
 
 tool_y=loop_y+80
 HL(d,MX,tool_y,FW,C100)
-T(d,MX,tool_y+22,"클로드 코드가 루프에서 사용하는 도구",20,"sb",C300)
+T(d,MX,tool_y+22,"루프 안에서 쓰는 주요 도구들",20,"sb",C300)
 CW3=FW//3; ty_b=tool_y+76
 for i,(cat,items) in enumerate([
     ("파일 관련",["파일 읽기 (Read)","파일 쓰기 (Write)","파일 검색 (Glob)"]),
@@ -296,81 +317,87 @@ for i,(cat,items) in enumerate([
 pg(d,3,7); save(img,"03_agent_loop.png")
 
 # ══════════════════════════════════════════════════════════════
-# SLIDE 04 — 설치
+# SLIDE 04 — 설치 (풀와이드)
 # ══════════════════════════════════════════════════════════════
 img,d=new_slide()
-left_col(d,"CH01-02","설치\n& 첫 번째 세션","명령어 한 줄로 5분 안에 완료됩니다.")
+cy_s=top_header(d,"CH01-02","설치 & 첫 번째 세션","명령어 하나면 5분 안에 끝나요.")
 
-HL(d,RX,72,RW,C900,2)
+# 2열: 좌(설치) / 우(첫 실행)
+HALF4=int(FW*0.46); VX4=MX+HALF4+40; RX4=VX4+30; RW4=FW-HALF4-80
 
-LW2=int(RW*0.5); rx3=RX+LW2+60; rw3=RW-LW2-60
-
-T(d,RX,84,"사전 준비",18,"sb",C300)
-HL(d,RX,110,LW2,C100); ry=122
+# 좌 — 설치
+T(d,MX,cy_s,"사전 준비",18,"sb",C300); HL(d,MX,cy_s+26,HALF4,C100); ry=cy_s+36
 for label,val in [
-    ("계정","claude.ai  Pro ($20/월)  또는  Max ($100/월)"),
+    ("계정","Pro ($20/월)  또는  Max ($100/월)"),
     ("OS","macOS / Linux   (Windows: WSL2)"),
     ("터미널","기본 Terminal 또는 iTerm2"),
 ]:
-    T(d,RX,ry+2,label,18,"sb",C300)
-    T(d,RX+90,ry,val,22,"r",C700)
-    ry+=56; HL(d,RX,ry,LW2,C100)
-ry+=32
+    T(d,MX,ry+2,label,18,"sb",C300)
+    T(d,MX+100,ry,val,22,"r",C700)
+    ry+=52; HL(d,MX,ry,HALF4,C100)
+ry+=28
+T(d,MX,ry,"설치 명령어",18,"sb",C300); ry+=26
+ry=code_block(d,MX,ry,HALF4,["curl -fsSL https://claude.ai/install.sh | bash"])+16
+T(d,MX,ry,"Homebrew 사용 시",18,"r",C300); ry+=22
+ry=code_block(d,MX,ry,HALF4,["brew install --cask claude-code"])+16
+T(d,MX,ry,"버전 확인",18,"r",C300); ry+=22
+code_block(d,MX,ry,HALF4,["claude --version"])
 
-T(d,RX,ry,"설치 명령어",18,"sb",C300); ry+=28
-ry=code_block(d,RX,ry,LW2,["curl -fsSL https://claude.ai/install.sh | bash"])+20
-T(d,RX,ry,"Homebrew 사용 시",18,"r",C300); ry+=26
-ry=code_block(d,RX,ry,LW2,["brew install --cask claude-code"])+20
-T(d,RX,ry,"버전 확인",18,"r",C300); ry+=26
-code_block(d,RX,ry,LW2,["claude --version"])
+# 구분선
+VL(d,VX4,cy_s-10,H-60)
 
-VL(d,rx3-30,80,H-60)
-T(d,rx3,84,"첫 실행 순서",18,"sb",C300)
-HL(d,rx3,110,rw3,C100); ry4=122
-for num,step,desc in [
+# 우 — 첫 실행
+T(d,RX4,cy_s,"첫 실행 순서",18,"sb",C300)
+HL(d,RX4,cy_s+26,RW4,C100); ry4=cy_s+36
+steps4=[
     ("01","claude  입력","터미널에서 클로드 세션 시작"),
     ("02","브라우저 로그인","OAuth 방식 — 별도 비밀번호 없음"),
     ("03","cd your-project","프로젝트 폴더로 이동"),
     ("04","/init  입력","CLAUDE.md 자동 생성"),
     ("05","첫 요청 입력",'"data.csv 읽어서 요약해줘"'),
-]:
-    T(d,rx3,ry4+12,num,18,"sb",C300)
-    d.text((rx3+68,ry4),step,font=F(30,"sb"),fill=C900)
-    d.text((rx3+68,ry4+44),desc,font=F(22,"r"),fill=C500)
-    ry4+=100; HL(d,rx3+68,ry4-8,rw3-68,C100)
+]
+RH4=int((H-ry4-60)/len(steps4))
+for num,step,desc in steps4:
+    T(d,RX4,ry4+RH4//2-22,num,18,"sb",C300)
+    d.text((RX4+58,ry4+RH4//2-28),step,font=F(30,"sb"),fill=C900)
+    d.text((RX4+58,ry4+RH4//2+10),desc,font=F(22,"r"),fill=C500)
+    ry4+=RH4; HL(d,RX4+58,ry4-4,RW4-58,C100)
 
 pg(d,4,7); save(img,"04_install.png")
 
 # ══════════════════════════════════════════════════════════════
-# SLIDE 05 — CLAUDE.md
+# SLIDE 05 — CLAUDE.md (풀와이드)
 # ══════════════════════════════════════════════════════════════
 img,d=new_slide()
-left_col(d,"CH01-03","CLAUDE.md","세션이 끝나도 프로젝트 맥락을 유지하는 영구 메모리 파일.\n/init으로 자동 생성됩니다.")
+cy_s=top_header(d,"CH01-03","CLAUDE.md — 프로젝트 메모리","세션이 끝나도 맥락이 유지돼요. /init 치면 자동으로 만들어줘요.")
 
-HL(d,RX,72,RW,C900,2)
-LW3=int(RW*0.46); rx4=RX+LW3+60; rw4=RW-LW3-60
+HALF5=int(FW*0.44); VX5=MX+HALF5+40; RX5=VX5+30; RW5=FW-HALF5-80
 
-T(d,RX,84,"CLAUDE.md에 담을 내용",18,"sb",C300)
-HL(d,RX,110,LW3,C100); ry=122
-for num,title,desc in [
+# 좌 — 담을 내용 5항목
+T(d,MX,cy_s,"CLAUDE.md에 담을 내용",18,"sb",C300)
+HL(d,MX,cy_s+26,HALF5,C100); ry=cy_s+36
+items5=[
     ("01","프로젝트 개요","목적·기술 스택 한 줄 요약"),
     ("02","폴더 구조","데이터·스크립트·결과물 위치"),
     ("03","자주 쓰는 명령어","실행·테스트·배포 명령어"),
     ("04","코딩 규칙","Python 버전·라이브러리 스타일"),
     ("05","금지 사항","원본 데이터 수정 금지 등"),
-]:
-    T(d,RX,ry+6,num,16,"sb",C300)
-    T(d,RX+54,ry,title,26,"sb",C900)
-    T(d,RX+54,ry+40,desc,21,"r",C500)
-    ry+=96; HL(d,RX+54,ry-8,LW3-54,C100)
-ry+=16
+]
+RH5=int((H-ry-130)/len(items5))
+for num,title,desc in items5:
+    T(d,MX,ry+RH5//2-18,num,16,"sb",C300)
+    d.text((MX+50,ry+RH5//2-26),title,font=F(26,"sb"),fill=C900)
+    d.text((MX+50,ry+RH5//2+10),desc,font=F(21,"r"),fill=C500)
+    ry+=RH5; HL(d,MX+50,ry-4,HALF5-50,C100)
+ry+=12
+wT(d,MX,ry,"→  /init 치면 클로드가 프로젝트 구조를 보고 알아서 만들어줘요.",20,"r",C700,HALF5)
 
-T(d,RX,ry,"팁",18,"sb",C300); ry+=28
-wT(d,RX,ry,"→  /init 입력 시 클로드가 프로젝트를 스캔해 CLAUDE.md를 자동 생성합니다.",22,"r",C700,LW3)
+# 구분선
+VL(d,VX5,cy_s-10,H-60)
 
-VL(d,rx4-30,80,H-60)
-T(d,rx4,84,"작성 예시",18,"sb",C300)
-code_block(d,rx4,110,rw4,[
+# 우 — 코드블록
+T(d,RX5,cy_s,"작성 예시",18,"sb",C300); cy_s+=34
+code_block(d,RX5,cy_s,RW5,[
     "# 프로젝트: DataBridge 분석 툴",
     "FastAPI + React + PostgreSQL",
     "",
@@ -390,7 +417,7 @@ pg(d,5,7); save(img,"05_claude_md.png")
 # SLIDE 06 — 슬래시 커맨드 (전체 폭)
 # ══════════════════════════════════════════════════════════════
 img,d=new_slide()
-cy_s=top_header(d,"CH01-06","슬래시 커맨드","세션 안에서 동작을 제어하는 명령어. / 로 시작하며 탭 자동완성을 지원합니다.")
+cy_s=top_header(d,"CH01-06","슬래시 커맨드","세션 중에 동작을 제어할 때 쓰는 명령어예요. /로 시작하고, 탭으로 자동완성돼요.")
 
 C1=MX; C2=MX+280; C3=MX+1060
 T(d,C1,cy_s,"커맨드",17,"sb",C300)
@@ -421,51 +448,56 @@ HL(d,MX,ry,FW,C100)
 pg(d,6,7); save(img,"06_commands.png")
 
 # ══════════════════════════════════════════════════════════════
-# SLIDE 07 — 비용 관리
+# SLIDE 07 — 비용 관리 (풀와이드)
 # ══════════════════════════════════════════════════════════════
 img,d=new_slide()
-left_col(d,"CH01-07","토큰 절약과\n비용 관리","효율적인 사용 습관으로 비용을 절반 이하로 줄일 수 있습니다.")
+cy_s=top_header(d,"CH01-07","토큰 절약과 비용 관리","습관 몇 가지만 들이면 비용이 확 줄어요.")
 
-HL(d,RX,72,RW,C900,2)
-LW4=int(RW*0.52); rx5=RX+LW4+60; rw5=RW-LW4-60
+HALF7=int(FW*0.52); VX7=MX+HALF7+40; RX7=VX7+30; RW7=FW-HALF7-80
 
-T(d,RX,84,"절약 전략 5가지",18,"sb",C300)
-HL(d,RX,110,LW4,C100); ry=122
-for i,(tip,desc) in enumerate([
+# 좌 — 절약 전략
+T(d,MX,cy_s,"절약 전략 5가지",18,"sb",C300)
+HL(d,MX,cy_s+26,HALF7,C100); ry=cy_s+36
+tips=[
     ("/compact 자주 사용",   "긴 대화 요약 → 토큰 소비 대폭 감소"),
     ("기능마다 새 세션 시작", "컨텍스트 누적 방지 → 불필요한 토큰 없앰"),
     ("CLAUDE.md 200줄 이하","매 세션 로드 비용 절감"),
     ("프롬프트 캐싱 활용",   "반복 컨텍스트 90% 할인 자동 적용"),
     ("Haiku 모델 병행",      "단순 작업은 저렴한 모델에 위임"),
-]):
-    T(d,RX,ry+8,f"0{i+1}",16,"sb",C300)
-    d.text((RX+52,ry-2),tip,font=F(26,"sb"),fill=C900)
-    d.text((RX+52,ry+38),desc,font=F(22,"r"),fill=C500)
-    ry+=96; HL(d,RX+52,ry-8,LW4-52,C100)
+]
+RH7=int((H-ry-60)/len(tips))
+for i,(tip,desc) in enumerate(tips):
+    T(d,MX,ry+RH7//2-18,f"0{i+1}",16,"sb",C300)
+    d.text((MX+50,ry+RH7//2-26),tip,font=F(26,"sb"),fill=C900)
+    d.text((MX+50,ry+RH7//2+10),desc,font=F(22,"r"),fill=C500)
+    ry+=RH7; HL(d,MX+50,ry-4,HALF7-50,C100)
 
-VL(d,rx5-30,80,H-60)
-T(d,rx5,84,"프롬프트 캐싱",18,"sb",C300)
-HL(d,rx5,110,rw5,C100); ry3=130
-wT(d,rx5,ry3,"같은 컨텍스트(CLAUDE.md 등)를 반복 전송할 때\nAnthropic이 자동으로 캐시합니다. 별도 설정 불필요.",22,"r",C700,rw5-20,lh=1.7)
-ry3+=130
+# 구분선
+VL(d,VX7,cy_s-10,H-60)
+
+# 우 — 캐싱 + 요금제
+T(d,RX7,cy_s,"프롬프트 캐싱",18,"sb",C300)
+HL(d,RX7,cy_s+26,RW7,C100); ry3=cy_s+38
+wT(d,RX7,ry3,"CLAUDE.md 같은 반복 내용은 Anthropic이 자동으로 캐시해줘요. 따로 설정 안 해도 돼요.",22,"r",C700,RW7,lh=1.7)
+ry3+=106
 for k,v in [("입력 토큰 할인","90%"),("자동 적용 여부","설정 없이 자동")]:
-    HL(d,rx5,ry3,rw5,C100)
-    T(d,rx5,ry3+16,k,20,"r",C500)
-    T(d,rx5+rw5,ry3+14,v,22,"sb",C900,"right")
-    ry3+=56
-HL(d,rx5,ry3,rw5,C100); ry3+=40
+    HL(d,RX7,ry3,RW7,C100)
+    T(d,RX7,ry3+14,k,20,"r",C500)
+    T(d,RX7+RW7,ry3+12,v,22,"sb",C900,"right")
+    ry3+=52
+HL(d,RX7,ry3,RW7,C100); ry3+=36
 
-T(d,rx5,ry3,"구독 요금제",18,"sb",C300); ry3+=28
-HL(d,rx5,ry3,rw5,C900,1); ry3+=16
-for plan,price,desc in [
+T(d,RX7,ry3,"구독 요금제",18,"sb",C300); ry3+=28
+HL(d,RX7,ry3,RW7,C900,1); ry3+=14
+for plan,price,note in [
     ("Pro","$20 / 월","개인 실습용"),
     ("Max","$100 / 월","실무·팀 협업"),
     ("API","사용량 과금","프로그래밍 연동"),
 ]:
-    T(d,rx5,ry3,plan,22,"sb",C900)
-    T(d,rx5+rw5,ry3,price,22,"sb",C700,"right")
-    T(d,rx5,ry3+32,desc,18,"r",C500)
-    ry3+=72; HL(d,rx5,ry3,rw5,C100)
+    T(d,RX7,ry3,plan,22,"sb",C900)
+    T(d,RX7+RW7,ry3,price,22,"sb",C700,"right")
+    T(d,RX7,ry3+30,note,18,"r",C500)
+    ry3+=66; HL(d,RX7,ry3,RW7,C100)
 
 pg(d,7,7); save(img,"07_cost.png")
 print(f"\n✅ v3 슬라이드 7장 완료")
