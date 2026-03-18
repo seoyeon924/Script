@@ -66,6 +66,19 @@ def wT(d, x, y, s, sz, wt, color, maxw, lh=1.55):
         y+=int(th(d,line,f)*lh)
     return y
 
+def wT_para(d, x, y, s, sz, wt, color, maxw, lh=1.65, gap=14):
+    """문장 단위 줄바꿈 — 원칙: 2-3문장은 반드시 줄 분리.
+    '. '(마침표+공백) 기준으로 문장을 나눠 각각 wT() 렌더링.
+    엄청 긴 단일 문장이면 일반 wT()와 동일하게 동작."""
+    parts = [p.strip() for p in s.split('. ')]
+    sentences = [p + '.' if i < len(parts)-1 else p for i,p in enumerate(parts) if p]
+    if len(sentences) <= 1:
+        return wT(d, x, y, s, sz, wt, color, maxw, lh=lh)
+    for sent in sentences:
+        y = wT(d, x, y, sent, sz, wt, color, maxw, lh=lh)
+        y += gap
+    return y - gap
+
 def HL(d, x, y, w, color=C100, h=1):
     d.rectangle([int(x),int(y),int(x+w),int(y+h)],fill=color)
 
@@ -154,13 +167,14 @@ def left_col(d, cat, title, desc="", tsz=58):
     return y
 
 def top_header(d, cat, title, desc="", tsz=52):
-    """전체 폭 레이아웃 상단 헤더"""
+    """전체 폭 레이아웃 상단 헤더
+    원칙: 제목-부제목 간격 최소 22px, 부제목은 wT_para()로 문장 분리"""
     y=64
     bw,bh=badge(d,MX,y,cat); y+=bh+14
     f_t=F(tsz,"b")
-    d.text((MX,y),title,font=f_t,fill=C900); y+=th(d,title,f_t)+14
+    d.text((MX,y),title,font=f_t,fill=C900); y+=th(d,title,f_t)+22   # ← 14→22
     if desc:
-        y=wT(d,MX,y,desc,20,"r",C500,FW*0.56,lh=1.5)
+        y=wT_para(d,MX,y,desc,20,"r",C500,int(FW*0.56),lh=1.55)
     y+=28; HL(d,MX,y,FW,C100); return y+28
 
 # ══════════════════════════════════════════════════════════════
@@ -510,7 +524,7 @@ VL(d,VX7,cy_s-10,H-60)
 cache_top = cy_s - 10
 T(d,RX7,cy_s,"프롬프트 캐싱",18,"sb",BLUE_T)
 HL(d,RX7,cy_s+26,RW7,BLUE_T,1); ry3=cy_s+38
-wT(d,RX7,ry3,"CLAUDE.md 같은 반복 내용은 Anthropic이 자동으로 캐시해줘요. 따로 설정 안 해도 돼요.",22,"r",C700,RW7,lh=1.7)
+wT_para(d,RX7,ry3,"CLAUDE.md 같은 반복 내용은 Anthropic이 자동으로 캐시해줘요. 따로 설정 안 해도 돼요.",22,"r",C700,RW7,lh=1.65,gap=10)
 ry3+=106
 for k,v in [("입력 토큰 할인","90%"),("자동 적용 여부","설정 없이 자동")]:
     HL(d,RX7,ry3,RW7,C100)
