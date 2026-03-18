@@ -23,6 +23,12 @@ C100  = (225,225,225)
 C050  = (245,245,245)
 BADGE = ( 38, 38, 38)
 
+# ── 컬러 팔레트 (연하늘색 계열) ──────────────────────────────
+LBLUE  = (228, 241, 252)   # 연하늘색 — 섹션 배경
+LBLUE2 = (208, 228, 247)   # 중간 연하늘색 — 강조 행/셀
+BLUE_T = ( 42, 110, 180)   # 텍스트 블루 — 레이블, 아이콘
+LGRAY  = (240, 240, 242)   # 연회색 — 교차 행
+
 # ── 폰트 ───────────────────────────────────────────────────
 FP = {
     "r":    "/Users/sy/Library/Fonts/Pretendard-Regular.otf",
@@ -239,7 +245,9 @@ cy_s=top_header(d,"CH01-01","두 가지 도구의 차이","겉보기엔 둘 다 
 COL0=MX; COL1=MX+340; COL2=MX+340+int(FW*0.38)
 T(d,COL0,cy_s,"구분",18,"sb",C300)
 T(d,COL1,cy_s,"ChatGPT",22,"sb",C500)
-T(d,COL2,cy_s,"Claude Code",22,"sb",C900)
+# Claude Code 헤더 배경 + 텍스트
+d.rectangle([COL2-16,cy_s-6,MX+FW,cy_s+32],fill=LBLUE)
+T(d,COL2,cy_s,"Claude Code",22,"sb",BLUE_T)
 cy_s+=30; HL(d,MX,cy_s,FW,C900,1); ry=cy_s+12
 
 rows=[
@@ -251,11 +259,15 @@ rows=[
 ]
 RH2=int((H-ry-140)/len(rows))
 for i,(label,lv,rv) in enumerate(rows):
-    bg=WHITE if i%2==0 else C050
-    d.rectangle([MX,ry,MX+FW,ry+RH2],fill=bg)
+    # ChatGPT 쪽: 교차 회색
+    gray_bg = WHITE if i%2==0 else LGRAY
+    d.rectangle([MX,ry,COL2-16,ry+RH2],fill=gray_bg)
+    # Claude Code 쪽: 연하늘색 고정 (강도만 교차)
+    blue_bg = LBLUE if i%2==0 else LBLUE2
+    d.rectangle([COL2-16,ry,MX+FW,ry+RH2],fill=blue_bg)
     T(d,COL0,ry+RH2//2-12,label,22,"sb",C700)
     T(d,COL1,ry+RH2//2-14,lv,24,"r",C500)
-    T(d,COL2,ry+RH2//2-14,rv,24,"sb",C900)
+    T(d,COL2,ry+RH2//2-14,rv,24,"sb",BLUE_T)
     ry+=RH2
 
 HL(d,MX,ry,FW,C100); ry+=28
@@ -281,18 +293,28 @@ steps=[
     ("완료","보고 또는 반복"),
 ]
 n=len(steps); SW=FW//n; ARR_Y=cy_s+200
+
+# ── 에이전트 자율 구간 배경 (steps 2~5, index 1~4) ──────────
+ag_x1 = MX + SW; ag_x2 = MX + 5*SW
+d.rectangle([ag_x1, ARR_Y-100, ag_x2, ARR_Y+160], fill=LBLUE)
+T(d,(ag_x1+ag_x2)//2, ARR_Y-90, "에이전트 자율 실행 구간", 17, "sb", BLUE_T, "center")
+
 for i,(title,desc) in enumerate(steps):
     sx=MX+i*SW; cx=sx+SW//2; r=36
-    is_first=(i==0)
-    fill=C900 if is_first else C050
-    d.ellipse([cx-r,ARR_Y-r,cx+r,ARR_Y+r],fill=fill,outline=C900,width=2)
+    is_user=(i==0 or i==n-1)
+    fill   = C900  if is_user else LBLUE2
+    border = C900  if is_user else BLUE_T
+    tc     = WHITE if is_user else BLUE_T
+    d.ellipse([cx-r,ARR_Y-r,cx+r,ARR_Y+r],fill=fill,outline=border,width=2)
     nd=str(i+1); fn=F(28,"b")
-    d.text((cx-tw(d,nd,fn)//2,ARR_Y-th(d,nd,fn)//2),nd,font=fn,fill=WHITE if is_first else C700)
+    d.text((cx-tw(d,nd,fn)//2,ARR_Y-th(d,nd,fn)//2),nd,font=fn,fill=tc)
     if i<n-1:
         ax_s=cx+r+6; ax_e=MX+(i+1)*SW+(((i+1)*SW)//2)-r-6
-        d.line([(ax_s,ARR_Y),(ax_e,ARR_Y)],fill=C300,width=2)
-        d.polygon([(ax_e,ARR_Y-8),(ax_e+12,ARR_Y),(ax_e,ARR_Y+8)],fill=C300)
-    T(d,cx,ARR_Y+r+22,title,26,"sb",C900,"center")
+        arr_c = BLUE_T if (0 < i < n-2) else C300
+        d.line([(ax_s,ARR_Y),(ax_e,ARR_Y)],fill=arr_c,width=2)
+        d.polygon([(ax_e,ARR_Y-8),(ax_e+12,ARR_Y),(ax_e,ARR_Y+8)],fill=arr_c)
+    tc2 = BLUE_T if not is_user else C900
+    T(d,cx,ARR_Y+r+22,title,26,"sb",tc2,"center")
     T(d,cx,ARR_Y+r+60,desc,20,"r",C500,"center")
 
 loop_y=ARR_Y+150
@@ -346,8 +368,11 @@ code_block(d,MX,ry,HALF4,["claude --version"])
 # 구분선
 VL(d,VX4,cy_s-10,H-60)
 
+# 우 — 연하늘색 배경
+d.rectangle([RX4-18, cy_s-18, W-MX+12, H-44], fill=LBLUE)
+
 # 우 — 첫 실행
-T(d,RX4,cy_s,"첫 실행 순서",18,"sb",C300)
+T(d,RX4,cy_s,"첫 실행 순서",18,"sb",BLUE_T)
 HL(d,RX4,cy_s+26,RW4,C100); ry4=cy_s+36
 steps4=[
     ("01","claude  입력","터미널에서 클로드 세션 시작"),
@@ -358,10 +383,10 @@ steps4=[
 ]
 RH4=int((H-ry4-60)/len(steps4))
 for num,step,desc in steps4:
-    T(d,RX4,ry4+RH4//2-22,num,18,"sb",C300)
+    T(d,RX4,ry4+RH4//2-22,num,18,"sb",BLUE_T)
     d.text((RX4+58,ry4+RH4//2-28),step,font=F(30,"sb"),fill=C900)
-    d.text((RX4+58,ry4+RH4//2+10),desc,font=F(22,"r"),fill=C500)
-    ry4+=RH4; HL(d,RX4+58,ry4-4,RW4-58,C100)
+    d.text((RX4+58,ry4+RH4//2+10),desc,font=F(22,"r"),fill=C700)
+    ry4+=RH4; HL(d,RX4+58,ry4-4,RW4-58,LBLUE2)
 
 pg(d,4,7); save(img,"04_install.png")
 
@@ -395,8 +420,11 @@ wT(d,MX,ry,"→  /init 치면 클로드가 프로젝트 구조를 보고 알아�
 # 구분선
 VL(d,VX5,cy_s-10,H-60)
 
+# 우 — 연하늘색 배경
+d.rectangle([RX5-18, cy_s-18, W-MX+12, H-44], fill=LBLUE)
+
 # 우 — 코드블록
-T(d,RX5,cy_s,"작성 예시",18,"sb",C300); cy_s+=34
+T(d,RX5,cy_s,"작성 예시",18,"sb",BLUE_T); cy_s+=34
 code_block(d,RX5,cy_s,RW5,[
     "# 프로젝트: DataBridge 분석 툴",
     "FastAPI + React + PostgreSQL",
@@ -436,12 +464,15 @@ cmds=[
     ("/memory", "메모리 파일 목록 확인 및 편집",           "CLAUDE.md 관리"),
 ]
 RH_C=95
+KEY_CMDS={"/init","/compact"}
 for i,(cmd,desc,when) in enumerate(cmds):
-    bg=WHITE if i%2==0 else C050
+    is_key = cmd in KEY_CMDS
+    bg = LBLUE if is_key else (WHITE if i%2==0 else LGRAY)
     d.rectangle([MX,ry,MX+FW,ry+RH_C],fill=bg)
-    d.text((C1+6,ry+30),cmd,font=F(28,"mono"),fill=C700)
+    cmd_c = BLUE_T if is_key else C700
+    d.text((C1+6,ry+30),cmd,font=F(28,"mono"),fill=cmd_c)
     T(d,C2,ry+32,desc,24,"r",C900)
-    T(d,C3,ry+34,when,21,"r",C500)
+    T(d,C3,ry+34,when,21,"r",C500 if not is_key else BLUE_T)
     ry+=RH_C
 HL(d,MX,ry,FW,C100)
 
@@ -475,28 +506,34 @@ for i,(tip,desc) in enumerate(tips):
 # 구분선
 VL(d,VX7,cy_s-10,H-60)
 
-# 우 — 캐싱 + 요금제
-T(d,RX7,cy_s,"프롬프트 캐싱",18,"sb",C300)
-HL(d,RX7,cy_s+26,RW7,C100); ry3=cy_s+38
+# 우 — 캐싱 섹션 연하늘색 박스
+cache_top = cy_s - 10
+T(d,RX7,cy_s,"프롬프트 캐싱",18,"sb",BLUE_T)
+HL(d,RX7,cy_s+26,RW7,BLUE_T,1); ry3=cy_s+38
 wT(d,RX7,ry3,"CLAUDE.md 같은 반복 내용은 Anthropic이 자동으로 캐시해줘요. 따로 설정 안 해도 돼요.",22,"r",C700,RW7,lh=1.7)
 ry3+=106
 for k,v in [("입력 토큰 할인","90%"),("자동 적용 여부","설정 없이 자동")]:
     HL(d,RX7,ry3,RW7,C100)
     T(d,RX7,ry3+14,k,20,"r",C500)
-    T(d,RX7+RW7,ry3+12,v,22,"sb",C900,"right")
+    T(d,RX7+RW7,ry3+12,v,22,"sb",BLUE_T,"right")
     ry3+=52
+# 캐싱 박스 배경 (내용 그린 뒤 사각형을 먼저 그려야 하지만, 배경 레이어 순서 상 다음에 재그림)
 HL(d,RX7,ry3,RW7,C100); ry3+=36
 
 T(d,RX7,ry3,"구독 요금제",18,"sb",C300); ry3+=28
 HL(d,RX7,ry3,RW7,C900,1); ry3+=4
-for plan,price,note in [
+for pi,(plan,price,note) in enumerate([
     ("Pro","$20 / 월","개인 실습용"),
     ("Max","$100 / 월","실무·팀 협업"),
     ("API","사용량 과금","프로그래밍 연동"),
-]:
+]):
     ry3+=20                                          # 행 상단 여백
-    T(d,RX7,ry3,plan,22,"sb",C900)
-    T(d,RX7+RW7,ry3,price,22,"sb",C700,"right")
+    row_bg = LBLUE if pi==0 else WHITE
+    d.rectangle([RX7-8, ry3-16, RX7+RW7+8, ry3+60], fill=row_bg)
+    plan_c = BLUE_T if pi==0 else C900
+    price_c = BLUE_T if pi==0 else C700
+    T(d,RX7,ry3,plan,22,"sb",plan_c)
+    T(d,RX7+RW7,ry3,price,22,"sb",price_c,"right")
     ry3+=34                                          # 제목 아래 여백
     T(d,RX7,ry3,note,18,"r",C500)
     ry3+=38                                          # 부제목 아래 여백
