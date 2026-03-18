@@ -140,39 +140,76 @@ def top_header(d, cat, title, desc="", tsz=52):
     y+=28; HL(d,MX,y,FW,C100); return y+28
 
 # ══════════════════════════════════════════════════════════════
-# SLIDE 01 — 챕터 타이틀
+# SLIDE 01 — 챕터 타이틀 (전용 레이아웃)
+# 좌: 블랙 패널 (챕터 번호) / 우: 화이트 패널 (제목 + 클립 목록)
 # ══════════════════════════════════════════════════════════════
 img,d=new_slide()
 
-# 대형 헤더
-y=72
-bw,bh=badge(d,MX,y,"CHAPTER 01",18); y+=bh+18
-f_big=F(96,"b")
-d.text((MX,y),"클로드 코드 첫 걸음",font=f_big,fill=C900)
-y+=th(d,"클로드 코드 첫 걸음",f_big)+18
-wT(d,MX,y,"에이전트 구조 · 설치 · 워크플로우 · 스킬 · 비용 관리",22,"r",C500,FW*0.65)
-y+=60; HL(d,MX,y,FW,C100); y+=40
+LP = 560        # 좌측 블랙 패널 너비
+PAD_L = 64      # 블랙 패널 내부 패딩
+PAD_R = 72      # 우측 패딩
 
-# 클립 목록 2열
-clips=[
-    ("01","클로드 코드란 무엇인가","에이전트 구조  ·  15분"),
-    ("02","설치 & 첫 번째 세션","macOS/Linux  ·  15분"),
-    ("03","CLAUDE.md — 프로젝트 메모리","영구 컨텍스트 설정  ·  20분"),
-    ("04","기본 워크플로우","파일 읽기·쓰기·실행  ·  15분"),
-    ("05","작업 모드","Plan · Auto · Editor  ·  10분"),
-    ("06","슬래시 커맨드 완전 정리","핵심 커맨드 8개  ·  15분"),
-    ("07","토큰 절약과 비용 관리","프롬프트 캐싱 · 요금제  ·  20분"),
+# ── 좌측 블랙 패널 ──────────────────────────────────────────
+d.rectangle([0, 0, LP, H], fill=C900)
+
+# 코스 라벨 (상단)
+T(d, PAD_L, 60, "FASTCAMPUS", 15, "sb", C300)
+T(d, PAD_L, 86, "× DATABRIDGE", 15, "sb", C300)
+
+# 대형 챕터 번호 — 슬라이드 중앙에 배치
+f_num = F(260, "b")
+num_str = "01"
+nw = tw(d, num_str, f_num)
+nh = th(d, num_str, f_num)
+nx = PAD_L
+ny = (H - nh) // 2 - 40
+d.text((nx, ny), num_str, font=f_num, fill=WHITE)
+
+# "CHAPTER" 레이블 (숫자 위)
+T(d, PAD_L, ny - 44, "CHAPTER", 20, "sb", C500)
+
+# 총 시간 (하단)
+T(d, PAD_L, H - 100, "총 7강  ·  105분", 20, "r", C500)
+T(d, PAD_L, H - 66, "클로드 코드 실무 완성", 17, "r", C300)
+
+# ── 우측 화이트 패널 ─────────────────────────────────────────
+RX_T = LP + PAD_R   # 우측 콘텐츠 X
+RW_T = W - RX_T - 80
+
+# 제목 블록
+ty = 72
+T(d, RX_T, ty, "클로드 코드", 80, "b", C900)
+ty += th(d, "클로드 코드", F(80, "b")) + 4
+T(d, RX_T, ty, "첫 걸음", 80, "b", C500)
+ty += th(d, "첫 걸음", F(80, "b")) + 28
+wT(d, RX_T, ty, "에이전트 구조부터 비용 관리까지 실무에서 바로 쓰는 흐름을 배웁니다.", 21, "r", C500, RW_T)
+ty += 56
+HL(d, RX_T, ty, RW_T, C100, 1)
+ty += 36
+
+# 클립 목록 (단일 열, 세로로 쭉)
+clips = [
+    ("01", "클로드 코드란 무엇인가",    "에이전트 구조  ·  15분"),
+    ("02", "설치 & 첫 번째 세션",       "macOS/Linux  ·  15분"),
+    ("03", "CLAUDE.md — 프로젝트 메모리","영구 컨텍스트 설정  ·  20분"),
+    ("04", "기본 워크플로우",           "파일 읽기·쓰기·실행  ·  15분"),
+    ("05", "작업 모드",                "Plan · Auto · Editor  ·  10분"),
+    ("06", "슬래시 커맨드 완전 정리",    "핵심 커맨드 8개  ·  15분"),
+    ("07", "토큰 절약과 비용 관리",      "프롬프트 캐싱 · 요금제  ·  20분"),
 ]
-COL2=(FW-60)//2; RH=148
-for i,(num,title,sub) in enumerate(clips):
-    col=i%2; row=i//2
-    cx=MX+col*(COL2+60); cy=y+row*RH
-    T(d,cx,cy+44,num,18,"sb",C300)
-    d.text((cx+64,cy+20),title,font=F(32,"sb"),fill=C900)
-    d.text((cx+64,cy+68),sub,font=F(22,"r"),fill=C500)
-    HL(d,cx+64,cy+RH-6,COL2-64,C100)
+# 가용 높이를 클립 수로 나눠 균등 배분
+avail = H - ty - 60
+RH_T = avail // len(clips)
 
-pg(d,1,7); save(img,"01_title.png")
+for num, title, sub in clips:
+    T(d, RX_T, ty + RH_T // 2 - 22, num, 16, "sb", C300)
+    d.text((RX_T + 52, ty + RH_T // 2 - 28), title, font=F(24, "sb"), fill=C900)
+    d.text((RX_T + 52, ty + RH_T // 2 + 10), sub, font=F(18, "r"), fill=C500)
+    HL(d, RX_T, ty + RH_T - 1, RW_T, C100)
+    ty += RH_T
+
+pg(d, 1, 7)
+save(img, "01_title.png")
 
 # ══════════════════════════════════════════════════════════════
 # SLIDE 02 — ChatGPT vs Claude Code
