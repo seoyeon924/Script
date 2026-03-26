@@ -173,3 +173,13 @@ mcp-test 폴더에 있는 sales.csv를 읽어서
 
 다음 클립에서는 데이터베이스 엠씨피를 연결하는 방법을 다룹니다.
 에스큐엘 데이터베이스에 클로드 코드가 직접 접속해서 쿼리를 실행하는 과정을 살펴보겠습니다.
+
+---
+
+## 📎 참고 자료
+
+### modelcontextprotocol/servers ★82,077
+Anthropic 공식 MCP 서버 모음. Brave Search, Filesystem, GitHub, Slack, PostgreSQL 등 즉시 사용 가능한 서버들이 정리되어 있습니다.
+공식 레포: https://github.com/modelcontextprotocol/servers
+
+> CH05 전체의 핵심 레퍼런스입니다. "MCP 서버 어디서 받아요?"라는 수강생 질문에 이 레포 하나면 답이 됩니다. Anthropic이 직접 관리하는 공식 레포라 내용 신뢰도가 최고이며, 강의 실습에서 쓸 MCP 서버도 여기서 선택하세요.
