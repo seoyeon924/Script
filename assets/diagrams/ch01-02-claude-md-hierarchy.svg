@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="580" font-family="'Pretendard', -apple-system, sans-serif">
+  <!-- 배경 -->
+  <rect width="900" height="580" fill="#F7F6F3" rx="16"/>
+
+  <!-- 제목 영역 -->
+  <text x="40" y="44" font-size="11" font-weight="700" fill="#A09D98" letter-spacing="2">CLAUDE CODE</text>
+  <text x="40" y="76" font-size="26" font-weight="800" fill="#111110">CLAUDE.md 설정 파일 한눈에 보기</text>
+  <text x="40" y="100" font-size="13" fill="#6B6860">아래로 갈수록 범위가 좁고, 우선순위가 높습니다</text>
+
+  <!-- 메인 카드 -->
+  <rect x="40" y="118" width="820" height="330" fill="#FFFFFF" rx="12" stroke="#E8E5DF" stroke-width="1"/>
+
+  <!-- ① 글로벌 -->
+  <text x="68" y="156" font-size="14" font-weight="700" fill="#C87941" font-family="monospace">~/.claude/CLAUDE.md</text>
+  <rect x="248" y="140" width="158" height="24" rx="12" fill="rgba(200,121,65,0.12)"/>
+  <text x="327" y="156" font-size="11" font-weight="600" fill="#C87941" text-anchor="middle">나만 적용 · 모든 프로젝트</text>
+
+  <!-- 트리 라인 -->
+  <line x1="82" y1="165" x2="82" y2="310" stroke="#D4CFC8" stroke-width="1.5"/>
+
+  <!-- my-project/ -->
+  <line x1="82" y1="186" x2="100" y2="186" stroke="#D4CFC8" stroke-width="1.5"/>
+  <text x="108" y="191" font-size="13" font-weight="600" fill="#2D2D2D" font-family="monospace">my-project/</text>
+
+  <!-- 프로젝트 내 트리 -->
+  <line x1="118" y1="200" x2="118" y2="360" stroke="#D4CFC8" stroke-width="1.5"/>
+
+  <!-- ② CLAUDE.md (프로젝트) -->
+  <line x1="118" y1="216" x2="136" y2="216" stroke="#D4CFC8" stroke-width="1.5"/>
+  <text x="144" y="221" font-size="13" font-weight="700" fill="#2E6B4F" font-family="monospace">CLAUDE.md</text>
+  <rect x="254" y="204" width="126" height="22" rx="11" fill="rgba(46,107,79,0.1)"/>
+  <text x="317" y="219" font-size="11" font-weight="600" fill="#2E6B4F" text-anchor="middle">팀 공유 · Git 커밋</text>
+
+  <!-- ③ CLAUDE.local.md -->
+  <line x1="118" y1="246" x2="136" y2="246" stroke="#D4CFC8" stroke-width="1.5"/>
+  <text x="144" y="251" font-size="12" fill="#8A8078" font-family="monospace">CLAUDE.local.md</text>
+  <rect x="314" y="234" width="200" height="22" rx="11" fill="rgba(160,157,152,0.12)"/>
+  <text x="414" y="249" font-size="11" fill="#8A8078" text-anchor="middle">나만 적용 · .gitignore · 거의 안 씀</text>
+
+  <!-- ④ .claude/rules/ -->
+  <line x1="118" y1="276" x2="136" y2="276" stroke="#D4CFC8" stroke-width="1.5"/>
+  <text x="144" y="281" font-size="13" font-weight="600" fill="#2D2D2D" font-family="monospace">.claude/</text>
+  <line x1="154" y1="290" x2="154" y2="346" stroke="#D4CFC8" stroke-width="1.5"/>
+  <line x1="154" y1="298" x2="172" y2="298" stroke="#D4CFC8" stroke-width="1.5"/>
+  <text x="180" y="303" font-size="13" font-weight="700" fill="#6A4A8A" font-family="monospace">rules/</text>
+  <rect x="248" y="286" width="222" height="22" rx="11" fill="rgba(106,74,138,0.1)"/>
+  <text x="359" y="301" font-size="11" font-weight="600" fill="#6A4A8A" text-anchor="middle">CLAUDE.md가 길어지면 주제별로 분리</text>
+  <!-- rules 하위 -->
+  <line x1="190" y1="312" x2="190" y2="346" stroke="#D4CFC8" stroke-width="1.5"/>
+  <line x1="190" y1="318" x2="208" y2="318" stroke="#D4CFC8" stroke-width="1.5"/>
+  <text x="216" y="323" font-size="11" fill="#8A8078" font-family="monospace">code-style.md</text>
+  <line x1="190" y1="332" x2="208" y2="332" stroke="#D4CFC8" stroke-width="1.5"/>
+  <text x="216" y="337" font-size="11" fill="#8A8078" font-family="monospace">testing.md</text>
+  <line x1="190" y1="346" x2="208" y2="346" stroke="#D4CFC8" stroke-width="1.5"/>
+  <text x="216" y="351" font-size="11" fill="#8A8078" font-family="monospace">security.md</text>
+
+  <!-- ⑤ 하위 폴더 -->
+  <line x1="118" y1="356" x2="136" y2="356" stroke="#D4CFC8" stroke-width="1.5"/>
+  <text x="144" y="361" font-size="13" font-weight="600" fill="#2D2D2D" font-family="monospace">src/auth/</text>
+  <line x1="190" y1="370" x2="208" y2="370" stroke="#D4CFC8" stroke-width="1.5"/>
+  <text x="216" y="375" font-size="13" font-weight="700" fill="#4A7AB5" font-family="monospace">CLAUDE.md</text>
+  <rect x="352" y="362" width="214" height="22" rx="11" fill="rgba(74,122,181,0.1)"/>
+  <text x="459" y="377" font-size="11" font-weight="600" fill="#4A7AB5" text-anchor="middle">이 폴더 작업 시에만 자동 로드</text>
+
+  <!-- Auto-memory -->
+  <line x1="82" y1="400" x2="100" y2="400" stroke="#D4CFC8" stroke-width="1.5"/>
+  <text x="108" y="406" font-size="13" font-weight="700" fill="#2D2D2D" font-family="monospace">Auto-memory</text>
+  <rect x="250" y="390" width="250" height="22" rx="11" fill="rgba(160,157,152,0.15)"/>
+  <text x="375" y="405" font-size="11" fill="#6B6860" text-anchor="middle">Claude가 알아서 기록 · /memory로 확인</text>
+
+  <!-- 하단 3카드 -->
+  <!-- 카드 1: 겹치면? -->
+  <rect x="40" y="464" width="260" height="100" fill="#FFFFFF" rx="10" stroke="#E8E5DF" stroke-width="1"/>
+  <text x="60" y="490" font-size="14" font-weight="700" fill="#111110">겹치면?</text>
+  <text x="60" y="512" font-size="12" fill="#6B6860">좁은 범위가 이깁니다.</text>
+  <text x="60" y="530" font-size="12" fill="#6B6860">글로벌 "탭 4칸" vs 프로젝트 "2칸"</text>
+  <text x="60" y="550" font-size="14" font-weight="800" fill="#111110">→ 2칸 적용</text>
+
+  <!-- 카드 2: 뭐부터? -->
+  <rect x="320" y="464" width="260" height="100" fill="rgba(74,191,181,0.08)" rx="10" stroke="rgba(74,191,181,0.2)" stroke-width="1"/>
+  <text x="340" y="490" font-size="14" font-weight="700" fill="#2A9D95">뭐부터?</text>
+  <text x="340" y="512" font-size="12" fill="#4A6060">프로젝트 폴더에</text>
+  <text x="340" y="530" font-size="13" font-weight="700" fill="#2A9D95" font-family="monospace">CLAUDE.md</text>
+  <text x="340" y="548" font-size="12" fill="#4A6060">하나만. 세 줄이면 됩니다.</text>
+
+  <!-- 카드 3: 길어지면? -->
+  <rect x="600" y="464" width="260" height="100" fill="rgba(106,74,138,0.07)" rx="10" stroke="rgba(106,74,138,0.15)" stroke-width="1"/>
+  <text x="620" y="490" font-size="14" font-weight="700" fill="#6A4A8A">길어지면?</text>
+  <text x="620" y="512" font-size="12" fill="#6B6860">200줄 넘으면</text>
+  <text x="620" y="530" font-size="13" font-weight="700" fill="#6A4A8A" font-family="monospace">.claude/rules/</text>
+  <text x="620" y="548" font-size="12" fill="#6B6860">로 분리. 주제별 파일로 관리.</text>
+</svg>
