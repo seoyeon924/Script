@@ -200,3 +200,54 @@ CLAUDE.md 파일은 한 군데만 있는 게 아닙니다.
 - [ ] "겹치면 / 뭐부터 / 길어지면" 3카드 하단 배치
 - [ ] Auto-memory 개념: `/memory` 명령어 직접 시연으로 연결
 - [ ] 출처: @unclejobs.ai 스레드 (공식 docs 기반 정리)
+
+---
+
+## 슬라이드 추가 — CLAUDE.md 실전 템플릿
+
+**[화면: 아래 코드블록]**
+
+처음 만들 때 이 구조를 그대로 복사해서 채우세요.
+
+```markdown
+# Project: [프로젝트명]
+
+## Tech Stack
+- [프레임워크]: Next.js 14, TypeScript
+- [데이터베이스]: Supabase (PostgreSQL)
+- [스타일링]: Tailwind CSS
+- [테스트]: Vitest, Playwright
+
+## Architecture
+- src/components — React 컴포넌트
+- src/services — 비즈니스 로직
+- src/utils — 공통 유틸
+- src/types — 타입 정의
+
+## Conventions
+- 커밋 메시지: Conventional Commits (feat/fix/chore)
+- 브랜치: feature/이름, fix/이름
+- PR 전에 반드시: lint + typecheck + test 통과
+- main 브랜치 직접 커밋 금지
+
+## Testing
+- 새 기능은 반드시 단위 테스트 작성
+- 테스트 파일: [파일명].test.ts
+- 통합 테스트: tests/integration/
+
+## Security
+- 환경변수는 .env.local, 코드에 하드코딩 절대 금지
+- 모든 사용자 입력 검증 필수
+- SQL은 Prepared Statement만 사용
+- 의존성 월 1회 보안 업데이트 확인
+
+## Review Checklist
+- [ ] 테스트 작성 & 통과
+- [ ] 타입 오류 없음
+- [ ] 린트 통과
+- [ ] 환경변수 .env.example 업데이트
+- [ ] README 변경 사항 반영
+```
+
+**팁:** `/init` 을 치면 Claude가 현재 프로젝트를 분석해서 이 구조를 자동으로 채워줍니다.
+

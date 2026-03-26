@@ -203,3 +203,57 @@ Claude Skills 공식 큐레이션 목록. 남들이 만들어둔 스킬을 바�
 공식 레포: https://github.com/anthropics/awesome-claude-skills
 
 > Skills와 Hooks는 함께 이해해야 강력해집니다. 이 챕터에서 "직접 만드는 법"을 배웠다면, 이 레포에서는 "이미 만들어진 것 가져다 쓰기"로 이어주세요. skillsmp.com과 함께 소개하면 수강생이 바로 실무에 적용할 수 있습니다.
+
+---
+
+## 슬라이드 추가 — Hook 이벤트 종류와 실행 시점
+
+**[화면: 아래 표]**
+
+Hooks는 Claude Code의 작업 흐름에서 특정 시점에 자동으로 스크립트를 실행합니다.
+
+| Hook 이름 | 실행 시점 | 실무 활용 예시 |
+|-----------|-----------|----------------|
+| `PreToolUse` | 도구 실행 직전 | 위험 명령어 차단, 비밀값 포함 여부 검사 |
+| `PostToolUse` | 도구 실행 직후 | 파일 저장 후 린트 자동 실행 |
+| `SessionStart` | 세션 시작 시 | 프로젝트 상태 로드, 환경 체크 |
+| `SessionEnd` | 세션 종료 시 | 작업 요약 저장, 로그 기록 |
+| `PreCommit` | 커밋 직전 | 시크릿 탐지, 테스트 통과 여부 확인 |
+| `Notification` | 알림 발생 시 | Slack 웹훅, 외부 모니터링 연동 |
+
+**settings.json Hook 설정 예시**
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "Write",
+      "hooks": [{
+        "type": "command",
+        "command": "npm run lint"
+      }]
+    }],
+    "PreToolUse": [{
+      "matcher": "Bash",
+      "hooks": [{
+        "type": "command",
+        "command": "scripts/safety-check.sh"
+      }]
+    }]
+  }
+}
+```
+
+**동작 원리**
+
+```
+Claude가 파일 저장(Write) 실행
+    ↓
+PostToolUse Hook 발동
+    ↓
+npm run lint 자동 실행
+    ↓
+린트 통과 → 계속 진행
+린트 실패 → Claude에게 오류 전달 → 자동 수정
+```
+

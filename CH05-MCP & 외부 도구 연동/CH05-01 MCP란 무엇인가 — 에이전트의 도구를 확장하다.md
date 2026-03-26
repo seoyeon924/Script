@@ -183,3 +183,75 @@ Anthropic 공식 MCP 서버 모음. Brave Search, Filesystem, GitHub, Slack, Pos
 공식 레포: https://github.com/modelcontextprotocol/servers
 
 > CH05 전체의 핵심 레퍼런스입니다. "MCP 서버 어디서 받아요?"라는 수강생 질문에 이 레포 하나면 답이 됩니다. Anthropic이 직접 관리하는 공식 레포라 내용 신뢰도가 최고이며, 강의 실습에서 쓸 MCP 서버도 여기서 선택하세요.
+
+---
+
+## 슬라이드 추가 — .mcp.json 설정 방법
+
+**[화면: 아래 코드]**
+
+`.mcp.json` 파일 하나로 Claude Code가 외부 서비스에 직접 연결됩니다.
+
+**기본 구조**
+
+```json
+{
+  "mcpServers": {
+    "서버이름": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-서버명"],
+      "env": {
+        "API_KEY": "${환경변수명}"
+      }
+    }
+  }
+}
+```
+
+**실전 설정 예시 — GitHub + PostgreSQL**
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "postgres": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-postgres"],
+      "env": {
+        "DATABASE_URL": "${DATABASE_URL}"
+      }
+    },
+    "slack": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+**많이 쓰는 MCP 서버 목록**
+
+| 서버 | 용도 | 설치 패키지 |
+|------|------|-------------|
+| GitHub | PR, 이슈, 레포 관리 | `@anthropic/mcp-github` |
+| PostgreSQL | DB 직접 쿼리 | `@anthropic/mcp-postgres` |
+| Slack | 알림 발송, 채널 검색 | `@anthropic/mcp-slack` |
+| Playwright | 브라우저 자동화 | `@playwright/mcp` |
+| Filesystem | 파일 접근 범위 제한 | `@anthropic/mcp-filesystem` |
+| JIRA | 티켓 조회/생성 | `@anthropic/mcp-jira` |
+
+**핵심:** 비밀값은 반드시 환경변수(`${변수명}`)로만 — 코드에 직접 입력 절대 금지.
+
