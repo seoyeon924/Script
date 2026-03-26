@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1400">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Pretendard', -apple-system, sans-serif;
+  background: #F7F5F0;
+  padding: 28px;
+  width: 1400px;
+  color: #1A1614;
+}
+
+/* TITLE */
+.title {
+  font-size: 36px; font-weight: 900; color: #1A1614;
+  margin-bottom: 22px; letter-spacing: -0.5px;
+  text-align: center;
+}
+.title span { color: #D45B2A; }
+
+/* LAYOUT */
+.layout { display: grid; grid-template-columns: 240px 1fr 260px; gap: 14px; }
+
+/* FOLDER TREE */
+.tree-panel {
+  background: #1E1A17; border-radius: 10px; padding: 14px;
+  font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px;
+  color: #C8BFB4; line-height: 1.55;
+}
+.tree-panel .tree-title {
+  color: #D45B2A; font-weight: 700; font-size: 12px;
+  margin-bottom: 8px; font-family: 'Pretendard', -apple-system, sans-serif;
+}
+.tree-line { white-space: nowrap; }
+.tree-line .dir { color: #F0A070; font-weight: 600; }
+.tree-line .file { color: #A8C4A0; }
+.tree-line .md { color: #7CBCDC; }
+.tree-line .json { color: #E8D08A; }
+.tree-line .yml { color: #C8A0DC; }
+.tree-line .sh { color: #80C8A0; }
+
+/* CENTER GRID */
+.center-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-content: start;
+}
+.full-width { grid-column: span 2; }
+
+/* RIGHT PANEL */
+.right-panel { display: flex; flex-direction: column; gap: 10px; }
+
+/* CARD */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #E8E4DF;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.card-header {
+  padding: 8px 12px;
+  font-size: 12px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  color: #fff;
+}
+.card-body { padding: 10px 12px; }
+
+/* HEADER COLORS */
+.h-orange { background: #D45B2A; }
+.h-green  { background: #3A7A50; }
+.h-blue   { background: #2E5C8A; }
+.h-purple { background: #6A4A8A; }
+.h-teal   { background: #2A7A7A; }
+.h-red    { background: #8A2A2A; }
+.h-dark   { background: #1E1A17; }
+.h-navy   { background: #1E3A5A; }
+
+/* ITEMS */
+.item { font-size: 11px; color: #3A3028; line-height: 1.5; margin-bottom: 4px; }
+.item::before { content: '▶ '; color: #D45B2A; font-size: 9px; }
+.item b { color: #D45B2A; }
+.item-plain { font-size: 11px; color: #3A3028; line-height: 1.5; margin-bottom: 3px; }
+.item-num { display: flex; gap: 7px; font-size: 11px; margin-bottom: 4px; }
+.num { background: #D45B2A; color: #fff; font-weight: 800; font-size: 9px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.item-num .txt { color: #3A3028; line-height: 1.4; }
+
+/* KEY-VALUE */
+.kv { display: flex; gap: 6px; margin-bottom: 4px; font-size: 11px; }
+.kv .key { color: #D45B2A; font-weight: 700; min-width: 90px; }
+.kv .val { color: #3A3028; }
+
+/* CODE BLOCK */
+.code-block {
+  background: #1E1A17; border-radius: 7px;
+  padding: 10px 12px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 10px; line-height: 1.6;
+  color: #C8BFB4;
+  overflow: hidden;
+}
+.code-block .k { color: #D08060; }
+.code-block .s { color: #A8C870; }
+.code-block .c { color: #8090A8; }
+.code-block .b { color: #E8D08A; }
+.code-block .p { color: #C8BFB4; }
+
+/* FOOTER GRID */
+.footer-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 10px; margin-top: 14px;
+}
+.footer-card {
+  background: #fff; border-radius: 8px;
+  border: 1px solid #E8E4DF;
+  padding: 10px 12px;
+}
+.footer-card .fc-title {
+  font-size: 10px; font-weight: 800; color: #D45B2A;
+  margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.3px;
+}
+.footer-card .fc-item {
+  font-size: 10px; color: #3A3028; line-height: 1.5; margin-bottom: 2px;
+}
+.footer-card .fc-item::before { content: '- '; color: #8A7060; }
+
+/* GETTING STARTED numbered */
+.gs-item { display: flex; gap: 7px; font-size: 11px; margin-bottom: 5px; align-items: flex-start; }
+.gs-num { background: #D45B2A; color: #fff; font-size: 9px; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.gs-text { color: #3A3028; line-height: 1.4; font-family: 'SF Mono','Fira Code',monospace; font-size: 10.5px; }
+
+/* CONTEXT */
+.ctx-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-size: 11px; }
+.ctx-bar-wrap { flex: 1; background: #EDE9E4; height: 8px; border-radius: 4px; margin: 0 8px; overflow: hidden; }
+.ctx-bar { height: 8px; border-radius: 4px; }
+.ctx-label { color: #3A3028; min-width: 70px; }
+.ctx-note { font-size: 10px; color: #8A7060; text-align: right; min-width: 80px; }
+
+/* TAG CHIP */
+.chip { display: inline-block; background: #F0EAE4; color: #6A5040; font-size: 9.5px; font-weight: 600; padding: 2px 7px; border-radius: 4px; margin: 2px 2px 2px 0; }
+.chip.orange { background: rgba(212,91,42,0.12); color: #C04020; }
+.chip.green { background: rgba(58,122,80,0.1); color: #2A6040; }
+.chip.blue { background: rgba(46,92,138,0.1); color: #1E4A7A; }
+.chip.purple { background: rgba(106,74,138,0.1); color: #5A3A7A; }
+</style>
+</head>
+<body>
+
+<div class="title">Claude Code <span>Project Structure</span></div>
+
+<div class="layout">
+
+  <!-- LEFT: FOLDER TREE -->
+  <div class="tree-panel">
+    <div class="tree-title">📁 my_project/</div>
+    <div class="tree-line"><span class="dir">my_project/</span></div>
+    <div class="tree-line">├── <span class="md">CLAUDE.md</span></div>
+    <div class="tree-line">├── <span class="dir">.claude/</span></div>
+    <div class="tree-line">│ &nbsp;├── <span class="json">settings.json</span></div>
+    <div class="tree-line">│ &nbsp;├── <span class="json">settings.local.json</span></div>
+    <div class="tree-line">│ &nbsp;└── <span class="dir">commands/</span></div>
+    <div class="tree-line">│ &nbsp; &nbsp; &nbsp;├── <span class="md">review.md</span></div>
+    <div class="tree-line">│ &nbsp; &nbsp; &nbsp;├── <span class="md">deploy.md</span></div>
+    <div class="tree-line">│ &nbsp; &nbsp; &nbsp;└── <span class="md">bootstrap.md</span></div>
+    <div class="tree-line">├── <span class="dir">skills/</span></div>
+    <div class="tree-line">│ &nbsp;├── <span class="dir">code-review/</span></div>
+    <div class="tree-line">│ &nbsp;│ &nbsp;├── <span class="md">SKILL.md</span></div>
+    <div class="tree-line">│ &nbsp;│ &nbsp;├── <span class="dir">scripts/</span></div>
+    <div class="tree-line">│ &nbsp;│ &nbsp;├── <span class="dir">references/</span></div>
+    <div class="tree-line">│ &nbsp;│ &nbsp;└── <span class="dir">assets/</span></div>
+    <div class="tree-line">│ &nbsp;└── <span class="dir">text-writer/</span></div>
+    <div class="tree-line">│ &nbsp; &nbsp; &nbsp;└── <span class="md">SKILL.md</span></div>
+    <div class="tree-line">├── <span class="dir">agents/</span></div>
+    <div class="tree-line">│ &nbsp;├── <span class="yml">code-reviewer.yml</span></div>
+    <div class="tree-line">│ &nbsp;├── <span class="yml">test-writer.yml</span></div>
+    <div class="tree-line">│ &nbsp;└── <span class="yml">devops-sre.yml</span></div>
+    <div class="tree-line">├── <span class="dir">plugins/</span></div>
+    <div class="tree-line">│ &nbsp;├── <span class="json">manifest.json</span></div>
+    <div class="tree-line">│ &nbsp;└── <span class="dir">my-plugin/</span></div>
+    <div class="tree-line">├── <span class="json">.mcp.json</span></div>
+    <div class="tree-line">├── <span class="dir">src/</span></div>
+    <div class="tree-line">│ &nbsp;├── <span class="dir">components/</span></div>
+    <div class="tree-line">│ &nbsp;├── <span class="dir">services/</span></div>
+    <div class="tree-line">│ &nbsp;└── <span class="dir">utils/</span></div>
+    <div class="tree-line">├── <span class="dir">tests/</span></div>
+    <div class="tree-line">│ &nbsp;├── <span class="dir">unit/</span></div>
+    <div class="tree-line">│ &nbsp;├── <span class="dir">integration/</span></div>
+    <div class="tree-line">│ &nbsp;└── <span class="dir">e2e/</span></div>
+    <div class="tree-line">├── <span class="dir">scripts/</span></div>
+    <div class="tree-line">│ &nbsp;├── <span class="sh">setup.sh</span></div>
+    <div class="tree-line">│ &nbsp;├── <span class="sh">deploy.sh</span></div>
+    <div class="tree-line">│ &nbsp;└── <span class="sh">seed.db.sh</span></div>
+    <div class="tree-line">├── <span class="json">package.json</span></div>
+    <div class="tree-line">├── <span class="json">tsconfig.json</span></div>
+    <div class="tree-line">├── <span class="file">.env.example</span></div>
+    <div class="tree-line">├── <span class="file">.gitignore</span></div>
+    <div class="tree-line">├── <span class="file">Dockerfile</span></div>
+    <div class="tree-line">└── <span class="md">README.md</span></div>
+  </div>
+
+  <!-- CENTER -->
+  <div class="center-grid">
+
+    <!-- Project Overview -->
+    <div class="card">
+      <div class="card-header h-orange">Project Overview</div>
+      <div class="card-body">
+        <div class="item-plain" style="font-size:11px;color:#3A3028;line-height:1.6;">
+          Complete Claude Code workspace with <b>Hooks</b>, <b>MCP Servers</b>, <b>Subagents</b>, and <b>Plugins</b> designed for production AI-assisted development.
+        </div>
+        <div style="margin-top:8px;">
+          <div class="kv"><span class="key">CLAUDE.md</span><span class="val">→ Project memory</span></div>
+          <div class="kv"><span class="key">.claude/</span><span class="val">→ Config & extensions</span></div>
+          <div class="kv"><span class="key">commands/</span><span class="val">→ Slash commands</span></div>
+          <div class="kv"><span class="key">skills/</span><span class="val">→ Auto-activated skills</span></div>
+          <div class="kv"><span class="key">.mcp.json</span><span class="val">→ MCP server config</span></div>
+          <div class="kv"><span class="key">agents/</span><span class="val">→ Subagent definitions</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLAUDE.md Essentials -->
+    <div class="card">
+      <div class="card-header h-orange">CLAUDE.md Essentials</div>
+      <div class="card-body">
+        <div class="item-num"><div class="num">1</div><div class="txt">Project conventions & style guide</div></div>
+        <div class="item-num"><div class="num">2</div><div class="txt">Tech stack & architecture overview</div></div>
+        <div class="item-num"><div class="num">3</div><div class="txt">Testing requirements & patterns</div></div>
+        <div class="item-num"><div class="num">4</div><div class="txt">Git workflow & branch strategy</div></div>
+        <div class="item-num"><div class="num">5</div><div class="txt">Security & compliance rules</div></div>
+        <div class="item-num"><div class="num">6</div><div class="txt">File naming & folder conventions</div></div>
+        <div class="item-num"><div class="num">7</div><div class="txt">Review checklist before commits</div></div>
+      </div>
+    </div>
+
+    <!-- Extension Types -->
+    <div class="card">
+      <div class="card-header h-green">Extension Types</div>
+      <div class="card-body">
+        <div class="kv"><span class="key" style="min-width:80px;">Skills</span><span class="val">Auto-activate on task match</span></div>
+        <div class="kv"><span class="key" style="min-width:80px;">Hooks</span><span class="val">Lifecycle event scripts</span></div>
+        <div class="kv"><span class="key" style="min-width:80px;">MCP</span><span class="val">External tool connections</span></div>
+        <div class="kv"><span class="key" style="min-width:80px;">Subagents</span><span class="val">Installed parallel workers</span></div>
+        <div class="kv"><span class="key" style="min-width:80px;">Agent Teams</span><span class="val">Multi-agent coordination</span></div>
+        <div class="kv"><span class="key" style="min-width:80px;">Plugins</span><span class="val">Bundled distributable setups</span></div>
+      </div>
+    </div>
+
+    <!-- Hook Events -->
+    <div class="card">
+      <div class="card-header h-blue">Hook Events</div>
+      <div class="card-body">
+        <div class="item"><b>PreToolUse</b> — Block before execution</div>
+        <div class="item"><b>PostToolUse</b> — Auto lint after writes</div>
+        <div class="item"><b>SessionStart</b> — Load content on launch</div>
+        <div class="item"><b>SessionEnd</b> — Save session summaries</div>
+        <div class="item"><b>PreCommit</b> — Secret detection</div>
+        <div class="item"><b>Notification</b> — Slack/webhook alerts</div>
+      </div>
+    </div>
+
+    <!-- Skill Structure -->
+    <div class="card">
+      <div class="card-header h-purple">Skill Structure</div>
+      <div class="card-body">
+        <div class="item"><b>SKILL.md</b> — Instructions & metadata</div>
+        <div class="item"><b>scripts/</b> — Executable automation</div>
+        <div class="item"><b>references/</b> — Docs loaded on demand</div>
+        <div class="item"><b>assets/</b> — Templates & static files</div>
+        <div style="margin-top:6px;">
+          <span class="chip orange">trigger: on-task-match</span>
+          <span class="chip green">auto-activated</span>
+          <span class="chip blue">shareable</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Popular MCP Servers -->
+    <div class="card">
+      <div class="card-header h-teal">Popular MCP Servers</div>
+      <div class="card-body">
+        <div class="item"><b>GitHub</b> — PRs, issues, repos</div>
+        <div class="item"><b>JIRA / Linear</b> — Ticket workflows</div>
+        <div class="item"><b>Slack</b> — Notifications & search</div>
+        <div class="item"><b>PostgresDB</b> — Direct queries</div>
+        <div class="item"><b>Playwright</b> — Browser automation</div>
+        <div class="item"><b>Filesystem</b> — Scoped file access</div>
+      </div>
+    </div>
+
+    <!-- Getting Started -->
+    <div class="card">
+      <div class="card-header h-orange">Getting Started</div>
+      <div class="card-body">
+        <div class="gs-item"><div class="gs-num">1</div><div class="gs-text">npm i -g @anthropic-ai/claude-code</div></div>
+        <div class="gs-item"><div class="gs-num">2</div><div class="gs-text">cd your-project &amp;&amp; claude</div></div>
+        <div class="gs-item"><div class="gs-num">3</div><div class="gs-text">/init → CLAUDE.md 자동 생성</div></div>
+        <div class="gs-item"><div class="gs-num">4</div><div class="gs-text">슬래시 커맨드를 .claude/commands/ 에 추가</div></div>
+        <div class="gs-item"><div class="gs-num">5</div><div class="gs-text">MCP 서버를 .mcp.json 에 설정</div></div>
+        <div class="gs-item"><div class="gs-num">6</div><div class="gs-text">Skill 추가 → 워크플로우 자동화</div></div>
+      </div>
+    </div>
+
+    <!-- Context Management -->
+    <div class="card">
+      <div class="card-header h-dark">Context Management</div>
+      <div class="card-body">
+        <div class="ctx-row">
+          <div class="ctx-label" style="font-size:11px;">0–60%</div>
+          <div class="ctx-bar-wrap"><div class="ctx-bar" style="width:60%;background:#3A7A50;"></div></div>
+          <div class="ctx-note" style="color:#3A7A50;">정상 작업</div>
+        </div>
+        <div class="ctx-row">
+          <div class="ctx-label" style="font-size:11px;">50–70%</div>
+          <div class="ctx-bar-wrap"><div class="ctx-bar" style="width:70%;background:#E8A030;"></div></div>
+          <div class="ctx-note" style="color:#E8A030;">사용량 모니터</div>
+        </div>
+        <div class="ctx-row">
+          <div class="ctx-label" style="font-size:11px;">70–80%</div>
+          <div class="ctx-bar-wrap"><div class="ctx-bar" style="width:80%;background:#D45B2A;"></div></div>
+          <div class="ctx-note" style="color:#D45B2A;">/compact 실행</div>
+        </div>
+        <div class="ctx-row">
+          <div class="ctx-label" style="font-size:11px;">80%+</div>
+          <div class="ctx-bar-wrap"><div class="ctx-bar" style="width:95%;background:#8A2A2A;"></div></div>
+          <div class="ctx-note" style="color:#8A2A2A;">반드시 압축</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-panel">
+
+    <!-- Best Practices -->
+    <div class="card">
+      <div class="card-header h-red">Best Practices for Claude Code</div>
+      <div class="card-body">
+        <div class="item"><b>Iterative Development</b> — 작게 시작, 자주 테스트</div>
+        <div class="item"><b>Clear Skill Docs</b> — 목적 & 사용법 명확히</div>
+        <div class="item"><b>Modular Skills</b> — 복잡한 작업 분해</div>
+        <div class="item"><b>Secure Secrets</b> — 환경변수 사용, 코드에 하드코딩 금지</div>
+        <div class="item"><b>Regular Auditing</b> — Skills & Hooks 주기적 검토</div>
+      </div>
+    </div>
+
+    <!-- settings.json -->
+    <div class="card">
+      <div class="card-header h-navy">settings.json Structure</div>
+      <div class="card-body" style="padding:8px;">
+        <div class="code-block">
+<span class="p">{</span>
+  <span class="k">"permissions"</span><span class="p">: {</span>
+    <span class="k">"allow"</span><span class="p">: [</span> <span class="s">...PATH...</span> <span class="p">],</span>
+    <span class="k">"deny"</span><span class="p">: [</span> <span class="s">...PATH...</span> <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="k">"hooks"</span><span class="p">: {</span>
+    <span class="k">"PreToolUse"</span><span class="p">: [{</span>
+      <span class="k">"matcher"</span><span class="p">: </span><span class="s">"hook"</span><span class="p">,</span>
+      <span class="k">"hooks"</span><span class="p">: [{</span>
+        <span class="k">"type"</span><span class="p">: </span><span class="s">"command"</span><span class="p">,</span>
+        <span class="k">"command"</span><span class="p">: </span><span class="s">"sbck-safety.sh"</span>
+      <span class="p">}]</span>
+    <span class="p">}],</span>
+    <span class="k">"PostToolUse"</span><span class="p">: [{</span>
+      <span class="k">"matcher"</span><span class="p">: </span><span class="s">"write"</span><span class="p">,</span>
+      <span class="k">"hooks"</span><span class="p">: [{</span>
+        <span class="k">"type"</span><span class="p">: </span><span class="s">"command"</span><span class="p">,</span>
+        <span class="k">"command"</span><span class="p">: </span><span class="s">"npm run lint"</span>
+      <span class="p">}]</span>
+    <span class="p">}]</span>
+  <span class="p">},</span>
+  <span class="k">"env"</span><span class="p">: {</span>
+    <span class="k">"MAX_THINKING_TOKENS"</span><span class="p">: </span><span class="b">"10000"</span><span class="p">,</span>
+    <span class="k">"CLAUDE_AUTOCOMPACT"</span><span class="p">: </span><span class="b">"50"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- .mcp.json -->
+    <div class="card">
+      <div class="card-header h-navy">.mcp.json Structure</div>
+      <div class="card-body" style="padding:8px;">
+        <div class="code-block">
+<span class="p">{</span>
+  <span class="k">"mcpServers"</span><span class="p">: {</span>
+    <span class="k">"github"</span><span class="p">: {</span>
+      <span class="k">"type"</span><span class="p">: </span><span class="s">"stdio"</span><span class="p">,</span>
+      <span class="k">"command"</span><span class="p">: </span><span class="s">"npx"</span><span class="p">,</span>
+      <span class="k">"args"</span><span class="p">: [</span><span class="s">"-y"</span><span class="p">,</span>
+        <span class="s">"@anthropic-ic/mcp-github"</span><span class="p">],</span>
+      <span class="k">"env"</span><span class="p">: {</span>
+        <span class="k">"GITHUB_TOKEN"</span><span class="p">:</span>
+          <span class="b">"${GITHUB_TOKEN}"</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="k">"postgres"</span><span class="p">: {</span>
+      <span class="k">"type"</span><span class="p">: </span><span class="s">"stdio"</span><span class="p">,</span>
+      <span class="k">"command"</span><span class="p">: </span><span class="s">"npx"</span><span class="p">,</span>
+      <span class="k">"args"</span><span class="p">: [</span><span class="s">"-y"</span><span class="p">,</span>
+        <span class="s">"@anthropic/mcp-postgres"</span><span class="p">],</span>
+      <span class="k">"env"</span><span class="p">: {</span>
+        <span class="k">"DATABASE_URL"</span><span class="p">:</span>
+          <span class="b">"${DATABASE_URL}"</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER: CLAUDE.md Template -->
+<div class="footer-grid" style="margin-top:14px;">
+  <div class="footer-card">
+    <div class="fc-title">## Tech Stack</div>
+    <div class="fc-item">Next.js 14, TypeScript, Tailwind</div>
+    <div class="fc-item">Supabase for auth & database</div>
+    <div class="fc-item">Prisma ORM, tRPC API layer</div>
+  </div>
+  <div class="footer-card">
+    <div class="fc-title">## Conventions</div>
+    <div class="fc-item">Always write tests before code</div>
+    <div class="fc-item">Use conventional commits</div>
+    <div class="fc-item">Never commit directly to main</div>
+    <div class="fc-item">Run lint + typecheck before PR</div>
+  </div>
+  <div class="footer-card">
+    <div class="fc-title">## Architecture</div>
+    <div class="fc-item">src/components — React components</div>
+    <div class="fc-item">src/services — Business logic</div>
+    <div class="fc-item">src/utils — Shared helpers</div>
+  </div>
+  <div class="footer-card">
+    <div class="fc-title">## Security</div>
+    <div class="fc-item">No secrets in code or logs</div>
+    <div class="fc-item">Validate all user inputs</div>
+    <div class="fc-item">Use parameterized queries only</div>
+    <div class="fc-item">Review deps monthly</div>
+  </div>
+</div>
+
+<div style="text-align:center;margin-top:16px;font-size:10px;color:#8A7060;">
+  CLAUDE.md Template — # Project: My App &nbsp;|&nbsp; Based on official Anthropic docs &nbsp;|&nbsp; seoyeon924.github.io/Script
+</div>
+
+</body>
+</html>
