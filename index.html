@@ -439,518 +439,400 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 
 <!-- ─── SIDEBAR ─── -->
 <div id="sidebar">
-  <div class="sidebar-header">
-    <div class="title">클로드코드 × 데이터분석</div>
-    <div class="sub">전서연 · 학습 가이드</div>
+  <div class="nav-logo">
+    <span class="logo-text">AI 데이터 시각화</span>
+    <span class="logo-sub">패스트캠퍼스 강의 스크립트</span>
   </div>
-  <div class="sidebar-progress">
-    <div class="progress-label">
-      <span>전체 진행률</span>
-      <span id="prog-label">0 / 14 클립</span>
-    </div>
-    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
-  </div>
-  <div id="nav">
 
-    <!-- 홈 -->
-    <div class="nav-item" id="home-nav-item" onclick="showHome(this)" style="margin-bottom:4px;">
-      <span class="num" style="font-size:12px;">⌂</span>
-      <span class="clip-title" style="font-weight:600;">전체 커리큘럼</span>
-    </div>
-
-    <div class="nav-divider"></div>
-
-    <!-- CH00 -->
-    <div class="chapter-label" onclick="toggleChapter('ch00')">
-      <span class="ch-badge ch00">CH00</span>
-      <span class="ch-name">강의 소개 & 준비</span>
-      <span class="ch-meta">4클립 · 55분</span>
+    <div class="nav-divider" style="background:#7B6FA0;opacity:0.3;"></div>
+    <div class="part-label" style="color:#7B6FA0;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px 4px;">P01 — 왜 AI 데이터 시각화인가</div>
+    <div class="chapter-label" onclick="toggleChapter('p01-ch01')">
+      <span class="ch-badge" style="background:rgba(123,111,160,0.12);color:#7B6FA0">CH01</span>
+      <span class="ch-name">데이터 시각화의 기초 관점 잡기</span>
+      <span class="ch-meta">4클립 · 40분</span>
       <span class="ch-toggle">▾</span>
     </div>
-    <div class="chapter-clips" id="clips-ch00">
-      <div class="nav-item" onclick="loadClip('ch00-01',this)" data-id="ch00-01">
+    <div class="chapter-clips" id="clips-p01-ch01">
+      <div class="nav-item" onclick="loadClip('p01-ch01-01',this)" data-id="p01-ch01-01">
         <span class="num">01</span>
-        <span class="clip-title">강의 OT</span>
+        <span class="clip-title">강의 개요 & 결과물 미리보기</span>
+        <span class="clip-time">10분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p01-ch01-02',this)" data-id="p01-ch01-02">
+        <span class="num">02</span>
+        <span class="clip-title">왜 AI + 데이터 시각화인가</span>
         <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch00-02',this)" data-id="ch00-02">
-        <span class="num">02</span>
-        <span class="clip-title">결과물 프리뷰</span>
-        <span class="clip-time">10분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch00-03',this)" data-id="ch00-03">
+      <div class="nav-item" onclick="loadClip('p01-ch01-03',this)" data-id="p01-ch01-03">
         <span class="num">03</span>
-        <span class="clip-title">수강생 경로 가이드</span>
+        <span class="clip-title">좋은 데이터 시각화의 원칙</span>
         <span class="clip-time">10분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch00-04',this)" data-id="ch00-04">
+      <div class="nav-item" onclick="loadClip('p01-ch01-04',this)" data-id="p01-ch01-04">
         <span class="num">04</span>
-        <span class="clip-title">환경 셋업</span>
-        <span class="clip-time">20분</span>
+        <span class="clip-title">비즈니스 데이터 시각화 사례</span>
+        <span class="clip-time">5분</span>
+      </div>
+    </div>
+    <div class="chapter-label" onclick="toggleChapter('p01-ch02')">
+      <span class="ch-badge" style="background:rgba(123,111,160,0.12);color:#7B6FA0">CH02</span>
+      <span class="ch-name">바이브코딩 환경 세팅</span>
+      <span class="ch-meta">2클립 · 20분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-p01-ch02">
+      <div class="nav-item" onclick="loadClip('p01-ch02-01',this)" data-id="p01-ch02-01">
+        <span class="num">01</span>
+        <span class="clip-title">Claude Code 설치하기</span>
+        <span class="clip-time">10분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p01-ch02-02',this)" data-id="p01-ch02-02">
+        <span class="num">02</span>
+        <span class="clip-title">Claude Code + Antigravity 환경 세팅</span>
+        <span class="clip-time">10분</span>
       </div>
     </div>
 
-    <!-- CH01 -->
-    <div class="chapter-label" onclick="toggleChapter('ch01')">
-      <span class="ch-badge ch01">CH01</span>
-      <span class="ch-name">기본 활용</span>
-      <span class="ch-meta">11클립 · 122분</span>
+    <div class="nav-divider" style="background:#4A7AB5;opacity:0.3;"></div>
+    <div class="part-label" style="color:#4A7AB5;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px 4px;">P02 — Claude Code 핵심 빠르게 익히기</div>
+    <div class="chapter-label" onclick="toggleChapter('p02-ch01')">
+      <span class="ch-badge" style="background:rgba(74,122,181,0.12);color:#4A7AB5">CH01</span>
+      <span class="ch-name">Claude Code 첫 걸음</span>
+      <span class="ch-meta">4클립 · 45분</span>
       <span class="ch-toggle">▾</span>
     </div>
-    <div class="chapter-clips" id="clips-ch01">
-      <div class="nav-item" onclick="loadClip('ch01-01',this)" data-id="ch01-01">
+    <div class="chapter-clips" id="clips-p02-ch01">
+      <div class="nav-item" onclick="loadClip('p02-ch01-01',this)" data-id="p02-ch01-01">
         <span class="num">01</span>
-        <span class="clip-title">클로드 코드란?</span>
-        <span class="clip-time">12분</span>
+        <span class="clip-title">첫 번째 세션 시작하기</span>
+        <span class="clip-time">10분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch01-02',this)" data-id="ch01-02">
+      <div class="nav-item" onclick="loadClip('p02-ch01-02',this)" data-id="p02-ch01-02">
         <span class="num">02</span>
-        <span class="clip-title">설치 & 첫 세션</span>
+        <span class="clip-title">프로젝트 폴더 구조 파악하기</span>
         <span class="clip-time">10분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch01-03',this)" data-id="ch01-03">
+      <div class="nav-item" onclick="loadClip('p02-ch01-03',this)" data-id="p02-ch01-03">
         <span class="num">03</span>
-        <span class="clip-title">CLAUDE.md</span>
+        <span class="clip-title">파일 읽기·쓰기·실행 & Plan Mode</span>
         <span class="clip-time">10분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch01-04',this)" data-id="ch01-04">
+      <div class="nav-item" onclick="loadClip('p02-ch01-04',this)" data-id="p02-ch01-04">
         <span class="num">04</span>
-        <span class="clip-title">기본 워크플로우</span>
-        <span class="clip-time">12분</span>
+        <span class="clip-title">CLAUDE.md — 전용 AI 두뇌 설계</span>
+        <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch01-05',this)" data-id="ch01-05">
-        <span class="num">05</span>
-        <span class="clip-title">작업 모드</span>
-        <span class="clip-time">12분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch01-06',this)" data-id="ch01-06">
-        <span class="num">06</span>
-        <span class="clip-title">슬래시 커맨드</span>
-        <span class="clip-time">8분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch01-07',this)" data-id="ch01-07">
-        <span class="num">07</span>
-        <span class="clip-title">토큰 & 비용 관리</span>
+    </div>
+    <div class="chapter-label" onclick="toggleChapter('p02-ch02')">
+      <span class="ch-badge" style="background:rgba(74,122,181,0.12);color:#4A7AB5">CH02</span>
+      <span class="ch-name">MCP & Skills 도구 확장</span>
+      <span class="ch-meta">4클립 · 50분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-p02-ch02">
+      <div class="nav-item" onclick="loadClip('p02-ch02-01',this)" data-id="p02-ch02-01">
+        <span class="num">01</span>
+        <span class="clip-title">MCP란 무엇인가</span>
         <span class="clip-time">10분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch01-08',this)" data-id="ch01-08">
-        <span class="num">08</span>
-        <span class="clip-title">훅 — 자동화 트리거</span>
-        <span class="clip-time">12분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch01-09',this)" data-id="ch01-09">
-        <span class="num">09</span>
-        <span class="clip-title">서브에이전트</span>
-        <span class="clip-time">12분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch01-10',this)" data-id="ch01-10">
-        <span class="num">10</span>
-        <span class="clip-title">MCP 연결</span>
-        <span class="clip-time">12분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch01-11',this)" data-id="ch01-11">
-        <span class="num">11</span>
-        <span class="clip-title">효과적인 지시 작성</span>
-        <span class="clip-time">12분</span>
-      </div>
-    </div>
-
-    <!-- Antigravity (CH01 연장) -->
-    <div class="chapter-label" onclick="toggleChapter('ch01-ag')">
-      <span class="ch-badge ch01">AG</span>
-      <span class="ch-name">Antigravity 환경</span>
-      <span class="ch-time">65분</span>
-    </div>
-    <div class="chapter-clips" id="clips-ch01-ag">
-      <div class="nav-item" onclick="loadClip('ch08-01',this)" data-id="ch08-01">
-        <span class="clip-num">AG-01</span>
-        <span class="clip-title">설치 & 클로드 코드 연결</span>
+      <div class="nav-item" onclick="loadClip('p02-ch02-02',this)" data-id="p02-ch02-02">
+        <span class="num">02</span>
+        <span class="clip-title">Firecrawl MCP 웹 크롤링</span>
         <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch08-02',this)" data-id="ch08-02">
-        <span class="clip-num">AG-02</span>
-        <span class="clip-title">화면 분할 워크플로</span>
+      <div class="nav-item" onclick="loadClip('p02-ch02-03',this)" data-id="p02-ch02-03">
+        <span class="num">03</span>
+        <span class="clip-title">MCP 실전 활용</span>
         <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch08-03',this)" data-id="ch08-03">
-        <span class="clip-num">AG-03</span>
-        <span class="clip-title">에이전트 매니저 활용</span>
-        <span class="clip-time">18분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch08-04',this)" data-id="ch08-04">
-        <span class="clip-num">AG-04</span>
-        <span class="clip-title">실전 파이프라인 완성</span>
-        <span class="clip-time">17분</span>
-      </div>
-    </div>
-    <!-- CH02 -->
-    <div class="chapter-label" onclick="toggleChapter('ch02')">
-      <span class="ch-badge ch02">CH02</span>
-      <span class="ch-name">서브에이전트</span>
-      <span class="ch-meta">3클립 · 60분</span>
-      <span class="ch-toggle">▾</span>
-    </div>
-    <div class="chapter-clips" id="clips-ch02">
-      <div class="nav-item" onclick="loadClip('ch02-01',this)" data-id="ch02-01">
-        <span class="num">01</span>
-        <span class="clip-title">서브에이전트란?</span>
-        <span class="clip-time">20분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch02-02',this)" data-id="ch02-02">
-        <span class="num">02</span>
-        <span class="clip-title">병렬 작업 설계</span>
-        <span class="clip-time">20분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch02-03',this)" data-id="ch02-03">
-        <span class="num">03</span>
-        <span class="clip-title">실전 실습</span>
-        <span class="clip-time">20분</span>
-      </div>
-    </div>
-
-    <!-- CH03 -->
-    <div class="chapter-label" onclick="toggleChapter('ch03')">
-      <span class="ch-badge ch03">CH03</span>
-      <span class="ch-name">에이전트 팀</span>
-      <span class="ch-meta">4클립 · 70분</span>
-      <span class="ch-toggle">▾</span>
-    </div>
-    <div class="chapter-clips" id="clips-ch03">
-      <div class="nav-item" onclick="loadClip('ch03-01',this)" data-id="ch03-01">
-        <span class="num">01</span>
-        <span class="clip-title">멀티 에이전트란?</span>
-        <span class="clip-time">20분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch03-02',this)" data-id="ch03-02">
-        <span class="num">02</span>
-        <span class="clip-title">역할 분리 설계</span>
-        <span class="clip-time">18분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch03-03',this)" data-id="ch03-03">
-        <span class="num">03</span>
-        <span class="clip-title">팀 실행</span>
-        <span class="clip-time">17분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch03-04',this)" data-id="ch03-04">
+      <div class="nav-item" onclick="loadClip('p02-ch02-04',this)" data-id="p02-ch02-04">
         <span class="num">04</span>
-        <span class="clip-title">실전 — 3-에이전트 팀</span>
-        <span class="clip-time">15분</span>
+        <span class="clip-title">Skills 탐색 & 설치</span>
+        <span class="clip-time">10분</span>
       </div>
     </div>
-
-    <!-- CH04 -->
-    <div class="chapter-label" onclick="toggleChapter('ch04')">
-      <span class="ch-badge ch04">CH04</span>
-      <span class="ch-name">멀티 환경</span>
-      <span class="ch-meta">3클립 · 40분</span>
+    <div class="chapter-label" onclick="toggleChapter('p02-ch03')">
+      <span class="ch-badge" style="background:rgba(74,122,181,0.12);color:#4A7AB5">CH03</span>
+      <span class="ch-name">데이터 분석 협업 구조 만들기</span>
+      <span class="ch-meta">4클립 · 50분</span>
       <span class="ch-toggle">▾</span>
     </div>
-    <div class="chapter-clips" id="clips-ch04">
-      <div class="nav-item" onclick="loadClip('ch04-01',this)" data-id="ch04-01">
+    <div class="chapter-clips" id="clips-p02-ch03">
+      <div class="nav-item" onclick="loadClip('p02-ch03-01',this)" data-id="p02-ch03-01">
         <span class="num">01</span>
-        <span class="clip-title">로컬 환경 최적화</span>
-        <span class="clip-time">12분</span>
+        <span class="clip-title">서브에이전트 구조 이해</span>
+        <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch04-02',this)" data-id="ch04-02">
+      <div class="nav-item" onclick="loadClip('p02-ch03-02',this)" data-id="p02-ch03-02">
         <span class="num">02</span>
-        <span class="clip-title">클라우드 환경</span>
-        <span class="clip-time">14분</span>
+        <span class="clip-title">에이전트 팀 설정</span>
+        <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch04-03',this)" data-id="ch04-03">
+      <div class="nav-item" onclick="loadClip('p02-ch03-03',this)" data-id="p02-ch03-03">
         <span class="num">03</span>
-        <span class="clip-title">실전 — 환경 전환</span>
-        <span class="clip-time">14분</span>
+        <span class="clip-title">병렬 작업·태스크 코워크 실습</span>
+        <span class="clip-time">10분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p02-ch03-04',this)" data-id="p02-ch03-04">
+        <span class="num">04</span>
+        <span class="clip-title">실무 최소 운영 팁</span>
+        <span class="clip-time">10분</span>
       </div>
     </div>
 
-    <!-- CH05 -->
-    <div class="chapter-label" onclick="toggleChapter('ch05')">
-      <span class="ch-badge ch05">CH05</span>
-      <span class="ch-name">MCP 연동</span>
+    <div class="nav-divider" style="background:#4A8A6A;opacity:0.3;"></div>
+    <div class="part-label" style="color:#4A8A6A;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px 4px;">P03 — 시각화 전략 자동 설계</div>
+    <div class="chapter-label" onclick="toggleChapter('p03-ch01')">
+      <span class="ch-badge" style="background:rgba(74,138,106,0.12);color:#4A8A6A">CH01</span>
+      <span class="ch-name">Claude Code로 시각화 설계하기</span>
       <span class="ch-meta">4클립 · 60분</span>
       <span class="ch-toggle">▾</span>
     </div>
-    <div class="chapter-clips" id="clips-ch05">
-      <div class="nav-item" onclick="loadClip('ch05-01',this)" data-id="ch05-01">
+    <div class="chapter-clips" id="clips-p03-ch01">
+      <div class="nav-item" onclick="loadClip('p03-ch01-01',this)" data-id="p03-ch01-01">
         <span class="num">01</span>
-        <span class="clip-title">MCP란 무엇인가</span>
-        <span class="clip-time">12분</span>
+        <span class="clip-title">데이터 구조 분석 → 시각화 전략</span>
+        <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch05-02',this)" data-id="ch05-02">
+      <div class="nav-item" onclick="loadClip('p03-ch01-02',this)" data-id="p03-ch01-02">
         <span class="num">02</span>
-        <span class="clip-title">데이터베이스 MCP</span>
-        <span class="clip-time">16분</span>
+        <span class="clip-title">KPI 히어라키 자동 설계</span>
+        <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch05-03',this)" data-id="ch05-03">
+      <div class="nav-item" onclick="loadClip('p03-ch01-03',this)" data-id="p03-ch01-03">
         <span class="num">03</span>
-        <span class="clip-title">Slack MCP</span>
-        <span class="clip-time">14분</span>
+        <span class="clip-title">인사이트 자동 생성 & 전처리</span>
+        <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch05-04',this)" data-id="ch05-04">
+      <div class="nav-item" onclick="loadClip('p03-ch01-04',this)" data-id="p03-ch01-04">
         <span class="num">04</span>
-        <span class="clip-title">실전 — 완전 자동화</span>
-        <span class="clip-time">18분</span>
+        <span class="clip-title">자동 완성 워크플로우 실전</span>
+        <span class="clip-time">15분</span>
+      </div>
+    </div>
+    <div class="chapter-label" onclick="toggleChapter('p03-ch02')">
+      <span class="ch-badge" style="background:rgba(74,138,106,0.12);color:#4A8A6A">CH02</span>
+      <span class="ch-name">에이전트 팀 대시보드 자동 생성</span>
+      <span class="ch-meta">3클립 · 35분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-p03-ch02">
+      <div class="nav-item" onclick="loadClip('p03-ch02-01',this)" data-id="p03-ch02-01">
+        <span class="num">01</span>
+        <span class="clip-title">에이전트 팀 구조 설계</span>
+        <span class="clip-time">10분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p03-ch02-02',this)" data-id="p03-ch02-02">
+        <span class="num">02</span>
+        <span class="clip-title">CSV → 대시보드 자동 완성</span>
+        <span class="clip-time">15분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p03-ch02-03',this)" data-id="p03-ch02-03">
+        <span class="num">03</span>
+        <span class="clip-title">Google Sheets 연동 & 실전</span>
+        <span class="clip-time">10분</span>
+      </div>
+    </div>
+    <div class="chapter-label" onclick="toggleChapter('p03-ch03')">
+      <span class="ch-badge" style="background:rgba(74,138,106,0.12);color:#4A8A6A">CH03</span>
+      <span class="ch-name">OpenClaw 업무 파이프라인 운영</span>
+      <span class="ch-meta">3클립 · 40분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-p03-ch03">
+      <div class="nav-item" onclick="loadClip('p03-ch03-01',this)" data-id="p03-ch03-01">
+        <span class="num">01</span>
+        <span class="clip-title">OpenClaw 이해 & 텔레그램 연결</span>
+        <span class="clip-time">15분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p03-ch03-02',this)" data-id="p03-ch03-02">
+        <span class="num">02</span>
+        <span class="clip-title">대시보드 자동 생성 & 주간 리포트</span>
+        <span class="clip-time">15분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p03-ch03-03',this)" data-id="p03-ch03-03">
+        <span class="num">03</span>
+        <span class="clip-title">Agent Manager 태스크 관리</span>
+        <span class="clip-time">10분</span>
       </div>
     </div>
 
-    <!-- CH06 -->
-    <div class="chapter-label" onclick="toggleChapter('ch06')">
-      <span class="ch-badge ch06">CH06</span>
-      <span class="ch-name">시각화 전략</span>
-      <span class="ch-meta">8클립 · 110분</span>
+    <div class="nav-divider" style="background:#B5724A;opacity:0.3;"></div>
+    <div class="part-label" style="color:#B5724A;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px 4px;">P04 — 고급 인터랙티브 시각화</div>
+    <div class="chapter-label" onclick="toggleChapter('p04-ch01')">
+      <span class="ch-badge" style="background:rgba(181,114,74,0.12);color:#B5724A">CH01</span>
+      <span class="ch-name">Interactive Data Art</span>
+      <span class="ch-meta">4클립 · 70분</span>
       <span class="ch-toggle">▾</span>
     </div>
-    <div class="chapter-clips" id="clips-ch06">
-      <div class="nav-item" onclick="loadClip('ch06-01',this)" data-id="ch06-01">
+    <div class="chapter-clips" id="clips-p04-ch01">
+      <div class="nav-item" onclick="loadClip('p04-ch01-01',this)" data-id="p04-ch01-01">
         <span class="num">01</span>
-        <span class="clip-title">시각화 전략이란</span>
-        <span class="clip-time">12분</span>
+        <span class="clip-title">Interactive Data Art 기획</span>
+        <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch06-02',this)" data-id="ch06-02">
+      <div class="nav-item" onclick="loadClip('p04-ch01-02',this)" data-id="p04-ch01-02">
         <span class="num">02</span>
-        <span class="clip-title">비교형 차트</span>
-        <span class="clip-time">14분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch06-03',this)" data-id="ch06-03">
-        <span class="num">03</span>
-        <span class="clip-title">분포와 관계 차트</span>
-        <span class="clip-time">14분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch06-04',this)" data-id="ch06-04">
-        <span class="num">04</span>
-        <span class="clip-title">태블로 자동화</span>
-        <span class="clip-time">14분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch06-05',this)" data-id="ch06-05">
-        <span class="num">05</span>
-        <span class="clip-title">파이썬 시각화</span>
-        <span class="clip-time">14분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch06-06',this)" data-id="ch06-06">
-        <span class="num">06</span>
-        <span class="clip-title">인터랙티브 차트</span>
-        <span class="clip-time">14분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch06-07',this)" data-id="ch06-07">
-        <span class="num">07</span>
-        <span class="clip-title">색상과 브랜드</span>
-        <span class="clip-time">12분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch06-08',this)" data-id="ch06-08">
-        <span class="num">08</span>
-        <span class="clip-title">실전 — 8단계 파이프라인</span>
-        <span class="clip-time">16분</span>
-      </div>
-    </div>
-
-    <!-- CH07 -->
-    <div class="chapter-label" onclick="toggleChapter('ch07')">
-      <span class="ch-badge ch07">CH07</span>
-      <span class="ch-name">D3.js 시각화</span>
-      <span class="ch-meta">4클립 · 75분</span>
-      <span class="ch-toggle">▾</span>
-    </div>
-    <div class="chapter-clips" id="clips-ch07">
-      <div class="nav-item" onclick="loadClip('ch07-01',this)" data-id="ch07-01">
-        <span class="num">01</span>
-        <span class="clip-title">D3.js란 무엇인가</span>
-        <span class="clip-time">18분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch07-02',this)" data-id="ch07-02">
-        <span class="num">02</span>
-        <span class="clip-title">인터랙티브 기능</span>
-        <span class="clip-time">18분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch07-03',this)" data-id="ch07-03">
-        <span class="num">03</span>
-        <span class="clip-title">히트맵·트리맵·네트워크</span>
+        <span class="clip-title">D3.js 네트워크 차트</span>
         <span class="clip-time">20분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch07-04',this)" data-id="ch07-04">
+      <div class="nav-item" onclick="loadClip('p04-ch01-03',this)" data-id="p04-ch01-03">
+        <span class="num">03</span>
+        <span class="clip-title">Tableau Extension 연결</span>
+        <span class="clip-time">15분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p04-ch01-04',this)" data-id="p04-ch01-04">
         <span class="num">04</span>
-        <span class="clip-title">실전 — 대시보드 완성</span>
-        <span class="clip-time">19분</span>
+        <span class="clip-title">3D Globe 시각화</span>
+        <span class="clip-time">20분</span>
       </div>
     </div>
 
-    <!-- CH08 -->
-    <div class="chapter-label" onclick="toggleChapter('ch08')">
-      <span class="ch-badge ch08">CH08</span>
+    <div class="nav-divider" style="background:#9E6A7A;opacity:0.3;"></div>
+    <div class="part-label" style="color:#9E6A7A;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px 4px;">P05 — 직무별 실전 대시보드</div>
+    <div class="chapter-label" onclick="toggleChapter('p05-ch01')">
+      <span class="ch-badge" style="background:rgba(158,106,122,0.12);color:#9E6A7A">CH01</span>
       <span class="ch-name">마케팅 대시보드</span>
-      <span class="ch-meta">4클립 · 65분</span>
+      <span class="ch-meta">3클립 · 45분</span>
       <span class="ch-toggle">▾</span>
     </div>
-    <div class="chapter-clips" id="clips-ch08">
-      <div class="nav-item" onclick="loadClip('ch08-01',this)" data-id="ch08-01">
+    <div class="chapter-clips" id="clips-p05-ch01">
+      <div class="nav-item" onclick="loadClip('p05-ch01-01',this)" data-id="p05-ch01-01">
         <span class="num">01</span>
-        <span class="clip-title">마케팅 데이터 구조</span>
+        <span class="clip-title">캠페인 성과 대시보드 기획안</span>
         <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch08-02',this)" data-id="ch08-02">
+      <div class="nav-item" onclick="loadClip('p05-ch01-02',this)" data-id="p05-ch01-02">
         <span class="num">02</span>
-        <span class="clip-title">채널별 성과 시각화</span>
-        <span class="clip-time">18분</span>
+        <span class="clip-title">전용 CLAUDE.md + Skill 제작 실습</span>
+        <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch08-03',this)" data-id="ch08-03">
+      <div class="nav-item" onclick="loadClip('p05-ch01-03',this)" data-id="p05-ch01-03">
         <span class="num">03</span>
-        <span class="clip-title">자동 갱신 대시보드</span>
-        <span class="clip-time">17분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch08-04',this)" data-id="ch08-04">
-        <span class="num">04</span>
-        <span class="clip-title">예산 배분 추천</span>
+        <span class="clip-title">활용 방법 / 인사이트 도출</span>
         <span class="clip-time">15분</span>
       </div>
     </div>
-
-    <!-- CH08 -->
-    <div class="chapter-label" onclick="toggleChapter('ch08')">
-      <span class="ch-badge ch08">CH08</span>
+    <div class="chapter-label" onclick="toggleChapter('p05-ch02')">
+      <span class="ch-badge" style="background:rgba(158,106,122,0.12);color:#9E6A7A">CH02</span>
       <span class="ch-name">A/B 테스트 분석</span>
       <span class="ch-meta">3클립 · 45분</span>
       <span class="ch-toggle">▾</span>
     </div>
-    <div class="chapter-clips" id="clips-ch08">
-      <div class="nav-item" onclick="loadClip('ch08-01',this)" data-id="ch08-01">
+    <div class="chapter-clips" id="clips-p05-ch02">
+      <div class="nav-item" onclick="loadClip('p05-ch02-01',this)" data-id="p05-ch02-01">
         <span class="num">01</span>
-        <span class="clip-title">A/B 테스트 개념</span>
+        <span class="clip-title">A/B test 대시보드 기획안</span>
         <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch08-02',this)" data-id="ch08-02">
+      <div class="nav-item" onclick="loadClip('p05-ch02-02',this)" data-id="p05-ch02-02">
         <span class="num">02</span>
-        <span class="clip-title">통계 검정과 시각화</span>
+        <span class="clip-title">전용 CLAUDE.md + Skill 제작 실습</span>
         <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch08-03',this)" data-id="ch08-03">
+      <div class="nav-item" onclick="loadClip('p05-ch02-03',this)" data-id="p05-ch02-03">
         <span class="num">03</span>
-        <span class="clip-title">실전 — 자동화 리포트</span>
+        <span class="clip-title">활용 방법 / 인사이트 도출</span>
+        <span class="clip-time">15분</span>
+      </div>
+    </div>
+    <div class="chapter-label" onclick="toggleChapter('p05-ch03')">
+      <span class="ch-badge" style="background:rgba(158,106,122,0.12);color:#9E6A7A">CH03</span>
+      <span class="ch-name">Data PM Metric 분석 대시보드</span>
+      <span class="ch-meta">3클립 · 45분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-p05-ch03">
+      <div class="nav-item" onclick="loadClip('p05-ch03-01',this)" data-id="p05-ch03-01">
+        <span class="num">01</span>
+        <span class="clip-title">PM 대시보드 기획안</span>
+        <span class="clip-time">15분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p05-ch03-02',this)" data-id="p05-ch03-02">
+        <span class="num">02</span>
+        <span class="clip-title">전용 CLAUDE.md + Skill 제작 실습</span>
+        <span class="clip-time">15분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p05-ch03-03',this)" data-id="p05-ch03-03">
+        <span class="num">03</span>
+        <span class="clip-title">활용 방법 / 인사이트 도출</span>
+        <span class="clip-time">15분</span>
+      </div>
+    </div>
+    <div class="chapter-label" onclick="toggleChapter('p05-ch04')">
+      <span class="ch-badge" style="background:rgba(158,106,122,0.12);color:#9E6A7A">CH04</span>
+      <span class="ch-name">리텐션 & 매출 분석</span>
+      <span class="ch-meta">3클립 · 45분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-p05-ch04">
+      <div class="nav-item" onclick="loadClip('p05-ch04-01',this)" data-id="p05-ch04-01">
+        <span class="num">01</span>
+        <span class="clip-title">리텐션 분석 대시보드 기획안</span>
+        <span class="clip-time">15분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p05-ch04-02',this)" data-id="p05-ch04-02">
+        <span class="num">02</span>
+        <span class="clip-title">전용 CLAUDE.md + Skill 제작 실습</span>
+        <span class="clip-time">15분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p05-ch04-03',this)" data-id="p05-ch04-03">
+        <span class="num">03</span>
+        <span class="clip-title">활용 방법 / 인사이트 도출</span>
+        <span class="clip-time">15분</span>
+      </div>
+    </div>
+    <div class="chapter-label" onclick="toggleChapter('p05-ch05')">
+      <span class="ch-badge" style="background:rgba(158,106,122,0.12);color:#9E6A7A">CH05</span>
+      <span class="ch-name">HR 대시보드</span>
+      <span class="ch-meta">3클립 · 45분</span>
+      <span class="ch-toggle">▾</span>
+    </div>
+    <div class="chapter-clips" id="clips-p05-ch05">
+      <div class="nav-item" onclick="loadClip('p05-ch05-01',this)" data-id="p05-ch05-01">
+        <span class="num">01</span>
+        <span class="clip-title">HR 대시보드 기획안 (채용 퍼널)</span>
+        <span class="clip-time">15분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p05-ch05-02',this)" data-id="p05-ch05-02">
+        <span class="num">02</span>
+        <span class="clip-title">전용 CLAUDE.md + Skill 제작 실습</span>
+        <span class="clip-time">15분</span>
+      </div>
+      <div class="nav-item" onclick="loadClip('p05-ch05-03',this)" data-id="p05-ch05-03">
+        <span class="num">03</span>
+        <span class="clip-title">활용 방법 / 인사이트 도출</span>
         <span class="clip-time">15분</span>
       </div>
     </div>
 
-    <!-- CH08 -->
-    <div class="chapter-label" onclick="toggleChapter('ch08')">
-      <span class="ch-badge ch08">CH08</span>
-      <span class="ch-name">PM KPI 시각화</span>
+    <div class="nav-divider" style="background:#4A9E8A;opacity:0.3;"></div>
+    <div class="part-label" style="color:#4A9E8A;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px 4px;">P06 — 웹 기반 포트폴리오 만들기</div>
+    <div class="chapter-label" onclick="toggleChapter('p06-ch01')">
+      <span class="ch-badge" style="background:rgba(74,158,138,0.12);color:#4A9E8A">CH01</span>
+      <span class="ch-name">시각화 포트폴리오 블로그 만들기</span>
       <span class="ch-meta">3클립 · 50분</span>
       <span class="ch-toggle">▾</span>
     </div>
-    <div class="chapter-clips" id="clips-ch08">
-      <div class="nav-item" onclick="loadClip('ch08-01',this)" data-id="ch08-01">
+    <div class="chapter-clips" id="clips-p06-ch01">
+      <div class="nav-item" onclick="loadClip('p06-ch01-01',this)" data-id="p06-ch01-01">
         <span class="num">01</span>
-        <span class="clip-title">PM 핵심 지표</span>
-        <span class="clip-time">17분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch08-02',this)" data-id="ch08-02">
-        <span class="num">02</span>
-        <span class="clip-title">KPI 트렌드 시각화</span>
-        <span class="clip-time">17분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch08-03',this)" data-id="ch08-03">
-        <span class="num">03</span>
-        <span class="clip-title">실전 — 주간 PM 리포트</span>
-        <span class="clip-time">16분</span>
-      </div>
-    </div>
-
-    <!-- CH08 -->
-    <div class="chapter-label" onclick="toggleChapter('ch08')">
-      <span class="ch-badge ch08">CH08</span>
-      <span class="ch-name">리텐션 매출 분석</span>
-      <span class="ch-meta">3클립 · 50분</span>
-      <span class="ch-toggle">▾</span>
-    </div>
-    <div class="chapter-clips" id="clips-ch08">
-      <div class="nav-item" onclick="loadClip('ch08-01',this)" data-id="ch08-01">
-        <span class="num">01</span>
-        <span class="clip-title">코호트 리텐션 분석</span>
-        <span class="clip-time">17분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch08-02',this)" data-id="ch08-02">
-        <span class="num">02</span>
-        <span class="clip-title">매출 트렌드와 LTV</span>
-        <span class="clip-time">16분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch08-03',this)" data-id="ch08-03">
-        <span class="num">03</span>
-        <span class="clip-title">실전 — 리텐션 개선 탐지</span>
-        <span class="clip-time">17분</span>
-      </div>
-    </div>
-
-    <!-- CH08 -->
-    <div class="chapter-label" onclick="toggleChapter('ch08')">
-      <span class="ch-badge ch08">CH08</span>
-      <span class="ch-name">HR 자동화</span>
-      <span class="ch-meta">7클립 · 115분</span>
-      <span class="ch-toggle">▾</span>
-    </div>
-    <div class="chapter-clips" id="clips-ch08">
-      <div class="nav-item" onclick="loadClip('ch08-01',this)" data-id="ch08-01">
-        <span class="num">01</span>
-        <span class="clip-title">HR 데이터 구조</span>
+        <span class="clip-title">Stitch로 포트폴리오 블로그 기획</span>
         <span class="clip-time">15분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch08-02',this)" data-id="ch08-02">
+      <div class="nav-item" onclick="loadClip('p06-ch01-02',this)" data-id="p06-ch01-02">
         <span class="num">02</span>
-        <span class="clip-title">이직률 분석과 예측</span>
-        <span class="clip-time">18분</span>
+        <span class="clip-title">Antigravity + Claude Code 빌드</span>
+        <span class="clip-time">20분</span>
       </div>
-      <div class="nav-item" onclick="loadClip('ch08-03',this)" data-id="ch08-03">
+      <div class="nav-item" onclick="loadClip('p06-ch01-03',this)" data-id="p06-ch01-03">
         <span class="num">03</span>
-        <span class="clip-title">성과 평가 자동화</span>
-        <span class="clip-time">17분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch08-04',this)" data-id="ch08-04">
-        <span class="num">04</span>
-        <span class="clip-title">채용 파이프라인 분석</span>
-        <span class="clip-time">16분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch08-05',this)" data-id="ch08-05">
-        <span class="num">05</span>
-        <span class="clip-title">근태와 팀 생산성</span>
-        <span class="clip-time">16분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch08-06',this)" data-id="ch08-06">
-        <span class="num">06</span>
-        <span class="clip-title">HR 대시보드</span>
-        <span class="clip-time">17분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch08-07',this)" data-id="ch08-07">
-        <span class="num">07</span>
-        <span class="clip-title">실전 — 월간 HR 리포트</span>
-        <span class="clip-time">16분</span>
-      </div>
-    </div>
-
-    <!-- CH08 -->
-    <div class="chapter-label" onclick="toggleChapter('ch08')">
-      <span class="ch-badge ch08">CH08</span>
-      <span class="ch-name">Openclaw 파이프라인</span>
-      <span class="ch-meta">3클립 · 50분</span>
-      <span class="ch-toggle">▾</span>
-    </div>
-    <div class="chapter-clips" id="clips-ch08">
-      <div class="nav-item" onclick="loadClip('ch08-01',this)" data-id="ch08-01">
-        <span class="num">01</span>
-        <span class="clip-title">Openclaw란 무엇인가</span>
-        <span class="clip-time">17분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch08-02',this)" data-id="ch08-02">
-        <span class="num">02</span>
-        <span class="clip-title">자동화 파이프라인 설계</span>
-        <span class="clip-time">17분</span>
-      </div>
-      <div class="nav-item" onclick="loadClip('ch08-03',this)" data-id="ch08-03">
-        <span class="num">03</span>
-        <span class="clip-title">실전 — 전체 파이프라인 완성</span>
-        <span class="clip-time">16분</span>
+        <span class="clip-title">포트폴리오 최종 완성 & 배포</span>
+        <span class="clip-time">15분</span>
       </div>
     </div>
 
   </div>
-</div>
-
 <!-- ─── MAIN ─── -->
 <div id="main">
 
@@ -1079,1013 +961,805 @@ const CHAPTER_INFO = {
 };
 
 const CURRICULUM = [
-  // CH00
   {
-    id: 'ch00-01',
-    file: 'CH00-01 강의 OT — Why, What, Who, How.md',
-    title: '강의 OT — Why · What · Who · How',
-    short: 'OT',
-    chapter: 'CH00',
-    chTitle: '강의 소개 & 준비',
-    time: '15분',
-    type: '슬라이드',
-    why: '이 강의가 내 직무에 맞는지, 배우면 무엇을 할 수 있는지 파악합니다. 목표가 명확해야 이후 60개 클립을 끝까지 완주할 수 있습니다.',
+    id: 'p01-ch01-01',
+    file: 'P01-CH01/P01-CH01-01 강의 개요 & 결과물 미리보기.md',
+    title: '강의 개요 & 결과물 미리보기',
+    short: '강의 개요 & 결과',
+    chapter: 'CH01',
+    part: 'P01',
+    chTitle: '데이터 시각화의 기초 관점 잡기',
+    partTitle: '왜 AI 데이터 시각화인가',
+    time: '10분',
+    type: '강의',
+    why: '',
     prereq: null,
     imgUrls: [],
     analogy: null
   },
   {
-    id: 'ch00-02',
-    file: 'CH00-02 결과물 프리뷰 — 이 강의로 무엇을 만드나.md',
-    title: '결과물 프리뷰 — 이 강의로 무엇을 만드나',
-    short: '결과물',
-    chapter: 'CH00',
-    chTitle: '강의 소개 & 준비',
-    time: '10분',
-    type: '화면 시연',
-    why: '완성된 대시보드, 자동화 리포트, 분석 에이전트 3가지를 미리 봅니다. "이게 진짜 되는 거구나"를 확인해야 학습 동기가 유지됩니다.',
-    prereq: 'CH00-01 강의 OT',
-    imgUrls: [
-      { src: 'img/previews/sales-pipeline-dashboard.jpg', caption: '영업 파이프라인 대시보드 — KPI, 트리맵, 전환율, Next 90일 포커스. 실제 CRM 데이터 기반.' },
-      { src: 'img/previews/sales-pipeline-full.jpg', caption: '세일즈 파이프라인 풀 스크린 — 스테이지별 딜 현황, 계정별 분석 포함.' },
-      { src: 'img/previews/ga4-report.png', caption: 'GA4 주간 리포트 자동화 — 데이터 수집 → 집계 → 시각화 → 발송까지 완전 자동.' },
-      { src: 'img/previews/smartstore-dashboard.png', caption: '스마트스토어 매출 분석 대시보드 — 채널별 성과, 상품별 매출 분해.' },
-      { src: 'img/previews/os-analysis.jpg', caption: 'AI Data Analyst OS — 자연어로 데이터 분석. 코드 없이 인사이트 도출.' },
-      { src: 'img/previews/os-flowmap.jpg', caption: 'FlowMap 시각화 — 고객 여정, 전환 경로를 인터랙티브 플로우로 표현.' },
-    ],
-    analogy: null
-  },
-  {
-    id: 'ch00-03',
-    file: 'CH00-03 수강생 경로 가이드 — 내 직무에 맞는 학습 순서.md',
-    title: '수강생 경로 가이드 — 내 직무에 맞는 학습 순서',
-    short: '경로',
-    chapter: 'CH00',
-    chTitle: '강의 소개 & 준비',
-    time: '10분',
-    type: '슬라이드',
-    why: '60개 클립을 처음부터 전부 볼 필요는 없습니다. 내 직무(데이터 분석가 / 마케터 / PM / 개발자)에 맞는 최적 순서를 선택하면 절반 시간에 핵심을 익힐 수 있습니다.',
-    prereq: 'CH00-01, CH00-02',
-    imgUrls: [],
-    analogy: null
-  },
-  {
-    id: 'ch00-04',
-    file: 'CH00-04 개발 환경 셋업 — 첫 실행까지.md',
-    title: '개발 환경 셋업 — 첫 실행까지',
-    short: '셋업',
-    chapter: 'CH00',
-    chTitle: '강의 소개 & 준비',
-    time: '20분',
-    type: '화면 녹화',
-    why: '노드제이에스, API 키, 클로드 코드 설치까지 완료해야 CH01부터 실습이 가능합니다. 이 클립을 건너뛰면 이후 모든 실습이 막힙니다.',
+    id: 'p01-ch01-02',
+    file: 'P01-CH01/P01-CH01-02 왜 AI + 데이터 시각화인가 — 수작업 vs Claude Code 워크플로우.md',
+    title: '왜 AI + 데이터 시각화인가',
+    short: '왜 AI + 데이터',
+    chapter: 'CH01',
+    part: 'P01',
+    chTitle: '데이터 시각화의 기초 관점 잡기',
+    partTitle: '왜 AI 데이터 시각화인가',
+    time: '15분',
+    type: '강의',
+    why: '',
     prereq: null,
     imgUrls: [],
     analogy: null
   },
-
-  // CH01
   {
-    id: 'ch01-01',
-    file: 'CH01-01 클로드 코드란 무엇인가.md',
-    title: '클로드 코드란 무엇인가',
-    short: '개념',
+    id: 'p01-ch01-03',
+    file: 'P01-CH01/P01-CH01-03 좋은 데이터 시각화의 원칙.md',
+    title: '좋은 데이터 시각화의 원칙',
+    short: '좋은 데이터 시각화',
     chapter: 'CH01',
-    chTitle: '기본 활용',
-    time: '12분',
-    type: '슬라이드 + 데모',
-    why: '에이전트 AI가 챗지피티와 구조적으로 어떻게 다른지 이해해야, 이후 실습에서 "왜 이렇게 동작하는지"를 납득하며 학습할 수 있습니다. 채팅은 1문 1답 — 매번 내가 다음 질문을 생각해야 합니다. 클로드 코드는 "이거 해줘" 하면 혼자서 검색하고, 판단하고, 파일 만들고, 결과를 들고 옵니다. 조언을 듣고 실행은 내가 하던 것에서, 실행까지 맡기는 것으로 달라집니다.',
-    prereq: 'CH00-04 환경 셋업 완료',
-    imgUrls: [
-      { src: 'img/diagrams/ch01-01-agent-loop.png', caption: '에이전트 루프 — Task → Language Model → Gather context → Formulate a plan → Take an action → Iterate (출처: Anthropic Academy)' },
-      { src: 'img/diagrams/ch01-01-tool-use.png', caption: 'Tool Use — 코딩 어시스턴트와 언어 모델이 도구를 통해 상호작용하는 구조 (출처: Anthropic Academy)' },
-    ],
-    analogy: '채팅은 탁구입니다. 내가 치면 AI가 받아칩니다. 내가 안 치면 AI도 아무것도 안 합니다. 매번 내가 다음 질문을 생각해야 합니다. 클로드 코드는 다릅니다. "이 엑셀에서 A, B, C열 추출해서 새 파일로 저장해줘" — 그러면 즉시 실행, 파일 생성 완료입니다. "PDF 10개 하나로 합쳐줘" — 즉시 실행, 완료입니다. 중간 과정을 일일이 지시하지 않아도 됩니다. 클로드 코드는 그 조수가 내 책상 앞에 직접 앉아서 파일을 열고, 코드를 실행하고, 결과를 저장합니다.'
-  },
-  {
-    id: 'ch01-02',
-    file: 'CH01-02 설치 & 첫 번째 세션.md',
-    title: '설치 & 첫 번째 세션',
-    short: '설치',
-    chapter: 'CH01',
-    chTitle: '기본 활용',
+    part: 'P01',
+    chTitle: '데이터 시각화의 기초 관점 잡기',
+    partTitle: '왜 AI 데이터 시각화인가',
     time: '10분',
-    type: '화면 녹화',
-    why: '설치는 5분이면 끝납니다. 이후 실습은 모두 이 설치가 완료된 상태를 전제합니다.',
-    prereq: 'CH00-04 환경 셋업 (겹치는 내용 있음)',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
     analogy: null
   },
   {
-    id: 'ch01-03',
-    file: 'CH01-03 CLAUDE.md — 프로젝트 메모리.md',
-    title: 'CLAUDE.md — 프로젝트 메모리',
-    short: 'CLAUDE.md',
+    id: 'p01-ch01-04',
+    file: 'P01-CH01/P01-CH01-04 비즈니스 데이터 시각화 사례 미리보기.md',
+    title: '비즈니스 데이터 시각화 사례',
+    short: '비즈니스 데이터 시',
     chapter: 'CH01',
-    chTitle: '기본 활용',
-    time: '10분',
-    type: '슬라이드 + 실습',
-    why: '클로드 코드는 세션이 끊기면 기억을 잃습니다. CLAUDE.md 없이는 매번 프로젝트를 처음부터 설명해야 합니다. 이 파일 하나가 생산성을 2-3배 높입니다.',
-    prereq: 'CH01-01 개념 이해 후',
-    imgUrls: [
-      { src: 'img/diagrams/ch01-03-a.png', caption: 'CLAUDE.md 개념 도식 (출처: Anthropic Academy)' },
-      { src: 'img/diagrams/ch01-03-b.png', caption: 'CLAUDE.md 구조와 메모리 스코프 (출처: Anthropic Academy)' },
-      { src: 'img/diagrams/ch01-03-c.png', caption: 'CLAUDE.md 컨텍스트 활용 패턴 (출처: Anthropic Academy)' },
-    ],
-    analogy: '매일 새로 출근하는 파견 직원과 일한다고 생각해보세요. 매번 처음부터 설명해야 합니다. CLAUDE.md는 그 직원에게 처음부터 드리는 인수인계 문서입니다. 읽고 나면 바로 일을 시작합니다.'
-  },
-  {
-    id: 'ch01-04',
-    file: 'CH01-04 기본 워크플로우 — 파일 읽기·쓰기·실행.md',
-    title: '기본 워크플로우 — 파일 읽기·쓰기·실행',
-    short: '워크플로우',
-    chapter: 'CH01',
-    chTitle: '기본 활용',
-    time: '12분',
-    type: '화면 녹화',
-    why: '실제 씨에스브이 파일을 읽고, 집계하고, 결과를 저장하는 전 과정을 직접 실행합니다. 이것이 이후 모든 프로젝트의 기본 패턴입니다.',
-    prereq: 'CH01-01~03',
-    imgUrls: [
-      { src: 'img/ch01-04.jpg', caption: '파일 읽기·수정·저장 워크플로우 (출처: Anthropic Academy)' },
-    ],
+    part: 'P01',
+    chTitle: '데이터 시각화의 기초 관점 잡기',
+    partTitle: '왜 AI 데이터 시각화인가',
+    time: '5분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
     analogy: null
   },
   {
-    id: 'ch01-05',
-    file: 'CH01-05 작업 모드 — Plan, Auto, Editor.md',
-    title: '작업 모드 — Plan · Auto · Editor',
-    short: '작업 모드',
-    chapter: 'CH01',
-    chTitle: '기본 활용',
-    time: '12분',
-    type: '슬라이드 + 데모',
-    why: '클로드 코드는 파일을 직접 수정하고 명령어를 실행합니다. 적절한 모드 선택 없이 쓰면 원본 데이터가 덮어써지거나 의도치 않은 명령이 실행될 수 있습니다.',
-    prereq: 'CH01-01~04',
-    imgUrls: [
-      { src: 'img/ch01-05.jpg', caption: 'Plan · Auto · Editor 작업 모드 (출처: Anthropic Academy)' },
-    ],
-    analogy: '인테리어 공사와 비슷합니다. Auto는 공사업자가 집 전체를 마음대로 수정하는 방식, Plan은 먼저 도면을 보여주고 승인받은 후 공사하는 방식, Editor는 수정할 곳마다 하나씩 확인받는 방식입니다. 처음에는 반드시 Plan 모드를 권장합니다.'
-  },
-  {
-    id: 'ch01-06',
-    file: 'CH01-06 슬래시 커맨드 완전 정리.md',
-    title: '슬래시 커맨드 완전 정리',
-    short: '슬래시',
-    chapter: 'CH01',
-    chTitle: '기본 활용',
-    time: '8분',
-    type: '슬라이드',
-    why: '슬래시 커맨드는 클로드 코드의 내장 단축 기능입니다. 모르면 매번 긴 문장으로 요청하게 되고, 알면 한 줄로 처리됩니다.',
-    prereq: 'CH01-01~05',
-    imgUrls: [
-      { src: 'img/ch01-06.jpg', caption: '슬래시 커맨드와 커스텀 명령어 (출처: Anthropic Academy)' },
-    ],
+    id: 'p01-ch02-01',
+    file: 'P01-CH02/P01-CH02-01 Claude Code 설치하기.md',
+    title: 'Claude Code 설치하기',
+    short: 'Claude Cod',
+    chapter: 'CH02',
+    part: 'P01',
+    chTitle: '바이브코딩 환경 세팅',
+    partTitle: '왜 AI 데이터 시각화인가',
+    time: '10분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
     analogy: null
   },
   {
-    id: 'ch01-07',
-    file: 'CH01-07 토큰 절약과 비용 관리.md',
-    title: '토큰 절약과 비용 관리',
-    short: '비용',
-    chapter: 'CH01',
-    chTitle: '기본 활용',
+    id: 'p01-ch02-02',
+    file: 'P01-CH02/P01-CH02-02 Claude Code + Antigravity 에디터 환경 세팅하기.md',
+    title: 'Claude Code + Antigravity 환경 세팅',
+    short: 'Claude Cod',
+    chapter: 'CH02',
+    part: 'P01',
+    chTitle: '바이브코딩 환경 세팅',
+    partTitle: '왜 AI 데이터 시각화인가',
     time: '10분',
-    type: '슬라이드',
-    why: '클로드 코드는 사용량 기반 과금입니다. 전략 없이 쓰면 같은 작업에 10배 비용이 들 수 있습니다. 실무에서 오래 쓰려면 비용 관리가 필수입니다.',
-    prereq: 'CH01-01~06',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '택시를 탈 때 목적지까지 최단 경로로 가느냐, 돌아서 가느냐의 차이입니다. 토큰은 택시 요금입니다. 같은 목적지에 도달하더라도 경로에 따라 비용이 크게 달라집니다.'
+    analogy: null
   },
   {
-    id: 'ch01-08',
-    file: 'CH01-08 훅(Hooks) — 작업 자동화 트리거.md',
-    title: '훅(Hooks) — 작업 자동화 트리거',
-    short: '훅',
+    id: 'p02-ch01-01',
+    file: 'P02-CH01/P02-CH01-01 Claude Code에서 첫 번째 세션 시작하기 - 기초 실습.md',
+    title: '첫 번째 세션 시작하기',
+    short: '첫 번째 세션 시작',
     chapter: 'CH01',
-    chTitle: '기본 활용',
-    time: '12분',
-    type: '슬라이드 + 실습',
-    why: '훅을 쓰면 "클로드가 파일 저장할 때마다 자동 백업", "위험 명령어 자동 차단", "작업 완료 시 알림" 같은 자동화가 코드 없이 가능합니다.',
-    prereq: 'CH01-01~07',
-    imgUrls: [
-      { src: 'img/diagrams/ch01-08-a.png', caption: '훅 개념 — 이벤트 트리거 구조 (출처: Anthropic Academy)' },
-      { src: 'img/diagrams/ch01-08-b.png', caption: '훅 종류와 실행 시점 (출처: Anthropic Academy)' },
-      { src: 'img/diagrams/ch01-08-c.png', caption: '훅 설정 예시 (출처: Anthropic Academy)' },
-      { src: 'img/diagrams/ch01-08-d.png', caption: '실용적인 훅 활용 패턴 (출처: Anthropic Academy)' },
-    ],
-    analogy: '엑셀의 트리거 매크로와 비슷합니다. "셀 값이 바뀔 때마다 이 코드 실행"처럼, 훅은 "클로드가 특정 동작을 할 때마다 이 스크립트 실행"입니다. 차이는 훅이 파일 시스템과 터미널 전체에 적용된다는 점입니다.'
+    part: 'P02',
+    chTitle: 'Claude Code 첫 걸음',
+    partTitle: 'Claude Code 핵심 빠르게 익히기',
+    time: '10분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
   },
   {
-    id: 'ch01-09',
-    file: 'CH01-09 서브에이전트 — 역할 분리와 위임.md',
-    title: '서브에이전트 — 역할 분리와 위임',
-    short: '서브에이전트',
+    id: 'p02-ch01-02',
+    file: 'P02-CH01/P02-CH01-02 프로젝트 폴더 구조 파악하기.md',
+    title: '프로젝트 폴더 구조 파악하기',
+    short: '프로젝트 폴더 구조',
     chapter: 'CH01',
-    chTitle: '기본 활용',
-    time: '12분',
-    type: '슬라이드 + 실습',
-    why: '혼자 일하는 에이전트 하나로는 복잡한 파이프라인이 버겁습니다. 서브에이전트를 쓰면 데이터 분석, 시각화, 보고서 작성을 각각 전문 에이전트에게 위임해 병렬로 처리할 수 있습니다.',
-    prereq: 'CH01-01~08',
+    part: 'P02',
+    chTitle: 'Claude Code 첫 걸음',
+    partTitle: 'Claude Code 핵심 빠르게 익히기',
+    time: '10분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '회사 팀 구성과 같습니다. 팀장(메인 에이전트)이 "월간 보고서 만들어줘"라는 지시를 받으면, 데이터 담당(서브1), 시각화 담당(서브2), 작성 담당(서브3)에게 나눠서 위임합니다. 각자 자기 일을 하고, 팀장이 결과를 취합합니다.'
+    analogy: null
   },
   {
-    id: 'ch01-10',
-    file: 'CH01-10 MCP — 외부 도구 연결.md',
-    title: 'MCP — 외부 도구 연결',
-    short: 'MCP',
+    id: 'p02-ch01-03',
+    file: 'P02-CH01/P02-CH01-03 파일 읽기·쓰기·실행 & Plan Mode 기초 사용법 정리하기.md',
+    title: '파일 읽기·쓰기·실행 & Plan Mode',
+    short: '파일 읽기·쓰기·실',
     chapter: 'CH01',
-    chTitle: '기본 활용',
-    time: '12분',
-    type: '슬라이드 + 실습',
-    why: '클로드 코드 기본 기능으로는 데이터베이스, 슬랙, 구글 시트에 직접 접근하기 어렵습니다. 엠씨피(MCP)를 연결하면 외부 시스템과 자연어로 대화하듯 연동됩니다.',
-    prereq: 'CH01-01~09',
-    imgUrls: [
-      { src: 'img/ch01-10.jpg', caption: 'MCP — 외부 도구 연결 구조 (출처: Anthropic Academy)' },
-    ],
-    analogy: '클로드 코드를 스마트폰이라고 하면, 엠씨피는 앱입니다. 기본 스마트폰으로도 많은 것을 할 수 있지만, 앱을 설치하면 배달, 은행, 지도까지 연결됩니다. 엠씨피를 연결하면 에스큐엘 데이터베이스, 슬랙, 구글 시트가 클로드의 도구가 됩니다.'
+    part: 'P02',
+    chTitle: 'Claude Code 첫 걸음',
+    partTitle: 'Claude Code 핵심 빠르게 익히기',
+    time: '10분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
   },
-
-  // ── CH01-11 (추가) ──
   {
-    id: 'ch01-11',
-    file: 'CH01-06 효과적인 지시 작성.md',
-    title: '효과적인 지시 작성',
-    short: '지시 작성',
+    id: 'p02-ch01-04',
+    file: 'P02-CH01/P02-CH01-04 CLAUDE.md — 데이터 시각화 전용 AI 두뇌 설계하기.md',
+    title: 'CLAUDE.md — 전용 AI 두뇌 설계',
+    short: 'CLAUDE.md ',
     chapter: 'CH01',
-    chTitle: '기본 활용',
-    time: '12분',
-    type: '슬라이드 + 실습',
-    why: '클로드 코드에 "이거 분석해줘"라고만 해도 동작하지만, 결과가 기대와 다를 때가 많습니다. 5가지 패턴을 익히면 처음부터 원하는 결과를 얻는 빈도가 크게 높아집니다.',
-    prereq: 'CH01-01~10',
-    imgUrls: [],
-    analogy: '요리사에게 "맛있는 거 만들어줘"라고 하면 무엇이 나올지 모릅니다. "간 낮은 닭가슴살 샐러드, 두 인분, 30분 안에"라고 하면 원하는 결과가 나옵니다. 지시도 같습니다.'
-  },
-
-  // ── CH02 서브에이전트 시스템 ──
-  {
-    id: 'ch02-01',
-    file: 'CH02-서브에이전트 시스템/CH02-01 서브에이전트란 무엇인가 — 위임의 기술.md',
-    title: '서브에이전트란 무엇인가',
-    short: '위임의 기술',
-    chapter: 'CH02',
-    chTitle: '서브에이전트 시스템',
-    time: '20분',
-    type: '슬라이드 + 실습',
-    why: '하나의 에이전트만으로는 대규모 데이터를 처리하기 어렵습니다. 서브에이전트를 이해하면 100개 파일을 한 번에 처리하는 파이프라인을 설계할 수 있습니다.',
-    prereq: 'CH01 전체',
-    imgUrls: [],
-    analogy: '팀장이 혼자 보고서 100개를 쓰는 대신, 팀원 10명에게 10개씩 나눠주는 방식입니다. 클로드 코드에서 팀장은 메인 에이전트, 팀원들은 서브에이전트입니다.'
-  },
-  {
-    id: 'ch02-02',
-    file: 'CH02-서브에이전트 시스템/CH02-02 병렬 작업 설계 — 여러 에이전트가 동시에 일하다.md',
-    title: '병렬 작업 설계',
-    short: '병렬 처리',
-    chapter: 'CH02',
-    chTitle: '서브에이전트 시스템',
-    time: '20분',
-    type: '슬라이드 + 실습',
-    why: '서브에이전트를 아무 계획 없이 실행하면 파일 충돌이나 결과 불일치가 생깁니다. 분할-처리-합산, 파이프라인, 병렬 검토 3가지 패턴을 알면 안전하게 설계할 수 있습니다.',
-    prereq: 'CH02-01',
-    imgUrls: [],
-    analogy: '공장 생산 라인을 설계하는 것과 같습니다. 어떤 공정은 병렬로, 어떤 공정은 순서대로 배치해야 최고 효율이 나옵니다.'
-  },
-  {
-    id: 'ch02-03',
-    file: 'CH02-서브에이전트 시스템/CH02-03 서브에이전트 실전 — 데이터 분석 파이프라인 자동화.md',
-    title: '서브에이전트 실전 실습',
-    short: '실전 파이프라인',
-    chapter: 'CH02',
-    chTitle: '서브에이전트 시스템',
-    time: '20분',
-    type: '화면 녹화 (실습)',
-    why: '5개 캠페인 씨에스브이를 병렬 분석하고 최종 비교 리포트까지 자동 생성하는 전체 흐름을 직접 실행합니다. 이 패턴을 본인 데이터에 바로 적용할 수 있습니다.',
-    prereq: 'CH02-01~02',
-    imgUrls: [],
-    analogy: '조리법을 배웠으니 이제 실제로 요리합니다. 레시피(클로드엠디)를 보면서 처음부터 끝까지 한 번 완성합니다.'
-  },
-
-  // ── CH03 에이전트 팀 코워크 ──
-  {
-    id: 'ch03-01',
-    file: 'CH03-에이전트 팀 코워크/CH03-01 멀티 에이전트 코워크란 — 혼자보다 팀이 강하다.md',
-    title: '멀티 에이전트 코워크란',
-    short: '팀이 강하다',
-    chapter: 'CH03',
-    chTitle: '에이전트 팀 코워크',
-    time: '20분',
-    type: '슬라이드 + 실습',
-    why: '서브에이전트는 같은 작업을 여럿이 처리하지만, 멀티 에이전트는 역할이 다릅니다. 데이터 분석·인사이트 도출·리포트 작성을 각 전문 에이전트가 나눠 맡으면 품질이 올라갑니다.',
-    prereq: 'CH02 전체',
-    imgUrls: [],
-    analogy: '콜센터 상담원 여럿(서브에이전트)과 병원 팀(멀티 에이전트)의 차이입니다. 병원은 접수·의사·간호사·약사가 각자 역할로 협력합니다.'
-  },
-  {
-    id: 'ch03-02',
-    file: 'CH03-에이전트 팀 코워크/CH03-02 역할 분리 에이전트 설계 — 기획자·실행자·검토자.md',
-    title: '역할 분리 에이전트 설계',
-    short: '역할 설계',
-    chapter: 'CH03',
-    chTitle: '에이전트 팀 코워크',
-    time: '18분',
-    type: '슬라이드 + 클로드엠디 작성',
-    why: '에이전트 팀의 역할을 명확히 정의하지 않으면 에이전트들이 서로 겹치거나 빠진 역할이 생깁니다. 기획자·실행자·검토자 3역할로 구조를 잡으면 안정적인 팀이 완성됩니다.',
-    prereq: 'CH03-01',
-    imgUrls: [],
-    analogy: '드라마 제작팀에 작가·감독·편집자가 있듯이, 에이전트 팀에도 역할별 전문가가 있어야 좋은 결과물이 나옵니다.'
-  },
-  {
-    id: 'ch03-03',
-    file: 'CH03-에이전트 팀 코워크/CH03-03 에이전트 팀으로 복잡한 분석 처리하기.md',
-    title: '에이전트 팀으로 복잡한 분석 처리',
-    short: '팀 실행',
-    chapter: 'CH03',
-    chTitle: '에이전트 팀 코워크',
-    time: '17분',
-    type: '화면 녹화 (실습)',
-    why: '설계한 팀이 실제로 어떻게 동작하는지, 중간에 오류가 나면 어떻게 처리하는지 직접 확인합니다. 특히 단계별 재실행 패턴은 실무에서 자주 쓰이는 기술입니다.',
-    prereq: 'CH03-01~02',
-    imgUrls: [],
-    analogy: '팀을 구성했으니 실제 프로젝트를 돌립니다. 중간에 팀원 하나가 막히면 그 사람만 교체하면 됩니다. 전체를 처음부터 다시 할 필요가 없습니다.'
-  },
-  {
-    id: 'ch03-04',
-    file: 'CH03-에이전트 팀 코워크/CH03-04 실전 — 3-에이전트 마케팅 데이터 분석 팀.md',
-    title: '실전 — 3-에이전트 분석 팀',
-    short: '완전 실습',
-    chapter: 'CH03',
-    chTitle: '에이전트 팀 코워크',
+    part: 'P02',
+    chTitle: 'Claude Code 첫 걸음',
+    partTitle: 'Claude Code 핵심 빠르게 익히기',
     time: '15분',
-    type: '화면 녹화 (완전 실습)',
-    why: '처음부터 끝까지 완전한 실습입니다. 강의 제공 템플릿을 본인 데이터에 수정해서 바로 실무에 쓸 수 있는 수준으로 완성합니다.',
-    prereq: 'CH03-01~03',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '수영 강습의 마지막 날 — 코치 없이 혼자 25미터를 완주합니다. 이 클립을 마치면 클로드 에이전트 팀을 혼자 운영할 수 있습니다.'
-  },
-
-  // ── CH04 멀티 환경 활용 ──
-  {
-    id: 'ch04-01',
-    file: 'CH04-멀티 환경 활용/CH04-01 로컬 환경 최적화 — 프로젝트 구조와 CLAUDE.md 전략.md',
-    title: '로컬 환경 최적화',
-    short: 'CLAUDE.md 전략',
-    chapter: 'CH04',
-    chTitle: '멀티 환경 활용',
-    time: '12분',
-    type: '슬라이드 + 실습',
-    why: '프로젝트 폴더 구조와 CLAUDE.md 설정을 최적화하면 에이전트의 작업 정확도가 높아집니다.',
-    prereq: 'CH03',
-    imgUrls: [],
-    analogy: '정리된 작업실에서 도구를 바로 찾을 수 있듯, 프로젝트 구조가 명확하면 에이전트도 빠르게 작업합니다.'
+    analogy: null
   },
   {
-    id: 'ch04-02',
-    file: 'CH04-멀티 환경 활용/CH04-02 클라우드 환경 — GitHub Codespaces와 원격 에이전트 실행.md',
-    title: '클라우드 환경',
-    short: 'Codespaces',
-    chapter: 'CH04',
-    chTitle: '멀티 환경 활용',
-    time: '14분',
-    type: '화면 녹화',
-    why: 'GitHub Codespaces에서 클로드 코드를 실행하면 어디서든 동일한 환경으로 작업할 수 있습니다.',
-    prereq: 'CH04-01',
-    imgUrls: [],
-    analogy: '회사 컴퓨터와 집 컴퓨터가 항상 같은 상태를 유지하는 것과 같습니다.'
-  },
-  {
-    id: 'ch04-03',
-    file: 'CH04-멀티 환경 활용/CH04-03 실전 — 로컬과 클라우드를 잇는 환경 전환 파이프라인.md',
-    title: '실전 — 환경 전환 파이프라인',
-    short: '환경 전환',
-    chapter: 'CH04',
-    chTitle: '멀티 환경 활용',
-    time: '14분',
-    type: '화면 녹화 (완전 실습)',
-    why: '로컬에서 작업하다 클라우드로 전환하고 다시 로컬로 돌아오는 워크플로를 자동화합니다.',
-    prereq: 'CH04-01~02',
-    imgUrls: [],
-    analogy: '집에서 시작한 요리를 식당 주방에서 마무리하고 집으로 가져오는 것처럼 자연스러운 환경 전환입니다.'
-  },
-
-  // ── CH05 MCP & 외부 도구 연동 ──
-  {
-    id: 'ch05-01',
-    file: 'CH05-MCP & 외부 도구 연동/CH05-01 MCP란 무엇인가 — 에이전트의 도구를 확장하다.md',
+    id: 'p02-ch02-01',
+    file: 'P02-CH02/P02-CH02-01 MCP란 무엇인가 — 데이터 시각화에 활용 가능한 MCP들.md',
     title: 'MCP란 무엇인가',
-    short: '도구 확장',
-    chapter: 'CH05',
-    chTitle: 'MCP 연동',
-    time: '12분',
-    type: '슬라이드 + 실습',
-    why: 'MCP를 이해하면 클로드 코드의 능력을 무한히 확장할 수 있습니다. 데이터베이스, 슬랙, 파일 시스템 등 모든 외부 도구와 연결됩니다.',
-    prereq: 'CH04',
+    short: 'MCP란 무엇인가',
+    chapter: 'CH02',
+    part: 'P02',
+    chTitle: 'MCP & Skills 도구 확장',
+    partTitle: 'Claude Code 핵심 빠르게 익히기',
+    time: '10분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '스마트폰에 앱을 설치하면 새로운 기능이 생기듯, MCP는 에이전트에 새로운 도구를 추가합니다.'
+    analogy: null
   },
   {
-    id: 'ch05-02',
-    file: 'CH05-MCP & 외부 도구 연동/CH05-02 데이터베이스 MCP — SQL에 직접 연결하다.md',
-    title: '데이터베이스 MCP',
-    short: 'SQL 연결',
-    chapter: 'CH05',
-    chTitle: 'MCP 연동',
-    time: '16분',
-    type: '화면 녹화',
-    why: '에이전트가 데이터베이스에 직접 쿼리를 실행하면 분석 속도가 비약적으로 빨라집니다.',
-    prereq: 'CH05-01',
+    id: 'p02-ch02-02',
+    file: 'P02-CH02/P02-CH02-02 Firecrawl MCP로 웹 크롤링 데이터 수집 및 전처리해보기.md',
+    title: 'Firecrawl MCP 웹 크롤링',
+    short: 'Firecrawl ',
+    chapter: 'CH02',
+    part: 'P02',
+    chTitle: 'MCP & Skills 도구 확장',
+    partTitle: 'Claude Code 핵심 빠르게 익히기',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '통역사 없이 현지인과 직접 대화하는 것처럼, 에이전트가 데이터베이스와 직접 소통합니다.'
+    analogy: null
   },
   {
-    id: 'ch05-03',
-    file: 'CH05-MCP & 외부 도구 연동/CH05-03 Slack MCP — 분석 결과를 팀에 자동 전달하다.md',
-    title: 'Slack MCP',
-    short: '자동 전달',
-    chapter: 'CH05',
-    chTitle: 'MCP 연동',
-    time: '14분',
-    type: '화면 녹화',
-    why: '분석이 완료되면 자동으로 슬랙에 리포트를 전송합니다. 사람이 개입할 필요가 없습니다.',
-    prereq: 'CH05-01~02',
+    id: 'p02-ch02-03',
+    file: 'P02-CH02/P02-CH02-03 MCP 실전 활용 — 웹 리서치·파일 처리·분석 자동화.md',
+    title: 'MCP 실전 활용',
+    short: 'MCP 실전 활용',
+    chapter: 'CH02',
+    part: 'P02',
+    chTitle: 'MCP & Skills 도구 확장',
+    partTitle: 'Claude Code 핵심 빠르게 익히기',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '비서가 보고서를 완성하면 바로 팀 채널에 공유하는 것과 같습니다.'
+    analogy: null
   },
   {
-    id: 'ch05-04',
-    file: 'CH05-MCP & 외부 도구 연동/CH05-04 실전 — DB 분석부터 Slack 발송까지 완전 자동화.md',
-    title: '실전 — 완전 자동화',
-    short: 'DB→Slack',
-    chapter: 'CH05',
-    chTitle: 'MCP 연동',
-    time: '18분',
-    type: '화면 녹화 (완전 실습)',
-    why: '데이터베이스 쿼리 → 분석 → 시각화 → 슬랙 발송까지 한 번의 명령으로 완료합니다.',
-    prereq: 'CH05-01~03',
+    id: 'p02-ch02-04',
+    file: 'P02-CH02/P02-CH02-04 Skills 탐색 & 설치 : data-analyst·visualization-expert 등 스킬 활용해보기.md',
+    title: 'Skills 탐색 & 설치',
+    short: 'Skills 탐색 ',
+    chapter: 'CH02',
+    part: 'P02',
+    chTitle: 'MCP & Skills 도구 확장',
+    partTitle: 'Claude Code 핵심 빠르게 익히기',
+    time: '10분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '버튼 하나로 원두 분쇄, 추출, 우유 스팀, 컵 서빙까지 완료되는 전자동 커피머신입니다.'
-  },
-
-  // ── CH06 시각화 전략 자동 설계 ──
-  {
-    id: 'ch06-01',
-    file: 'CH06-시각화 전략 자동 설계/CH06-01 시각화 전략이란 — 데이터 구조가 차트를 결정한다.md',
-    title: '시각화 전략이란',
-    short: '차트 선택',
-    chapter: 'CH06',
-    chTitle: '시각화 전략',
-    time: '12분',
-    type: '슬라이드',
-    why: '데이터 구조만 보면 어떤 차트를 써야 할지 알 수 있습니다. 이 원칙을 알면 에이전트에게 정확한 지시를 내릴 수 있습니다.',
-    prereq: 'CH05',
-    imgUrls: [],
-    analogy: '옷을 고를 때 날씨와 상황을 보듯, 차트도 데이터의 성격과 목적을 보고 고릅니다.'
+    analogy: null
   },
   {
-    id: 'ch06-02',
-    file: 'CH06-시각화 전략 자동 설계/CH06-02 비교형 차트 — 막대와 라인, 언제 어떻게 쓰는가.md',
-    title: '비교형 차트',
-    short: '막대·라인',
-    chapter: 'CH06',
-    chTitle: '시각화 전략',
-    time: '14분',
-    type: '슬라이드 + 실습',
-    why: '가장 많이 쓰는 막대 그래프와 라인 차트의 정확한 사용법을 익힙니다.',
-    prereq: 'CH06-01',
+    id: 'p02-ch03-01',
+    file: 'P02-CH03/P02-CH03-01 서브에이전트 구조 이해 & 데이터 분석용 에이전트 만들기.md',
+    title: '서브에이전트 구조 이해',
+    short: '서브에이전트 구조 ',
+    chapter: 'CH03',
+    part: 'P02',
+    chTitle: '데이터 분석 협업 구조 만들기',
+    partTitle: 'Claude Code 핵심 빠르게 익히기',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '망치와 드라이버처럼 가장 기본이지만 가장 자주 쓰는 도구입니다.'
+    analogy: null
   },
   {
-    id: 'ch06-03',
-    file: 'CH06-시각화 전략 자동 설계/CH06-03 분포와 관계 차트 — 히스토그램, 스캐터, 박스 플롯.md',
-    title: '분포와 관계 차트',
-    short: '히스토·스캐터',
-    chapter: 'CH06',
-    chTitle: '시각화 전략',
-    time: '14분',
-    type: '슬라이드 + 실습',
-    why: '데이터의 분포와 변수 간 관계를 한눈에 보여주는 차트들입니다.',
-    prereq: 'CH06-01~02',
+    id: 'p02-ch03-02',
+    file: 'P02-CH03/P02-CH03-02 에이전트 팀 설정 & 팀장·팀원 역할 분담하기.md',
+    title: '에이전트 팀 설정',
+    short: '에이전트 팀 설정',
+    chapter: 'CH03',
+    part: 'P02',
+    chTitle: '데이터 분석 협업 구조 만들기',
+    partTitle: 'Claude Code 핵심 빠르게 익히기',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '사진이 순간을 담듯, 이 차트들은 데이터의 전체 분포를 한 장에 담습니다.'
+    analogy: null
   },
   {
-    id: 'ch06-04',
-    file: 'CH06-시각화 전략 자동 설계/CH06-04 태블로 자동화 — Claude Code로 TWB 파일 생성하기.md',
-    title: '태블로 자동화',
-    short: 'TWB 생성',
-    chapter: 'CH06',
-    chTitle: '시각화 전략',
-    time: '14분',
-    type: '화면 녹화',
-    why: '클로드 코드로 태블로 워크북 파일을 직접 생성합니다. GUI 없이 대시보드를 자동화할 수 있습니다.',
-    prereq: 'CH06-01~03',
+    id: 'p02-ch03-03',
+    file: 'P02-CH03/P02-CH03-03 병렬 작업·태스크 코워크 실습.md',
+    title: '병렬 작업·태스크 코워크 실습',
+    short: '병렬 작업·태스크 ',
+    chapter: 'CH03',
+    part: 'P02',
+    chTitle: '데이터 분석 협업 구조 만들기',
+    partTitle: 'Claude Code 핵심 빠르게 익히기',
+    time: '10분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '수작업으로 보고서를 그리는 대신 템플릿을 코드로 찍어내는 것과 같습니다.'
+    analogy: null
   },
   {
-    id: 'ch06-05',
-    file: 'CH06-시각화 전략 자동 설계/CH06-05 파이썬 시각화 자동화 — matplotlib과 seaborn.md',
-    title: '파이썬 시각화',
-    short: 'matplotlib',
-    chapter: 'CH06',
-    chTitle: '시각화 전략',
-    time: '14분',
-    type: '화면 녹화',
-    why: '파이썬 시각화 라이브러리를 에이전트가 자동으로 사용하게 합니다.',
-    prereq: 'CH06-01~03',
+    id: 'p02-ch03-04',
+    file: 'P02-CH03/P02-CH03-04 Claude Code 실무 최소 운영 팁 — permissions·세션 정리·검증 루프.md',
+    title: '실무 최소 운영 팁',
+    short: '실무 최소 운영 팁',
+    chapter: 'CH03',
+    part: 'P02',
+    chTitle: '데이터 분석 협업 구조 만들기',
+    partTitle: 'Claude Code 핵심 빠르게 익히기',
+    time: '10분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '화가에게 그림을 맡기듯, 에이전트에게 시각화를 맡깁니다.'
+    analogy: null
   },
   {
-    id: 'ch06-06',
-    file: 'CH06-시각화 전략 자동 설계/CH06-06 인터랙티브 차트 — HTML로 살아있는 시각화 만들기.md',
-    title: '인터랙티브 차트',
-    short: 'HTML 차트',
-    chapter: 'CH06',
-    chTitle: '시각화 전략',
-    time: '14분',
-    type: '화면 녹화',
-    why: '정적 이미지가 아닌 클릭하고 줌하고 필터할 수 있는 차트를 만듭니다.',
-    prereq: 'CH06-01~05',
+    id: 'p03-ch01-01',
+    file: 'P03-CH01/P03-CH01-01 데이터 구조 분석 → 시각화 전략 자동 도출.md',
+    title: '데이터 구조 분석 → 시각화 전략',
+    short: '데이터 구조 분석 ',
+    chapter: 'CH01',
+    part: 'P03',
+    chTitle: 'Claude Code로 시각화 설계하기',
+    partTitle: '시각화 전략 자동 설계',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '사진 대신 동영상을 만드는 것처럼, 차트에 생명을 불어넣습니다.'
+    analogy: null
   },
   {
-    id: 'ch06-07',
-    file: 'CH06-시각화 전략 자동 설계/CH06-07 색상과 브랜드 일관성 — 에이전트에게 디자인 기준 전달하기.md',
-    title: '색상과 브랜드',
-    short: '디자인 기준',
-    chapter: 'CH06',
-    chTitle: '시각화 전략',
-    time: '12분',
-    type: '슬라이드 + 실습',
-    why: '회사 브랜드에 맞는 색상과 스타일을 CLAUDE.md에 정의해서 일관된 시각화를 만듭니다.',
-    prereq: 'CH06-01~06',
+    id: 'p03-ch01-02',
+    file: 'P03-CH01/P03-CH01-02 KPI 히어라키 자동 설계 & 계산식 자동 생성.md',
+    title: 'KPI 히어라키 자동 설계',
+    short: 'KPI 히어라키 자',
+    chapter: 'CH01',
+    part: 'P03',
+    chTitle: 'Claude Code로 시각화 설계하기',
+    partTitle: '시각화 전략 자동 설계',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '옷을 입을 때 색상 조합을 맞추듯, 차트도 브랜드 가이드를 따릅니다.'
+    analogy: null
   },
   {
-    id: 'ch06-08',
-    file: 'CH06-시각화 전략 자동 설계/CH06-08 실전 — 데이터에서 대시보드까지 8단계 전자동 파이프라인.md',
-    title: '실전 — 8단계 파이프라인',
-    short: '전자동',
-    chapter: 'CH06',
-    chTitle: '시각화 전략',
-    time: '16분',
-    type: '화면 녹화 (완전 실습)',
-    why: '문제 정의부터 최종 보고서까지 8단계 파이프라인을 한 번의 명령으로 실행합니다.',
-    prereq: 'CH06-01~07',
+    id: 'p03-ch01-03',
+    file: 'P03-CH01/P03-CH01-03 설명 문구·인사이트 자동 생성 & 데이터 전처리 파이프라인.md',
+    title: '인사이트 자동 생성 & 전처리',
+    short: '인사이트 자동 생성',
+    chapter: 'CH01',
+    part: 'P03',
+    chTitle: 'Claude Code로 시각화 설계하기',
+    partTitle: '시각화 전략 자동 설계',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '원재료 투입부터 완제품 포장까지 자동화된 공장 라인입니다.'
+    analogy: null
   },
   {
-    id: 'ch07-01',
-    file: 'CH07-D3.js 커스텀 시각화/CH07-01 D3.js란 무엇인가 — 데이터로 그림을 그리다.md',
-    title: 'D3.js란 무엇인가',
-    short: '개념 + 원리',
-    chapter: 'CH07',
-    chTitle: 'D3.js 커스텀 시각화',
-    time: '18분',
-    type: '강의 + 시연',
-    why: '디쓰리제이에스는 라이브러리가 아닌 데이터 바인딩 엔진입니다. 원리를 이해하면 어떤 차트도 만들 수 있는 기반이 생깁니다.',
-    prereq: 'CH06',
+    id: 'p03-ch01-04',
+    file: 'P03-CH01/P03-CH01-04 분석·시각화·리포트 자동 완성 워크플로우 실전.md',
+    title: '자동 완성 워크플로우 실전',
+    short: '자동 완성 워크플로',
+    chapter: 'CH01',
+    part: 'P03',
+    chTitle: 'Claude Code로 시각화 설계하기',
+    partTitle: '시각화 전략 자동 설계',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '붓과 물감을 처음 받은 날 — 이제부터 그릴 수 있는 것에 제한이 없습니다.'
+    analogy: null
   },
   {
-    id: 'ch07-02',
-    file: 'CH07-D3.js 커스텀 시각화/CH07-02 인터랙티브 기능 — 필터, 애니메이션, 줌.md',
-    title: '인터랙티브 기능',
-    short: '필터·애니·줌',
-    chapter: 'CH07',
-    chTitle: 'D3.js 커스텀 시각화',
-    time: '18분',
-    type: '화면 녹화 위주',
-    why: '정적인 차트와 살아있는 차트의 차이는 인터랙션입니다. 클로드 코드로 드래그, 줌, 필터를 자동으로 구현합니다.',
-    prereq: 'CH07-01',
+    id: 'p03-ch02-01',
+    file: 'P03-CH02/P03-CH02-01 에이전트 팀 구조 설계 — 팀장/분석가/BI 역할 분담.md',
+    title: '에이전트 팀 구조 설계',
+    short: '에이전트 팀 구조 ',
+    chapter: 'CH02',
+    part: 'P03',
+    chTitle: '에이전트 팀 대시보드 자동 생성',
+    partTitle: '시각화 전략 자동 설계',
+    time: '10분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '지도 앱에서 핀치로 확대하는 순간 — 데이터가 사용자의 손안으로 들어옵니다.'
+    analogy: null
   },
   {
-    id: 'ch07-03',
-    file: 'CH07-D3.js 커스텀 시각화/CH07-03 고급 차트 — 히트맵, 트리맵, 네트워크 그래프.md',
-    title: '히트맵·트리맵·네트워크 그래프',
-    short: '고급 차트 3종',
-    chapter: 'CH07',
-    chTitle: 'D3.js 커스텀 시각화',
+    id: 'p03-ch02-02',
+    file: 'P03-CH02/P03-CH02-02 CSV → EDA → 인사이트 → 대시보드 자동 완성 파이프라인.md',
+    title: 'CSV → 대시보드 자동 완성',
+    short: 'CSV → 대시보드',
+    chapter: 'CH02',
+    part: 'P03',
+    chTitle: '에이전트 팀 대시보드 자동 생성',
+    partTitle: '시각화 전략 자동 설계',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'p03-ch02-03',
+    file: 'P03-CH02/P03-CH02-03 Google Sheets 연동 & 파이프라인 실전 실행하기.md',
+    title: 'Google Sheets 연동 & 실전',
+    short: 'Google She',
+    chapter: 'CH02',
+    part: 'P03',
+    chTitle: '에이전트 팀 대시보드 자동 생성',
+    partTitle: '시각화 전략 자동 설계',
+    time: '10분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'p03-ch03-01',
+    file: 'P03-CH03/P03-CH03-01 OpenClaw 이해 & 텔레그램 에이전트 연결하기.md',
+    title: 'OpenClaw 이해 & 텔레그램 연결',
+    short: 'OpenClaw 이',
+    chapter: 'CH03',
+    part: 'P03',
+    chTitle: 'OpenClaw 업무 파이프라인 운영',
+    partTitle: '시각화 전략 자동 설계',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'p03-ch03-02',
+    file: 'P03-CH03/P03-CH03-02 OpenClaw로 대시보드 자동 생성 & 주간 리포트 운영하기.md',
+    title: '대시보드 자동 생성 & 주간 리포트',
+    short: '대시보드 자동 생성',
+    chapter: 'CH03',
+    part: 'P03',
+    chTitle: 'OpenClaw 업무 파이프라인 운영',
+    partTitle: '시각화 전략 자동 설계',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'p03-ch03-03',
+    file: 'P03-CH03/P03-CH03-03 OpenClaw Agent Manager로 태스크 흐름·상태 관리하기.md',
+    title: 'Agent Manager 태스크 관리',
+    short: 'Agent Mana',
+    chapter: 'CH03',
+    part: 'P03',
+    chTitle: 'OpenClaw 업무 파이프라인 운영',
+    partTitle: '시각화 전략 자동 설계',
+    time: '10분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'p04-ch01-01',
+    file: 'P04-CH01/P04-CH01-01 Claude Code로 Interactive Data Art 기획하기.md',
+    title: 'Interactive Data Art 기획',
+    short: 'Interactiv',
+    chapter: 'CH01',
+    part: 'P04',
+    chTitle: 'Interactive Data Art',
+    partTitle: '고급 인터랙티브 시각화',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'p04-ch01-02',
+    file: 'P04-CH01/P04-CH01-02 D3.js 기반 네트워크 차트 만들기.md',
+    title: 'D3.js 네트워크 차트',
+    short: 'D3.js 네트워크',
+    chapter: 'CH01',
+    part: 'P04',
+    chTitle: 'Interactive Data Art',
+    partTitle: '고급 인터랙티브 시각화',
     time: '20분',
-    type: '화면 녹화 위주',
-    why: '일반 라이브러리로는 만들기 어렵지만 실무에서 강력하게 쓰이는 차트 3종을 클로드 코드로 자동 생성합니다. 어벤져스 네트워크 실사례 포함.',
-    prereq: 'CH07-01~02',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '요리사가 칼 3종을 모두 다룰 수 있게 되는 날 — 어떤 재료가 와도 적합한 도구를 고를 수 있습니다.'
+    analogy: null
   },
   {
-    id: 'ch07-04',
-    file: 'CH07-D3.js 커스텀 시각화/CH07-04 실전 — D3.js 커스텀 대시보드 완성.md',
-    title: '실전 — 커스텀 대시보드 완성',
-    short: '완전 실습',
-    chapter: 'CH07',
-    chTitle: 'D3.js 커스텀 시각화',
-    time: '19분',
-    type: '화면 녹화 (완전 실습)',
-    why: '히트맵, 트리맵, 네트워크 그래프를 하나의 대시보드로 통합합니다. 이 클립을 마치면 디쓰리제이에스 커스텀 대시보드를 처음부터 완성할 수 있습니다.',
-    prereq: 'CH07-01~03',
-    imgUrls: [],
-    analogy: '세 악기를 배운 뒤 첫 합주 — 각 파트가 하나의 음악이 됩니다.'
-  },
-
-  // ── CH08: Claude Code x Antigravity ──
-  {
-    id: 'ch08-01',
-    file: 'CH08-Claude Code x Antigravity/CH08-01 안티그래비티 설치와 클로드 코드 연결.md',
-    title: '안티그래비티 설치와 클로드 코드 연결',
-    short: '설치 & 연결',
+    id: 'p04-ch01-03',
+    file: 'P04-CH01/P04-CH01-03 Tableau Extension으로 만들어 태블로에 연결하기.md',
+    title: 'Tableau Extension 연결',
+    short: 'Tableau Ex',
     chapter: 'CH01',
-    chTitle: 'Antigravity 환경',
+    part: 'P04',
+    chTitle: 'Interactive Data Art',
+    partTitle: '고급 인터랙티브 시각화',
     time: '15분',
-    type: '화면 녹화 (브라우저 + 에디터)',
-    why: '안티그래비티는 에디터와 에이전트 매니저가 통합된 환경입니다. 클로드 프로 구독만으로 API 토큰 없이 연결할 수 있어 비용 절감 효과가 큽니다.',
-    prereq: 'CH01',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '터미널과 에디터를 처음으로 한 화면에 펼쳐놓는 날 — 이제 왼손과 오른손이 동시에 움직입니다.'
+    analogy: null
   },
   {
-    id: 'ch08-02',
-    file: 'CH08-Claude Code x Antigravity/CH08-02 화면 분할 워크플로 — 터미널 좌측, 에디터 우측.md',
-    title: '화면 분할 워크플로 — 터미널 좌측, 에디터 우측',
-    short: '화면 분할',
+    id: 'p04-ch01-04',
+    file: 'P04-CH01/P04-CH01-04 3D Globe 시각화 만들기.md',
+    title: '3D Globe 시각화',
+    short: '3D Globe 시',
     chapter: 'CH01',
-    chTitle: 'Antigravity 환경',
-    time: '15분',
-    type: '화면 녹화',
-    why: '파일 내용 확인을 클로드에게 물어보면 토큰이 소비됩니다. 에디터를 옆에 열어두면 직접 보면서 작업해 토큰을 절약할 수 있습니다.',
-    prereq: 'CH08-01',
+    part: 'P04',
+    chTitle: 'Interactive Data Art',
+    partTitle: '고급 인터랙티브 시각화',
+    time: '20분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '주방에서 레시피 책을 보면서 요리하는 것 — 재료 상태를 확인하려고 매번 셰프에게 물어볼 필요가 없습니다.'
+    analogy: null
   },
   {
-    id: 'ch08-03',
-    file: 'CH08-Claude Code x Antigravity/CH08-03 에이전트 매니저 활용 — 작업 관리와 모니터링.md',
-    title: '에이전트 매니저 활용 — 작업 관리와 모니터링',
-    short: '에이전트 매니저',
+    id: 'p05-ch01-01',
+    file: 'P05-CH01/P05-CH01-01 캠페인 성과 대시보드 기획안 (채널별 성과 & 시계열 예측 & 클러스터 분석).md',
+    title: '캠페인 성과 대시보드 기획안',
+    short: '캠페인 성과 대시보',
     chapter: 'CH01',
-    chTitle: 'Antigravity 환경',
-    time: '18분',
-    type: '화면 녹화',
-    why: '여러 작업을 동시에 관리하고 각 세션의 진행 상태를 한눈에 파악할 수 있습니다. 멀티태스킹 효율이 크게 올라갑니다.',
-    prereq: 'CH08-01~02',
+    part: 'P05',
+    chTitle: '마케팅 대시보드',
+    partTitle: '직무별 실전 대시보드',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '여러 탭을 동시에 열고 작업하는 것 — 각 탭이 독립적으로 진행되면서 전체 흐름을 모니터링합니다.'
+    analogy: null
   },
   {
-    id: 'ch08-04',
-    file: 'CH08-Claude Code x Antigravity/CH08-04 실전 — 시각화 자동화 파이프라인 완성.md',
-    title: '실전 — 시각화 자동화 파이프라인 완성',
-    short: '실전 파이프라인',
+    id: 'p05-ch01-02',
+    file: 'P05-CH01/P05-CH01-02 캠페인 성과 대시보드 전용 CLAUDE.md + Skill로 제작 실습.md',
+    title: '전용 CLAUDE.md + Skill 제작 실습',
+    short: '전용 CLAUDE.',
     chapter: 'CH01',
-    chTitle: 'Antigravity 환경',
-    time: '17분',
-    type: '화면 녹화 (실전 실습)',
-    why: '마케팅 성과 데이터를 받아서 8단계 파이프라인으로 대시보드까지 자동화합니다. 안티그래비티 + 클로드 코드 조합의 실전 활용법을 완성합니다.',
-    prereq: 'CH08-01~03',
-    imgUrls: [],
-    analogy: '공장 라인 가동 첫날 — 원자재가 들어가면 완성품이 자동으로 나옵니다.'
-  },
-
-  // ── CH09: 마케팅 대시보드 ──
-  {
-    id: 'ch08-01',
-    file: 'CH09-마케팅 대시보드/CH09-01 마케팅 데이터 구조 이해 — 채널, 지출, 전환.md',
-    title: '마케팅 데이터 구조 이해 — 채널, 지출, 전환',
-    short: '데이터 구조',
-    chapter: 'CH08',
+    part: 'P05',
     chTitle: '마케팅 대시보드',
+    partTitle: '직무별 실전 대시보드',
     time: '15분',
-    type: '슬라이드 3장 + 화면 녹화',
-    why: '채널, 지출, 전환이라는 마케팅 데이터의 3가지 축을 이해하면 어떤 분석도 설계할 수 있습니다. 데이터 구조를 먼저 잡아야 시각화가 의미 있습니다.',
-    prereq: 'CH06',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '지도를 읽는 법을 배우는 것 — 좌표 체계를 이해해야 어디든 찾아갈 수 있습니다.'
+    analogy: null
   },
   {
-    id: 'ch08-02',
-    file: 'CH09-마케팅 대시보드/CH09-02 채널별 성과 시각화 — 트렌드와 비교.md',
-    title: '채널별 성과 시각화 — 트렌드와 비교',
-    short: '성과 시각화',
-    chapter: 'CH08',
+    id: 'p05-ch01-03',
+    file: 'P05-CH01/P05-CH01-03 캠페인 성과 대시보드 활용 방법과 인사이트 도출.md',
+    title: '활용 방법 / 인사이트 도출',
+    short: '활용 방법 / 인사',
+    chapter: 'CH01',
+    part: 'P05',
     chTitle: '마케팅 대시보드',
-    time: '18분',
-    type: '화면 녹화',
-    why: '채널별 트렌드와 비교 차트는 마케팅 보고서의 핵심입니다. 클로드 코드로 반복 작업을 자동화하면 매주 30분이 절약됩니다.',
-    prereq: 'CH09-01',
-    imgUrls: [],
-    analogy: '여러 선수의 기록을 같은 차트에 그리는 것 — 누가 앞서고 있는지 한눈에 보입니다.'
-  },
-  {
-    id: 'ch08-03',
-    file: 'CH09-마케팅 대시보드/CH09-03 자동 갱신 대시보드 — 새 데이터가 와도 버튼 하나로.md',
-    title: '자동 갱신 대시보드 — 새 데이터가 와도 버튼 하나로',
-    short: '자동 갱신',
-    chapter: 'CH08',
-    chTitle: '마케팅 대시보드',
-    time: '17분',
-    type: '화면 녹화',
-    why: '새 데이터가 들어올 때마다 처음부터 차트를 만드는 것은 낭비입니다. 한 번 구조를 잡으면 이후에는 버튼 하나로 갱신됩니다.',
-    prereq: 'CH09-01~02',
-    imgUrls: [],
-    analogy: '매달 인쇄하던 보고서를 살아있는 웹 페이지로 바꾸는 것 — 데이터만 바뀌면 차트가 자동으로 따라옵니다.'
-  },
-  {
-    id: 'ch08-04',
-    file: 'CH09-마케팅 대시보드/CH09-04 예산 배분 추천 — 인사이트에서 액션까지.md',
-    title: '예산 배분 추천 — 인사이트에서 액션까지',
-    short: '예산 추천',
-    chapter: 'CH08',
-    chTitle: '마케팅 대시보드',
+    partTitle: '직무별 실전 대시보드',
     time: '15분',
-    type: '화면 녹화',
-    why: '데이터를 보는 것과 결정을 내리는 것은 다릅니다. 클로드 코드로 채널별 ROI를 계산하고 예산 배분 추천까지 자동화합니다.',
-    prereq: 'CH09-01~03',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '성적표를 보고 어떤 과목에 더 공부 시간을 배분할지 결정하는 것 — 데이터가 행동을 만듭니다.'
+    analogy: null
   },
-
-  // ── CH10: A/B 테스트 분석 ──
   {
-    id: 'ch08-01',
-    file: 'CH10-데이터 분석 대시보드/CH10-01 A:B 테스트 개념 — 무엇을 어떻게 비교하는가.md',
-    title: 'A/B 테스트 개념 — 무엇을 어떻게 비교하는가',
-    short: '개념',
-    chapter: 'CH08',
+    id: 'p05-ch02-01',
+    file: 'P05-CH02/P05-CH02-01 A/B test 대시보드 기획안 (A/B 테스트 & 세그먼트 분석 & 의사결정).md',
+    title: 'A/B test 대시보드 기획안',
+    short: 'A/B test 대',
+    chapter: 'CH02',
+    part: 'P05',
     chTitle: 'A/B 테스트 분석',
+    partTitle: '직무별 실전 대시보드',
     time: '15분',
-    type: '슬라이드 3장 + 화면 녹화',
-    why: 'A/B 테스트는 마케터와 PM이 가장 많이 쓰는 의사결정 도구입니다. 개념을 제대로 이해해야 잘못된 결론을 피할 수 있습니다.',
-    prereq: 'CH09',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '두 가지 레시피를 같은 날 같은 시간에 테스트하는 것 — 조건이 같아야 결과를 믿을 수 있습니다.'
+    analogy: null
   },
   {
-    id: 'ch08-02',
-    file: 'CH10-데이터 분석 대시보드/CH10-02 A:B 테스트 분석 — 통계 검정과 시각화.md',
-    title: 'A/B 테스트 분석 — 통계 검정과 시각화',
-    short: '통계 검정',
-    chapter: 'CH08',
+    id: 'p05-ch02-02',
+    file: 'P05-CH02/P05-CH02-02 A/B test 대시보드 전용 CLAUDE.md + Skill로 제작 실습.md',
+    title: '전용 CLAUDE.md + Skill 제작 실습',
+    short: '전용 CLAUDE.',
+    chapter: 'CH02',
+    part: 'P05',
     chTitle: 'A/B 테스트 분석',
+    partTitle: '직무별 실전 대시보드',
     time: '15분',
-    type: '화면 녹화',
-    why: '통계 검정 없이 A/B 테스트 결과를 판단하면 우연을 성과로 착각할 수 있습니다. 클로드 코드로 p-값과 신뢰구간을 자동 계산합니다.',
-    prereq: 'CH10-01',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '동전을 10번 던졌을 때 7번 앞면이 나온 것이 편향인지 우연인지 판단하는 것 — 숫자를 믿으려면 통계가 필요합니다.'
+    analogy: null
   },
   {
-    id: 'ch08-03',
-    file: 'CH10-데이터 분석 대시보드/CH10-03 실전 — A:B 테스트 자동화 리포트 완성.md',
-    title: '실전 — A/B 테스트 자동화 리포트 완성',
-    short: '실전 리포트',
-    chapter: 'CH08',
+    id: 'p05-ch02-03',
+    file: 'P05-CH02/P05-CH02-03 A-B test 대시보드 활용 방법과 인사이트 도출.md',
+    title: '활용 방법 / 인사이트 도출',
+    short: '활용 방법 / 인사',
+    chapter: 'CH02',
+    part: 'P05',
     chTitle: 'A/B 테스트 분석',
+    partTitle: '직무별 실전 대시보드',
     time: '15분',
-    type: '화면 녹화 (실전 실습)',
-    why: '데이터를 받아 통계 검정, 시각화, 해석까지 한 번에 자동화합니다. 이후 A/B 테스트 결과가 올 때마다 5분 안에 리포트가 완성됩니다.',
-    prereq: 'CH10-01~02',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '실험 결과를 받아 논문 초안까지 자동으로 쓰는 연구 보조 시스템 — 분석은 기계가, 해석은 사람이 합니다.'
-  },
-
-  // ── CH11: PM KPI 시각화 ──
-  {
-    id: 'ch08-01',
-    file: 'CH11-PM KPI 시각화/CH11-01 PM 핵심 지표 — DAU, 리텐션, 피처 사용률.md',
-    title: 'PM 핵심 지표 — DAU, 리텐션, 피처 사용률',
-    short: '핵심 지표',
-    chapter: 'CH08',
-    chTitle: 'PM KPI 시각화',
-    time: '17분',
-    type: '슬라이드 3장 + 화면 녹화',
-    why: 'PM이 매일 보는 지표가 DAU, 리텐션, 피처 사용률입니다. 이 세 가지를 자동화하면 주간 보고 준비 시간이 절반으로 줄어듭니다.',
-    prereq: 'CH09',
-    imgUrls: [],
-    analogy: '자동차 계기판 — 속도, 연료, 엔진 온도를 한눈에 보는 것처럼 제품 상태를 모니터링합니다.'
+    analogy: null
   },
   {
-    id: 'ch08-02',
-    file: 'CH11-PM KPI 시각화/CH11-02 KPI 트렌드 시각화 — DAU 곡선과 리텐션 히트맵.md',
-    title: 'KPI 트렌드 시각화 — DAU 곡선과 리텐션 히트맵',
-    short: '트렌드 시각화',
-    chapter: 'CH08',
-    chTitle: 'PM KPI 시각화',
-    time: '17분',
-    type: '화면 녹화',
-    why: 'DAU 곡선은 제품의 성장과 이탈을 보여주고, 리텐션 히트맵은 어느 날에 사용자가 떠나는지 보여줍니다. 클로드 코드로 자동 생성합니다.',
-    prereq: 'CH11-01',
-    imgUrls: [],
-    analogy: '환자의 체온 기록 차트 — 언제 열이 오르고 내렸는지 패턴이 보여야 원인을 찾을 수 있습니다.'
-  },
-  {
-    id: 'ch08-03',
-    file: 'CH11-PM KPI 시각화/CH11-03 실전 — 주간 PM 리포트 자동화.md',
-    title: '실전 — 주간 PM 리포트 자동화',
-    short: '실전 리포트',
-    chapter: 'CH08',
-    chTitle: 'PM KPI 시각화',
-    time: '16분',
-    type: '화면 녹화 (실전 실습)',
-    why: '매주 같은 지표를 같은 형식으로 보고합니다. 자동화하면 월요일 아침 리포트 준비를 클로드 코드가 대신합니다.',
-    prereq: 'CH11-01~02',
-    imgUrls: [],
-    analogy: '주간 뉴스레터 자동 발행 — 데이터만 수집되면 레이아웃과 차트는 자동으로 완성됩니다.'
-  },
-
-  // ── CH12: 리텐션 매출 분석 ──
-  {
-    id: 'ch08-01',
-    file: 'CH12-리텐션 매출 분석/CH12-01 코호트 리텐션 분석 — 누가 왜 떠나는가.md',
-    title: '코호트 리텐션 분석 — 누가 왜 떠나는가',
-    short: '코호트 분석',
-    chapter: 'CH08',
-    chTitle: '리텐션 매출 분석',
-    time: '17분',
-    type: '슬라이드 2장 + 화면 녹화',
-    why: '코호트 분석은 동일한 시기에 가입한 사용자 그룹이 어떻게 이탈하는지 추적합니다. 어느 시점에 집중 개선이 필요한지 보여줍니다.',
-    prereq: 'CH11',
-    imgUrls: [],
-    analogy: '같은 해에 입학한 학생들이 몇 명이나 졸업했는지 추적하는 것 — 어느 학년에서 중퇴가 많은지 보입니다.'
-  },
-  {
-    id: 'ch08-02',
-    file: 'CH12-리텐션 매출 분석/CH12-02 매출 트렌드와 LTV — 고객 한 명의 가치.md',
-    title: '매출 트렌드와 LTV — 고객 한 명의 가치',
-    short: 'LTV 분석',
-    chapter: 'CH08',
-    chTitle: '리텐션 매출 분석',
-    time: '16분',
-    type: '화면 녹화',
-    why: 'LTV(고객 생애 가치)를 알면 획득 비용과 비교해 사업 성장 가능성을 판단할 수 있습니다. 클로드 코드로 코호트별 LTV를 자동 계산합니다.',
-    prereq: 'CH12-01',
-    imgUrls: [],
-    analogy: '고객 한 명을 평생 친구로 만드는 비용과 그 친구가 가져다주는 가치를 비교하는 것 — 투자 대비 효과를 수치로 봅니다.'
-  },
-  {
-    id: 'ch08-03',
-    file: 'CH12-리텐션 매출 분석/CH12-03 실전 — 리텐션 개선 포인트 자동 탐지.md',
-    title: '실전 — 리텐션 개선 포인트 자동 탐지',
-    short: '실전 탐지',
-    chapter: 'CH08',
-    chTitle: '리텐션 매출 분석',
-    time: '17분',
-    type: '화면 녹화 (실전 실습)',
-    why: '이탈이 집중되는 구간을 자동으로 찾아냅니다. 어디를 개선해야 리텐션이 올라갈지 데이터 기반으로 판단합니다.',
-    prereq: 'CH12-01~02',
-    imgUrls: [],
-    analogy: '파이프에서 물이 새는 곳을 자동으로 탐지하는 센서 — 어디를 막아야 할지 바로 알 수 있습니다.'
-  },
-
-  // ── CH13: HR 자동화 ──
-  {
-    id: 'ch08-01',
-    file: 'CH13-HR 자동화/CH13-01 HR 데이터 구조 — 직원, 성과, 이직.md',
-    title: 'HR 데이터 구조 — 직원, 성과, 이직',
-    short: 'HR 구조',
-    chapter: 'CH08',
-    chTitle: 'HR 자동화',
+    id: 'p05-ch03-01',
+    file: 'P05-CH03/P05-CH03-01 PM 대시보드 기획안 (Metric Hierarchy & 원인 분석 & Action).md',
+    title: 'PM 대시보드 기획안',
+    short: 'PM 대시보드 기획',
+    chapter: 'CH03',
+    part: 'P05',
+    chTitle: 'Data PM Metric 분석 대시보드',
+    partTitle: '직무별 실전 대시보드',
     time: '15분',
-    type: '슬라이드 2장 + 화면 녹화',
-    why: '인사 데이터는 직원 정보, 성과 기록, 이직 이력으로 구성됩니다. 구조를 이해해야 분석과 자동화를 설계할 수 있습니다.',
-    prereq: 'CH09',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '회사 조직도를 처음 받는 날 — 누가 누구와 연결되어 있는지 파악해야 움직임이 보입니다.'
+    analogy: null
   },
   {
-    id: 'ch08-02',
-    file: 'CH13-HR 자동화/CH13-02 이직률 분석과 예측 — 누가 떠날 가능성이 높은가.md',
-    title: '이직률 분석과 예측 — 누가 떠날 가능성이 높은가',
-    short: '이직 예측',
-    chapter: 'CH08',
-    chTitle: 'HR 자동화',
-    time: '18분',
-    type: '화면 녹화',
-    why: '이직을 사후에 파악하면 이미 늦습니다. 성과, 근속, 만족도 데이터로 이탈 가능성이 높은 직원을 미리 찾아냅니다.',
-    prereq: 'CH13-01',
+    id: 'p05-ch03-02',
+    file: 'P05-CH03/P05-CH03-02 PM 대시보드 전용 CLAUDE.md + Skill로 제작 실습.md',
+    title: '전용 CLAUDE.md + Skill 제작 실습',
+    short: '전용 CLAUDE.',
+    chapter: 'CH03',
+    part: 'P05',
+    chTitle: 'Data PM Metric 분석 대시보드',
+    partTitle: '직무별 실전 대시보드',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '날씨 예보 — 비가 온 뒤 우산을 챙기는 게 아니라 내리기 전에 준비합니다.'
+    analogy: null
   },
   {
-    id: 'ch08-03',
-    file: 'CH13-HR 자동화/CH13-03 성과 평가 자동화 — 등급 산출과 피드백 초안 생성.md',
-    title: '성과 평가 자동화 — 등급 산출과 피드백 초안 생성',
-    short: '성과 평가',
-    chapter: 'CH08',
-    chTitle: 'HR 자동화',
-    time: '17분',
-    type: '화면 녹화',
-    why: '성과 등급 산출과 피드백 초안 작성은 반복 작업입니다. 클로드 코드로 자동화하면 HR 담당자의 평가 시즌 부담이 크게 줄어듭니다.',
-    prereq: 'CH13-01',
+    id: 'p05-ch03-03',
+    file: 'P05-CH03/P05-CH03-03 PM 대시보드 활용 방법과 인사이트 도출.md',
+    title: '활용 방법 / 인사이트 도출',
+    short: '활용 방법 / 인사',
+    chapter: 'CH03',
+    part: 'P05',
+    chTitle: 'Data PM Metric 분석 대시보드',
+    partTitle: '직무별 실전 대시보드',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '성적표 채점을 기계가 하고, 교사는 최종 피드백만 손보는 것 — 반복은 기계가, 판단은 사람이 합니다.'
+    analogy: null
   },
   {
-    id: 'ch08-04',
-    file: 'CH13-HR 자동화/CH13-04 채용 파이프라인 분석 — 어디서 좋은 인재가 오는가.md',
-    title: '채용 파이프라인 분석 — 어디서 좋은 인재가 오는가',
-    short: '채용 분석',
-    chapter: 'CH08',
-    chTitle: 'HR 자동화',
-    time: '16분',
-    type: '화면 녹화',
-    why: '채용 채널마다 합격률과 장기 재직률이 다릅니다. 어느 채널에서 좋은 인재가 오는지 데이터로 확인하면 채용 예산을 효율적으로 씁니다.',
-    prereq: 'CH13-01',
+    id: 'p05-ch04-01',
+    file: 'P05-CH04/P05-CH04-01 리텐션 분석 대시보드 기획안 (코호트 & What-if & LTV).md',
+    title: '리텐션 분석 대시보드 기획안',
+    short: '리텐션 분석 대시보',
+    chapter: 'CH04',
+    part: 'P05',
+    chTitle: '리텐션 & 매출 분석',
+    partTitle: '직무별 실전 대시보드',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '낚시 포인트 분석 — 어느 곳에 가야 원하는 물고기가 잡히는지 데이터로 찾습니다.'
+    analogy: null
   },
   {
-    id: 'ch08-05',
-    file: 'CH13-HR 자동화/CH13-05 근태와 팀 생산성 분석.md',
-    title: '근태와 팀 생산성 분석',
-    short: '근태 분석',
-    chapter: 'CH08',
-    chTitle: 'HR 자동화',
-    time: '16분',
-    type: '화면 녹화',
-    why: '근태 데이터는 팀 생산성 패턴을 보여줍니다. 어느 팀이 언제 가장 생산적인지 파악해 업무 배분과 회의 일정을 최적화합니다.',
-    prereq: 'CH13-01',
+    id: 'p05-ch04-02',
+    file: 'P05-CH04/P05-CH04-02 리텐션 대시보드 전용 CLAUDE.md + Skill로 제작 실습.md',
+    title: '전용 CLAUDE.md + Skill 제작 실습',
+    short: '전용 CLAUDE.',
+    chapter: 'CH04',
+    part: 'P05',
+    chTitle: '리텐션 & 매출 분석',
+    partTitle: '직무별 실전 대시보드',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '공장 생산 라인의 가동률 모니터링 — 어느 시간대에 라인이 멈추는지 파악해 유지보수 일정을 잡습니다.'
+    analogy: null
   },
   {
-    id: 'ch08-06',
-    file: 'CH13-HR 자동화/CH13-06 HR 대시보드 — 경영진을 위한 인사 현황판.md',
-    title: 'HR 대시보드 — 경영진을 위한 인사 현황판',
-    short: 'HR 대시보드',
-    chapter: 'CH08',
-    chTitle: 'HR 자동화',
-    time: '17분',
-    type: '화면 녹화',
-    why: '경영진이 필요한 인사 정보를 한 화면에 모읍니다. 이직률, 성과 분포, 채용 현황을 실시간으로 볼 수 있는 대시보드를 구축합니다.',
-    prereq: 'CH13-01~05',
+    id: 'p05-ch04-03',
+    file: 'P05-CH04/P05-CH04-03 리텐션 대시보드 활용 방법과 인사이트 도출.md',
+    title: '활용 방법 / 인사이트 도출',
+    short: '활용 방법 / 인사',
+    chapter: 'CH04',
+    part: 'P05',
+    chTitle: '리텐션 & 매출 분석',
+    partTitle: '직무별 실전 대시보드',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '비행기 조종석 계기판 — 수백 개의 센서 데이터를 파일럿이 한눈에 볼 수 있도록 정리합니다.'
+    analogy: null
   },
   {
-    id: 'ch08-07',
-    file: 'CH13-HR 자동화/CH13-07 실전 — 월간 HR 리포트 완전 자동화.md',
-    title: '실전 — 월간 HR 리포트 완전 자동화',
-    short: '실전 자동화',
-    chapter: 'CH08',
-    chTitle: 'HR 자동화',
-    time: '16분',
-    type: '화면 녹화 (실전 실습)',
-    why: '매월 같은 형식의 HR 리포트를 클로드 코드가 자동으로 만들어냅니다. 데이터만 준비되면 리포트 완성까지 5분이면 충분합니다.',
-    prereq: 'CH13-01~06',
+    id: 'p05-ch05-01',
+    file: 'P05-CH05/P05-CH05-01 HR 대시보드 기획안 (채용 퍼널).md',
+    title: 'HR 대시보드 기획안 (채용 퍼널)',
+    short: 'HR 대시보드 기획',
+    chapter: 'CH05',
+    part: 'P05',
+    chTitle: 'HR 대시보드',
+    partTitle: '직무별 실전 대시보드',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '세금 신고를 전담 회계사가 자동으로 처리해주는 것 — 입력만 하면 산출이 자동입니다.'
-  },
-
-  // ── CH14: Openclaw 파이프라인 ──
-  {
-    id: 'ch08-01',
-    file: 'CH14-Openclaw 파이프라인/CH14-01 Openclaw란 무엇인가 — AI 에이전트 자동화 플랫폼.md',
-    title: 'Openclaw란 무엇인가 — AI 에이전트 자동화 플랫폼',
-    short: 'Openclaw 소개',
-    chapter: 'CH08',
-    chTitle: 'Openclaw 파이프라인',
-    time: '17분',
-    type: '슬라이드 3장 + 화면 녹화',
-    why: 'Openclaw는 클로드 코드 에이전트를 스케줄링하고 알림을 보내는 자동화 플랫폼입니다. 이 강의의 모든 실습을 완전 자동화하는 마지막 퍼즐입니다.',
-    prereq: 'CH13',
-    imgUrls: [],
-    analogy: '모든 기계를 연결하는 컨트롤 타워 — 개별 에이전트가 언제 무엇을 할지 전체를 지휘합니다.'
+    analogy: null
   },
   {
-    id: 'ch08-02',
-    file: 'CH14-Openclaw 파이프라인/CH14-02 자동화 파이프라인 설계 — 스케줄, 트리거, 알림.md',
-    title: '자동화 파이프라인 설계 — 스케줄, 트리거, 알림',
-    short: '파이프라인 설계',
-    chapter: 'CH08',
-    chTitle: 'Openclaw 파이프라인',
-    time: '17분',
-    type: '화면 녹화',
-    why: '스케줄, 트리거, 알림 세 요소를 조합하면 어떤 자동화도 설계할 수 있습니다. 텔레그램 연동으로 결과를 실시간으로 받아봅니다.',
-    prereq: 'CH14-01',
+    id: 'p05-ch05-02',
+    file: 'P05-CH05/P05-CH05-02 HR 대시보드 전용 CLAUDE.md + Skill로 제작 실습.md',
+    title: '전용 CLAUDE.md + Skill 제작 실습',
+    short: '전용 CLAUDE.',
+    chapter: 'CH05',
+    part: 'P05',
+    chTitle: 'HR 대시보드',
+    partTitle: '직무별 실전 대시보드',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '스마트 홈 자동화 — 특정 조건이 되면 자동으로 불이 켜지고, 완료되면 알림이 옵니다.'
+    analogy: null
   },
   {
-    id: 'ch08-03',
-    file: 'CH14-Openclaw 파이프라인/CH14-03 실전 — 전체 강의 파이프라인 완성과 운영.md',
-    title: '실전 — 전체 강의 파이프라인 완성과 운영',
-    short: '최종 파이프라인',
-    chapter: 'CH08',
-    chTitle: 'Openclaw 파이프라인',
-    time: '16분',
-    type: '화면 녹화 (실전 실습 + 강의 마무리)',
-    why: '강의에서 배운 모든 것을 하나의 파이프라인으로 연결합니다. 이 클립을 마치면 클로드 코드 기반 완전 자동화 시스템이 완성됩니다.',
-    prereq: 'CH14-01~02',
+    id: 'p05-ch05-03',
+    file: 'P05-CH05/P05-CH05-03 HR 대시보드 활용 방법과 인사이트 도출.md',
+    title: '활용 방법 / 인사이트 도출',
+    short: '활용 방법 / 인사',
+    chapter: 'CH05',
+    part: 'P05',
+    chTitle: 'HR 대시보드',
+    partTitle: '직무별 실전 대시보드',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
     imgUrls: [],
-    analogy: '모든 악기가 모여 오케스트라를 완성하는 마지막 리허설 — 각 파트가 하나의 공연이 됩니다.'
+    analogy: null
+  },
+  {
+    id: 'p06-ch01-01',
+    file: 'P06-CH01/P06-CH01-01 Stitch로 포트폴리오 블로그 디자인 기획하기.md',
+    title: 'Stitch로 포트폴리오 블로그 기획',
+    short: 'Stitch로 포트',
+    chapter: 'CH01',
+    part: 'P06',
+    chTitle: '시각화 포트폴리오 블로그 만들기',
+    partTitle: '웹 기반 포트폴리오 만들기',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'p06-ch01-02',
+    file: 'P06-CH01/P06-CH01-02 Antigravity + Claude Code로 포트폴리오 페이지 빌드하기.md',
+    title: 'Antigravity + Claude Code 빌드',
+    short: 'Antigravit',
+    chapter: 'CH01',
+    part: 'P06',
+    chTitle: '시각화 포트폴리오 블로그 만들기',
+    partTitle: '웹 기반 포트폴리오 만들기',
+    time: '20분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
+  },
+  {
+    id: 'p06-ch01-03',
+    file: 'P06-CH01/P06-CH01-03 포트폴리오 최종 완성 & 배포하기.md',
+    title: '포트폴리오 최종 완성 & 배포',
+    short: '포트폴리오 최종 완',
+    chapter: 'CH01',
+    part: 'P06',
+    chTitle: '시각화 포트폴리오 블로그 만들기',
+    partTitle: '웹 기반 포트폴리오 만들기',
+    time: '15분',
+    type: '강의',
+    why: '',
+    prereq: null,
+    imgUrls: [],
+    analogy: null
   }
 ];
 
