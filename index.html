@@ -51,6 +51,12 @@
   --ch03-soft: rgba(181,114,74,0.1);
   --why-bg: #FAFAF8;
   --why-border: #C8C2B6;
+  --p01: #7B6FA0; --p01-soft: rgba(123,111,160,0.12);
+  --p02: #4A7AB5; --p02-soft: rgba(74,122,181,0.12);
+  --p03: #4A8A6A; --p03-soft: rgba(74,138,106,0.12);
+  --p04: #B5724A; --p04-soft: rgba(181,114,74,0.12);
+  --p05: #8A4A6A; --p05-soft: rgba(138,74,106,0.12);
+  --p06: #4AAAB5; --p06-soft: rgba(74,170,181,0.12);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--bg); display: flex; height: 100vh; overflow: hidden; }
@@ -98,21 +104,12 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 .chapter-label.collapsed .ch-toggle { transform: rotate(-90deg); }
 .chapter-clips { overflow: hidden; transition: max-height 0.22s ease; }
 .chapter-clips.collapsed { max-height: 0 !important; }
-.ch-badge.ch00 { background: var(--ch00-soft); color: var(--ch00); }
-.ch-badge.ch01 { background: var(--ch01-soft); color: var(--ch01); }
-.ch-badge.ch02 { background: var(--ch02-soft); color: var(--ch02); }
-.ch-badge.ch03 { background: var(--ch03-soft); color: var(--ch03); }
-.ch-badge.ch04 { background: var(--ch04-soft); color: var(--ch04); }
-.ch-badge.ch05 { background: var(--ch05-soft); color: var(--ch05); }
-.ch-badge.ch06 { background: var(--ch06-soft); color: var(--ch06); }
-.ch-badge.ch07 { background: var(--ch07-soft); color: var(--ch07); }
-.ch-badge.ch08 { background: var(--ch08-soft); color: var(--ch08); }
-.ch-badge.ch09 { background: var(--ch09-soft); color: var(--ch09); }
-.ch-badge.ch10 { background: var(--ch10-soft); color: var(--ch10); }
-.ch-badge.ch11 { background: var(--ch11-soft); color: var(--ch11); }
-.ch-badge.ch12 { background: var(--ch12-soft); color: var(--ch12); }
-.ch-badge.ch13 { background: var(--ch13-soft); color: var(--ch13); }
-.ch-badge.ch14 { background: var(--ch14-soft); color: var(--ch14); }
+.ch-badge.p01 { background: var(--p01-soft); color: var(--p01); }
+.ch-badge.p02 { background: var(--p02-soft); color: var(--p02); }
+.ch-badge.p03 { background: var(--p03-soft); color: var(--p03); }
+.ch-badge.p04 { background: var(--p04-soft); color: var(--p04); }
+.ch-badge.p05 { background: var(--p05-soft); color: var(--p05); }
+.ch-badge.p06 { background: var(--p06-soft); color: var(--p06); }
 
 .nav-item {
   display: flex; align-items: center; gap: 10px;
@@ -158,21 +155,12 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
   display: inline-block; padding: 1px 5px; border-radius: 3px;
   font-size: 8.5px; font-weight: 800;
 }
-.rmap-badge.ch00 { background: var(--ch00-soft); color: var(--ch00); }
-.rmap-badge.ch01 { background: var(--ch01-soft); color: var(--ch01); }
-.rmap-badge.ch02 { background: var(--ch02-soft); color: var(--ch02); }
-.rmap-badge.ch03 { background: var(--ch03-soft); color: var(--ch03); }
-.rmap-badge.ch04 { background: var(--ch04-soft); color: var(--ch04); }
-.rmap-badge.ch05 { background: var(--ch05-soft); color: var(--ch05); }
-.rmap-badge.ch06 { background: var(--ch06-soft); color: var(--ch06); }
-.rmap-badge.ch07 { background: var(--ch07-soft); color: var(--ch07); }
-.rmap-badge.ch08 { background: var(--ch08-soft); color: var(--ch08); }
-.rmap-badge.ch09 { background: var(--ch09-soft); color: var(--ch09); }
-.rmap-badge.ch10 { background: var(--ch10-soft); color: var(--ch10); }
-.rmap-badge.ch11 { background: var(--ch11-soft); color: var(--ch11); }
-.rmap-badge.ch12 { background: var(--ch12-soft); color: var(--ch12); }
-.rmap-badge.ch13 { background: var(--ch13-soft); color: var(--ch13); }
-.rmap-badge.ch14 { background: var(--ch14-soft); color: var(--ch14); }
+.rmap-badge.p01 { background: var(--p01-soft); color: var(--p01); }
+.rmap-badge.p02 { background: var(--p02-soft); color: var(--p02); }
+.rmap-badge.p03 { background: var(--p03-soft); color: var(--p03); }
+.rmap-badge.p04 { background: var(--p04-soft); color: var(--p04); }
+.rmap-badge.p05 { background: var(--p05-soft); color: var(--p05); }
+.rmap-badge.p06 { background: var(--p06-soft); color: var(--p06); }
 
 .roadmap-clips { display: inline-flex; align-items: center; gap: 0; }
 .rmap-clip {
@@ -244,21 +232,13 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
   border-radius: 4px; font-size: 10.5px; font-weight: 700;
   letter-spacing: 0.06em;
 }
-.meta-badge.chapter { background: var(--ch01-soft); color: var(--ch01); }
-.meta-badge.chapter.ch00 { background: var(--ch00-soft); color: var(--ch00); }
-.meta-badge.chapter.ch02 { background: var(--ch02-soft); color: var(--ch02); }
-.meta-badge.chapter.ch03 { background: var(--ch03-soft); color: var(--ch03); }
-.meta-badge.chapter.ch04 { background: var(--ch04-soft); color: var(--ch04); }
-.meta-badge.chapter.ch05 { background: var(--ch05-soft); color: var(--ch05); }
-.meta-badge.chapter.ch06 { background: var(--ch06-soft); color: var(--ch06); }
-.meta-badge.chapter.ch07 { background: var(--ch07-soft); color: var(--ch07); }
-.meta-badge.chapter.ch08 { background: var(--ch08-soft); color: var(--ch08); }
-.meta-badge.chapter.ch09 { background: var(--ch09-soft); color: var(--ch09); }
-.meta-badge.chapter.ch10 { background: var(--ch10-soft); color: var(--ch10); }
-.meta-badge.chapter.ch11 { background: var(--ch11-soft); color: var(--ch11); }
-.meta-badge.chapter.ch12 { background: var(--ch12-soft); color: var(--ch12); }
-.meta-badge.chapter.ch13 { background: var(--ch13-soft); color: var(--ch13); }
-.meta-badge.chapter.ch14 { background: var(--ch14-soft); color: var(--ch14); }
+.meta-badge.chapter { background: var(--p02-soft); color: var(--p02); }
+.meta-badge.chapter.p01 { background: var(--p01-soft); color: var(--p01); }
+.meta-badge.chapter.p02 { background: var(--p02-soft); color: var(--p02); }
+.meta-badge.chapter.p03 { background: var(--p03-soft); color: var(--p03); }
+.meta-badge.chapter.p04 { background: var(--p04-soft); color: var(--p04); }
+.meta-badge.chapter.p05 { background: var(--p05-soft); color: var(--p05); }
+.meta-badge.chapter.p06 { background: var(--p06-soft); color: var(--p06); }
 .meta-badge.type { background: var(--hover); color: var(--text-2); }
 .meta-badge.time { background: var(--hover); color: var(--text-2); }
 .clip-title-h { font-size: 26px; font-weight: 700; color: var(--text-1); line-height: 1.2; letter-spacing: -0.02em; }
@@ -394,21 +374,12 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 .home-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; cursor: pointer; transition: box-shadow 0.15s; }
 .home-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
 .home-card .hc-chapter { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px; }
-.home-card .hc-chapter.ch00 { color: var(--ch00); }
-.home-card .hc-chapter.ch01 { color: var(--ch01); }
-.home-card .hc-chapter.ch02 { color: var(--ch02); }
-.home-card .hc-chapter.ch03 { color: var(--ch03); }
-.home-card .hc-chapter.ch04 { color: var(--ch04); }
-.home-card .hc-chapter.ch05 { color: var(--ch05); }
-.home-card .hc-chapter.ch06 { color: var(--ch06); }
-.home-card .hc-chapter.ch07 { color: var(--ch07); }
-.home-card .hc-chapter.ch08 { color: var(--ch08); }
-.home-card .hc-chapter.ch09 { color: var(--ch09); }
-.home-card .hc-chapter.ch10 { color: var(--ch10); }
-.home-card .hc-chapter.ch11 { color: var(--ch11); }
-.home-card .hc-chapter.ch12 { color: var(--ch12); }
-.home-card .hc-chapter.ch13 { color: var(--ch13); }
-.home-card .hc-chapter.ch14 { color: var(--ch14); }
+.home-card .hc-chapter.p01 { color: var(--p01); }
+.home-card .hc-chapter.p02 { color: var(--p02); }
+.home-card .hc-chapter.p03 { color: var(--p03); }
+.home-card .hc-chapter.p04 { color: var(--p04); }
+.home-card .hc-chapter.p05 { color: var(--p05); }
+.home-card .hc-chapter.p06 { color: var(--p06); }
 .home-card .hc-title { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 5px; }
 .home-card .hc-desc { font-size: 12.5px; color: var(--text-3); line-height: 1.6; }
 .home-card .hc-count { font-size: 12px; color: var(--text-3); margin-top: 10px; }
@@ -832,6 +803,16 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
       </div>
     </div>
 
+  <!-- 진행률 바 -->
+  <div class="nav-progress">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-size:11px;color:var(--text-3);">학습 진행률</span>
+      <span id="prog-label" style="font-size:11px;color:var(--text-2);font-weight:600;">0 / 50 클립</span>
+    </div>
+    <div style="background:var(--line);border-radius:4px;height:4px;overflow:hidden;">
+      <div id="prog-fill" style="height:100%;background:var(--accent);border-radius:4px;width:0%;transition:width .3s;"></div>
+    </div>
+  </div>
   </div>
 <!-- ─── MAIN ─── -->
 <div id="main">
@@ -868,63 +849,51 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
         </div>
 
         <div class="home-grid">
-          <div class="home-card" onclick="loadClip('ch00-01',null)">
-            <div class="hc-chapter ch00">CH00 · 강의 소개 & 준비</div>
-            <div class="hc-title">OT부터 시작하기</div>
-            <div class="hc-desc">강의 목표, 결과물 프리뷰, 수강생 경로 선택, 환경 셋업</div>
-            <div class="hc-count">4클립 · 55분</div>
+          <div class="home-card" onclick="loadClip('p01-ch01-01',null)">
+            <div class="hc-chapter p01">P01 · 데이터 시각화의 기초 관점 잡기</div>
+            <div class="hc-title">시각화 원칙 & 환경 세팅</div>
+            <div class="hc-desc">AI + 시각화 이유, 좋은 차트 원칙, 사례, Claude Code + Antigravity 설치</div>
+            <div class="hc-count">6클립 (CH01×4 · CH02×2)</div>
           </div>
-          <div class="home-card" onclick="loadClip('ch01-01',null)">
-            <div class="hc-chapter ch01">CH01 · 기본 활용</div>
-            <div class="hc-title">클로드 코드 시작하기</div>
-            <div class="hc-desc">에이전트 구조, CLAUDE.md, 작업 모드, 훅, MCP, 효과적인 지시</div>
-            <div class="hc-count">11클립 · 122분</div>
+          <div class="home-card" onclick="loadClip('p02-ch01-01',null)">
+            <div class="hc-chapter p02">P02 · Claude Code 실전 활용</div>
+            <div class="hc-title">세션 · MCP · 에이전트 팀</div>
+            <div class="hc-desc">첫 세션, CLAUDE.md 설계, MCP 도구 확장, 서브에이전트 & 병렬 작업</div>
+            <div class="hc-count">12클립 (CH01×4 · CH02×4 · CH03×4)</div>
           </div>
-          <div class="home-card" onclick="loadClip('ch02-01',null)">
-            <div class="hc-chapter" style="color:var(--ch02);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH02 · 서브에이전트</div>
-            <div class="hc-title">여러 에이전트 병렬 실행</div>
-            <div class="hc-desc">Task 도구, 분할-처리-합산 패턴, 병렬 파이프라인 실전</div>
-            <div class="hc-count">3클립 · 60분</div>
+          <div class="home-card" onclick="loadClip('p03-ch01-01',null)">
+            <div class="hc-chapter p03">P03 · 시각화 자동화 & 파이프라인</div>
+            <div class="hc-title">전략 자동 설계 · 에이전트 팀 · OpenClaw</div>
+            <div class="hc-desc">KPI 자동 설계, CSV→대시보드 파이프라인, OpenClaw 운영</div>
+            <div class="hc-count">10클립 (CH01×4 · CH02×3 · CH03×3)</div>
           </div>
-          <div class="home-card" onclick="loadClip('ch03-01',null)">
-            <div class="hc-chapter" style="color:var(--ch03);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH03 · 에이전트 팀</div>
-            <div class="hc-title">역할 분리 멀티 에이전트</div>
-            <div class="hc-desc">오케스트레이터-워커 패턴, 역할 설계, 3-에이전트 완전 실습</div>
-            <div class="hc-count">4클립 · 70분</div>
+          <div class="home-card" onclick="loadClip('p04-ch01-01',null)">
+            <div class="hc-chapter p04">P04 · Interactive Data Art</div>
+            <div class="hc-title">D3.js · Tableau Extension · 3D Globe</div>
+            <div class="hc-desc">네트워크 차트, 태블로 익스텐션 연결, 3D 지구본 시각화</div>
+            <div class="hc-count">4클립 (CH01×4)</div>
           </div>
-          <div class="home-card" onclick="loadClip('ch04-01',null)">
-            <div class="hc-chapter" style="color:var(--ch04);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH04 · 멀티 환경</div>
-            <div class="hc-title">로컬 ↔ 클라우드 전환</div>
-            <div class="hc-desc">CLAUDE.md 전략, GitHub Codespaces, 환경 전환 파이프라인</div>
-            <div class="hc-count">3클립 · 40분</div>
+          <div class="home-card" onclick="loadClip('p05-ch01-01',null)">
+            <div class="hc-chapter p05">P05 · 실전 비즈니스 대시보드</div>
+            <div class="hc-title">마케팅 · A/B · PM · 리텐션 · HR</div>
+            <div class="hc-desc">캠페인 성과, A/B 테스트, Metric 분석, 코호트, HR 채용 퍼널 대시보드</div>
+            <div class="hc-count">15클립 (CH01~CH05 × 3클립)</div>
           </div>
-          <div class="home-card" onclick="loadClip('ch05-01',null)">
-            <div class="hc-chapter" style="color:var(--ch05);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH05 · MCP 연동</div>
-            <div class="hc-title">외부 도구 확장</div>
-            <div class="hc-desc">데이터베이스 MCP, Slack MCP, DB→분석→발송 완전 자동화</div>
-            <div class="hc-count">4클립 · 60분</div>
-          </div>
-          <div class="home-card" onclick="loadClip('ch06-01',null)">
-            <div class="hc-chapter" style="color:var(--ch06);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH06 · 시각화 전략</div>
-            <div class="hc-title">데이터 → 차트 자동 설계</div>
-            <div class="hc-desc">차트 선택, 태블로·파이썬·인터랙티브, 8단계 파이프라인</div>
-            <div class="hc-count">8클립 · 110분</div>
-          </div>
-          <div class="home-card" onclick="loadClip('ch07-01',null)">
-            <div class="hc-chapter" style="color:var(--ch07);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;">CH07 · D3.js 시각화</div>
-            <div class="hc-title">커스텀 인터랙티브 차트</div>
-            <div class="hc-desc">히트맵, 트리맵, 네트워크 그래프, 커스텀 대시보드</div>
-            <div class="hc-count">4클립 · 75분</div>
+          <div class="home-card" onclick="loadClip('p06-ch01-01',null)">
+            <div class="hc-chapter p06">P06 · 포트폴리오 블로그</div>
+            <div class="hc-title">Stitch · Antigravity · 배포</div>
+            <div class="hc-desc">디자인 기획, 포트폴리오 페이지 빌드, 최종 완성 & 배포</div>
+            <div class="hc-count">3클립 (CH01×3)</div>
           </div>
         </div>
 
         <div style="margin-top:20px;padding:16px 20px;background:var(--hover);border-radius:10px;">
           <div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">직무별 권장 경로</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <div><span style="font-size:12px;font-weight:700;color:var(--text-1);">데이터 분석가</span><br><span style="font-size:11.5px;color:var(--text-3);">CH00→01→02→05→06→10→12</span></div>
-            <div><span style="font-size:12px;font-weight:700;color:var(--text-1);">마케터/기획자</span><br><span style="font-size:11.5px;color:var(--text-3);">CH00→01→02→09→11</span></div>
-            <div><span style="font-size:12px;font-weight:700;color:var(--text-1);">PM</span><br><span style="font-size:11.5px;color:var(--text-3);">CH00→01→02→11→10</span></div>
-            <div><span style="font-size:12px;font-weight:700;color:var(--text-1);">개발자/AI 엔지니어</span><br><span style="font-size:11.5px;color:var(--text-3);">CH00→01→02→03→04→05→08→14</span></div>
+            <div><span style="font-size:12px;font-weight:700;color:var(--text-1);">데이터 분석가</span><br><span style="font-size:11.5px;color:var(--text-3);">P01 → P02 → P03 → P05</span></div>
+            <div><span style="font-size:12px;font-weight:700;color:var(--text-1);">마케터/기획자</span><br><span style="font-size:11.5px;color:var(--text-3);">P01 → P02 → P05-CH01·CH02</span></div>
+            <div><span style="font-size:12px;font-weight:700;color:var(--text-1);">PM</span><br><span style="font-size:11.5px;color:var(--text-3);">P01 → P02 → P05-CH03·CH04</span></div>
+            <div><span style="font-size:12px;font-weight:700;color:var(--text-1);">프론트엔드/개발자</span><br><span style="font-size:11.5px;color:var(--text-3);">P01 → P02 → P03 → P04 → P06</span></div>
           </div>
         </div>
       </div>
@@ -1814,7 +1783,7 @@ function expandChapter(ch) {
 }
 
 function collapseAllExcept(keepCh) {
-  ['ch00','ch01','ch02','ch03'].forEach(ch => {
+  ['p01-ch01','p01-ch02','p02-ch01','p02-ch02','p02-ch03','p03-ch01','p03-ch02','p03-ch03','p04-ch01','p05-ch01','p05-ch02','p05-ch03','p05-ch04','p05-ch05','p06-ch01'].forEach(ch => {
     if (ch === keepCh) { expandChapter(ch); return; }
     const clips = document.getElementById('clips-' + ch);
     if (!clips) return;
@@ -1866,7 +1835,8 @@ function renderRoadmap(currentId) {
     const label = document.createElement('span');
     label.className = 'roadmap-chapter-label';
     const badge = document.createElement('span');
-    badge.className = `rmap-badge ${ch.toLowerCase()}`;
+    const partClass = (clips[0].part || ch).toLowerCase();
+    badge.className = `rmap-badge ${partClass}`;
     badge.textContent = ch;
     label.appendChild(badge);
     group.appendChild(label);
@@ -1939,9 +1909,8 @@ function loadClip(id, el) {
   visitedClips.add(id);
   updateProgress();
   updateVisitedMarks();
-  // 해당 챕터 자동 열기
-  const chKey = id.replace(/-\d+$/, '').replace('-','');  // ch00-01 → ch00
-  const chId = id.match(/^(ch\d+)/)?.[1];
+  // 해당 챕터 자동 열기 (p01-ch01-01 → p01-ch01)
+  const chId = id.match(/^(p\d+-ch\d+)/)?.[1];
   if (chId) collapseAllExcept(chId);
 
   // 뷰 전환
@@ -1959,7 +1928,7 @@ function loadClip(id, el) {
   const totalInCh = chClips.length;
 
   // 헤더
-  const chClass = clip.chapter.toLowerCase();
+  const chClass = clip.part ? clip.part.toLowerCase() : 'p01';
   document.getElementById('clip-header-area').innerHTML = `
     <div class="clip-meta">
       <span class="meta-badge chapter ${chClass}">${clip.chapter} · ${clip.chTitle}</span>
