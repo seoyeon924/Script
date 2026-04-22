@@ -6,16 +6,17 @@
 <title>P01-CH01 — 데이터 시각화의 기초 관점 잡기</title>
 <style>
   @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #110F0D;
-    --text: #EDE9E4;
-    --sub: #888580;
-    --dim: #565250;
-    --white: #F0EDE8;
-    --border: #2C2720;
+    --bg: #111111;
+    --text: #F2F2F2;
+    --sub: #888;
+    --dim: #555;
+    --white: #FFF;
+    --border: #282828;
     --p01: #7B6FA0;
   }
 
@@ -32,21 +33,13 @@
   .slide.active { display: flex; }
 
   .tb {
-    height: 48px; min-height: 48px; padding: 0 44px;
+    height: 48px; min-height: 48px;
+    padding: 0 52px;
     display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--border); flex-shrink: 0;
-    background: #100E0C;
   }
-  .tb-left { display: flex; align-items: center; gap: 0; }
-  .tb-divider { width: 1px; height: 18px; background: var(--border); margin: 0 16px; flex-shrink: 0; }
-  .tb-badge-wrap { display: flex; align-items: center; gap: 10px; }
-  .tb-cap { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sub); }
-  .tb-num { font-size: 11px; color: #666; letter-spacing: 0.08em; }
-  .tb-badge {
-    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
-    text-transform: uppercase; padding: 3px 9px; border-radius: 3px;
-    background: rgba(123,111,160,0.15); color: #7B6FA0; flex-shrink: 0;
-  }
+  .tb-cap { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
+  .tb-num { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; }
 
   .body { flex: 1; display: flex; min-height: 0; }
 
@@ -68,8 +61,8 @@
 
   .l-panel {
     width: 38%; border-right: 1px solid var(--border);
-    padding: 52px; display: flex; flex-direction: column; justify-content: space-between;
-    background: rgba(123,111,160,0.03);
+    padding: 52px;
+    display: flex; flex-direction: column; justify-content: space-between;
   }
   .eyebrow { font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--sub); margin-bottom: 20px; }
   .big-title { font-size: 34px; font-weight: 400; color: var(--white); line-height: 1.3; letter-spacing: -0.02em; margin-bottom: 10px; }
@@ -220,17 +213,7 @@
 
     <!-- 상단: FastCampus 로고 + 챕터 정보 -->
     <div style="position:relative;z-index:2;display:flex;align-items:center;gap:0;">
-      <!-- FastCampus 로고 -->
-      <svg width="148" height="44" viewBox="0 0 148 44" xmlns="http://www.w3.org/2000/svg">
-        <defs><clipPath id="fc-s1"><circle cx="22" cy="22" r="22"/></clipPath></defs>
-        <circle cx="22" cy="22" r="22" fill="#F03558"/>
-        <g clip-path="url(#fc-s1)">
-          <rect x="-15" y="5" width="74" height="7" transform="rotate(-38 22 22)" fill="#0F0F0F"/>
-          <rect x="-15" y="23" width="74" height="7" transform="rotate(-38 22 22)" fill="#0F0F0F"/>
-        </g>
-        <text x="50" y="18" font-size="19" font-weight="700" fill="#F0EDE8" font-family="Pretendard,-apple-system,sans-serif">Fast</text>
-        <text x="50" y="40" font-size="19" font-weight="700" fill="#F0EDE8" font-family="Pretendard,-apple-system,sans-serif">campus</text>
-      </svg>
+      <img src="../assets/fastcampuslogo.png" style="height:44px;width:auto;">
       <div style="width:1px;height:18px;background:rgba(240,237,232,0.15);margin:0 18px;flex-shrink:0;"></div>
       <span style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,237,232,0.35);font-weight:400;">P01 · CH01</span>
     </div>
@@ -257,14 +240,8 @@
 <!-- ════ 02 | 결과물 4가지 ════ -->
 <div class="slide" id="s2">
   <div class="tb">
-    <div class="tb-left">
-      <div class="tb-divider"></div>
-      <div class="tb-badge-wrap">
-        <span class="tb-badge">P01 · CH01-01</span>
-        <span class="tb-cap">강의 개요 & 결과물 미리보기</span>
-      </div>
-    </div>
-    <span class="tb-num">02 — 16</span>
+    <span class="tb-cap">강의 개요 &amp; 결과물 미리보기</span>
+    <span class="tb-num">02</span>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -283,7 +260,7 @@
         <line x1="56" y1="42" x2="100" y2="42" stroke="#888" stroke-width="0.7"/>
         <circle cx="78" cy="52" r="8" fill="none" stroke="#666" stroke-width="5"/>
         <circle cx="78" cy="52" r="8" fill="none" stroke="#aaa" stroke-width="5" stroke-dasharray="18 32" stroke-dashoffset="0" transform="rotate(-90 78 52)"/>
-        <circle cx="78" cy="52" r="4" fill="#100E0C"/>
+        <circle cx="78" cy="52" r="4" fill="#111111"/>
         <rect x="108" y="28" width="48" height="32" rx="2" fill="none" stroke="#888" stroke-width="1"/>
         <line x1="108" y1="34" x2="156" y2="34" stroke="#888" stroke-width="0.7"/>
         <polyline points="114,52 124,44 134,48 144,38 152,42" fill="none" stroke="#aaa" stroke-width="1.5"/>
@@ -355,14 +332,8 @@
 <!-- ════ 03 | 수강 대상 ════ -->
 <div class="slide" id="s3">
   <div class="tb">
-    <div class="tb-left">
-      <div class="tb-divider"></div>
-      <div class="tb-badge-wrap">
-        <span class="tb-badge">P01 · CH01-01</span>
-        <span class="tb-cap">강의 개요 & 결과물 미리보기</span>
-      </div>
-    </div>
-    <span class="tb-num">03 — 16</span>
+    <span class="tb-cap">강의 개요 &amp; 결과물 미리보기</span>
+    <span class="tb-num">03</span>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -442,14 +413,8 @@
 <!-- ════ 04 | 전체 커리큘럼 ════ -->
 <div class="slide" id="s4">
   <div class="tb">
-    <div class="tb-left">
-      <div class="tb-divider"></div>
-      <div class="tb-badge-wrap">
-        <span class="tb-badge">P01 · CH01-01</span>
-        <span class="tb-cap">강의 개요 & 결과물 미리보기</span>
-      </div>
-    </div>
-    <span class="tb-num">04 — 16</span>
+    <span class="tb-cap">강의 개요 &amp; 결과물 미리보기</span>
+    <span class="tb-num">04</span>
   </div>
   <div class="body">
     <div class="l-panel" style="width:28%;">
@@ -513,19 +478,24 @@
 <div class="slide" id="s5">
   <div class="body sec-break">
     <div style="margin-bottom:24px;">
-      <svg width="64" height="48" viewBox="0 0 64 48">
-        <rect x="2" y="12" width="22" height="24" rx="2" fill="none" stroke="#444" stroke-width="1.2"/>
-        <line x1="6" y1="20" x2="20" y2="20" stroke="#444" stroke-width="1"/>
-        <line x1="6" y1="25" x2="16" y2="25" stroke="#444" stroke-width="1"/>
-        <line x1="6" y1="30" x2="18" y2="30" stroke="#444" stroke-width="1"/>
-        <text x="27" y="27" font-size="9" fill="#333" font-family="monospace">→</text>
-        <rect x="34" y="8" width="28" height="32" rx="2" fill="none" stroke="#777" stroke-width="1.2"/>
-        <line x1="34" y1="16" x2="62" y2="16" stroke="#777" stroke-width="0.8"/>
-        <circle cx="38" cy="12" r="1.2" fill="#666"/>
-        <circle cx="42" cy="12" r="1.2" fill="#666"/>
-        <rect x="38" y="22" width="7" height="7" rx="0.5" fill="#2a2a2a"/>
-        <rect x="48" y="22" width="10" height="7" rx="0.5" fill="#333"/>
-        <line x1="38" y1="34" x2="56" y2="34" stroke="#666" stroke-width="0.8" stroke-dasharray="2 2"/>
+      <svg width="72" height="60" viewBox="0 0 72 60">
+        <!-- CSV file icon -->
+        <rect x="2" y="4" width="28" height="36" rx="2" fill="none" stroke="#444" stroke-width="1.2"/>
+        <line x1="2" y1="14" x2="30" y2="14" stroke="#333" stroke-width="0.8"/>
+        <line x1="8" y1="20" x2="24" y2="20" stroke="#333" stroke-width="1"/>
+        <line x1="8" y1="26" x2="22" y2="26" stroke="#333" stroke-width="1"/>
+        <line x1="8" y1="32" x2="20" y2="32" stroke="#333" stroke-width="1"/>
+        <!-- arrow -->
+        <line x1="34" y1="22" x2="42" y2="22" stroke="#333" stroke-width="1.2"/>
+        <polygon points="42,18 50,22 42,26" fill="#333"/>
+        <!-- dashboard icon -->
+        <rect x="52" y="4" width="18" height="14" rx="1.5" fill="none" stroke="#666" stroke-width="1.2"/>
+        <rect x="52" y="22" width="8" height="18" rx="1.5" fill="none" stroke="#555" stroke-width="1.2"/>
+        <rect x="62" y="22" width="8" height="18" rx="1.5" fill="none" stroke="#555" stroke-width="1.2"/>
+        <line x1="55" y1="29" x2="63" y2="25" stroke="#777" stroke-width="1"/>
+        <!-- recycle arrow bottom -->
+        <path d="M52 46 Q36 56 20 46" fill="none" stroke="#444" stroke-width="1" stroke-dasharray="3 2"/>
+        <polygon points="18,43 20,47 23,44" fill="#444"/>
       </svg>
     </div>
     <div class="sec-label">Clip 02</div>
@@ -537,14 +507,8 @@
 <!-- ════ 06 | 수작업 워크플로우 ════ -->
 <div class="slide" id="s6">
   <div class="tb">
-    <div class="tb-left">
-      <div class="tb-divider"></div>
-      <div class="tb-badge-wrap">
-        <span class="tb-badge">P01 · CH01-02</span>
-        <span class="tb-cap">왜 AI + 데이터 시각화인가</span>
-      </div>
-    </div>
-    <span class="tb-num">06 — 16</span>
+    <span class="tb-cap">왜 AI + 데이터 시각화인가</span>
+    <span class="tb-num">06</span>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -553,54 +517,57 @@
         <div class="big-title">반복되는<br>5단계 사이클</div>
         <div class="body-text" style="margin-top:16px;">5개 채널 CSV → 집계 → 차트 → 리포트. 데이터가 바뀌면 처음부터 전부 다시 합니다.</div>
       </div>
-      <svg width="180" height="130" viewBox="0 0 180 130" style="opacity:0.65;">
-        <circle cx="90" cy="60" r="45" fill="none" stroke="#2C2720" stroke-width="1.5" stroke-dasharray="5 3"/>
-        <circle cx="90" cy="15" r="6" fill="#1C1A18" stroke="#555" stroke-width="1.2"/>
-        <circle cx="133" cy="42" r="6" fill="#1C1A18" stroke="#555" stroke-width="1.2"/>
-        <circle cx="117" cy="97" r="6" fill="#1C1A18" stroke="#555" stroke-width="1.2"/>
-        <circle cx="63" cy="97" r="6" fill="#1C1A18" stroke="#555" stroke-width="1.2"/>
-        <circle cx="47" cy="42" r="6" fill="#1C1A18" stroke="#555" stroke-width="1.2"/>
-        <text x="90" y="9" text-anchor="middle" font-size="8" fill="#777" font-family="Pretendard,sans-serif">CSV</text>
-        <text x="148" y="44" text-anchor="start" font-size="8" fill="#777" font-family="Pretendard,sans-serif">집계</text>
-        <text x="120" y="112" text-anchor="middle" font-size="8" fill="#777" font-family="Pretendard,sans-serif">차트</text>
-        <text x="58" y="112" text-anchor="middle" font-size="8" fill="#777" font-family="Pretendard,sans-serif">리포트</text>
-        <text x="14" y="44" text-anchor="start" font-size="8" fill="#777" font-family="Pretendard,sans-serif">확인</text>
-        <path d="M63 97 Q20 120 20 60 Q20 10 90 10" fill="none" stroke="#804040" stroke-width="0.8" stroke-dasharray="2 2"/>
-        <polygon points="88,10 94,7 92,13" fill="#804040" opacity="0.6"/>
-        <text x="6" y="70" font-size="7" fill="#804040" font-family="Pretendard,sans-serif" opacity="0.6">재작업</text>
-      </svg>
+      <div style="font-size:12px;color:#555;line-height:1.7;margin-top:8px;">
+        매번 반복 · 오류 발생 시 전 단계 롤백<br>
+        숫자 하나 바뀌면 4단계 전체 재작업
+      </div>
     </div>
-    <div style="flex:1;display:flex;flex-direction:column;">
-      <div class="pipe-row">
-        <div class="pipe-n">01</div>
-        <div class="pipe-name">CSV 다운로드</div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-desc">채널별 파일을 각각 수동 다운로드</div>
-      </div>
-      <div class="pipe-row">
-        <div class="pipe-n">02</div>
-        <div class="pipe-name">Excel 집계</div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-desc">VLOOKUP 합치기 · 피벗 테이블 · 수식 오류 디버깅</div>
-      </div>
-      <div class="pipe-row">
-        <div class="pipe-n">03</div>
-        <div class="pipe-name">차트 제작</div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-desc">수동으로 그리고 색상·폰트 맞추기</div>
-      </div>
-      <div class="pipe-row">
-        <div class="pipe-n">04</div>
-        <div class="pipe-name">리포트 정리</div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-desc">복사·붙여넣기 → 레이아웃 조정</div>
-      </div>
-      <div class="pipe-row" style="border-bottom:none;">
-        <div class="pipe-n" style="color:#665;">⚠</div>
-        <div class="pipe-name" style="color:#77736E;">데이터 수정 시</div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-desc" style="color:#665060;">숫자가 바뀌면 1번부터 전체 반복</div>
-      </div>
+    <!-- Right panel: horizontal step-arrow SVG -->
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:40px 32px;">
+      <svg width="780" height="440" viewBox="0 0 780 440" style="display:block;flex-shrink:0;">
+        <!-- Step 01 -->
+        <rect x="10" y="120" width="120" height="88" rx="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+        <text x="70" y="142" text-anchor="middle" font-size="10" fill="#555" font-family="Pretendard,sans-serif" letter-spacing="0.08em">STEP 01</text>
+        <text x="70" y="168" text-anchor="middle" font-size="14" font-weight="500" fill="#F2F2F2" font-family="Pretendard,sans-serif">CSV</text>
+        <text x="70" y="188" text-anchor="middle" font-size="12" fill="#888" font-family="Pretendard,sans-serif">다운로드</text>
+        <!-- Arrow 1 -->
+        <line x1="132" y1="164" x2="154" y2="164" stroke="#333" stroke-width="1.5"/>
+        <polygon points="154,159 164,164 154,169" fill="#333"/>
+        <!-- Step 02 -->
+        <rect x="166" y="120" width="120" height="88" rx="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+        <text x="226" y="142" text-anchor="middle" font-size="10" fill="#555" font-family="Pretendard,sans-serif" letter-spacing="0.08em">STEP 02</text>
+        <text x="226" y="168" text-anchor="middle" font-size="14" font-weight="500" fill="#F2F2F2" font-family="Pretendard,sans-serif">Excel</text>
+        <text x="226" y="188" text-anchor="middle" font-size="12" fill="#888" font-family="Pretendard,sans-serif">집계</text>
+        <!-- Arrow 2 -->
+        <line x1="288" y1="164" x2="310" y2="164" stroke="#333" stroke-width="1.5"/>
+        <polygon points="310,159 320,164 310,169" fill="#333"/>
+        <!-- Step 03 -->
+        <rect x="322" y="120" width="120" height="88" rx="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+        <text x="382" y="142" text-anchor="middle" font-size="10" fill="#555" font-family="Pretendard,sans-serif" letter-spacing="0.08em">STEP 03</text>
+        <text x="382" y="168" text-anchor="middle" font-size="14" font-weight="500" fill="#F2F2F2" font-family="Pretendard,sans-serif">차트</text>
+        <text x="382" y="188" text-anchor="middle" font-size="12" fill="#888" font-family="Pretendard,sans-serif">제작</text>
+        <!-- Arrow 3 -->
+        <line x1="444" y1="164" x2="466" y2="164" stroke="#333" stroke-width="1.5"/>
+        <polygon points="466,159 476,164 466,169" fill="#333"/>
+        <!-- Step 04 -->
+        <rect x="478" y="120" width="120" height="88" rx="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+        <text x="538" y="142" text-anchor="middle" font-size="10" fill="#555" font-family="Pretendard,sans-serif" letter-spacing="0.08em">STEP 04</text>
+        <text x="538" y="168" text-anchor="middle" font-size="14" font-weight="500" fill="#F2F2F2" font-family="Pretendard,sans-serif">리포트</text>
+        <text x="538" y="188" text-anchor="middle" font-size="12" fill="#888" font-family="Pretendard,sans-serif">정리</text>
+        <!-- Arrow 4 -->
+        <line x1="600" y1="164" x2="622" y2="164" stroke="#555" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <polygon points="622,159 632,164 622,169" fill="#555"/>
+        <!-- Repeat/Warning box -->
+        <rect x="634" y="100" width="130" height="128" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="1.2"/>
+        <text x="699" y="128" text-anchor="middle" font-size="18" fill="#666" font-family="Pretendard,sans-serif">⚠</text>
+        <text x="699" y="152" text-anchor="middle" font-size="13" font-weight="500" fill="#888" font-family="Pretendard,sans-serif">데이터 수정</text>
+        <text x="699" y="172" text-anchor="middle" font-size="11" fill="#555" font-family="Pretendard,sans-serif">→ 처음부터</text>
+        <text x="699" y="192" text-anchor="middle" font-size="11" fill="#444" font-family="Pretendard,sans-serif">재작업</text>
+        <!-- Recycle arc: from warning box back to step 01 -->
+        <path d="M 699 228 Q 699 300 390 320 Q 80 340 70 208" fill="none" stroke="#444" stroke-width="1.2" stroke-dasharray="6 4"/>
+        <polygon points="67,208 70,220 76,212" fill="#444"/>
+        <text x="390" y="342" text-anchor="middle" font-size="11" fill="#444" font-family="Pretendard,sans-serif" letter-spacing="0.06em">숫자 하나 바뀌면 1단계부터 반복</text>
+      </svg>
     </div>
   </div>
 </div>
@@ -608,14 +575,8 @@
 <!-- ════ 07 | Claude Code 워크플로우 ════ -->
 <div class="slide" id="s7">
   <div class="tb">
-    <div class="tb-left">
-      <div class="tb-divider"></div>
-      <div class="tb-badge-wrap">
-        <span class="tb-badge">P01 · CH01-02</span>
-        <span class="tb-cap">왜 AI + 데이터 시각화인가</span>
-      </div>
-    </div>
-    <span class="tb-num">07 — 16</span>
+    <span class="tb-cap">왜 AI + 데이터 시각화인가</span>
+    <span class="tb-num">07</span>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -629,44 +590,56 @@
           <div class="code-hi"> 인터랙티브 대시보드로 만들어줘."</div>
         </div>
       </div>
-      <svg width="200" height="48" viewBox="0 0 200 48">
-        <rect x="0" y="10" width="50" height="26" rx="2" fill="none" stroke="#333" stroke-width="1"/>
-        <text x="25" y="27" font-size="10" fill="#777" text-anchor="middle" font-family="monospace">Read</text>
-        <line x1="52" y1="23" x2="72" y2="23" stroke="#333" stroke-width="1"/>
-        <polygon points="72,19 80,23 72,27" fill="#333"/>
-        <rect x="82" y="10" width="52" height="26" rx="2" fill="none" stroke="#333" stroke-width="1"/>
-        <text x="108" y="27" font-size="10" fill="#777" text-anchor="middle" font-family="monospace">Write</text>
-        <line x1="136" y1="23" x2="154" y2="23" stroke="#333" stroke-width="1"/>
-        <polygon points="154,19 162,23 154,27" fill="#444"/>
-        <rect x="164" y="10" width="36" height="26" rx="2" fill="#1A1C20" stroke="#3A3E48" stroke-width="1"/>
-        <text x="182" y="27" font-size="10" fill="#aaa" text-anchor="middle" font-family="monospace">Bash</text>
-      </svg>
+      <div style="font-size:12px;color:#555;line-height:1.8;">
+        파일 업로드 불필요<br>
+        오류 발생 시 자동 수정<br>
+        결과 파일 자동 저장
+      </div>
     </div>
-    <div style="flex:1;display:flex;flex-direction:column;">
-      <div class="pipe-row">
-        <div class="pipe-n">01</div>
-        <div class="pipe-name">파일 읽기</div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-desc">파일시스템에서 CSV 직접 읽기 (업로드 불필요)</div>
-      </div>
-      <div class="pipe-row">
-        <div class="pipe-n">02</div>
-        <div class="pipe-name">코드 작성</div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-desc">pandas 집계 코드 작성 · ROI/CTR/CVR 계산</div>
-      </div>
-      <div class="pipe-row">
-        <div class="pipe-n">03</div>
-        <div class="pipe-name">실행</div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-desc">스크립트 직접 실행 · 오류 발생 시 자동 수정</div>
-      </div>
-      <div class="pipe-row" style="border-bottom:none;">
-        <div class="pipe-n">04</div>
-        <div class="pipe-name">저장</div>
-        <div class="pipe-arrow">→</div>
-        <div class="pipe-desc">charts/dashboard.html 인터랙티브 대시보드 저장</div>
-      </div>
+    <!-- Right panel: 2-row flow diagram -->
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:40px 32px;">
+      <svg width="720" height="400" viewBox="0 0 720 400" style="display:block;flex-shrink:0;">
+        <!-- Row label -->
+        <text x="20" y="88" font-size="10" fill="#444" font-family="Pretendard,sans-serif" letter-spacing="0.1em">PIPELINE</text>
+        <!-- Step 01: 자연어 입력 -->
+        <rect x="20" y="100" width="140" height="90" rx="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+        <text x="90" y="126" text-anchor="middle" font-size="10" fill="#555" font-family="Pretendard,sans-serif" letter-spacing="0.08em">STEP 01</text>
+        <text x="90" y="152" text-anchor="middle" font-size="13" font-weight="500" fill="#F2F2F2" font-family="Pretendard,sans-serif">자연어 입력</text>
+        <text x="90" y="172" text-anchor="middle" font-size="11" fill="#666" font-family="Pretendard,sans-serif">채팅 패널 요청</text>
+        <!-- Arrow -->
+        <line x1="162" y1="145" x2="180" y2="145" stroke="#333" stroke-width="1.5"/>
+        <polygon points="180,140 190,145 180,150" fill="#333"/>
+        <!-- Step 02: 파일 읽기 -->
+        <rect x="192" y="100" width="140" height="90" rx="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+        <text x="262" y="126" text-anchor="middle" font-size="10" fill="#555" font-family="Pretendard,sans-serif" letter-spacing="0.08em">STEP 02</text>
+        <text x="262" y="152" text-anchor="middle" font-size="13" font-weight="500" fill="#F2F2F2" font-family="Pretendard,sans-serif">파일 읽기</text>
+        <text x="262" y="172" text-anchor="middle" font-size="11" fill="#666" font-family="Pretendard,sans-serif">CSV 직접 접근</text>
+        <!-- Arrow -->
+        <line x1="334" y1="145" x2="352" y2="145" stroke="#333" stroke-width="1.5"/>
+        <polygon points="352,140 362,145 352,150" fill="#333"/>
+        <!-- Step 03: 코드 작성 & 실행 -->
+        <rect x="364" y="100" width="160" height="90" rx="6" fill="#1e1e1e" stroke="#444" stroke-width="1.2"/>
+        <text x="444" y="126" text-anchor="middle" font-size="10" fill="#666" font-family="Pretendard,sans-serif" letter-spacing="0.08em">STEP 03</text>
+        <text x="444" y="150" text-anchor="middle" font-size="13" font-weight="500" fill="#F2F2F2" font-family="Pretendard,sans-serif">코드 작성 &amp; 실행</text>
+        <text x="444" y="170" text-anchor="middle" font-size="11" fill="#666" font-family="Pretendard,sans-serif">오류 시 자동 수정</text>
+        <!-- Arrow -->
+        <line x1="526" y1="145" x2="544" y2="145" stroke="#333" stroke-width="1.5"/>
+        <polygon points="544,140 554,145 544,150" fill="#333"/>
+        <!-- Step 04: 결과 저장 -->
+        <rect x="556" y="100" width="144" height="90" rx="6" fill="#1a1a1a" stroke="#7B6FA0" stroke-width="1.2"/>
+        <text x="628" y="126" text-anchor="middle" font-size="10" fill="#7B6FA0" font-family="Pretendard,sans-serif" letter-spacing="0.08em">STEP 04</text>
+        <text x="628" y="152" text-anchor="middle" font-size="13" font-weight="500" fill="#F2F2F2" font-family="Pretendard,sans-serif">결과 저장</text>
+        <text x="628" y="172" text-anchor="middle" font-size="11" fill="#888" font-family="Pretendard,sans-serif">dashboard.html</text>
+
+        <!-- Comparison row: Before vs After -->
+        <line x1="20" y1="240" x2="700" y2="240" stroke="#222" stroke-width="1"/>
+        <text x="20" y="270" font-size="11" fill="#444" font-family="Pretendard,sans-serif" letter-spacing="0.06em">수작업</text>
+        <text x="20" y="290" font-size="11" fill="#555" font-family="Pretendard,sans-serif">CSV 다운로드 → Excel 집계 → 차트 제작 → 리포트 → ⚠ 재작업</text>
+        <line x1="20" y1="310" x2="700" y2="310" stroke="#1e1e1e" stroke-width="1"/>
+        <text x="20" y="340" font-size="11" fill="#888" font-family="Pretendard,sans-serif" letter-spacing="0.06em">Claude Code</text>
+        <text x="20" y="360" font-size="11" fill="#F2F2F2" font-family="Pretendard,sans-serif">자연어 요청 한 번 → 파일 읽기 → 코드 실행 → 대시보드 완성</text>
+        <text x="620" y="360" font-size="10" fill="#7B6FA0" font-family="Pretendard,sans-serif" text-anchor="end">자동화</text>
+      </svg>
     </div>
   </div>
 </div>
@@ -674,14 +647,8 @@
 <!-- ════ 08 | ChatGPT vs Claude Code ════ -->
 <div class="slide" id="s8">
   <div class="tb">
-    <div class="tb-left">
-      <div class="tb-divider"></div>
-      <div class="tb-badge-wrap">
-        <span class="tb-badge">P01 · CH01-02</span>
-        <span class="tb-cap">왜 AI + 데이터 시각화인가</span>
-      </div>
-    </div>
-    <span class="tb-num">08 — 16</span>
+    <span class="tb-cap">왜 AI + 데이터 시각화인가</span>
+    <span class="tb-num">08</span>
   </div>
   <div class="body">
     <div style="flex:1;padding:44px 56px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--border);">
@@ -701,6 +668,16 @@
           <div style="font-size:14px;color:#444;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--dim);">—</span>반복 작업마다 새로 설명</div>
         </div>
       </div>
+      <!-- connector SVG -->
+      <svg width="180" height="48" viewBox="0 0 180 48" style="margin-top:32px;opacity:0.3;">
+        <rect x="0" y="10" width="52" height="28" rx="3" fill="none" stroke="#333" stroke-width="1"/>
+        <text x="26" y="28" font-size="9" fill="#666" text-anchor="middle" font-family="monospace">대화</text>
+        <line x1="54" y1="24" x2="78" y2="24" stroke="#333" stroke-width="1"/>
+        <text x="90" y="28" font-size="14" fill="#333" text-anchor="middle">≠</text>
+        <line x1="102" y1="24" x2="126" y2="24" stroke="#333" stroke-width="1"/>
+        <rect x="128" y="10" width="52" height="28" rx="3" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+        <text x="154" y="28" font-size="9" fill="#888" text-anchor="middle" font-family="monospace">실행</text>
+      </svg>
     </div>
     <div style="flex:1;padding:44px 56px;display:flex;flex-direction:column;justify-content:space-between;">
       <div>
@@ -730,15 +707,22 @@
 <div class="slide" id="s9">
   <div class="body sec-break">
     <div style="margin-bottom:24px;">
-      <svg width="56" height="48" viewBox="0 0 56 48">
-        <line x1="4" y1="44" x2="52" y2="44" stroke="#555" stroke-width="1.2"/>
-        <line x1="4" y1="44" x2="4" y2="6" stroke="#555" stroke-width="1.2"/>
-        <rect x="8" y="28" width="8" height="16" rx="1" fill="#333"/>
-        <rect x="19" y="18" width="8" height="26" rx="1" fill="#555"/>
-        <rect x="30" y="22" width="8" height="22" rx="1" fill="#444"/>
-        <rect x="41" y="30" width="8" height="14" rx="1" fill="#333"/>
-        <polyline points="12,24 23,14 34,18 45,26" fill="none" stroke="#aaa" stroke-width="1.5"/>
-        <circle cx="45" cy="26" r="3" fill="#F0EDE8"/>
+      <svg width="64" height="56" viewBox="0 0 64 56">
+        <!-- axes -->
+        <line x1="8" y1="48" x2="58" y2="48" stroke="#555" stroke-width="1.2"/>
+        <line x1="8" y1="48" x2="8" y2="8" stroke="#555" stroke-width="1.2"/>
+        <!-- bars -->
+        <rect x="12" y="32" width="8" height="16" rx="1" fill="#333"/>
+        <rect x="23" y="22" width="8" height="26" rx="1" fill="#555"/>
+        <rect x="34" y="26" width="8" height="22" rx="1" fill="#444"/>
+        <rect x="45" y="34" width="8" height="14" rx="1" fill="#333"/>
+        <!-- highlight bar -->
+        <rect x="23" y="22" width="8" height="26" rx="1" fill="#F2F2F2"/>
+        <!-- trend line -->
+        <polyline points="16,28 27,18 38,22 49,30" fill="none" stroke="#aaa" stroke-width="1.5"/>
+        <circle cx="27" cy="18" r="3" fill="#F0EDE8"/>
+        <!-- label -->
+        <text x="27" y="14" font-size="7" fill="#888" text-anchor="middle" font-family="Pretendard,sans-serif">▲ 강조</text>
       </svg>
     </div>
     <div class="sec-label">Clip 03</div>
@@ -750,14 +734,8 @@
 <!-- ════ 10 | 차트 유형 가이드 ════ -->
 <div class="slide" id="s10">
   <div class="tb">
-    <div class="tb-left">
-      <div class="tb-divider"></div>
-      <div class="tb-badge-wrap">
-        <span class="tb-badge">P01 · CH01-03</span>
-        <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
-      </div>
-    </div>
-    <span class="tb-num">10 — 16</span>
+    <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
+    <span class="tb-num">10</span>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -859,14 +837,8 @@
 <!-- ════ 11 | 원칙 2&3 ════ -->
 <div class="slide" id="s11">
   <div class="tb">
-    <div class="tb-left">
-      <div class="tb-divider"></div>
-      <div class="tb-badge-wrap">
-        <span class="tb-badge">P01 · CH01-03</span>
-        <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
-      </div>
-    </div>
-    <span class="tb-num">11 — 16</span>
+    <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
+    <span class="tb-num">11</span>
   </div>
   <div class="body">
     <div class="principle-col">
@@ -919,14 +891,8 @@
 <!-- ════ 12 | 원칙 4&5 ════ -->
 <div class="slide" id="s12">
   <div class="tb">
-    <div class="tb-left">
-      <div class="tb-divider"></div>
-      <div class="tb-badge-wrap">
-        <span class="tb-badge">P01 · CH01-03</span>
-        <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
-      </div>
-    </div>
-    <span class="tb-num">12 — 16</span>
+    <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
+    <span class="tb-num">12</span>
   </div>
   <div class="body">
     <div class="principle-col">
@@ -1006,17 +972,20 @@
 <div class="slide" id="s13">
   <div class="body sec-break">
     <div style="margin-bottom:24px;">
-      <svg width="56" height="48" viewBox="0 0 56 48">
-        <rect x="2" y="2" width="52" height="44" rx="3" fill="none" stroke="#2C2720" stroke-width="1.2"/>
-        <line x1="2" y1="12" x2="54" y2="12" stroke="#2C2720" stroke-width="1"/>
-        <circle cx="8" cy="7" r="1.5" fill="#333"/>
-        <circle cx="14" cy="7" r="1.5" fill="#333"/>
-        <rect x="6" y="16" width="14" height="10" rx="1" fill="#1E1C18" stroke="#2C2720"/>
-        <rect x="22" y="16" width="14" height="10" rx="1" fill="#252320" stroke="#333"/>
-        <rect x="38" y="16" width="14" height="10" rx="1" fill="#1E1C18" stroke="#2C2720"/>
-        <rect x="6" y="30" width="44" height="14" rx="1" fill="#1A1815" stroke="#2C2720"/>
-        <polyline points="10,40 18,34 26,37 34,30 42,33 48,31" fill="none" stroke="#aaa" stroke-width="1.5"/>
-        <circle cx="48" cy="31" r="2" fill="#F0EDE8"/>
+      <svg width="64" height="56" viewBox="0 0 64 56">
+        <!-- dashboard mockup -->
+        <rect x="2" y="2" width="60" height="52" rx="3" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <line x1="2" y1="14" x2="62" y2="14" stroke="#2C2720" stroke-width="1"/>
+        <circle cx="8" cy="8" r="1.5" fill="#333"/>
+        <circle cx="14" cy="8" r="1.5" fill="#333"/>
+        <!-- KPI cards -->
+        <rect x="6" y="18" width="16" height="12" rx="1" fill="#1E1C18" stroke="#2C2720"/>
+        <rect x="24" y="18" width="16" height="12" rx="1" fill="#252320" stroke="#333"/>
+        <rect x="42" y="18" width="16" height="12" rx="1" fill="#1E1C18" stroke="#2C2720"/>
+        <!-- chart area -->
+        <rect x="6" y="33" width="52" height="16" rx="1" fill="#1A1815" stroke="#2C2720"/>
+        <polyline points="10,46 18,40 26,43 34,36 42,39 50,34" fill="none" stroke="#aaa" stroke-width="1.5"/>
+        <circle cx="50" cy="34" r="2" fill="#F0EDE8"/>
       </svg>
     </div>
     <div class="sec-label">Clip 04</div>
@@ -1028,14 +997,8 @@
 <!-- ════ 14 | 쇼케이스 ════ -->
 <div class="slide" id="s14">
   <div class="tb">
-    <div class="tb-left">
-      <div class="tb-divider"></div>
-      <div class="tb-badge-wrap">
-        <span class="tb-badge">P01 · CH01-04</span>
-        <span class="tb-cap">비즈니스 데이터 시각화 사례 미리보기</span>
-      </div>
-    </div>
-    <span class="tb-num">14 — 16</span>
+    <span class="tb-cap">비즈니스 데이터 시각화 사례 미리보기</span>
+    <span class="tb-num">14</span>
   </div>
   <div class="body">
     <div class="showcase-grid">
@@ -1137,14 +1100,8 @@
 <!-- ════ 15 | 챕터 요약 ════ -->
 <div class="slide" id="s15">
   <div class="tb">
-    <div class="tb-left">
-      <div class="tb-divider"></div>
-      <div class="tb-badge-wrap">
-        <span class="tb-badge">P01 · CH01</span>
-        <span class="tb-cap">챕터 요약</span>
-      </div>
-    </div>
-    <span class="tb-num">15 — 16</span>
+    <span class="tb-cap">챕터 요약</span>
+    <span class="tb-num">15</span>
   </div>
   <div class="body">
     <div class="takeaway-grid" style="grid-template-columns:1fr 1fr 1fr 1fr;">
@@ -1249,11 +1206,12 @@
   const CLIP_MAP = { 1:0,2:0,3:0,4:0, 5:1,6:1,7:1,8:1, 9:2,10:2,11:2,12:2, 13:3,14:3,15:3,16:3 };
   let cur = 1;
 
-  // FastCampus 로고를 모든 .tb 좌측에 삽입 (고유 clipPath ID 사용)
-  let _fcId = 0;
-  document.querySelectorAll('.tb-left').forEach(el => {
-    const uid = `fc${++_fcId}`;
-    el.insertAdjacentHTML('afterbegin', `<svg width="97" height="26" viewBox="0 0 97 26" style="flex-shrink:0;" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="${uid}"><circle cx="13" cy="13" r="13"/></clipPath></defs><circle cx="13" cy="13" r="13" fill="#F03558"/><g clip-path="url(#${uid})"><rect x="-10" y="2" width="46" height="4.5" transform="rotate(-38 13 13)" fill="#0F0F0F"/><rect x="-10" y="15" width="46" height="4.5" transform="rotate(-38 13 13)" fill="#0F0F0F"/></g><text x="30" y="11" font-size="11" font-weight="700" fill="#F0EDE8" font-family="Pretendard,-apple-system,sans-serif">Fast</text><text x="30" y="24" font-size="11" font-weight="700" fill="#F0EDE8" font-family="Pretendard,-apple-system,sans-serif">campus</text></svg>`);
+  // FastCampus 로고를 모든 .tb 좌측에 삽입
+  document.querySelectorAll('.tb').forEach(tb => {
+    const cap = tb.querySelector('.tb-cap');
+    if (cap) {
+      cap.insertAdjacentHTML('beforebegin', '<img src="../assets/fastcampuslogo.png" style="height:22px;width:auto;flex-shrink:0;margin-right:14px;">');
+    }
   });
 
   function scale() {
