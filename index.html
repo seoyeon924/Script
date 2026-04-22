@@ -230,6 +230,15 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 /* 클립 헤더 */
 .clip-header { margin-bottom: 28px; }
 .clip-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.slide-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 11px; border-radius: 5px; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.05em; background: #1C1A18; color: #E8E5DF;
+  border: 1px solid #3A3832; cursor: pointer; text-decoration: none;
+  transition: background 0.15s;
+}
+.slide-btn:hover { background: #2C2A28; }
+.slide-btn::before { content: '▶'; font-size: 8px; opacity: 0.6; }
 .meta-badge {
   display: inline-flex; align-items: center; padding: 3px 9px;
   border-radius: 4px; font-size: 10.5px; font-weight: 700;
@@ -1940,10 +1949,20 @@ function loadClip(id, el) {
 
   // 헤더
   const chClass = clip.part ? clip.part.toLowerCase() : 'p01';
+  // 슬라이드 파일 맵 (챕터 → 슬라이드 HTML 경로)
+  const SLIDE_MAP = {
+    'p01-ch01': 'P01-CH01/P01-CH01-slides.html',
+  };
+  const slidePath = SLIDE_MAP[chId] || null;
+  const slideBtnHtml = slidePath
+    ? `<a class="slide-btn" href="${slidePath}" target="_blank">슬라이드 열기</a>`
+    : '';
+
   document.getElementById('clip-header-area').innerHTML = `
     <div class="clip-meta">
       <span class="meta-badge chapter ${chClass}">${clip.chapter} · ${clip.chTitle}</span>
       <span class="meta-badge time">${clip.time}</span>
+      ${slideBtnHtml}
     </div>
     <div class="clip-title-h">${clip.title}</div>
     <div class="clip-pos">${clip.chapter} · ${posInCh} / ${totalInCh}</div>
