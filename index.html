@@ -63,6 +63,9 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 
 /* ─── SIDEBAR ─── */
 #sidebar { width: 280px; flex-shrink: 0; background: var(--sidebar); border-right: 1px solid var(--line); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+.nav-logo { padding: 16px 18px 12px; border-bottom: 1px solid var(--line); flex-shrink: 0; }
+.logo-text { display: block; font-size: 13px; font-weight: 700; color: var(--text-1); line-height: 1.3; }
+.logo-sub { display: block; font-size: 11px; color: var(--text-3); margin-top: 2px; }
 .sidebar-header { padding: 20px 18px 14px; border-bottom: 1px solid var(--line); }
 .sidebar-header .brand { font-size: 12px; font-weight: 700; color: var(--text-3); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
 .sidebar-header .title { font-size: 14.5px; font-weight: 700; color: var(--text-1); line-height: 1.35; }
@@ -72,8 +75,9 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 .progress-label { font-size: 10.5px; color: var(--text-3); margin-bottom: 5px; display: flex; justify-content: space-between; }
 .progress-bar { height: 3px; background: var(--line); border-radius: 2px; }
 .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+.nav-progress { padding: 12px 18px; border-top: 1px solid var(--line); flex-shrink: 0; }
 
-#nav { flex: 1; overflow-y: auto; padding: 8px 0 32px; }
+#nav { flex: 1; overflow-y: auto; padding: 8px 0 16px; }
 
 .chapter-label {
   padding: 6px 10px 6px 14px;
@@ -90,12 +94,11 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
   font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; flex-shrink: 0;
 }
 .chapter-label .ch-meta {
-  display: flex; align-items: center; gap: 5px;
-  flex: 1; font-size: 10px; font-weight: 500; color: var(--text-3);
-  white-space: nowrap; overflow: hidden;
+  display: none;
 }
 .chapter-label .ch-name {
-  font-size: 11px; font-weight: 700; color: var(--text-2); flex-shrink: 0;
+  font-size: 11px; font-weight: 700; color: var(--text-2);
+  flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .chapter-label .ch-toggle {
   margin-left: auto; font-size: 9px; color: var(--text-3);
@@ -414,7 +417,7 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
     <span class="logo-text">AI 데이터 시각화</span>
     <span class="logo-sub">패스트캠퍼스 강의 스크립트</span>
   </div>
-
+  <div id="nav">
     <div class="nav-divider" style="background:#7B6FA0;opacity:0.3;"></div>
     <div class="part-label" style="color:#7B6FA0;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px 4px;">P01 — 왜 AI 데이터 시각화인가</div>
     <div class="chapter-label" onclick="toggleChapter('p01-ch01')">
@@ -803,6 +806,7 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
       </div>
     </div>
 
+  </div><!-- /#nav -->
   <!-- 진행률 바 -->
   <div class="nav-progress">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
@@ -919,14 +923,21 @@ body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--b
 <script>
 // ─── 커리큘럼 데이터 ───
 const CHAPTER_INFO = {
-  'CH00': { title: '강의 소개 & 준비', desc: '강의 목표, 결과물 프리뷰, 수강생 경로 가이드, 환경 셋업', time: '55분', color: 'ch00' },
-  'CH01': { title: '기본 활용', desc: '클로드 코드 핵심 기능 — 세션, CLAUDE.md, 워크플로우, 슬래시 커맨드, 훅, MCP', time: '122분', color: 'ch01' },
-  'CH02': { title: '서브에이전트 시스템', desc: 'Task 도구로 병렬 처리, 100개 파일 동시 분석, 분할-처리-합산 패턴', time: '60분', color: 'ch02' },
-  'CH03': { title: '에이전트 팀 코워크', desc: '역할 분리 멀티 에이전트, 오케스트레이터-워커 패턴, 5-에이전트 실사례', time: '70분', color: 'ch03' },
-  'CH04': { title: '멀티 환경 활용', desc: '로컬 최적화, GitHub Codespaces, 환경 전환 파이프라인', time: '40분', color: 'ch04' },
-  'CH05': { title: 'MCP & 외부 도구 연동', desc: '데이터베이스 MCP, Slack MCP, DB→분석→발송 완전 자동화', time: '60분', color: 'ch05' },
-  'CH06': { title: '시각화 전략 자동 설계', desc: '차트 선택 원칙, 태블로·파이썬·인터랙티브, 8단계 파이프라인', time: '110분', color: 'ch06' },
-  'CH07': { title: 'D3.js 커스텀 시각화', desc: '히트맵, 트리맵, 네트워크 그래프, 커스텀 대시보드', time: '75분', color: 'ch07' }
+  'P01-CH01': { title: '데이터 시각화의 기초 관점 잡기', desc: 'AI + 시각화 이유, 좋은 차트 원칙, 비즈니스 사례 미리보기', time: '4클립', color: 'p01' },
+  'P01-CH02': { title: '바이브코딩 환경 세팅', desc: 'Claude Code 설치, Antigravity 에디터 연결', time: '2클립', color: 'p01' },
+  'P02-CH01': { title: 'Claude Code 첫 걸음', desc: '첫 세션, 폴더 구조, 파일 읽기/쓰기, CLAUDE.md 설계', time: '4클립', color: 'p02' },
+  'P02-CH02': { title: 'MCP & Skills 도구 확장', desc: 'MCP 개념, Firecrawl, 실전 활용, Skills 설치', time: '4클립', color: 'p02' },
+  'P02-CH03': { title: '데이터 분석 협업 구조 만들기', desc: '서브에이전트, 팀 설정, 병렬 작업, 실무 운영 팁', time: '4클립', color: 'p02' },
+  'P03-CH01': { title: 'Claude Code로 시각화 설계하기', desc: '데이터 구조 분석, KPI 자동 설계, 인사이트 생성, 워크플로우', time: '4클립', color: 'p03' },
+  'P03-CH02': { title: '에이전트 팀 대시보드 자동 생성', desc: '팀 구조 설계, CSV→대시보드 파이프라인, Google Sheets 연동', time: '3클립', color: 'p03' },
+  'P03-CH03': { title: 'OpenClaw 업무 파이프라인 운영', desc: 'OpenClaw + 텔레그램, 대시보드 자동 생성, Agent Manager', time: '3클립', color: 'p03' },
+  'P04-CH01': { title: 'Interactive Data Art', desc: 'D3.js 네트워크 차트, Tableau Extension, 3D Globe', time: '4클립', color: 'p04' },
+  'P05-CH01': { title: '마케팅 대시보드', desc: '캠페인 성과 기획, CLAUDE.md + Skill 제작, 활용 & 인사이트', time: '3클립', color: 'p05' },
+  'P05-CH02': { title: 'A/B 테스트 분석', desc: 'A/B 대시보드 기획, 제작 실습, 활용 & 인사이트', time: '3클립', color: 'p05' },
+  'P05-CH03': { title: 'Data PM Metric 분석 대시보드', desc: 'PM 대시보드 기획, CLAUDE.md + Skill 제작, 활용 & 인사이트', time: '3클립', color: 'p05' },
+  'P05-CH04': { title: '리텐션 & 매출 분석', desc: '리텐션 기획, 제작 실습, 활용 & 인사이트', time: '3클립', color: 'p05' },
+  'P05-CH05': { title: 'HR 대시보드', desc: 'HR 채용 퍼널 기획, 제작 실습, 활용 & 인사이트', time: '3클립', color: 'p05' },
+  'P06-CH01': { title: '시각화 포트폴리오 블로그 만들기', desc: 'Stitch 기획, Antigravity + Claude Code 빌드, 배포', time: '3클립', color: 'p06' },
 };
 
 const CURRICULUM = [
@@ -2881,12 +2892,12 @@ if (window.innerWidth <= 768) {
 
 // ─── 초기화 ───
 updateProgress();
-// 초기: CH00만 열고 나머지 닫기
-['ch01','ch02','ch03','ch04','ch05','ch06','ch07','ch08','ch09','ch10','ch11','ch12','ch13','ch14'].forEach(ch => {
+// 초기: P01-CH01만 열고 나머지 닫기
+['p01-ch02','p02-ch01','p02-ch02','p02-ch03','p03-ch01','p03-ch02','p03-ch03','p04-ch01','p05-ch01','p05-ch02','p05-ch03','p05-ch04','p05-ch05','p06-ch01'].forEach(ch => {
   const clips = document.getElementById('clips-' + ch);
-  const label = clips ? clips.previousElementSibling : null;
+  const lbl = clips ? clips.previousElementSibling : null;
   if (clips) { clips.classList.add('collapsed'); clips.style.maxHeight = '0px'; }
-  if (label) label.classList.add('collapsed');
+  if (lbl) lbl.classList.add('collapsed');
 });
 </script>
 </body>
