@@ -221,10 +221,15 @@
     <!-- 상단: FastCampus 로고 + 챕터 정보 -->
     <div style="position:relative;z-index:2;display:flex;align-items:center;gap:0;">
       <!-- FastCampus 로고 -->
-      <svg width="130" height="26" viewBox="0 0 130 26">
-        <circle cx="13" cy="13" r="13" fill="#F0EDE8"/>
-        <path d="M9 7.5 L9 18.5 L20 13 Z" fill="#0D0B08"/>
-        <text x="30" y="18" font-size="13.5" font-weight="700" fill="#F0EDE8" font-family="Pretendard,-apple-system,sans-serif">fastcampus</text>
+      <svg width="148" height="44" viewBox="0 0 148 44" xmlns="http://www.w3.org/2000/svg">
+        <defs><clipPath id="fc-s1"><circle cx="22" cy="22" r="22"/></clipPath></defs>
+        <circle cx="22" cy="22" r="22" fill="#F03558"/>
+        <g clip-path="url(#fc-s1)">
+          <rect x="-15" y="5" width="74" height="7" transform="rotate(-38 22 22)" fill="#0F0F0F"/>
+          <rect x="-15" y="23" width="74" height="7" transform="rotate(-38 22 22)" fill="#0F0F0F"/>
+        </g>
+        <text x="50" y="18" font-size="19" font-weight="700" fill="#F0EDE8" font-family="Pretendard,-apple-system,sans-serif">Fast</text>
+        <text x="50" y="40" font-size="19" font-weight="700" fill="#F0EDE8" font-family="Pretendard,-apple-system,sans-serif">campus</text>
       </svg>
       <div style="width:1px;height:18px;background:rgba(240,237,232,0.15);margin:0 18px;flex-shrink:0;"></div>
       <span style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,237,232,0.35);font-weight:400;">P01 · CH01</span>
@@ -363,7 +368,7 @@
     <div class="l-panel">
       <div>
         <div class="eyebrow">수강 대상</div>
-        <div class="big-title">코딩 없이<br>시작합니다</div>
+        <div class="big-title">코딩 없이<br>시작</div>
         <div class="body-text" style="margin-top:16px;">Antigravity 에디터 채팅 패널에서 자연어로 입력하면 됩니다. 터미널은 꼭 필요할 때만 씁니다.</div>
       </div>
       <svg width="180" height="100" viewBox="0 0 180 100" style="opacity:0.28;">
@@ -1244,10 +1249,11 @@
   const CLIP_MAP = { 1:0,2:0,3:0,4:0, 5:1,6:1,7:1,8:1, 9:2,10:2,11:2,12:2, 13:3,14:3,15:3,16:3 };
   let cur = 1;
 
-  // FastCampus 로고를 모든 .tb 좌측에 삽입
-  const fcSvg = `<svg width="92" height="18" viewBox="0 0 92 18" style="flex-shrink:0;" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="9" fill="#F0EDE8"/><path d="M6 5 L6 13 L14.5 9 Z" fill="#100E0C"/><text x="22" y="13" font-size="9.5" font-weight="700" fill="#F0EDE8" font-family="Pretendard,-apple-system,sans-serif">fastcampus</text></svg>`;
+  // FastCampus 로고를 모든 .tb 좌측에 삽입 (고유 clipPath ID 사용)
+  let _fcId = 0;
   document.querySelectorAll('.tb-left').forEach(el => {
-    el.insertAdjacentHTML('afterbegin', fcSvg);
+    const uid = `fc${++_fcId}`;
+    el.insertAdjacentHTML('afterbegin', `<svg width="97" height="26" viewBox="0 0 97 26" style="flex-shrink:0;" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="${uid}"><circle cx="13" cy="13" r="13"/></clipPath></defs><circle cx="13" cy="13" r="13" fill="#F03558"/><g clip-path="url(#${uid})"><rect x="-10" y="2" width="46" height="4.5" transform="rotate(-38 13 13)" fill="#0F0F0F"/><rect x="-10" y="15" width="46" height="4.5" transform="rotate(-38 13 13)" fill="#0F0F0F"/></g><text x="30" y="11" font-size="11" font-weight="700" fill="#F0EDE8" font-family="Pretendard,-apple-system,sans-serif">Fast</text><text x="30" y="24" font-size="11" font-weight="700" fill="#F0EDE8" font-family="Pretendard,-apple-system,sans-serif">campus</text></svg>`);
   });
 
   function scale() {
