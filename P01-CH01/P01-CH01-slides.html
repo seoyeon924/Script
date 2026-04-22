@@ -14,11 +14,6 @@
     --text: #F2F2F2;
     --sub: #888;
     --dim: #3A3A3A;
-    --accent: #888888;
-    --green: #35c995;
-    --orange: #FF7B35;
-    --orange-dim: rgba(255,123,53,0.15);
-    --red-dim: rgba(239,125,134,0.08);
     --white: #FFF;
     --border: #282828;
     --p01: #7B6FA0;
@@ -36,24 +31,21 @@
   .slide { position: absolute; inset: 0; display: none; flex-direction: column; }
   .slide.active { display: flex; }
 
-  /* ── Topbar ── */
   .tb {
-    height: 48px; min-height: 48px;
-    padding: 0 52px;
+    height: 48px; min-height: 48px; padding: 0 52px;
     display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--border); flex-shrink: 0;
   }
   .tb-cap { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
   .tb-num { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; }
   .tb-badge {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
     text-transform: uppercase; padding: 3px 9px; border-radius: 3px;
     background: rgba(123,111,160,0.15); color: #7B6FA0;
   }
 
   .body { flex: 1; display: flex; min-height: 0; }
 
-  /* ── Navigation ── */
   .nav {
     position: fixed; bottom: 24px; right: 40px;
     display: flex; align-items: center; gap: 12px; z-index: 100;
@@ -63,205 +55,129 @@
   .nav-btn:hover { color: var(--white); }
   .progress { position: fixed; bottom: 0; left: 0; height: 2px; background: var(--p01); transition: width 0.3s; z-index: 100; }
 
-  /* ── Clip indicator ── */
   .clip-dots {
     position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
     display: flex; gap: 6px; z-index: 100;
   }
-  .clip-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--dim); transition: background 0.2s;
-  }
+  .clip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--dim); transition: background 0.2s; }
   .clip-dot.active { background: var(--p01); }
 
-  /* ── Panels ── */
   .l-panel {
     width: 38%; border-right: 1px solid var(--border);
-    padding: 52px 52px;
-    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 52px 52px; display: flex; flex-direction: column; justify-content: space-between;
   }
-  .l-panel-wide {
-    width: 45%; border-right: 1px solid var(--border);
-    padding: 52px 52px;
-    display: flex; flex-direction: column; justify-content: space-between;
-  }
-  .r-panel { flex: 1; overflow: hidden; }
-  .r-panel-dark { flex: 1; overflow: hidden; background: #0a0a0a; display: flex; align-items: center; justify-content: center; }
-
-  /* ── Text atoms ── */
   .eyebrow { font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--sub); margin-bottom: 20px; }
-  .big-title { font-size: clamp(32px, 4vw, 54px); font-weight: 300; color: var(--white); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 10px; }
-  .body-text { font-size: 15px; color: #C0C8D0; line-height: 1.9; }
-  .sec-label { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 28px; }
-  .sec-title { font-size: clamp(18px, 2.4vw, 28px); font-weight: 300; line-height: 1.55; color: #fff; }
-  .sec-sub { font-size: 13px; color: rgba(255,255,255,0.25); margin-top: 24px; line-height: 1.9; letter-spacing: 0.02em; font-weight: 300; }
+  .big-title { font-size: 34px; font-weight: 400; color: var(--white); line-height: 1.3; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .body-text { font-size: 14px; color: #999; line-height: 1.85; }
 
-  /* ── Row items ── */
-  .row-item { display: flex; align-items: flex-start; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .row-item { display: flex; align-items: flex-start; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--border); }
   .row-item:first-child { border-top: 1px solid var(--border); }
-  .row-label { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; width: 110px; flex-shrink: 0; padding-top: 4px; text-transform: uppercase; }
-  .row-title { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.3; margin-bottom: 3px; }
-  .row-sub { font-size: 13px; color: #C0C8D0; line-height: 1.5; }
+  .row-label { font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; width: 90px; flex-shrink: 0; padding-top: 3px; text-transform: uppercase; }
+  .row-title { font-size: 14px; font-weight: 500; color: var(--white); line-height: 1.3; margin-bottom: 4px; }
+  .row-sub { font-size: 12.5px; color: #777; line-height: 1.6; }
 
-  /* ── Pipeline ── */
-  .pipe-wrap { display: flex; flex-direction: column; gap: 0; }
-  .pipe-row { display: flex; align-items: center; gap: 0; border-bottom: 1px solid var(--border); padding: 18px 52px; }
+  .pipe-wrap { display: flex; flex-direction: column; }
+  .pipe-row { display: flex; align-items: center; border-bottom: 1px solid var(--border); padding: 16px 52px; gap: 0; }
   .pipe-row:first-child { border-top: 1px solid var(--border); }
   .pipe-n { font-size: 11px; color: var(--dim); letter-spacing: 0.06em; width: 28px; flex-shrink: 0; }
-  .pipe-name { font-size: 15px; font-weight: 600; color: var(--white); width: 180px; flex-shrink: 0; }
-  .pipe-arrow { font-size: 12px; color: var(--dim); margin-right: 20px; }
-  .pipe-desc { font-size: 13px; color: #C0C8D0; flex: 1; }
-  .pipe-out { font-size: 11px; color: var(--sub); letter-spacing: 0.05em; width: 200px; text-align: right; flex-shrink: 0; }
+  .pipe-name { font-size: 14px; font-weight: 500; color: var(--white); width: 150px; flex-shrink: 0; }
+  .pipe-arrow { font-size: 11px; color: var(--dim); margin-right: 20px; }
+  .pipe-desc { font-size: 13px; color: #777; flex: 1; line-height: 1.5; }
 
-  /* ── Compare ── */
-  .cmp-half { flex: 1; padding: 52px 48px; display: flex; flex-direction: column; justify-content: space-between; }
-  .cmp-half + .cmp-half { border-left: 1px solid var(--border); }
-  .cmp-label { font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--sub); margin-bottom: 20px; }
-  .cmp-title { font-size: clamp(28px, 3.2vw, 44px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 28px; }
-  .cmp-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-  .cmp-list li { font-size: 15px; color: var(--sub); padding-left: 20px; position: relative; line-height: 1.65; }
-  .cmp-list li::before { content: '—'; position: absolute; left: 0; color: var(--dim); }
-  .cmp-list li.hi { color: var(--text); }
-  .cmp-list li.hi::before { content: '→'; color: var(--green); }
-  .cmp-stat { font-size: clamp(48px, 6vw, 80px); font-weight: 800; letter-spacing: -0.04em; line-height: 1; margin-top: 32px; }
-  .cmp-stat-lbl { font-size: 14px; color: var(--sub); margin-top: 8px; }
-
-  /* ── Agenda rows ── */
   .agenda-rows { flex: 1; display: flex; flex-direction: column; }
-  .agenda-row { flex: 1; display: flex; align-items: center; border-bottom: 1px solid var(--border); gap: 0; padding: 0 52px; }
+  .agenda-row { flex: 1; display: flex; align-items: center; border-bottom: 1px solid var(--border); padding: 0 52px; }
   .agenda-row:first-child { border-top: 1px solid var(--border); }
-  .agenda-part { width: 72px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sub); flex-shrink: 0; }
-  .agenda-title { flex: 1; font-size: 20px; font-weight: 500; color: var(--text); }
-  .agenda-sub { font-size: 12px; color: rgba(255,255,255,0.28); margin-left: 16px; flex-shrink: 0; max-width: 280px; text-align: right; line-height: 1.5; }
+  .agenda-part { width: 64px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sub); flex-shrink: 0; }
+  .agenda-title { flex: 1; font-size: 18px; font-weight: 400; color: var(--text); }
+  .agenda-sub { font-size: 11.5px; color: rgba(255,255,255,0.25); margin-left: 16px; flex-shrink: 0; max-width: 260px; text-align: right; line-height: 1.5; }
 
-  /* ── Code block ── */
-  .code-wrap {
-    background: #0a0a0a; border: 1px solid var(--border);
-    padding: 28px 32px; font-family: 'Menlo', 'Monaco', monospace;
-    font-size: 13px; line-height: 1.8; color: rgba(255,255,255,0.6); overflow: hidden;
-  }
-  .code-line-green { color: #35c995; }
-  .code-line-orange { color: #FF7B35; }
-  .code-line-dim { color: rgba(255,255,255,0.35); }
-
-  /* ── Takeaway ── */
-  .takeaway-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--border); }
-  .takeaway-cell { padding: 52px 48px; display: flex; flex-direction: column; justify-content: space-between; }
-  .takeaway-cell + .takeaway-cell { border-left: 1px solid var(--border); }
-  .takeaway-n { font-size: clamp(60px, 8vw, 96px); font-weight: 800; color: var(--white); letter-spacing: -0.04em; line-height: 1; }
-  .takeaway-title { font-size: 21px; font-weight: 600; color: var(--white); margin-bottom: 12px; letter-spacing: -0.01em; }
-  .takeaway-body { font-size: 15px; color: var(--sub); line-height: 1.8; }
-
-  /* ── Deliverable grid ── */
   .deliv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); flex: 1; }
-  .deliv-cell { background: #111; padding: 36px 40px; display: flex; flex-direction: column; gap: 12px; }
-  .deliv-num { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; }
-  .deliv-title { font-size: 18px; font-weight: 600; color: var(--white); line-height: 1.3; letter-spacing: -0.01em; }
-  .deliv-desc { font-size: 13px; color: #888; line-height: 1.7; }
-  .deliv-tag { display: inline-flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
-  .deliv-tag span { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sub); border: 1px solid #333; padding: 2px 8px; }
+  .deliv-cell { background: #111; padding: 36px 40px; display: flex; flex-direction: column; gap: 10px; }
+  .deliv-num { font-size: 10px; color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; }
+  .deliv-title { font-size: 17px; font-weight: 500; color: var(--white); line-height: 1.35; }
+  .deliv-desc { font-size: 12.5px; color: #666; line-height: 1.7; }
+  .deliv-tag { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+  .deliv-tag span { font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: #555; border: 1px solid #2a2a2a; padding: 2px 8px; }
 
-  /* ── Principle card ── */
-  .principle-col { flex: 1; border-right: 1px solid var(--border); padding: 40px 44px; display: flex; flex-direction: column; gap: 24px; }
+  .code-wrap {
+    background: #0d0d0d; border: 1px solid var(--border);
+    padding: 20px 24px; font-family: 'Menlo', 'Monaco', monospace;
+    font-size: 12.5px; line-height: 1.8; color: rgba(255,255,255,0.5);
+  }
+  .code-hi { color: rgba(255,255,255,0.85); }
+
+  .principle-col { flex: 1; border-right: 1px solid var(--border); padding: 44px 44px; display: flex; flex-direction: column; }
   .principle-col:last-child { border-right: none; }
-  .principle-n { font-size: 64px; font-weight: 800; color: var(--dim); letter-spacing: -0.04em; line-height: 1; margin-bottom: 8px; }
-  .principle-title { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
-  .principle-body { font-size: 13.5px; color: #999; line-height: 1.8; }
+  .principle-n { font-size: 52px; font-weight: 300; color: var(--dim); letter-spacing: -0.03em; line-height: 1; margin-bottom: 20px; }
+  .principle-title { font-size: 18px; font-weight: 500; color: var(--white); margin-bottom: 12px; }
+  .principle-body { font-size: 13.5px; color: #777; line-height: 1.85; }
 
-  /* ── Curriculum road ── */
-  .road-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); }
-  .road-row:first-child { border-top: 1px solid var(--border); }
-  .road-part { width: 64px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); border-right: 1px solid var(--border); flex-shrink: 0; }
-  .road-body { flex: 1; padding: 14px 28px; display: flex; flex-direction: column; gap: 3px; }
-  .road-title { font-size: 15px; font-weight: 600; color: var(--white); }
-  .road-sub { font-size: 12px; color: #666; }
-  .road-badge { font-size: 10px; padding: 2px 8px; border-radius: 3px; font-weight: 700; letter-spacing: 0.06em; align-self: flex-start; margin-top: 2px; }
+  .sec-break { background: #0a0a0a; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .sec-label { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 20px; }
+  .sec-title { font-size: 30px; font-weight: 300; line-height: 1.4; color: #fff; }
+  .sec-sub { font-size: 13px; color: rgba(255,255,255,0.2); margin-top: 20px; line-height: 1.9; }
 
-  /* ── Chart type grid ── */
+  /* 차트 셀 — 잘리지 않도록 고정 레이아웃 */
   .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); flex: 1; }
-  .chart-cell { background: #111; padding: 28px 32px; display: flex; flex-direction: column; gap: 10px; }
-  .chart-cell-title { font-size: 13px; font-weight: 700; color: var(--white); }
-  .chart-cell-when { font-size: 11.5px; color: #666; line-height: 1.5; }
+  .chart-cell { background: #111; padding: 32px 40px; display: flex; flex-direction: column; justify-content: space-between; }
+  .chart-fig { flex: 1; display: flex; align-items: center; justify-content: center; padding: 8px 0 16px; }
+  .chart-fig svg { display: block; flex-shrink: 0; }
+  .chart-cell-title { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 4px; }
+  .chart-cell-when { font-size: 11.5px; color: #555; line-height: 1.55; }
 
-  /* ── Showcase ── */
   .showcase-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--border); flex: 1; }
   .showcase-cell { background: #0d0d0d; display: flex; flex-direction: column; }
   .showcase-header { padding: 20px 24px 12px; border-bottom: 1px solid var(--border); }
   .showcase-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sub); margin-bottom: 4px; }
-  .showcase-title { font-size: 15px; font-weight: 600; color: var(--white); }
+  .showcase-title { font-size: 14px; font-weight: 500; color: var(--white); }
   .showcase-body { flex: 1; padding: 16px; display: flex; align-items: center; justify-content: center; }
-  .showcase-part { font-size: 10px; color: var(--dim); padding: 12px 24px; border-top: 1px solid var(--border); letter-spacing: 0.06em; }
+  .showcase-part { font-size: 10px; color: var(--dim); padding: 10px 24px; border-top: 1px solid var(--border); letter-spacing: 0.06em; }
 
-  /* ── Section break ── */
-  .sec-break { background: #080808; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-
-  /* ── Claude Code logo ── */
-  .claude-logo { display: flex; align-items: center; gap: 12px; }
-  .claude-logo-text { font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: -0.01em; }
-  .claude-logo-sub { font-size: 12px; color: var(--sub); }
-
-  /* ── Before/After ── */
-  .ba-before { background: rgba(239,125,134,0.04); }
-  .ba-after { background: rgba(53,201,149,0.04); }
-
-  /* ── Keyboard shortcut ── */
-  kbd {
-    font-family: 'Menlo', monospace; font-size: 11px;
-    background: #1a1a1a; border: 1px solid #333; border-bottom: 2px solid #222;
-    padding: 2px 7px; border-radius: 4px; color: #ccc;
-  }
+  .takeaway-grid { flex: 1; display: grid; border-top: 1px solid var(--border); }
+  .takeaway-cell { padding: 48px 44px; display: flex; flex-direction: column; justify-content: space-between; }
+  .takeaway-cell + .takeaway-cell { border-left: 1px solid var(--border); }
+  .takeaway-n { font-size: 44px; font-weight: 300; color: #444; letter-spacing: -0.03em; line-height: 1; }
+  .takeaway-title { font-size: 17px; font-weight: 500; color: var(--white); margin: 16px 0 10px; line-height: 1.35; }
+  .takeaway-body { font-size: 13px; color: var(--sub); line-height: 1.8; }
 </style>
 </head>
 <body>
-
-<!-- ════════════════════════════════════════════════════
-     P01-CH01 슬라이드 덱
-     총 16장 | CH01-01(4) + CH01-02(5) + CH01-03(4) + CH01-04(3)
-════════════════════════════════════════════════════ -->
 <div class="deck" id="deck">
 
-<!-- ════ 01 | CH01 CHAPTER TITLE ════ -->
+<!-- ════ 01 | CHAPTER TITLE ════ -->
 <div class="slide active" id="s1">
-  <div class="body" style="position:relative; flex-direction:column; justify-content:space-between; padding:64px 72px; background:#0a0a0a; overflow:hidden;">
-    <!-- bg grid -->
-    <svg style="position:absolute;right:0;top:0;width:55%;height:100%;opacity:0.06;z-index:0;" viewBox="0 0 560 800" preserveAspectRatio="xMidYMid slice">
+  <div class="body" style="position:relative;flex-direction:column;justify-content:space-between;padding:64px 72px;background:#0a0a0a;overflow:hidden;">
+    <svg style="position:absolute;right:0;top:0;width:55%;height:100%;opacity:0.05;z-index:0;" viewBox="0 0 560 800" preserveAspectRatio="xMidYMid slice">
       <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#7B6FA0" stroke-width="0.8"/></pattern></defs>
       <rect width="560" height="800" fill="url(#grid)"/>
-      <!-- accent lines -->
-      <line x1="0" y1="200" x2="560" y2="200" stroke="#7B6FA0" stroke-width="1" opacity="0.3"/>
-      <line x1="0" y1="400" x2="560" y2="400" stroke="#7B6FA0" stroke-width="1" opacity="0.3"/>
-      <circle cx="280" cy="400" r="160" fill="none" stroke="#7B6FA0" stroke-width="0.5" opacity="0.5"/>
+      <circle cx="280" cy="400" r="200" fill="none" stroke="#7B6FA0" stroke-width="0.5"/>
+      <circle cx="280" cy="400" r="120" fill="none" stroke="#7B6FA0" stroke-width="0.3"/>
     </svg>
     <div style="position:relative;z-index:2;">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:36px;">
-        <!-- Claude Code icon -->
-        <svg width="32" height="32" viewBox="0 0 32 32">
-          <g transform="translate(16,16)">
-            <polygon points="0,-13 4.5,-6.5 11.3,-6.5 6.8,0 11.3,6.5 4.5,6.5 0,13 -4.5,6.5 -11.3,6.5 -6.8,0 -11.3,-6.5 -4.5,-6.5" fill="none" stroke="#FF7B35" stroke-width="1.2" opacity="0.8"/>
-            <circle cx="0" cy="0" r="4" fill="#FF7B35" opacity="0.9"/>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:40px;">
+        <svg width="24" height="24" viewBox="0 0 24 24">
+          <g transform="translate(12,12)">
+            <polygon points="0,-9 3,-4.5 7.8,-4.5 4.7,0 7.8,4.5 3,4.5 0,9 -3,4.5 -7.8,4.5 -4.7,0 -7.8,-4.5 -3,-4.5" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
           </g>
         </svg>
-        <span style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);font-weight:500;">FastCampus · P01 · CH01</span>
+        <span style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.22);font-weight:400;">FastCampus · P01 · CH01</span>
       </div>
-      <div style="font-size:clamp(40px,5.2vw,68px);font-weight:300;color:var(--white);line-height:1.15;letter-spacing:-0.03em;">데이터 시각화의<br>기초 관점 잡기</div>
-      <div style="margin-top:20px;font-size:18px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.6;">AI + 시각화, 워크플로우, 원칙, 사례</div>
+      <div style="font-size:52px;font-weight:300;color:var(--white);line-height:1.15;letter-spacing:-0.025em;">데이터 시각화의<br>기초 관점 잡기</div>
+      <div style="margin-top:18px;font-size:16px;font-weight:300;color:rgba(255,255,255,0.35);">AI + 시각화, 워크플로우, 원칙, 사례</div>
     </div>
     <div style="position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;">
-      <div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Chapter</div>
-        <div style="font-size:15px;color:rgba(255,255,255,0.5);font-weight:500;">4 클립 · 40분</div>
-      </div>
-      <div style="display:flex;gap:8px;">
-        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#7B6FA0;border:1px solid rgba(123,111,160,0.4);padding:4px 12px;">CH01-01</span>
-        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);border:1px solid #282828;padding:4px 12px;">CH01-02</span>
-        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);border:1px solid #282828;padding:4px 12px;">CH01-03</span>
-        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);border:1px solid #282828;padding:4px 12px;">CH01-04</span>
+      <div style="font-size:13px;color:rgba(255,255,255,0.3);font-weight:300;">4 클립</div>
+      <div style="display:flex;gap:6px;">
+        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#7B6FA0;border:1px solid rgba(123,111,160,0.35);padding:3px 10px;">01</span>
+        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.15);border:1px solid #222;padding:3px 10px;">02</span>
+        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.15);border:1px solid #222;padding:3px 10px;">03</span>
+        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.15);border:1px solid #222;padding:3px 10px;">04</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ════ 02 | CLIP 01 — 강의 개요 & 결과물 미리보기 ════ -->
+<!-- ════ 02 | 결과물 4가지 ════ -->
 <div class="slide" id="s2">
   <div class="tb">
     <div style="display:flex;align-items:center;gap:12px;">
@@ -274,16 +190,13 @@
     <div class="l-panel">
       <div>
         <div class="eyebrow">이 강의로 무엇을 만드는가</div>
-        <div class="big-title" style="font-size:36px;">4가지 핵심<br>결과물</div>
-        <div class="body-text" style="margin-top:20px;">Claude Code + 데이터 시각화를 결합했을 때 실제로 만들 수 있는 것들을 먼저 확인합니다.</div>
+        <div class="big-title">4가지 핵심<br>결과물</div>
+        <div class="body-text" style="margin-top:16px;">Claude Code + 데이터 시각화 조합으로 실제로 만들 수 있는 것들입니다.</div>
       </div>
-      <div>
-        <div style="font-size:11px;color:var(--sub);letter-spacing:0.08em;margin-bottom:6px;">환경</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:11px;color:#888;border:1px solid #333;padding:3px 10px;">Claude Code</span>
-          <span style="font-size:11px;color:#888;border:1px solid #333;padding:3px 10px;">Antigravity</span>
-          <span style="font-size:11px;color:#888;border:1px solid #333;padding:3px 10px;">Python</span>
-        </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="font-size:10px;color:#555;border:1px solid #222;padding:2px 9px;">Claude Code</span>
+        <span style="font-size:10px;color:#555;border:1px solid #222;padding:2px 9px;">Antigravity</span>
+        <span style="font-size:10px;color:#555;border:1px solid #222;padding:2px 9px;">Python</span>
       </div>
     </div>
     <div class="deliv-grid">
@@ -291,39 +204,31 @@
         <div class="deliv-num">결과물 01</div>
         <div class="deliv-title">자동 갱신<br>인터랙티브 대시보드</div>
         <div class="deliv-desc">CSV 교체만으로 자동 갱신. KPI 카드, 채널별 성과, 코호트 분석 포함.</div>
-        <div class="deliv-tag">
-          <span>D3.js</span><span>Plotly</span><span>Tableau</span>
-        </div>
+        <div class="deliv-tag"><span>D3.js</span><span>Plotly</span><span>Tableau</span></div>
       </div>
       <div class="deliv-cell" style="background:#0f0f0f;">
         <div class="deliv-num">결과물 02</div>
         <div class="deliv-title">직무별 분석<br>대시보드 × 5</div>
-        <div class="deliv-desc">마케팅 ROI · A/B테스트 · PM KPI · 리텐션 코호트 · HR 채용 퍼널</div>
-        <div class="deliv-tag">
-          <span>CLAUDE.md</span><span>Skill</span>
-        </div>
+        <div class="deliv-desc">마케팅 ROI · A/B 테스트 · PM KPI · 리텐션 코호트 · HR 채용 퍼널</div>
+        <div class="deliv-tag"><span>CLAUDE.md</span><span>Skill</span></div>
       </div>
       <div class="deliv-cell" style="background:#0f0f0f;">
         <div class="deliv-num">결과물 03</div>
         <div class="deliv-title">자동화 리포트<br>파이프라인</div>
-        <div class="deliv-desc">OpenClaw + 텔레그램 연동. 매주 월요일 자동 분석 → 슬랙 알림.</div>
-        <div class="deliv-tag">
-          <span>OpenClaw</span><span>Telegram</span>
-        </div>
+        <div class="deliv-desc">OpenClaw + 텔레그램 연동. 정기 분석 → 슬랙 알림 자동 발송.</div>
+        <div class="deliv-tag"><span>OpenClaw</span><span>Telegram</span></div>
       </div>
       <div class="deliv-cell">
         <div class="deliv-num">결과물 04</div>
         <div class="deliv-title">웹 기반<br>포트폴리오</div>
-        <div class="deliv-desc">Antigravity + Claude Code로 빌드. GitHub Pages에 배포하는 시각화 포트폴리오.</div>
-        <div class="deliv-tag">
-          <span>Stitch</span><span>GitHub Pages</span>
-        </div>
+        <div class="deliv-desc">Antigravity + Claude Code 빌드. GitHub Pages에 배포하는 시각화 포트폴리오.</div>
+        <div class="deliv-tag"><span>Stitch</span><span>GitHub Pages</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ════ 03 | 누구를 위한 강의인가 ════ -->
+<!-- ════ 03 | 수강 대상 ════ -->
 <div class="slide" id="s3">
   <div class="tb">
     <div style="display:flex;align-items:center;gap:12px;">
@@ -335,32 +240,32 @@
   <div class="body">
     <div class="l-panel">
       <div>
-        <div class="eyebrow">누구를 위한 강의인가</div>
-        <div class="big-title" style="font-size:36px;">코딩 선수 지식<br>필요 없습니다</div>
-        <div class="body-text" style="margin-top:20px;">터미널 첫 실행부터 차근차근 따라갈 수 있습니다. Antigravity 에디터 채팅 패널에서 자연어로 모든 작업을 진행합니다.</div>
+        <div class="eyebrow">수강 대상</div>
+        <div class="big-title">코딩 선수 지식<br>없어도 됩니다</div>
+        <div class="body-text" style="margin-top:16px;">Antigravity 에디터 채팅 패널에서 자연어로 작업합니다. 터미널은 꼭 필요한 경우에만 씁니다.</div>
       </div>
-      <div style="font-size:12px;color:var(--sub);">데이터 분석가 · 마케터 · 기획자 · PM</div>
+      <div style="font-size:11px;color:var(--dim);">데이터 분석가 · 마케터 · 기획자 · PM</div>
     </div>
     <div style="flex:1;display:flex;flex-direction:column;">
-      <div class="row-item" style="padding:24px 52px;flex:1;align-items:center;">
+      <div class="row-item" style="padding:22px 52px;flex:1;align-items:center;">
         <div class="row-label">데이터<br>분석가</div>
         <div>
-          <div class="row-title">반복 작업을 자동화하고 싶은 분</div>
-          <div class="row-sub" style="margin-top:6px;">매주 같은 집계·시각화 → Claude Code 파이프라인으로 5분 처리</div>
+          <div class="row-title">반복 집계·시각화 작업을 자동화하고 싶은 분</div>
+          <div class="row-sub" style="margin-top:5px;">파이프라인으로 구조화해서 요청 한 번에 처리</div>
         </div>
       </div>
-      <div class="row-item" style="padding:24px 52px;flex:1;align-items:center;border-top:none;">
+      <div class="row-item" style="padding:22px 52px;flex:1;align-items:center;border-top:none;">
         <div class="row-label">마케터 /<br>기획자</div>
         <div>
           <div class="row-title">코딩 없이 데이터 기반 리포트를 만들고 싶은 분</div>
-          <div class="row-sub" style="margin-top:6px;">채팅으로 요청 → 채널별 ROI 대시보드·시계열 분석 자동 생성</div>
+          <div class="row-sub" style="margin-top:5px;">채널별 ROI, 시계열 분석, 대시보드 자동 생성</div>
         </div>
       </div>
-      <div class="row-item" style="padding:24px 52px;flex:1;align-items:center;border-top:none;border-bottom:none;">
+      <div class="row-item" style="padding:22px 52px;flex:1;align-items:center;border-top:none;border-bottom:none;">
         <div class="row-label">PM</div>
         <div>
           <div class="row-title">KPI 대시보드를 직접 만들고 보고서를 자동화하고 싶은 분</div>
-          <div class="row-sub" style="margin-top:6px;">KPI 트래커, A/B 결과 분석, 주간 리포트 자동 발송까지</div>
+          <div class="row-sub" style="margin-top:5px;">KPI 트래커, A/B 결과 분석, 주간 리포트 자동 발송</div>
         </div>
       </div>
     </div>
@@ -377,73 +282,71 @@
     <span class="tb-num">04 — 16</span>
   </div>
   <div class="body">
-    <div class="l-panel" style="width:30%;">
+    <div class="l-panel" style="width:28%;">
       <div>
         <div class="eyebrow">전체 커리큘럼</div>
-        <div class="big-title" style="font-size:32px;">6 Parts<br>50 클립</div>
-        <div class="body-text" style="margin-top:16px;font-size:13.5px;">기초 관점부터 실전 대시보드, 자동화 파이프라인, 포트폴리오 배포까지.</div>
+        <div class="big-title">6 Parts<br>50 클립</div>
+        <div class="body-text" style="margin-top:14px;font-size:13px;">기초 관점부터 실전 대시보드, 자동화 파이프라인, 포트폴리오 배포까지.</div>
       </div>
-      <div style="font-size:11px;color:var(--sub);">총 약 8시간</div>
     </div>
     <div class="agenda-rows">
-      <div class="agenda-row" style="background:rgba(123,111,160,0.06);">
-        <div class="agenda-part" style="color:#7B6FA0;font-weight:700;">P01</div>
-        <div class="agenda-title" style="font-size:16px;">왜 AI 데이터 시각화인가</div>
+      <div class="agenda-row" style="background:rgba(123,111,160,0.05);">
+        <div class="agenda-part" style="color:#7B6FA0;">P01</div>
+        <div class="agenda-title">왜 AI 데이터 시각화인가</div>
         <div class="agenda-sub">기초 관점 · 환경 세팅 · 6클립</div>
       </div>
       <div class="agenda-row">
-        <div class="agenda-part" style="color:#4A7AB5;font-weight:700;">P02</div>
-        <div class="agenda-title" style="font-size:16px;">Claude Code 핵심 빠르게 익히기</div>
+        <div class="agenda-part" style="color:#4A7AB5;">P02</div>
+        <div class="agenda-title">Claude Code 핵심 빠르게 익히기</div>
         <div class="agenda-sub">첫 걸음 · MCP · 에이전트 팀 · 12클립</div>
       </div>
       <div class="agenda-row">
-        <div class="agenda-part" style="color:#4A8A6A;font-weight:700;">P03</div>
-        <div class="agenda-title" style="font-size:16px;">시각화 전략 자동 설계</div>
+        <div class="agenda-part" style="color:#4A8A6A;">P03</div>
+        <div class="agenda-title">시각화 전략 자동 설계</div>
         <div class="agenda-sub">KPI 설계 · 대시보드 · OpenClaw · 10클립</div>
       </div>
       <div class="agenda-row">
-        <div class="agenda-part" style="color:#B5724A;font-weight:700;">P04</div>
-        <div class="agenda-title" style="font-size:16px;">고급 인터랙티브 시각화</div>
+        <div class="agenda-part" style="color:#B5724A;">P04</div>
+        <div class="agenda-title">고급 인터랙티브 시각화</div>
         <div class="agenda-sub">D3.js · 3D Globe · Tableau Extension · 4클립</div>
       </div>
       <div class="agenda-row">
-        <div class="agenda-part" style="color:#9E6A7A;font-weight:700;">P05</div>
-        <div class="agenda-title" style="font-size:16px;">직무별 실전 대시보드</div>
+        <div class="agenda-part" style="color:#9E6A7A;">P05</div>
+        <div class="agenda-title">직무별 실전 대시보드</div>
         <div class="agenda-sub">마케팅 · A/B · PM · 리텐션 · HR · 15클립</div>
       </div>
       <div class="agenda-row" style="border-bottom:none;">
-        <div class="agenda-part" style="color:#4AAAB5;font-weight:700;">P06</div>
-        <div class="agenda-title" style="font-size:16px;">웹 기반 포트폴리오</div>
+        <div class="agenda-part" style="color:#4AAAB5;">P06</div>
+        <div class="agenda-title">웹 기반 포트폴리오</div>
         <div class="agenda-sub">Stitch · Antigravity · 배포 · 3클립</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ════ 05 | CLIP 02 SECTION BREAK ════ -->
+<!-- ════ 05 | CLIP 02 BREAK ════ -->
 <div class="slide" id="s5">
   <div class="body sec-break">
-    <div style="margin-bottom:28px;">
-      <!-- Claude Code + traditional tools comparison icon -->
-      <svg width="64" height="64" viewBox="0 0 64 64">
-        <rect x="4" y="20" width="24" height="24" rx="3" fill="none" stroke="#444" stroke-width="1.5"/>
-        <line x1="9" y1="28" x2="22" y2="28" stroke="#444" stroke-width="1.5"/>
-        <line x1="9" y1="32" x2="18" y2="32" stroke="#444" stroke-width="1.5"/>
-        <line x1="9" y1="36" x2="20" y2="36" stroke="#444" stroke-width="1.5"/>
-        <text x="30" y="35" font-size="10" fill="#333" font-family="monospace">→</text>
-        <g transform="translate(36,20)">
-          <polygon points="12,0 15.5,5 20,5 16.5,8.5 18,13 12,10 6,13 7.5,8.5 4,5 8.5,5" fill="none" stroke="#FF7B35" stroke-width="1.5"/>
-          <circle cx="12" cy="6.5" r="2.5" fill="#FF7B35" opacity="0.7"/>
-        </g>
+    <div style="margin-bottom:24px;">
+      <svg width="48" height="48" viewBox="0 0 48 48">
+        <rect x="4" y="14" width="18" height="20" rx="2" fill="none" stroke="#333" stroke-width="1.2"/>
+        <line x1="8" y1="21" x2="18" y2="21" stroke="#333" stroke-width="1.2"/>
+        <line x1="8" y1="25" x2="15" y2="25" stroke="#333" stroke-width="1.2"/>
+        <line x1="8" y1="29" x2="17" y2="29" stroke="#333" stroke-width="1.2"/>
+        <text x="25" y="26" font-size="8" fill="#2a2a2a" font-family="monospace">→</text>
+        <rect x="28" y="14" width="16" height="20" rx="2" fill="none" stroke="#555" stroke-width="1.2"/>
+        <line x1="31" y1="21" x2="41" y2="21" stroke="#555" stroke-width="1.2"/>
+        <line x1="31" y1="25" x2="39" y2="25" stroke="#555" stroke-width="1.2"/>
+        <line x1="31" y1="29" x2="41" y2="29" stroke="#555" stroke-width="1.2"/>
       </svg>
     </div>
     <div class="sec-label">Clip 02</div>
-    <div class="sec-title" style="font-size:32px;">왜 AI + 데이터<br>시각화인가</div>
-    <div class="sec-sub">수작업 워크플로우의 문제 · Claude Code 솔루션<br>3~4시간 → 5분</div>
+    <div class="sec-title">왜 AI + 데이터<br>시각화인가</div>
+    <div class="sec-sub">수작업 워크플로우의 한계 · Claude Code 접근 방식<br>ChatGPT와 구조적 차이</div>
   </div>
 </div>
 
-<!-- ════ 06 | 수작업 워크플로우 — BEFORE ════ -->
+<!-- ════ 06 | 수작업 워크플로우 ════ -->
 <div class="slide" id="s6">
   <div class="tb">
     <div style="display:flex;align-items:center;gap:12px;">
@@ -453,58 +356,50 @@
     <span class="tb-num">06 — 16</span>
   </div>
   <div class="body">
-    <div class="l-panel ba-before">
+    <div class="l-panel">
       <div>
-        <div class="eyebrow" style="color:#EF7D86;">Before — 수작업 워크플로우</div>
-        <div class="big-title" style="font-size:32px;">마케팅 분석가의<br>월요일 아침</div>
-        <div class="body-text" style="margin-top:16px;">5개 채널 CSV → 집계 → 차트 → PPT<br>이 사이클이 매주 반복됩니다.</div>
+        <div class="eyebrow">수작업 데이터 분석 워크플로우</div>
+        <div class="big-title">반복되는<br>5단계 사이클</div>
+        <div class="body-text" style="margin-top:16px;">5개 채널 CSV → 집계 → 차트 → 리포트.<br>데이터가 바뀌면 처음부터 전체 반복입니다.</div>
       </div>
-      <div>
-        <div style="font-size:48px;font-weight:800;color:rgba(239,125,134,0.7);letter-spacing:-0.03em;line-height:1;">3~4h</div>
-        <div style="font-size:12px;color:var(--sub);margin-top:4px;">매주 반복되는 소요 시간</div>
-      </div>
+      <div style="font-size:12px;color:var(--dim);">매주 반복되는 수작업 구조</div>
     </div>
     <div style="flex:1;display:flex;flex-direction:column;">
-      <div class="pipe-row" style="background:rgba(239,125,134,0.04);">
+      <div class="pipe-row">
         <div class="pipe-n">01</div>
         <div class="pipe-name">CSV 다운로드</div>
         <div class="pipe-arrow">→</div>
-        <div class="pipe-desc">5개 채널 파일을 각각 수동 다운로드</div>
-        <div class="pipe-out" style="color:#EF7D86;">30분</div>
+        <div class="pipe-desc">채널별 파일을 각각 수동 다운로드</div>
       </div>
-      <div class="pipe-row" style="background:rgba(239,125,134,0.04);">
+      <div class="pipe-row">
         <div class="pipe-n">02</div>
         <div class="pipe-name">Excel 집계</div>
         <div class="pipe-arrow">→</div>
         <div class="pipe-desc">VLOOKUP 합치기 · 피벗 테이블 · 수식 오류 디버깅</div>
-        <div class="pipe-out" style="color:#EF7D86;">1~2시간</div>
       </div>
-      <div class="pipe-row" style="background:rgba(239,125,134,0.04);">
+      <div class="pipe-row">
         <div class="pipe-n">03</div>
         <div class="pipe-name">차트 제작</div>
         <div class="pipe-arrow">→</div>
         <div class="pipe-desc">수동으로 그리고 색상·폰트 맞추기</div>
-        <div class="pipe-out" style="color:#EF7D86;">1시간</div>
       </div>
-      <div class="pipe-row" style="background:rgba(239,125,134,0.04);">
+      <div class="pipe-row">
         <div class="pipe-n">04</div>
-        <div class="pipe-name">PPT 정리</div>
+        <div class="pipe-name">리포트 정리</div>
         <div class="pipe-arrow">→</div>
         <div class="pipe-desc">복사·붙여넣기 → 레이아웃 조정</div>
-        <div class="pipe-out" style="color:#EF7D86;">30분</div>
       </div>
-      <div class="pipe-row" style="background:rgba(239,125,134,0.06);border-bottom:none;">
-        <div class="pipe-n">⚠</div>
-        <div class="pipe-name" style="color:#EF7D86;">데이터 수정</div>
+      <div class="pipe-row" style="border-bottom:none;">
+        <div class="pipe-n" style="color:#555;">⚠</div>
+        <div class="pipe-name" style="color:#555;">데이터 수정 시</div>
         <div class="pipe-arrow">→</div>
-        <div class="pipe-desc" style="color:#EF7D86;">숫자가 바뀌면 1번부터 전체 반복</div>
-        <div class="pipe-out" style="color:#EF7D86;">처음부터</div>
+        <div class="pipe-desc" style="color:#555;">숫자가 바뀌면 1번부터 전체 반복</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ════ 07 | Claude Code 워크플로우 — AFTER ════ -->
+<!-- ════ 07 | Claude Code 워크플로우 ════ -->
 <div class="slide" id="s7">
   <div class="tb">
     <div style="display:flex;align-items:center;gap:12px;">
@@ -514,51 +409,43 @@
     <span class="tb-num">07 — 16</span>
   </div>
   <div class="body">
-    <div class="l-panel ba-after">
+    <div class="l-panel">
       <div>
-        <div class="eyebrow" style="color:var(--green);">After — Claude Code 워크플로우</div>
-        <div class="big-title" style="font-size:32px;">채팅 한 줄로<br>전 과정 자동화</div>
-        <div style="margin-top:20px;" class="code-wrap" style="font-size:12px;">
-          <div class="code-line-dim"># 채팅 패널에 입력</div>
-          <div class="code-line-green" style="margin-top:8px;">"data/raw/에 있는 5개 채널 CSV를 합쳐서</div>
-          <div class="code-line-green"> 채널별 ROI, CTR, CVR을 계산하고</div>
-          <div class="code-line-green"> 인터랙티브 대시보드를 만들어줘.</div>
-          <div class="code-line-green"> 색상은 브랜드 파란색 계열로."</div>
+        <div class="eyebrow">Claude Code 워크플로우</div>
+        <div class="big-title">채팅 패널에<br>요청 하나로</div>
+        <div style="margin-top:20px;" class="code-wrap">
+          <div style="color:#444;font-size:11px;margin-bottom:10px;"># Antigravity 채팅 패널</div>
+          <div class="code-hi">"data/raw/에 있는 5개 채널 CSV를 합쳐서</div>
+          <div class="code-hi"> 채널별 ROI, CTR, CVR을 계산하고</div>
+          <div class="code-hi"> 인터랙티브 대시보드로 만들어줘."</div>
         </div>
       </div>
-      <div>
-        <div style="font-size:48px;font-weight:800;color:rgba(53,201,149,0.8);letter-spacing:-0.03em;line-height:1;">3~5분</div>
-        <div style="font-size:12px;color:var(--sub);margin-top:4px;">동일한 작업 소요 시간</div>
-      </div>
+      <div style="font-size:12px;color:var(--dim);">Read → Write → Bash 자동 연결</div>
     </div>
     <div style="flex:1;display:flex;flex-direction:column;">
-      <div class="pipe-row" style="background:rgba(53,201,149,0.04);">
+      <div class="pipe-row">
         <div class="pipe-n">01</div>
         <div class="pipe-name">파일 읽기</div>
         <div class="pipe-arrow">→</div>
-        <div class="pipe-desc">파일시스템에서 5개 CSV 직접 읽기 (업로드 불필요)</div>
-        <div class="pipe-out" style="color:var(--green);">자동</div>
+        <div class="pipe-desc">파일시스템에서 CSV 직접 읽기 (업로드 불필요)</div>
       </div>
-      <div class="pipe-row" style="background:rgba(53,201,149,0.04);">
+      <div class="pipe-row">
         <div class="pipe-n">02</div>
         <div class="pipe-name">코드 작성</div>
         <div class="pipe-arrow">→</div>
         <div class="pipe-desc">pandas 집계 코드 작성 · ROI/CTR/CVR 계산</div>
-        <div class="pipe-out" style="color:var(--green);">자동</div>
       </div>
-      <div class="pipe-row" style="background:rgba(53,201,149,0.04);">
+      <div class="pipe-row">
         <div class="pipe-n">03</div>
         <div class="pipe-name">실행</div>
         <div class="pipe-arrow">→</div>
-        <div class="pipe-desc">Bash 도구로 스크립트 직접 실행 · 오류 자동 수정</div>
-        <div class="pipe-out" style="color:var(--green);">자동</div>
+        <div class="pipe-desc">스크립트 직접 실행 · 오류 발생 시 자동 수정</div>
       </div>
-      <div class="pipe-row" style="background:rgba(53,201,149,0.04);border-bottom:none;">
+      <div class="pipe-row" style="border-bottom:none;">
         <div class="pipe-n">04</div>
         <div class="pipe-name">저장</div>
         <div class="pipe-arrow">→</div>
-        <div class="pipe-desc">charts/dashboard.html 로 인터랙티브 대시보드 저장</div>
-        <div class="pipe-out" style="color:var(--green);">자동</div>
+        <div class="pipe-desc">charts/dashboard.html 인터랙티브 대시보드 저장</div>
       </div>
     </div>
   </div>
@@ -574,58 +461,68 @@
     <span class="tb-num">08 — 16</span>
   </div>
   <div class="body">
-    <div class="cmp-half" style="background:#0d0d0d;">
+    <div style="flex:1;padding:52px 56px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--border);">
       <div>
-        <div class="cmp-label">ChatGPT (웹)</div>
-        <div class="cmp-title" style="font-size:36px;font-weight:300;color:#888;">대화 도구</div>
-        <ul class="cmp-list">
-          <li>텍스트·코드 예시 제공</li>
-          <li>파일은 직접 업로드해야 함</li>
-          <li>코드 실행은 내 컴퓨터에서 직접</li>
-          <li>결과 복사·붙여넣기 필요</li>
-          <li>반복 작업마다 새로 설명</li>
-        </ul>
+        <div style="font-size:11px;letter-spacing:0.13em;text-transform:uppercase;color:var(--dim);margin-bottom:24px;">ChatGPT (웹)</div>
+        <div style="font-size:28px;font-weight:300;color:#555;margin-bottom:28px;">대화 도구</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="font-size:14px;color:#444;padding-left:18px;position:relative;line-height:1.6;">
+            <span style="position:absolute;left:0;color:var(--dim);">—</span>텍스트·코드 예시 제공
+          </div>
+          <div style="font-size:14px;color:#444;padding-left:18px;position:relative;line-height:1.6;">
+            <span style="position:absolute;left:0;color:var(--dim);">—</span>파일은 직접 업로드해야 함
+          </div>
+          <div style="font-size:14px;color:#444;padding-left:18px;position:relative;line-height:1.6;">
+            <span style="position:absolute;left:0;color:var(--dim);">—</span>코드 실행은 내 컴퓨터에서 직접
+          </div>
+          <div style="font-size:14px;color:#444;padding-left:18px;position:relative;line-height:1.6;">
+            <span style="position:absolute;left:0;color:var(--dim);">—</span>반복 작업마다 새로 설명
+          </div>
+        </div>
       </div>
-      <div class="cmp-stat" style="font-size:56px;color:#333;">텍스트</div>
     </div>
-    <div class="cmp-half" style="background:rgba(53,201,149,0.03);">
+    <div style="flex:1;padding:52px 56px;display:flex;flex-direction:column;justify-content:space-between;">
       <div>
-        <div class="cmp-label" style="color:var(--green);">Claude Code (에이전트)</div>
-        <div class="cmp-title" style="font-size:36px;font-weight:700;color:var(--white);">실행 에이전트</div>
-        <ul class="cmp-list">
-          <li class="hi">파일시스템 직접 읽기·쓰기</li>
-          <li class="hi">코드를 내 컴퓨터에서 직접 실행</li>
-          <li class="hi">결과 파일 자동 저장</li>
-          <li class="hi">CLAUDE.md 규칙 영구 적용</li>
-          <li class="hi">에이전트 팀으로 병렬 작업</li>
-        </ul>
+        <div style="font-size:11px;letter-spacing:0.13em;text-transform:uppercase;color:#aaa;margin-bottom:24px;">Claude Code (에이전트)</div>
+        <div style="font-size:28px;font-weight:400;color:var(--white);margin-bottom:28px;">실행 에이전트</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="font-size:14px;color:var(--text);padding-left:18px;position:relative;line-height:1.6;">
+            <span style="position:absolute;left:0;color:#aaa;">→</span>파일시스템 직접 읽기·쓰기
+          </div>
+          <div style="font-size:14px;color:var(--text);padding-left:18px;position:relative;line-height:1.6;">
+            <span style="position:absolute;left:0;color:#aaa;">→</span>코드를 내 컴퓨터에서 직접 실행
+          </div>
+          <div style="font-size:14px;color:var(--text);padding-left:18px;position:relative;line-height:1.6;">
+            <span style="position:absolute;left:0;color:#aaa;">→</span>결과 파일 자동 저장
+          </div>
+          <div style="font-size:14px;color:var(--text);padding-left:18px;position:relative;line-height:1.6;">
+            <span style="position:absolute;left:0;color:#aaa;">→</span>CLAUDE.md 규칙 영구 적용
+          </div>
+        </div>
       </div>
-      <div class="cmp-stat" style="font-size:56px;color:var(--green);">파일 생성</div>
     </div>
   </div>
 </div>
 
-<!-- ════ 09 | CLIP 03 SECTION BREAK ════ -->
+<!-- ════ 09 | CLIP 03 BREAK ════ -->
 <div class="slide" id="s9">
   <div class="body sec-break">
-    <div style="margin-bottom:28px;">
-      <!-- Visualization principle icon -->
-      <svg width="64" height="64" viewBox="0 0 64 64">
-        <!-- Bar chart icon -->
-        <rect x="6" y="38" width="10" height="18" rx="2" fill="#444"/>
-        <rect x="20" y="26" width="10" height="30" rx="2" fill="#666"/>
-        <rect x="34" y="16" width="10" height="40" rx="2" fill="#FF7B35" opacity="0.9"/>
-        <rect x="48" y="32" width="10" height="24" rx="2" fill="#444"/>
-        <line x1="4" y1="57" x2="60" y2="57" stroke="#333" stroke-width="1.5"/>
+    <div style="margin-bottom:24px;">
+      <svg width="48" height="48" viewBox="0 0 48 48">
+        <rect x="4" y="30" width="8" height="14" rx="1" fill="#333"/>
+        <rect x="14" y="22" width="8" height="22" rx="1" fill="#555"/>
+        <rect x="24" y="14" width="8" height="30" rx="1" fill="#777"/>
+        <rect x="34" y="26" width="8" height="18" rx="1" fill="#444"/>
+        <line x1="2" y1="44" x2="46" y2="44" stroke="#2a2a2a" stroke-width="1.2"/>
       </svg>
     </div>
     <div class="sec-label">Clip 03</div>
-    <div class="sec-title" style="font-size:32px;">좋은 데이터<br>시각화의 원칙</div>
+    <div class="sec-title">좋은 데이터<br>시각화의 원칙</div>
     <div class="sec-sub">질문 정의 · 인사이트 제목 · 강조 하나<br>Data-Ink Ratio · 수치 맥락</div>
   </div>
 </div>
 
-<!-- ════ 10 | 원칙 1&2 ════ -->
+<!-- ════ 10 | 차트 유형 가이드 ════ -->
 <div class="slide" id="s10">
   <div class="tb">
     <div style="display:flex;align-items:center;gap:12px;">
@@ -638,59 +535,88 @@
     <div class="l-panel">
       <div>
         <div class="eyebrow">원칙 1 — 질문부터 정한다</div>
-        <div class="big-title" style="font-size:32px;">차트보다<br>질문이 먼저</div>
+        <div class="big-title">차트보다<br>질문이 먼저</div>
         <div class="body-text" style="margin-top:16px;">"이 차트가 어떤 질문에 답하는가"를 먼저 정해야 올바른 차트 유형이 보입니다.</div>
       </div>
-      <div>
-        <div style="font-size:12px;color:var(--sub);margin-bottom:10px;letter-spacing:0.06em;text-transform:uppercase;">Claude Code에 적용</div>
-        <div class="code-wrap" style="padding:14px 16px;font-size:12px;">
-          <div class="code-line-dim"># CLAUDE.md에 추가</div>
-          <div class="code-line-green" style="margin-top:6px;">차트 만들기 전에 항상 물어봐:</div>
-          <div class="code-line-green">"이 차트가 답할 질문은?"</div>
-        </div>
+      <div class="code-wrap" style="padding:14px 16px;font-size:12px;">
+        <div style="color:#333;margin-bottom:8px;"># CLAUDE.md에 추가</div>
+        <div class="code-hi">차트 만들기 전에 항상:</div>
+        <div class="code-hi">"이 차트가 답할 질문은?"</div>
       </div>
     </div>
+    <!-- 차트 그리드 — 고정 크기 SVG로 잘림 없이 -->
     <div class="chart-grid">
       <div class="chart-cell">
-        <svg width="100%" height="60" viewBox="0 0 200 60">
-          <polyline points="10,50 50,30 90,20 130,35 170,15" fill="none" stroke="#FF7B35" stroke-width="2"/>
-          <circle cx="170" cy="15" r="4" fill="#FF7B35"/>
-        </svg>
-        <div class="chart-cell-title">라인 차트</div>
-        <div class="chart-cell-when">시간에 따른 트렌드<br>"월별 매출이 어떻게 변했나?"</div>
+        <div class="chart-fig">
+          <svg width="200" height="90" viewBox="0 0 200 90">
+            <line x1="16" y1="80" x2="184" y2="80" stroke="#2a2a2a" stroke-width="1"/>
+            <line x1="16" y1="80" x2="16" y2="14" stroke="#2a2a2a" stroke-width="1"/>
+            <polyline points="30,68 62,52 94,42 126,56 158,32 176,38" fill="none" stroke="#ccc" stroke-width="2"/>
+            <circle cx="176" cy="38" r="4" fill="#fff"/>
+            <line x1="30" y1="80" x2="30" y2="76" stroke="#333" stroke-width="1"/>
+            <line x1="62" y1="80" x2="62" y2="76" stroke="#333" stroke-width="1"/>
+            <line x1="94" y1="80" x2="94" y2="76" stroke="#333" stroke-width="1"/>
+            <line x1="126" y1="80" x2="126" y2="76" stroke="#333" stroke-width="1"/>
+            <line x1="158" y1="80" x2="158" y2="76" stroke="#333" stroke-width="1"/>
+          </svg>
+        </div>
+        <div>
+          <div class="chart-cell-title">라인 차트</div>
+          <div class="chart-cell-when">시간에 따른 트렌드<br>"월별 매출이 어떻게 변했나?"</div>
+        </div>
       </div>
       <div class="chart-cell" style="background:#0f0f0f;">
-        <svg width="100%" height="60" viewBox="0 0 200 60">
-          <rect x="10" y="30" width="30" height="28" rx="2" fill="#666"/>
-          <rect x="50" y="10" width="30" height="48" rx="2" fill="#FF7B35"/>
-          <rect x="90" y="20" width="30" height="38" rx="2" fill="#666"/>
-          <rect x="130" y="38" width="30" height="20" rx="2" fill="#666"/>
-          <rect x="170" y="15" width="28" height="43" rx="2" fill="#666"/>
-        </svg>
-        <div class="chart-cell-title">막대 차트 (세로)</div>
-        <div class="chart-cell-when">카테고리 비교 (7개 이하)<br>"채널별 매출 비교"</div>
+        <div class="chart-fig">
+          <svg width="200" height="90" viewBox="0 0 200 90">
+            <line x1="16" y1="80" x2="184" y2="80" stroke="#2a2a2a" stroke-width="1"/>
+            <line x1="16" y1="80" x2="16" y2="14" stroke="#2a2a2a" stroke-width="1"/>
+            <rect x="28" y="52" width="24" height="28" rx="1" fill="#333"/>
+            <rect x="60" y="26" width="24" height="54" rx="1" fill="#fff"/>
+            <rect x="92" y="38" width="24" height="42" rx="1" fill="#333"/>
+            <rect x="124" y="60" width="24" height="20" rx="1" fill="#333"/>
+            <rect x="156" y="44" width="24" height="36" rx="1" fill="#333"/>
+          </svg>
+        </div>
+        <div>
+          <div class="chart-cell-title">막대 차트 (세로)</div>
+          <div class="chart-cell-when">카테고리 비교 (7개 이하)<br>"채널별 매출 비교"</div>
+        </div>
       </div>
       <div class="chart-cell" style="background:#0f0f0f;">
-        <svg width="100%" height="60" viewBox="0 0 200 60">
-          <circle cx="100" cy="30" r="25" fill="none" stroke="#333" stroke-width="18"/>
-          <circle cx="100" cy="30" r="25" fill="none" stroke="#FF7B35" stroke-width="18" stroke-dasharray="47 110" stroke-dashoffset="0" transform="rotate(-90 100 30)"/>
-          <circle cx="100" cy="30" r="25" fill="none" stroke="#666" stroke-width="18" stroke-dasharray="31 126" stroke-dashoffset="-47" transform="rotate(-90 100 30)"/>
-          <circle cx="100" cy="30" r="14" fill="#111"/>
-        </svg>
-        <div class="chart-cell-title">도넛 차트</div>
-        <div class="chart-cell-when">구성 비율 (5개 이하)<br>"채널별 예산 배분"</div>
+        <div class="chart-fig">
+          <svg width="120" height="90" viewBox="0 0 120 90">
+            <circle cx="60" cy="45" r="34" fill="none" stroke="#2a2a2a" stroke-width="22"/>
+            <circle cx="60" cy="45" r="34" fill="none" stroke="#fff" stroke-width="22"
+              stroke-dasharray="53 160" stroke-dashoffset="0" transform="rotate(-90 60 45)"/>
+            <circle cx="60" cy="45" r="34" fill="none" stroke="#444" stroke-width="22"
+              stroke-dasharray="37 176" stroke-dashoffset="-53" transform="rotate(-90 60 45)"/>
+            <circle cx="60" cy="45" r="34" fill="none" stroke="#222" stroke-width="22"
+              stroke-dasharray="28 185" stroke-dashoffset="-90" transform="rotate(-90 60 45)"/>
+            <circle cx="60" cy="45" r="20" fill="#0f0f0f"/>
+          </svg>
+        </div>
+        <div>
+          <div class="chart-cell-title">도넛 차트</div>
+          <div class="chart-cell-when">구성 비율 (5개 이하)<br>"채널별 예산 배분"</div>
+        </div>
       </div>
       <div class="chart-cell">
-        <svg width="100%" height="60" viewBox="0 0 200 60">
-          <circle cx="40" cy="45" r="5" fill="#666" opacity="0.6"/>
-          <circle cx="70" cy="30" r="7" fill="#666" opacity="0.6"/>
-          <circle cx="100" cy="20" r="5" fill="#FF7B35" opacity="0.9"/>
-          <circle cx="130" cy="35" r="6" fill="#666" opacity="0.6"/>
-          <circle cx="160" cy="15" r="8" fill="#666" opacity="0.6"/>
-          <line x1="30" y1="50" x2="180" y2="10" stroke="#333" stroke-width="1" stroke-dasharray="4 4"/>
-        </svg>
-        <div class="chart-cell-title">스캐터 플롯</div>
-        <div class="chart-cell-when">두 변수 관계<br>"예산 vs 매출 상관관계"</div>
+        <div class="chart-fig">
+          <svg width="200" height="90" viewBox="0 0 200 90">
+            <line x1="16" y1="80" x2="184" y2="80" stroke="#2a2a2a" stroke-width="1"/>
+            <line x1="16" y1="80" x2="16" y2="14" stroke="#2a2a2a" stroke-width="1"/>
+            <circle cx="40" cy="68" r="5" fill="#333"/>
+            <circle cx="68" cy="54" r="7" fill="#333"/>
+            <circle cx="96" cy="38" r="5" fill="#333"/>
+            <circle cx="130" cy="48" r="6" fill="#fff"/>
+            <circle cx="158" cy="26" r="8" fill="#333"/>
+            <line x1="30" y1="74" x2="170" y2="20" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="3 3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="chart-cell-title">스캐터 플롯</div>
+          <div class="chart-cell-when">두 변수 관계<br>"예산 vs 매출 상관관계"</div>
+        </div>
       </div>
     </div>
   </div>
@@ -712,15 +638,14 @@
         <div class="principle-title">차트 제목은 인사이트로</div>
         <div class="principle-body">보는 사람이 제목만 읽어도 핵심을 파악해야 합니다.</div>
       </div>
-      <div style="margin-top:24px;">
-        <div style="font-size:11px;color:var(--dim);letter-spacing:0.08em;margin-bottom:14px;text-transform:uppercase;">비교</div>
-        <div style="padding:14px 18px;background:rgba(239,125,134,0.07);border:1px solid rgba(239,125,134,0.2);margin-bottom:10px;border-radius:4px;">
-          <div style="font-size:10px;color:#EF7D86;letter-spacing:0.1em;margin-bottom:6px;">BAD</div>
-          <div style="font-size:14px;color:#888;">"채널별 ROI"</div>
+      <div style="margin-top:28px;display:flex;flex-direction:column;gap:10px;">
+        <div style="padding:14px 18px;background:#1a1a1a;border:1px solid #2a2a2a;">
+          <div style="font-size:10px;color:#444;letter-spacing:0.1em;margin-bottom:6px;">BAD</div>
+          <div style="font-size:13px;color:#555;">"채널별 ROI"</div>
         </div>
-        <div style="padding:14px 18px;background:rgba(53,201,149,0.07);border:1px solid rgba(53,201,149,0.2);border-radius:4px;">
-          <div style="font-size:10px;color:var(--green);letter-spacing:0.1em;margin-bottom:6px;">GOOD</div>
-          <div style="font-size:14px;color:var(--white);font-weight:600;">"SNS 채널 ROI, 검색 대비 2배 — 예산 재배분 필요"</div>
+        <div style="padding:14px 18px;background:#1e1e1e;border:1px solid #383838;">
+          <div style="font-size:10px;color:#888;letter-spacing:0.1em;margin-bottom:6px;">GOOD</div>
+          <div style="font-size:13px;color:var(--white);font-weight:500;">"SNS 채널 ROI, 검색 대비 2배 — 예산 재배분 필요"</div>
         </div>
       </div>
     </div>
@@ -730,21 +655,16 @@
         <div class="principle-title">강조는 단 하나</div>
         <div class="principle-body">색상·크기·위치로 강조할 요소는 최대 1개. 모든 것을 강조하면 아무것도 강조되지 않습니다.</div>
       </div>
-      <div style="margin-top:24px;">
-        <!-- Visual example: bars with one highlighted -->
-        <svg width="100%" height="120" viewBox="0 0 300 120">
-          <text x="10" y="12" font-size="10" fill="#666" font-family="Pretendard,sans-serif">색을 너무 많이 쓰면</text>
-          <rect x="10" y="20" width="32" height="70" fill="#FF6B6B" rx="2"/>
-          <rect x="50" y="35" width="32" height="55" fill="#4ECDC4" rx="2"/>
-          <rect x="90" y="15" width="32" height="75" fill="#FFE66D" rx="2"/>
-          <rect x="130" y="45" width="32" height="45" fill="#A8E6CF" rx="2"/>
-          <rect x="170" y="25" width="32" height="65" fill="#DDA0DD" rx="2"/>
-
-          <text x="10" y="110" font-size="10" fill="#35c995" font-family="Pretendard,sans-serif">하나만 강조</text>
-          <rect x="160" y="20" width="32" height="70" fill="#333" rx="2"/>
-          <rect x="200" y="35" width="32" height="55" fill="#333" rx="2"/>
-          <rect x="240" y="15" width="32" height="75" fill="#FF7B35" rx="2"/>
-          <rect x="280" y="45" width="20" height="45" fill="#333" rx="2"/>
+      <div style="margin-top:28px;">
+        <div style="font-size:11px;color:var(--dim);margin-bottom:16px;letter-spacing:0.08em;">— 하나만 흰색, 나머지는 회색</div>
+        <svg width="240" height="100" viewBox="0 0 240 100">
+          <rect x="10" y="30" width="28" height="60" rx="1" fill="#2a2a2a"/>
+          <rect x="46" y="10" width="28" height="80" rx="1" fill="#fff"/>
+          <rect x="82" y="22" width="28" height="68" rx="1" fill="#2a2a2a"/>
+          <rect x="118" y="48" width="28" height="42" rx="1" fill="#2a2a2a"/>
+          <rect x="154" y="18" width="28" height="72" rx="1" fill="#2a2a2a"/>
+          <line x1="8" y1="92" x2="200" y2="92" stroke="#222" stroke-width="1"/>
+          <text x="50" y="9" font-size="8" fill="#888" text-anchor="middle" font-family="Pretendard,sans-serif">▲ 강조</text>
         </svg>
       </div>
     </div>
@@ -765,25 +685,20 @@
       <div>
         <div class="principle-n">04</div>
         <div class="principle-title">불필요한 요소를 제거한다</div>
-        <div class="principle-body">
-          Edward Tufte의 Data-Ink Ratio 원칙.<br><br>
-          데이터를 표현하지 않는 모든 요소는 제거합니다.
-        </div>
+        <div class="principle-body">Edward Tufte의 Data-Ink Ratio 원칙.<br>데이터를 표현하지 않는 모든 요소는 제거합니다.</div>
       </div>
-      <div style="margin-top:20px;">
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:#666;">
-            <span style="color:#EF7D86;font-size:18px;width:20px;flex-shrink:0;">✕</span>3D 효과
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:#666;">
-            <span style="color:#EF7D86;font-size:18px;width:20px;flex-shrink:0;">✕</span>불필요한 격자선
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:#666;">
-            <span style="color:#EF7D86;font-size:18px;width:20px;flex-shrink:0;">✕</span>과도한 범례·장식
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:#666;">
-            <span style="color:#EF7D86;font-size:18px;width:20px;flex-shrink:0;">✕</span>의미 없는 색상 변화
-          </div>
+      <div style="margin-top:28px;display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:#444;padding:10px 0;border-bottom:1px solid #1a1a1a;">
+          <span style="font-size:11px;color:#333;width:16px;flex-shrink:0;">✕</span>3D 효과
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:#444;padding:10px 0;border-bottom:1px solid #1a1a1a;">
+          <span style="font-size:11px;color:#333;width:16px;flex-shrink:0;">✕</span>불필요한 격자선
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:#444;padding:10px 0;border-bottom:1px solid #1a1a1a;">
+          <span style="font-size:11px;color:#333;width:16px;flex-shrink:0;">✕</span>과도한 범례·장식
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:#444;padding:10px 0;">
+          <span style="font-size:11px;color:#333;width:16px;flex-shrink:0;">✕</span>의미 없는 색상 변화
         </div>
       </div>
     </div>
@@ -793,21 +708,16 @@
         <div class="principle-title">수치에 맥락을 제공한다</div>
         <div class="principle-body">숫자만 보여주면 의미를 알 수 없습니다. 목표치, 전기 대비, 업계 평균을 함께 제시합니다.</div>
       </div>
-      <div style="margin-top:24px;">
-        <div style="padding:20px;background:#0d0d0d;border:1px solid #222;border-radius:6px;">
-          <div style="font-size:11px;color:#555;letter-spacing:0.08em;margin-bottom:8px;">CVR</div>
-          <div style="font-size:40px;font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1;">3.2%</div>
-          <div style="display:flex;gap:16px;margin-top:12px;">
-            <div style="display:flex;align-items:center;gap:6px;">
-              <span style="font-size:11px;color:#35c995;">▲ 0.4%p</span>
-              <span style="font-size:11px;color:#555;">전월 대비</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;">
-              <span style="font-size:11px;color:#888;">목표 3.5%</span>
-            </div>
+      <div style="margin-top:28px;">
+        <div style="padding:22px 24px;background:#0d0d0d;border:1px solid #1e1e1e;">
+          <div style="font-size:10px;color:#444;letter-spacing:0.1em;margin-bottom:10px;">CVR</div>
+          <div style="font-size:38px;font-weight:300;color:#fff;letter-spacing:-0.02em;line-height:1;">3.2%</div>
+          <div style="display:flex;gap:20px;margin-top:14px;">
+            <div style="font-size:11px;color:#aaa;">▲ 0.4%p 전월 대비</div>
+            <div style="font-size:11px;color:#444;">목표 3.5%</div>
           </div>
-          <div style="height:4px;background:#222;border-radius:2px;margin-top:12px;overflow:hidden;">
-            <div style="width:91%;height:100%;background:#35c995;border-radius:2px;"></div>
+          <div style="height:3px;background:#1a1a1a;margin-top:14px;overflow:hidden;">
+            <div style="width:91%;height:100%;background:#888;"></div>
           </div>
         </div>
       </div>
@@ -815,27 +725,25 @@
   </div>
 </div>
 
-<!-- ════ 13 | CLIP 04 SECTION BREAK ════ -->
+<!-- ════ 13 | CLIP 04 BREAK ════ -->
 <div class="slide" id="s13">
   <div class="body sec-break">
-    <div style="margin-bottom:28px;">
-      <svg width="64" height="64" viewBox="0 0 64 64">
-        <!-- Dashboard icon -->
-        <rect x="4" y="4" width="56" height="56" rx="6" fill="none" stroke="#333" stroke-width="1.5"/>
-        <rect x="10" y="10" width="20" height="14" rx="3" fill="#333"/>
-        <rect x="34" y="10" width="20" height="14" rx="3" fill="#FF7B35" opacity="0.7"/>
-        <rect x="10" y="28" width="44" height="26" rx="3" fill="#222"/>
-        <polyline points="14,46 22,36 30,40 38,30 48,34" fill="none" stroke="#35c995" stroke-width="1.5"/>
-        <circle cx="48" cy="34" r="2.5" fill="#35c995"/>
+    <div style="margin-bottom:24px;">
+      <svg width="48" height="48" viewBox="0 0 48 48">
+        <rect x="4" y="4" width="40" height="40" rx="4" fill="none" stroke="#2a2a2a" stroke-width="1.2"/>
+        <rect x="9" y="9" width="14" height="10" rx="2" fill="#2a2a2a"/>
+        <rect x="25" y="9" width="14" height="10" rx="2" fill="#444"/>
+        <rect x="9" y="22" width="30" height="18" rx="2" fill="#1a1a1a"/>
+        <polyline points="12,34 18,27 24,30 30,23 36,26" fill="none" stroke="#888" stroke-width="1.5"/>
       </svg>
     </div>
     <div class="sec-label">Clip 04</div>
-    <div class="sec-title" style="font-size:32px;">비즈니스 데이터<br>시각화 사례 미리보기</div>
+    <div class="sec-title">비즈니스 데이터<br>시각화 사례 미리보기</div>
     <div class="sec-sub">이 강의에서 만들 결과물 미리 확인</div>
   </div>
 </div>
 
-<!-- ════ 14 | 결과물 쇼케이스 — 대시보드 ════ -->
+<!-- ════ 14 | 쇼케이스 ════ -->
 <div class="slide" id="s14">
   <div class="tb">
     <div style="display:flex;align-items:center;gap:12px;">
@@ -853,31 +761,28 @@
           <div class="showcase-title">마케팅 채널 성과</div>
         </div>
         <div class="showcase-body">
-          <svg width="100%" height="160" viewBox="0 0 240 160">
-            <!-- KPI cards -->
-            <rect x="4" y="4" width="70" height="40" rx="4" fill="#1a1a1a" stroke="#2a2a2a"/>
-            <text x="12" y="18" font-size="8" fill="#666" font-family="Pretendard,sans-serif">ROI</text>
-            <text x="12" y="34" font-size="14" font-weight="700" fill="#35c995" font-family="Pretendard,sans-serif">342%</text>
-            <rect x="82" y="4" width="70" height="40" rx="4" fill="#1a1a1a" stroke="#2a2a2a"/>
-            <text x="90" y="18" font-size="8" fill="#666" font-family="Pretendard,sans-serif">CVR</text>
-            <text x="90" y="34" font-size="14" font-weight="700" fill="#fff" font-family="Pretendard,sans-serif">3.2%</text>
-            <rect x="160" y="4" width="76" height="40" rx="4" fill="#1a1a1a" stroke="#2a2a2a"/>
-            <text x="168" y="18" font-size="8" fill="#666" font-family="Pretendard,sans-serif">매출</text>
-            <text x="168" y="34" font-size="14" font-weight="700" fill="#fff" font-family="Pretendard,sans-serif">₩2.4억</text>
-            <!-- Line chart -->
-            <rect x="4" y="52" width="232" height="70" rx="4" fill="#1a1a1a" stroke="#2a2a2a"/>
-            <polyline points="20,108 58,90 96,80 134,95 172,70 210,78" fill="none" stroke="#FF7B35" stroke-width="2"/>
-            <polyline points="20,115 58,110 96,100 134,108 172,95 210,105" fill="none" stroke="#4A7AB5" stroke-width="1.5" stroke-dasharray="3 2"/>
-            <!-- Bar chart -->
-            <rect x="4" y="130" width="108" height="26" rx="4" fill="#1a1a1a" stroke="#2a2a2a"/>
-            <rect x="12" y="137" width="18" height="13" rx="1" fill="#FF7B35" opacity="0.7"/>
-            <rect x="34" y="140" width="18" height="10" rx="1" fill="#666"/>
-            <rect x="56" y="138" width="18" height="12" rx="1" fill="#666"/>
-            <rect x="78" y="142" width="18" height="8" rx="1" fill="#666"/>
-            <!-- Pie -->
-            <rect x="120" y="130" width="116" height="26" rx="4" fill="#1a1a1a" stroke="#2a2a2a"/>
-            <circle cx="140" cy="143" r="10" fill="none" stroke="#333" stroke-width="8"/>
-            <circle cx="140" cy="143" r="10" fill="none" stroke="#FF7B35" stroke-width="8" stroke-dasharray="19 44" stroke-dashoffset="0" transform="rotate(-90 140 143)"/>
+          <svg width="220" height="140" viewBox="0 0 220 140">
+            <rect x="4" y="4" width="64" height="36" rx="3" fill="#1a1a1a" stroke="#252525"/>
+            <text x="12" y="17" font-size="7.5" fill="#555" font-family="Pretendard,sans-serif">ROI</text>
+            <text x="12" y="31" font-size="13" font-weight="500" fill="#ddd" font-family="Pretendard,sans-serif">342%</text>
+            <rect x="74" y="4" width="64" height="36" rx="3" fill="#1a1a1a" stroke="#252525"/>
+            <text x="82" y="17" font-size="7.5" fill="#555" font-family="Pretendard,sans-serif">CVR</text>
+            <text x="82" y="31" font-size="13" font-weight="500" fill="#ddd" font-family="Pretendard,sans-serif">3.2%</text>
+            <rect x="144" y="4" width="72" height="36" rx="3" fill="#1a1a1a" stroke="#252525"/>
+            <text x="152" y="17" font-size="7.5" fill="#555" font-family="Pretendard,sans-serif">매출</text>
+            <text x="152" y="31" font-size="13" font-weight="500" fill="#ddd" font-family="Pretendard,sans-serif">₩2.4억</text>
+            <rect x="4" y="46" width="212" height="56" rx="3" fill="#1a1a1a" stroke="#252525"/>
+            <line x1="14" y1="96" x2="208" y2="96" stroke="#222" stroke-width="1"/>
+            <polyline points="18,92 50,78 82,70 114,82 146,62 178,68 200,65" fill="none" stroke="#ccc" stroke-width="1.5"/>
+            <polyline points="18,95 50,92 82,86 114,90 146,82 178,88 200,87" fill="none" stroke="#444" stroke-width="1" stroke-dasharray="2 2"/>
+            <rect x="4" y="108" width="100" height="28" rx="3" fill="#1a1a1a" stroke="#252525"/>
+            <rect x="10" y="116" width="14" height="14" rx="1" fill="#aaa"/>
+            <rect x="28" y="119" width="14" height="11" rx="1" fill="#444"/>
+            <rect x="46" y="117" width="14" height="13" rx="1" fill="#444"/>
+            <rect x="64" y="121" width="14" height="9" rx="1" fill="#444"/>
+            <rect x="110" y="108" width="106" height="28" rx="3" fill="#1a1a1a" stroke="#252525"/>
+            <circle cx="128" cy="122" r="10" fill="none" stroke="#222" stroke-width="8"/>
+            <circle cx="128" cy="122" r="10" fill="none" stroke="#aaa" stroke-width="8" stroke-dasharray="16 46" stroke-dashoffset="0" transform="rotate(-90 128 122)"/>
           </svg>
         </div>
         <div class="showcase-part">→ P05 CH01에서 제작</div>
@@ -889,63 +794,56 @@
           <div class="showcase-title">A/B 테스트 분석</div>
         </div>
         <div class="showcase-body">
-          <svg width="100%" height="160" viewBox="0 0 240 160">
-            <!-- A/B comparison bars -->
-            <rect x="4" y="4" width="112" height="80" rx="4" fill="#1a1a1a" stroke="#2a2a2a"/>
-            <text x="12" y="18" font-size="8" fill="#888" font-family="Pretendard,sans-serif">Control (A)</text>
-            <rect x="12" y="28" width="90" height="14" rx="2" fill="#333"/>
-            <rect x="12" y="28" width="62" height="14" rx="2" fill="#4A7AB5" opacity="0.8"/>
-            <text x="12" y="56" font-size="20" font-weight="800" fill="#fff" font-family="Pretendard,sans-serif">2.1%</text>
-            <text x="12" y="72" font-size="9" fill="#666" font-family="Pretendard,sans-serif">CVR</text>
-
-            <rect x="124" y="4" width="112" height="80" rx="4" fill="#1a1a1a" stroke="rgba(53,201,149,0.3)"/>
-            <text x="132" y="18" font-size="8" fill="#35c995" font-family="Pretendard,sans-serif">Variant (B) ★</text>
-            <rect x="132" y="28" width="90" height="14" rx="2" fill="#333"/>
-            <rect x="132" y="28" width="80" height="14" rx="2" fill="#35c995" opacity="0.8"/>
-            <text x="132" y="56" font-size="20" font-weight="800" fill="#35c995" font-family="Pretendard,sans-serif">2.7%</text>
-            <text x="132" y="72" font-size="9" fill="#35c995" font-family="Pretendard,sans-serif">+28.6% ↑</text>
-
-            <!-- Stats significance -->
-            <rect x="4" y="92" width="232" height="64" rx="4" fill="#1a1a1a" stroke="#2a2a2a"/>
-            <text x="12" y="108" font-size="8" fill="#666" font-family="Pretendard,sans-serif">통계적 유의성</text>
-            <text x="12" y="124" font-size="13" font-weight="700" fill="#35c995" font-family="Pretendard,sans-serif">p = 0.032</text>
-            <text x="12" y="140" font-size="9" fill="#888" font-family="Pretendard,sans-serif">95% 신뢰구간 · 유의미한 차이</text>
-            <rect x="140" y="100" width="88" height="16" rx="2" fill="#222"/>
-            <rect x="140" y="100" width="72" height="16" rx="2" fill="#35c995" opacity="0.3"/>
-            <text x="144" y="112" font-size="8" fill="#35c995" font-family="Pretendard,sans-serif">Confidence: 96.8%</text>
+          <svg width="220" height="140" viewBox="0 0 220 140">
+            <rect x="4" y="4" width="104" height="72" rx="3" fill="#1a1a1a" stroke="#252525"/>
+            <text x="12" y="18" font-size="7.5" fill="#555" font-family="Pretendard,sans-serif">Control (A)</text>
+            <rect x="12" y="24" width="84" height="10" rx="1" fill="#222"/>
+            <rect x="12" y="24" width="56" height="10" rx="1" fill="#555"/>
+            <text x="12" y="52" font-size="18" font-weight="300" fill="#aaa" font-family="Pretendard,sans-serif">2.1%</text>
+            <text x="12" y="66" font-size="8" fill="#444" font-family="Pretendard,sans-serif">CVR</text>
+            <rect x="114" y="4" width="102" height="72" rx="3" fill="#1e1e1e" stroke="#333"/>
+            <text x="122" y="18" font-size="7.5" fill="#888" font-family="Pretendard,sans-serif">Variant (B) ★</text>
+            <rect x="122" y="24" width="84" height="10" rx="1" fill="#222"/>
+            <rect x="122" y="24" width="76" height="10" rx="1" fill="#888"/>
+            <text x="122" y="52" font-size="18" font-weight="400" fill="#fff" font-family="Pretendard,sans-serif">2.7%</text>
+            <text x="122" y="66" font-size="8" fill="#aaa" font-family="Pretendard,sans-serif">+28.6% ↑</text>
+            <rect x="4" y="82" width="212" height="54" rx="3" fill="#1a1a1a" stroke="#252525"/>
+            <text x="12" y="97" font-size="7.5" fill="#555" font-family="Pretendard,sans-serif">통계적 유의성</text>
+            <text x="12" y="113" font-size="12" font-weight="400" fill="#ccc" font-family="Pretendard,sans-serif">p = 0.032</text>
+            <text x="12" y="127" font-size="7.5" fill="#555" font-family="Pretendard,sans-serif">95% 신뢰구간 · 유의미한 차이</text>
+            <rect x="130" y="92" width="78" height="12" rx="1" fill="#222"/>
+            <rect x="130" y="92" width="64" height="12" rx="1" fill="#444"/>
+            <text x="134" y="102" font-size="7" fill="#888" font-family="Pretendard,sans-serif">Confidence: 96.8%</text>
           </svg>
         </div>
         <div class="showcase-part">→ P05 CH02에서 제작</div>
       </div>
-      <!-- D3.js / Interactive -->
+      <!-- D3.js -->
       <div class="showcase-cell" style="border-left:1px solid var(--border);">
         <div class="showcase-header">
           <div class="showcase-label">P04 · CH01</div>
           <div class="showcase-title">D3.js 인터랙티브 아트</div>
         </div>
         <div class="showcase-body">
-          <svg width="100%" height="160" viewBox="0 0 240 160">
-            <!-- Network chart -->
-            <circle cx="120" cy="80" r="14" fill="#1a1a1a" stroke="#FF7B35" stroke-width="2"/>
-            <circle cx="60" cy="40" r="9" fill="#1a1a1a" stroke="#4A7AB5" stroke-width="1.5"/>
-            <circle cx="180" cy="40" r="11" fill="#1a1a1a" stroke="#4A7AB5" stroke-width="1.5"/>
-            <circle cx="40" cy="110" r="7" fill="#1a1a1a" stroke="#4A8A6A" stroke-width="1.5"/>
-            <circle cx="200" cy="110" r="8" fill="#1a1a1a" stroke="#4A8A6A" stroke-width="1.5"/>
-            <circle cx="120" cy="140" r="6" fill="#1a1a1a" stroke="#7B6FA0" stroke-width="1.5"/>
-            <line x1="120" y1="80" x2="60" y2="40" stroke="#333" stroke-width="1.5"/>
-            <line x1="120" y1="80" x2="180" y2="40" stroke="#333" stroke-width="1.5"/>
-            <line x1="120" y1="80" x2="40" y2="110" stroke="#333" stroke-width="1.5"/>
-            <line x1="120" y1="80" x2="200" y2="110" stroke="#333" stroke-width="1.5"/>
-            <line x1="120" y1="80" x2="120" y2="140" stroke="#333" stroke-width="1.5"/>
-            <line x1="60" y1="40" x2="40" y2="110" stroke="#222" stroke-width="1"/>
-            <line x1="180" y1="40" x2="200" y2="110" stroke="#222" stroke-width="1"/>
-            <!-- Globe hint -->
-            <circle cx="195" cy="135" r="18" fill="none" stroke="#333" stroke-width="1"/>
-            <ellipse cx="195" cy="135" rx="8" ry="18" fill="none" stroke="#444" stroke-width="0.8"/>
-            <line x1="177" y1="135" x2="213" y2="135" stroke="#444" stroke-width="0.8"/>
-            <path d="M 195 117 Q 210 125 210 135 Q 210 145 195 153" fill="none" stroke="#FF7B35" stroke-width="1.5" opacity="0.8"/>
-            <text x="30" y="158" font-size="8" fill="#555" font-family="Pretendard,sans-serif">Network Chart</text>
-            <text x="172" y="158" font-size="8" fill="#555" font-family="Pretendard,sans-serif">3D Globe</text>
+          <svg width="220" height="140" viewBox="0 0 220 140">
+            <circle cx="110" cy="70" r="12" fill="#1a1a1a" stroke="#555" stroke-width="1.5"/>
+            <circle cx="54" cy="34" r="8" fill="#1a1a1a" stroke="#444" stroke-width="1.2"/>
+            <circle cx="166" cy="34" r="9" fill="#1a1a1a" stroke="#444" stroke-width="1.2"/>
+            <circle cx="34" cy="100" r="6" fill="#1a1a1a" stroke="#333" stroke-width="1.2"/>
+            <circle cx="186" cy="100" r="7" fill="#1a1a1a" stroke="#333" stroke-width="1.2"/>
+            <circle cx="110" cy="126" r="5" fill="#1a1a1a" stroke="#333" stroke-width="1.2"/>
+            <line x1="110" y1="70" x2="54" y2="34" stroke="#2a2a2a" stroke-width="1.2"/>
+            <line x1="110" y1="70" x2="166" y2="34" stroke="#2a2a2a" stroke-width="1.2"/>
+            <line x1="110" y1="70" x2="34" y2="100" stroke="#2a2a2a" stroke-width="1.2"/>
+            <line x1="110" y1="70" x2="186" y2="100" stroke="#2a2a2a" stroke-width="1.2"/>
+            <line x1="110" y1="70" x2="110" y2="126" stroke="#2a2a2a" stroke-width="1.2"/>
+            <line x1="54" y1="34" x2="34" y2="100" stroke="#1e1e1e" stroke-width="1"/>
+            <line x1="166" y1="34" x2="186" y2="100" stroke="#1e1e1e" stroke-width="1"/>
+            <circle cx="180" cy="115" r="16" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+            <ellipse cx="180" cy="115" rx="7" ry="16" fill="none" stroke="#333" stroke-width="0.8"/>
+            <line x1="164" y1="115" x2="196" y2="115" stroke="#333" stroke-width="0.8"/>
+            <text x="10" y="138" font-size="7.5" fill="#444" font-family="Pretendard,sans-serif">Network Chart</text>
+            <text x="155" y="138" font-size="7.5" fill="#444" font-family="Pretendard,sans-serif">3D Globe</text>
           </svg>
         </div>
         <div class="showcase-part">→ P04 CH01에서 제작</div>
@@ -964,35 +862,33 @@
     <span class="tb-num">15 — 16</span>
   </div>
   <div class="body">
-    <div style="display:flex;flex-direction:column;width:100%;">
-      <div class="takeaway-grid" style="grid-template-columns:1fr 1fr 1fr 1fr;">
-        <div class="takeaway-cell">
-          <div>
-            <div class="takeaway-n" style="font-size:64px;color:#7B6FA0;">①</div>
-            <div class="takeaway-title" style="font-size:17px;margin-top:16px;">AI + 시각화 =<br>자동화</div>
-          </div>
-          <div class="takeaway-body" style="font-size:13px;">수작업 3~4시간을 Claude Code로 5분으로. 반복 작업을 파이프라인으로.</div>
+    <div class="takeaway-grid" style="grid-template-columns:1fr 1fr 1fr 1fr;">
+      <div class="takeaway-cell">
+        <div class="takeaway-n">①</div>
+        <div>
+          <div class="takeaway-title">AI + 시각화 =<br>자동화</div>
+          <div class="takeaway-body">수작업 반복 사이클을 Claude Code 파이프라인으로 구조화합니다.</div>
         </div>
-        <div class="takeaway-cell">
-          <div>
-            <div class="takeaway-n" style="font-size:64px;color:#4A7AB5;">②</div>
-            <div class="takeaway-title" style="font-size:17px;margin-top:16px;">에디터 채팅이<br>기본 환경</div>
-          </div>
-          <div class="takeaway-body" style="font-size:13px;">Antigravity + Claude Code 익스텐션. 자연어로 요청 → 파일 자동 생성.</div>
+      </div>
+      <div class="takeaway-cell">
+        <div class="takeaway-n">②</div>
+        <div>
+          <div class="takeaway-title">에디터 채팅이<br>기본 환경</div>
+          <div class="takeaway-body">Antigravity + Claude Code 익스텐션. 자연어 요청 → 파일 자동 생성.</div>
         </div>
-        <div class="takeaway-cell">
-          <div>
-            <div class="takeaway-n" style="font-size:64px;color:#4A8A6A;">③</div>
-            <div class="takeaway-title" style="font-size:17px;margin-top:16px;">질문이 차트보다<br>먼저</div>
-          </div>
-          <div class="takeaway-body" style="font-size:13px;">좋은 시각화 5원칙: 질문 → 인사이트 제목 → 강조 하나 → 불필요 제거 → 맥락.</div>
+      </div>
+      <div class="takeaway-cell">
+        <div class="takeaway-n">③</div>
+        <div>
+          <div class="takeaway-title">질문이 차트보다<br>먼저</div>
+          <div class="takeaway-body">좋은 시각화 5원칙: 질문 → 인사이트 제목 → 강조 하나 → 불필요 제거 → 맥락.</div>
         </div>
-        <div class="takeaway-cell">
-          <div>
-            <div class="takeaway-n" style="font-size:64px;color:#B5724A;">④</div>
-            <div class="takeaway-title" style="font-size:17px;margin-top:16px;">결과물이<br>구체적</div>
-          </div>
-          <div class="takeaway-body" style="font-size:13px;">강의 완주 시 대시보드 × 5, 자동화 파이프라인, 웹 포트폴리오 완성.</div>
+      </div>
+      <div class="takeaway-cell">
+        <div class="takeaway-n">④</div>
+        <div>
+          <div class="takeaway-title">결과물이<br>구체적</div>
+          <div class="takeaway-body">강의 완주 시 대시보드 × 5, 자동화 파이프라인, 웹 포트폴리오 완성.</div>
         </div>
       </div>
     </div>
@@ -1001,50 +897,20 @@
 
 <!-- ════ 16 | NEXT ════ -->
 <div class="slide" id="s16">
-  <div class="body" style="flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#0a0a0a;gap:0;">
-    <!-- Next clip badge -->
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:36px;">
-      <div style="width:1px;height:20px;background:#333;"></div>
-      <span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#555;">Next</span>
-      <div style="width:1px;height:20px;background:#333;"></div>
+  <div class="body" style="flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#0a0a0a;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:32px;">
+      <div style="width:40px;height:1px;background:#222;"></div>
+      <span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#333;">Next</span>
+      <div style="width:40px;height:1px;background:#222;"></div>
     </div>
-    <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#555;margin-bottom:16px;">P01 · CH02</div>
-    <div style="font-size:clamp(28px,4vw,48px);font-weight:300;color:var(--white);line-height:1.2;letter-spacing:-0.02em;">바이브코딩 환경 세팅</div>
-    <div style="font-size:18px;font-weight:300;color:rgba(255,255,255,0.35);margin-top:14px;">Claude Code 설치 · Antigravity 에디터 연결</div>
-    <div style="display:flex;align-items:center;gap:24px;margin-top:56px;">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <!-- Claude Code icon -->
-        <svg width="28" height="28" viewBox="0 0 28 28">
-          <g transform="translate(14,14)">
-            <polygon points="0,-11 3.8,-5.5 9.5,-5.5 5.7,0 9.5,5.5 3.8,5.5 0,11 -3.8,5.5 -9.5,5.5 -5.7,0 -9.5,-5.5 -3.8,-5.5" fill="none" stroke="#FF7B35" stroke-width="1.2" opacity="0.7"/>
-            <circle cx="0" cy="0" r="3" fill="#FF7B35"/>
-          </g>
-        </svg>
-        <span style="font-size:13px;color:#555;">Claude Code</span>
-      </div>
-      <span style="color:#333;font-size:18px;">+</span>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <!-- Antigravity icon -->
-        <svg width="28" height="28" viewBox="0 0 28 28">
-          <rect x="3" y="6" width="22" height="16" rx="3" fill="none" stroke="#888" stroke-width="1.5"/>
-          <line x1="3" y1="11" x2="25" y2="11" stroke="#444" stroke-width="1"/>
-          <circle cx="6.5" cy="8.5" r="1.2" fill="#EF7D86"/>
-          <circle cx="10" cy="8.5" r="1.2" fill="#FFE66D"/>
-          <circle cx="13.5" cy="8.5" r="1.2" fill="#35c995"/>
-          <rect x="7" y="14" width="8" height="5" rx="1" fill="#1a1a1a"/>
-          <line x1="18" y1="15" x2="22" y2="15" stroke="#555" stroke-width="1"/>
-          <line x1="18" y1="17" x2="21" y2="17" stroke="#555" stroke-width="1"/>
-          <line x1="18" y1="19" x2="22" y2="19" stroke="#555" stroke-width="1"/>
-        </svg>
-        <span style="font-size:13px;color:#555;">Antigravity</span>
-      </div>
-    </div>
+    <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#444;margin-bottom:14px;">P01 · CH02</div>
+    <div style="font-size:40px;font-weight:300;color:var(--white);line-height:1.25;letter-spacing:-0.02em;">바이브코딩 환경 세팅</div>
+    <div style="font-size:16px;font-weight:300;color:rgba(255,255,255,0.25);margin-top:12px;">Claude Code 설치 · Antigravity 에디터 연결</div>
   </div>
 </div>
 
-</div><!-- /deck -->
+</div>
 
-<!-- ════ Navigation ════ -->
 <div class="nav">
   <span class="nav-ctr" id="nav-ctr">1 / 16</span>
   <button class="nav-btn" onclick="prev()">←</button>
@@ -1052,56 +918,48 @@
 </div>
 <div class="progress" id="progress"></div>
 <div class="clip-dots" id="clip-dots">
-  <div class="clip-dot active" title="CH01-01 강의 개요"></div>
-  <div class="clip-dot" title="CH01-02 왜 AI+시각화"></div>
-  <div class="clip-dot" title="CH01-03 시각화 원칙"></div>
-  <div class="clip-dot" title="CH01-04 사례 미리보기"></div>
+  <div class="clip-dot active"></div>
+  <div class="clip-dot"></div>
+  <div class="clip-dot"></div>
+  <div class="clip-dot"></div>
 </div>
 
 <script>
   const TOTAL = 16;
-  const CLIP_MAP = { 1:0, 2:0, 3:0, 4:0, 5:1, 6:1, 7:1, 8:1, 9:2, 10:2, 11:2, 12:2, 13:3, 14:3, 15:3, 16:3 };
+  const CLIP_MAP = { 1:0,2:0,3:0,4:0, 5:1,6:1,7:1,8:1, 9:2,10:2,11:2,12:2, 13:3,14:3,15:3,16:3 };
   let cur = 1;
 
   function scale() {
     const s = Math.min(window.innerWidth / 1280, window.innerHeight / 800);
-    document.querySelector('.deck').style.transform = `scale(${s})`;
-    document.querySelector('.deck').style.top = `${(window.innerHeight - 800 * s) / 2}px`;
-    document.querySelector('.deck').style.left = `${(window.innerWidth - 1280 * s) / 2}px`;
+    const d = document.querySelector('.deck');
+    d.style.transform = `scale(${s})`;
+    d.style.top = `${(window.innerHeight - 800*s)/2}px`;
+    d.style.left = `${(window.innerWidth - 1280*s)/2}px`;
   }
   scale(); window.addEventListener('resize', scale);
 
   function show(n) {
     if (n < 1 || n > TOTAL) return;
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-    document.getElementById('s' + n).classList.add('active');
+    document.getElementById('s'+n).classList.add('active');
     document.getElementById('nav-ctr').textContent = n + ' / ' + TOTAL;
-    document.getElementById('progress').style.width = (n / TOTAL * 100) + '%';
-    document.querySelectorAll('.clip-dot').forEach((d, i) => d.classList.toggle('active', i === CLIP_MAP[n]));
+    document.getElementById('progress').style.width = (n/TOTAL*100)+'%';
+    document.querySelectorAll('.clip-dot').forEach((d,i) => d.classList.toggle('active', i===CLIP_MAP[n]));
     cur = n;
-    history.replaceState(null, '', '#s' + n);
   }
-  function next() { show(cur + 1); }
-  function prev() { show(cur - 1); }
+  function next() { show(cur+1); }
+  function prev() { show(cur-1); }
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
-    if (e.key >= '1' && e.key <= '9') show(+e.key);
+    if (e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); next(); }
+    if (e.key==='ArrowLeft') { e.preventDefault(); prev(); }
   });
-
-  // Touch/swipe
   let tx = 0;
   document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
   document.addEventListener('touchend', e => {
-    const dx = tx - e.changedTouches[0].clientX;
-    if (Math.abs(dx) > 40) dx > 0 ? next() : prev();
+    if (Math.abs(tx - e.changedTouches[0].clientX) > 40) tx > e.changedTouches[0].clientX ? next() : prev();
   });
-
-  // URL hash init
-  const hash = location.hash.replace('#s', '');
-  if (hash && +hash >= 1 && +hash <= TOTAL) show(+hash);
-  else show(1);
+  show(1);
 </script>
 </body>
 </html>
