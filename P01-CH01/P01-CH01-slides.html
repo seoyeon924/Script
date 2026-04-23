@@ -167,73 +167,91 @@
 
 <!-- ════ 01 | CHAPTER TITLE ════ -->
 <div class="slide active" id="s1">
-  <div class="body" style="position:relative;flex-direction:column;justify-content:space-between;padding:52px 72px;background:#EDEBE7;overflow:hidden;">
+  <div class="body" style="background:#EDEBE7;overflow:hidden;">
 
-    <!-- 우측 애니메이션 그래프 -->
-    <div style="position:absolute;right:0;top:0;width:52%;height:100%;overflow:hidden;opacity:0.15;pointer-events:none;">
-      <svg width="100%" height="100%" viewBox="0 0 560 800" preserveAspectRatio="xMidYMid meet">
-        <line x1="30" y1="240" x2="530" y2="240" stroke="#2A2520" stroke-width="0.4"/>
-        <line x1="30" y1="180" x2="530" y2="180" stroke="#2A2520" stroke-width="0.4"/>
-        <line x1="30" y1="120" x2="530" y2="120" stroke="#2A2520" stroke-width="0.4"/>
-        <line x1="30" y1="60" x2="530" y2="60" stroke="#2A2520" stroke-width="0.4"/>
-        <line x1="30" y1="30" x2="30" y2="250" stroke="#2A2520" stroke-width="0.4"/>
-        <rect class="anim-bar1" x="50"  width="38" height="40" y="200" rx="1" fill="#2A2520"/>
-        <rect class="anim-bar2" x="100" width="38" height="70" y="170" rx="1" fill="#2A2520"/>
-        <rect class="anim-bar3" x="150" width="38" height="55" y="185" rx="1" fill="#2A2520"/>
-        <rect class="anim-bar4" x="200" width="38" height="85" y="155" rx="1" fill="#2A2520"/>
-        <rect class="anim-bar5" x="250" width="38" height="50" y="190" rx="1" fill="#2A2520"/>
-        <rect class="anim-bar6" x="300" width="38" height="100" y="140" rx="1" fill="#2A2520"/>
-        <rect class="anim-bar7" x="350" width="38" height="65" y="175" rx="1" fill="#2A2520"/>
-        <rect class="anim-bar8" x="400" width="38" height="80" y="160" rx="1" fill="#2A2520"/>
-        <line x1="30" y1="240" x2="470" y2="240" stroke="#2A2520" stroke-width="1"/>
-        <polyline class="anim-line"
-          points="69,195 119,160 169,175 219,142 269,185 319,128 369,162 419,148"
-          fill="none" stroke="#2A2520" stroke-width="1.5"
-          stroke-dasharray="600" stroke-dashoffset="600"/>
-        <circle class="anim-dot" cx="419" cy="148" r="3" fill="#2A2520"/>
-        <g transform="translate(110,450)">
-          <circle cx="0" cy="0" r="55" fill="none" stroke="#2C2720" stroke-width="24"/>
-          <circle cx="0" cy="0" r="55" fill="none" stroke="#2A2520" stroke-width="24"
-            stroke-dasharray="138 207" stroke-dashoffset="0" transform="rotate(-90)"/>
-          <circle cx="0" cy="0" r="55" fill="none" stroke="#666" stroke-width="24"
-            stroke-dasharray="86 259" stroke-dashoffset="-138" transform="rotate(-90)"/>
-          <circle cx="0" cy="0" r="40" fill="#EDEBE7"/>
-        </g>
-        <g transform="translate(290,390)">
-          <line x1="0" y1="120" x2="200" y2="120" stroke="#2C2720" stroke-width="0.8"/>
-          <line x1="0" y1="80" x2="200" y2="80" stroke="#2C2720" stroke-width="0.8"/>
-          <line x1="0" y1="40" x2="200" y2="40" stroke="#2C2720" stroke-width="0.8"/>
-          <polyline points="10,105 40,80 70,90 100,55 130,70 160,42 190,58"
-            fill="none" stroke="#AAA8A4" stroke-width="1.5"/>
-          <polyline points="10,112 40,100 70,108 100,88 130,96 160,78 190,85"
-            fill="none" stroke="#444" stroke-width="1" stroke-dasharray="2 2"/>
-        </g>
+    <!-- 왼쪽: 텍스트 콘텐츠 -->
+    <div style="width:52%;display:flex;flex-direction:column;justify-content:space-between;padding:56px 72px;">
+
+      <!-- 상단: 로고 + 챕터 -->
+      <div style="display:flex;align-items:center;">
+        <img src="../assets/fastcampuslogo.png" style="height:40px;width:auto;">
+        <div style="width:1px;height:16px;background:rgba(0,0,0,0.15);margin:0 20px;flex-shrink:0;"></div>
+        <span style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(0,0,0,0.38);font-weight:400;">P01 · CH01</span>
+      </div>
+
+      <!-- 중앙: 타이틀 -->
+      <div>
+        <div style="font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:#7B6FA0;margin-bottom:28px;">데이터 시각화 기초</div>
+        <div style="font-size:58px;font-weight:300;color:#1C1A18;line-height:1.12;letter-spacing:-0.03em;">데이터 시각화의<br>기초 관점 잡기</div>
+        <div style="margin-top:24px;font-size:16px;font-weight:300;color:rgba(0,0,0,0.42);line-height:1.9;letter-spacing:0.01em;">AI + 시각화 &nbsp;·&nbsp; 워크플로우 &nbsp;·&nbsp; 원칙 &nbsp;·&nbsp; 사례</div>
+      </div>
+
+      <!-- 하단: 클립 -->
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(0,0,0,0.3);">4 Clips</div>
+        <div style="display:flex;gap:6px;">
+          <span style="font-size:10px;letter-spacing:0.1em;color:#7B6FA0;border:1px solid rgba(123,111,160,0.4);padding:3px 11px;">01</span>
+          <span style="font-size:10px;letter-spacing:0.1em;color:rgba(0,0,0,0.22);border:1px solid rgba(0,0,0,0.1);padding:3px 11px;">02</span>
+          <span style="font-size:10px;letter-spacing:0.1em;color:rgba(0,0,0,0.22);border:1px solid rgba(0,0,0,0.1);padding:3px 11px;">03</span>
+          <span style="font-size:10px;letter-spacing:0.1em;color:rgba(0,0,0,0.22);border:1px solid rgba(0,0,0,0.1);padding:3px 11px;">04</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 오른쪽: 정적 차트 일러스트 -->
+    <div style="flex:1;background:#E4E2DE;border-left:1px solid rgba(0,0,0,0.07);display:flex;align-items:center;justify-content:center;padding:52px 48px;">
+      <svg width="460" height="460" viewBox="0 0 460 460" style="display:block;overflow:visible;">
+
+        <!-- Bar chart -->
+        <text x="0" y="13" font-size="9" fill="#AAA" font-family="Pretendard,sans-serif" letter-spacing="0.12em">BAR</text>
+        <line x1="0" y1="155" x2="195" y2="155" stroke="#CCC" stroke-width="0.8"/>
+        <line x1="0" y1="25" x2="0" y2="155" stroke="#CCC" stroke-width="0.8"/>
+        <rect x="8"   y="102" width="20" height="53" rx="2" fill="#CCCCCC"/>
+        <rect x="36"  y="78"  width="20" height="77" rx="2" fill="#CCCCCC"/>
+        <rect x="64"  y="58"  width="20" height="97" rx="2" fill="#7B6FA0"/>
+        <rect x="92"  y="84"  width="20" height="71" rx="2" fill="#CCCCCC"/>
+        <rect x="120" y="45"  width="20" height="110" rx="2" fill="#CCCCCC"/>
+        <rect x="148" y="70"  width="20" height="85" rx="2" fill="#CCCCCC"/>
+        <text x="74" y="51" font-size="8" fill="#7B6FA0" text-anchor="middle" font-family="Pretendard,sans-serif">▲</text>
+
+        <!-- Line chart -->
+        <text x="245" y="13" font-size="9" fill="#AAA" font-family="Pretendard,sans-serif" letter-spacing="0.12em">LINE</text>
+        <line x1="245" y1="155" x2="455" y2="155" stroke="#CCC" stroke-width="0.8"/>
+        <line x1="245" y1="25"  x2="245" y2="155" stroke="#CCC" stroke-width="0.8"/>
+        <line x1="245" y1="105" x2="455" y2="105" stroke="#DDDBD8" stroke-width="0.7"/>
+        <line x1="245" y1="68"  x2="455" y2="68"  stroke="#DDDBD8" stroke-width="0.7"/>
+        <polyline points="255,138 288,112 321,120 354,82 387,95 420,60 453,72"
+          fill="none" stroke="#7B6FA0" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="420" cy="60" r="4" fill="#7B6FA0"/>
+        <polyline points="255,148 288,138 321,143 354,128 387,133 420,118 453,122"
+          fill="none" stroke="#BBBBBB" stroke-width="1.5" stroke-dasharray="4 3" stroke-linejoin="round"/>
+
+        <!-- Donut -->
+        <text x="75" y="215" font-size="9" fill="#AAA" font-family="Pretendard,sans-serif" letter-spacing="0.12em" text-anchor="middle">DONUT</text>
+        <circle cx="75" cy="300" r="52" fill="none" stroke="#DDDBD8" stroke-width="22"/>
+        <circle cx="75" cy="300" r="52" fill="none" stroke="#7B6FA0" stroke-width="22"
+          stroke-dasharray="130 197" stroke-dashoffset="0" transform="rotate(-90 75 300)"/>
+        <circle cx="75" cy="300" r="52" fill="none" stroke="#BBBBBB" stroke-width="22"
+          stroke-dasharray="85 242" stroke-dashoffset="-130" transform="rotate(-90 75 300)"/>
+        <circle cx="75" cy="300" r="36" fill="#E4E2DE"/>
+        <text x="75" y="305" font-size="15" font-weight="300" fill="#666" text-anchor="middle" font-family="Pretendard,sans-serif">66%</text>
+
+        <!-- Scatter -->
+        <text x="350" y="215" font-size="9" fill="#AAA" font-family="Pretendard,sans-serif" letter-spacing="0.12em" text-anchor="middle">SCATTER</text>
+        <line x1="250" y1="400" x2="455" y2="400" stroke="#CCC" stroke-width="0.8"/>
+        <line x1="250" y1="230" x2="250" y2="400" stroke="#CCC" stroke-width="0.8"/>
+        <circle cx="275" cy="372" r="5"  fill="#CCCCCC" opacity="0.85"/>
+        <circle cx="300" cy="348" r="7"  fill="#CCCCCC" opacity="0.8"/>
+        <circle cx="325" cy="310" r="5"  fill="#7B6FA0" opacity="0.9"/>
+        <circle cx="350" cy="342" r="9"  fill="#CCCCCC" opacity="0.7"/>
+        <circle cx="375" cy="282" r="6"  fill="#CCCCCC" opacity="0.85"/>
+        <circle cx="400" cy="298" r="10" fill="#CCCCCC" opacity="0.6"/>
+        <circle cx="290" cy="385" r="4"  fill="#CCCCCC" opacity="0.75"/>
+        <circle cx="440" cy="260" r="5"  fill="#CCCCCC" opacity="0.8"/>
+
       </svg>
     </div>
 
-    <!-- 상단: FastCampus 로고 + 챕터 정보 -->
-    <div style="position:relative;z-index:2;display:flex;align-items:center;gap:0;">
-      <img src="../assets/fastcampuslogo.png" style="height:44px;width:auto;">
-      <div style="width:1px;height:18px;background:rgba(0,0,0,0.15);margin:0 18px;flex-shrink:0;"></div>
-      <span style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(0,0,0,0.4);font-weight:400;">P01 · CH01</span>
-    </div>
-
-    <!-- 중앙: 타이틀 -->
-    <div style="position:relative;z-index:2;">
-      <div style="font-size:54px;font-weight:300;color:var(--white);line-height:1.15;letter-spacing:-0.025em;">데이터 시각화의<br>기초 관점 잡기</div>
-      <div style="margin-top:16px;font-size:16px;font-weight:300;color:rgba(0,0,0,0.4);">AI + 시각화, 워크플로우, 원칙, 사례</div>
-    </div>
-
-    <!-- 하단: 클립 표시 -->
-    <div style="position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;">
-      <div style="font-size:13px;color:rgba(0,0,0,0.3);font-weight:300;">4 클립</div>
-      <div style="display:flex;gap:6px;">
-        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#7B6FA0;border:1px solid rgba(123,111,160,0.35);padding:3px 10px;">01</span>
-        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.25);border:1px solid #DDDBD8;padding:3px 10px;">02</span>
-        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.25);border:1px solid #DDDBD8;padding:3px 10px;">03</span>
-        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.25);border:1px solid #DDDBD8;padding:3px 10px;">04</span>
-      </div>
-    </div>
   </div>
 </div>
 
