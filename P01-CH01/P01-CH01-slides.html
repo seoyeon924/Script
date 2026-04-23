@@ -68,12 +68,12 @@
   .big-title { font-size: 46px; font-weight: 300; color: var(--white); line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 14px; }
   .body-text { font-size: 17px; color: #888; line-height: 1.85; }
 
-  .row-item { display: flex; align-items: flex-start; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border); }
+  .row-item { display: flex; align-items: center; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border); }
   .row-item:first-child { border-top: 1px solid var(--border); }
-  .row-icon { flex-shrink: 0; opacity: 0.5; margin-top: 2px; }
-  .row-label { font-size: 12px; color: rgba(0,0,0,0.4); letter-spacing: 0.06em; width: 80px; flex-shrink: 0; padding-top: 2px; text-transform: uppercase; line-height: 1.5; }
-  .row-title { font-size: 17px; font-weight: 500; color: var(--white); line-height: 1.35; margin-bottom: 6px; }
-  .row-sub { font-size: 14px; color: #666; line-height: 1.6; }
+  .row-icon { flex-shrink: 0; opacity: 0.5; }
+  .row-label { font-size: 12px; color: rgba(0,0,0,0.4); letter-spacing: 0.06em; width: 110px; flex-shrink: 0; white-space: nowrap; text-transform: uppercase; line-height: 1.5; }
+  .row-title { font-size: 19px; font-weight: 500; color: var(--white); line-height: 1.35; margin-bottom: 6px; }
+  .row-sub { font-size: 15px; color: #666; line-height: 1.6; }
 
   .pipe-wrap { display: flex; flex-direction: column; }
   .pipe-row { display: flex; align-items: center; border-bottom: 1px solid var(--border); padding: 20px 52px; gap: 0; }
@@ -394,7 +394,7 @@
           <rect x="12" y="8" width="3" height="10" rx="0.5" fill="#aaa"/>
           <rect x="17" y="13" width="1.5" height="5" rx="0.3" fill="#888"/>
         </svg>
-        <div class="row-label">데이터<br>분석가</div>
+        <div class="row-label">데이터 분석가</div>
         <div>
           <div class="row-title">반복 집계·시각화 작업을 자동화하고 싶다면</div>
           <div class="row-sub" style="margin-top:5px;">파이프라인으로 구조화해서 요청 한 번에 처리</div>
@@ -406,7 +406,7 @@
           <circle cx="10" cy="10" r="3.5" fill="none" stroke="#aaa" stroke-width="1"/>
           <circle cx="10" cy="10" r="1" fill="#7B6FA0"/>
         </svg>
-        <div class="row-label">마케터 /<br>기획자</div>
+        <div class="row-label">마케터 / 기획자</div>
         <div>
           <div class="row-title">코딩 없이 데이터 기반 리포트를 만들고 싶다면</div>
           <div class="row-sub" style="margin-top:5px;">채널별 ROI, 시계열 분석, 대시보드 자동 생성</div>
