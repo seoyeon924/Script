@@ -68,7 +68,7 @@
   .big-title { font-size: 46px; font-weight: 300; color: var(--white); line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 14px; }
   .body-text { font-size: 17px; color: #888; line-height: 1.85; }
 
-  .row-item { display: flex; align-items: center; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border); }
+  .row-item { display: flex; align-items: flex-start; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border); }
   .row-item:first-child { border-top: 1px solid var(--border); }
   .row-icon { flex-shrink: 0; opacity: 0.5; }
   .row-label { font-size: 12px; color: rgba(0,0,0,0.4); letter-spacing: 0.06em; width: 110px; flex-shrink: 0; white-space: nowrap; text-transform: uppercase; line-height: 1.5; }
@@ -215,7 +215,7 @@
 <!-- ════ 02 | 강사 소개 ════ -->
 <div class="slide" id="s2">
   <div class="tb">
-    <span class="tb-cap">연사 소개</span>
+    <span class="tb-cap"></span>
     <span class="tb-num">2</span>
   </div>
   <div class="body">
@@ -1861,13 +1861,6 @@
   const CLIP_LABELS = ['강의 개요','AI 시각화 사례','원리','마무리'];
   let cur = 1;
 
-  // FastCampus 로고를 모든 .tb 좌측에 삽입
-  document.querySelectorAll('.tb').forEach(tb => {
-    const cap = tb.querySelector('.tb-cap');
-    if (cap) {
-      cap.insertAdjacentHTML('beforebegin', '<img src="../assets/fastcampuslogo.png" style="height:22px;width:auto;flex-shrink:0;margin-right:14px;">');
-    }
-  });
 
   function scale() {
     const s = Math.min(window.innerWidth / 1280, window.innerHeight / 800);
