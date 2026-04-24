@@ -121,9 +121,10 @@ def call_tts(text_chunk, idx):
         "text": text_chunk,
         "model_id": MODEL,
         "voice_settings": {
-            "stability": 0.5,
-            "similarity_boost": 0.8,
-            "style": 0.2,
+            "stability": 0.38,
+            "similarity_boost": 0.58,
+            "style": 0.49,
+            "speed": 1.0,
             "use_speaker_boost": True
         }
     }).encode("utf-8")
