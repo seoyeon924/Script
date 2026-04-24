@@ -197,13 +197,13 @@
     <!-- content top -->
     <div style="position:relative;z-index:2;">
       <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:28px;font-weight:500;">FastCampus Webinar</div>
-      <div style="font-size:clamp(36px,4.6vw,62px);font-weight:300;color:#fff;line-height:1.25;letter-spacing:-0.025em;">AI+데이터 시각화 <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:0.9em;">w. Claude Code</span></div>
+      <div style="font-size:clamp(36px,4.6vw,62px);font-weight:300;color:#fff;line-height:1.25;letter-spacing:-0.025em;">AI+데이터 시각화<br><span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:0.9em;">w. Claude Code</span></div>
     </div>
     <!-- content bottom -->
     <div style="position:relative;z-index:2;display:flex;flex-direction:row;align-items:flex-end;justify-content:space-between;">
       <div style="display:flex;flex-direction:column;gap:0;">
         <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.5;margin-bottom:6px;">데이터 시각화 전문가 전서연에게 배우는</div>
-        <div style="font-size:24px;font-weight:600;color:#fff;line-height:1.3;letter-spacing:-0.02em;">AI 인터랙티브 대시보드 제작 전과정</div>
+        <div style="font-size:24px;font-weight:600;color:#fff;line-height:1.3;letter-spacing:-0.02em;">AI 인터랙티브 데이터 시각화</div>
       </div>
       <div style="text-align:right;flex-shrink:0;margin-left:32px;">
         <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.5;margin-bottom:6px;">DataBridge CEO</div>
@@ -1881,6 +1881,7 @@
 
   function show(n) {
     if (n < 1 || n > TOTAL) return;
+    document.body.style.background = (n === 1) ? '#000' : '';
     const slideId = ORDER[n-1];
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
     const el = document.getElementById('s'+slideId);
