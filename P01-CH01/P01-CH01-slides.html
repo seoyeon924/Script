@@ -187,17 +187,17 @@
 
 <!-- ════ 01 | TITLE ════ -->
 <div class="slide active" id="s1">
-  <div class="body" style="position:relative;flex-direction:column;justify-content:space-between;padding:56px 72px;background:#050606;overflow:hidden;">
-    <!-- bg video -->
-    <video autoplay loop muted playsinline style="position:absolute;right:0;top:0;width:55%;height:100%;object-fit:cover;opacity:0.85;z-index:0;">
+  <div class="body" style="position:relative;flex-direction:column;justify-content:space-between;padding:56px 72px;background:#000;overflow:hidden;">
+    <!-- bg video: full width, dark overlay on top -->
+    <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.35;z-index:0;">
       <source src="../assets/videos/title-bg.mp4" type="video/mp4">
     </video>
-    <!-- overlay gradient: dark → transparent -->
-    <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(5,6,6,0.92) 40%, rgba(5,6,6,0.0) 100%);z-index:1;"></div>
+    <!-- full dark overlay -->
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);z-index:1;"></div>
     <!-- content top -->
     <div style="position:relative;z-index:2;">
       <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:28px;font-weight:500;">FastCampus Webinar</div>
-      <div style="font-size:clamp(36px,4.6vw,62px);font-weight:300;color:#fff;line-height:1.25;letter-spacing:-0.025em;">데이터 시각화 전문가 전서연에게 배우는<br><span style="font-family:'Instrument Serif',serif;font-style:italic;">AI</span>+데이터 시각화 <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:0.9em;">w. Claude Code</span></div>
+      <div style="font-size:clamp(36px,4.6vw,62px);font-weight:300;color:#fff;line-height:1.25;letter-spacing:-0.025em;"><span style="font-family:'Instrument Serif',serif;font-style:italic;">AI</span>+데이터 시각화 <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:0.9em;">w. Claude Code</span></div>
     </div>
     <!-- content bottom -->
     <div style="position:relative;z-index:2;display:flex;flex-direction:row;align-items:flex-end;justify-content:space-between;">
