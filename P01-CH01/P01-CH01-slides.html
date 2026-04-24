@@ -185,183 +185,100 @@
 <body>
 <div class="deck" id="deck">
 
-<!-- ════ 01 | CHAPTER TITLE ════ -->
+<!-- ════ 01 | TITLE ════ -->
 <div class="slide active" id="s1">
-  <div class="body" style="background:#EDEBE7;overflow:hidden;">
-
-    <!-- 왼쪽: 텍스트 콘텐츠 -->
-    <div style="width:52%;display:flex;flex-direction:column;justify-content:space-between;padding:56px 72px;">
-
-      <!-- 상단: 로고 + 챕터 -->
-      <div style="display:flex;align-items:center;">
-        <img src="../assets/fastcampuslogo.png" style="height:40px;width:auto;">
-        <div style="width:1px;height:16px;background:rgba(0,0,0,0.15);margin:0 20px;flex-shrink:0;"></div>
-        <span style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(0,0,0,0.38);font-weight:400;">P01 · CH01</span>
+  <div class="body" style="position:relative;flex-direction:column;justify-content:space-between;padding:56px 72px;background:#F5F4F0;overflow:hidden;">
+    <!-- bg video -->
+    <video autoplay loop muted playsinline style="position:absolute;right:0;top:0;width:55%;height:100%;object-fit:cover;opacity:0.85;z-index:0;">
+      <source src="../assets/videos/title-bg.mp4" type="video/mp4">
+    </video>
+    <!-- overlay gradient: light → transparent -->
+    <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(245,244,240,0.96) 42%, rgba(245,244,240,0.0) 100%);z-index:1;"></div>
+    <!-- content top -->
+    <div style="position:relative;z-index:2;">
+      <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:28px;font-weight:500;">FastCampus Webinar</div>
+      <div style="font-size:clamp(46px,5.5vw,72px);font-weight:300;color:#1C1A18;line-height:1.12;letter-spacing:-0.03em;">AI Data <span style="font-family:'Instrument Serif',serif;font-style:italic;">Analysis</span> <span style="font-family:'Instrument Serif',serif;font-style:italic;">OS</span></div>
+      <div style="font-size:clamp(24px,3vw,40px);font-weight:300;color:rgba(0,0,0,0.5);margin-top:8px;line-height:1.4;">w. <span style="font-family:'Instrument Serif',serif;font-style:italic;">Claude Code</span></div>
+    </div>
+    <!-- content bottom -->
+    <div style="position:relative;z-index:2;display:flex;flex-direction:row;align-items:flex-end;justify-content:space-between;">
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div style="font-size:13px;font-weight:300;color:rgba(0,0,0,0.45);line-height:1.5;margin-bottom:6px;">데이터 시각화 전문가 전서연에게 배우는</div>
+        <div style="font-size:24px;font-weight:600;color:#1C1A18;line-height:1.3;letter-spacing:-0.02em;">AI 인터랙티브 대시보드 제작 전과정</div>
       </div>
-
-      <!-- 중앙: 타이틀 -->
-      <div>
-        <div style="font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:#E8603C;margin-bottom:28px;">데이터 시각화 기초</div>
-        <div style="font-size:58px;font-weight:300;color:#1C1A18;line-height:1.12;letter-spacing:-0.03em;"><span style="font-weight:600;">데이터 시각화</span>의<br><span style="font-weight:600;">기초</span> 관점 잡기</div>
-        <div style="margin-top:24px;font-size:16px;font-weight:300;color:rgba(0,0,0,0.42);line-height:1.9;letter-spacing:0.01em;">AI + 시각화 &nbsp;·&nbsp; 워크플로우 &nbsp;·&nbsp; 원칙 &nbsp;·&nbsp; 사례</div>
-      </div>
-
-      <!-- 하단: 클립 -->
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(0,0,0,0.3);">4 Clips</div>
-        <div style="display:flex;gap:6px;">
-          <span style="font-size:10px;letter-spacing:0.1em;color:#E8603C;border:1px solid rgba(232,96,60,0.4);padding:3px 11px;">01</span>
-          <span style="font-size:10px;letter-spacing:0.1em;color:rgba(0,0,0,0.22);border:1px solid rgba(0,0,0,0.1);padding:3px 11px;">02</span>
-          <span style="font-size:10px;letter-spacing:0.1em;color:rgba(0,0,0,0.22);border:1px solid rgba(0,0,0,0.1);padding:3px 11px;">03</span>
-          <span style="font-size:10px;letter-spacing:0.1em;color:rgba(0,0,0,0.22);border:1px solid rgba(0,0,0,0.1);padding:3px 11px;">04</span>
-        </div>
+      <div style="text-align:right;flex-shrink:0;margin-left:32px;">
+        <div style="font-size:13px;font-weight:300;color:rgba(0,0,0,0.45);line-height:1.5;margin-bottom:6px;">DataBridge CEO</div>
+        <div style="font-size:24px;font-weight:600;color:#1C1A18;letter-spacing:-0.01em;">전서연</div>
       </div>
     </div>
-
-    <!-- 오른쪽: 정적 차트 일러스트 -->
-    <div style="flex:1;background:#E4E2DE;border-left:1px solid rgba(0,0,0,0.07);display:flex;align-items:center;justify-content:center;padding:52px 48px;">
-      <svg width="460" height="460" viewBox="0 0 460 460" style="display:block;overflow:visible;">
-
-        <!-- Bar chart -->
-        <text x="0" y="13" font-size="9" fill="#AAA" font-family="Pretendard,sans-serif" letter-spacing="0.12em">BAR</text>
-        <line x1="0" y1="155" x2="195" y2="155" stroke="#CCC" stroke-width="0.8"/>
-        <line x1="0" y1="25" x2="0" y2="155" stroke="#CCC" stroke-width="0.8"/>
-        <rect x="8"   y="102" width="20" height="53" rx="2" fill="#CCCCCC"/>
-        <rect x="36"  y="78"  width="20" height="77" rx="2" fill="#CCCCCC"/>
-        <rect x="64"  y="58"  width="20" height="97" rx="2" fill="#E8603C"/>
-        <rect x="92"  y="84"  width="20" height="71" rx="2" fill="#CCCCCC"/>
-        <rect x="120" y="45"  width="20" height="110" rx="2" fill="#CCCCCC"/>
-        <rect x="148" y="70"  width="20" height="85" rx="2" fill="#CCCCCC"/>
-        <text x="74" y="51" font-size="8" fill="#E8603C" text-anchor="middle" font-family="Pretendard,sans-serif">▲</text>
-
-        <!-- Line chart -->
-        <text x="245" y="13" font-size="9" fill="#AAA" font-family="Pretendard,sans-serif" letter-spacing="0.12em">LINE</text>
-        <line x1="245" y1="155" x2="455" y2="155" stroke="#CCC" stroke-width="0.8"/>
-        <line x1="245" y1="25"  x2="245" y2="155" stroke="#CCC" stroke-width="0.8"/>
-        <line x1="245" y1="105" x2="455" y2="105" stroke="#DDDBD8" stroke-width="0.7"/>
-        <line x1="245" y1="68"  x2="455" y2="68"  stroke="#DDDBD8" stroke-width="0.7"/>
-        <polyline points="255,138 288,112 321,120 354,82 387,95 420,60 453,72"
-          fill="none" stroke="#E8603C" stroke-width="2" stroke-linejoin="round"/>
-        <circle cx="420" cy="60" r="4" fill="#E8603C"/>
-        <polyline points="255,148 288,138 321,143 354,128 387,133 420,118 453,122"
-          fill="none" stroke="#BBBBBB" stroke-width="1.5" stroke-dasharray="4 3" stroke-linejoin="round"/>
-
-        <!-- Donut -->
-        <text x="75" y="215" font-size="9" fill="#AAA" font-family="Pretendard,sans-serif" letter-spacing="0.12em" text-anchor="middle">DONUT</text>
-        <circle cx="75" cy="300" r="52" fill="none" stroke="#DDDBD8" stroke-width="22"/>
-        <circle cx="75" cy="300" r="52" fill="none" stroke="#E8603C" stroke-width="22"
-          stroke-dasharray="130 197" stroke-dashoffset="0" transform="rotate(-90 75 300)"/>
-        <circle cx="75" cy="300" r="52" fill="none" stroke="#BBBBBB" stroke-width="22"
-          stroke-dasharray="85 242" stroke-dashoffset="-130" transform="rotate(-90 75 300)"/>
-        <circle cx="75" cy="300" r="36" fill="#E4E2DE"/>
-        <text x="75" y="305" font-size="15" font-weight="300" fill="#666" text-anchor="middle" font-family="Pretendard,sans-serif">66%</text>
-
-        <!-- Scatter -->
-        <text x="350" y="215" font-size="9" fill="#AAA" font-family="Pretendard,sans-serif" letter-spacing="0.12em" text-anchor="middle">SCATTER</text>
-        <line x1="250" y1="400" x2="455" y2="400" stroke="#CCC" stroke-width="0.8"/>
-        <line x1="250" y1="230" x2="250" y2="400" stroke="#CCC" stroke-width="0.8"/>
-        <circle cx="275" cy="372" r="5"  fill="#CCCCCC" opacity="0.85"/>
-        <circle cx="300" cy="348" r="7"  fill="#CCCCCC" opacity="0.8"/>
-        <circle cx="325" cy="310" r="5"  fill="#E8603C" opacity="0.9"/>
-        <circle cx="350" cy="342" r="9"  fill="#CCCCCC" opacity="0.7"/>
-        <circle cx="375" cy="282" r="6"  fill="#CCCCCC" opacity="0.85"/>
-        <circle cx="400" cy="298" r="10" fill="#CCCCCC" opacity="0.6"/>
-        <circle cx="290" cy="385" r="4"  fill="#CCCCCC" opacity="0.75"/>
-        <circle cx="440" cy="260" r="5"  fill="#CCCCCC" opacity="0.8"/>
-
-      </svg>
-    </div>
-
   </div>
 </div>
 
-<!-- ════ 02 | 결과물 4가지 ════ -->
+<!-- ════ 02 | 강사 소개 ════ -->
 <div class="slide" id="s2">
   <div class="tb">
-    <span class="tb-cap">강의 개요 &amp; 결과물 미리보기</span>
-    <span class="tb-num">02</span>
+    <span class="tb-cap">연사 소개</span>
+    <span class="tb-num">2</span>
   </div>
   <div class="body">
     <div class="l-panel">
       <div>
-        <div class="eyebrow">강의 결과물</div>
-        <div class="big-title">4가지<br>결과물</div>
-        <div class="body-text" style="margin-top:16px;">Claude Code + 데이터 시각화를 조합해 직접 만들어 봅니다.</div>
+        <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--p01);margin-bottom:18px;">DataBridge</div>
+        <div style="font-size:clamp(28px,3.8vw,48px);font-weight:300;color:var(--white);line-height:1.2;letter-spacing:-0.03em;margin-bottom:14px;">전서연</div>
+        <div style="margin-bottom:20px;">
+          <div style="font-size:15px;color:rgba(0,0,0,0.8);line-height:1.8;font-weight:500;">국내 최초 Tableau Visionary 2026</div>
+          <div style="font-size:12.5px;color:rgba(0,0,0,0.45);margin-top:5px;line-height:1.6;">전세계 41명 선정 · 글로벌 데이터 시각화 전문가</div>
+        </div>
+        <div>
+          <div style="font-size:15px;color:rgba(0,0,0,0.8);line-height:1.8;font-weight:500;">국내 최초 5년 연속 Tableau Ambassador</div>
+        </div>
       </div>
-      <svg width="160" height="64" viewBox="0 0 160 64" style="opacity:0.3;">
-        <rect x="0" y="32" width="48" height="28" rx="2" fill="none" stroke="#888" stroke-width="1"/>
-        <line x1="0" y1="38" x2="48" y2="38" stroke="#888" stroke-width="0.7"/>
-        <rect x="6" y="43" width="8" height="10" rx="0.5" fill="#777"/>
-        <rect x="17" y="45" width="8" height="8" rx="0.5" fill="#555"/>
-        <rect x="28" y="41" width="8" height="12" rx="0.5" fill="#666"/>
-        <rect x="56" y="36" width="44" height="24" rx="2" fill="none" stroke="#888" stroke-width="1"/>
-        <line x1="56" y1="42" x2="100" y2="42" stroke="#888" stroke-width="0.7"/>
-        <circle cx="78" cy="52" r="8" fill="none" stroke="#666" stroke-width="5"/>
-        <circle cx="78" cy="52" r="8" fill="none" stroke="#aaa" stroke-width="5" stroke-dasharray="18 32" stroke-dashoffset="0" transform="rotate(-90 78 52)"/>
-        <circle cx="78" cy="52" r="4" fill="#111111"/>
-        <rect x="108" y="28" width="48" height="32" rx="2" fill="none" stroke="#888" stroke-width="1"/>
-        <line x1="108" y1="34" x2="156" y2="34" stroke="#888" stroke-width="0.7"/>
-        <polyline points="114,52 124,44 134,48 144,38 152,42" fill="none" stroke="#aaa" stroke-width="1.5"/>
-        <circle cx="152" cy="42" r="2" fill="#E8603C"/>
-        <line x1="24" y1="32" x2="56" y2="44" stroke="#333" stroke-width="0.7" stroke-dasharray="3 2"/>
-        <line x1="100" y1="44" x2="108" y2="44" stroke="#333" stroke-width="0.7" stroke-dasharray="3 2"/>
-      </svg>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;">
-        <span style="font-size:10px;color:#55524E;border:1px solid #DDDBD8;padding:2px 9px;">Claude Code</span>
-        <span style="font-size:10px;color:#55524E;border:1px solid #DDDBD8;padding:2px 9px;">Antigravity</span>
-        <span style="font-size:10px;color:#55524E;border:1px solid #DDDBD8;padding:2px 9px;">Python</span>
-      </div>
+      <div style="font-size:13px;color:rgba(0,0,0,0.4);line-height:2.4;">databridge.co.kr</div>
     </div>
-    <div class="deliv-grid">
-      <div class="deliv-cell">
-        <svg width="22" height="22" viewBox="0 0 22 22" style="opacity:0.5;flex-shrink:0;">
-          <rect x="1" y="1" width="9" height="9" rx="1.2" fill="none" stroke="#bbb" stroke-width="1"/>
-          <rect x="12" y="1" width="9" height="9" rx="1.2" fill="none" stroke="#bbb" stroke-width="1"/>
-          <rect x="1" y="12" width="9" height="9" rx="1.2" fill="none" stroke="#bbb" stroke-width="1"/>
-          <rect x="12" y="12" width="9" height="9" rx="1.2" fill="none" stroke="#bbb" stroke-width="1"/>
-        </svg>
-        <div class="deliv-num">결과물 01</div>
-        <div class="deliv-title">자동 갱신<br>인터랙티브 대시보드</div>
-        <div class="deliv-desc">CSV만 바꾸면 자동 갱신 — KPI 카드, 채널별 성과, 코호트 분석</div>
-        <div class="deliv-tag"><span>자동 갱신</span><span>인터랙티브</span><span>P03</span></div>
+    <div style="flex:1;padding:28px 44px;display:flex;flex-direction:column;justify-content:center;gap:0;overflow:auto;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,0,0,0.25);padding-bottom:10px;">현재</div>
+      <div class="row-item">
+        <div class="row-label" style="color:rgba(0,0,0,0.5);">DataBridge</div>
+        <div>
+          <div class="row-title">CEO / Founder</div>
+          <div class="row-sub" style="margin-top:6px;line-height:1.9;">
+            데이터 스토리텔링 기반 AX / DX 교육 및 컨설팅<br>
+            현대자동차 전사 BI 부트캠프<br>
+            쿠팡 Business Analytics 대시보드 구축<br>
+            하나은행 전사 디지털 데이터 분석 스쿨<br>
+            CJ그룹 전사 태블로 교육<br>
+            대상그룹 · 한국철강 · 사조그룹 전사 교육/시스템 구축
+          </div>
+        </div>
       </div>
-      <div class="deliv-cell" style="background:#F0EEE9;">
-        <svg width="22" height="22" viewBox="0 0 22 22" style="opacity:0.5;flex-shrink:0;">
-          <line x1="2" y1="20" x2="20" y2="20" stroke="#bbb" stroke-width="0.8"/>
-          <rect x="2" y="12" width="3" height="8" rx="0.5" fill="#bbb"/>
-          <rect x="7" y="8" width="3" height="12" rx="0.5" fill="#888"/>
-          <rect x="12" y="10" width="3" height="10" rx="0.5" fill="#888"/>
-          <rect x="17" y="14" width="3" height="6" rx="0.5" fill="#888"/>
-        </svg>
-        <div class="deliv-num">결과물 02</div>
-        <div class="deliv-title">직무별 분석<br>대시보드 × 5</div>
-        <div class="deliv-desc">마케팅 ROI · A/B 테스트 · PM KPI · 리텐션 코호트 · HR 채용 퍼널</div>
-        <div class="deliv-tag"><span>직무별 맞춤</span><span>P05</span></div>
+      <div class="row-item">
+        <div class="row-label" style="color:rgba(0,0,0,0.5);">FastCampus</div>
+        <div>
+          <div class="row-title">패스트캠퍼스 온라인 강의</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:baseline;gap:14px;">
+              <span style="font-size:11px;font-weight:700;color:rgba(0,0,0,0.25);letter-spacing:0.06em;min-width:32px;">2021</span>
+              <span class="row-sub">세계 3등에게 배우는 실무 밀착 데이터 시각화</span>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:14px;">
+              <span style="font-size:11px;font-weight:700;color:rgba(0,0,0,0.25);letter-spacing:0.06em;min-width:32px;">2024</span>
+              <span class="row-sub">세계 3등에게 배우는 13개 데이터 분석 프로젝트</span>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:14px;">
+              <span style="font-size:11px;font-weight:700;color:rgba(0,0,0,0.5);letter-spacing:0.06em;min-width:32px;">2026</span>
+              <span class="row-sub" style="color:#1C1A18;font-weight:500;">AI + 데이터 시각화 (w. Claude Code)</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="deliv-cell" style="background:#F0EEE9;">
-        <svg width="22" height="22" viewBox="0 0 22 22" style="opacity:0.5;flex-shrink:0;">
-          <path d="M11 2 A9 9 0 1 1 2 11" fill="none" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"/>
-          <polygon points="2,7 2,11 6,11" fill="#bbb"/>
-        </svg>
-        <div class="deliv-num">결과물 03</div>
-        <div class="deliv-title">자동화 리포트<br>파이프라인</div>
-        <div class="deliv-desc">스케줄 실행 → 분석 → 슬랙·텔레그램 알림까지 자동 발송</div>
-        <div class="deliv-tag"><span>스케줄 자동화</span><span>알림 발송</span><span>P03</span></div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,0,0,0.25);padding-top:18px;padding-bottom:10px;">이전</div>
+      <div class="row-item">
+        <div class="row-label" style="color:rgba(0,0,0,0.35);">AWS</div>
+        <div><div class="row-title">Business Analyst</div></div>
       </div>
-      <div class="deliv-cell">
-        <svg width="22" height="22" viewBox="0 0 22 22" style="opacity:0.5;flex-shrink:0;">
-          <rect x="1" y="3" width="20" height="16" rx="1.5" fill="none" stroke="#bbb" stroke-width="1"/>
-          <line x1="1" y1="8" x2="21" y2="8" stroke="#bbb" stroke-width="0.7"/>
-          <circle cx="4" cy="5.5" r="0.7" fill="#aaa"/>
-          <circle cx="7" cy="5.5" r="0.7" fill="#aaa"/>
-          <circle cx="10" cy="5.5" r="0.7" fill="#aaa"/>
-          <rect x="4" y="11" width="6" height="5" rx="0.5" fill="#EBEBEB"/>
-          <rect x="12" y="11" width="6" height="5" rx="0.5" fill="#EBEBEB"/>
-        </svg>
-        <div class="deliv-num">결과물 04</div>
-        <div class="deliv-title">웹 기반<br>포트폴리오</div>
-        <div class="deliv-desc">분석 결과를 웹으로 배포 — URL 하나로 공유 가능한 시각화 포트폴리오</div>
-        <div class="deliv-tag"><span>웹 배포</span><span>URL 공유</span><span>P06</span></div>
+      <div class="row-item" style="border-bottom:none;">
+        <div class="row-label" style="color:rgba(0,0,0,0.35);">Martinee</div>
+        <div><div class="row-title">Growth Data Analyst</div></div>
       </div>
     </div>
   </div>
