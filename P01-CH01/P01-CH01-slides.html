@@ -991,19 +991,60 @@
       <div>
         <div class="principle-n">03</div>
         <div class="principle-title">강조는 단 하나</div>
-        <div class="principle-body">색상·크기·위치 강조 최대 1개 / 전부 강조 = 강조 없음</div>
+        <div class="principle-body">Preattentive attribute — 시선은 다른 것 하나에 먼저 간다 / 전부 다르면 전부 같다</div>
       </div>
-      <div style="margin-top:28px;">
-        <div style="font-size:11px;color:var(--dim);margin-bottom:16px;letter-spacing:0.08em;">— 하나만 흰색, 나머지는 회색</div>
-        <svg width="240" height="100" viewBox="0 0 240 100">
-          <rect x="10" y="30" width="28" height="60" rx="1" fill="#2C2720"/>
-          <rect x="46" y="10" width="28" height="80" rx="1" fill="#E8603C"/>
-          <rect x="82" y="22" width="28" height="68" rx="1" fill="#2C2720"/>
-          <rect x="118" y="48" width="28" height="42" rx="1" fill="#2C2720"/>
-          <rect x="154" y="18" width="28" height="72" rx="1" fill="#2C2720"/>
-          <line x1="8" y1="92" x2="200" y2="92" stroke="#222" stroke-width="1"/>
-          <text x="50" y="9" font-size="8" fill="#888" text-anchor="middle" font-family="Pretendard,sans-serif">▲ 강조</text>
+      <!-- BAD -->
+      <div style="margin-top:24px;">
+        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">BAD — 모든 채널에 다른 색</div>
+        <svg width="260" height="88" viewBox="0 0 260 88">
+          <line x1="4" y1="84" x2="256" y2="84" stroke="#CCCCCC" stroke-width="0.8"/>
+          <rect x="8"   y="28" width="34" height="56" rx="1" fill="#4A7AB5"/>
+          <rect x="54"  y="18" width="34" height="66" rx="1" fill="#E87C3E"/>
+          <rect x="100" y="36" width="34" height="48" rx="1" fill="#5BAD8C"/>
+          <rect x="146" y="44" width="34" height="40" rx="1" fill="#B56B4A"/>
+          <rect x="192" y="32" width="34" height="52" rx="1" fill="#8B6AB5"/>
+          <text x="25"  y="88" font-size="8" fill="#999" text-anchor="middle" font-family="Pretendard,sans-serif">SNS</text>
+          <text x="71"  y="88" font-size="8" fill="#999" text-anchor="middle" font-family="Pretendard,sans-serif">검색</text>
+          <text x="117" y="88" font-size="8" fill="#999" text-anchor="middle" font-family="Pretendard,sans-serif">디스플레이</text>
+          <text x="163" y="88" font-size="8" fill="#999" text-anchor="middle" font-family="Pretendard,sans-serif">유튜브</text>
+          <text x="209" y="88" font-size="8" fill="#999" text-anchor="middle" font-family="Pretendard,sans-serif">카카오</text>
         </svg>
+        <div style="font-size:11px;color:#AAAAAA;margin-top:6px;">어디를 봐야 할지 모름 — 시선이 분산됨</div>
+      </div>
+      <!-- GOOD -->
+      <div style="margin-top:20px;">
+        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">GOOD — 핵심 하나만 강조</div>
+        <svg width="260" height="88" viewBox="0 0 260 88">
+          <line x1="4" y1="84" x2="256" y2="84" stroke="#CCCCCC" stroke-width="0.8"/>
+          <rect x="8"   y="28" width="34" height="56" rx="1" fill="#DDDDDD"/>
+          <rect x="54"  y="18" width="34" height="66" rx="1" fill="#E8603C"/>
+          <rect x="100" y="36" width="34" height="48" rx="1" fill="#DDDDDD"/>
+          <rect x="146" y="44" width="34" height="40" rx="1" fill="#DDDDDD"/>
+          <rect x="192" y="32" width="34" height="52" rx="1" fill="#DDDDDD"/>
+          <text x="25"  y="88" font-size="8" fill="#bbb" text-anchor="middle" font-family="Pretendard,sans-serif">SNS</text>
+          <text x="71"  y="88" font-size="8" fill="#E8603C" text-anchor="middle" font-family="Pretendard,sans-serif">검색</text>
+          <text x="117" y="88" font-size="8" fill="#bbb" text-anchor="middle" font-family="Pretendard,sans-serif">디스플레이</text>
+          <text x="163" y="88" font-size="8" fill="#bbb" text-anchor="middle" font-family="Pretendard,sans-serif">유튜브</text>
+          <text x="209" y="88" font-size="8" fill="#bbb" text-anchor="middle" font-family="Pretendard,sans-serif">카카오</text>
+          <line x1="71" y1="16" x2="71" y2="6" stroke="#E8603C" stroke-width="1"/>
+          <text x="71" y="5" font-size="8" fill="#E8603C" text-anchor="middle" font-family="Pretendard,sans-serif">CTR 2.8× ↑</text>
+        </svg>
+        <div style="font-size:11px;color:#888;margin-top:6px;">0.3초 안에 "검색이 높다"를 인식</div>
+      </div>
+      <!-- 전주의적 속성 -->
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:7px;">
+        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:4px;">PREATTENTIVE ATTRIBUTES</div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div style="width:14px;height:14px;background:#E8603C;border-radius:1px;flex-shrink:0;"></div>
+          <div style="font-size:13px;color:#888;">색상 — 가장 강력 / 1개만 사용</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div style="width:8px;height:14px;background:#888;border-radius:1px;flex-shrink:0;margin-left:3px;"></div>
+          <div style="font-size:13px;color:#888;">크기 — 2순위 / 과도하면 역효과</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div style="font-size:13px;color:#888;padding-left:4px;border-left:2px solid #555;">위치 — 레이아웃으로 강조</div>
+        </div>
       </div>
     </div>
   </div>
