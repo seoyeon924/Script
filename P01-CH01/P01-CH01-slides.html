@@ -1413,9 +1413,9 @@
         <circle cx="50" cy="34" r="2" fill="#E8603C"/>
       </svg>
     </div>
-    <div class="sec-label">Clip 04</div>
-    <div class="sec-title">비즈니스 데이터<br>시각화 사례 미리보기</div>
-    <div class="sec-sub">이 강의에서 만들 결과물 미리 확인</div>
+    <div class="sec-label">AI 데이터 시각화 사례</div>
+    <div class="sec-title">이런 걸<br>만들 수 있어요</div>
+    <div class="sec-sub">비즈니스 대시보드 6개 · 인터랙티브 시각화 3개</div>
   </div>
 </div>
 
@@ -1890,7 +1890,16 @@
 
 <script>
   const TOTAL = 28;
-  const CLIP_MAP = { 1:0,2:0,3:0,4:0, 5:1,6:1,7:1,8:1, 9:2,10:2,11:2,12:2,13:2,14:2,15:2,16:2, 17:3,18:3,19:3,20:3,21:3,22:3,23:3,24:3,25:3,26:3,27:3,28:3 };
+  // 제시 순서: 사례 먼저(5-14) → 왜 AI(15-18) → 원칙(19-26) → 마무리(27-28)
+  const ORDER = [1,2,3,4, 17,18,19,20,21,22,23,24,25,26, 5,6,7,8, 9,10,11,12,13,14,15,16, 27,28];
+  const CLIP_MAP = {
+    1:0,2:0,3:0,4:0,
+    5:1,6:1,7:1,8:1,9:1,10:1,11:1,12:1,13:1,14:1,
+    15:2,16:2,17:2,18:2,19:2,20:2,21:2,22:2,23:2,24:2,25:2,26:2,
+    27:3,28:3
+  };
+  // 클립 라벨
+  const CLIP_LABELS = ['강의 개요','AI 시각화 사례','원리','마무리'];
   let cur = 1;
 
   // FastCampus 로고를 모든 .tb 좌측에 삽입
@@ -1912,8 +1921,14 @@
 
   function show(n) {
     if (n < 1 || n > TOTAL) return;
+    const slideId = ORDER[n-1];
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-    document.getElementById('s'+n).classList.add('active');
+    const el = document.getElementById('s'+slideId);
+    if (el) {
+      el.classList.add('active');
+      const numEl = el.querySelector('.tb-num');
+      if (numEl) numEl.textContent = n;
+    }
     document.getElementById('nav-ctr').textContent = n + ' / ' + TOTAL;
     document.getElementById('progress').style.width = (n/TOTAL*100)+'%';
     document.querySelectorAll('.clip-dot').forEach((d,i) => d.classList.toggle('active', i===CLIP_MAP[n]));
