@@ -607,54 +607,82 @@
     <span class="tb-cap">왜 AI + 데이터 시각화인가</span>
     <span class="tb-num">08</span>
   </div>
-  <div class="body">
-    <div style="flex:1;padding:44px 56px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--border);">
-      <div>
-        <svg width="28" height="28" viewBox="0 0 28 28" style="margin-bottom:14px;opacity:0.3;">
-          <rect x="2" y="4" width="24" height="17" rx="3" fill="none" stroke="#aaa" stroke-width="1.2"/>
-          <path d="M8 21 L8 25 L14 21" fill="none" stroke="#aaa" stroke-width="1.2" stroke-linejoin="round"/>
-          <line x1="7" y1="10" x2="21" y2="10" stroke="#888" stroke-width="1"/>
-          <line x1="7" y1="14" x2="17" y2="14" stroke="#777" stroke-width="1"/>
-        </svg>
-        <div style="font-size:13px;letter-spacing:0.13em;text-transform:uppercase;color:var(--dim);margin-bottom:18px;">ChatGPT (웹)</div>
-        <div style="font-size:28px;font-weight:300;color:#AAAAAA;margin-bottom:28px;">대화 도구</div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div style="font-size:16px;color:#AAAAAA;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--dim);">—</span>텍스트·코드 예시 제공</div>
-          <div style="font-size:16px;color:#AAAAAA;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--dim);">—</span>파일은 직접 업로드해야 함</div>
-          <div style="font-size:16px;color:#AAAAAA;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--dim);">—</span>코드 실행은 내 컴퓨터에서 직접</div>
-          <div style="font-size:16px;color:#AAAAAA;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--dim);">—</span>반복 작업마다 새로 설명</div>
-        </div>
+  <div class="body" style="flex-direction:column;padding:0;">
+    <!-- 헤더 -->
+    <div style="display:grid;grid-template-columns:1fr 120px 1fr;border-bottom:1px solid var(--border);">
+      <div style="padding:22px 48px;display:flex;align-items:center;gap:12px;">
+        <div style="font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#888;font-weight:500;">ChatGPT</div>
+        <div style="font-size:11px;color:#bbb;border:1px solid #ddd;padding:2px 8px;border-radius:2px;">대화 도구</div>
       </div>
-      <!-- connector SVG -->
-      <svg width="180" height="48" viewBox="0 0 180 48" style="margin-top:32px;opacity:0.3;">
-        <rect x="0" y="10" width="52" height="28" rx="3" fill="none" stroke="#333" stroke-width="1"/>
-        <text x="26" y="28" font-size="9" fill="#666" text-anchor="middle" font-family="monospace">대화</text>
-        <line x1="54" y1="24" x2="78" y2="24" stroke="#333" stroke-width="1"/>
-        <text x="90" y="28" font-size="14" fill="#333" text-anchor="middle">≠</text>
-        <line x1="102" y1="24" x2="126" y2="24" stroke="#333" stroke-width="1"/>
-        <rect x="128" y="10" width="52" height="28" rx="3" fill="#EBEBEB" stroke="#444" stroke-width="1"/>
-        <text x="154" y="28" font-size="9" fill="#888" text-anchor="middle" font-family="monospace">실행</text>
-      </svg>
+      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
+        <div style="font-size:11px;color:#bbb;letter-spacing:0.08em;">VS</div>
+      </div>
+      <div style="padding:22px 48px;display:flex;align-items:center;gap:12px;">
+        <div style="font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);font-weight:500;">Claude Code</div>
+        <div style="font-size:11px;color:#E8603C;border:1px solid #E8603C;padding:2px 8px;border-radius:2px;">실행 에이전트</div>
+      </div>
     </div>
-    <div style="flex:1;padding:44px 56px;display:flex;flex-direction:column;justify-content:space-between;">
-      <div>
-        <svg width="28" height="28" viewBox="0 0 28 28" style="margin-bottom:14px;opacity:0.6;">
-          <rect x="2" y="3" width="24" height="19" rx="2" fill="none" stroke="#ccc" stroke-width="1.2"/>
-          <line x1="2" y1="9" x2="26" y2="9" stroke="#aaa" stroke-width="0.8"/>
-          <circle cx="5.5" cy="6" r="1" fill="#777"/>
-          <circle cx="9" cy="6" r="1" fill="#777"/>
-          <circle cx="12.5" cy="6" r="1" fill="#777"/>
-          <text x="6" y="17" font-size="7.5" fill="#888" font-family="monospace">$ run —auto</text>
-          <line x1="6" y1="20.5" x2="22" y2="20.5" stroke="#444" stroke-width="0.8" stroke-dasharray="2 2"/>
-        </svg>
-        <div style="font-size:13px;letter-spacing:0.13em;text-transform:uppercase;color:#aaa;margin-bottom:18px;">Claude Code (에이전트)</div>
-        <div style="font-size:28px;font-weight:400;color:var(--white);margin-bottom:28px;">실행 에이전트</div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div style="font-size:16px;color:var(--text);padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:#aaa;">→</span>파일시스템 직접 읽기·쓰기</div>
-          <div style="font-size:16px;color:var(--text);padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:#aaa;">→</span>코드를 내 컴퓨터에서 직접 실행</div>
-          <div style="font-size:16px;color:var(--text);padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:#aaa;">→</span>결과 파일 자동 저장</div>
-          <div style="font-size:16px;color:var(--text);padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:#aaa;">→</span>CLAUDE.md 규칙 영구 적용</div>
-        </div>
+    <!-- 비교 행 -->
+    <div style="flex:1;display:grid;grid-template-columns:1fr 120px 1fr;grid-template-rows:repeat(6,1fr);">
+      <!-- Row 1 -->
+      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);">
+        <div style="font-size:14px;color:#777;line-height:1.5;">파일은 수동으로 업로드<br><span style="font-size:12px;color:#aaa;">대화창에 첨부 후 분석 요청</span></div>
+      </div>
+      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
+        <div style="font-size:10px;color:#bbb;letter-spacing:0.08em;text-align:center;">파일<br>접근</div>
+      </div>
+      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);">
+        <div style="font-size:14px;color:var(--white);line-height:1.5;">로컬 파일시스템 직접 R/W<br><span style="font-size:12px;color:#888;">CSV 수백 개도 자동 처리</span></div>
+      </div>
+      <!-- Row 2 -->
+      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);background:#FAFAFA;">
+        <div style="font-size:14px;color:#777;line-height:1.5;">코드 예시만 제공<br><span style="font-size:12px;color:#aaa;">복붙 후 사용자가 직접 실행</span></div>
+      </div>
+      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:#FAFAFA;display:flex;align-items:center;justify-content:center;">
+        <div style="font-size:10px;color:#bbb;letter-spacing:0.08em;text-align:center;">코드<br>실행</div>
+      </div>
+      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);background:#FAFAFA;">
+        <div style="font-size:14px;color:var(--white);line-height:1.5;">내 컴퓨터에서 직접 실행<br><span style="font-size:12px;color:#888;">터미널 명령 포함 전체 자동화</span></div>
+      </div>
+      <!-- Row 3 -->
+      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);">
+        <div style="font-size:14px;color:#777;line-height:1.5;">결과는 복사·붙여넣기<br><span style="font-size:12px;color:#aaa;">차트·파일 저장은 사용자 몫</span></div>
+      </div>
+      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
+        <div style="font-size:10px;color:#bbb;letter-spacing:0.08em;text-align:center;">결과<br>저장</div>
+      </div>
+      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);">
+        <div style="font-size:14px;color:var(--white);line-height:1.5;">HTML·CSV·PNG 자동 저장<br><span style="font-size:12px;color:#888;">지정 경로에 파일 자동 관리</span></div>
+      </div>
+      <!-- Row 4 -->
+      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);background:#FAFAFA;">
+        <div style="font-size:14px;color:#777;line-height:1.5;">세션 종료 시 컨텍스트 초기화<br><span style="font-size:12px;color:#aaa;">매번 처음부터 설명 반복</span></div>
+      </div>
+      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:#FAFAFA;display:flex;align-items:center;justify-content:center;">
+        <div style="font-size:10px;color:#bbb;letter-spacing:0.08em;text-align:center;">규칙<br>기억</div>
+      </div>
+      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);background:#FAFAFA;">
+        <div style="font-size:14px;color:var(--white);line-height:1.5;">CLAUDE.md 프로젝트 규칙 영구 적용<br><span style="font-size:12px;color:#888;">한 번 설정 → 계속 유지</span></div>
+      </div>
+      <!-- Row 5 -->
+      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);">
+        <div style="font-size:14px;color:#777;line-height:1.5;">단계별 개별 요청 필수<br><span style="font-size:12px;color:#aaa;">5단계 작업 = 5번 대화</span></div>
+      </div>
+      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
+        <div style="font-size:10px;color:#bbb;letter-spacing:0.08em;text-align:center;">반복<br>작업</div>
+      </div>
+      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);">
+        <div style="font-size:14px;color:var(--white);line-height:1.5;">요청 한 번 → 전체 파이프라인 실행<br><span style="font-size:12px;color:#888;">집계 → 차트 → 리포트 연속 처리</span></div>
+      </div>
+      <!-- Row 6 -->
+      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;background:#FAFAFA;">
+        <div style="font-size:14px;color:#777;line-height:1.5;">웹 브라우저 한계<br><span style="font-size:12px;color:#aaa;">로컬 환경·외부 툴 연동 불가</span></div>
+      </div>
+      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);background:#FAFAFA;display:flex;align-items:center;justify-content:center;">
+        <div style="font-size:10px;color:#bbb;letter-spacing:0.08em;text-align:center;">환경<br>연동</div>
+      </div>
+      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;background:#FAFAFA;">
+        <div style="font-size:14px;color:var(--white);line-height:1.5;">Git · Slack · DB · API 연동<br><span style="font-size:12px;color:#888;">로컬 전체 개발 환경에서 작동</span></div>
       </div>
     </div>
   </div>
@@ -698,7 +726,7 @@
     <div class="l-panel">
       <div>
         <div class="eyebrow">데이터 시각화의 목적</div>
-        <div class="big-title">액션 가능한<br>인사이트의<br>커뮤니케이션</div>
+        <div class="big-title">Actionable<br>Insights의<br>커뮤니케이션</div>
         <div class="body-text" style="margin-top:16px;">수치 나열 × / "무엇을 해야 할지" 보이는 시각화</div>
       </div>
       <!-- 현황→왜→왜→Action 플로우 -->
@@ -780,6 +808,7 @@
   <div class="body">
     <div class="l-panel">
       <div>
+        <div class="principle-n" style="font-size:48px;margin-bottom:8px;">01</div>
         <div class="eyebrow">질문 먼저</div>
         <div class="big-title">Question<br>First</div>
         <div class="body-text" style="margin-top:16px;">차트 선택 전 "이 차트가 답할 질문" 먼저 / 질문 없는 그래프 = 방향 없는 결론</div>
