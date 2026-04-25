@@ -637,48 +637,48 @@
       <!-- 테이블 컨테이너 — 상하 여백 후 테이블만 그림 -->
       <div style="border:1px solid var(--border);">
         <!-- 컬럼 헤더 -->
-        <div style="display:grid;grid-template-columns:90px 1fr 1fr;padding:12px 20px;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.03);">
-          <div></div>
-          <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;">ChatGPT</div>
-          <div style="font-size:10px;color:#888;letter-spacing:0.1em;">Claude Code</div>
+        <div style="display:grid;grid-template-columns:90px 1fr 1fr;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.03);">
+          <div style="padding:12px 20px;"></div>
+          <div style="padding:12px 20px 12px 0;font-size:10px;color:#AAAAAA;letter-spacing:0.1em;">ChatGPT</div>
+          <div style="padding:12px 20px;font-size:10px;color:#E8603C;letter-spacing:0.1em;border-left:1px solid var(--border);">Claude Code</div>
         </div>
         <!-- 비교 행 6개 -->
         <div style="display:grid;grid-template-columns:90px 1fr 1fr;">
           <!-- 파일 접근 -->
           <div style="display:contents;">
             <div style="padding:13px 20px;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:10px;color:#666;letter-spacing:0.06em;">파일 접근</div>
-            <div style="padding:13px 16px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:#666;">수동 업로드</div>
-            <div style="padding:13px 20px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:var(--white);">로컬 파일시스템 직접 R/W</div>
+            <div style="padding:13px 20px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:#555;">수동 업로드</div>
+            <div style="padding:13px 20px;display:flex;align-items:center;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:13px;color:var(--white);font-weight:600;">로컬 파일시스템 직접 R/W</div>
           </div>
           <!-- 코드 실행 -->
           <div style="display:contents;">
             <div style="padding:13px 20px;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:10px;color:#666;letter-spacing:0.06em;">코드 실행</div>
-            <div style="padding:13px 16px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:#666;">코드 제안 → 사용자가 실행</div>
-            <div style="padding:13px 20px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:var(--white);">내 컴퓨터에서 직접 실행</div>
+            <div style="padding:13px 20px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:#555;">코드 제안 → 사용자가 실행</div>
+            <div style="padding:13px 20px;display:flex;align-items:center;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:13px;color:var(--white);font-weight:600;">내 컴퓨터에서 직접 실행</div>
           </div>
           <!-- 결과 저장 -->
           <div style="display:contents;">
             <div style="padding:13px 20px;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:10px;color:#666;letter-spacing:0.06em;">결과 저장</div>
-            <div style="padding:13px 16px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:#666;">복붙 수작업</div>
-            <div style="padding:13px 20px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:var(--white);">파일 자동 저장·관리</div>
+            <div style="padding:13px 20px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:#555;">복붙 수작업</div>
+            <div style="padding:13px 20px;display:flex;align-items:center;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:13px;color:var(--white);font-weight:600;">파일 자동 저장·관리</div>
           </div>
           <!-- 규칙 기억 -->
           <div style="display:contents;">
             <div style="padding:13px 20px;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:10px;color:#666;letter-spacing:0.06em;">규칙 기억</div>
-            <div style="padding:13px 16px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:#666;">세션 종료 시 초기화</div>
-            <div style="padding:13px 20px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:var(--white);">CLAUDE.md 영구 적용</div>
+            <div style="padding:13px 20px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:#555;">세션 종료 시 초기화</div>
+            <div style="padding:13px 20px;display:flex;align-items:center;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:13px;color:var(--white);font-weight:600;">CLAUDE.md 영구 적용</div>
           </div>
           <!-- 반복 작업 -->
           <div style="display:contents;">
             <div style="padding:13px 20px;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:10px;color:#666;letter-spacing:0.06em;">반복 작업</div>
-            <div style="padding:13px 16px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:#666;">단계마다 개별 요청</div>
-            <div style="padding:13px 20px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:var(--white);">파이프라인 자동 실행</div>
+            <div style="padding:13px 20px 13px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:#555;">단계마다 개별 요청</div>
+            <div style="padding:13px 20px;display:flex;align-items:center;border-bottom:1px solid var(--border);border-left:1px solid var(--border);font-size:13px;color:var(--white);font-weight:600;">파이프라인 자동 실행</div>
           </div>
           <!-- 환경 연동 -->
           <div style="display:contents;">
             <div style="padding:13px 20px;display:flex;align-items:center;font-size:10px;color:#666;letter-spacing:0.06em;">환경 연동</div>
-            <div style="padding:13px 16px 13px 0;display:flex;align-items:center;font-size:13px;color:#666;">웹 브라우저만</div>
-            <div style="padding:13px 20px 13px 0;display:flex;align-items:center;font-size:13px;color:var(--white);">Git · Slack · DB · API</div>
+            <div style="padding:13px 20px 13px 0;display:flex;align-items:center;font-size:13px;color:#555;">웹 브라우저만</div>
+            <div style="padding:13px 20px;display:flex;align-items:center;border-left:1px solid var(--border);font-size:13px;color:var(--white);font-weight:600;">Git · Slack · DB · API</div>
           </div>
         </div>
       </div>
