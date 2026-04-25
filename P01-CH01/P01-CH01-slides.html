@@ -333,6 +333,7 @@
         <div>
           <div class="row-title">반복 집계·시각화 자동화</div>
           <div class="row-sub" style="margin-top:5px;">카테고리별 매출 증감율, 드릴다운 분석 — 요청 한 번에 자동 집계·시각화</div>
+          <div style="margin-top:10px;font-size:12px;color:#aaa;letter-spacing:0.04em;">완성 결과물 → 매출 드릴다운 분석 대시보드</div>
         </div>
       </div>
       <div class="row-item" style="padding:22px 52px;flex:1;border-top:none;">
@@ -345,6 +346,7 @@
         <div>
           <div class="row-title">데이터 기반 마케팅 리포트 제작</div>
           <div class="row-sub" style="margin-top:5px;">광고 소재별 CTR · 앱설치 · 구매전환율 퍼널, 프로모션 전후 매출 자동 비교</div>
+          <div style="margin-top:10px;font-size:12px;color:#aaa;letter-spacing:0.04em;">완성 결과물 → 마케팅 채널 성과 · A/B 테스트 대시보드</div>
         </div>
       </div>
       <div class="row-item" style="padding:22px 52px;flex:1;border-top:none;border-bottom:none;">
@@ -357,6 +359,7 @@
         <div>
           <div class="row-title">KPI 대시보드 구축 · 보고서 자동화</div>
           <div class="row-sub" style="margin-top:5px;">RFM 세그먼트 대시보드, A/B 유의성 자동 검정, Slack 주간 리포트 자동 발송</div>
+          <div style="margin-top:10px;font-size:12px;color:#aaa;letter-spacing:0.04em;">완성 결과물 → PM 메트릭 · Retention · Sales Pipeline 대시보드</div>
         </div>
       </div>
     </div>
@@ -607,82 +610,74 @@
     <span class="tb-cap">왜 AI + 데이터 시각화인가</span>
     <span class="tb-num">08</span>
   </div>
-  <div class="body" style="flex-direction:column;padding:0;">
-    <!-- 헤더 -->
-    <div style="display:grid;grid-template-columns:1fr 120px 1fr;border-bottom:1px solid var(--border);">
-      <div style="padding:22px 48px;display:flex;align-items:center;gap:12px;">
-        <div style="font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#888;font-weight:500;">ChatGPT</div>
-        <div style="font-size:11px;color:#bbb;border:1px solid #ddd;padding:2px 8px;border-radius:2px;">대화 도구</div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">구조적 차이</div>
+        <div class="big-title">ChatGPT<br>vs<br>Claude Code</div>
+        <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;">
+          <div style="padding:10px 14px;border:1px solid var(--border);">
+            <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:4px;">CHATGPT</div>
+            <div style="font-size:14px;color:#777;font-weight:500;">대화 도구</div>
+          </div>
+          <div style="padding:10px 14px;border:1px solid #E8603C;">
+            <div style="font-size:10px;color:#E8603C;letter-spacing:0.1em;margin-bottom:4px;">CLAUDE CODE</div>
+            <div style="font-size:14px;color:var(--white);font-weight:500;">실행 에이전트</div>
+          </div>
+        </div>
       </div>
-      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
-        <div style="font-size:11px;color:#bbb;letter-spacing:0.08em;">VS</div>
-      </div>
-      <div style="padding:22px 48px;display:flex;align-items:center;gap:12px;">
-        <div style="font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);font-weight:500;">Claude Code</div>
-        <div style="font-size:11px;color:#E8603C;border:1px solid #E8603C;padding:2px 8px;border-radius:2px;">실행 에이전트</div>
+      <div style="font-size:13px;color:#BBBBBB;line-height:1.7;border-top:1px solid var(--border);padding-top:14px;">
+        제안 → 사용자 실행<br>
+        <span style="color:#E8603C;">vs</span><br>
+        요청 → 직접 실행·저장·자동화
       </div>
     </div>
-    <!-- 비교 행 -->
-    <div style="flex:1;display:grid;grid-template-columns:1fr 120px 1fr;grid-template-rows:repeat(6,1fr);">
-      <!-- Row 1 -->
-      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);">
-        <div style="font-size:14px;color:#777;line-height:1.5;">파일은 수동으로 업로드<br><span style="font-size:12px;color:#aaa;">대화창에 첨부 후 분석 요청</span></div>
+    <!-- 우측: 비교 리스트 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+      <!-- 컬럼 헤더 -->
+      <div style="display:grid;grid-template-columns:80px 1fr 1fr;padding:0 44px 12px;border-bottom:1px solid var(--border);">
+        <div></div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;">ChatGPT</div>
+        <div style="font-size:11px;color:#888;letter-spacing:0.1em;">Claude Code</div>
       </div>
-      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
-        <div style="font-size:10px;color:#bbb;letter-spacing:0.08em;text-align:center;">파일<br>접근</div>
-      </div>
-      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);">
-        <div style="font-size:14px;color:var(--white);line-height:1.5;">로컬 파일시스템 직접 R/W<br><span style="font-size:12px;color:#888;">CSV 수백 개도 자동 처리</span></div>
-      </div>
-      <!-- Row 2 -->
-      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);background:#FAFAFA;">
-        <div style="font-size:14px;color:#777;line-height:1.5;">코드 예시만 제공<br><span style="font-size:12px;color:#aaa;">복붙 후 사용자가 직접 실행</span></div>
-      </div>
-      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:#FAFAFA;display:flex;align-items:center;justify-content:center;">
-        <div style="font-size:10px;color:#bbb;letter-spacing:0.08em;text-align:center;">코드<br>실행</div>
-      </div>
-      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);background:#FAFAFA;">
-        <div style="font-size:14px;color:var(--white);line-height:1.5;">내 컴퓨터에서 직접 실행<br><span style="font-size:12px;color:#888;">터미널 명령 포함 전체 자동화</span></div>
-      </div>
-      <!-- Row 3 -->
-      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);">
-        <div style="font-size:14px;color:#777;line-height:1.5;">결과는 복사·붙여넣기<br><span style="font-size:12px;color:#aaa;">차트·파일 저장은 사용자 몫</span></div>
-      </div>
-      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
-        <div style="font-size:10px;color:#bbb;letter-spacing:0.08em;text-align:center;">결과<br>저장</div>
-      </div>
-      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);">
-        <div style="font-size:14px;color:var(--white);line-height:1.5;">HTML·CSV·PNG 자동 저장<br><span style="font-size:12px;color:#888;">지정 경로에 파일 자동 관리</span></div>
-      </div>
-      <!-- Row 4 -->
-      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);background:#FAFAFA;">
-        <div style="font-size:14px;color:#777;line-height:1.5;">세션 종료 시 컨텍스트 초기화<br><span style="font-size:12px;color:#aaa;">매번 처음부터 설명 반복</span></div>
-      </div>
-      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:#FAFAFA;display:flex;align-items:center;justify-content:center;">
-        <div style="font-size:10px;color:#bbb;letter-spacing:0.08em;text-align:center;">규칙<br>기억</div>
-      </div>
-      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);background:#FAFAFA;">
-        <div style="font-size:14px;color:var(--white);line-height:1.5;">CLAUDE.md 프로젝트 규칙 영구 적용<br><span style="font-size:12px;color:#888;">한 번 설정 → 계속 유지</span></div>
-      </div>
-      <!-- Row 5 -->
-      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);">
-        <div style="font-size:14px;color:#777;line-height:1.5;">단계별 개별 요청 필수<br><span style="font-size:12px;color:#aaa;">5단계 작업 = 5번 대화</span></div>
-      </div>
-      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
-        <div style="font-size:10px;color:#bbb;letter-spacing:0.08em;text-align:center;">반복<br>작업</div>
-      </div>
-      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);">
-        <div style="font-size:14px;color:var(--white);line-height:1.5;">요청 한 번 → 전체 파이프라인 실행<br><span style="font-size:12px;color:#888;">집계 → 차트 → 리포트 연속 처리</span></div>
-      </div>
-      <!-- Row 6 -->
-      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;background:#FAFAFA;">
-        <div style="font-size:14px;color:#777;line-height:1.5;">웹 브라우저 한계<br><span style="font-size:12px;color:#aaa;">로컬 환경·외부 툴 연동 불가</span></div>
-      </div>
-      <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);background:#FAFAFA;display:flex;align-items:center;justify-content:center;">
-        <div style="font-size:10px;color:#bbb;letter-spacing:0.08em;text-align:center;">환경<br>연동</div>
-      </div>
-      <div style="padding:18px 48px;display:flex;flex-direction:column;justify-content:center;background:#FAFAFA;">
-        <div style="font-size:14px;color:var(--white);line-height:1.5;">Git · Slack · DB · API 연동<br><span style="font-size:12px;color:#888;">로컬 전체 개발 환경에서 작동</span></div>
+      <!-- 비교 행 6개 -->
+      <div style="display:grid;grid-template-columns:80px 1fr 1fr;padding:0 44px;flex:1;align-content:stretch;">
+        <!-- 파일 접근 -->
+        <div style="display:contents;">
+          <div style="padding:18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:10px;color:#AAAAAA;letter-spacing:0.08em;">파일 접근</div>
+          <div style="padding:18px 16px 18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:14px;color:#777;">수동 업로드</div>
+          <div style="padding:18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:14px;color:var(--white);">로컬 파일시스템 직접 R/W</div>
+        </div>
+        <!-- 코드 실행 -->
+        <div style="display:contents;">
+          <div style="padding:18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:10px;color:#AAAAAA;letter-spacing:0.08em;">코드 실행</div>
+          <div style="padding:18px 16px 18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:14px;color:#777;">코드 제안 → 사용자가 실행</div>
+          <div style="padding:18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:14px;color:var(--white);">내 컴퓨터에서 직접 실행</div>
+        </div>
+        <!-- 결과 저장 -->
+        <div style="display:contents;">
+          <div style="padding:18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:10px;color:#AAAAAA;letter-spacing:0.08em;">결과 저장</div>
+          <div style="padding:18px 16px 18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:14px;color:#777;">복붙 수작업</div>
+          <div style="padding:18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:14px;color:var(--white);">파일 자동 저장·관리</div>
+        </div>
+        <!-- 규칙 기억 -->
+        <div style="display:contents;">
+          <div style="padding:18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:10px;color:#AAAAAA;letter-spacing:0.08em;">규칙 기억</div>
+          <div style="padding:18px 16px 18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:14px;color:#777;">세션 종료 시 초기화</div>
+          <div style="padding:18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:14px;color:var(--white);">CLAUDE.md 영구 적용</div>
+        </div>
+        <!-- 반복 작업 -->
+        <div style="display:contents;">
+          <div style="padding:18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:10px;color:#AAAAAA;letter-spacing:0.08em;">반복 작업</div>
+          <div style="padding:18px 16px 18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:14px;color:#777;">단계마다 개별 요청</div>
+          <div style="padding:18px 0;display:flex;align-items:center;border-bottom:1px solid var(--border);font-size:14px;color:var(--white);">파이프라인 자동 실행</div>
+        </div>
+        <!-- 환경 연동 -->
+        <div style="display:contents;">
+          <div style="padding:18px 0;display:flex;align-items:center;font-size:10px;color:#AAAAAA;letter-spacing:0.08em;">환경 연동</div>
+          <div style="padding:18px 16px 18px 0;display:flex;align-items:center;font-size:14px;color:#777;">웹 브라우저만</div>
+          <div style="padding:18px 0;display:flex;align-items:center;font-size:14px;color:var(--white);">Git · Slack · DB · API</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1478,6 +1473,14 @@
           <span class="case-tag">K-means</span>
           <span class="case-tag">시뮬레이터</span>
         </div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:10px;">이 강의에서 직접 제작 — P05 · CH01</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">01</span>Claude Code로 채널별 CSV 집계 · ROI 계산</div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">02</span>K-means 클러스터링 자동 분류</div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">03</span>Chart.js 인터랙티브 대시보드 렌더링</div>
+          </div>
+        </div>
       </div>
       <div class="case-num">1 / 6</div>
     </div>
@@ -1507,6 +1510,14 @@
           <span class="case-tag">A/B Test</span>
           <span class="case-tag">Forest Plot</span>
           <span class="case-tag">AI 판정</span>
+        </div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:10px;">이 강의에서 직접 제작 — P05 · CH02</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">01</span>실험 데이터 집계 · 신뢰구간 계산 자동화</div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">02</span>Forest Plot · 누적 전환율 추세 시각화</div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">03</span>Claude Code AI 판정 인사이트 생성</div>
+          </div>
         </div>
       </div>
       <div class="case-num">2 / 6</div>
@@ -1538,6 +1549,14 @@
           <span class="case-tag">Churn Risk</span>
           <span class="case-tag">Action Plan</span>
         </div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:10px;">이 강의에서 직접 제작 — P05 · CH03</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">01</span>KPI → Driver → Input 3계층 지표 설계</div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">02</span>Churn Score 자동 계산 · 세그먼트 분류</div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">03</span>AI 액션 플랜 · 목표 트래킹 자동 생성</div>
+          </div>
+        </div>
       </div>
       <div class="case-num">3 / 6</div>
     </div>
@@ -1567,6 +1586,14 @@
           <span class="case-tag">Attrition</span>
           <span class="case-tag">Recruiting Funnel</span>
           <span class="case-tag">Segment</span>
+        </div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:10px;">이 강의에서 직접 제작 — P05 · CH04</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">01</span>헤드카운트 변화 · 채용 퍼널 집계 자동화</div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">02</span>AI 이탈 위험 점수 · 레벨별 세그먼트 분류</div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">03</span>부서별 이탈 패턴 시각화 · 인사이트 생성</div>
+          </div>
         </div>
       </div>
       <div class="case-num">4 / 6</div>
@@ -1599,6 +1626,14 @@
           <span class="case-tag">LTV</span>
           <span class="case-tag">Simulator</span>
         </div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:10px;">이 강의에서 직접 제작 — P05 · CH05</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">01</span>MRR 분해 · 플랜별 매출 추세 자동 집계</div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">02</span>코호트 리텐션 테이블 · LTV 시뮬레이터 제작</div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">03</span>이탈률 시뮬레이터 · AI 알림 자동 생성</div>
+          </div>
+        </div>
       </div>
       <div class="case-num">5 / 6</div>
     </div>
@@ -1628,6 +1663,14 @@
           <span class="case-tag">Pipeline</span>
           <span class="case-tag">Funnel</span>
           <span class="case-tag">Forecast</span>
+        </div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:10px;">이 강의에서 직접 제작 — P05 · CH05</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">01</span>단계별 전환율 · 파이프라인 상태 자동 집계</div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">02</span>90일 이상 감지 · 우선순위 자동 정렬</div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#666;line-height:1.5;"><span style="color:#aaa;flex-shrink:0;">03</span>고객사별 영업 기회 리스트 자동 생성</div>
+          </div>
         </div>
       </div>
       <div class="case-num">6 / 6</div>
