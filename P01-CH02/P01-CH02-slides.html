@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P01-CH02 — Claude Code 환경 세팅</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Poppins:wght@700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #F2F2EF;
+    --text: #1C1A18;
+    --sub: #888;
+    --dim: #BBBBBB;
+    --white: #1C1A18;
+    --border: #E0DDD9;
+    --p01: #E8603C;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+  }
+
+  .deck { width: 1280px; height: 800px; transform-origin: top left; position: fixed; top: 0; left: 0; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; }
+  .slide.active { display: flex; }
+
+  .tb {
+    height: 48px; min-height: 48px;
+    padding: 0 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border); flex-shrink: 0;
+    position: relative;
+  }
+  .tb-cap { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
+  .tb-num { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; }
+
+  .body { flex: 1; display: flex; min-height: 0; }
+
+  .nav {
+    position: fixed; bottom: 24px; right: 40px;
+    display: flex; align-items: center; gap: 12px; z-index: 100;
+  }
+  .nav-ctr { font-size: 11px; color: #666; letter-spacing: 0.08em; }
+  .nav-btn { background: none; border: none; color: var(--sub); cursor: pointer; font-size: 18px; padding: 4px; transition: color 0.15s; }
+  .nav-btn:hover { color: var(--white); }
+  .progress { position: fixed; bottom: 0; left: 0; height: 2px; background: var(--p01); transition: width 0.3s; z-index: 100; }
+
+  .clip-dots {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px; z-index: 100;
+  }
+  .clip-dot { width: 6px; height: 6px; border-radius: 50%; background: #CCCCCC; transition: background 0.2s; }
+  .clip-dot.active { background: var(--p01); }
+
+  .l-panel {
+    width: 38%; border-right: 1px solid var(--border);
+    padding: 52px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .eyebrow { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); margin-bottom: 22px; }
+  .big-title { font-size: 46px; font-weight: 600; color: var(--white); line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 14px; }
+  .body-text { font-size: 17px; color: #888; line-height: 1.85; }
+
+  .code-wrap {
+    background: #0A0C10; border: 1px solid #1E2028;
+    padding: 22px 26px; font-family: 'Menlo', 'Monaco', monospace;
+    font-size: 14px; line-height: 1.85; color: rgba(255,255,255,0.5);
+  }
+  .code-hi { color: rgba(255,255,255,0.88); }
+  .code-comment { color: rgba(255,255,255,0.28); }
+  .code-accent { color: #E8603C; }
+
+  .takeaway-grid { flex: 1; display: grid; border-top: 1px solid var(--border); }
+  .takeaway-cell { padding: 44px 48px; display: flex; flex-direction: column; justify-content: space-between; }
+  .takeaway-cell + .takeaway-cell { border-left: 1px solid var(--border); }
+  .takeaway-n { font-size: 48px; font-weight: 300; color: #CCCCCC; letter-spacing: -0.03em; line-height: 1; }
+  .takeaway-title { font-size: 20px; font-weight: 500; color: var(--white); margin: 16px 0 12px; line-height: 1.35; }
+  .takeaway-body { font-size: 15px; color: var(--sub); line-height: 1.85; }
+
+  .case-right { flex: 1; overflow: hidden; background: #F5F4F0; display: flex; align-items: center; justify-content: center; }
+  .case-right img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ════ s1 | 타이틀 ════ -->
+<div class="slide" id="s1" style="background:#0D0D0B;">
+  <div class="body" style="align-items:center;justify-content:center;flex-direction:column;gap:0;position:relative;">
+    <!-- Animated terminal-like visual -->
+    <svg width="900" height="420" viewBox="0 0 900 420" style="position:absolute;opacity:0.06;">
+      <rect x="80" y="40" width="740" height="340" rx="8" fill="none" stroke="#fff" stroke-width="1"/>
+      <rect x="80" y="40" width="740" height="36" rx="8" fill="#fff" opacity="0.08"/>
+      <circle cx="108" cy="58" r="6" fill="#E8603C" opacity="0.8"/>
+      <circle cx="130" cy="58" r="6" fill="#F5A623" opacity="0.8"/>
+      <circle cx="152" cy="58" r="6" fill="#7ED321" opacity="0.8"/>
+      <text x="110" y="116" font-size="13" fill="#fff" font-family="monospace">$ curl -fsSL https://claude.ai/install.sh | bash</text>
+      <text x="110" y="146" font-size="13" fill="rgba(255,255,255,0.4)" font-family="monospace">Installing Claude Code...</text>
+      <text x="110" y="176" font-size="13" fill="rgba(255,255,255,0.4)" font-family="monospace">✓ claude v1.x installed</text>
+      <text x="110" y="216" font-size="13" fill="#E8603C" font-family="monospace">$ claude</text>
+      <text x="110" y="246" font-size="13" fill="rgba(255,255,255,0.6)" font-family="monospace">Claude Code — 현재 폴더를 알려줘.</text>
+      <text x="110" y="280" font-size="13" fill="rgba(255,255,255,0.3)" font-family="monospace">/Users/me/data-viz-project</text>
+    </svg>
+    <!-- Title content -->
+    <div style="text-align:center;position:relative;z-index:1;">
+      <div style="font-size:11px;letter-spacing:0.22em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:32px;">P01 · CH02 · Claude Code 환경 세팅</div>
+      <div style="font-size:72px;font-weight:700;color:#fff;line-height:1.05;letter-spacing:-0.03em;font-family:'Poppins','Pretendard',sans-serif;">
+        Set Up<br><span style="color:#E8603C;">Claude Code</span>
+      </div>
+      <div style="font-size:18px;color:rgba(255,255,255,0.4);margin-top:28px;letter-spacing:0.04em;">
+        설치 → Antigravity 에디터 → 첫 실습
+      </div>
+    </div>
+    <!-- Bottom info -->
+    <div style="position:absolute;bottom:52px;left:0;right:0;display:flex;justify-content:center;gap:48px;">
+      <div style="text-align:center;">
+        <div style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;margin-bottom:6px;">클립</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.5);">2개</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;margin-bottom:6px;">예상 시간</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.5);">약 20분</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;margin-bottom:6px;">준비물</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.5);">Claude Pro / Max 구독</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s2 | 오프닝 — 왜 Antigravity? ════ -->
+<div class="slide" id="s2">
+  <div class="tb">
+    <span class="tb-cap">Claude Code 설치하기</span>
+    <span class="tb-num">2</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">이 강의의 접근법</div>
+        <div class="big-title">터미널 말고<br>에디터 안에서</div>
+        <div class="body-text" style="margin-top:16px;">많은 분들이 Claude Code를 "터미널 도구"로 알고 계십니다. 맞습니다. 하지만 이 강의에서는 다르게 접근합니다.</div>
+      </div>
+      <div style="padding:18px;background:#F8F7F4;border:1px solid var(--border);">
+        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:8px;">이 강의에서 쓸 환경</div>
+        <div style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:6px;">Antigravity 에디터 + Claude Code</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;">에디터 오른쪽 채팅 패널 → 자연어 지시<br>터미널은 꼭 필요할 때만</div>
+      </div>
+    </div>
+    <!-- Right: 방법 비교 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 60px;gap:0;">
+      <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.12em;margin-bottom:20px;">BEFORE vs AFTER</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);">
+        <div style="background:#FAFAFA;padding:28px 30px;">
+          <div style="font-size:10px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:14px;">터미널만 쓸 때</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:14px;color:#CCCCCC;">화면 분할 필요</div>
+            <div style="font-size:14px;color:#CCCCCC;">파일 편집기 따로</div>
+            <div style="font-size:14px;color:#CCCCCC;">결과 확인 왔다갔다</div>
+            <div style="font-size:14px;color:#CCCCCC;">명령어 직접 입력</div>
+          </div>
+        </div>
+        <div style="background:#FDF8F5;border:1px solid rgba(232,96,60,0.15);padding:28px 30px;">
+          <div style="font-size:10px;color:#E8603C;letter-spacing:0.1em;margin-bottom:14px;">Antigravity 안에서</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:14px;color:#1C1A18;font-weight:500;">한 화면에서 모두</div>
+            <div style="font-size:14px;color:#1C1A18;font-weight:500;">diff 실시간 확인</div>
+            <div style="font-size:14px;color:#1C1A18;font-weight:500;">채팅으로 즉시 지시</div>
+            <div style="font-size:14px;color:#1C1A18;font-weight:500;">데이터 시각화 최적</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s3 | Claude Code란? — ChatGPT 비교 ════ -->
+<div class="slide" id="s3">
+  <div class="tb">
+    <span class="tb-cap">Claude Code 설치하기</span>
+    <span class="tb-num">3</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">30초 정리</div>
+        <div class="big-title">Claude Code<br>vs ChatGPT</div>
+        <div class="body-text" style="margin-top:16px;">단순히 질문에 답하는 게 아니라, 내 컴퓨터 파일을 직접 읽고, 코드를 실행하고, 결과물을 저장합니다.</div>
+      </div>
+      <div style="padding:16px;background:#0A0C10;border:1px solid #1E2028;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:8px;font-family:monospace;">$ claude</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.7);font-family:monospace;line-height:1.8;">
+          CSV 파일을 던져주면,<br>
+          읽고 → 분석하고 → 차트 만들고<br>
+          <span style="color:#E8603C;">→ 저장까지 혼자 합니다.</span>
+        </div>
+      </div>
+    </div>
+    <!-- Right: 비교표 -->
+    <div style="flex:1;display:flex;align-items:center;padding:48px 52px;">
+      <div style="width:100%;border:1px solid var(--border);">
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.02);">
+          <div style="padding:14px 18px;border-right:1px solid var(--border);"></div>
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:11px;color:#888;letter-spacing:0.1em;">CHATGPT (웹)</div>
+          <div style="padding:14px 18px;font-size:11px;color:#E8603C;letter-spacing:0.1em;">CLAUDE CODE</div>
+        </div>
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:18px;border-right:1px solid var(--border);font-size:12px;color:#AAA;letter-spacing:0.06em;">파일 처리</div>
+          <div style="padding:18px;border-right:1px solid var(--border);font-size:14px;color:#888;">업로드한 파일만</div>
+          <div style="padding:18px;font-size:14px;color:#1C1A18;font-weight:500;">폴더 전체 자동으로 읽음</div>
+        </div>
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:18px;border-right:1px solid var(--border);font-size:12px;color:#AAA;letter-spacing:0.06em;">코드 실행</div>
+          <div style="padding:18px;border-right:1px solid var(--border);font-size:14px;color:#888;">직접 안 함</div>
+          <div style="padding:18px;font-size:14px;color:#1C1A18;font-weight:500;">내 컴퓨터에서 직접 실행</div>
+        </div>
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:18px;border-right:1px solid var(--border);font-size:12px;color:#AAA;letter-spacing:0.06em;">결과 저장</div>
+          <div style="padding:18px;border-right:1px solid var(--border);font-size:14px;color:#888;">복사-붙여넣기</div>
+          <div style="padding:18px;font-size:14px;color:#1C1A18;font-weight:500;">파일로 자동 저장</div>
+        </div>
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;">
+          <div style="padding:18px;border-right:1px solid var(--border);font-size:12px;color:#AAA;letter-spacing:0.06em;">기억</div>
+          <div style="padding:18px;border-right:1px solid var(--border);font-size:14px;color:#888;">대화 끝나면 초기화</div>
+          <div style="padding:18px;font-size:14px;color:#1C1A18;font-weight:500;">CLAUDE.md로 영구 기억</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s4 | 설치 전 준비 ════ -->
+<div class="slide" id="s4">
+  <div class="tb">
+    <span class="tb-cap">Claude Code 설치하기</span>
+    <span class="tb-num">4</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">설치 전 확인</div>
+        <div class="big-title">준비물<br>두 가지</div>
+        <div class="body-text" style="margin-top:16px;">계정과 운영체제만 확인하면 설치 준비 완료입니다.</div>
+      </div>
+      <div style="padding:16px 18px;border:1px solid rgba(232,96,60,0.3);background:rgba(232,96,60,0.04);">
+        <div style="font-size:10px;color:#E8603C;letter-spacing:0.1em;margin-bottom:8px;">추천 플랜</div>
+        <div style="font-size:15px;font-weight:600;color:var(--white);">Max $100/월</div>
+        <div style="font-size:13px;color:#888;margin-top:4px;line-height:1.6;">Pro $20는 하루 한도가 빠르게 찹니다.<br>본격적으로 쓸 거라면 Max 권장.</div>
+      </div>
+    </div>
+    <!-- Right: 체크리스트 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 60px;gap:20px;">
+      <!-- 계정 -->
+      <div style="border:1px solid var(--border);padding:28px 32px;">
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.12em;margin-bottom:16px;">01 · CLAUDE.AI 계정</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;flex-shrink:0;">Pro</div>
+            <div style="font-size:14px;color:#888;">$20/월 — 하루 한도 있음</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:28px;height:28px;background:#1C1A18;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0;">Max</div>
+            <div style="font-size:14px;color:#1C1A18;font-weight:500;">$100/월 — 권장, 한도 넉넉</div>
+          </div>
+        </div>
+      </div>
+      <!-- 운영체제 -->
+      <div style="border:1px solid var(--border);padding:28px 32px;">
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.12em;margin-bottom:16px;">02 · 운영체제</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+          <div>
+            <div style="font-size:13px;font-weight:500;color:var(--white);margin-bottom:4px;">macOS</div>
+            <div style="font-size:12px;color:#888;">13 (Ventura) 이상</div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:500;color:var(--white);margin-bottom:4px;">Windows</div>
+            <div style="font-size:12px;color:#888;">10 (64비트) 이상</div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:500;color:var(--white);margin-bottom:4px;">Linux</div>
+            <div style="font-size:12px;color:#888;">Ubuntu 20.04 이상</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s5 | macOS 설치 ════ -->
+<div class="slide" id="s5">
+  <div class="tb">
+    <span class="tb-cap">Claude Code 설치하기</span>
+    <span class="tb-num">5</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">설치</div>
+        <div class="big-title">macOS<br>설치</div>
+        <div class="body-text" style="margin-top:16px;">터미널을 열고 명령어 하나를 붙여넣습니다. 설치 후 버전 확인까지 1분이면 끝납니다.</div>
+      </div>
+      <div style="font-size:13px;color:#888;line-height:1.8;">
+        macOS 버전 확인:<br>
+        <span style="color:#555;">🍎 → 이 Mac에 관하여</span>
+      </div>
+    </div>
+    <!-- Right: 코드 블록 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 60px;gap:20px;">
+      <div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">방법 1 — 공식 설치 스크립트</div>
+        <div class="code-wrap">
+          <div class="code-comment"># 터미널에 붙여넣기</div>
+          <div class="code-hi">curl -fsSL https://claude.ai/install.sh | bash</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">방법 2 — Homebrew (설치되어 있을 때)</div>
+        <div class="code-wrap">
+          <div class="code-hi">brew install --cask claude-code</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">설치 확인</div>
+        <div class="code-wrap">
+          <div class="code-hi">claude --version</div>
+          <div class="code-comment"># 숫자가 나오면 설치 완료</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s6 | Windows 설치 ════ -->
+<div class="slide" id="s6">
+  <div class="tb">
+    <span class="tb-cap">Claude Code 설치하기</span>
+    <span class="tb-num">6</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">설치</div>
+        <div class="big-title">Windows<br>설치</div>
+        <div class="body-text" style="margin-top:16px;">PowerShell을 관리자 권한으로 열고 아래 명령어를 실행합니다.</div>
+      </div>
+      <div style="padding:14px 16px;background:#FDF8F5;border:1px solid rgba(232,96,60,0.2);">
+        <div style="font-size:10px;color:#E8603C;letter-spacing:0.1em;margin-bottom:6px;">주의</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;">npm으로 설치하는 방법은<br>공식적으로 deprecated입니다.<br>아래 방법을 사용하세요.</div>
+      </div>
+    </div>
+    <!-- Right: 코드 블록 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 60px;gap:20px;">
+      <div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">방법 1 — PowerShell (관리자 권한)</div>
+        <div class="code-wrap">
+          <div class="code-comment"># PowerShell (관리자 권한으로 실행)</div>
+          <div class="code-hi">irm https://claude.ai/install.ps1 | iex</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">방법 2 — winget</div>
+        <div class="code-wrap">
+          <div class="code-hi">winget install Anthropic.ClaudeCode</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">설치 확인</div>
+        <div class="code-wrap">
+          <div class="code-hi">claude --version</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s7 | 로그인 ════ -->
+<div class="slide" id="s7">
+  <div class="tb">
+    <span class="tb-cap">Claude Code 설치하기</span>
+    <span class="tb-num">7</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">로그인</div>
+        <div class="big-title">브라우저<br>로그인</div>
+        <div class="body-text" style="margin-top:16px;">설치 후 처음 <code style="font-size:15px;background:#F0EEE9;padding:2px 6px;border-radius:2px;">claude</code>를 실행하면 브라우저가 자동으로 열립니다. claude.ai 계정으로 로그인하면 끝입니다.</div>
+      </div>
+      <div style="padding:16px 18px;background:#F8F7F4;border:1px solid var(--border);">
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:8px;">첫 번째 명령</div>
+        <div style="font-size:13px;color:#555;font-family:monospace;line-height:1.8;">현재 폴더 경로를 알려줘.</div>
+        <div style="font-size:12px;color:#AAAAAA;margin-top:6px;">→ 경로가 출력되면 정상 동작</div>
+      </div>
+    </div>
+    <!-- Right: 로그인 플로우 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:52px 60px;gap:0;">
+      <div style="width:100%;max-width:480px;">
+        <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);">
+          <div style="background:#fff;padding:22px 28px;display:flex;align-items:center;gap:20px;">
+            <div style="width:36px;height:36px;background:#0A0C10;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:16px;color:#E8603C;font-family:monospace;">$</span>
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--white);margin-bottom:3px;">터미널 실행</div>
+              <div style="font-size:12px;color:#888;font-family:monospace;">claude</div>
+            </div>
+          </div>
+          <div style="background:#fff;padding:22px 28px;display:flex;align-items:center;gap:20px;">
+            <div style="width:36px;height:36px;background:#F0EEE9;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="#888" stroke-width="1.5"/><path d="M6 9h6M9 6v6" stroke="#888" stroke-width="1.5"/></svg>
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--white);margin-bottom:3px;">브라우저 자동 오픈</div>
+              <div style="font-size:12px;color:#888;">claude.ai 인증 화면</div>
+            </div>
+          </div>
+          <div style="background:#FDF8F5;border:1px solid rgba(232,96,60,0.15);padding:22px 28px;display:flex;align-items:center;gap:20px;">
+            <div style="width:36px;height:36px;background:#E8603C;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l4 4 6-7" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--white);margin-bottom:3px;">로그인 완료</div>
+              <div style="font-size:12px;color:#888;">터미널로 돌아오면 프롬프트 활성화</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s8 | 트러블슈팅 ════ -->
+<div class="slide" id="s8">
+  <div class="tb">
+    <span class="tb-cap">Claude Code 설치하기</span>
+    <span class="tb-num">8</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">트러블슈팅</div>
+        <div class="big-title">설치가<br>안 될 때</div>
+        <div class="body-text" style="margin-top:16px;">두 가지 경우만 알면 대부분 해결됩니다.</div>
+      </div>
+      <div class="code-wrap">
+        <div class="code-comment"># 진단 명령어</div>
+        <div class="code-hi">claude doctor</div>
+      </div>
+    </div>
+    <!-- Right: 두 가지 케이스 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 60px;gap:20px;">
+      <div style="border:1px solid var(--border);padding:28px 32px;">
+        <div style="font-size:11px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:14px;">케이스 01</div>
+        <div style="font-size:16px;font-weight:500;color:var(--white);margin-bottom:10px;">"command not found" 오류</div>
+        <div style="font-size:14px;color:#888;line-height:1.7;margin-bottom:16px;">PATH 설정이 안 된 경우입니다. 터미널을 닫고 다시 열거나:</div>
+        <div class="code-wrap" style="font-size:13px;">
+          <div class="code-hi">source ~/.zshrc</div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--border);padding:28px 32px;">
+        <div style="font-size:11px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:14px;">케이스 02</div>
+        <div style="font-size:16px;font-weight:500;color:var(--white);margin-bottom:10px;">로그인이 안 되는 경우</div>
+        <div style="font-size:14px;color:#888;line-height:1.7;margin-bottom:16px;">네트워크 문제일 수 있습니다. 진단 명령으로 확인:</div>
+        <div class="code-wrap" style="font-size:13px;">
+          <div class="code-hi">claude doctor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s9 | 클립 1 핵심 정리 ════ -->
+<div class="slide" id="s9">
+  <div class="tb">
+    <span class="tb-cap">Claude Code 설치하기</span>
+    <span class="tb-num">9</span>
+  </div>
+  <div class="body" style="flex-direction:column;">
+    <div style="padding:36px 52px 24px;border-bottom:1px solid var(--border);">
+      <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.12em;margin-bottom:8px;">CLIP 01 · 핵심 정리</div>
+      <div style="font-size:26px;font-weight:500;color:var(--white);">Claude Code 설치 완료</div>
+    </div>
+    <div class="takeaway-grid" style="grid-template-columns:1fr 1fr 1fr;">
+      <div class="takeaway-cell">
+        <div class="takeaway-n">01</div>
+        <div>
+          <div class="takeaway-title">명령어 하나로 설치</div>
+          <div class="takeaway-body">curl 또는 winget 한 줄로 설치.<br>브라우저 로그인으로 인증 완료.</div>
+        </div>
+      </div>
+      <div class="takeaway-cell">
+        <div class="takeaway-n">02</div>
+        <div>
+          <div class="takeaway-title">구독 선택</div>
+          <div class="takeaway-body">Pro $20는 하루 한도가 빠릅니다.<br>본격 사용이라면 Max $100 권장.</div>
+        </div>
+      </div>
+      <div class="takeaway-cell">
+        <div class="takeaway-n">03</div>
+        <div>
+          <div class="takeaway-title">다음: Antigravity 세팅</div>
+          <div class="takeaway-body">에디터 안에서 Claude Code를 쓰는<br>우리만의 작업 환경을 완성합니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s10 | 섹션 브레이크 — Antigravity ════ -->
+<div class="slide" id="s10" style="background:#E5DCC8;">
+  <div class="tb" style="background:#E5DCC8;border-bottom:1px solid #CFC4AC;">
+    <span class="tb-cap" style="color:#8C7E6A;">Antigravity 에디터</span>
+    <span class="tb-num" style="color:#8C7E6A;">10</span>
+  </div>
+  <div class="body" style="flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:0 80px 80px;">
+    <div style="font-size:16px;color:#8C7E6A;letter-spacing:0.14em;margin-bottom:28px;font-weight:500;">CLIP 02 · Antigravity 에디터 환경 세팅</div>
+    <div style="font-size:84px;font-weight:700;line-height:1.06;color:#1C1A18;letter-spacing:-0.03em;font-family:'Poppins','Pretendard',sans-serif;">
+      Set Up<br>Your Workspace
+    </div>
+  </div>
+</div>
+
+<!-- ════ s11 | Antigravity란? ════ -->
+<div class="slide" id="s11">
+  <div class="tb">
+    <span class="tb-cap">Antigravity 에디터 환경 세팅</span>
+    <span class="tb-num">11</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">Antigravity란</div>
+        <div class="big-title">AI 네이티브<br>코드 에디터</div>
+        <div class="body-text" style="margin-top:16px;">VS Code와 비슷하게 생겼지만, AI와의 협업을 기본으로 설계된 에디터입니다.</div>
+      </div>
+      <div style="font-size:13px;color:#888;line-height:1.8;">
+        <span style="color:#555;font-weight:500;">지원 환경</span><br>
+        macOS: Apple Silicon (M1~M4), 12 이상<br>
+        Windows: 10 64비트 이상<br>
+        <span style="color:#BBBBBB;">Intel Mac: 지원 안 함</span>
+      </div>
+    </div>
+    <!-- Right: 3가지 이유 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:48px 52px;gap:1px;background:var(--border);">
+      <div style="background:#fff;padding:28px 32px;flex:1;display:flex;gap:20px;align-items:flex-start;">
+        <div style="font-size:32px;font-weight:300;color:#DDDDDD;line-height:1;flex-shrink:0;">01</div>
+        <div>
+          <div style="font-size:16px;font-weight:500;color:var(--white);margin-bottom:8px;">에디터 안에서 Claude Code와 채팅</div>
+          <div style="font-size:14px;color:#888;line-height:1.7;">오른쪽 패널에서 자연어로 요청하면, Claude가 파일을 읽고 수정하고 실행합니다. 터미널을 별도로 열 필요 없습니다.</div>
+        </div>
+      </div>
+      <div style="background:#fff;padding:28px 32px;flex:1;display:flex;gap:20px;align-items:flex-start;">
+        <div style="font-size:32px;font-weight:300;color:#DDDDDD;line-height:1;flex-shrink:0;">02</div>
+        <div>
+          <div style="font-size:16px;font-weight:500;color:var(--white);margin-bottom:8px;">파일 변경을 실시간 diff로 확인</div>
+          <div style="font-size:14px;color:#888;line-height:1.7;">Claude가 파일을 수정하면 에디터에서 바로 보입니다. 수정 내용을 눈으로 확인하고 승인하거나 되돌릴 수 있습니다.</div>
+        </div>
+      </div>
+      <div style="background:#fff;padding:28px 32px;flex:1;display:flex;gap:20px;align-items:flex-start;">
+        <div style="font-size:32px;font-weight:300;color:#DDDDDD;line-height:1;flex-shrink:0;">03</div>
+        <div>
+          <div style="font-size:16px;font-weight:500;color:var(--white);margin-bottom:8px;">구독으로 API 추가 비용 없이</div>
+          <div style="font-size:14px;color:#888;line-height:1.7;">Claude Pro/Max 구독만 있으면 됩니다. 별도 API 키 없이 구독 내에서 사용.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s12 | Antigravity 홈페이지 (이미지) ════ -->
+<div class="slide" id="s12">
+  <div class="tb">
+    <span class="tb-cap">Antigravity 에디터 환경 세팅</span>
+    <span class="tb-num">12</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">설치</div>
+        <div class="big-title">Antigravity<br>다운로드</div>
+        <div class="body-text" style="margin-top:16px;">antigravity.google 에 접속해 macOS 또는 Windows 버전을 내려받습니다.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);">
+          <div style="font-size:12px;color:#888;width:24px;flex-shrink:0;">①</div>
+          <div style="font-size:14px;color:#555;">antigravity.google 접속</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);">
+          <div style="font-size:12px;color:#888;width:24px;flex-shrink:0;">②</div>
+          <div style="font-size:14px;color:#555;">macOS .dmg 또는 Windows .exe 다운로드</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 0;">
+          <div style="font-size:12px;color:#888;width:24px;flex-shrink:0;">③</div>
+          <div style="font-size:14px;color:#555;">macOS: Applications 폴더에 드래그<br>Windows: .exe 실행</div>
+        </div>
+      </div>
+    </div>
+    <div class="case-right">
+      <img src="AntigravityHomepage.png" alt="Antigravity Homepage">
+    </div>
+  </div>
+</div>
+
+<!-- ════ s13 | Claude Code 익스텐션 (이미지) ════ -->
+<div class="slide" id="s13">
+  <div class="tb">
+    <span class="tb-cap">Antigravity 에디터 환경 세팅</span>
+    <span class="tb-num">13</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">익스텐션 연결</div>
+        <div class="big-title">Claude Code<br>익스텐션</div>
+        <div class="body-text" style="margin-top:16px;">에디터 안에 Claude Code 익스텐션을 설치하고 계정과 연결합니다.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--border);">
+        <div style="padding:14px 16px;border-bottom:1px solid var(--border);">
+          <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:6px;">STEP 1</div>
+          <div style="font-size:13px;color:#555;">퍼즐 아이콘 → "Claude Code" 검색 → Install</div>
+        </div>
+        <div style="padding:14px 16px;border-bottom:1px solid var(--border);">
+          <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:6px;">STEP 2</div>
+          <div style="font-size:13px;color:#555;">주황색 꽃 아이콘 → Connect Account</div>
+        </div>
+        <div style="padding:14px 16px;">
+          <div style="font-size:10px;color:#E8603C;letter-spacing:0.1em;margin-bottom:6px;">STEP 3</div>
+          <div style="font-size:13px;color:#555;">브라우저 인증 → 코드 복사 → 에디터 붙여넣기</div>
+        </div>
+      </div>
+    </div>
+    <div class="case-right">
+      <img src="AntigravityExtension.png" alt="Antigravity Claude Code Extension">
+    </div>
+  </div>
+</div>
+
+<!-- ════ s14 | 작업 환경 구성 ════ -->
+<div class="slide" id="s14">
+  <div class="tb">
+    <span class="tb-cap">Antigravity 에디터 환경 세팅</span>
+    <span class="tb-num">14</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">레이아웃</div>
+        <div class="big-title">작업 환경<br>구성</div>
+        <div class="body-text" style="margin-top:16px;">이제 실제로 쓸 레이아웃을 잡습니다. 세 가지 영역을 이렇게 배치합니다.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="padding:12px 14px;background:#F8F7F4;border-left:2px solid var(--p01);">
+          <div style="font-size:12px;font-weight:600;color:var(--white);margin-bottom:3px;">Claude Code 채팅 패널</div>
+          <div style="font-size:12px;color:#888;">자연어로 작업 지시 → 주 작업 공간</div>
+        </div>
+        <div style="padding:12px 14px;background:#F8F7F4;border-left:2px solid #888;">
+          <div style="font-size:12px;font-weight:600;color:var(--white);margin-bottom:3px;">에디터</div>
+          <div style="font-size:12px;color:#888;">파일 내용 확인 및 검토</div>
+        </div>
+        <div style="padding:12px 14px;background:#F8F7F4;border-left:2px solid #DDDDDD;">
+          <div style="font-size:12px;font-weight:600;color:var(--white);margin-bottom:3px;">터미널 (Ctrl + `)</div>
+          <div style="font-size:12px;color:#888;">꼭 필요할 때만 사용</div>
+        </div>
+      </div>
+    </div>
+    <!-- Right: 레이아웃 시각화 -->
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:48px 52px;">
+      <div style="width:100%;height:100%;border:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;gap:1px;background:var(--border);">
+        <!-- 파일 탐색기 + 에디터 -->
+        <div style="background:#fff;display:flex;flex-direction:column;">
+          <div style="padding:10px 14px;border-bottom:1px solid var(--border);font-size:10px;color:#AAAAAA;letter-spacing:0.1em;">EXPLORER + EDITOR</div>
+          <div style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:6px;">
+            <div style="height:8px;background:#EEEEEE;border-radius:1px;width:70%;"></div>
+            <div style="height:8px;background:#EEEEEE;border-radius:1px;width:55%;"></div>
+            <div style="height:8px;background:#E8603C;border-radius:1px;width:80%;opacity:0.3;"></div>
+            <div style="height:8px;background:#EEEEEE;border-radius:1px;width:65%;"></div>
+            <div style="height:8px;background:#EEEEEE;border-radius:1px;width:40%;"></div>
+          </div>
+        </div>
+        <!-- Claude Code 패널 -->
+        <div style="background:#F8F7F4;display:flex;flex-direction:column;">
+          <div style="padding:10px 14px;border-bottom:1px solid var(--border);font-size:10px;color:#E8603C;letter-spacing:0.1em;">CLAUDE CODE PANEL</div>
+          <div style="flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:8px;justify-content:flex-end;">
+            <div style="background:#fff;border:1px solid var(--border);padding:8px 10px;border-radius:2px;">
+              <div style="font-size:11px;color:#888;font-family:monospace;">CSV 파일 분석해줘</div>
+            </div>
+            <div style="background:#FDF8F5;border:1px solid rgba(232,96,60,0.2);padding:8px 10px;border-radius:2px;">
+              <div style="font-size:11px;color:#555;font-family:monospace;">파일을 읽겠습니다...</div>
+            </div>
+          </div>
+        </div>
+        <!-- 터미널 (하단) -->
+        <div style="background:#0A0C10;grid-column:1/3;padding:10px 14px;display:flex;align-items:center;gap:8px;">
+          <div style="font-size:10px;color:#444;letter-spacing:0.1em;">TERMINAL (필요 시)</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.2);font-family:monospace;">$ _</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s15 | YouTube 영상 전체화면 ════ -->
+<div class="slide" id="s15" style="background:#000;">
+  <div class="tb" style="background:#111;border-bottom:1px solid #222;">
+    <span class="tb-cap" style="color:#666;">Antigravity 에디터 환경 세팅</span>
+    <span class="tb-num" style="color:#444;">15</span>
+  </div>
+  <div class="body" style="background:#000;">
+    <iframe
+      src="https://www.youtube.com/embed/SVCBA-pBgt0?rel=0&modestbranding=1"
+      style="width:100%;height:100%;border:none;"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
+
+<!-- ════ s16 | 첫 번째 테스트 ════ -->
+<div class="slide" id="s16">
+  <div class="tb">
+    <span class="tb-cap">Antigravity 에디터 환경 세팅</span>
+    <span class="tb-num">16</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">테스트</div>
+        <div class="big-title">첫 번째<br>대화</div>
+        <div class="body-text" style="margin-top:16px;">오른쪽 Claude Code 패널에서 아래 두 가지를 입력해 정상 동작을 확인합니다.</div>
+      </div>
+      <div style="font-size:13px;color:#888;line-height:1.8;">
+        파일이 생성되면<br>
+        <span style="color:#555;">환경 세팅 완료입니다.</span>
+      </div>
+    </div>
+    <!-- Right: 테스트 명령 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 60px;gap:24px;">
+      <div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:12px;">테스트 1 — 폴더 인식 확인</div>
+        <div class="code-wrap">
+          <div class="code-hi">안녕. 현재 열려 있는 폴더 이름을 알려줘.</div>
+          <div class="code-comment" style="margin-top:8px;"># 폴더 이름이 나오면 정상</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:12px;">테스트 2 — 파일 생성 확인</div>
+        <div class="code-wrap">
+          <div class="code-hi">hello.txt 파일을 만들어줘.</div>
+          <div class="code-hi">내용은 "Claude Code + Antigravity 세팅 완료"</div>
+          <div class="code-comment" style="margin-top:8px;"># 파일 탐색기에 hello.txt 생기면 성공</div>
+        </div>
+      </div>
+      <div style="padding:16px 20px;background:#FDF8F5;border:1px solid rgba(232,96,60,0.2);">
+        <div style="font-size:13px;color:#E8603C;font-weight:500;margin-bottom:4px;">성공 기준</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;">왼쪽 파일 탐색기에 hello.txt가 생성되면<br>환경 세팅이 완료된 것입니다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s17 | 터미널 없이 ════ -->
+<div class="slide" id="s17">
+  <div class="tb">
+    <span class="tb-cap">Antigravity 에디터 환경 세팅</span>
+    <span class="tb-num">17</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">핵심 원칙</div>
+        <div class="big-title">터미널<br>명령어<br>안 외워도 됨</div>
+        <div class="body-text" style="margin-top:16px;">채팅 패널에서 말하면, Claude가 알아서 실행합니다.</div>
+      </div>
+      <div style="padding:16px 18px;background:#F8F7F4;border:1px solid var(--border);">
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:8px;">이 강의에서 우리가 주로 쓸 것</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#888;line-height:1.7;">
+          <div>💬 Claude Code 채팅 패널</div>
+          <div>📁 에디터 (파일 확인)</div>
+          <div style="color:#CCCCCC;">⌨️ 터미널 (가끔)</div>
+        </div>
+      </div>
+    </div>
+    <!-- Right: 비교 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 60px;gap:20px;">
+      <div style="border:1px solid var(--border);overflow:hidden;">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);font-size:11px;color:#AAAAAA;letter-spacing:0.1em;background:rgba(0,0,0,0.02);">채팅 패널에서 이렇게 말하면</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);">
+          <div style="background:#fff;padding:22px 24px;">
+            <div style="font-size:11px;color:#AAAAAA;margin-bottom:10px;letter-spacing:0.08em;">말로</div>
+            <div style="font-size:14px;color:#555;line-height:1.8;">data.csv 파일 읽고<br>채널별 합계 만들어줘</div>
+          </div>
+          <div style="background:#FDF8F5;border:1px solid rgba(232,96,60,0.1);padding:22px 24px;">
+            <div style="font-size:11px;color:#E8603C;margin-bottom:10px;letter-spacing:0.08em;">Claude가 실행</div>
+            <div style="font-size:13px;color:#555;font-family:monospace;line-height:1.8;">import pandas as pd<br>df = pd.read_csv('data.csv')<br>result = df.groupby(...)...</div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;padding:20px;">
+        <div style="font-size:15px;color:#888;line-height:1.8;">파이썬을 몰라도 됩니다.<br>원하는 것을 말하면, Claude가 코드를 작성하고 실행합니다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ s18 | 챕터 마무리 ════ -->
+<div class="slide" id="s18">
+  <div class="tb">
+    <span class="tb-cap">Antigravity 에디터 환경 세팅</span>
+    <span class="tb-num">18</span>
+  </div>
+  <div class="body" style="flex-direction:column;">
+    <div style="padding:36px 52px 24px;border-bottom:1px solid var(--border);">
+      <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.12em;margin-bottom:8px;">P01-CH02 · 완료</div>
+      <div style="font-size:26px;font-weight:500;color:var(--white);">환경 세팅 완료</div>
+    </div>
+    <div class="takeaway-grid" style="grid-template-columns:1fr 1fr 1fr;">
+      <div class="takeaway-cell">
+        <div class="takeaway-n">01</div>
+        <div>
+          <div class="takeaway-title">Claude Code 설치</div>
+          <div class="takeaway-body">명령어 하나, 브라우저 로그인으로 완료.</div>
+        </div>
+      </div>
+      <div class="takeaway-cell">
+        <div class="takeaway-n">02</div>
+        <div>
+          <div class="takeaway-title">Antigravity 연결</div>
+          <div class="takeaway-body">에디터 안에서 채팅으로 작업 지시.<br>diff로 변경 내용 실시간 확인.</div>
+        </div>
+      </div>
+      <div class="takeaway-cell">
+        <div class="takeaway-n">03</div>
+        <div>
+          <div class="takeaway-title">다음 파트</div>
+          <div class="takeaway-body">이 환경으로 첫 번째 데이터 시각화를 만듭니다.<br>P02 → 실습 시작.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<div class="nav">
+  <span class="nav-ctr" id="nav-ctr">1 / 18</span>
+  <button class="nav-btn" onclick="prev()">←</button>
+  <button class="nav-btn" onclick="next()">→</button>
+</div>
+<div class="progress" id="progress"></div>
+<div class="clip-dots" id="clip-dots">
+  <div class="clip-dot active"></div>
+  <div class="clip-dot"></div>
+</div>
+
+<script>
+  const TOTAL = 18;
+  const ORDER = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
+  const CLIP_MAP = {
+    1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,
+    11:1,12:1,13:1,14:1,15:1,16:1,17:1,18:1
+  };
+  const CLIP_LABELS = ['Claude Code 설치', 'Antigravity 세팅'];
+  let cur = 1;
+
+  function scale() {
+    const s = Math.min(window.innerWidth / 1280, window.innerHeight / 800);
+    const d = document.querySelector('.deck');
+    d.style.transform = `scale(${s})`;
+    d.style.top = `${(window.innerHeight - 800*s)/2}px`;
+    d.style.left = `${(window.innerWidth - 1280*s)/2}px`;
+  }
+  scale(); window.addEventListener('resize', scale);
+
+  function show(n) {
+    if (n < 1 || n > TOTAL) return;
+    document.body.style.background = (n === 1 || n === 15) ? '#000' : '';
+    const slideId = ORDER[n-1];
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById('s'+slideId);
+    if (el) {
+      el.classList.add('active');
+      const numEl = el.querySelector('.tb-num');
+      if (numEl) numEl.textContent = n;
+    }
+    document.getElementById('nav-ctr').textContent = n + ' / ' + TOTAL;
+    document.getElementById('progress').style.width = (n/TOTAL*100)+'%';
+    document.querySelectorAll('.clip-dot').forEach((d,i) => d.classList.toggle('active', i===CLIP_MAP[n]));
+    cur = n;
+  }
+  function next() { show(cur+1); }
+  function prev() { show(cur-1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); next(); }
+    if (e.key==='ArrowLeft') { e.preventDefault(); prev(); }
+  });
+  let tx = 0;
+  document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    if (Math.abs(tx - e.changedTouches[0].clientX) > 40) tx > e.changedTouches[0].clientX ? next() : prev();
+  });
+  show(1);
+</script>
+</body>
+</html>

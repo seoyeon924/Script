@@ -39,19 +39,6 @@
     border-bottom: 1px solid var(--border); flex-shrink: 0;
     position: relative;
   }
-  .sec-nav {
-    position: absolute; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 6px; align-items: center;
-  }
-  .sec-nav-item {
-    width: 36px; height: 22px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
-    border: 1px solid #3a3a3a; color: #444;
-  }
-  .sec-nav-item.on { background: var(--white); color: #111; border-color: var(--white); }
-  .sec-nav-cream { border-color: #BFB5A3; color: #BFB5A3; }
-  .sec-nav-cream.on { background: #1C1A18; color: #E5DCC8; border-color: #1C1A18; }
   .tb-cap { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
   .tb-num { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; }
 
@@ -391,54 +378,53 @@
       <div>
         <div class="eyebrow">전체 커리큘럼</div>
         <div class="big-title">6 Parts</div>
-        <div class="body-text" style="margin-top:14px;">기초 관점부터 실전 대시보드, 자동화 파이프라인, 포트폴리오 배포까지.</div>
+        <div class="body-text" style="margin-top:14px;">AI 관점 정립부터 실전 대시보드, 자동화 파이프라인, 포트폴리오 배포까지.</div>
       </div>
-      <svg width="120" height="120" viewBox="0 0 120 120" style="opacity:0.22;">
-        <line x1="20" y1="10" x2="20" y2="110" stroke="#aaa" stroke-width="1"/>
-        <circle cx="20" cy="18" r="4" fill="#E8603C"/>
-        <circle cx="20" cy="36" r="4" fill="#aaa"/>
-        <circle cx="20" cy="54" r="4" fill="#aaa"/>
-        <circle cx="20" cy="72" r="4" fill="#aaa"/>
-        <circle cx="20" cy="90" r="4" fill="#aaa"/>
-        <circle cx="20" cy="108" r="4" fill="#aaa"/>
-        <line x1="28" y1="18" x2="80" y2="18" stroke="#E8603C" stroke-width="0.8"/>
-        <line x1="28" y1="36" x2="70" y2="36" stroke="#666" stroke-width="0.8"/>
-        <line x1="28" y1="54" x2="74" y2="54" stroke="#666" stroke-width="0.8"/>
-        <line x1="28" y1="72" x2="66" y2="72" stroke="#666" stroke-width="0.8"/>
-        <line x1="28" y1="90" x2="78" y2="90" stroke="#666" stroke-width="0.8"/>
-        <line x1="28" y1="108" x2="60" y2="108" stroke="#666" stroke-width="0.8"/>
-      </svg>
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:0;">
+        <div style="padding:10px 0;border-top:1px solid var(--border);display:flex;align-items:baseline;gap:10px;">
+          <div style="font-size:28px;font-weight:300;color:var(--white);letter-spacing:-0.03em;line-height:1;">50</div>
+          <div style="font-size:11px;color:#888;">클립</div>
+        </div>
+        <div style="padding:10px 0;border-top:1px solid var(--border);display:flex;align-items:baseline;gap:10px;">
+          <div style="font-size:28px;font-weight:300;color:var(--white);letter-spacing:-0.03em;line-height:1;">12</div>
+          <div style="font-size:11px;color:#888;">시간</div>
+        </div>
+        <div style="padding:10px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:10px;">
+          <div style="font-size:28px;font-weight:300;color:var(--white);letter-spacing:-0.03em;line-height:1;">6</div>
+          <div style="font-size:11px;color:#888;">직무 대시보드</div>
+        </div>
+      </div>
     </div>
     <div class="agenda-rows">
       <div class="agenda-row" style="background:rgba(232,96,60,0.06);">
         <div class="agenda-part" style="color:#E8603C;">P01</div>
         <div class="agenda-title">왜 AI 데이터 시각화인가</div>
-        <div class="agenda-sub">기초 관점 · 환경 세팅 · 6클립</div>
+        <div class="agenda-sub">AI 관점 · 바이브코딩 환경 세팅 · 6클립</div>
       </div>
       <div class="agenda-row">
         <div class="agenda-part" style="color:#888;">P02</div>
-        <div class="agenda-title">Claude Code 기초 빠르게 익히기</div>
-        <div class="agenda-sub">설치 · 첫 실행 · 자동화 구조 이해 · 12클립</div>
+        <div class="agenda-title">Claude Code 핵심 빠르게 익히기</div>
+        <div class="agenda-sub">첫 실행 · CLAUDE.md · MCP · 에이전트팀 · 12클립</div>
       </div>
       <div class="agenda-row">
         <div class="agenda-part" style="color:#888;">P03</div>
         <div class="agenda-title">시각화 전략 자동 설계</div>
-        <div class="agenda-sub">KPI 설계 · 대시보드 자동화 · 리포트 발송 · 10클립</div>
+        <div class="agenda-sub">KPI 설계 · 대시보드 자동화 · OpenClaw · 10클립</div>
       </div>
       <div class="agenda-row">
         <div class="agenda-part" style="color:#888;">P04</div>
         <div class="agenda-title">고급 인터랙티브 시각화</div>
-        <div class="agenda-sub">인터랙티브 차트 · 고급 시각화 실습 · 4클립</div>
+        <div class="agenda-sub">D3.js · Three.js · Tableau Extension · 4클립</div>
       </div>
       <div class="agenda-row">
         <div class="agenda-part" style="color:#888;">P05</div>
         <div class="agenda-title">직무별 실전 대시보드</div>
-        <div class="agenda-sub">마케팅 · A/B · PM · 리텐션 · HR · 15클립</div>
+        <div class="agenda-sub">마케팅 · A/B · PM · 리텐션 · HR · Sales · 15클립</div>
       </div>
       <div class="agenda-row" style="border-bottom:none;">
         <div class="agenda-part" style="color:#888;">P06</div>
         <div class="agenda-title">웹 기반 포트폴리오</div>
-        <div class="agenda-sub">Stitch · Antigravity · 배포 · 3클립</div>
+        <div class="agenda-sub">Antigravity · 배포 · 노션 DB 연동 · 3클립</div>
       </div>
     </div>
   </div>
@@ -816,8 +802,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">11</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item on">A</span><span class="sec-nav-item">B</span><span class="sec-nav-item">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -878,8 +862,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">11b</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item">A</span><span class="sec-nav-item">B</span><span class="sec-nav-item on">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -976,8 +958,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">12</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item on">A</span><span class="sec-nav-item">B</span><span class="sec-nav-item">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -1040,8 +1020,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">12b</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item on">A</span><span class="sec-nav-item">B</span><span class="sec-nav-item">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -1118,8 +1096,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">13</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item on">A</span><span class="sec-nav-item">B</span><span class="sec-nav-item">C</span></div>
   </div>
   <div class="body">
     <div class="principle-col">
@@ -1201,8 +1177,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">14</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item on">A</span><span class="sec-nav-item">B</span><span class="sec-nav-item">C</span></div>
   </div>
   <div class="body">
     <!-- 왼쪽: 원칙 6 다양한 관점 -->
@@ -1318,8 +1292,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">15</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item">A</span><span class="sec-nav-item on">B</span><span class="sec-nav-item">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -1422,8 +1394,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">16</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item">A</span><span class="sec-nav-item on">B</span><span class="sec-nav-item">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -1498,8 +1468,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">16b</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item">A</span><span class="sec-nav-item on">B</span><span class="sec-nav-item">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -1555,8 +1523,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">16c</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item">A</span><span class="sec-nav-item on">B</span><span class="sec-nav-item">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -1627,8 +1593,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">16d</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item">A</span><span class="sec-nav-item on">B</span><span class="sec-nav-item">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -1701,8 +1665,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">16e</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item">A</span><span class="sec-nav-item on">B</span><span class="sec-nav-item">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -1769,8 +1731,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">16f</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item">A</span><span class="sec-nav-item">B</span><span class="sec-nav-item on">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -1823,8 +1783,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">16g</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item">A</span><span class="sec-nav-item">B</span><span class="sec-nav-item on">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -1872,8 +1830,6 @@
   <div class="tb">
     <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
     <span class="tb-num">16h</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item">A</span><span class="sec-nav-item">B</span><span class="sec-nav-item on">C</span></div>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -1961,8 +1917,8 @@
       </svg>
     </div>
     <div class="sec-label">AI 데이터 시각화 사례</div>
-    <div class="sec-title">AI 시각화<br>포트폴리오</div>
-    <div class="sec-sub">비즈니스 대시보드 6개 · 인터랙티브 시각화 3개</div>
+    <div class="sec-title">AI + 데이터<br>시각화 사례</div>
+    <div class="sec-sub">인터랙티브 시각화 3개 · 비즈니스 대시보드 6개</div>
   </div>
 </div>
 
@@ -2630,7 +2586,7 @@
       <div>
         <div class="eyebrow">기초 개념</div>
         <div class="big-title">어떻게<br>시작할까</div>
-        <div class="body-text" style="margin-top:16px;">"해달라"고 하기 전에, 먼저 하고 싶은 게 뭔지 찾아라. 사례를 보고 "나도 해보고 싶다"가 생기면 그때 시작.</div>
+        <div class="body-text" style="margin-top:16px;">마음에 드는 결과물을 먼저 찾아보세요. 다양한 사례를 탐색하다 보면 자연스럽게 시작점이 생깁니다.</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:0;margin-top:20px;border:1px solid var(--border);">
         <div style="padding:10px 14px;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);">
@@ -2692,50 +2648,68 @@
   </div>
 </div>
 
-<!-- ════ s29 | 섹션 브레이크 A — 시작 전 원칙 ════ -->
-<div class="slide" id="s29" style="background:#E5DCC8;">
-  <div class="tb" style="background:#E5DCC8;border-bottom:1px solid #CFC4AC;">
-    <span class="tb-cap" style="color:#8C7E6A;">시작 전 원칙</span>
-    <span class="tb-num" style="color:#8C7E6A;">29</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item sec-nav-cream on">A</span><span class="sec-nav-item sec-nav-cream">B</span><span class="sec-nav-item sec-nav-cream">C</span></div>
+<!-- ════ s29 | 섹션 A — 대전제 ════ -->
+<div class="slide" id="s29">
+  <div class="tb">
+    <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
+    <span class="tb-num"></span>
   </div>
-  <div class="body" style="flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:0 80px 80px;">
-    <div style="font-size:16px;color:#8C7E6A;letter-spacing:0.14em;margin-bottom:28px;font-weight:500;">A · 시작 전 원칙 · 4가지</div>
-    <div style="font-size:84px;font-weight:700;line-height:1.06;color:#1C1A18;letter-spacing:-0.03em;font-family:'Poppins','Pretendard',sans-serif;">
-      Before<br>You Chart
+  <div class="body" style="align-items:center;justify-content:center;gap:20px;">
+    <div style="width:260px;padding:52px 36px;border:2px solid #1C1A18;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:11px;letter-spacing:0.12em;color:#666;font-weight:500;text-transform:uppercase;">A · 4가지</div>
+      <div style="font-size:30px;font-weight:700;color:#1C1A18;line-height:1.2;letter-spacing:-0.02em;">대전제</div>
+    </div>
+    <div style="width:260px;padding:52px 36px;border:1px solid #E8E8E8;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:11px;letter-spacing:0.12em;color:#CCCCCC;font-weight:500;text-transform:uppercase;">B · 6가지</div>
+      <div style="font-size:30px;font-weight:700;color:#CCCCCC;line-height:1.2;letter-spacing:-0.02em;">좋은 차트의<br>원칙</div>
+    </div>
+    <div style="width:260px;padding:52px 36px;border:1px solid #E8E8E8;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:11px;letter-spacing:0.12em;color:#CCCCCC;font-weight:500;text-transform:uppercase;">C · 4가지</div>
+      <div style="font-size:30px;font-weight:700;color:#CCCCCC;line-height:1.2;letter-spacing:-0.02em;">대시보드<br>설계</div>
     </div>
   </div>
 </div>
 
-<!-- ════ s30 | 섹션 브레이크 B — 차트 설계 원칙 ════ -->
-<div class="slide" id="s30" style="background:#E5DCC8;">
-  <div class="tb" style="background:#E5DCC8;border-bottom:1px solid #CFC4AC;">
-    <span class="tb-cap" style="color:#8C7E6A;">차트 설계 원칙</span>
-    <span class="tb-num" style="color:#8C7E6A;">30</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item sec-nav-cream">A</span><span class="sec-nav-item sec-nav-cream on">B</span><span class="sec-nav-item sec-nav-cream">C</span></div>
+<!-- ════ s30 | 섹션 B — 좋은 차트의 원칙 ════ -->
+<div class="slide" id="s30">
+  <div class="tb">
+    <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
+    <span class="tb-num"></span>
   </div>
-  <div class="body" style="flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:0 80px 80px;">
-    <div style="font-size:16px;color:#8C7E6A;letter-spacing:0.14em;margin-bottom:28px;font-weight:500;">B · 차트 설계 원칙 · 6가지</div>
-    <div style="font-size:84px;font-weight:700;line-height:1.06;color:#1C1A18;letter-spacing:-0.03em;font-family:'Poppins','Pretendard',sans-serif;">
-      Which Chart<br>Delivers?
+  <div class="body" style="align-items:center;justify-content:center;gap:20px;">
+    <div style="width:260px;padding:52px 36px;border:1px solid #E8E8E8;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:11px;letter-spacing:0.12em;color:#CCCCCC;font-weight:500;text-transform:uppercase;">A · 4가지</div>
+      <div style="font-size:30px;font-weight:700;color:#CCCCCC;line-height:1.2;letter-spacing:-0.02em;">대전제</div>
+    </div>
+    <div style="width:260px;padding:52px 36px;border:2px solid #1C1A18;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:11px;letter-spacing:0.12em;color:#666;font-weight:500;text-transform:uppercase;">B · 6가지</div>
+      <div style="font-size:30px;font-weight:700;color:#1C1A18;line-height:1.2;letter-spacing:-0.02em;">좋은 차트의<br>원칙</div>
+    </div>
+    <div style="width:260px;padding:52px 36px;border:1px solid #E8E8E8;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:11px;letter-spacing:0.12em;color:#CCCCCC;font-weight:500;text-transform:uppercase;">C · 4가지</div>
+      <div style="font-size:30px;font-weight:700;color:#CCCCCC;line-height:1.2;letter-spacing:-0.02em;">대시보드<br>설계</div>
     </div>
   </div>
 </div>
 
-<!-- ════ s31 | 섹션 브레이크 C — 대시보드 설계 원칙 ════ -->
-<div class="slide" id="s31" style="background:#E5DCC8;">
-  <div class="tb" style="background:#E5DCC8;border-bottom:1px solid #CFC4AC;">
-    <span class="tb-cap" style="color:#8C7E6A;">대시보드 설계 원칙</span>
-    <span class="tb-num" style="color:#8C7E6A;">31</span>
-  
-    <div class="sec-nav"><span class="sec-nav-item sec-nav-cream">A</span><span class="sec-nav-item sec-nav-cream">B</span><span class="sec-nav-item sec-nav-cream on">C</span></div>
+<!-- ════ s31 | 섹션 C — 대시보드 설계 ════ -->
+<div class="slide" id="s31">
+  <div class="tb">
+    <span class="tb-cap">좋은 데이터 시각화의 원칙</span>
+    <span class="tb-num"></span>
   </div>
-  <div class="body" style="flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:0 80px 80px;">
-    <div style="font-size:16px;color:#8C7E6A;letter-spacing:0.14em;margin-bottom:28px;font-weight:500;">C · 대시보드 설계 원칙 · 4가지</div>
-    <div style="font-size:84px;font-weight:700;line-height:1.06;color:#1C1A18;letter-spacing:-0.03em;font-family:'Poppins','Pretendard',sans-serif;">
-      Make Them<br>Act
+  <div class="body" style="align-items:center;justify-content:center;gap:20px;">
+    <div style="width:260px;padding:52px 36px;border:1px solid #E8E8E8;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:11px;letter-spacing:0.12em;color:#CCCCCC;font-weight:500;text-transform:uppercase;">A · 4가지</div>
+      <div style="font-size:30px;font-weight:700;color:#CCCCCC;line-height:1.2;letter-spacing:-0.02em;">대전제</div>
+    </div>
+    <div style="width:260px;padding:52px 36px;border:1px solid #E8E8E8;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:11px;letter-spacing:0.12em;color:#CCCCCC;font-weight:500;text-transform:uppercase;">B · 6가지</div>
+      <div style="font-size:30px;font-weight:700;color:#CCCCCC;line-height:1.2;letter-spacing:-0.02em;">좋은 차트의<br>원칙</div>
+    </div>
+    <div style="width:260px;padding:52px 36px;border:2px solid #1C1A18;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:11px;letter-spacing:0.12em;color:#666;font-weight:500;text-transform:uppercase;">C · 4가지</div>
+      <div style="font-size:30px;font-weight:700;color:#1C1A18;line-height:1.2;letter-spacing:-0.02em;">대시보드<br>설계</div>
     </div>
   </div>
 </div>
@@ -2758,10 +2732,10 @@
 
 <script>
   const TOTAL = 43;
-  // 제시 순서: 사례 먼저(5-14) → 왜 AI(15-18) → Claude Code 심화(19-21) → 섹션 브레이크(A/B/C) 포함 원칙 → 마무리
-  // s29/30/31 = 섹션 브레이크 (시작 전 / 차트 설계 / 대시보드 설계)
+  // 제시 순서: 사례 먼저(5-14, 인터랙티브→비즈니스) → 왜 AI(15-18) → Claude Code 심화(19-21) → 섹션 박스 슬라이드 포함 원칙 → 마무리
+  // s29/30/31 = 섹션 박스 슬라이드 (A·대전제 / B·좋은 차트의 원칙 / C·대시보드 설계)
   // s32/33/34 = Claude Code 심화 (3-way 비교 / 활용 범위 / 작동 방식+요금)
-  const ORDER = [1,2,3,4, 17,18,19,20,21,22,23,24,25,26, 5,6,7,8, 32,33,34, 9,10, 29, 11,12,'12b',13,14, 30, 15,16,'16b','16c','16d','16e', 31, '16f','16g','16h','11b', 27,28];
+  const ORDER = [1,2,3,4, 17,24,25,26,18,19,20,21,22,23, 5,6,7,8, 32,33,34, 9,10, 29, 11,12,'12b',13,14, 30, 15,16,'16b','16c','16d','16e', 31, '16f','16g','16h','11b', 27,28];
   const CLIP_MAP = {
     1:0,2:0,3:0,4:0,
     5:1,6:1,7:1,8:1,9:1,10:1,11:1,12:1,13:1,14:1,
@@ -2769,7 +2743,7 @@
     42:3,43:3
   };
   // 클립 라벨
-  const CLIP_LABELS = ['강의 개요','AI 시각화 사례','원리','마무리'];
+  const CLIP_LABELS = ['강의 개요','AI + 데이터 시각화 사례','원리','마무리'];
   let cur = 1;
 
 
