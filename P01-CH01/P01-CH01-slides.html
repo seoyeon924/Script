@@ -982,27 +982,34 @@
         <div style="font-size:12px;color:#888;padding-left:12px;position:relative;"><span style="position:absolute;left:0;color:#E8603C;">3.</span>권고/시사점으로 마무리</div>
       </div>
     </div>
-    <!-- 우측: BAD / GOOD 예시 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:1px;background:var(--border);">
-      <div style="background:#fff;flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 44px;gap:10px;">
-        <div style="font-size:10px;color:#BBBBBB;letter-spacing:0.1em;">BAD</div>
-        <div style="font-size:18px;color:#BBBBBB;font-weight:400;">"채널별 ROI"</div>
-        <div style="font-size:12px;color:#CCCCCC;">수치 없음 — 판단 불가</div>
+    <!-- 우측: BAD / GOOD 좌우 비교 테이블 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 36px;gap:0;">
+      <!-- 헤더 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <div style="font-size:10px;color:#BBBBBB;letter-spacing:0.12em;font-weight:500;">BAD</div>
+        <div style="font-size:10px;color:#E8603C;letter-spacing:0.12em;font-weight:500;">GOOD</div>
       </div>
-      <div style="background:#F5F4F0;flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 44px;gap:10px;">
-        <div style="font-size:10px;color:#E8603C;letter-spacing:0.1em;">GOOD</div>
-        <div style="font-size:16px;color:#1a1a1a;font-weight:500;line-height:1.4;">"SNS CTR, 검색 대비 2.8배<br>— 예산 30% SNS 즉시 재배분"</div>
-        <div style="font-size:12px;color:#888;">결론 + 수치 + 권고 완성</div>
+      <!-- 예시 1 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <div style="padding:18px 20px;background:#FAFAFA;border:1px solid #EEEEEE;">
+          <div style="font-size:16px;color:#CCCCCC;font-weight:400;margin-bottom:8px;">"채널별 ROI"</div>
+          <div style="font-size:11px;color:#CCCCCC;line-height:1.5;">수치 없음 — 판단 불가</div>
+        </div>
+        <div style="padding:18px 20px;background:#FDF8F5;border:1px solid rgba(232,96,60,0.2);">
+          <div style="font-size:14px;color:#1a1a1a;font-weight:500;line-height:1.5;margin-bottom:8px;">"SNS CTR, 검색 대비 2.8배<br>— 예산 30% SNS 즉시 재배분"</div>
+          <div style="font-size:11px;color:#888;line-height:1.5;">결론 + 수치 + 권고 완성</div>
+        </div>
       </div>
-      <div style="background:#fff;flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 44px;gap:10px;">
-        <div style="font-size:10px;color:#BBBBBB;letter-spacing:0.1em;">BAD</div>
-        <div style="font-size:18px;color:#BBBBBB;font-weight:400;">"월별 매출"</div>
-        <div style="font-size:12px;color:#CCCCCC;">방향 없음 — 오르는지 내리는지 불명</div>
-      </div>
-      <div style="background:#F5F4F0;flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 44px;gap:10px;">
-        <div style="font-size:10px;color:#E8603C;letter-spacing:0.1em;">GOOD</div>
-        <div style="font-size:16px;color:#1a1a1a;font-weight:500;line-height:1.4;">"3월 매출 +22% — 프로모션 효과<br>4월 동일 집행 권고"</div>
-        <div style="font-size:12px;color:#888;">트렌드 + 원인 + 다음 액션</div>
+      <!-- 예시 2 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div style="padding:18px 20px;background:#FAFAFA;border:1px solid #EEEEEE;">
+          <div style="font-size:16px;color:#CCCCCC;font-weight:400;margin-bottom:8px;">"월별 매출"</div>
+          <div style="font-size:11px;color:#CCCCCC;line-height:1.5;">방향 없음 — 오르는지 내리는지 불명</div>
+        </div>
+        <div style="padding:18px 20px;background:#FDF8F5;border:1px solid rgba(232,96,60,0.2);">
+          <div style="font-size:14px;color:#1a1a1a;font-weight:500;line-height:1.5;margin-bottom:8px;">"3월 매출 +22% — 프로모션 효과<br>4월 동일 집행 권고"</div>
+          <div style="font-size:11px;color:#888;line-height:1.5;">트렌드 + 원인 + 다음 액션</div>
+        </div>
       </div>
     </div>
   </div>
