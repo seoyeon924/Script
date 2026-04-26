@@ -801,7 +801,6 @@
 
   function show(n) {
     if (n < 1 || n > TOTAL) return;
-    document.body.style.background = (n === 1 || n === 15) ? '#000' : '';
     const slideId = ORDER[n-1];
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
     const el = document.getElementById('s'+slideId);
