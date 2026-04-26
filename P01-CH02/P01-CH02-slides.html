@@ -683,23 +683,23 @@
     <!-- Right: 테스트 명령 -->
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 60px;gap:24px;">
       <div>
-        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:12px;">테스트 1 — 폴더 인식 확인</div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:12px;">테스트 1 — 데이터 파일 생성</div>
         <div class="code-wrap">
-          <div class="code-hi">data 폴더 안에 sample.csv 파일을 만들어줘.</div>
-          <div class="code-hi">컬럼은 날짜, 채널, 매출 세 가지로 해줘.</div>
-          <div class="code-comment" style="margin-top:8px;"># 파일 탐색기에 data/sample.csv 생기면 정상</div>
+          <div class="code-hi">채널별 월매출 가짜 데이터 CSV 만들어줘.</div>
+          <div class="code-hi">컬럼: 월, 채널, 매출. 채널은 검색·소셜·이메일. 6개월치.</div>
+          <div class="code-comment" style="margin-top:8px;"># 파일 탐색기에 CSV 생기면 1단계 완료</div>
         </div>
       </div>
       <div>
-        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:12px;">테스트 2 — 데이터 읽기 확인</div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:12px;">테스트 2 — 차트 생성</div>
         <div class="code-wrap">
-          <div class="code-hi">방금 만든 sample.csv 읽고 채널별 매출 합계 보여줘.</div>
-          <div class="code-comment" style="margin-top:8px;"># 숫자가 나오면 환경 세팅 완료</div>
+          <div class="code-hi">방금 만든 CSV 읽고 채널별 매출 바 차트 HTML 만들어줘.</div>
+          <div class="code-comment" style="margin-top:8px;"># HTML 열면 차트 나오면 세팅 완료</div>
         </div>
       </div>
       <div style="padding:16px 20px;background:#FDF8F5;border:1px solid rgba(232,96,60,0.2);">
         <div style="font-size:13px;color:#E8603C;font-weight:500;margin-bottom:4px;">성공 기준</div>
-        <div style="font-size:13px;color:#888;line-height:1.7;">data/sample.csv 생성 확인<br>= 세팅 완료</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;">CSV 생성 → HTML 차트 렌더링<br>= 세팅 완료</div>
       </div>
     </div>
   </div>
