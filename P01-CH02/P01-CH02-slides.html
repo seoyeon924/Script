@@ -146,47 +146,67 @@
       <div>
         <div class="eyebrow">설치 전 확인</div>
         <div class="big-title">Claude 플랜<br>구매</div>
-        <div class="body-text" style="margin-top:16px;">운영체제 확인</div>
+        <div class="body-text" style="margin-top:16px;">다른 AI 도구보다 비용이 높은 편 — 플랜 선택이 중요</div>
       </div>
-      <div style="padding:16px 18px;border:1px solid rgba(232,96,60,0.3);background:rgba(232,96,60,0.04);">
-        <div style="font-size:10px;color:#E8603C;letter-spacing:0.1em;margin-bottom:8px;">추천 플랜</div>
-        <div style="font-size:15px;font-weight:600;color:var(--white);">Max $100/월</div>
-        <div style="font-size:13px;color:#888;margin-top:4px;line-height:1.6;">Pro $20 — 집중 사용 시 하루 한도 도달<br>Max $100 권장</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:4px;">지원 운영체제</div>
+        <div style="display:flex;gap:10px;font-size:13px;color:#888;">
+          <span>macOS 13+</span><span style="color:var(--border);">·</span>
+          <span>Windows 10+</span><span style="color:var(--border);">·</span>
+          <span>Ubuntu 20.04+</span>
+        </div>
       </div>
     </div>
-    <!-- Right: 체크리스트 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 60px;gap:20px;">
-      <!-- 계정 -->
-      <div style="border:1px solid var(--border);padding:28px 32px;">
-        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.12em;margin-bottom:16px;">01 · CLAUDE.AI 계정</div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="display:flex;align-items:center;gap:14px;">
-            <div style="width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;flex-shrink:0;">Pro</div>
-            <div style="font-size:14px;color:#888;">$20/월 — 하루 한도 있음</div>
+    <!-- Right: 플랜 비교 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;gap:0;">
+      <div style="width:100%;border:1px solid var(--border);">
+
+        <!-- 헤더 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.02);">
+          <div style="padding:13px 20px;border-right:1px solid var(--border);font-size:11px;color:#AAAAAA;letter-spacing:0.1em;">Pro $20</div>
+          <div style="padding:13px 20px;border-right:1px solid var(--border);font-size:11px;color:#E8603C;letter-spacing:0.1em;">Max $100 ★ 권장</div>
+          <div style="padding:13px 20px;font-size:11px;color:#AAAAAA;letter-spacing:0.1em;">Max $200</div>
+        </div>
+
+        <!-- 용도 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:16px 20px;border-right:1px solid var(--border);">
+            <div style="font-size:13px;color:#888;line-height:1.6;">체험용</div>
           </div>
-          <div style="display:flex;align-items:center;gap:14px;">
-            <div style="width:28px;height:28px;background:#1C1A18;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0;">Max</div>
-            <div style="font-size:14px;color:#1C1A18;font-weight:500;">$100/월 — 권장, 한도 넉넉</div>
+          <div style="padding:16px 20px;border-right:1px solid var(--border);background:rgba(232,96,60,0.03);">
+            <div style="font-size:13px;color:#1C1A18;font-weight:500;line-height:1.6;">업무 · 프로젝트 실전</div>
+          </div>
+          <div style="padding:16px 20px;">
+            <div style="font-size:13px;color:#888;line-height:1.6;">하루 종일 풀타임 사용</div>
           </div>
         </div>
-      </div>
-      <!-- 운영체제 -->
-      <div style="border:1px solid var(--border);padding:28px 32px;">
-        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.12em;margin-bottom:16px;">02 · 운영체제</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
-          <div>
-            <div style="font-size:13px;font-weight:500;color:var(--white);margin-bottom:4px;">macOS</div>
-            <div style="font-size:12px;color:#888;">13 (Ventura) 이상</div>
+
+        <!-- 한도 현실 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:16px 20px;border-right:1px solid var(--border);">
+            <div style="font-size:12px;color:#BBBBBB;line-height:1.7;">집중 작업 시<br>1시간 내 한도 도달</div>
           </div>
-          <div>
-            <div style="font-size:13px;font-weight:500;color:var(--white);margin-bottom:4px;">Windows</div>
-            <div style="font-size:12px;color:#888;">10 (64비트) 이상</div>
+          <div style="padding:16px 20px;border-right:1px solid var(--border);background:rgba(232,96,60,0.03);">
+            <div style="font-size:12px;color:#888;line-height:1.7;">Pro 대비 5배 사용량<br>한도 걱정 없이 작업</div>
           </div>
-          <div>
-            <div style="font-size:13px;font-weight:500;color:var(--white);margin-bottom:4px;">Linux</div>
-            <div style="font-size:12px;color:#888;">Ubuntu 20.04 이상</div>
+          <div style="padding:16px 20px;">
+            <div style="font-size:12px;color:#BBBBBB;line-height:1.7;">Pro 대비 20배<br>헤비유저 구간</div>
           </div>
         </div>
+
+        <!-- Opus 모델 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;">
+          <div style="padding:16px 20px;border-right:1px solid var(--border);">
+            <div style="font-size:12px;color:#BBBBBB;line-height:1.7;">Opus 모델<br>사실상 사용 불가</div>
+          </div>
+          <div style="padding:16px 20px;border-right:1px solid var(--border);background:rgba(232,96,60,0.03);">
+            <div style="font-size:12px;color:#888;line-height:1.7;">멀티세션 · 에이전트팀<br>Opus 모델 활용 가능</div>
+          </div>
+          <div style="padding:16px 20px;">
+            <div style="font-size:12px;color:#BBBBBB;line-height:1.7;">제약 없는<br>풀 스펙 활용</div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
