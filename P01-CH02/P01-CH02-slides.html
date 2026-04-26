@@ -87,53 +87,34 @@
 
   .case-right { flex: 1; overflow: hidden; background: #F5F4F0; display: flex; align-items: center; justify-content: center; }
   .case-right img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
+
+  .sec-break { background: #E8E6E2; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .sec-label { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(0,0,0,0.4); margin-bottom: 24px; }
+  .sec-title { font-size: 44px; font-weight: 300; line-height: 1.35; color: var(--white); }
+  .sec-sub { font-size: 16px; color: rgba(0,0,0,0.5); margin-top: 24px; line-height: 2; }
 </style>
 </head>
 <body>
 <div class="deck" id="deck">
 
-<!-- ════ s1 | 타이틀 ════ -->
-<div class="slide" id="s1" style="background:#0D0D0B;">
-  <div class="body" style="align-items:center;justify-content:center;flex-direction:column;gap:0;position:relative;">
-    <!-- Animated terminal-like visual -->
-    <svg width="900" height="420" viewBox="0 0 900 420" style="position:absolute;opacity:0.06;">
-      <rect x="80" y="40" width="740" height="340" rx="8" fill="none" stroke="#fff" stroke-width="1"/>
-      <rect x="80" y="40" width="740" height="36" rx="8" fill="#fff" opacity="0.08"/>
-      <circle cx="108" cy="58" r="6" fill="#E8603C" opacity="0.8"/>
-      <circle cx="130" cy="58" r="6" fill="#F5A623" opacity="0.8"/>
-      <circle cx="152" cy="58" r="6" fill="#7ED321" opacity="0.8"/>
-      <text x="110" y="116" font-size="13" fill="#fff" font-family="monospace">$ curl -fsSL https://claude.ai/install.sh | bash</text>
-      <text x="110" y="146" font-size="13" fill="rgba(255,255,255,0.4)" font-family="monospace">Installing Claude Code...</text>
-      <text x="110" y="176" font-size="13" fill="rgba(255,255,255,0.4)" font-family="monospace">✓ claude v1.x installed</text>
-      <text x="110" y="216" font-size="13" fill="#E8603C" font-family="monospace">$ claude</text>
-      <text x="110" y="246" font-size="13" fill="rgba(255,255,255,0.6)" font-family="monospace">Claude Code — 현재 폴더를 알려줘.</text>
-      <text x="110" y="280" font-size="13" fill="rgba(255,255,255,0.3)" font-family="monospace">/Users/me/data-viz-project</text>
-    </svg>
-    <!-- Title content -->
-    <div style="text-align:center;position:relative;z-index:1;">
-      <div style="font-size:11px;letter-spacing:0.22em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:32px;">P01 · CH02 · Claude Code 환경 세팅</div>
-      <div style="font-size:72px;font-weight:700;color:#fff;line-height:1.05;letter-spacing:-0.03em;font-family:'Poppins','Pretendard',sans-serif;">
-        Set Up<br><span style="color:#E8603C;">Claude Code</span>
-      </div>
-      <div style="font-size:18px;color:rgba(255,255,255,0.4);margin-top:28px;letter-spacing:0.04em;">
-        설치 → Antigravity 에디터 → 첫 실습
-      </div>
+<!-- ════ s1 | 챕터 표지 ════ -->
+<div class="slide active" id="s1">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <svg width="60" height="54" viewBox="0 0 60 54">
+        <rect x="2" y="2" width="56" height="50" rx="3" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <line x1="2" y1="14" x2="58" y2="14" stroke="#2C2720" stroke-width="1"/>
+        <circle cx="8" cy="8" r="1.5" fill="#333"/>
+        <circle cx="14" cy="8" r="1.5" fill="#333"/>
+        <circle cx="20" cy="8" r="1.5" fill="#333"/>
+        <text x="8" y="27" font-size="7.5" fill="#999" font-family="monospace">$ claude</text>
+        <text x="8" y="37" font-size="7.5" fill="#CCCCCC" font-family="monospace">✓ ready</text>
+        <rect x="8" y="41" width="1.8" height="7" fill="#E8603C" opacity="0.7"/>
+      </svg>
     </div>
-    <!-- Bottom info -->
-    <div style="position:absolute;bottom:52px;left:0;right:0;display:flex;justify-content:center;gap:48px;">
-      <div style="text-align:center;">
-        <div style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;margin-bottom:6px;">클립</div>
-        <div style="font-size:14px;color:rgba(255,255,255,0.5);">2개</div>
-      </div>
-      <div style="text-align:center;">
-        <div style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;margin-bottom:6px;">예상 시간</div>
-        <div style="font-size:14px;color:rgba(255,255,255,0.5);">약 20분</div>
-      </div>
-      <div style="text-align:center;">
-        <div style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;margin-bottom:6px;">준비물</div>
-        <div style="font-size:14px;color:rgba(255,255,255,0.5);">Claude Pro / Max 구독</div>
-      </div>
-    </div>
+    <div class="sec-label">P01 · CH02 · 바이브코딩 환경 세팅</div>
+    <div class="sec-title">바이브코딩<br>환경 세팅</div>
+    <div class="sec-sub">Claude Code 설치 · Antigravity 에디터 연결</div>
   </div>
 </div>
 
@@ -356,6 +337,10 @@
         <div style="font-size:10px;color:#E8603C;letter-spacing:0.1em;margin-bottom:6px;">주의</div>
         <div style="font-size:13px;color:#888;line-height:1.7;">npm으로 설치하는 방법은<br>공식적으로 deprecated입니다.<br>아래 방법을 사용하세요.</div>
       </div>
+      <div style="padding:12px 14px;background:#F8F7F4;border:1px solid var(--border);">
+        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:5px;">WSL 사용자</div>
+        <div style="font-size:12px;color:#888;line-height:1.7;">Windows Subsystem for Linux 환경에서는 curl 방식으로 설치할 수 있습니다. bash 스크립트 동작이 더 안정적입니다. Git for Windows가 있어야 합니다.</div>
+      </div>
     </div>
     <!-- Right: 코드 블록 -->
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 60px;gap:20px;">
@@ -455,6 +440,10 @@
         <div class="code-comment"># 진단 명령어</div>
         <div class="code-hi">claude doctor</div>
       </div>
+      <div style="padding:12px 14px;border-top:1px solid var(--border);margin-top:auto;">
+        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:5px;">보안 기초</div>
+        <div style="font-size:12px;color:#888;line-height:1.7;">API 키나 비밀번호를 채팅창에 직접 입력하지 마세요. Claude Code는 파일 시스템을 직접 읽을 수 있습니다.</div>
+      </div>
     </div>
     <!-- Right: 두 가지 케이스 -->
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 60px;gap:20px;">
@@ -515,17 +504,30 @@
   </div>
 </div>
 
-<!-- ════ s10 | 섹션 브레이크 — Antigravity ════ -->
-<div class="slide" id="s10" style="background:#E5DCC8;">
-  <div class="tb" style="background:#E5DCC8;border-bottom:1px solid #CFC4AC;">
-    <span class="tb-cap" style="color:#8C7E6A;">Antigravity 에디터</span>
-    <span class="tb-num" style="color:#8C7E6A;">10</span>
-  </div>
-  <div class="body" style="flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:0 80px 80px;">
-    <div style="font-size:16px;color:#8C7E6A;letter-spacing:0.14em;margin-bottom:28px;font-weight:500;">CLIP 02 · Antigravity 에디터 환경 세팅</div>
-    <div style="font-size:84px;font-weight:700;line-height:1.06;color:#1C1A18;letter-spacing:-0.03em;font-family:'Poppins','Pretendard',sans-serif;">
-      Set Up<br>Your Workspace
+<!-- ════ s10 | 클립 2 표지 ════ -->
+<div class="slide" id="s10">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <svg width="60" height="54" viewBox="0 0 60 54">
+        <rect x="2" y="2" width="56" height="50" rx="3" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <line x1="2" y1="14" x2="58" y2="14" stroke="#2C2720" stroke-width="1"/>
+        <circle cx="8" cy="8" r="1.5" fill="#333"/>
+        <circle cx="14" cy="8" r="1.5" fill="#333"/>
+        <line x1="8" y1="21" x2="8" y2="48" stroke="#BBBBBB" stroke-width="0.8"/>
+        <line x1="8" y1="25" x2="15" y2="25" stroke="#BBBBBB" stroke-width="0.8"/>
+        <line x1="8" y1="31" x2="15" y2="31" stroke="#BBBBBB" stroke-width="0.8"/>
+        <line x1="8" y1="37" x2="15" y2="37" stroke="#BBBBBB" stroke-width="0.8"/>
+        <line x1="8" y1="43" x2="15" y2="43" stroke="#BBBBBB" stroke-width="0.8"/>
+        <rect x="21" y="19" width="35" height="30" rx="1" fill="#F0EFEB"/>
+        <line x1="25" y1="26" x2="50" y2="26" stroke="#DDDDDD" stroke-width="1.2"/>
+        <line x1="25" y1="31" x2="44" y2="31" stroke="#DDDDDD" stroke-width="1.2"/>
+        <line x1="25" y1="36" x2="50" y2="36" stroke="#E8603C" stroke-width="1.2" opacity="0.55"/>
+        <line x1="25" y1="41" x2="38" y2="41" stroke="#DDDDDD" stroke-width="1.2"/>
+      </svg>
     </div>
+    <div class="sec-label">CLIP 02 · Antigravity 에디터 환경 세팅</div>
+    <div class="sec-title">Antigravity<br>에디터 세팅</div>
+    <div class="sec-sub">설치 · 익스텐션 연결 · 첫 번째 대화</div>
   </div>
 </div>
 
@@ -747,16 +749,16 @@
       <div>
         <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:12px;">테스트 1 — 폴더 인식 확인</div>
         <div class="code-wrap">
-          <div class="code-hi">안녕. 현재 열려 있는 폴더 이름을 알려줘.</div>
-          <div class="code-comment" style="margin-top:8px;"># 폴더 이름이 나오면 정상</div>
+          <div class="code-hi">data 폴더 안에 sample.csv 파일을 만들어줘.</div>
+          <div class="code-hi">컬럼은 날짜, 채널, 매출 세 가지로 해줘.</div>
+          <div class="code-comment" style="margin-top:8px;"># 파일 탐색기에 data/sample.csv 생기면 정상</div>
         </div>
       </div>
       <div>
-        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:12px;">테스트 2 — 파일 생성 확인</div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:12px;">테스트 2 — 데이터 읽기 확인</div>
         <div class="code-wrap">
-          <div class="code-hi">hello.txt 파일을 만들어줘.</div>
-          <div class="code-hi">내용은 "Claude Code + Antigravity 세팅 완료"</div>
-          <div class="code-comment" style="margin-top:8px;"># 파일 탐색기에 hello.txt 생기면 성공</div>
+          <div class="code-hi">방금 만든 sample.csv 읽고 채널별 매출 합계 보여줘.</div>
+          <div class="code-comment" style="margin-top:8px;"># 숫자가 나오면 환경 세팅 완료</div>
         </div>
       </div>
       <div style="padding:16px 20px;background:#FDF8F5;border:1px solid rgba(232,96,60,0.2);">
@@ -840,8 +842,8 @@
       <div class="takeaway-cell">
         <div class="takeaway-n">03</div>
         <div>
-          <div class="takeaway-title">다음 파트</div>
-          <div class="takeaway-body">이 환경으로 첫 번째 데이터 시각화를 만듭니다.<br>P02 → 실습 시작.</div>
+          <div class="takeaway-title">다음: CLAUDE.md</div>
+          <div class="takeaway-body">Claude가 매번 같은 맥락을 기억하게 만드는 방법을 배웁니다. P02에서 CLAUDE.md 설계부터 시작합니다.</div>
         </div>
       </div>
     </div>
