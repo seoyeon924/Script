@@ -368,10 +368,6 @@
         <div class="code-comment"># 진단 명령어</div>
         <div class="code-hi">claude doctor</div>
       </div>
-      <div style="padding:12px 14px;border-top:1px solid var(--border);margin-top:auto;">
-        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:5px;">보안 기초 규칙</div>
-        <div style="font-size:12px;color:#888;line-height:1.7;">API 키·비밀번호 채팅창 입력 금지<br>파일 시스템 직접 접근 가능</div>
-      </div>
     </div>
     <!-- Right: 세 가지 케이스 -->
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 52px;gap:14px;">
@@ -401,6 +397,51 @@
 </div>
 
 
+
+<!-- ════ s9 | 보안 기초 규칙 ════ -->
+<div class="slide" id="s9">
+  <div class="tb">
+    <span class="tb-cap">Claude Code 설치하기</span>
+    <span class="tb-num">9</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">사용 전 필독</div>
+        <div class="big-title">보안 기초<br>규칙</div>
+        <div class="body-text" style="margin-top:16px;">Claude Code는 파일 시스템에 직접 접근 — 기본 수칙 숙지 필수</div>
+      </div>
+    </div>
+    <!-- Right: 4가지 규칙 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 52px;gap:12px;">
+
+      <div style="border:1px solid var(--border);padding:18px 24px;">
+        <div style="font-size:11px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:8px;">01 · 민감 정보 채팅창 입력 금지</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;margin-bottom:10px;">API 키 · 비밀번호 · 개인 인증서 → 채팅창 직접 입력 금지<br>환경변수 또는 .env 파일 사용</div>
+        <div class="code-wrap" style="font-size:12px;">
+          <div class="code-comment"># 이렇게 하지 말 것</div>
+          <div style="color:rgba(255,255,255,0.4);">내 AWS 키는 AKIA... DB 비밀번호는 pass123...</div>
+        </div>
+      </div>
+
+      <div style="border:1px solid var(--border);padding:18px 24px;">
+        <div style="font-size:11px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:8px;">02 · sudo 권한 요청 — 이유 먼저 확인</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;">시스템 파일 수정·관리자 권한 요청 시 → 이유 파악 후 허용 여부 판단</div>
+      </div>
+
+      <div style="border:1px solid var(--border);padding:18px 24px;">
+        <div style="font-size:11px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:8px;">03 · --dangerously-skip-permissions 사용 주의</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;">모든 권한 확인을 생략하는 옵션 — 컨테이너 등 격리 환경 외 사용 금지</div>
+      </div>
+
+      <div style="border:1px solid var(--border);padding:18px 24px;">
+        <div style="font-size:11px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:8px;">04 · 대규모 작업 전 백업 선행</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;">리팩토링 · DB 마이그레이션 전 → git commit 또는 별도 백업 필수</div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- ════ s10 | 클립 2 표지 ════ -->
 <div class="slide" id="s10">
@@ -716,10 +757,10 @@
 </div>
 
 <script>
-  const TOTAL = 14;
-  const ORDER = [1,4,5,6,7,8,10,11,12,13,15,16,17,18];
+  const TOTAL = 15;
+  const ORDER = [1,4,5,6,7,8,9,10,11,12,13,15,16,17,18];
   const CLIP_MAP = {
-    1:0,4:0,5:0,6:0,7:0,8:0,10:0,
+    1:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,
     11:1,12:1,13:1,15:1,16:1,17:1,18:1
   };
   const CLIP_LABELS = ['Claude Code 설치', 'Antigravity 세팅'];
