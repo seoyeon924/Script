@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P02-CH01 — Claude Code 첫 걸음</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #E8E6E2;
+    --text: #1C1A18;
+    --sub: #888;
+    --dim: #BBBBBB;
+    --white: #1C1A18;
+    --border: #E0DDD9;
+    --p01: #E8603C;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+  }
+
+  .deck { width: 1280px; height: 800px; transform-origin: top left; position: fixed; top: 0; left: 0; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; background: var(--bg); }
+  .slide.active { display: flex; }
+
+  .tb {
+    height: 48px; min-height: 48px;
+    padding: 0 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .tb-cap { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
+  .tb-num { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; }
+
+  .body { flex: 1; display: flex; min-height: 0; }
+
+  .nav {
+    position: fixed; bottom: 24px; right: 40px;
+    display: flex; align-items: center; gap: 12px; z-index: 100;
+  }
+  .nav-ctr { font-size: 11px; color: #666; letter-spacing: 0.08em; }
+  .nav-btn { background: none; border: none; color: var(--sub); cursor: pointer; font-size: 18px; padding: 4px; transition: color 0.15s; }
+  .nav-btn:hover { color: var(--white); }
+  .progress { position: fixed; bottom: 0; left: 0; height: 2px; background: var(--p01); transition: width 0.3s; z-index: 100; }
+
+  .clip-dots {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px; z-index: 100;
+  }
+  .clip-dot { width: 6px; height: 6px; border-radius: 50%; background: #CCCCCC; transition: background 0.2s; }
+  .clip-dot.active { background: var(--p01); }
+
+  .l-panel {
+    width: 38%; border-right: 1px solid var(--border);
+    padding: 52px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .eyebrow { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); margin-bottom: 22px; }
+  .big-title { font-size: 46px; font-weight: 600; color: var(--white); line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 14px; }
+  .body-text { font-size: 17px; color: #888; line-height: 1.85; }
+
+  .code-wrap {
+    background: #0A0C10; border: 1px solid #1E2028;
+    padding: 22px 26px; font-family: 'Menlo', 'Monaco', monospace;
+    font-size: 14px; line-height: 1.85; color: rgba(255,255,255,0.5);
+  }
+  .code-hi { color: rgba(255,255,255,0.88); }
+  .code-comment { color: rgba(255,255,255,0.28); }
+  .code-accent { color: #E8603C; }
+
+  .sec-break { background: var(--bg); flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .sec-label { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(0,0,0,0.4); margin-bottom: 24px; }
+  .sec-title { font-size: 44px; font-weight: 300; line-height: 1.35; color: var(--white); }
+  .sec-sub { font-size: 16px; color: rgba(0,0,0,0.5); margin-top: 24px; line-height: 2; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ════ s1 | 챕터 표지 ════ -->
+<div class="slide active" id="s1">
+  <div class="body" style="flex-direction:column;padding:64px 80px 72px;">
+
+    <!-- 상단 레이블 + 제목 -->
+    <div>
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(0,0,0,0.55);margin-bottom:20px;">P02 · CH01 · Claude Code 첫 걸음</div>
+      <div style="font-family:'Poppins',sans-serif;font-size:50px;font-weight:600;color:#1C1A18;line-height:1.25;letter-spacing:-0.02em;">Claude Code<br>첫 걸음</div>
+    </div>
+
+    <!-- 하단: 클립 카드 3개 -->
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:20px;">
+
+      <!-- CLIP 01 -->
+      <div style="width:268px;height:268px;border:1px solid rgba(0,0,0,0.1);padding:28px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 01</div>
+        <div style="font-size:16px;font-weight:400;color:#1C1A18;line-height:1.55;">프로젝트 폴더<br>구조 파악하기</div>
+      </div>
+
+      <!-- CLIP 02 -->
+      <div style="width:268px;height:268px;border:1px solid rgba(0,0,0,0.1);padding:28px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 02</div>
+        <div style="font-size:16px;font-weight:400;color:#1C1A18;line-height:1.55;">파일 읽기·쓰기·실행<br>&amp; Plan Mode</div>
+      </div>
+
+      <!-- CLIP 03 -->
+      <div style="width:268px;height:268px;border:1px solid rgba(0,0,0,0.1);padding:28px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 03</div>
+        <div style="font-size:16px;font-weight:400;color:#1C1A18;line-height:1.55;">CLAUDE.md<br>전용 AI 두뇌 설계</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s2 | Clip 01 sec-break ════ -->
+<div class="slide" id="s2">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <!-- 폴더 트리 아이콘 -->
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <rect x="2" y="14" width="52" height="36" rx="3" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <path d="M2 22h52" stroke="#2C2720" stroke-width="1"/>
+        <path d="M2 14h18l4 8" stroke="none"/>
+        <rect x="2" y="8" width="22" height="10" rx="2" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <!-- 트리 라인 -->
+        <line x1="12" y1="29" x2="12" y2="43" stroke="#BBBBBB" stroke-width="0.9"/>
+        <line x1="12" y1="32" x2="20" y2="32" stroke="#BBBBBB" stroke-width="0.9"/>
+        <line x1="12" y1="37" x2="20" y2="37" stroke="#BBBBBB" stroke-width="0.9"/>
+        <line x1="12" y1="43" x2="20" y2="43" stroke="#BBBBBB" stroke-width="0.9"/>
+        <line x1="22" y1="37" x2="22" y2="44" stroke="#DDDDDD" stroke-width="0.9"/>
+        <line x1="22" y1="40" x2="30" y2="40" stroke="#DDDDDD" stroke-width="0.9"/>
+        <line x1="22" y1="44" x2="30" y2="44" stroke="#E8603C" stroke-width="0.9" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="sec-label">CLIP 01 · 프로젝트 폴더 구조 파악하기</div>
+    <div class="sec-title">프로젝트<br>폴더 구조</div>
+    <div class="sec-sub">Claude가 파악하는 방식 · 표준 구조 · 실습</div>
+  </div>
+</div>
+
+
+<!-- ════ s3 | Claude가 보는 것들 ════ -->
+<div class="slide" id="s3">
+  <div class="tb">
+    <span class="tb-cap">프로젝트 폴더 구조 파악하기</span>
+    <span class="tb-num">3</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">프로젝트 파악</div>
+        <div class="big-title">Claude가<br>보는 것들</div>
+        <div class="body-text" style="margin-top:16px;">세션 시작 시 폴더 자동 탐색</div>
+      </div>
+      <div style="padding:18px 20px;background:#F5F4F0;border:1px solid var(--border);">
+        <div style="font-size:13px;color:#555;line-height:1.8;">폴더 구조가 명확할수록<br>Claude 실수 감소</div>
+      </div>
+    </div>
+    <!-- Right: 3가지 항목 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;gap:14px;">
+
+      <div style="border:1px solid var(--border);padding:22px 28px;background:#fff;display:flex;gap:20px;align-items:flex-start;">
+        <div style="font-size:28px;font-weight:300;color:#CCCCCC;line-height:1;flex-shrink:0;width:36px;">01</div>
+        <div>
+          <div style="font-size:15px;font-weight:500;color:#1C1A18;margin-bottom:6px;">CLAUDE.md</div>
+          <div style="font-size:13px;color:#888;line-height:1.7;">프로젝트 규칙과 기억</div>
+        </div>
+      </div>
+
+      <div style="border:1px solid var(--border);padding:22px 28px;background:#fff;display:flex;gap:20px;align-items:flex-start;">
+        <div style="font-size:28px;font-weight:300;color:#CCCCCC;line-height:1;flex-shrink:0;width:36px;">02</div>
+        <div>
+          <div style="font-size:15px;font-weight:500;color:#1C1A18;margin-bottom:6px;">폴더 이름</div>
+          <div style="font-size:13px;color:#888;line-height:1.7;">data, scripts, charts로 역할 추론</div>
+        </div>
+      </div>
+
+      <div style="border:1px solid var(--border);padding:22px 28px;background:#fff;display:flex;gap:20px;align-items:flex-start;">
+        <div style="font-size:28px;font-weight:300;color:#CCCCCC;line-height:1;flex-shrink:0;width:36px;">03</div>
+        <div>
+          <div style="font-size:15px;font-weight:500;color:#1C1A18;margin-bottom:6px;">파일 목록</div>
+          <div style="font-size:13px;color:#888;line-height:1.7;">어떤 데이터가 있는지 파악</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s4 | 표준 폴더 구조 ════ -->
+<div class="slide" id="s4">
+  <div class="tb">
+    <span class="tb-cap">프로젝트 폴더 구조 파악하기</span>
+    <span class="tb-num">4</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">폴더 구조</div>
+        <div class="big-title">데이터 시각화<br>표준 구조</div>
+      </div>
+      <div style="padding:16px 20px;border-left:3px solid var(--p01);background:#FDF8F5;">
+        <div style="font-size:13px;color:#1C1A18;font-weight:500;line-height:1.7;">data/raw/ 절대 수정 금지<br>— 원본 보존 원칙</div>
+      </div>
+    </div>
+    <!-- Right: 폴더 트리 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 60px;">
+      <div class="code-wrap">
+        <div class="code-hi">my-viz-project/</div>
+        <div>├── <span class="code-accent">CLAUDE.md</span></div>
+        <div>├── .claude/</div>
+        <div>│   └── settings.json</div>
+        <div>├── data/</div>
+        <div>│   ├── raw/          <span class="code-comment">← 원본 (수정 금지)</span></div>
+        <div>│   └── processed/    <span class="code-comment">← 전처리 결과</span></div>
+        <div>├── scripts/</div>
+        <div>├── charts/</div>
+        <div>└── reports/</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s5 | 폴더 생성 & 소개하기 ════ -->
+<div class="slide" id="s5">
+  <div class="tb">
+    <span class="tb-cap">프로젝트 폴더 구조 파악하기</span>
+    <span class="tb-num">5</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">실습</div>
+        <div class="big-title">폴더 생성<br>&amp; 소개하기</div>
+      </div>
+      <div style="padding:16px 20px;background:#F5F4F0;border:1px solid var(--border);">
+        <div style="font-size:13px;color:#555;line-height:1.8;">→ 능동적 질문 = 이후 정확도 향상</div>
+      </div>
+    </div>
+    <!-- Right: 두 프롬프트 박스 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;gap:16px;">
+
+      <div style="border:1px solid var(--border);border-left:3px solid #BBBBBB;padding:24px 28px;background:#fff;">
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">프롬프트 1</div>
+        <div style="font-size:14px;color:#444;line-height:1.8;">데이터 시각화 프로젝트용 폴더 구조를 만들어줘.<br>폴더: data/raw, data/processed, scripts, charts, reports</div>
+      </div>
+
+      <div style="border:1px solid rgba(232,96,60,0.2);border-left:3px solid var(--p01);padding:24px 28px;background:#FDF8F5;">
+        <div style="font-size:11px;color:#E8603C;letter-spacing:0.1em;margin-bottom:10px;">프롬프트 2</div>
+        <div style="font-size:14px;color:#444;line-height:1.8;">이 프로젝트 폴더 전체를 파악해줘.<br>어떤 파일이 있는지, 분석 시작 전에 알아야 할 게 있으면 물어봐.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s6 | Clip 02 sec-break ════ -->
+<div class="slide" id="s6">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <!-- 파일 도구 아이콘 -->
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <!-- Read: 파일 -->
+        <rect x="4" y="6" width="22" height="28" rx="2" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <line x1="8" y1="13" x2="22" y2="13" stroke="#BBBBBB" stroke-width="1"/>
+        <line x1="8" y1="18" x2="22" y2="18" stroke="#BBBBBB" stroke-width="1"/>
+        <line x1="8" y1="23" x2="18" y2="23" stroke="#E8603C" stroke-width="1" opacity="0.6"/>
+        <!-- Write: 펜 -->
+        <path d="M32 38l14-14-4-4L28 34l-2 6 6-2z" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <line x1="38" y1="24" x2="42" y2="28" stroke="#2C2720" stroke-width="1.2"/>
+        <!-- Bash: 터미널 -->
+        <rect x="8" y="40" width="20" height="13" rx="2" fill="none" stroke="#BBBBBB" stroke-width="1"/>
+        <line x1="11" y1="44" x2="13" y2="46" stroke="#888" stroke-width="1"/>
+        <line x1="13" y1="46" x2="11" y2="48" stroke="#888" stroke-width="1"/>
+        <line x1="15" y1="48" x2="19" y2="48" stroke="#888" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="sec-label">CLIP 02 · 파일 읽기·쓰기·실행 &amp; Plan Mode</div>
+    <div class="sec-title">파일 도구<br>&amp; Plan Mode</div>
+    <div class="sec-sub">Read · Write/Edit · Bash · 계획 먼저 확인</div>
+  </div>
+</div>
+
+
+<!-- ════ s7 | Read · Write · Bash ════ -->
+<div class="slide" id="s7">
+  <div class="tb">
+    <span class="tb-cap">파일 읽기·쓰기·실행 &amp; Plan Mode</span>
+    <span class="tb-num">7</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">핵심 도구</div>
+        <div class="big-title">Read · Write<br>· Bash</div>
+      </div>
+      <div class="code-wrap" style="font-size:13px;">
+        <div class="code-comment"># 작업 흐름</div>
+        <div class="code-hi">CSV 읽고 (Read)</div>
+        <div>→ <span class="code-hi">코드 작성·저장 (Write)</span></div>
+        <div>→ <span class="code-hi">실행 (Bash)</span></div>
+        <div>→ <span class="code-hi">차트 저장 (Write)</span></div>
+      </div>
+    </div>
+    <!-- Right: 3행 그리드 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0;border-left:none;">
+      <div style="flex:1;display:flex;flex-direction:column;">
+
+        <div style="flex:1;border-bottom:1px solid var(--border);padding:28px 44px;display:flex;align-items:center;gap:24px;">
+          <div style="width:60px;flex-shrink:0;">
+            <div style="font-size:14px;font-weight:600;color:#1C1A18;letter-spacing:0.04em;">Read</div>
+          </div>
+          <div style="border-left:1px solid var(--border);padding-left:24px;">
+            <div style="font-size:15px;color:#1C1A18;margin-bottom:5px;">파일 내용을 컨텍스트로 가져옴</div>
+            <div style="font-size:13px;color:#888;">CSV · 코드 · 문서</div>
+          </div>
+        </div>
+
+        <div style="flex:1;border-bottom:1px solid var(--border);padding:28px 44px;display:flex;align-items:center;gap:24px;">
+          <div style="width:60px;flex-shrink:0;">
+            <div style="font-size:14px;font-weight:600;color:#1C1A18;letter-spacing:0.04em;">Write<br>/ Edit</div>
+          </div>
+          <div style="border-left:1px solid var(--border);padding-left:24px;">
+            <div style="font-size:15px;color:#1C1A18;margin-bottom:5px;">새 파일 생성 또는 일부 수정</div>
+            <div style="font-size:13px;color:#888;">diff로 변경 미리보기</div>
+          </div>
+        </div>
+
+        <div style="flex:1;padding:28px 44px;display:flex;align-items:center;gap:24px;">
+          <div style="width:60px;flex-shrink:0;">
+            <div style="font-size:14px;font-weight:600;color:#1C1A18;letter-spacing:0.04em;">Bash</div>
+          </div>
+          <div style="border-left:1px solid var(--border);padding-left:24px;">
+            <div style="font-size:15px;color:#1C1A18;margin-bottom:5px;">Python · 터미널 실행</div>
+            <div style="font-size:13px;color:#888;">결과를 다시 Claude에 전달</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s8 | Plan Mode ════ -->
+<div class="slide" id="s8">
+  <div class="tb">
+    <span class="tb-cap">파일 읽기·쓰기·실행 &amp; Plan Mode</span>
+    <span class="tb-num">8</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">계획 확인</div>
+        <div class="big-title">Plan Mode</div>
+        <div class="body-text" style="margin-top:16px;">파일 여러 개 바뀌는 작업 —<br>실행 전 계획 확인</div>
+      </div>
+      <div style="border:1px solid var(--border);padding:16px 20px;background:#F5F4F0;">
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:8px;">언제 쓸지</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <div style="display:flex;gap:10px;"><span style="color:#BBBBBB;font-size:11px;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#666;">처음 해보는 복잡한 작업</span></div>
+          <div style="display:flex;gap:10px;"><span style="color:#BBBBBB;font-size:11px;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#666;">파일 5개 이상 변경</span></div>
+          <div style="display:flex;gap:10px;"><span style="color:#BBBBBB;font-size:11px;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#666;">원본 데이터 포함 가능성</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Right: 두 방법 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;gap:16px;">
+
+      <div style="border:1px solid var(--border);padding:26px 32px;background:#fff;">
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:12px;">방법 1 — 프롬프트에 추가</div>
+        <div style="font-size:14px;color:#444;line-height:1.8;font-style:italic;">"실행하기 전에 계획 먼저 보여줘"</div>
+      </div>
+
+      <div style="border:1px solid var(--border);padding:26px 32px;background:#fff;">
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:12px;">방법 2 — 키보드 단축키</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="font-family:monospace;font-size:15px;font-weight:600;color:#1C1A18;background:#F0EEE9;padding:6px 12px;border:1px solid var(--border);">Shift+Tab</div>
+          <span style="color:#BBBBBB;font-size:14px;">두 번</span>
+          <span style="font-size:13px;color:#888;">— Plan Mode 전환<br>(파일 수정 없이 계획만)</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s9 | 취소 & 되돌리기 ════ -->
+<div class="slide" id="s9">
+  <div class="tb">
+    <span class="tb-cap">파일 읽기·쓰기·실행 &amp; Plan Mode</span>
+    <span class="tb-num">9</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">실수 복구</div>
+        <div class="big-title">취소<br>&amp; 되돌리기</div>
+      </div>
+      <div>
+        <!-- 복구 아이콘 SVG -->
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="22" fill="none" stroke="#DDDDDD" stroke-width="1.2"/>
+          <path d="M18 30 A12 12 0 1 1 30 18" stroke="#2C2720" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <polyline points="18,22 18,30 26,30" fill="none" stroke="#2C2720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <!-- Right: 3개 케이스 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;gap:14px;">
+
+      <div style="border:1px solid var(--border);padding:22px 28px;background:#fff;display:flex;gap:20px;align-items:center;">
+        <div style="font-family:monospace;font-size:14px;font-weight:600;color:#1C1A18;background:#F0EEE9;padding:6px 12px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;">Ctrl+C</div>
+        <div style="font-size:14px;color:#444;line-height:1.7;">작업 중 즉각 중단</div>
+      </div>
+
+      <div style="border:1px solid var(--border);padding:22px 28px;background:#fff;display:flex;gap:20px;align-items:center;">
+        <div style="font-family:monospace;font-size:14px;font-weight:600;color:#1C1A18;background:#F0EEE9;padding:6px 12px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;">Esc Esc</div>
+        <div style="font-size:14px;color:#444;line-height:1.7;">직전 체크포인트로 복귀</div>
+      </div>
+
+      <div style="border:1px solid var(--border);padding:22px 28px;background:#fff;display:flex;gap:20px;align-items:center;">
+        <div style="font-family:monospace;font-size:14px;font-weight:600;color:#E8603C;background:#FDF8F5;padding:6px 12px;border:1px solid rgba(232,96,60,0.2);white-space:nowrap;flex-shrink:0;">/rewind</div>
+        <div style="font-size:14px;color:#444;line-height:1.7;">특정 시점으로 대화 되감기</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s10 | Clip 03 sec-break ════ -->
+<div class="slide" id="s10">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <!-- CLAUDE.md 아이콘 -->
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <rect x="8" y="4" width="40" height="48" rx="3" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <line x1="8" y1="16" x2="48" y2="16" stroke="#2C2720" stroke-width="1"/>
+        <!-- CLAUDE.md 글자 암시 -->
+        <line x1="14" y1="10" x2="18" y2="10" stroke="#2C2720" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="20" y1="10" x2="24" y2="10" stroke="#2C2720" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="26" y1="10" x2="30" y2="10" stroke="#2C2720" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- 내용 줄 -->
+        <line x1="14" y1="24" x2="42" y2="24" stroke="#DDDDDD" stroke-width="1"/>
+        <line x1="14" y1="29" x2="38" y2="29" stroke="#DDDDDD" stroke-width="1"/>
+        <line x1="14" y1="34" x2="42" y2="34" stroke="#E8603C" stroke-width="1" opacity="0.55"/>
+        <line x1="14" y1="39" x2="34" y2="39" stroke="#DDDDDD" stroke-width="1"/>
+        <line x1="14" y1="44" x2="40" y2="44" stroke="#DDDDDD" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="sec-label">CLIP 03 · CLAUDE.md</div>
+    <div class="sec-title">CLAUDE.md<br>전용 AI 두뇌</div>
+    <div class="sec-sub">반복 설명 제거 · 규칙 영구 저장 · /init</div>
+  </div>
+</div>
+
+
+<!-- ════ s11 | CLAUDE.md란? ════ -->
+<div class="slide" id="s11">
+  <div class="tb">
+    <span class="tb-cap">CLAUDE.md</span>
+    <span class="tb-num">11</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">CLAUDE.md</div>
+        <div class="big-title">한 번 쓰면<br>매번 자동 적용</div>
+        <div class="body-text" style="margin-top:16px;">세션 시작마다 자동으로 읽힘</div>
+      </div>
+      <div style="padding:16px 20px;background:#F5F4F0;border:1px solid var(--border);">
+        <div style="font-size:13px;color:#555;line-height:1.8;">'이건 마케팅 분석 프로젝트야...'<br>매번 반복 불필요</div>
+      </div>
+    </div>
+    <!-- Right: 위치별 범위 표 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;">
+      <div style="border:1px solid var(--border);">
+
+        <!-- 헤더 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.02);">
+          <div style="padding:12px 20px;border-right:1px solid var(--border);font-size:11px;color:#AAAAAA;letter-spacing:0.1em;">위치</div>
+          <div style="padding:12px 20px;border-right:1px solid var(--border);font-size:11px;color:#AAAAAA;letter-spacing:0.1em;">적용 범위</div>
+          <div style="padding:12px 20px;font-size:11px;color:#AAAAAA;letter-spacing:0.1em;">공유 여부</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:18px 20px;border-right:1px solid var(--border);">
+            <div style="font-family:monospace;font-size:13px;color:#1C1A18;">~/.claude/CLAUDE.md</div>
+          </div>
+          <div style="padding:18px 20px;border-right:1px solid var(--border);">
+            <div style="font-size:13px;color:#555;">내 컴퓨터 전체</div>
+          </div>
+          <div style="padding:18px 20px;">
+            <div style="font-size:13px;color:#888;">본인만</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:18px 20px;border-right:1px solid var(--border);">
+            <div style="font-family:monospace;font-size:13px;color:#E8603C;">project/CLAUDE.md</div>
+          </div>
+          <div style="padding:18px 20px;border-right:1px solid var(--border);">
+            <div style="font-size:13px;color:#555;">이 프로젝트</div>
+          </div>
+          <div style="padding:18px 20px;">
+            <div style="font-size:13px;color:#888;">Git으로 팀 공유</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;">
+          <div style="padding:18px 20px;border-right:1px solid var(--border);">
+            <div style="font-family:monospace;font-size:12px;color:#1C1A18;">project/CLAUDE.local.md</div>
+          </div>
+          <div style="padding:18px 20px;border-right:1px solid var(--border);">
+            <div style="font-size:13px;color:#555;">이 프로젝트, 나만</div>
+          </div>
+          <div style="padding:18px 20px;">
+            <div style="font-size:13px;color:#888;">.gitignore 처리</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s12 | 데이터 시각화 CLAUDE.md ════ -->
+<div class="slide" id="s12">
+  <div class="tb">
+    <span class="tb-cap">CLAUDE.md</span>
+    <span class="tb-num">12</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">예시</div>
+        <div class="big-title">데이터 시각화<br>CLAUDE.md</div>
+      </div>
+    </div>
+    <!-- Right: 코드 예시 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 60px;">
+      <div class="code-wrap">
+        <div class="code-accent"># 마케팅 성과 분석 프로젝트</div>
+        <div style="margin-top:14px;"></div>
+        <div class="code-hi">## 데이터 처리 원칙</div>
+        <div>- <span class="code-hi">data/raw/</span> 수정 절대 금지</div>
+        <div>- 전처리 결과 → <span class="code-hi">data/processed/</span></div>
+        <div style="margin-top:14px;"></div>
+        <div class="code-hi">## 시각화 규칙</div>
+        <div>- 시간 흐름 → 라인 차트</div>
+        <div>- 카테고리 비교 → 막대 차트</div>
+        <div>- 강조색: <span class="code-accent">#1E3A5F</span></div>
+        <div style="margin-top:14px;"></div>
+        <div class="code-hi">## 차트 요구사항</div>
+        <div>- 제목: 핵심 인사이트 한 줄</div>
+        <div>- 레이블: 한국어</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s13 | /init & 작성 팁 ════ -->
+<div class="slide" id="s13">
+  <div class="tb">
+    <span class="tb-cap">CLAUDE.md</span>
+    <span class="tb-num">13</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">작성 팁</div>
+        <div class="big-title">/init으로<br>시작하기</div>
+        <div class="body-text" style="margin-top:16px;">새 프로젝트 → Claude가 폴더 분석 후<br>초안 생성</div>
+      </div>
+      <div class="code-wrap" style="text-align:center;padding:18px;">
+        <span class="code-accent" style="font-size:18px;font-weight:600;">/init</span>
+      </div>
+    </div>
+    <!-- Right: 3가지 작성 원칙 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;gap:14px;">
+
+      <div style="border:1px solid var(--border);padding:22px 28px;background:#fff;">
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">원칙 1</div>
+        <div style="font-size:15px;font-weight:500;color:#1C1A18;margin-bottom:8px;">규칙보다 이유</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;">
+          <span style="font-family:monospace;color:#555;">"data/raw 수정 금지 — 원본 보존 원칙"</span><br>이유 명시가 Claude 판단 정확도를 높임
+        </div>
+      </div>
+
+      <div style="border:1px solid var(--border);padding:22px 28px;background:#fff;">
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">원칙 2</div>
+        <div style="font-size:15px;font-weight:500;color:#1C1A18;margin-bottom:8px;">반복 요청 → 규칙화</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;">매번 말하는 내용은 CLAUDE.md에 한 줄 추가</div>
+      </div>
+
+      <div style="border:1px solid var(--border);padding:22px 28px;background:#fff;">
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">원칙 3</div>
+        <div style="font-size:15px;font-weight:500;color:#1C1A18;margin-bottom:8px;">/init 활용</div>
+        <div style="font-size:13px;color:#888;line-height:1.7;">채팅에서 /init → 폴더 분석 → 초안 생성 → 수정</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s14 | 챕터 요약 ════ -->
+<div class="slide" id="s14">
+  <div class="tb">
+    <span class="tb-cap">챕터 요약</span>
+    <span class="tb-num">14</span>
+  </div>
+  <div class="body" style="align-items:center;justify-content:center;padding:36px 60px;">
+    <div style="width:100%;border:1px solid var(--border);">
+
+      <!-- 헤더 -->
+      <div style="display:grid;grid-template-columns:100px 1fr;border-bottom:1px solid var(--border);">
+        <div style="padding:13px 18px;border-right:1px solid var(--border);font-size:10px;color:#BBBBBB;letter-spacing:0.14em;display:flex;align-items:center;">P02 · CH01</div>
+        <div style="padding:13px 22px;font-size:15px;font-weight:600;color:var(--white);">이 챕터에서 배운 것</div>
+      </div>
+
+      <!-- 클립 목록 -->
+      <div style="display:grid;grid-template-columns:100px 1fr 1fr 1fr;">
+
+        <div style="border-right:1px solid var(--border);padding:20px 18px;display:flex;align-items:flex-start;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.1em;">CLIP</div>
+        </div>
+
+        <!-- CLIP 01 -->
+        <div style="border-right:1px solid var(--border);padding:22px 24px;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:10px;">01</div>
+          <div style="font-size:13px;font-weight:500;color:#1C1A18;margin-bottom:14px;line-height:1.5;">프로젝트 폴더 구조 파악하기</div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">표준 구조 (raw · processed · charts)</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">Claude에게 폴더 소개하기</span></div>
+          </div>
+        </div>
+
+        <!-- CLIP 02 -->
+        <div style="border-right:1px solid var(--border);padding:22px 24px;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:10px;">02</div>
+          <div style="font-size:13px;font-weight:500;color:#1C1A18;margin-bottom:14px;line-height:1.5;">파일 읽기·쓰기·실행 &amp;<br>Plan Mode</div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">Read · Write · Bash 도구</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">Plan Mode &amp; 실수 복구</span></div>
+          </div>
+        </div>
+
+        <!-- CLIP 03 -->
+        <div style="padding:22px 24px;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:10px;">03</div>
+          <div style="font-size:13px;font-weight:500;color:#1C1A18;margin-bottom:14px;line-height:1.5;">CLAUDE.md</div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">반복 설명 제거</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">데이터 시각화 규칙 영구 저장</span></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+</div><!-- /deck -->
+
+<div class="nav">
+  <span class="nav-ctr" id="nav-ctr">1 / 14</span>
+  <button class="nav-btn" onclick="prev()">←</button>
+  <button class="nav-btn" onclick="next()">→</button>
+</div>
+<div class="progress" id="progress"></div>
+<div class="clip-dots" id="clip-dots">
+  <div class="clip-dot active"></div>
+  <div class="clip-dot"></div>
+  <div class="clip-dot"></div>
+</div>
+
+<script>
+  const TOTAL = 14;
+  const ORDER = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+  const CLIP_MAP = {1:0,2:0,3:0,4:0,5:0, 6:1,7:1,8:1,9:1, 10:2,11:2,12:2,13:2, 14:2};
+  const CLIP_LABELS = ['프로젝트 폴더 구조','파일·Plan Mode','CLAUDE.md'];
+  let cur = 1;
+
+  function scale() {
+    const s = Math.min(window.innerWidth / 1280, window.innerHeight / 800);
+    const d = document.querySelector('.deck');
+    d.style.transform = `scale(${s})`;
+    d.style.top = `${(window.innerHeight - 800*s)/2}px`;
+    d.style.left = `${(window.innerWidth - 1280*s)/2}px`;
+  }
+  scale(); window.addEventListener('resize', scale);
+
+  function show(n) {
+    if (n < 1 || n > TOTAL) return;
+    const slideId = ORDER[n-1];
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById('s'+slideId);
+    if (el) {
+      el.classList.add('active');
+      const numEl = el.querySelector('.tb-num');
+      if (numEl) numEl.textContent = n;
+    }
+    document.getElementById('nav-ctr').textContent = n + ' / ' + TOTAL;
+    document.getElementById('progress').style.width = (n/TOTAL*100)+'%';
+    const clipIdx = CLIP_MAP[slideId];
+    document.querySelectorAll('.clip-dot').forEach((d,i) => d.classList.toggle('active', i === clipIdx));
+    cur = n;
+  }
+  function next() { show(cur+1); }
+  function prev() { show(cur-1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); next(); }
+    if (e.key==='ArrowLeft') { e.preventDefault(); prev(); }
+  });
+  let tx = 0;
+  document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    if (Math.abs(tx - e.changedTouches[0].clientX) > 40) tx > e.changedTouches[0].clientX ? next() : prev();
+  });
+  show(1);
+</script>
+</body>
+</html>

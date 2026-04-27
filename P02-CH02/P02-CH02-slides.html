@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P02-CH02 — MCP & Skills</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #E8E6E2;
+    --text: #1C1A18;
+    --sub: #888;
+    --dim: #BBBBBB;
+    --white: #1C1A18;
+    --border: #E0DDD9;
+    --p01: #E8603C;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+  }
+
+  .deck { width: 1280px; height: 800px; transform-origin: top left; position: fixed; top: 0; left: 0; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; }
+  .slide.active { display: flex; }
+
+  .tb {
+    height: 48px; min-height: 48px;
+    padding: 0 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border); flex-shrink: 0;
+    position: relative;
+  }
+  .tb-cap { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
+  .tb-num { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; }
+
+  .body { flex: 1; display: flex; min-height: 0; }
+
+  .nav {
+    position: fixed; bottom: 24px; right: 40px;
+    display: flex; align-items: center; gap: 12px; z-index: 100;
+  }
+  .nav-ctr { font-size: 11px; color: #666; letter-spacing: 0.08em; }
+  .nav-btn { background: none; border: none; color: var(--sub); cursor: pointer; font-size: 18px; padding: 4px; transition: color 0.15s; }
+  .nav-btn:hover { color: var(--white); }
+  .progress { position: fixed; bottom: 0; left: 0; height: 2px; background: var(--p01); transition: width 0.3s; z-index: 100; }
+
+  .clip-dots {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px; z-index: 100;
+  }
+  .clip-dot { width: 6px; height: 6px; border-radius: 50%; background: #CCCCCC; transition: background 0.2s; }
+  .clip-dot.active { background: var(--p01); }
+
+  .l-panel {
+    width: 38%; border-right: 1px solid var(--border);
+    padding: 52px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .eyebrow { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); margin-bottom: 22px; }
+  .big-title { font-size: 46px; font-weight: 600; color: var(--white); line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 14px; }
+  .body-text { font-size: 17px; color: #888; line-height: 1.85; }
+
+  .code-wrap {
+    background: #0A0C10; border: 1px solid #1E2028;
+    padding: 22px 26px; font-family: 'Menlo', 'Monaco', monospace;
+    font-size: 13px; line-height: 1.85; color: rgba(255,255,255,0.5);
+  }
+  .code-hi { color: rgba(255,255,255,0.88); }
+  .code-comment { color: rgba(255,255,255,0.28); }
+  .code-accent { color: #E8603C; }
+
+  .sec-break { background: var(--bg); flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .sec-label { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(0,0,0,0.4); margin-bottom: 24px; }
+  .sec-title { font-size: 44px; font-weight: 300; line-height: 1.35; color: var(--white); }
+  .sec-sub { font-size: 16px; color: rgba(0,0,0,0.5); margin-top: 24px; line-height: 2; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ════ s1 | 챕터 표지 ════ -->
+<div class="slide active" id="s1">
+  <div class="body" style="background:var(--bg);flex-direction:column;padding:64px 80px 72px;">
+
+    <!-- 상단: 챕터 제목 -->
+    <div>
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(0,0,0,0.55);margin-bottom:20px;font-family:'Poppins',sans-serif;">P02 · CH02 · MCP &amp; Skills</div>
+      <div style="font-size:50px;font-weight:600;color:#1C1A18;line-height:1.25;letter-spacing:-0.02em;font-family:'Poppins',sans-serif;">MCP &amp;<br>Skills</div>
+    </div>
+
+    <!-- 하단: 클립 카드 4개 -->
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:18px;">
+
+      <!-- CLIP 01 -->
+      <div style="width:200px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 01</div>
+        <div style="font-size:15px;font-weight:400;color:#1C1A18;line-height:1.55;">MCP란<br>무엇인가</div>
+      </div>
+
+      <!-- CLIP 02 -->
+      <div style="width:200px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 02</div>
+        <div style="font-size:15px;font-weight:400;color:#1C1A18;line-height:1.55;">Firecrawl MCP<br>웹 크롤링</div>
+      </div>
+
+      <!-- CLIP 03 -->
+      <div style="width:200px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 03</div>
+        <div style="font-size:15px;font-weight:400;color:#1C1A18;line-height:1.55;">MCP<br>실전 활용</div>
+      </div>
+
+      <!-- CLIP 04 -->
+      <div style="width:200px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 04</div>
+        <div style="font-size:15px;font-weight:400;color:#1C1A18;line-height:1.55;">Skills<br>탐색 &amp; 설치</div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s2 | Clip 01 sec-break 표지 ════ -->
+<div class="slide" id="s2">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <!-- MCP 아이콘: 플러그/연결 모티프 -->
+      <svg width="60" height="60" viewBox="0 0 60 60">
+        <rect x="2" y="2" width="56" height="56" rx="4" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <!-- 플러그 핀 -->
+        <rect x="20" y="10" width="6" height="12" rx="1.5" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <rect x="34" y="10" width="6" height="12" rx="1.5" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <!-- 플러그 몸체 -->
+        <path d="M15 22 H45 V34 Q45 40 30 40 Q15 40 15 34 Z" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <!-- 코드 줄 연결 -->
+        <line x1="30" y1="40" x2="30" y2="50" stroke="#E8603C" stroke-width="1.5"/>
+        <circle cx="30" cy="52" r="2" fill="#E8603C"/>
+      </svg>
+    </div>
+    <div class="sec-label">CLIP 01 · MCP란 무엇인가</div>
+    <div class="sec-title">MCP —<br>새로운 도구 연결</div>
+    <div class="sec-sub">개념 · 작동 구조 · 활용 가능한 MCP들</div>
+  </div>
+</div>
+
+
+<!-- ════ s3 | MCP 개념 ════ -->
+<div class="slide" id="s3">
+  <div class="tb">
+    <span class="tb-cap">MCP란 무엇인가</span>
+    <span class="tb-num">3</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">MCP란</div>
+        <div class="big-title">스마트폰에<br>앱을 설치하듯</div>
+        <div class="body-text" style="margin-top:16px;">Model Context Protocol —<br>에이전트에 새 도구 연결하는 표준</div>
+      </div>
+    </div>
+    <!-- Right -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:48px 56px;gap:24px;">
+
+      <!-- 비유 설명 박스 -->
+      <div style="border:1px solid var(--border);padding:28px 32px;">
+        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.14em;margin-bottom:18px;">비유로 이해하기</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);">
+          <div style="padding:16px 20px;border-right:1px solid var(--border);">
+            <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:8px;">스마트폰</div>
+            <div style="font-size:13px;color:#888;line-height:1.75;">전화·메시지만 가능<br>→ 카카오맵 설치<br>→ 내비게이션 가능</div>
+          </div>
+          <div style="padding:16px 20px;">
+            <div style="font-size:11px;color:var(--p01);letter-spacing:0.1em;margin-bottom:8px;">Claude Code</div>
+            <div style="font-size:13px;color:#1C1A18;line-height:1.75;">코드·파일만 가능<br>→ MCP 연결<br>→ DB·웹·파일 처리 가능</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 작동 구조 -->
+      <div style="border:1px solid var(--border);padding:28px 32px;">
+        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.14em;margin-bottom:20px;">작동 구조</div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+          <div style="background:rgba(232,96,60,0.06);border:1px solid rgba(232,96,60,0.18);padding:12px 32px;font-size:13px;font-weight:500;color:#1C1A18;letter-spacing:0.02em;">Claude Code (에이전트)</div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:0;padding:4px 0;">
+            <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.08em;margin-bottom:2px;">↓ 요청</div>
+            <div style="width:1px;height:18px;background:var(--border);"></div>
+            <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.08em;margin-top:2px;">↓ 응답</div>
+          </div>
+          <div style="background:#F5F4F0;border:1px solid var(--border);padding:12px 32px;font-size:13px;font-weight:500;color:#888;letter-spacing:0.02em;">MCP 서버</div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:0;padding:4px 0;">
+            <div style="width:1px;height:22px;background:var(--border);"></div>
+          </div>
+          <div style="background:rgba(232,96,60,0.06);border:1px solid rgba(232,96,60,0.18);padding:12px 32px;font-size:13px;font-weight:500;color:#1C1A18;letter-spacing:0.02em;">Claude Code</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s4 | 활용 가능한 MCP + 추가 명령어 ════ -->
+<div class="slide" id="s4">
+  <div class="tb">
+    <span class="tb-cap">MCP란 무엇인가</span>
+    <span class="tb-num">4</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">MCP 목록</div>
+        <div class="big-title">데이터 시각화에<br>유용한 MCP들</div>
+      </div>
+      <div>
+        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">MCP 연결 명령어</div>
+        <div class="code-wrap">
+          <span class="code-hi">claude mcp add</span> <span class="code-accent">--transport stdio</span> \<br>
+          &nbsp;&nbsp;filesystem <span class="code-comment">-- npx -y</span> \<br>
+          &nbsp;&nbsp;<span class="code-hi">@modelcontextprotocol/server-filesystem</span> ~/Desktop
+        </div>
+      </div>
+    </div>
+    <!-- Right: 표 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;">
+      <div style="width:100%;border:1px solid var(--border);">
+
+        <!-- 헤더 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.02);">
+          <div style="padding:12px 18px;border-right:1px solid var(--border);font-size:10px;color:#AAAAAA;letter-spacing:0.1em;">MCP 서버</div>
+          <div style="padding:12px 18px;border-right:1px solid var(--border);font-size:10px;color:#AAAAAA;letter-spacing:0.1em;">기능</div>
+          <div style="padding:12px 18px;font-size:10px;color:#AAAAAA;letter-spacing:0.1em;">활용 사례</div>
+        </div>
+
+        <!-- Row 1 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#1C1A18;font-family:monospace;">server-filesystem</div>
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#888;">파일 읽기·쓰기</div>
+          <div style="padding:14px 18px;font-size:13px;color:#888;">프로젝트 파일 접근</div>
+        </div>
+
+        <!-- Row 2 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#1C1A18;font-family:monospace;">server-postgres</div>
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#888;">PostgreSQL 연결</div>
+          <div style="padding:14px 18px;font-size:13px;color:#888;">DB에서 직접 추출</div>
+        </div>
+
+        <!-- Row 3 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#1C1A18;font-family:monospace;">server-sqlite</div>
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#888;">SQLite 연결</div>
+          <div style="padding:14px 18px;font-size:13px;color:#888;">로컬 DB 분석</div>
+        </div>
+
+        <!-- Row 4 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#E8603C;font-family:monospace;">firecrawl-mcp</div>
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#888;">웹 크롤링</div>
+          <div style="padding:14px 18px;font-size:13px;color:#888;">경쟁사·뉴스 수집</div>
+        </div>
+
+        <!-- Row 5 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;">
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#1C1A18;font-family:monospace;">Google Sheets MCP</div>
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#888;">스프레드시트</div>
+          <div style="padding:14px 18px;font-size:13px;color:#888;">팀 공유 데이터 직접 읽기</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s5 | Clip 02 sec-break 표지 ════ -->
+<div class="slide" id="s5">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <!-- Firecrawl 아이콘: 웹/크롤링 모티프 -->
+      <svg width="60" height="60" viewBox="0 0 60 60">
+        <rect x="2" y="2" width="56" height="56" rx="4" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <!-- 지구/웹 원형 -->
+        <circle cx="30" cy="30" r="16" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <!-- 가로선 -->
+        <line x1="14" y1="30" x2="46" y2="30" stroke="#BBBBBB" stroke-width="0.9"/>
+        <!-- 세로 타원 -->
+        <ellipse cx="30" cy="30" rx="7" ry="16" fill="none" stroke="#BBBBBB" stroke-width="0.9"/>
+        <!-- 크롤 화살표 -->
+        <path d="M36 22 L42 22 L42 28" stroke="#E8603C" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="42" y1="22" x2="34" y2="30" stroke="#E8603C" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="sec-label">CLIP 02 · Firecrawl MCP</div>
+    <div class="sec-title">Firecrawl —<br>웹 크롤링 자동화</div>
+    <div class="sec-sub">API 키 발급 · MCP 연결 · 실습</div>
+  </div>
+</div>
+
+
+<!-- ════ s6 | Firecrawl 소개 ════ -->
+<div class="slide" id="s6">
+  <div class="tb">
+    <span class="tb-cap">Firecrawl MCP</span>
+    <span class="tb-num">6</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">Firecrawl</div>
+        <div class="big-title">웹 페이지를<br>마크다운으로</div>
+        <div class="body-text" style="margin-top:16px;">동적 렌더링 포함 · 불필요 태그 제거<br>표·리스트 구조 보존</div>
+      </div>
+      <div style="font-size:13px;color:#888;line-height:1.9;padding:16px 20px;border:1px solid var(--border);background:rgba(0,0,0,0.015);">
+        <span style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;display:block;margin-bottom:8px;">무료 티어</span>
+        월 500페이지 / 분당 스크래핑 10회
+      </div>
+    </div>
+    <!-- Right: 기능 표 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;">
+      <div style="width:100%;border:1px solid var(--border);">
+
+        <!-- 헤더 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.02);">
+          <div style="padding:12px 18px;border-right:1px solid var(--border);font-size:10px;color:#AAAAAA;letter-spacing:0.1em;">함수</div>
+          <div style="padding:12px 18px;border-right:1px solid var(--border);font-size:10px;color:#AAAAAA;letter-spacing:0.1em;">범위</div>
+          <div style="padding:12px 18px;font-size:10px;color:#AAAAAA;letter-spacing:0.1em;">활용 사례</div>
+        </div>
+
+        <!-- firecrawl_scrape -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:16px 18px;border-right:1px solid var(--border);">
+            <div style="font-size:13px;color:#E8603C;font-family:monospace;">firecrawl_scrape</div>
+          </div>
+          <div style="padding:16px 18px;border-right:1px solid var(--border);">
+            <div style="font-size:13px;color:#888;">단일 페이지</div>
+          </div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:13px;color:#888;">제품 페이지 수집</div>
+          </div>
+        </div>
+
+        <!-- firecrawl_crawl -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:16px 18px;border-right:1px solid var(--border);">
+            <div style="font-size:13px;color:#E8603C;font-family:monospace;">firecrawl_crawl</div>
+          </div>
+          <div style="padding:16px 18px;border-right:1px solid var(--border);">
+            <div style="font-size:13px;color:#888;">사이트 전체</div>
+          </div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:13px;color:#888;">블로그 전체 수집</div>
+          </div>
+        </div>
+
+        <!-- firecrawl_search -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:16px 18px;border-right:1px solid var(--border);">
+            <div style="font-size:13px;color:#E8603C;font-family:monospace;">firecrawl_search</div>
+          </div>
+          <div style="padding:16px 18px;border-right:1px solid var(--border);">
+            <div style="font-size:13px;color:#888;">웹 검색+수집</div>
+          </div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:13px;color:#888;">뉴스·논문 검색</div>
+          </div>
+        </div>
+
+        <!-- firecrawl_map -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;">
+          <div style="padding:16px 18px;border-right:1px solid var(--border);">
+            <div style="font-size:13px;color:#E8603C;font-family:monospace;">firecrawl_map</div>
+          </div>
+          <div style="padding:16px 18px;border-right:1px solid var(--border);">
+            <div style="font-size:13px;color:#888;">사이트 맵 파악</div>
+          </div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:13px;color:#888;">구조 이해</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s7 | Firecrawl 설치 & 연결 ════ -->
+<div class="slide" id="s7">
+  <div class="tb">
+    <span class="tb-cap">Firecrawl MCP</span>
+    <span class="tb-num">7</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">설치</div>
+        <div class="big-title">API 키 발급<br>&amp; MCP 연결</div>
+      </div>
+    </div>
+    <!-- Right: 3단계 절차 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;gap:20px;">
+
+      <!-- Step 1 -->
+      <div style="display:flex;gap:20px;align-items:flex-start;">
+        <div style="flex-shrink:0;width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;color:#AAAAAA;letter-spacing:0.08em;">01</div>
+        <div style="flex:1;padding-top:4px;">
+          <div style="font-size:13px;font-weight:500;color:#1C1A18;margin-bottom:6px;">firecrawl.dev 가입</div>
+          <div style="font-size:13px;color:#888;line-height:1.7;">무료 계정 가입 → API Keys 탭에서 키 복사</div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div style="display:flex;gap:20px;align-items:flex-start;">
+        <div style="flex-shrink:0;width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;color:#AAAAAA;letter-spacing:0.08em;">02</div>
+        <div style="flex:1;padding-top:4px;">
+          <div style="font-size:13px;font-weight:500;color:#1C1A18;margin-bottom:10px;">MCP 연결 &amp; 환경변수 설정</div>
+          <div class="code-wrap">
+            <span class="code-hi">claude mcp add</span> <span class="code-accent">--transport stdio</span> firecrawl \<br>
+            &nbsp;&nbsp;<span class="code-comment">-- npx -y firecrawl-mcp</span><br>
+            <br>
+            <span class="code-comment"># API 키는 환경변수로</span><br>
+            <span class="code-hi">export</span> <span class="code-accent">FIRECRAWL_API_KEY</span>=<span style="color:rgba(255,255,255,0.65);">"fc-..."</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 강조 박스 -->
+      <div style="display:flex;gap:20px;align-items:flex-start;">
+        <div style="flex-shrink:0;width:28px;height:28px;border:1px solid rgba(232,96,60,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--p01);letter-spacing:0.08em;">03</div>
+        <div style="flex:1;padding-top:4px;">
+          <div style="background:rgba(232,96,60,0.05);border:1px solid rgba(232,96,60,0.18);padding:16px 20px;">
+            <div style="font-size:12px;color:var(--p01);font-weight:500;letter-spacing:0.04em;">보안 주의</div>
+            <div style="font-size:13px;color:#888;margin-top:6px;line-height:1.7;">API 키를 채팅창에 직접 입력 금지<br>환경변수만 사용</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s8 | Clip 03 sec-break 표지 ════ -->
+<div class="slide" id="s8">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <!-- 실전 활용 아이콘: 파이프라인/흐름 모티프 -->
+      <svg width="60" height="60" viewBox="0 0 60 60">
+        <rect x="2" y="2" width="56" height="56" rx="4" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <!-- 노드 3개 -->
+        <circle cx="14" cy="30" r="6" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <circle cx="30" cy="30" r="6" fill="none" stroke="#888" stroke-width="1.2"/>
+        <circle cx="46" cy="30" r="6" fill="none" stroke="#E8603C" stroke-width="1.2"/>
+        <!-- 연결선 -->
+        <line x1="20" y1="30" x2="24" y2="30" stroke="#BBBBBB" stroke-width="1.2"/>
+        <line x1="36" y1="30" x2="40" y2="30" stroke="#E8603C" stroke-width="1.2"/>
+        <!-- 화살표 -->
+        <path d="M37 27 L40 30 L37 33" stroke="#E8603C" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- 레이블 점선 -->
+        <line x1="14" y1="38" x2="14" y2="44" stroke="#BBBBBB" stroke-width="0.8" stroke-dasharray="2,2"/>
+        <line x1="30" y1="38" x2="30" y2="44" stroke="#BBBBBB" stroke-width="0.8" stroke-dasharray="2,2"/>
+        <line x1="46" y1="38" x2="46" y2="44" stroke="#E8603C" stroke-width="0.8" stroke-dasharray="2,2"/>
+      </svg>
+    </div>
+    <div class="sec-label">CLIP 03 · MCP 실전 활용</div>
+    <div class="sec-title">수집 →<br>분석 자동화</div>
+    <div class="sec-sub">경쟁사 분석 · 파일 일괄처리 · 파이프라인</div>
+  </div>
+</div>
+
+
+<!-- ════ s9 | MCP 실전 시나리오 ════ -->
+<div class="slide" id="s9">
+  <div class="tb">
+    <span class="tb-cap">MCP 실전 활용</span>
+    <span class="tb-num">9</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">실전 활용</div>
+        <div class="big-title">세 가지<br>시나리오</div>
+      </div>
+      <div style="font-size:13px;color:#888;line-height:1.8;padding:16px 20px;border:1px solid var(--border);background:rgba(0,0,0,0.015);">
+        이 프롬프트를 Skill로 저장하면<br>명령어 하나로 재실행
+      </div>
+    </div>
+    <!-- Right: 3개 시나리오 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 52px;gap:16px;">
+
+      <!-- 시나리오 01 -->
+      <div style="border:1px solid var(--border);padding:20px 24px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.14em;background:rgba(0,0,0,0.04);padding:4px 8px;">시나리오 01</div>
+          <div style="font-size:14px;font-weight:500;color:#1C1A18;">경쟁사 분석 리포트</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:12px;color:#888;">경쟁사 3곳 URL</span>
+          <span style="color:var(--p01);font-size:12px;">→</span>
+          <span style="font-size:12px;color:#888;">수집</span>
+          <span style="color:var(--p01);font-size:12px;">→</span>
+          <span style="font-size:12px;color:#888;">비교</span>
+          <span style="color:var(--p01);font-size:12px;">→</span>
+          <span style="font-size:12px;color:#1C1A18;font-family:monospace;">reports/competitor_weekly.md 자동 생성</span>
+        </div>
+      </div>
+
+      <!-- 시나리오 02 -->
+      <div style="border:1px solid var(--border);padding:20px 24px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.14em;background:rgba(0,0,0,0.04);padding:4px 8px;">시나리오 02</div>
+          <div style="font-size:14px;font-weight:500;color:#1C1A18;">파일 일괄처리</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:12px;color:#1C1A18;font-family:monospace;">data/raw/ CSV 여러 개</span>
+          <span style="color:var(--p01);font-size:12px;">→</span>
+          <span style="font-size:12px;color:#888;">컬럼 통일·날짜 변환·타입 변환</span>
+          <span style="color:var(--p01);font-size:12px;">→</span>
+          <span style="font-size:12px;color:#1C1A18;font-family:monospace;">processed/ 저장</span>
+        </div>
+      </div>
+
+      <!-- 시나리오 03 -->
+      <div style="border:1px solid rgba(232,96,60,0.15);padding:20px 24px;background:rgba(232,96,60,0.03);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <div style="font-size:10px;color:var(--p01);letter-spacing:0.14em;background:rgba(232,96,60,0.08);padding:4px 8px;">시나리오 03</div>
+          <div style="font-size:14px;font-weight:500;color:#1C1A18;">파이프라인</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:12px;color:#888;">수집</span>
+          <span style="color:var(--p01);font-size:12px;">→</span>
+          <span style="font-size:12px;color:#888;">전처리</span>
+          <span style="color:var(--p01);font-size:12px;">→</span>
+          <span style="font-size:12px;color:#888;">시각화</span>
+          <span style="color:var(--p01);font-size:12px;">→</span>
+          <span style="font-size:12px;color:#888;">리포트 한 번에</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s10 | Clip 04 sec-break 표지 ════ -->
+<div class="slide" id="s10">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <!-- Skills 아이콘: 슬래시 커맨드 모티프 -->
+      <svg width="60" height="60" viewBox="0 0 60 60">
+        <rect x="2" y="2" width="56" height="56" rx="4" fill="none" stroke="#2C2720" stroke-width="1.2"/>
+        <!-- 터미널 커서 -->
+        <text x="12" y="36" font-family="monospace" font-size="22" fill="#2C2720" font-weight="400">/</text>
+        <!-- 텍스트 줄들 -->
+        <line x1="28" y1="22" x2="50" y2="22" stroke="#BBBBBB" stroke-width="1.2"/>
+        <line x1="28" y1="30" x2="46" y2="30" stroke="#BBBBBB" stroke-width="1.2"/>
+        <line x1="28" y1="38" x2="50" y2="38" stroke="#E8603C" stroke-width="1.2" opacity="0.7"/>
+        <!-- 커서 깜빡임 표현 -->
+        <rect x="28" y="44" width="8" height="2" fill="#E8603C" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="sec-label">CLIP 04 · Skills</div>
+    <div class="sec-title">Skills —<br>반복 워크플로우 저장</div>
+    <div class="sec-sub">구조 이해 · 커뮤니티 설치 · 직접 만들기</div>
+  </div>
+</div>
+
+
+<!-- ════ s11 | Skills 구조 ════ -->
+<div class="slide" id="s11">
+  <div class="tb">
+    <span class="tb-cap">Skills 탐색 &amp; 설치</span>
+    <span class="tb-num">11</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">Skills란</div>
+        <div class="big-title">/명령어 하나로<br>워크플로우 실행</div>
+        <div class="body-text" style="margin-top:16px;">SKILL.md 파일 하나 = 하나의 Skill</div>
+      </div>
+    </div>
+    <!-- Right -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;gap:24px;">
+
+      <!-- 비교 표 -->
+      <div style="border:1px solid var(--border);">
+
+        <!-- 헤더 -->
+        <div style="display:grid;grid-template-columns:120px 1fr 1fr;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.02);">
+          <div style="padding:12px 18px;border-right:1px solid var(--border);"></div>
+          <div style="padding:12px 18px;border-right:1px solid var(--border);font-size:12px;font-weight:500;color:#1C1A18;">CLAUDE.md</div>
+          <div style="padding:12px 18px;font-size:12px;font-weight:500;color:var(--p01);">Skills</div>
+        </div>
+
+        <!-- 역할 -->
+        <div style="display:grid;grid-template-columns:120px 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:11px;color:#AAAAAA;letter-spacing:0.08em;display:flex;align-items:center;">역할</div>
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#888;">기본 규칙</div>
+          <div style="padding:14px 18px;font-size:13px;color:#888;">특정 워크플로우</div>
+        </div>
+
+        <!-- 적용 -->
+        <div style="display:grid;grid-template-columns:120px 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:11px;color:#AAAAAA;letter-spacing:0.08em;display:flex;align-items:center;">적용</div>
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#888;">항상 자동</div>
+          <div style="padding:14px 18px;font-size:13px;color:#888;">명령어로 호출</div>
+        </div>
+
+        <!-- 내용 -->
+        <div style="display:grid;grid-template-columns:120px 1fr 1fr;">
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:11px;color:#AAAAAA;letter-spacing:0.08em;display:flex;align-items:center;">내용</div>
+          <div style="padding:14px 18px;border-right:1px solid var(--border);font-size:13px;color:#888;">규칙·금지사항</div>
+          <div style="padding:14px 18px;font-size:13px;color:#888;">단계별 작업 지시</div>
+        </div>
+
+      </div>
+
+      <!-- 폴더 위치 -->
+      <div>
+        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">폴더 위치</div>
+        <div class="code-wrap">
+          <span class="code-hi">~/.claude/skills/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">전역</span><br>
+          <span class="code-hi">my-project/.claude/skills/</span>&nbsp;&nbsp;<span class="code-comment">프로젝트 전용</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s12 | 커뮤니티 설치 & 직접 만들기 ════ -->
+<div class="slide" id="s12">
+  <div class="tb">
+    <span class="tb-cap">Skills 탐색 &amp; 설치</span>
+    <span class="tb-num">12</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">설치 &amp; 제작</div>
+        <div class="big-title">커뮤니티 Skills<br>&amp; 직접 만들기</div>
+      </div>
+      <div style="font-size:13px;color:#888;line-height:1.8;padding:16px 20px;border:1px solid var(--border);background:rgba(0,0,0,0.015);">
+        SKILL.md = 반복 작업을<br>/명령어로 압축한 것
+      </div>
+    </div>
+    <!-- Right -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;gap:24px;">
+
+      <!-- 커뮤니티 설치 -->
+      <div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.12em;margin-bottom:10px;">커뮤니티 설치</div>
+        <div class="code-wrap">
+          <span class="code-hi">/plugin marketplace add</span> \<br>
+          &nbsp;&nbsp;<span style="color:rgba(255,255,255,0.55);">https://github.com/fivetaku/gptaku_plugins.git</span><br>
+          <span class="code-hi">/plugin install</span> <span class="code-accent">deep-research</span><br>
+          <span class="code-accent">/deep-research</span> <span style="color:rgba(255,255,255,0.65);">2024년 한국 이커머스 트렌드</span>
+        </div>
+      </div>
+
+      <!-- 직접 만들기 -->
+      <div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.12em;margin-bottom:10px;">직접 만들기</div>
+        <div style="border:1px solid var(--border);padding:20px 24px;">
+          <div style="font-size:13px;color:#888;line-height:1.85;font-family:monospace;">
+            현재 프로젝트 .claude/skills/data-analyst/에<br>
+            data-analyst SKILL.md 만들어줘.<br>
+            <span style="color:#1C1A18;">/data-analyst</span> 호출 시:<br>
+            <span style="color:var(--p01);">EDA → 차트 3개 → 리포트 생성</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s13 | 챕터 요약 ════ -->
+<div class="slide" id="s13">
+  <div class="tb">
+    <span class="tb-cap">챕터 요약</span>
+    <span class="tb-num">13</span>
+  </div>
+  <div class="body" style="align-items:center;justify-content:center;padding:36px 60px;background:var(--bg);">
+    <div style="width:100%;border:1px solid var(--border);">
+
+      <!-- 헤더 -->
+      <div style="display:grid;grid-template-columns:100px 1fr;border-bottom:1px solid var(--border);">
+        <div style="padding:13px 18px;border-right:1px solid var(--border);font-size:10px;color:#BBBBBB;letter-spacing:0.14em;display:flex;align-items:center;">P02 · CH02</div>
+        <div style="padding:13px 22px;font-size:15px;font-weight:600;color:var(--white);">이 챕터에서 배운 것</div>
+      </div>
+
+      <!-- 클립 목록 -->
+      <div style="display:grid;grid-template-columns:100px 1fr 1fr 1fr 1fr;">
+
+        <div style="border-right:1px solid var(--border);padding:20px 18px;display:flex;align-items:flex-start;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.1em;">CLIP</div>
+        </div>
+
+        <!-- CLIP 01 -->
+        <div style="border-right:1px solid var(--border);padding:22px 22px;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:10px;">01</div>
+          <div style="font-size:13px;font-weight:500;color:#1C1A18;margin-bottom:14px;line-height:1.5;">MCP란?</div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">MCP 개념·표준 프로토콜</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">활용 가능한 MCP 목록</span></div>
+          </div>
+        </div>
+
+        <!-- CLIP 02 -->
+        <div style="border-right:1px solid var(--border);padding:22px 22px;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:10px;">02</div>
+          <div style="font-size:13px;font-weight:500;color:#1C1A18;margin-bottom:14px;line-height:1.5;">Firecrawl MCP</div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">웹 크롤링 자동화</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">API 키·MCP 연결</span></div>
+          </div>
+        </div>
+
+        <!-- CLIP 03 -->
+        <div style="border-right:1px solid var(--border);padding:22px 22px;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:10px;">03</div>
+          <div style="font-size:13px;font-weight:500;color:#1C1A18;margin-bottom:14px;line-height:1.5;">MCP 실전</div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">경쟁사 분석 자동화</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">수집→분석 파이프라인</span></div>
+          </div>
+        </div>
+
+        <!-- CLIP 04 -->
+        <div style="padding:22px 22px;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:10px;">04</div>
+          <div style="font-size:13px;font-weight:500;color:#1C1A18;margin-bottom:14px;line-height:1.5;">Skills</div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">반복 워크플로우 저장</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">커뮤니티 설치·직접 제작</span></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<div class="nav">
+  <span class="nav-ctr" id="nav-ctr">1 / 13</span>
+  <button class="nav-btn" onclick="prev()">←</button>
+  <button class="nav-btn" onclick="next()">→</button>
+</div>
+<div class="progress" id="progress"></div>
+<div class="clip-dots" id="clip-dots">
+  <div class="clip-dot active"></div>
+  <div class="clip-dot"></div>
+  <div class="clip-dot"></div>
+  <div class="clip-dot"></div>
+</div>
+
+<script>
+  const TOTAL = 13;
+  const ORDER = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+  const CLIP_MAP = {1:0,2:0,3:0,4:0, 5:1,6:1,7:1, 8:2,9:2, 10:3,11:3,12:3, 13:3};
+  const CLIP_LABELS = ['MCP란?','Firecrawl MCP','MCP 실전','Skills'];
+  let cur = 1;
+
+  function scale() {
+    const s = Math.min(window.innerWidth / 1280, window.innerHeight / 800);
+    const d = document.querySelector('.deck');
+    d.style.transform = `scale(${s})`;
+    d.style.top = `${(window.innerHeight - 800*s)/2}px`;
+    d.style.left = `${(window.innerWidth - 1280*s)/2}px`;
+  }
+  scale(); window.addEventListener('resize', scale);
+
+  function show(n) {
+    if (n < 1 || n > TOTAL) return;
+    const slideId = ORDER[n-1];
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById('s'+slideId);
+    if (el) {
+      el.classList.add('active');
+      const numEl = el.querySelector('.tb-num');
+      if (numEl) numEl.textContent = n;
+    }
+    document.getElementById('nav-ctr').textContent = n + ' / ' + TOTAL;
+    document.getElementById('progress').style.width = (n/TOTAL*100)+'%';
+    const clipIdx = CLIP_MAP[slideId] ?? 0;
+    document.querySelectorAll('.clip-dot').forEach((d,i) => d.classList.toggle('active', i===clipIdx));
+    cur = n;
+  }
+  function next() { show(cur+1); }
+  function prev() { show(cur-1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); next(); }
+    if (e.key==='ArrowLeft') { e.preventDefault(); prev(); }
+  });
+  let tx = 0;
+  document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    if (Math.abs(tx - e.changedTouches[0].clientX) > 40) tx > e.changedTouches[0].clientX ? next() : prev();
+  });
+  show(1);
+</script>
+</body>
+</html>
