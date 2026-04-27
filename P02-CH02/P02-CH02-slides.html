@@ -209,6 +209,45 @@
 </div>
 
 
+<!-- ════ s14 | MCP 비유 — USB-C / 만능 리모컨 ════ -->
+<div class="slide" id="s14">
+  <div class="tb">
+    <span class="tb-cap">MCP란 무엇인가</span>
+    <span class="tb-num">4</span>
+  </div>
+  <div class="body">
+    <!-- Left: 비유 텍스트 -->
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">직관적 비유</div>
+        <div class="big-title">AI의<br>USB-C</div>
+        <div class="body-text" style="margin-top:16px;">연결 방식을 통일해<br>한 번 꽂으면<br>어디든 쓸 수 있게</div>
+      </div>
+      <!-- 두 가지 비유 -->
+      <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px;">
+        <div style="border-left:3px solid var(--p01);padding:10px 16px;">
+          <div style="font-size:11px;color:var(--p01);letter-spacing:0.1em;font-weight:600;margin-bottom:4px;">USB-C 비유</div>
+          <div style="font-size:13px;color:#444;line-height:1.65;">기기마다 다른 케이블이 필요했듯, AI도 도구마다 따로 연결해야 했다. MCP = 하나의 단자로 모두 연결</div>
+        </div>
+        <div style="border-left:3px solid #888;padding:10px 16px;">
+          <div style="font-size:11px;color:#888;letter-spacing:0.1em;font-weight:600;margin-bottom:4px;">만능 리모컨 비유</div>
+          <div style="font-size:13px;color:#444;line-height:1.65;">가전제품마다 리모컨이 달랐듯, 각 시스템에 별도 통합이 필요했다. MCP = 하나의 리모컨으로 전부 제어</div>
+        </div>
+      </div>
+    </div>
+    <!-- Right: 아키텍처 이미지 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:36px 48px;gap:16px;">
+      <img src="mcp-layer.webp" alt="MCP architecture diagram"
+           style="width:100%;max-width:560px;border:1px solid var(--border);display:block;">
+      <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.08em;text-align:right;width:100%;max-width:560px;">
+        출처: <a href="https://mcpcn.com/en/blog/understanding-mcp-protocol/" target="_blank"
+                 style="color:#AAAAAA;text-decoration:underline;">mcpcn.com — Understanding MCP Protocol</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- ════ s4 | 활용 가능한 MCP + 추가 명령어 ════ -->
 <div class="slide" id="s4">
   <div class="tb">
@@ -772,9 +811,9 @@
 </div>
 
 <script>
-  const TOTAL = 13;
-  const ORDER = [1,2,3,4,5,6,7,8,9,10,11,12,13];
-  const CLIP_MAP = {1:0,2:0,3:0,4:0, 5:1,6:1,7:1, 8:2,9:2, 10:3,11:3,12:3, 13:3};
+  const TOTAL = 14;
+  const ORDER = [1,2,3,14,4,5,6,7,8,9,10,11,12,13];
+  const CLIP_MAP = {1:0,2:0,3:0,14:0,4:0, 5:1,6:1,7:1, 8:2,9:2, 10:3,11:3,12:3, 13:3};
   const CLIP_LABELS = ['MCP란?','Firecrawl MCP','MCP 실전','Skills'];
   let cur = 1;
 
