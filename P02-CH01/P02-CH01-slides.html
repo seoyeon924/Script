@@ -689,53 +689,45 @@
       </div>
     </div>
     <!-- Right: Before/After -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 48px;gap:14px;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 48px;gap:16px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
         <!-- Before -->
         <div>
-          <div style="font-size:17px;font-weight:700;letter-spacing:0.08em;color:#777;text-align:center;margin-bottom:8px;">Before</div>
-          <div style="background:#1A1A1A;border-radius:5px;overflow:hidden;border:1px solid #2A2020;opacity:0.72;">
-            <div style="background:#242020;padding:7px 12px;font-size:16px;color:#5A5A5A;text-align:center;letter-spacing:0.1em;">session</div>
-            <div style="padding:12px 14px;font-size:17px;font-family:monospace;color:#404040;line-height:1.8;">
+          <div style="font-size:16px;font-weight:600;letter-spacing:0.1em;color:#AAAAAA;margin-bottom:8px;">Before</div>
+          <div class="code-wrap" style="padding:0;overflow:hidden;">
+            <div style="background:#0E1016;padding:7px 14px;font-size:15px;color:rgba(255,255,255,0.3);text-align:center;letter-spacing:0.1em;border-bottom:1px solid #1E2028;">session</div>
+            <div style="padding:14px 18px;line-height:1.85;color:rgba(255,255,255,0.28);">
               <div>$ API 엔드포인트 만들어줘</div>
               <div>$ 인증 미들웨어 추가해줘</div>
               <div>$ 에러 핸들링 수정해줘</div>
               <div>$ 테스트 코드 작성해줘</div>
-              <div style="color:#323232;">... 대화 100+ 턴</div>
+              <div style="color:rgba(255,255,255,0.16);">... 대화 100+ 턴</div>
             </div>
-            <div style="padding:6px 14px 12px;display:flex;align-items:center;gap:8px;">
-              <div style="width:7px;height:7px;border-radius:50%;background:#C0483C;"></div>
-              <div style="font-size:17px;font-family:monospace;color:#C0483C;font-weight:600;">컨텍스트 95%</div>
+            <div style="padding:6px 18px 12px;display:flex;align-items:center;gap:8px;border-top:1px solid #1E2028;">
+              <div style="width:6px;height:6px;border-radius:50%;background:#C0483C;"></div>
+              <div style="font-size:16px;color:#C0483C;font-weight:600;">컨텍스트 95%</div>
             </div>
           </div>
         </div>
         <!-- After -->
         <div>
-          <div style="font-size:17px;font-weight:700;letter-spacing:0.08em;color:#90C090;text-align:center;margin-bottom:8px;">After</div>
-          <div style="background:#1E1E1E;border-radius:5px;overflow:hidden;border:1px solid rgba(144,192,144,0.25);">
-            <div style="background:#252D25;padding:7px 12px;font-size:16px;color:#90C090;text-align:center;letter-spacing:0.1em;">session</div>
-            <div style="padding:12px 14px;font-size:17px;font-family:monospace;line-height:1.8;">
-              <div style="color:#E8E6E2;font-weight:600;">[Summary]</div>
-              <div style="color:#90C090;">- Express API 서버 구축</div>
-              <div style="color:#90C090;">- JWT 인증 구현 완료</div>
-              <div style="color:#90C090;">- 에러 핸들링 적용</div>
-              <div style="color:#E8E6E2;margin-top:4px;font-weight:600;">[Active Context]</div>
-              <div style="color:#90C090;">- 테스트 작업 중</div>
+          <div style="font-size:16px;font-weight:600;letter-spacing:0.1em;color:#1C1A18;margin-bottom:8px;">After</div>
+          <div class="code-wrap" style="padding:0;overflow:hidden;border-color:#1E2A1E;">
+            <div style="background:#0A100A;padding:7px 14px;font-size:15px;color:rgba(144,192,144,0.7);text-align:center;letter-spacing:0.1em;border-bottom:1px solid #1E2A1E;">session</div>
+            <div style="padding:14px 18px;line-height:1.85;">
+              <div class="code-hi">[Summary]</div>
+              <div style="color:rgba(144,192,144,0.85);">- Express API 서버 구축</div>
+              <div style="color:rgba(144,192,144,0.85);">- JWT 인증 구현 완료</div>
+              <div style="color:rgba(144,192,144,0.85);">- 에러 핸들링 적용</div>
+              <div class="code-hi" style="margin-top:4px;">[Active Context]</div>
+              <div style="color:rgba(144,192,144,0.85);">- 테스트 작업 중</div>
             </div>
-            <div style="padding:6px 14px 12px;display:flex;align-items:center;gap:8px;">
-              <div style="width:7px;height:7px;border-radius:50%;background:#90C090;"></div>
-              <div style="font-size:17px;font-family:monospace;color:#90C090;font-weight:600;">컨텍스트 30%</div>
+            <div style="padding:6px 18px 12px;display:flex;align-items:center;gap:8px;border-top:1px solid #1E2A1E;">
+              <div style="width:6px;height:6px;border-radius:50%;background:rgba(144,192,144,0.85);"></div>
+              <div style="font-size:16px;color:rgba(144,192,144,0.85);font-weight:600;">컨텍스트 30%</div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- /compact command -->
-      <div style="text-align:center;">
-        <div style="display:inline-block;background:#1E1E1E;border-radius:4px;padding:10px 32px;font-family:monospace;font-size:16px;font-weight:600;color:#E8603C;">$ /compact</div>
-      </div>
-      <!-- tip -->
-      <div style="background:rgba(232,96,60,0.06);border:1px solid rgba(232,96,60,0.18);padding:11px 16px;font-size:16px;color:#333;">
-        💡 /clear 대신 /compact — 맥락 유지
       </div>
     </div>
   </div>
