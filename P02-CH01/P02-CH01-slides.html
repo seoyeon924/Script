@@ -340,17 +340,21 @@
         <div style="font-size:17px;color:#555;line-height:1.8;">→ 능동적 질문 = 이후 정확도 향상</div>
       </div>
     </div>
-    <!-- Right: 두 프롬프트 박스 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 52px;gap:16px;">
+    <!-- Right: CLAUDE.md 생성 실습 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 52px;gap:20px;">
 
-      <div style="border:1px solid var(--border);border-left:3px solid #BBBBBB;padding:22px 28px;background:#fff;">
-        <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">프롬프트 1 — 공식 구조 생성</div>
-        <div style="font-size:17px;color:#333;line-height:1.85;">데이터 시각화 프로젝트를 Claude Code 공식 구조로 세팅해줘.<br><br>루트에 CLAUDE.md 만들고,<br>.claude/ 안에 rules/, hooks/ 폴더도 만들어줘.<br>data/raw, data/processed, scripts, charts, reports 폴더도 포함.<br><br>CLAUDE.md에는 이 프로젝트 규칙을 써줘:<br>- data/raw/ 파일은 절대 수정 금지<br>- 차트 레이블은 한국어<br>- @.claude/rules/ 형식으로 규칙 파일 import 예시 포함</div>
+      <div style="border:1px solid var(--border);border-left:3px solid var(--p01);padding:24px 28px;background:#fff;">
+        <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:14px;">프롬프트</div>
+        <div style="font-size:17px;color:#333;line-height:1.9;">이 프로젝트용 CLAUDE.md 만들어줘.<br><br>규칙 두 가지만 넣어:<br>- data/raw/ 파일은 수정 금지<br>- 차트 레이블은 한국어로</div>
       </div>
 
-      <div style="border:1px solid rgba(232,96,60,0.2);border-left:3px solid var(--p01);padding:22px 28px;background:#FDF8F5;">
-        <div style="font-size:16px;color:#E8603C;letter-spacing:0.1em;margin-bottom:10px;">프롬프트 2 — 구조 파악 후 시작</div>
-        <div style="font-size:17px;color:#333;line-height:1.85;">이 프로젝트 폴더 전체를 파악해줘.<br>CLAUDE.md 읽고 규칙 확인한 다음,<br>분석 시작 전에 모르는 게 있으면 먼저 물어봐.</div>
+      <div style="border:1px solid var(--border);padding:20px 28px;background:#F5F4F0;">
+        <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">결과</div>
+        <div class="code-wrap" style="font-size:16px;line-height:1.85;margin-top:0;">
+          <div class="code-comment"># 프로젝트 규칙</div>
+          <div class="code-hi">- data/raw/ 파일 수정 금지</div>
+          <div class="code-hi">- 차트 레이블은 한국어</div>
+        </div>
       </div>
 
     </div>
@@ -856,7 +860,7 @@
         <div class="body-text" style="margin-top:16px;">세션 시작마다 자동으로 읽힘</div>
       </div>
       <div style="padding:16px 20px;background:#F5F4F0;border:1px solid var(--border);">
-        <div style="font-size:17px;color:#555;line-height:1.8;">'이건 마케팅 분석 프로젝트야...'<br>매번 반복 불필요</div>
+        <div style="font-size:17px;color:#555;line-height:1.8;">"이건 마케팅 분석 프로젝트야..."<br>매번 반복해서 얘기할 필요 없어짐</div>
       </div>
     </div>
     <!-- Right: 위치별 범위 표 -->
@@ -903,6 +907,7 @@
           </div>
           <div style="padding:18px 20px;">
             <div style="font-size:17px;color:#555;">.gitignore 처리</div>
+            <div style="font-size:16px;color:#AAAAAA;margin-top:4px;">git에 올라가지 않음 — 나만 보이는 설정</div>
           </div>
         </div>
 
