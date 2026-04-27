@@ -853,10 +853,23 @@
       <div>
         <div class="eyebrow">CLAUDE.md</div>
         <div class="big-title">한 번 쓰면<br>매번 자동 적용</div>
-        <div class="body-text" style="margin-top:16px;">세션 시작마다 자동으로 읽힘</div>
       </div>
-      <div style="padding:16px 20px;background:#F5F4F0;border:1px solid var(--border);">
-        <div style="font-size:17px;color:#555;line-height:1.8;">"이건 마케팅 분석 프로젝트야..."<br>매번 반복해서 얘기할 필요 없어짐</div>
+      <div style="margin-top:18px;display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#AAAAAA;flex-shrink:0;margin-top:8px;"></div>
+          <div style="font-size:16px;color:#555;line-height:1.6;">매 세션 시작 시 자동으로 읽는 지침 파일</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#AAAAAA;flex-shrink:0;margin-top:8px;"></div>
+          <div style="font-size:16px;color:#555;line-height:1.6;">코딩 표준, 아키텍처, 빌드 명령, 워크플로우를 영속적으로 전달</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:var(--p01);flex-shrink:0;margin-top:8px;"></div>
+          <div style="font-size:16px;color:#555;line-height:1.6;">context window에 로드되므로 길수록 성능 저하<br>→ <strong>200줄 이하 권장</strong></div>
+        </div>
+      </div>
+      <div style="padding:14px 18px;background:#F5F4F0;border:1px solid var(--border);margin-top:4px;">
+        <div style="font-size:16px;color:#555;line-height:1.8;">"이건 마케팅 분석 프로젝트야..."<br>매번 반복해서 얘기할 필요 없어짐</div>
       </div>
     </div>
     <!-- Right: 위치별 범위 표 -->
@@ -920,34 +933,34 @@
     <span class="tb-num">12</span>
   </div>
   <div class="body">
-    <div class="l-panel">
+    <div class="l-panel" style="justify-content:flex-start;gap:0;padding-top:44px;">
       <div>
-        <div class="eyebrow">예시</div>
+        <div class="eyebrow">공식 구조</div>
         <div class="big-title">프로젝트<br>기본 폴더 구조</div>
       </div>
+      <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;">
+        <div style="border:1px solid var(--border);padding:14px 16px;background:#fff;">
+          <div style="font-family:monospace;font-size:16px;color:var(--p01);font-weight:600;margin-bottom:4px;">CLAUDE.local.md</div>
+          <div style="font-size:16px;color:#555;line-height:1.6;">팀과 공유하지 않는<br>나만의 개인 지침<br><span style="color:#AAAAAA;">자동으로 .gitignore 처리</span></div>
+        </div>
+      </div>
     </div>
-    <!-- Right: 코드 예시 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 60px;">
-      <div class="code-wrap">
-        <div class="code-accent"># 마케팅 성과 분석 프로젝트</div>
-        <div style="margin-top:14px;"></div>
-        <div class="code-hi">## 데이터 처리 원칙</div>
-        <div>- <span class="code-hi">data/raw/</span> 수정 절대 금지</div>
-        <div>- 전처리 결과 → <span class="code-hi">data/processed/</span></div>
-        <div style="margin-top:14px;"></div>
-        <div class="code-hi">## 시각화 규칙</div>
-        <div>- 시간 흐름 → 라인 차트</div>
-        <div>- 카테고리 비교 → 막대 차트</div>
-        <div>- 강조색: <span class="code-accent">#1E3A5F</span></div>
-        <div style="margin-top:14px;"></div>
-        <div class="code-hi">## 차트 요구사항</div>
-        <div>- 제목: 핵심 인사이트 한 줄</div>
-        <div>- 레이블: 한국어</div>
-        <div style="margin-top:14px;"></div>
-        <div class="code-comment">## 대시보드 레이아웃 규칙</div>
-        <div class="code-comment">## 리포트 출력 형식</div>
-        <div class="code-comment">## 성능 최적화 지침</div>
-        <div style="margin-top:6px;" class="code-comment">...</div>
+    <!-- Right: 폴더 구조 트리 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 48px;gap:16px;">
+      <div class="code-wrap" style="font-size:16px;line-height:1.85;">
+        <div class="code-hi">your-project/</div>
+        <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 팀 공유 · git 커밋</span></div>
+        <div>├── <span class="code-accent">CLAUDE.local.md</span>        <span class="code-comment"># 개인 지침 · .gitignore</span></div>
+        <div>└── .claude/</div>
+        <div>    ├── settings.json       <span class="code-comment"># 팀 설정 (git 커밋)</span></div>
+        <div>    ├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
+        <div>    ├── rules/              <span class="code-comment"># 경로별 규칙 파일들</span></div>
+        <div>    └── hooks/              <span class="code-comment"># 훅 스크립트</span></div>
+        <div style="margin-top:10px;" class="code-comment"># 전역 디렉토리 (내 컴퓨터 전체)</div>
+        <div class="code-hi">~/.claude/</div>
+        <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 전역 지침 (모든 프로젝트)</span></div>
+        <div>├── settings.json</div>
+        <div>└── rules/</div>
       </div>
     </div>
   </div>
