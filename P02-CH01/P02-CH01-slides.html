@@ -322,21 +322,23 @@
     <!-- Right: 상세 폴더 트리 -->
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 48px;">
       <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.12em;margin-bottom:12px;">모든 Claude Code 프로젝트에 적용되는 구조</div>
-      <div class="code-wrap" style="font-size:13px;line-height:1.9;">
+      <div class="code-wrap" style="font-size:12.5px;line-height:1.85;">
         <div class="code-hi">my-project/</div>
-        <div>├── <span class="code-accent">CLAUDE.md</span>          <span class="code-comment"># 프로젝트 전체 지시서</span></div>
+        <div>├── <span class="code-accent">CLAUDE.md</span>          <span class="code-comment"># 팀 공유 (git 커밋)</span></div>
+        <div>├── <span class="code-hi">CLAUDE.local.md</span>    <span class="code-comment"># 나만 (gitignore)</span></div>
         <div>└── .claude/</div>
         <div>    ├── agents/            <span class="code-comment"># 에이전트 정의 파일</span></div>
         <div>    │   ├── <span class="code-hi">eda.md</span>         <span class="code-comment"># 역할 · 모델 · 도구</span></div>
         <div>    │   ├── <span class="code-hi">analysis.md</span></div>
         <div>    │   └── <span class="code-hi">report.md</span></div>
-        <div>    ├── rules/             <span class="code-comment"># 공통 규칙</span></div>
+        <div>    ├── rules/             <span class="code-comment"># 경로별 공통 규칙</span></div>
         <div>    │   └── shared-rules.md</div>
-        <div>    └── skills/            <span class="code-comment"># 슬래시 커맨드</span></div>
-        <div>        └── visualize/</div>
-        <div>            └── <span class="code-accent">SKILL.md</span>   <span class="code-comment"># /visualize 로 실행</span></div>
+        <div>    ├── skills/            <span class="code-comment"># 슬래시 커맨드</span></div>
+        <div>    │   └── visualize/</div>
+        <div>    │       └── <span class="code-accent">SKILL.md</span>   <span class="code-comment"># /visualize 로 실행</span></div>
+        <div>    └── hooks/             <span class="code-comment"># 자동 실행 훅</span></div>
       </div>
-      <div style="margin-top:16px;padding:14px 18px;border:1px solid var(--border);background:#F5F4F0;">
+      <div style="margin-top:14px;padding:12px 18px;border:1px solid var(--border);background:#F5F4F0;">
         <div style="font-size:13px;color:#555;line-height:1.7;">
           <span style="color:#1C1A18;font-weight:500;">CLAUDE.md</span>가 지휘자,&nbsp;
           <span style="color:#1C1A18;font-weight:500;">agents/</span>가 팀원,&nbsp;
@@ -1033,6 +1035,73 @@
 </div>
 
 
+<!-- ════ s19 | @ Import & 규모 관리 ════ -->
+<div class="slide" id="s19">
+  <div class="tb">
+    <span class="tb-cap">CLAUDE.md</span>
+    <span class="tb-num">18</span>
+  </div>
+  <div class="body">
+    <div class="l-panel" style="justify-content:flex-start;gap:0;padding-top:44px;">
+      <div>
+        <div class="eyebrow">CLAUDE.md 심화</div>
+        <div class="big-title">@ Import<br>&amp; 규모 관리</div>
+        <div class="body-text" style="margin-top:14px;">파일이 길어지면 쪼개서 불러온다</div>
+      </div>
+      <div style="margin-top:24px;padding:16px 20px;border:1px solid rgba(232,96,60,0.2);background:rgba(232,96,60,0.03);">
+        <div style="font-size:11px;color:var(--p01);letter-spacing:0.06em;margin-bottom:8px;">권장 크기</div>
+        <div style="font-size:15px;color:#1C1A18;font-weight:600;margin-bottom:4px;">200줄 이하</div>
+        <div style="font-size:13px;color:#666;line-height:1.65;">context window에 로드되므로<br>길수록 응답 품질 저하</div>
+      </div>
+      <div style="margin-top:12px;padding:14px 18px;border:1px solid var(--border);background:#F5F4F0;">
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.06em;margin-bottom:6px;">.gitignore 추가 필수</div>
+        <div style="font-family:monospace;font-size:13px;color:#555;line-height:1.8;">CLAUDE.local.md<br>.claude/settings.local.json</div>
+      </div>
+    </div>
+    <!-- Right: @ import 예시 + 전략 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 52px;gap:18px;">
+
+      <!-- @ import 문법 -->
+      <div>
+        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">@ IMPORT 문법</div>
+        <div class="code-wrap" style="font-size:13px;line-height:1.85;">
+          <div class="code-comment"># CLAUDE.md 에서 다른 파일을 불러온다</div>
+          <div style="margin-top:8px;"></div>
+          <div><span style="color:var(--p01);">@</span><span class="code-hi">.claude/rules/analysis-principles.md</span></div>
+          <div><span style="color:var(--p01);">@</span><span class="code-hi">.claude/rules/design-system.md</span></div>
+          <div style="margin-top:8px;"></div>
+          <div class="code-comment"># 홈 디렉토리 절대 경로도 가능</div>
+          <div><span style="color:var(--p01);">@</span><span class="code-hi">~/.claude/my-style-guide.md</span></div>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:#888;">재귀 import 최대 5단계 · 첫 import 시 승인 필요</div>
+      </div>
+
+      <!-- 규모별 전략 -->
+      <div style="border:1px solid var(--border);">
+        <div style="padding:11px 18px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.02);">
+          <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;">규모별 CLAUDE.md 전략</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;">
+          <div style="padding:16px 18px;border-right:1px solid var(--border);">
+            <div style="font-size:12px;color:#888;margin-bottom:6px;">개인 프로젝트</div>
+            <div style="font-size:14px;color:#333;line-height:1.6;">CLAUDE.md 하나로 관리</div>
+          </div>
+          <div style="padding:16px 18px;">
+            <div style="font-size:12px;color:#888;margin-bottom:6px;">팀 프로젝트</div>
+            <div style="font-size:14px;color:#333;line-height:1.6;">CLAUDE.md (팀) +<br>CLAUDE.local.md (개인)</div>
+          </div>
+        </div>
+        <div style="padding:16px 18px;border-top:1px solid var(--border);background:rgba(232,96,60,0.02);">
+          <div style="font-size:12px;color:var(--p01);margin-bottom:6px;">길어지면</div>
+          <div style="font-size:14px;color:#333;line-height:1.6;">자주 쓰는 내용 → CLAUDE.md / 경로별 규칙 → <span style="font-family:monospace;">.claude/rules/</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 <!-- ════ s14 | 챕터 요약 ════ -->
 <div class="slide" id="s14">
   <div class="tb">
@@ -1058,21 +1127,21 @@
         <!-- CLIP 01 -->
         <div style="border-right:1px solid var(--border);padding:22px 24px;">
           <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:10px;">01</div>
-          <div style="font-size:15px;font-weight:500;color:#1C1A18;margin-bottom:14px;line-height:1.5;">프로젝트 폴더 구조 파악하기</div>
+          <div style="font-size:15px;font-weight:500;color:#1C1A18;margin-bottom:14px;line-height:1.5;">파일 읽기·쓰기·실행 &amp;<br>Plan Mode</div>
           <div style="display:flex;flex-direction:column;gap:9px;">
-            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:15px;color:#555;">폴더 구조 예시 (raw · processed · charts)</span></div>
-            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:15px;color:#555;">Claude에게 폴더 소개하기</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:15px;color:#555;">Read · Write · Bash 도구</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:15px;color:#555;">Plan Mode &amp; 실수 복구</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:15px;color:#555;">슬래시 명령어 치트시트</span></div>
           </div>
         </div>
 
         <!-- CLIP 02 -->
         <div style="border-right:1px solid var(--border);padding:22px 24px;">
           <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.1em;margin-bottom:10px;">02</div>
-          <div style="font-size:15px;font-weight:500;color:#1C1A18;margin-bottom:14px;line-height:1.5;">파일 읽기·쓰기·실행 &amp;<br>Plan Mode</div>
+          <div style="font-size:15px;font-weight:500;color:#1C1A18;margin-bottom:14px;line-height:1.5;">프로젝트 폴더 구조 파악하기</div>
           <div style="display:flex;flex-direction:column;gap:9px;">
-            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:15px;color:#555;">Read · Write · Bash 도구</span></div>
-            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:15px;color:#555;">Plan Mode &amp; 실수 복구</span></div>
-            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:15px;color:#555;">슬래시 명령어 치트시트</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:15px;color:#555;">폴더 구조 예시 (raw · processed · charts)</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:15px;color:#555;">Claude에게 폴더 소개하기</span></div>
           </div>
         </div>
 
@@ -1096,7 +1165,7 @@
 </div><!-- /deck -->
 
 <div class="nav">
-  <span class="nav-ctr" id="nav-ctr">1 / 18</span>
+  <span class="nav-ctr" id="nav-ctr">1 / 19</span>
   <button class="nav-btn" onclick="prev()">←</button>
   <button class="nav-btn" onclick="next()">→</button>
 </div>
@@ -1108,9 +1177,9 @@
 </div>
 
 <script>
-  const TOTAL = 18;
-  const ORDER = [1,6,7,8,9,15,16,2,3,4,18,5,10,11,12,13,17,14];
-  const CLIP_MAP = {1:0, 6:0,7:0,8:0,9:0,15:0,16:0, 2:1,3:1,4:1,18:1,5:1, 10:2,11:2,12:2,13:2,17:2,14:2};
+  const TOTAL = 19;
+  const ORDER = [1,6,7,8,9,15,16,2,3,4,18,5,10,11,12,13,17,19,14];
+  const CLIP_MAP = {1:0, 6:0,7:0,8:0,9:0,15:0,16:0, 2:1,3:1,4:1,18:1,5:1, 10:2,11:2,12:2,13:2,17:2,19:2,14:2};
   const CLIP_LABELS = ['프로젝트 폴더 구조','파일·Plan Mode','CLAUDE.md'];
   let cur = 1;
 
