@@ -208,7 +208,7 @@
     <div class="l-panel" style="justify-content:flex-start;gap:0;padding-top:44px;">
       <div>
         <div class="eyebrow">공식 구조</div>
-        <div class="big-title">기본부터<br>잡고 시작</div>
+        <div class="big-title">Claude Code<br>폴더 구조</div>
         <div class="body-text" style="margin-top:14px;">Claude Code 자동 인식<br>파일 목록</div>
       </div>
       <!-- CLAUDE.md 핵심 -->
@@ -277,9 +277,6 @@
           <div style="font-size:16px;color:#1C1A18;font-weight:500;margin-bottom:2px;">전역 (내 컴퓨터 전체)</div>
           <div style="font-size:16px;color:#777;line-height:1.6;">모든 프로젝트에 자동 적용 · 본인만</div>
         </div>
-        <div style="border:1px solid var(--border);padding:10px 18px;background:rgba(0,0,0,0.01);">
-          <div style="font-size:16px;color:#AAAAAA;line-height:1.6;">+ 조직 관리 정책(Managed) · 개인 로컬(Local) 포함 총 4단계</div>
-        </div>
       </div>
     </div>
     <!-- Right: 전체 구조 트리 + CLAUDE.md 핵심 -->
@@ -316,8 +313,8 @@
             <div style="font-size:16px;color:#777;line-height:1.5;">길수록 응답 품질 저하</div>
           </div>
           <div style="padding:14px 16px;">
-            <div style="font-family:monospace;font-size:16px;font-weight:600;color:var(--p01);margin-bottom:4px;">@파일명 import</div>
-            <div style="font-size:16px;color:#777;line-height:1.5;">규칙 파일 분리 가능</div>
+            <div style="font-family:monospace;font-size:16px;font-weight:600;color:var(--p01);margin-bottom:4px;">@rules/viz.md</div>
+            <div style="font-size:16px;color:#777;line-height:1.5;">CLAUDE.md에서 규칙 파일 직접 참조 — 길어지면 분리해서 관리</div>
           </div>
         </div>
       </div>
@@ -440,6 +437,73 @@
           <div style="border-left:1px solid var(--border);padding-left:24px;">
             <div style="font-size:17px;color:#1C1A18;margin-bottom:5px;">Python · 터미널 실행</div>
             <div style="font-size:17px;color:#555;">결과를 다시 Claude에 전달</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s19 | Glob · Grep · LS · WebFetch ════ -->
+<div class="slide" id="s19">
+  <div class="tb">
+    <span class="tb-cap">파일 읽기·쓰기·실행 &amp; Plan Mode</span>
+    <span class="tb-num">8</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">추가 도구</div>
+        <div class="big-title">탐색 &amp;<br>검색 도구</div>
+        <div class="body-text" style="margin-top:16px;">Claude가 파일을<br>직접 찾고 읽는 방식</div>
+      </div>
+      <div style="padding:18px 20px;background:#F5F4F0;border:1px solid var(--border);">
+        <div style="font-size:17px;color:#555;line-height:1.8;">"data/ 안에 CSV 파일들<br>전부 분석해줘"<br>→ Glob → Read → Bash</div>
+      </div>
+    </div>
+    <!-- Right: 4행 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0;">
+      <div style="flex:1;display:flex;flex-direction:column;">
+
+        <div style="flex:1;border-bottom:1px solid var(--border);padding:22px 44px;display:flex;align-items:center;gap:24px;">
+          <div style="width:80px;flex-shrink:0;">
+            <div style="font-size:16px;font-weight:600;color:#1C1A18;letter-spacing:0.04em;">Glob</div>
+          </div>
+          <div style="border-left:1px solid var(--border);padding-left:24px;">
+            <div style="font-size:17px;color:#1C1A18;margin-bottom:5px;">파일 패턴 검색</div>
+            <div style="font-size:17px;color:#555;font-family:monospace;">data/*.csv &nbsp;·&nbsp; scripts/*.py</div>
+          </div>
+        </div>
+
+        <div style="flex:1;border-bottom:1px solid var(--border);padding:22px 44px;display:flex;align-items:center;gap:24px;">
+          <div style="width:80px;flex-shrink:0;">
+            <div style="font-size:16px;font-weight:600;color:#1C1A18;letter-spacing:0.04em;">Grep</div>
+          </div>
+          <div style="border-left:1px solid var(--border);padding-left:24px;">
+            <div style="font-size:17px;color:#1C1A18;margin-bottom:5px;">파일 내용 검색</div>
+            <div style="font-size:17px;color:#555;">함수명 · 컬럼명 · 에러 메시지 찾기</div>
+          </div>
+        </div>
+
+        <div style="flex:1;border-bottom:1px solid var(--border);padding:22px 44px;display:flex;align-items:center;gap:24px;">
+          <div style="width:80px;flex-shrink:0;">
+            <div style="font-size:16px;font-weight:600;color:#1C1A18;letter-spacing:0.04em;">LS</div>
+          </div>
+          <div style="border-left:1px solid var(--border);padding-left:24px;">
+            <div style="font-size:17px;color:#1C1A18;margin-bottom:5px;">폴더 구조 확인</div>
+            <div style="font-size:17px;color:#555;">디렉토리 목록 파악 → 다음 작업 계획</div>
+          </div>
+        </div>
+
+        <div style="flex:1;padding:22px 44px;display:flex;align-items:center;gap:24px;">
+          <div style="width:80px;flex-shrink:0;">
+            <div style="font-size:16px;font-weight:600;color:#1C1A18;letter-spacing:0.04em;">Web<br>Fetch</div>
+          </div>
+          <div style="border-left:1px solid var(--border);padding-left:24px;">
+            <div style="font-size:17px;color:#1C1A18;margin-bottom:5px;">URL 내용 가져오기</div>
+            <div style="font-size:17px;color:#555;">공식 문서 · API 레퍼런스 직접 참조</div>
           </div>
         </div>
 
@@ -576,7 +640,7 @@
         <div style="display:flex;flex-direction:column;gap:6px;">
           <div style="border:1px solid var(--border);padding:13px 20px;background:#fff;display:flex;gap:16px;align-items:flex-start;">
             <div style="font-size:17px;color:#1C1A18;background:#F0EEE9;padding:4px 10px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;font-weight:500;">Fork conversation from here</div>
-            <div style="font-size:16px;color:#555;line-height:1.5;">대화를 이 시점에서 새 분기로 복사 — 코드는 그대로, 다른 방향 시도</div>
+            <div style="font-size:16px;color:#555;white-space:nowrap;">현 시점 대화 복사 — 코드 유지, 방향 전환</div>
           </div>
           <div style="border:1px solid var(--border);padding:13px 20px;background:#fff;display:flex;gap:16px;align-items:flex-start;">
             <div style="font-size:17px;color:#1C1A18;background:#F0EEE9;padding:4px 10px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;font-weight:500;">Fork conversation and rewind code</div>
@@ -1081,7 +1145,7 @@
 </div><!-- /deck -->
 
 <div class="nav">
-  <span class="nav-ctr" id="nav-ctr">1 / 18</span>
+  <span class="nav-ctr" id="nav-ctr">1 / 19</span>
   <button class="nav-btn" onclick="prev()">←</button>
   <button class="nav-btn" onclick="next()">→</button>
 </div>
@@ -1093,9 +1157,9 @@
 </div>
 
 <script>
-  const TOTAL = 18;
-  const ORDER = [1,6,7,8,9,15,16,2,3,18,4,5,10,11,12,13,17,14];
-  const CLIP_MAP = {1:0, 6:0,7:0,8:0,9:0,15:0,16:0, 2:1,3:1,4:1,18:1,5:1, 10:2,11:2,12:2,13:2,17:2,14:2};
+  const TOTAL = 19;
+  const ORDER = [1,6,7,19,8,9,15,16,2,3,18,4,5,10,11,12,13,17,14];
+  const CLIP_MAP = {1:0, 6:0,7:0,19:0,8:0,9:0,15:0,16:0, 2:1,3:1,4:1,18:1,5:1, 10:2,11:2,12:2,13:2,17:2,14:2};
   const CLIP_LABELS = ['프로젝트 폴더 구조','파일·Plan Mode','CLAUDE.md'];
   let cur = 1;
 
