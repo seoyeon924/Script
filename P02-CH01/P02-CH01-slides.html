@@ -263,63 +263,82 @@
 </div>
 
 
-<!-- ════ s18 | .claude/ 구조 상세 설명 ════ -->
+<!-- ════ s18 | CLAUDE 폴더 구조 ════ -->
 <div class="slide" id="s18">
   <div class="tb">
     <span class="tb-cap">프로젝트 폴더 구조 파악하기</span>
     <span class="tb-num">5</span>
   </div>
   <div class="body">
-    <!-- Left: 3가지 설명 카드 -->
-    <div class="l-panel" style="justify-content:center;gap:0;">
-      <div style="margin-bottom:20px;">
-        <div class="eyebrow">.claude/ 안을 뜯어보면</div>
-        <div class="big-title">파일 하나가<br>역할 하나</div>
+    <!-- Left: 3단계 적용 범위 -->
+    <div class="l-panel" style="justify-content:flex-start;gap:0;padding-top:40px;">
+      <div style="margin-bottom:24px;">
+        <div class="eyebrow">CLAUDE 폴더 구조</div>
+        <div class="big-title">3단계<br>적용 범위</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="border:1px solid var(--border);padding:16px 20px;background:#F5F4F0;">
-          <div style="font-size:17px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:6px;">.claude/agents/</div>
-          <div style="font-size:17px;color:#1C1A18;font-weight:500;margin-bottom:4px;">에이전트 한 명 = 파일 하나</div>
-          <div style="font-size:18px;color:#666;line-height:1.65;">.md 파일 두면 에이전트로 인식<br>역할·도구·모델을 파일 안에 선언</div>
+        <div style="border:1px solid var(--border);padding:14px 18px;background:#fff;">
+          <div style="font-family:monospace;font-size:16px;color:var(--p01);font-weight:600;margin-bottom:4px;">.claude/</div>
+          <div style="font-size:16px;color:#1C1A18;font-weight:500;margin-bottom:2px;">프로젝트</div>
+          <div style="font-size:16px;color:#777;line-height:1.6;">이 프로젝트에만 적용 · 팀 공유 가능</div>
         </div>
-        <div style="border:1px solid var(--border);padding:16px 20px;background:#F5F4F0;">
-          <div style="font-size:17px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:6px;">.claude/rules/</div>
-          <div style="font-size:17px;color:#1C1A18;font-weight:500;margin-bottom:4px;">모든 에이전트가 공유하는 규칙</div>
-          <div style="font-size:18px;color:#666;line-height:1.65;">CLAUDE.md에서 @rules/ 로 불러옴<br>분석 원칙·디자인 시스템 분리 보관</div>
+        <div style="border:1px solid var(--border);padding:14px 18px;background:#F5F4F0;">
+          <div style="font-family:monospace;font-size:16px;color:#555;font-weight:600;margin-bottom:4px;">~/.claude/</div>
+          <div style="font-size:16px;color:#1C1A18;font-weight:500;margin-bottom:2px;">전역 (내 컴퓨터 전체)</div>
+          <div style="font-size:16px;color:#777;line-height:1.6;">모든 프로젝트에 자동 적용 · 본인만</div>
         </div>
-        <div style="border:1px solid rgba(232,96,60,0.2);padding:16px 20px;background:rgba(232,96,60,0.03);">
-          <div style="font-size:17px;color:var(--p01);letter-spacing:0.1em;margin-bottom:6px;">.claude/skills/</div>
-          <div style="font-size:17px;color:#1C1A18;font-weight:500;margin-bottom:4px;">특정 에이전트만 쓰는 규칙집</div>
-          <div style="font-size:18px;color:#666;line-height:1.65;">에이전트 선언에 한 줄 추가하면<br>그 에이전트 호출 때만 로드</div>
+        <div style="border:1px solid var(--border);padding:14px 18px;background:#F5F4F0;">
+          <div style="font-family:monospace;font-size:16px;color:#888;font-weight:600;margin-bottom:4px;">OS 관리 정책 CLAUDE.md</div>
+          <div style="font-size:16px;color:#1C1A18;font-weight:500;margin-bottom:2px;">조직 (IT 배포)</div>
+          <div style="font-size:16px;color:#777;line-height:1.6;">팀 전체 강제 적용 · 오버라이드 불가</div>
         </div>
+      </div>
+      <div style="margin-top:16px;padding:14px 18px;border:1px solid rgba(232,96,60,0.2);background:rgba(232,96,60,0.03);">
+        <div style="font-size:16px;color:#555;line-height:1.7;">우선순위: <span style="font-weight:500;color:#1C1A18;">OS 정책 &gt; ~/.claude/ &gt; .claude/</span><br>나중에 로드될수록 우선 적용</div>
       </div>
     </div>
-    <!-- Right: 상세 폴더 트리 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 48px;">
-      <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.12em;margin-bottom:12px;">모든 Claude Code 프로젝트에 적용되는 구조</div>
-      <div class="code-wrap" style="font-size:17px;line-height:1.85;">
-        <div class="code-hi">my-project/</div>
-        <div>├── <span class="code-accent">CLAUDE.md</span>          <span class="code-comment"># 팀 공유 (git 커밋)</span></div>
-        <div>├── <span class="code-hi">CLAUDE.local.md</span>    <span class="code-comment"># 나만 (gitignore)</span></div>
+    <!-- Right: 전체 구조 트리 + CLAUDE.md 핵심 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 44px;gap:18px;">
+
+      <!-- 전체 폴더 트리 -->
+      <div class="code-wrap" style="font-size:16px;line-height:1.85;">
+        <div class="code-comment"># 프로젝트 디렉토리</div>
+        <div class="code-hi">your-project/</div>
+        <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 팀 공유 (git 커밋)</span></div>
+        <div>├── <span class="code-hi">CLAUDE.local.md</span>        <span class="code-comment"># 나만 (.gitignore)</span></div>
         <div>└── .claude/</div>
-        <div>    ├── agents/            <span class="code-comment"># 에이전트 정의 파일</span></div>
-        <div>    │   ├── <span class="code-hi">eda.md</span>         <span class="code-comment"># 역할 · 모델 · 도구</span></div>
-        <div>    │   ├── <span class="code-hi">analysis.md</span></div>
-        <div>    │   └── <span class="code-hi">report.md</span></div>
-        <div>    ├── rules/             <span class="code-comment"># 경로별 공통 규칙</span></div>
-        <div>    │   └── shared-rules.md</div>
-        <div>    ├── skills/            <span class="code-comment"># 슬래시 커맨드</span></div>
-        <div>    │   └── visualize/</div>
-        <div>    │       └── <span class="code-accent">SKILL.md</span>   <span class="code-comment"># /visualize 로 실행</span></div>
-        <div>    └── hooks/             <span class="code-comment"># 자동 실행 훅</span></div>
+        <div>    ├── settings.json       <span class="code-comment"># 팀 설정</span></div>
+        <div>    ├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
+        <div>    ├── rules/              <span class="code-comment"># 경로별 규칙</span></div>
+        <div>    └── hooks/              <span class="code-comment"># 자동 실행 훅</span></div>
+        <div style="margin-top:8px;" class="code-comment"># 전역 디렉토리 (내 컴퓨터)</div>
+        <div class="code-hi">~/.claude/</div>
+        <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 전역 개인 지침</span></div>
+        <div>├── settings.json</div>
+        <div>└── rules/</div>
       </div>
-      <div style="margin-top:14px;padding:12px 18px;border:1px solid var(--border);background:#F5F4F0;">
-        <div style="font-size:18px;color:#555;line-height:1.7;">
-          <span style="color:#1C1A18;font-weight:500;">CLAUDE.md</span>가 지휘자,&nbsp;
-          <span style="color:#1C1A18;font-weight:500;">agents/</span>가 팀원,&nbsp;
-          <span style="color:var(--p01);font-weight:500;">skills/</span>가 각자의 매뉴얼
+
+      <!-- CLAUDE.md 핵심 3가지 -->
+      <div style="border:1px solid var(--border);">
+        <div style="padding:10px 18px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.02);">
+          <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;">CLAUDE.md 핵심</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;">
+          <div style="padding:14px 16px;border-right:1px solid var(--border);">
+            <div style="font-size:16px;font-weight:600;color:#1C1A18;margin-bottom:4px;">세션마다 자동 로드</div>
+            <div style="font-size:16px;color:#777;line-height:1.5;">매번 설명 안 해도 됨</div>
+          </div>
+          <div style="padding:14px 16px;border-right:1px solid var(--border);">
+            <div style="font-size:16px;font-weight:600;color:#1C1A18;margin-bottom:4px;">200줄 이하 권장</div>
+            <div style="font-size:16px;color:#777;line-height:1.5;">길수록 응답 품질 저하</div>
+          </div>
+          <div style="padding:14px 16px;">
+            <div style="font-family:monospace;font-size:16px;font-weight:600;color:var(--p01);margin-bottom:4px;">@파일명 import</div>
+            <div style="font-size:16px;color:#777;line-height:1.5;">규칙 파일 분리 가능</div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
@@ -342,16 +361,16 @@
       </div>
     </div>
     <!-- Right: 두 프롬프트 박스 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;gap:16px;">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 52px;gap:16px;">
 
-      <div style="border:1px solid var(--border);border-left:3px solid #BBBBBB;padding:24px 28px;background:#fff;">
-        <div style="font-size:17px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">프롬프트 1</div>
-        <div style="font-size:16px;color:#444;line-height:1.8;">데이터 시각화 프로젝트용 폴더 구조를 만들어줘.<br>폴더: data/raw, data/processed, scripts, charts, reports</div>
+      <div style="border:1px solid var(--border);border-left:3px solid #BBBBBB;padding:22px 28px;background:#fff;">
+        <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">프롬프트 1 — 공식 구조 생성</div>
+        <div style="font-size:17px;color:#333;line-height:1.85;">데이터 시각화 프로젝트를 Claude Code 공식 구조로 세팅해줘.<br><br>루트에 CLAUDE.md(팀용)와 CLAUDE.local.md(개인용 템플릿) 만들고,<br>.claude/ 안에 rules/, hooks/ 폴더도 만들어줘.<br>data/raw, data/processed, scripts, charts, reports 폴더도 포함.<br><br>CLAUDE.md에는 이 프로젝트 규칙을 써줘:<br>- data/raw/ 파일은 절대 수정 금지<br>- 차트 레이블은 한국어<br>- @.claude/rules/ 형식으로 규칙 파일 import 예시 포함<br><br>.gitignore에 CLAUDE.local.md와 .claude/settings.local.json 추가해줘.</div>
       </div>
 
-      <div style="border:1px solid rgba(232,96,60,0.2);border-left:3px solid var(--p01);padding:24px 28px;background:#FDF8F5;">
-        <div style="font-size:17px;color:#E8603C;letter-spacing:0.1em;margin-bottom:10px;">프롬프트 2</div>
-        <div style="font-size:16px;color:#444;line-height:1.8;">이 프로젝트 폴더 전체를 파악해줘.<br>어떤 파일이 있는지, 분석 시작 전에 알아야 할 게 있으면 물어봐.</div>
+      <div style="border:1px solid rgba(232,96,60,0.2);border-left:3px solid var(--p01);padding:22px 28px;background:#FDF8F5;">
+        <div style="font-size:16px;color:#E8603C;letter-spacing:0.1em;margin-bottom:10px;">프롬프트 2 — 구조 파악 후 시작</div>
+        <div style="font-size:17px;color:#333;line-height:1.85;">이 프로젝트 폴더 전체를 파악해줘.<br>CLAUDE.md 읽고 규칙 확인한 다음,<br>분석 시작 전에 모르는 게 있으면 먼저 물어봐.</div>
       </div>
 
     </div>
@@ -1163,7 +1182,7 @@
 
 <script>
   const TOTAL = 19;
-  const ORDER = [1,6,7,8,9,15,16,2,3,4,18,5,10,11,12,13,17,19,14];
+  const ORDER = [1,6,7,8,9,15,16,2,3,18,4,5,10,11,12,13,17,19,14];
   const CLIP_MAP = {1:0, 6:0,7:0,8:0,9:0,15:0,16:0, 2:1,3:1,4:1,18:1,5:1, 10:2,11:2,12:2,13:2,17:2,19:2,14:2};
   const CLIP_LABELS = ['프로젝트 폴더 구조','파일·Plan Mode','CLAUDE.md'];
   let cur = 1;
