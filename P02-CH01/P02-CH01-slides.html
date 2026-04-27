@@ -448,6 +448,167 @@
 </div>
 
 
+<!-- ════ s15 | /compact ════ -->
+<div class="slide" id="s15">
+  <div class="tb">
+    <span class="tb-cap">파일 읽기·쓰기·실행 &amp; Plan Mode</span>
+    <span class="tb-num">10</span>
+  </div>
+  <div class="body">
+    <!-- Left -->
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">컨텍스트 관리</div>
+        <div style="font-family:monospace;font-size:34px;font-weight:700;color:#1C1A18;line-height:1.1;">/compact</div>
+        <div style="height:3px;width:36px;background:var(--p01);margin:14px 0;"></div>
+        <div class="body-text">대화가 길어지면 앞부분을 잊어버려요.<br>/clear는 대화를 통째로 날려요.<br>/compact는 핵심 맥락만 남기고 압축해요.</div>
+      </div>
+      <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;">
+        <div style="border-left:3px solid var(--border);padding:9px 14px;">
+          <div style="font-family:monospace;font-size:12px;color:var(--p01);margin-bottom:3px;">/resume</div>
+          <div style="font-size:12px;color:#555;line-height:1.5;">터미널 껐다 켜도 이전 대화 이어가기</div>
+        </div>
+        <div style="border-left:3px solid var(--border);padding:9px 14px;">
+          <div style="font-family:monospace;font-size:12px;color:var(--p01);margin-bottom:3px;">/context</div>
+          <div style="font-size:12px;color:#555;line-height:1.5;">현재 컨텍스트 사용량 확인</div>
+        </div>
+        <div style="border-left:3px solid var(--border);padding:9px 14px;">
+          <div style="font-family:monospace;font-size:12px;color:var(--p01);margin-bottom:3px;">/rename [이름]</div>
+          <div style="font-size:12px;color:#555;line-height:1.5;">세션에 이름 붙여서 구분하기</div>
+        </div>
+      </div>
+    </div>
+    <!-- Right: Before/After -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 48px;gap:14px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <!-- Before -->
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#888;text-align:center;margin-bottom:8px;">Before</div>
+          <div style="background:#1E1E1E;border-radius:5px;overflow:hidden;">
+            <div style="background:#2A2A2A;padding:7px 12px;font-size:10px;color:#888;text-align:center;letter-spacing:0.1em;">session</div>
+            <div style="padding:12px 14px;font-size:11px;font-family:monospace;color:#999;line-height:1.8;">
+              <div>$ API 엔드포인트 만들어줘</div>
+              <div>$ 인증 미들웨어 추가해줘</div>
+              <div>$ 에러 핸들링 수정해줘</div>
+              <div>$ 테스트 코드 작성해줘</div>
+              <div style="color:#666;">... 대화 100+ 턴</div>
+            </div>
+            <div style="padding:6px 14px 12px;display:flex;align-items:center;gap:8px;">
+              <div style="width:7px;height:7px;border-radius:50%;background:#E8603C;"></div>
+              <div style="font-size:11px;font-family:monospace;color:#E8603C;font-weight:600;">컨텍스트 95%</div>
+            </div>
+          </div>
+        </div>
+        <!-- After -->
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#888;text-align:center;margin-bottom:8px;">After</div>
+          <div style="background:#1E1E1E;border-radius:5px;overflow:hidden;">
+            <div style="background:#2A2A2A;padding:7px 12px;font-size:10px;color:#888;text-align:center;letter-spacing:0.1em;">session</div>
+            <div style="padding:12px 14px;font-size:11px;font-family:monospace;color:#999;line-height:1.8;">
+              <div style="color:#E8E6E2;">[Summary]</div>
+              <div style="color:#90C090;">- Express API 서버 구축</div>
+              <div style="color:#90C090;">- JWT 인증 구현 완료</div>
+              <div style="color:#90C090;">- 에러 핸들링 적용</div>
+              <div style="color:#E8E6E2;margin-top:4px;">[Active Context]</div>
+              <div style="color:#90C090;">- 테스트 작업 중</div>
+            </div>
+            <div style="padding:6px 14px 12px;display:flex;align-items:center;gap:8px;">
+              <div style="width:7px;height:7px;border-radius:50%;background:#90C090;"></div>
+              <div style="font-size:11px;font-family:monospace;color:#90C090;font-weight:600;">컨텍스트 30%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /compact command -->
+      <div style="text-align:center;">
+        <div style="display:inline-block;background:#1E1E1E;border-radius:4px;padding:10px 32px;font-family:monospace;font-size:14px;font-weight:600;color:#E8603C;">$ /compact</div>
+      </div>
+      <!-- tip -->
+      <div style="background:rgba(232,96,60,0.06);border:1px solid rgba(232,96,60,0.18);padding:11px 16px;font-size:12px;color:#444;">
+        💡 /clear 대신 /compact를 쓰세요 — 맥락이 유지됩니다
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s16 | 슬래시 명령어 치트시트 ════ -->
+<div class="slide" id="s16">
+  <div class="tb">
+    <span class="tb-cap">파일 읽기·쓰기·실행 &amp; Plan Mode</span>
+    <span class="tb-num">11</span>
+  </div>
+  <div class="body" style="align-items:center;justify-content:center;padding:28px 52px;">
+    <div style="width:100%;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;">
+        <div style="font-size:22px;font-weight:600;color:#1C1A18;letter-spacing:-0.01em;">슬래시 명령어 한눈에 보기</div>
+        <div style="font-size:10px;color:#AAAAAA;letter-spacing:0.1em;">Claude Code Slash Commands</div>
+      </div>
+      <!-- 5열 그리드 -->
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+
+        <!-- 세션 -->
+        <div style="border:1px solid var(--border);padding:16px 18px;background:#fff;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.12em;margin-bottom:12px;">세션</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div><code style="font-size:12px;color:var(--p01);font-weight:600;">/compact</code><div style="font-size:10px;color:#888;margin-top:2px;">맥락 압축</div></div>
+            <div><code style="font-size:12px;color:#1C1A18;">/resume</code><div style="font-size:10px;color:#888;margin-top:2px;">이전 대화 이어가기</div></div>
+            <div><code style="font-size:12px;color:#1C1A18;">/context</code><div style="font-size:10px;color:#888;margin-top:2px;">컨텍스트 사용량</div></div>
+            <div><code style="font-size:12px;color:#1C1A18;">/rename</code><div style="font-size:10px;color:#888;margin-top:2px;">세션 이름 지정</div></div>
+          </div>
+        </div>
+
+        <!-- 작업 -->
+        <div style="border:1px solid var(--border);padding:16px 18px;background:#fff;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.12em;margin-bottom:12px;">작업</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div><code style="font-size:12px;color:var(--p01);font-weight:600;">/plan</code><div style="font-size:10px;color:#888;margin-top:2px;">실행 계획 수립</div></div>
+            <div><code style="font-size:12px;color:#1C1A18;">/diff</code><div style="font-size:10px;color:#888;margin-top:2px;">변경 내역 미리보기</div></div>
+            <div><code style="font-size:12px;color:#1C1A18;">/cost</code><div style="font-size:10px;color:#888;margin-top:2px;">토큰·비용 확인</div></div>
+          </div>
+        </div>
+
+        <!-- 성능 -->
+        <div style="border:1px solid var(--border);padding:16px 18px;background:#fff;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.12em;margin-bottom:12px;">성능</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div><code style="font-size:12px;color:#1C1A18;">/fast</code><div style="font-size:10px;color:#888;margin-top:2px;">빠른 응답 모드</div></div>
+            <div><code style="font-size:12px;color:#1C1A18;">/effort</code><div style="font-size:10px;color:#888;margin-top:2px;">사고 깊이 (low·mid·high)</div></div>
+            <div><code style="font-size:12px;color:#1C1A18;">/model</code><div style="font-size:10px;color:#888;margin-top:2px;">모델 직접 선택</div></div>
+          </div>
+        </div>
+
+        <!-- 설정 -->
+        <div style="border:1px solid var(--border);padding:16px 18px;background:#fff;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.12em;margin-bottom:12px;">설정</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div><code style="font-size:12px;color:var(--p01);font-weight:600;">/memory</code><div style="font-size:10px;color:#888;margin-top:2px;">CLAUDE.md 편집</div></div>
+            <div><code style="font-size:12px;color:#1C1A18;">/init</code><div style="font-size:10px;color:#888;margin-top:2px;">CLAUDE.md 자동 생성</div></div>
+            <div><code style="font-size:12px;color:#1C1A18;">/insights</code><div style="font-size:10px;color:#888;margin-top:2px;">세션 패턴 분석</div></div>
+          </div>
+        </div>
+
+        <!-- 유틸 -->
+        <div style="border:1px solid var(--border);padding:16px 18px;background:#fff;">
+          <div style="font-size:9px;color:#BBBBBB;letter-spacing:0.12em;margin-bottom:12px;">유틸</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div><code style="font-size:12px;color:#1C1A18;">/copy</code><div style="font-size:10px;color:#888;margin-top:2px;">마지막 응답 복사</div></div>
+            <div><code style="font-size:12px;color:#1C1A18;">/export</code><div style="font-size:10px;color:#888;margin-top:2px;">대화 파일로 내보내기</div></div>
+            <div><code style="font-size:12px;color:#1C1A18;">/doctor</code><div style="font-size:10px;color:#888;margin-top:2px;">설치 상태 자동 진단</div></div>
+            <div><code style="font-size:12px;color:#1C1A18;">/rewind</code><div style="font-size:10px;color:#888;margin-top:2px;">특정 시점으로 되감기</div></div>
+          </div>
+        </div>
+
+      </div>
+      <!-- 하단 노트 -->
+      <div style="margin-top:14px;font-size:11px;color:#AAAAAA;text-align:center;">
+        주황색 명령어는 이 챕터에서 직접 사용하는 핵심 명령어입니다
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- ════ s10 | Clip 03 sec-break ════ -->
 <div class="slide" id="s10">
   <div class="body sec-break">
@@ -665,6 +826,7 @@
           <div style="display:flex;flex-direction:column;gap:9px;">
             <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">Read · Write · Bash 도구</span></div>
             <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">Plan Mode &amp; 실수 복구</span></div>
+            <div style="display:flex;gap:10px;"><span style="font-size:9px;color:#BBBBBB;flex-shrink:0;margin-top:3px;">·</span><span style="font-size:13px;color:#888;">슬래시 명령어 치트시트</span></div>
           </div>
         </div>
 
@@ -700,9 +862,9 @@
 </div>
 
 <script>
-  const TOTAL = 14;
-  const ORDER = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
-  const CLIP_MAP = {1:0,2:0,3:0,4:0,5:0, 6:1,7:1,8:1,9:1, 10:2,11:2,12:2,13:2, 14:2};
+  const TOTAL = 16;
+  const ORDER = [1,2,3,4,5,6,7,8,9,15,16,10,11,12,13,14];
+  const CLIP_MAP = {1:0,2:0,3:0,4:0,5:0, 6:1,7:1,8:1,9:1,15:1,16:1, 10:2,11:2,12:2,13:2, 14:2};
   const CLIP_LABELS = ['프로젝트 폴더 구조','파일·Plan Mode','CLAUDE.md'];
   let cur = 1;
 
