@@ -24,7 +24,7 @@ MCP를 연결하면 데이터베이스, 구글 시트, 웹 크롤링까지 직�
 
 ## MCP란 무엇인가 (3분)
 
-MCP(Model Context Protocol)는 에이전트에게 새로운 도구를 연결하는 표준 프로토콜입니다.
+MCP(Model Context Protocol)는 에이전트에게 새로운 도구를 연결하는 프로토콜입니다.
 
 스마트폰에 앱을 설치하는 것과 같습니다.
 스마트폰 자체는 전화와 메시지만 됩니다.
@@ -85,6 +85,6 @@ claude mcp list
 
 ## 핵심 정리 (30초)
 
-MCP는 Claude Code에 새로운 도구를 연결하는 표준 프로토콜입니다.
+MCP는 Claude Code에 새로운 도구를 연결하는 프로토콜입니다.
 데이터 시각화에는 파일시스템, DB, Firecrawl, Google Sheets MCP가 특히 유용합니다.
 다음 클립에서는 Firecrawl MCP로 웹 크롤링 데이터를 수집합니다.
