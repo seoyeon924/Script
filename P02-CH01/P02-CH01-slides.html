@@ -232,7 +232,9 @@
           <div>└── .claude/</div>
           <div>│   ├── settings.json       <span class="code-comment"># 팀 설정 (permissions · hooks)</span></div>
           <div>│   ├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
-          <div>│   └── rules/              <span class="code-comment"># 경로별 규칙</span></div>
+          <div>│   ├── commands/           <span class="code-comment"># 커스텀 슬래시 커맨드</span></div>
+          <div>│   ├── agents/             <span class="code-comment"># 서브에이전트</span></div>
+          <div>│   └── skills/             <span class="code-comment"># 스킬</span></div>
         </div>
       </div>
 
@@ -292,12 +294,15 @@
         <div>└── .claude/</div>
         <div>│   ├── settings.json       <span class="code-comment"># 팀 설정 (permissions · hooks)</span></div>
         <div>│   ├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
-        <div>│   └── rules/              <span class="code-comment"># 경로별 규칙</span></div>
+        <div>│   ├── commands/           <span class="code-comment"># 커스텀 슬래시 커맨드</span></div>
+        <div>│   ├── agents/             <span class="code-comment"># 서브에이전트</span></div>
+        <div>│   └── skills/             <span class="code-comment"># 스킬</span></div>
         <div style="margin-top:8px;" class="code-comment"># 전역 디렉토리 (내 컴퓨터)</div>
         <div class="code-hi">~/.claude/</div>
         <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 전역 개인 지침</span></div>
         <div>├── settings.json</div>
-        <div>└── rules/</div>
+        <div>├── commands/</div>
+        <div>└── agents/</div>
       </div>
 
       <!-- CLAUDE.md 핵심 3가지 -->
@@ -929,12 +934,15 @@
         <div>└── .claude/</div>
         <div>│   ├── settings.json       <span class="code-comment"># 팀 설정 (git 커밋)</span></div>
         <div>│   ├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
-        <div>│   └── rules/              <span class="code-comment"># 경로별 규칙 파일들</span></div>
+        <div>│   ├── commands/           <span class="code-comment"># 커스텀 슬래시 커맨드</span></div>
+        <div>│   ├── agents/             <span class="code-comment"># 서브에이전트</span></div>
+        <div>│   └── skills/             <span class="code-comment"># 스킬</span></div>
         <div style="margin-top:10px;" class="code-comment"># 전역 디렉토리 (내 컴퓨터 전체)</div>
         <div class="code-hi">~/.claude/</div>
         <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 전역 지침 (모든 프로젝트)</span></div>
         <div>├── settings.json</div>
-        <div>└── rules/</div>
+        <div>├── commands/</div>
+        <div>└── agents/</div>
       </div>
     </div>
   </div>
@@ -987,7 +995,7 @@
         <div style="margin-top:8px;"></div>
         <div class="code-comment"># 프로젝트 루트 기준 상대 경로</div>
         <div><span class="code-accent">@</span><span class="code-hi">docs/architecture.md</span></div>
-        <div><span class="code-accent">@</span><span class="code-hi">rules/viz-rules.md</span></div>
+        <div><span class="code-accent">@</span><span class="code-hi">docs/viz-style.md</span></div>
         <div style="margin-top:8px;"></div>
         <div class="code-comment"># 홈 디렉토리 절대 경로</div>
         <div><span class="code-accent">@</span><span class="code-hi">~/.claude/my-style-guide.md</span></div>
@@ -1038,7 +1046,7 @@
 
       <div style="border:1px solid var(--border);padding:16px 22px;background:#fff;">
         <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">크기 — 200줄 이하 권장</div>
-        <div style="font-size:16px;color:#555;line-height:1.6;">길수록 컨텍스트 소비 증가, 준수율 저하<br>길어지면 <code style="font-size:15px;">@rules/</code> 경로 분리 활용</div>
+        <div style="font-size:16px;color:#555;line-height:1.6;">길수록 컨텍스트 소비 증가, 준수율 저하<br>길어지면 <code style="font-size:15px;">@ Import</code>로 별도 파일 분리 활용</div>
       </div>
 
       <div style="border:1px solid var(--border);padding:16px 22px;background:#fff;">
@@ -1087,7 +1095,7 @@
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="width:6px;height:6px;border-radius:50%;background:#888;flex-shrink:0;"></div>
-          <div style="font-size:16px;color:#555;">나중: @rules/ 분리 + Skills 등록</div>
+          <div style="font-size:16px;color:#555;">나중: @ Import 분리 + Skills 등록</div>
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding-left:3px;">
           <div style="font-size:16px;color:var(--border);">↓</div>
