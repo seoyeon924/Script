@@ -631,7 +631,7 @@
 </div>
 
 
-<!-- ════ s8 | Plan Mode & 5가지 모드 ════ -->
+<!-- ════ s8 | 4가지 실행 모드 ════ -->
 <div class="slide" id="s8">
   <div class="tb">
     <span class="tb-cap">파일 읽기·쓰기·실행 &amp; Plan Mode</span>
@@ -641,67 +641,59 @@
     <div class="l-panel">
       <div>
         <div class="eyebrow">VSCode 익스텐션</div>
-        <div class="big-title">5가지<br>실행 모드</div>
-        <div class="body-text" style="margin-top:16px;">Shift+Tab으로<br>모드를 순환 전환</div>
+        <div class="big-title">4가지<br>실행 모드</div>
+        <div class="body-text" style="margin-top:16px;">⇧ + Tab으로<br>순환 전환</div>
       </div>
-      <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px;">
-        <div style="border:1px solid var(--border);padding:12px 16px;background:#F5F4F0;">
-          <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:6px;">전환 순서 (Shift+Tab)</div>
-          <div style="font-size:15px;color:#555;line-height:1.8;font-family:monospace;">default → acceptEdits<br>→ plan → auto</div>
-        </div>
-        <div style="border:1px solid var(--border);padding:12px 16px;background:#F5F4F0;">
-          <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:6px;">Plan Mode를 쓸 때</div>
-          <div style="display:flex;flex-direction:column;gap:4px;">
-            <div style="font-size:16px;color:#555;">· 처음 해보는 복잡한 작업</div>
-            <div style="font-size:16px;color:#555;">· 파일 5개 이상 변경</div>
-            <div style="font-size:16px;color:#555;">· 원본 데이터 포함 가능성</div>
-          </div>
+      <div style="margin-top:24px;border:1px solid var(--border);padding:14px 18px;background:#F5F4F0;">
+        <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:8px;">Plan mode를 쓸 때</div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="font-size:16px;color:#555;">· 처음 해보는 복잡한 작업</div>
+          <div style="font-size:16px;color:#555;">· 파일 5개 이상 변경</div>
+          <div style="font-size:16px;color:#555;">· 원본 데이터 포함 가능성</div>
         </div>
       </div>
     </div>
-    <!-- Right: 5가지 모드 카드 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 44px;gap:8px;">
+    <!-- Right: 4가지 모드 카드 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 48px;gap:10px;">
 
-      <!-- default — Ask -->
-      <div style="border:1px solid var(--border);border-left:3px solid var(--p01);padding:14px 20px;display:flex;gap:16px;align-items:flex-start;background:#fff;">
-        <div style="flex-shrink:0;min-width:130px;">
-          <div style="font-size:16px;font-weight:600;color:#1C1A18;">default</div>
-          <div style="font-size:13px;color:var(--p01);margin-top:2px;">기본값</div>
+      <div style="border:1px solid var(--border);padding:18px 24px;display:flex;gap:20px;align-items:flex-start;background:#fff;">
+        <div style="flex-shrink:0;width:32px;height:32px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 2v5M8 1v6M10 2v5M12 5v2a4 4 0 01-8 0V5" stroke="#888" stroke-width="1.2" stroke-linecap="round"/></svg>
         </div>
-        <div style="font-size:16px;color:#555;line-height:1.5;">편집·명령 모두 승인 요청 — 처음 보는 코드, 신중한 작업에 적합</div>
+        <div>
+          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:3px;">Ask before edits</div>
+          <div style="font-size:16px;color:#555;">편집마다 승인 요청 — 한 줄씩 확인하며 작업</div>
+        </div>
       </div>
 
-      <!-- acceptEdits — Auto accept edits -->
-      <div style="border:1px solid var(--border);padding:14px 20px;display:flex;gap:16px;align-items:flex-start;background:#fff;">
-        <div style="flex-shrink:0;min-width:130px;">
-          <div style="font-size:16px;font-weight:600;color:#1C1A18;">acceptEdits</div>
+      <div style="border:1px solid var(--border);padding:18px 24px;display:flex;gap:20px;align-items:flex-start;background:#fff;">
+        <div style="flex-shrink:0;width:32px;height:32px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#888" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <div style="font-size:16px;color:#555;line-height:1.5;">편집 자동 수락, Bash 명령만 승인 — 빠른 코드 수정에 적합</div>
+        <div>
+          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:3px;">Edit automatically</div>
+          <div style="font-size:16px;color:#555;">선택 영역 또는 파일 전체 자동 수정</div>
+        </div>
       </div>
 
-      <!-- plan -->
-      <div style="border:1px solid var(--border);padding:14px 20px;display:flex;gap:16px;align-items:flex-start;background:#fff;">
-        <div style="flex-shrink:0;min-width:130px;">
-          <div style="font-size:16px;font-weight:600;color:#1C1A18;">plan</div>
+      <div style="border:1px solid var(--border);border-left:3px solid var(--p01);padding:18px 24px;display:flex;gap:20px;align-items:flex-start;background:#fff;">
+        <div style="flex-shrink:0;width:32px;height:32px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="0.5" stroke="#888" stroke-width="1.2"/><rect x="9" y="2" width="5" height="5" rx="0.5" stroke="#888" stroke-width="1.2"/><rect x="2" y="9" width="5" height="5" rx="0.5" stroke="#888" stroke-width="1.2"/><rect x="9" y="9" width="5" height="5" rx="0.5" stroke="#888" stroke-width="1.2"/></svg>
         </div>
-        <div style="font-size:16px;color:#555;line-height:1.5;">읽기 전용 — 코드 탐색·계획만, 파일 수정 없음 (AI 리스크 관리)</div>
+        <div>
+          <div style="font-size:17px;font-weight:600;color:var(--p01);margin-bottom:3px;">Plan mode</div>
+          <div style="font-size:16px;color:#555;">코드 탐색 후 계획 제시 — 파일 수정 없음</div>
+        </div>
       </div>
 
-      <!-- auto -->
-      <div style="border:1px solid var(--border);padding:14px 20px;display:flex;gap:16px;align-items:flex-start;background:#fff;">
-        <div style="flex-shrink:0;min-width:130px;">
-          <div style="font-size:16px;font-weight:600;color:#1C1A18;">auto</div>
-          <div style="font-size:13px;color:#AAAAAA;margin-top:2px;">Team/Enterprise</div>
+      <div style="border:1px solid var(--border);padding:18px 24px;display:flex;gap:20px;align-items:flex-start;background:#fff;">
+        <div style="flex-shrink:0;width:32px;height:32px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2C5.8 2 4 3.8 4 6v1H3v7h10V7h-1V6c0-2.2-1.8-4-4-4z" stroke="#888" stroke-width="1.2" stroke-linejoin="round"/><circle cx="8" cy="10.5" r="1" fill="#888"/></svg>
         </div>
-        <div style="font-size:16px;color:#555;line-height:1.5;">백그라운드 분류기가 안전성 판단 후 자동 실행 — Sonnet 4.6+ 필요</div>
-      </div>
-
-      <!-- bypassPermissions -->
-      <div style="border:1px solid var(--border);padding:14px 20px;display:flex;gap:16px;align-items:flex-start;background:#fff;">
-        <div style="flex-shrink:0;min-width:130px;">
-          <div style="font-size:16px;font-weight:600;color:#1C1A18;">bypass</div>
+        <div>
+          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:3px;">Bypass permissions</div>
+          <div style="font-size:16px;color:#555;">위험 명령도 승인 없이 실행 — 자동화 작업 전용</div>
         </div>
-        <div style="font-size:16px;color:#555;line-height:1.5;">모든 승인 건너뜀 — 자동화 파이프라인 전용, 주의해서 사용</div>
       </div>
 
     </div>
@@ -735,29 +727,25 @@
           <div style="padding:10px 20px;font-size:15px;color:#AAAAAA;letter-spacing:0.08em;">추천 모드</div>
         </div>
         <!-- 행들 -->
-        <div style="display:grid;grid-template-columns:1fr 140px;border-bottom:1px solid var(--border);">
+        <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
           <div style="padding:16px 20px;font-size:17px;color:#333;border-right:1px solid var(--border);">처음 보는 코드 · 구조 파악이 먼저</div>
-          <div style="padding:16px 20px;font-size:16px;font-weight:600;color:var(--p01);font-family:monospace;">plan</div>
+          <div style="padding:16px 20px;font-size:16px;font-weight:600;color:var(--p01);">Plan mode</div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 140px;border-bottom:1px solid var(--border);">
-          <div style="padding:16px 20px;font-size:17px;color:#333;border-right:1px solid var(--border);">빠른 수정 · 간단한 작업</div>
-          <div style="padding:16px 20px;font-size:16px;font-weight:600;color:#1C1A18;font-family:monospace;">acceptEdits</div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 140px;border-bottom:1px solid var(--border);">
+        <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
           <div style="padding:16px 20px;font-size:17px;color:#333;border-right:1px solid var(--border);">파일 5개 이상 · 원본 데이터 포함</div>
-          <div style="padding:16px 20px;font-size:16px;font-weight:600;color:var(--p01);font-family:monospace;">plan</div>
+          <div style="padding:16px 20px;font-size:16px;font-weight:600;color:var(--p01);">Plan mode</div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 140px;border-bottom:1px solid var(--border);">
-          <div style="padding:16px 20px;font-size:17px;color:#333;border-right:1px solid var(--border);">확신이 없을 때 · 승인하며 진행</div>
-          <div style="padding:16px 20px;font-size:16px;font-weight:600;color:#1C1A18;font-family:monospace;">default</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:16px 20px;font-size:17px;color:#333;border-right:1px solid var(--border);">확인하며 진행 · 승인 제어가 필요할 때</div>
+          <div style="padding:16px 20px;font-size:16px;font-weight:600;color:#1C1A18;">Ask before edits</div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 140px;border-bottom:1px solid var(--border);">
-          <div style="padding:16px 20px;font-size:17px;color:#333;border-right:1px solid var(--border);">자동화 파이프라인 · CI/CD 환경</div>
-          <div style="padding:16px 20px;font-size:16px;font-weight:600;color:#888;font-family:monospace;">bypass</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:16px 20px;font-size:17px;color:#333;border-right:1px solid var(--border);">빠른 수정 · 내용을 파악한 상태</div>
+          <div style="padding:16px 20px;font-size:16px;font-weight:600;color:#1C1A18;">Edit automatically</div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 140px;">
-          <div style="padding:16px 20px;font-size:17px;color:#333;border-right:1px solid var(--border);">Team/Enterprise · 안전한 자동 실행</div>
-          <div style="padding:16px 20px;font-size:16px;font-weight:600;color:#888;font-family:monospace;">auto</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;">
+          <div style="padding:16px 20px;font-size:17px;color:#333;border-right:1px solid var(--border);">자동화 파이프라인 · 승인 불필요한 환경</div>
+          <div style="padding:16px 20px;font-size:16px;font-weight:600;color:#888;">Bypass permissions</div>
         </div>
       </div>
     </div>
