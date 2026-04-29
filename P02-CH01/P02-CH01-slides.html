@@ -228,8 +228,9 @@
         <div class="code-wrap" style="font-size:16px;line-height:1.85;">
           <div class="code-hi">your-project/</div>
           <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 팀 공유 (git 커밋)</span></div>
+          <div>├── CLAUDE.local.md        <span class="code-comment"># 개인 지침 (.gitignore 수동 추가)</span></div>
           <div>└── .claude/</div>
-          <div>    ├── settings.json       <span class="code-comment"># 팀 설정 (hooks 포함)</span></div>
+          <div>    ├── settings.json       <span class="code-comment"># 팀 설정 (permissions · hooks)</span></div>
           <div>    ├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
           <div>    └── rules/              <span class="code-comment"># 경로별 규칙</span></div>
         </div>
@@ -923,7 +924,7 @@
       <div class="code-wrap" style="font-size:16px;line-height:1.85;">
         <div class="code-hi">your-project/</div>
         <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 팀 공유 · git 커밋</span></div>
-        <div>├── <span class="code-accent">CLAUDE.local.md</span>        <span class="code-comment"># 개인 지침 · .gitignore</span></div>
+        <div>├── <span class="code-accent">CLAUDE.local.md</span>        <span class="code-comment"># 개인 지침 · .gitignore 수동 추가</span></div>
         <div>└── .claude/</div>
         <div>    ├── settings.json       <span class="code-comment"># 팀 설정 (git 커밋)</span></div>
         <div>    ├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
@@ -1285,7 +1286,10 @@
           <div style="font-size:16px;color:#555;line-height:1.75;">허용 도구 목록 · 환경 변수 · hooks 정의<br>Claude Code 설정 UI에서도 편집 가능</div>
           <div class="code-wrap" style="font-size:15px;line-height:1.75;margin-top:12px;">
             <div>{</div>
-            <div>  <span class="code-hi">"allowedTools"</span>: [<span class="code-accent">"Edit"</span>, <span class="code-accent">"Bash"</span>],</div>
+            <div>  <span class="code-hi">"permissions"</span>: {</div>
+            <div>    <span class="code-hi">"allow"</span>: [<span class="code-accent">"Bash(npm run *)"</span>],</div>
+            <div>    <span class="code-hi">"deny"</span>:  [<span class="code-accent">"Read(.env)"</span>]</div>
+            <div>  },</div>
             <div>  <span class="code-hi">"hooks"</span>: { <span class="code-comment">/* 이벤트 자동화 */</span> }</div>
             <div>}</div>
           </div>
