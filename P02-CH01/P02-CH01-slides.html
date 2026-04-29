@@ -288,10 +288,11 @@
         <div class="code-comment"># 프로젝트 디렉토리</div>
         <div class="code-hi">your-project/</div>
         <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 팀 공유 (git 커밋)</span></div>
+        <div>├── CLAUDE.local.md        <span class="code-comment"># 개인 지침 (gitignore 수동)</span></div>
         <div>└── .claude/</div>
-        <div>    ├── settings.json       <span class="code-comment"># 팀 설정 (hooks 포함)</span></div>
-        <div>    ├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
-        <div>    └── rules/              <span class="code-comment"># 경로별 규칙</span></div>
+        <div>│   ├── settings.json       <span class="code-comment"># 팀 설정 (permissions · hooks)</span></div>
+        <div>│   ├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
+        <div>│   └── rules/              <span class="code-comment"># 경로별 규칙</span></div>
         <div style="margin-top:8px;" class="code-comment"># 전역 디렉토리 (내 컴퓨터)</div>
         <div class="code-hi">~/.claude/</div>
         <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 전역 개인 지침</span></div>
@@ -915,7 +916,7 @@
       <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;">
         <div style="border:1px solid var(--border);padding:14px 16px;background:#fff;">
           <div style="font-family:monospace;font-size:16px;color:var(--p01);font-weight:600;margin-bottom:4px;">CLAUDE.local.md</div>
-          <div style="font-size:16px;color:#555;line-height:1.6;">팀과 공유하지 않는<br>나만의 개인 지침<br><span style="color:#AAAAAA;">자동으로 .gitignore 처리</span></div>
+          <div style="font-size:16px;color:#555;line-height:1.6;">팀과 공유하지 않는<br>나만의 개인 지침<br><span style="color:#AAAAAA;">.gitignore 수동 추가 필요</span></div>
         </div>
       </div>
     </div>
@@ -926,10 +927,9 @@
         <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 팀 공유 · git 커밋</span></div>
         <div>├── <span class="code-accent">CLAUDE.local.md</span>        <span class="code-comment"># 개인 지침 · .gitignore 수동 추가</span></div>
         <div>└── .claude/</div>
-        <div>    ├── settings.json       <span class="code-comment"># 팀 설정 (git 커밋)</span></div>
-        <div>    ├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
-        <div>    ├── rules/              <span class="code-comment"># 경로별 규칙 파일들</span></div>
-        <div>    └── hooks/              <span class="code-comment"># 훅 스크립트</span></div>
+        <div>│   ├── settings.json       <span class="code-comment"># 팀 설정 (git 커밋)</span></div>
+        <div>│   ├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
+        <div>│   └── rules/              <span class="code-comment"># 경로별 규칙 파일들</span></div>
         <div style="margin-top:10px;" class="code-comment"># 전역 디렉토리 (내 컴퓨터 전체)</div>
         <div class="code-hi">~/.claude/</div>
         <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 전역 지침 (모든 프로젝트)</span></div>
