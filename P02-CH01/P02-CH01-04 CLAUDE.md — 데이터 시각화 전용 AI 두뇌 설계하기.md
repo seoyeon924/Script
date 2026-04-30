@@ -3,6 +3,7 @@ tags: #P02 #CH01 #CLAUDE-md #데이터시각화 #AI두뇌
 time: 15분
 part: Part 02
 chapter: CH01
+clip: 02
 status: ✅ 대본완성
 ---
 
