@@ -786,23 +786,19 @@
 
       <!-- VSCode 익스텐션 -->
       <div>
-        <div style="font-size:17px;font-weight:700;letter-spacing:0.08em;color:#888;text-transform:uppercase;margin-bottom:10px;">VSCode — 메시지 위에 마우스오버 → Rewind 메뉴</div>
+        <div style="font-size:17px;font-weight:700;letter-spacing:0.08em;color:#888;text-transform:uppercase;margin-bottom:10px;">VSCode — 메시지 위에 마우스오버 → 컨텍스트 메뉴</div>
         <div style="display:flex;flex-direction:column;gap:6px;">
           <div style="border:1px solid var(--border);padding:12px 18px;background:#fff;display:flex;gap:16px;align-items:center;">
-            <div style="font-size:16px;color:#1C1A18;background:#F0EEE9;padding:4px 10px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;font-weight:500;">Restore code and conversation</div>
-            <div style="font-size:16px;color:#555;">코드 + 대화 모두 해당 시점으로 복원</div>
+            <div style="font-size:16px;color:#1C1A18;background:#F0EEE9;padding:4px 10px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;font-weight:500;">Fork conversation from here</div>
+            <div style="font-size:16px;color:#555;">해당 시점부터 대화를 새 브랜치로 분기</div>
           </div>
           <div style="border:1px solid var(--border);padding:12px 18px;background:#fff;display:flex;gap:16px;align-items:center;">
-            <div style="font-size:16px;color:#1C1A18;background:#F0EEE9;padding:4px 10px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;font-weight:500;">Restore conversation</div>
-            <div style="font-size:16px;color:#555;">대화만 복원, 코드 파일은 유지</div>
+            <div style="font-size:16px;color:#1C1A18;background:#F0EEE9;padding:4px 10px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;font-weight:500;">Rewind code to here</div>
+            <div style="font-size:16px;color:#555;">코드만 해당 시점으로 되감기 (대화 유지)</div>
           </div>
           <div style="border:1px solid var(--border);padding:12px 18px;background:#fff;display:flex;gap:16px;align-items:center;">
-            <div style="font-size:16px;color:#1C1A18;background:#F0EEE9;padding:4px 10px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;font-weight:500;">Restore code</div>
-            <div style="font-size:16px;color:#555;">코드만 복원, 대화 히스토리는 유지</div>
-          </div>
-          <div style="border:1px solid var(--border);padding:12px 18px;background:#fff;display:flex;gap:16px;align-items:center;">
-            <div style="font-size:16px;color:#1C1A18;background:#F0EEE9;padding:4px 10px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;font-weight:500;">Summarize from here</div>
-            <div style="font-size:16px;color:#555;">해당 시점부터 대화 내용 요약</div>
+            <div style="font-size:16px;color:#1C1A18;background:#F0EEE9;padding:4px 10px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;font-weight:500;">Fork conversation and rewind code</div>
+            <div style="font-size:16px;color:#555;">대화 분기 + 코드 되감기 동시 적용</div>
           </div>
         </div>
       </div>
