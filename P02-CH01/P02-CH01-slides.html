@@ -1758,17 +1758,28 @@
         <div style="padding:12px 22px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.02);">
           <div style="font-family:monospace;font-size:17px;color:#555;font-weight:600;">settings.json</div>
         </div>
-        <div style="padding:16px 22px;">
-          <div style="font-size:16px;color:#555;line-height:1.75;">허용 도구 목록 · 환경 변수 · hooks 정의<br>Claude Code 설정 UI에서도 편집 가능</div>
-          <div class="code-wrap" style="font-size:15px;line-height:1.75;margin-top:12px;">
-            <div>{</div>
-            <div>  <span class="code-hi">"permissions"</span>: {</div>
-            <div>    <span class="code-hi">"allow"</span>: [<span class="code-accent">"Bash(npm run *)"</span>],</div>
-            <div>    <span class="code-hi">"deny"</span>:  [<span class="code-accent">"Read(.env)"</span>]</div>
-            <div>  },</div>
-            <div>  <span class="code-hi">"hooks"</span>: { <span class="code-comment">/* 이벤트 자동화 */</span> }</div>
-            <div>}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:14px 18px;border-right:1px solid var(--border);">
+            <div style="font-size:15px;color:#AAAAAA;margin-bottom:6px;">permissions</div>
+            <div style="font-size:15px;color:#555;line-height:1.65;">Claude가 실행할 수 있는<br>명령어를 허용하거나 차단</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+              <div style="font-size:14px;font-family:monospace;color:#2A7A4A;">allow: ["Bash(git *)"]</div>
+              <div style="font-size:14px;color:#AAAAAA;">→ git 명령 전부 허용</div>
+              <div style="font-size:14px;font-family:monospace;color:#C0483C;margin-top:2px;">deny: ["Bash(rm -rf *)"]</div>
+              <div style="font-size:14px;color:#AAAAAA;">→ 강제 삭제 차단</div>
+            </div>
           </div>
+          <div style="padding:14px 18px;">
+            <div style="font-size:15px;color:#AAAAAA;margin-bottom:6px;">hooks</div>
+            <div style="font-size:15px;color:#555;line-height:1.65;">특정 순간에 자동으로<br>실행되는 명령어 등록</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+              <div style="font-size:14px;color:#555;line-height:1.6;">파일 수정 후<br>→ 자동으로 린트 실행</div>
+              <div style="font-size:14px;color:#555;line-height:1.6;margin-top:4px;">응답 완료 후<br>→ 결과 자동 저장</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:10px 18px;background:#F8F7F4;">
+          <div style="font-size:14px;color:#AAAAAA;">Claude Code 설정 UI에서도 편집 가능</div>
         </div>
       </div>
     </div>
