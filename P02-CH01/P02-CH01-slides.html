@@ -270,13 +270,12 @@
         </div>
       </div>
     </div>
-    <!-- Right: 공식 구조 → 데이터 시각화 적용 -->
+    <!-- Right: 공식 구조 -->
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 44px;gap:20px;">
 
-      <!-- 공식 프로젝트 구조 -->
       <div>
         <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;font-weight:600;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);">공식 문서 기준 프로젝트 구조</div>
-        <div class="code-wrap" style="font-size:16px;line-height:1.85;">
+        <div class="code-wrap" style="font-size:17px;line-height:2;">
           <div class="code-hi">your-project/</div>
           <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 팀 공유 (git 커밋)</span></div>
           <div>├── CLAUDE.local.md        <span class="code-comment"># 개인 지침 (.gitignore 수동 추가)</span></div>
@@ -286,19 +285,6 @@
           <div>&nbsp;&nbsp;&nbsp;&nbsp;├── .mcp.json           <span class="code-comment"># MCP 서버 설정 (git 커밋)</span></div>
           <div>&nbsp;&nbsp;&nbsp;&nbsp;├── agents/             <span class="code-comment"># 서브에이전트</span></div>
           <div>&nbsp;&nbsp;&nbsp;&nbsp;└── skills/             <span class="code-comment"># 스킬</span></div>
-        </div>
-      </div>
-
-      <!-- 데이터 시각화 적용 예시 -->
-      <div>
-        <div style="font-size:16px;color:var(--p01);letter-spacing:0.1em;font-weight:600;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(232,96,60,0.25);">데이터 시각화 프로젝트 적용</div>
-        <div class="code-wrap" style="font-size:16px;line-height:1.85;">
-          <div class="code-hi">my-viz-project/</div>
-          <div>├── <span class="code-accent">CLAUDE.md</span>     <span class="code-comment"># 시각화 규칙, raw/ 수정 금지 등</span></div>
-          <div>├── data/</div>
-          <div>│   ├── raw/       <span class="code-comment"># 원본 — 절대 수정 금지</span></div>
-          <div>│   └── processed/</div>
-          <div>├── scripts/ · charts/ · reports/</div>
         </div>
       </div>
 
@@ -322,14 +308,14 @@
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <div style="border:1px solid var(--border);padding:14px 18px;background:#fff;">
-          <div style="font-family:monospace;font-size:16px;color:var(--p01);font-weight:600;margin-bottom:4px;">.claude/</div>
-          <div style="font-size:16px;color:#1C1A18;font-weight:500;margin-bottom:2px;">프로젝트</div>
-          <div style="font-size:16px;color:#777;line-height:1.6;">이 프로젝트에만 적용 · 팀 공유 가능</div>
+          <div style="font-family:monospace;font-size:16px;color:var(--p01);font-weight:600;margin-bottom:6px;">.claude/  <span style="font-size:14px;font-family:sans-serif;color:#888;font-weight:400;">프로젝트</span></div>
+          <div style="font-size:15px;color:#555;line-height:1.7;">이 프로젝트에서만 작동<br>git 커밋 → 팀원 전체가 같은 규칙 사용</div>
+          <div style="margin-top:8px;font-size:14px;color:#AAAAAA;line-height:1.6;">예) raw/ 수정 금지 · 차트 레이블 한국어</div>
         </div>
         <div style="border:1px solid var(--border);padding:14px 18px;background:#F5F4F0;">
-          <div style="font-family:monospace;font-size:16px;color:#555;font-weight:600;margin-bottom:4px;">~/.claude/</div>
-          <div style="font-size:16px;color:#1C1A18;font-weight:500;margin-bottom:2px;">전역 (내 컴퓨터 전체)</div>
-          <div style="font-size:16px;color:#777;line-height:1.6;">모든 프로젝트에 자동 적용 · 본인만</div>
+          <div style="font-family:monospace;font-size:16px;color:#555;font-weight:600;margin-bottom:6px;">~/.claude/  <span style="font-size:14px;font-family:sans-serif;color:#888;font-weight:400;">전역</span></div>
+          <div style="font-size:15px;color:#555;line-height:1.7;">어떤 프로젝트를 열어도 자동 적용<br>나만 사용 — 팀에 공유 안 됨</div>
+          <div style="margin-top:8px;font-size:14px;color:#AAAAAA;line-height:1.6;">예) 항상 한국어로 답하기 · 개인 코딩 스타일</div>
         </div>
       </div>
     </div>
