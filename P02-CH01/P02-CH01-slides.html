@@ -232,8 +232,7 @@
           <div>└── .claude/</div>
           <div>&nbsp;&nbsp;&nbsp;&nbsp;├── settings.json       <span class="code-comment"># 팀 설정 (permissions · hooks)</span></div>
           <div>&nbsp;&nbsp;&nbsp;&nbsp;├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;├── rules/              <span class="code-comment"># 경로별 규칙</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;├── commands/           <span class="code-comment"># 커스텀 슬래시 커맨드</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;├── .mcp.json           <span class="code-comment"># MCP 서버 설정 (git 커밋)</span></div>
           <div>&nbsp;&nbsp;&nbsp;&nbsp;├── agents/             <span class="code-comment"># 서브에이전트</span></div>
           <div>&nbsp;&nbsp;&nbsp;&nbsp;└── skills/             <span class="code-comment"># 스킬</span></div>
         </div>
@@ -295,17 +294,14 @@
         <div>└── .claude/</div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;├── settings.json       <span class="code-comment"># 팀 설정 (permissions · hooks)</span></div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;├── rules/              <span class="code-comment"># 경로별 규칙</span></div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;├── commands/           <span class="code-comment"># 커스텀 슬래시 커맨드</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;├── .mcp.json           <span class="code-comment"># MCP 서버 설정 (git 커밋)</span></div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;├── agents/             <span class="code-comment"># 서브에이전트</span></div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;└── skills/             <span class="code-comment"># 스킬</span></div>
         <div style="margin-top:8px;" class="code-comment"># 전역 디렉토리 (내 컴퓨터)</div>
         <div class="code-hi">~/.claude/</div>
         <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 전역 개인 지침</span></div>
-        <div>├── settings.json</div>
-        <div>├── rules/</div>
-        <div>├── commands/</div>
-        <div>└── agents/</div>
+        <div>├── settings.json          <span class="code-comment"># 전역 사용자 설정</span></div>
+        <div>└── agents/                <span class="code-comment"># 전역 서브에이전트</span></div>
       </div>
 
       <!-- CLAUDE.md 핵심 3가지 -->
@@ -1234,17 +1230,14 @@
         <div>└── .claude/</div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;├── settings.json       <span class="code-comment"># 팀 설정 (git 커밋)</span></div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;├── settings.local.json <span class="code-comment"># 개인 설정 (자동 제외)</span></div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;├── rules/              <span class="code-comment"># 경로별 규칙</span></div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;├── commands/           <span class="code-comment"># 커스텀 슬래시 커맨드</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;├── .mcp.json           <span class="code-comment"># MCP 서버 설정 (git 커밋)</span></div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;├── agents/             <span class="code-comment"># 서브에이전트</span></div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;└── skills/             <span class="code-comment"># 스킬</span></div>
         <div style="margin-top:10px;" class="code-comment"># 전역 디렉토리 (내 컴퓨터 전체)</div>
         <div class="code-hi">~/.claude/</div>
         <div>├── <span class="code-accent">CLAUDE.md</span>              <span class="code-comment"># 전역 지침 (모든 프로젝트)</span></div>
-        <div>├── settings.json</div>
-        <div>├── rules/</div>
-        <div>├── commands/</div>
-        <div>└── agents/</div>
+        <div>├── settings.json          <span class="code-comment"># 전역 사용자 설정</span></div>
+        <div>└── agents/                <span class="code-comment"># 전역 서브에이전트</span></div>
       </div>
     </div>
   </div>
