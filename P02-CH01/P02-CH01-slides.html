@@ -198,51 +198,54 @@
 </div>
 
 
-<!-- ════ s31 | CLAUDE.md란? ════ -->
+<!-- ════ s31 | CLAUDE.md가 하는 일 ════ -->
 <div class="slide" id="s31">
   <div class="tb">
-    <span class="tb-cap">프로젝트 폴더 구조 파악하기</span>
-    <span class="tb-num">15</span>
+    <span class="tb-cap">CLAUDE.md</span>
+    <span class="tb-num">2</span>
   </div>
   <div class="body">
     <div class="l-panel" style="justify-content:flex-start;gap:0;padding-top:44px;">
       <div>
-        <div class="eyebrow">세션 기억</div>
-        <div class="big-title">CLAUDE.md란?</div>
-        <div style="margin-top:14px;font-size:18px;font-weight:600;color:var(--p01);line-height:1.5;">Claude한테 규칙을<br>저장해두는 파일</div>
+        <div class="eyebrow">역할</div>
+        <div class="big-title">Claude에게<br>주는 지시서</div>
       </div>
-      <div style="margin-top:24px;display:flex;flex-direction:column;gap:12px;">
-        <div style="border:1px solid var(--border);padding:14px 18px;background:#fff;">
-          <div style="font-size:16px;font-weight:600;color:#1C1A18;margin-bottom:4px;">세션 시작할 때 자동 로드</div>
-          <div style="font-size:16px;color:#777;line-height:1.6;">매번 설명 안 해도 Claude가<br>프로젝트 규칙을 처음부터 알고 시작</div>
+      <div style="margin-top:22px;display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:var(--p01);flex-shrink:0;margin-top:8px;"></div>
+          <div style="font-size:16px;color:#555;line-height:1.6;">이 프로젝트에서 네 역할은 이거야</div>
         </div>
-        <div style="border:1px solid var(--border);padding:14px 18px;background:#fff;">
-          <div style="font-size:16px;font-weight:600;color:#1C1A18;margin-bottom:4px;">평범한 마크다운 파일</div>
-          <div style="font-size:16px;color:#777;line-height:1.6;">특별한 문법 없음 — 말하듯 쓰면 됨</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:var(--p01);flex-shrink:0;margin-top:8px;"></div>
+          <div style="font-size:16px;color:#555;line-height:1.6;">이런 규칙을 따라야 해</div>
         </div>
-        <div style="border:1px solid rgba(232,96,60,0.25);padding:14px 18px;background:rgba(232,96,60,0.04);">
-          <div style="font-size:16px;color:#555;line-height:1.7;font-family:monospace;">"이 규칙 CLAUDE.md에<br>추가해줘"</div>
-          <div style="font-size:15px;color:#AAAAAA;margin-top:4px;">→ Claude가 직접 파일 열고 추가</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:var(--p01);flex-shrink:0;margin-top:8px;"></div>
+          <div style="font-size:16px;color:#555;line-height:1.6;">이 파일들은 절대 건드리지 마</div>
         </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:var(--p01);flex-shrink:0;margin-top:8px;"></div>
+          <div style="font-size:16px;color:#555;line-height:1.6;">차트는 이 스타일로 만들어</div>
+        </div>
+      </div>
+      <div style="margin-top:18px;padding:12px 16px;background:rgba(232,96,60,0.04);border:1px solid rgba(232,96,60,0.2);">
+        <div style="font-size:15px;color:#555;line-height:1.6;">한 번 써두면 매번 말하지 않아도 됨</div>
       </div>
     </div>
     <!-- Right: CLAUDE.md 예시 -->
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 44px;gap:14px;">
-      <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:2px;">CLAUDE.md 예시</div>
+      <div style="font-size:14px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:2px;">CLAUDE.md</div>
       <div class="code-wrap" style="font-size:16px;line-height:2;">
-        <div class="code-comment"># 프로젝트 규칙</div>
-        <div style="margin-top:6px;"></div>
-        <div class="code-comment">## 데이터 처리</div>
-        <div>- <span class="code-hi">data/raw/</span> 파일은 절대 수정 금지</div>
-        <div>- 처리 결과는 <span class="code-hi">data/processed/</span>에 저장</div>
-        <div style="margin-top:6px;"></div>
-        <div class="code-comment">## 출력 형식</div>
-        <div>- 차트 레이블은 <span class="code-accent">한국어</span>로</div>
-        <div>- 분석 전 파일 구조 먼저 확인할 것</div>
-        <div style="margin-top:6px;"></div>
-        <div class="code-comment">## 저장 경로</div>
-        <div>- 차트 → <span class="code-hi">charts/</span></div>
-        <div>- 리포트 → <span class="code-hi">reports/</span></div>
+        <div class="code-comment"># 프로젝트에서 네 역할</div>
+        <div>마케팅 채널 성과를 <span class="code-hi">분석하고 시각화</span></div>
+        <div style="margin-top:8px;"></div>
+        <div class="code-comment"># 규칙</div>
+        <div>- <span class="code-accent">data/raw/</span> 파일 수정 절대 금지</div>
+        <div>- 차트 레이블은 <span class="code-hi">한국어</span>로</div>
+        <div style="margin-top:8px;"></div>
+        <div class="code-comment"># 차트 스타일</div>
+        <div>- 강조색: <span class="code-accent">#1E3A5F</span></div>
+        <div>- 저장: <span class="code-hi">charts/</span> 폴더</div>
       </div>
     </div>
   </div>
@@ -363,37 +366,41 @@
 </div>
 
 
-<!-- ════ s5 | 폴더 생성 & 소개하기 ════ -->
+<!-- ════ s5 | /init 두 타이밍 ════ -->
 <div class="slide" id="s5">
   <div class="tb">
-    <span class="tb-cap">프로젝트 폴더 구조 파악하기</span>
-    <span class="tb-num">5</span>
+    <span class="tb-cap">CLAUDE.md</span>
+    <span class="tb-num">7</span>
   </div>
   <div class="body">
-    <div class="l-panel">
+    <div class="l-panel" style="justify-content:flex-start;gap:0;padding-top:44px;">
       <div>
-        <div class="eyebrow">실습</div>
-        <div class="big-title">CLAUDE.md<br>직접 만들어보기</div>
+        <div class="eyebrow">/init</div>
+        <div class="big-title">/init<br>두 타이밍</div>
       </div>
-      <div style="padding:16px 20px;background:#F5F4F0;border:1px solid var(--border);">
-        <div style="font-size:17px;color:#555;line-height:1.8;">→ 능동적 질문 = 이후 정확도 향상</div>
+      <div style="margin-top:22px;padding:14px 18px;background:rgba(232,96,60,0.04);border:1px solid rgba(232,96,60,0.2);">
+        <div style="font-family:monospace;font-size:16px;color:var(--p01);">/init</div>
+        <div style="font-size:15px;color:#555;margin-top:4px;line-height:1.6;">Claude가 현재 폴더를 분석해서<br>CLAUDE.md 초안 자동 생성</div>
       </div>
     </div>
-    <!-- Right: CLAUDE.md 생성 실습 -->
+    <!-- Right: 두 타이밍 -->
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 52px;gap:20px;">
 
-      <div style="border:1px solid var(--border);padding:24px 28px;background:#fff;">
-        <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:14px;">프롬프트</div>
-        <div style="font-size:17px;color:#333;line-height:1.9;">이 프로젝트용 CLAUDE.md 만들어줘.<br><br>규칙 두 가지만 넣어:<br>- data/raw/ 파일은 수정 금지<br>- 차트 레이블은 한국어로</div>
+      <div style="border:1px solid var(--border);padding:22px 24px;background:#fff;">
+        <div style="font-size:14px;font-weight:700;color:#888;letter-spacing:0.1em;margin-bottom:10px;">타이밍 ①</div>
+        <div style="font-size:19px;font-weight:600;color:#1C1A18;margin-bottom:8px;">새 프로젝트 시작할 때</div>
+        <div style="font-size:16px;color:#555;line-height:1.7;">/init 입력 → Claude가 폴더 분석 →<br>CLAUDE.md 초안 생성 → 직접 수정</div>
       </div>
 
-      <div style="border:1px solid var(--border);padding:20px 28px;background:#F5F4F0;">
-        <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">결과</div>
-        <div class="code-wrap" style="font-size:16px;line-height:1.85;margin-top:0;">
-          <div class="code-comment"># 프로젝트 규칙</div>
-          <div class="code-hi">- data/raw/ 파일 수정 금지</div>
-          <div class="code-hi">- 차트 레이블은 한국어</div>
+      <div style="border:1px solid rgba(232,96,60,0.25);padding:22px 24px;background:rgba(232,96,60,0.02);">
+        <div style="font-size:14px;font-weight:700;color:var(--p01);letter-spacing:0.1em;margin-bottom:10px;">타이밍 ② — 더 중요</div>
+        <div style="font-size:19px;font-weight:600;color:#1C1A18;margin-bottom:10px;">결과물이 마음에 들었을 때</div>
+        <div class="code-wrap" style="font-size:15px;line-height:1.8;padding:12px 16px;">
+          <div class="code-hi">이 결과물 기준으로 워크플로우를</div>
+          <div class="code-hi">CLAUDE.md에 저장해줘.</div>
+          <div class="code-comment">다음 세션에서도 이 품질로 재현할 수 있게.</div>
         </div>
+        <div style="font-size:15px;color:#555;margin-top:10px;line-height:1.7;">→ Claude가 작업 방식 분석 후 워크플로우로 정리</div>
       </div>
 
     </div>
@@ -1139,95 +1146,121 @@
 </div>
 
 
-<!-- ════ s30 | CLAUDE.md 왜 필요한가 ════ -->
+<!-- ════ s30 | 반복 설명 문제 ════ -->
 <div class="slide" id="s30">
   <div class="tb">
     <span class="tb-cap">CLAUDE.md</span>
     <span class="tb-num">1</span>
   </div>
   <div class="body">
-    <!-- Left: 설명 -->
-    <div class="l-panel" style="flex:1;justify-content:center;">
+    <div class="l-panel" style="justify-content:flex-start;gap:0;padding-top:44px;">
       <div>
-        <div class="eyebrow">왜 필요한가</div>
-        <div class="big-title">세션 간<br>기억 유지</div>
-        <div style="margin-top:20px;display:flex;flex-direction:column;gap:14px;">
-          <div style="font-size:17px;color:#555;line-height:1.75;">Claude는 세션이 끊기면<br>이전 대화를 기억 못 함</div>
-          <div style="font-size:17px;color:#555;line-height:1.75;">매번 같은 규칙·컨텍스트를<br>다시 설명해야 하는 문제</div>
-          <div style="border:1px solid var(--border);padding:14px 18px;background:#F8F7F4;margin-top:4px;">
-            <div style="font-size:16px;color:#888;margin-bottom:6px;">해결책</div>
-            <div style="font-family:monospace;font-size:17px;color:var(--p01);font-weight:600;">CLAUDE.md</div>
-            <div style="font-size:16px;color:#555;margin-top:4px;line-height:1.6;">프로젝트 규칙을 파일에 저장<br>→ 매 세션 자동 로드</div>
-          </div>
+        <div class="eyebrow">문제</div>
+        <div class="big-title">매 세션<br>반복 설명</div>
+      </div>
+      <div style="margin-top:22px;display:flex;flex-direction:column;gap:10px;">
+        <div style="border:1px solid var(--border);padding:14px 18px;background:#FDF8F7;">
+          <div style="font-size:14px;color:#AAAAAA;margin-bottom:8px;letter-spacing:0.08em;">매번 이렇게 설명해야 함</div>
+          <div style="font-family:monospace;font-size:15px;color:#555;line-height:1.8;">"이건 마케팅 데이터 분석 프로젝트야,<br>차트는 파이썬으로 만들고,<br>raw 데이터는 수정하지 마"</div>
+        </div>
+        <div style="border:1px solid rgba(232,96,60,0.2);padding:12px 16px;background:rgba(232,96,60,0.04);">
+          <div style="font-size:16px;color:var(--p01);font-weight:600;">CLAUDE.md가 이 문제를 해결합니다</div>
         </div>
       </div>
     </div>
-    <!-- Right: 스크린샷 -->
-    <div style="width:48%;background:#0E0E0E;display:flex;align-items:center;justify-content:center;padding:48px;border-left:1px solid #1E2028;">
-      <img src="claude-md-intro.png" alt="Claude Code CLAUDE.md 로딩 화면" style="width:100%;max-width:400px;">
+    <!-- Right: 해결책 비교 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 52px;gap:16px;">
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#C0483C;letter-spacing:0.08em;margin-bottom:10px;">CLAUDE.md 없을 때</div>
+        <div style="border:1px solid #E8C0B8;padding:16px 20px;background:#FDF8F7;">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;gap:8px;align-items:flex-start;">
+              <div style="color:#C0483C;flex-shrink:0;font-size:15px;">✗</div>
+              <div style="font-size:16px;color:#555;">세션 시작마다 프로젝트 설명 반복</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:flex-start;">
+              <div style="color:#C0483C;flex-shrink:0;font-size:15px;">✗</div>
+              <div style="font-size:16px;color:#555;">규칙 · 스타일 매번 재설명</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:flex-start;">
+              <div style="color:#C0483C;flex-shrink:0;font-size:15px;">✗</div>
+              <div style="font-size:16px;color:#555;">Claude가 이전 맥락을 모르는 상태로 시작</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#2A7A4A;letter-spacing:0.08em;margin-bottom:10px;">CLAUDE.md 있을 때</div>
+        <div style="border:1px solid #B8D8C4;padding:16px 20px;background:#F4FBF7;">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;gap:8px;align-items:flex-start;">
+              <div style="color:#2A7A4A;flex-shrink:0;font-size:15px;">✓</div>
+              <div style="font-size:16px;color:#555;">세션 시작 시 프로젝트 규칙 자동 로드</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:flex-start;">
+              <div style="color:#2A7A4A;flex-shrink:0;font-size:15px;">✓</div>
+              <div style="font-size:16px;color:#555;">반복 설명 없이 바로 작업 시작</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:flex-start;">
+              <div style="color:#2A7A4A;flex-shrink:0;font-size:15px;">✓</div>
+              <div style="font-size:16px;color:#555;">Claude가 항상 프로젝트 맥락에서 작업</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 
-<!-- ════ s11 | CLAUDE.md vs 자동 메모리 ════ -->
+<!-- ════ s11 | 세 가지 위치 ════ -->
 <div class="slide" id="s11">
   <div class="tb">
     <span class="tb-cap">CLAUDE.md</span>
-    <span class="tb-num">11</span>
+    <span class="tb-num">3</span>
   </div>
   <div class="body">
     <div class="l-panel" style="justify-content:flex-start;gap:0;padding-top:44px;">
       <div>
-        <div class="eyebrow">두 가지 메모리 시스템</div>
-        <div class="big-title">CLAUDE.md vs<br>자동 메모리</div>
-        <div class="body-text" style="margin-top:16px;">둘 다 모든 대화 시작 시 자동 로드</div>
+        <div class="eyebrow">적용 범위</div>
+        <div class="big-title">세 가지<br>위치</div>
       </div>
-      <div style="margin-top:20px;padding:14px 18px;background:#F5F4F0;border:1px solid var(--border);">
-        <div style="font-size:16px;color:#555;line-height:1.8;">지침이 더 구체적이고 간결할수록<br>Claude가 더 일관되게 따름</div>
+      <div style="margin-top:22px;padding:14px 18px;background:#F5F4F0;border:1px solid var(--border);">
+        <div style="font-size:16px;color:#555;line-height:1.8;">좁은 범위가<br>넓은 범위보다 우선 적용</div>
       </div>
-      <div style="margin-top:14px;padding:14px 18px;background:rgba(232,96,60,0.04);border:1px solid rgba(232,96,60,0.2);">
-        <div style="font-size:16px;color:#555;line-height:1.7;">Claude 동작을 안내하려면 <strong>CLAUDE.md</strong> 사용<br>자동 메모리로 Claude가 수정 사항에서 학습</div>
+      <div style="margin-top:14px;padding:12px 16px;background:rgba(232,96,60,0.04);border:1px solid rgba(232,96,60,0.2);">
+        <div style="font-family:monospace;font-size:15px;color:var(--p01);">"이 규칙 CLAUDE.md에<br>추가해줘"</div>
+        <div style="font-size:15px;color:#AAAAAA;margin-top:4px;">→ Claude가 직접 파일 열고 추가</div>
       </div>
     </div>
-    <!-- Right: 비교 표 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 48px;">
+    <!-- Right: 위치 테이블 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 52px;">
       <div style="border:1px solid var(--border);">
-        <!-- 헤더 -->
-        <div style="display:grid;grid-template-columns:100px 1fr 1fr;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.02);">
-          <div style="padding:10px 14px;border-right:1px solid var(--border);"></div>
-          <div style="padding:10px 14px;border-right:1px solid var(--border);font-size:16px;font-weight:600;color:var(--p01);">CLAUDE.md 파일</div>
-          <div style="padding:10px 14px;font-size:16px;font-weight:600;color:#555;">자동 메모리</div>
+        <div style="display:grid;grid-template-columns:2fr 1.5fr 1fr;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.02);">
+          <div style="padding:10px 16px;border-right:1px solid var(--border);font-size:14px;color:#AAAAAA;letter-spacing:0.08em;">위치</div>
+          <div style="padding:10px 16px;border-right:1px solid var(--border);font-size:14px;color:#AAAAAA;letter-spacing:0.08em;">적용 범위</div>
+          <div style="padding:10px 16px;font-size:14px;color:#AAAAAA;letter-spacing:0.08em;">팀 공유</div>
         </div>
-        <!-- 작성자 -->
-        <div style="display:grid;grid-template-columns:100px 1fr 1fr;border-bottom:1px solid var(--border);">
-          <div style="padding:12px 14px;border-right:1px solid var(--border);font-size:15px;color:#AAAAAA;letter-spacing:0.06em;">작성자</div>
-          <div style="padding:12px 14px;border-right:1px solid var(--border);font-size:16px;color:#1C1A18;font-weight:500;">사용자</div>
-          <div style="padding:12px 14px;font-size:16px;color:#555;">Claude</div>
+        <div style="display:grid;grid-template-columns:2fr 1.5fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:16px;border-right:1px solid var(--border);">
+            <div style="font-family:monospace;font-size:15px;color:#555;">~/.claude/CLAUDE.md</div>
+          </div>
+          <div style="padding:16px;border-right:1px solid var(--border);font-size:16px;color:#555;">내 컴퓨터 전체</div>
+          <div style="padding:16px;font-size:16px;color:#555;">본인만</div>
         </div>
-        <!-- 포함 내용 -->
-        <div style="display:grid;grid-template-columns:100px 1fr 1fr;border-bottom:1px solid var(--border);">
-          <div style="padding:12px 14px;border-right:1px solid var(--border);font-size:15px;color:#AAAAAA;letter-spacing:0.06em;">포함 내용</div>
-          <div style="padding:12px 14px;border-right:1px solid var(--border);font-size:16px;color:#1C1A18;">지침 및 규칙</div>
-          <div style="padding:12px 14px;font-size:16px;color:#555;">학습 및 패턴</div>
+        <div style="display:grid;grid-template-columns:2fr 1.5fr 1fr;border-bottom:1px solid var(--border);background:rgba(232,96,60,0.02);">
+          <div style="padding:16px;border-right:1px solid var(--border);">
+            <div style="font-family:monospace;font-size:15px;color:var(--p01);font-weight:600;">my-project/CLAUDE.md</div>
+          </div>
+          <div style="padding:16px;border-right:1px solid var(--border);font-size:16px;color:#1C1A18;font-weight:500;">이 프로젝트 전체</div>
+          <div style="padding:16px;font-size:16px;color:#1C1A18;font-weight:500;">Git 공유 가능</div>
         </div>
-        <!-- 범위 -->
-        <div style="display:grid;grid-template-columns:100px 1fr 1fr;border-bottom:1px solid var(--border);">
-          <div style="padding:12px 14px;border-right:1px solid var(--border);font-size:15px;color:#AAAAAA;letter-spacing:0.06em;">범위</div>
-          <div style="padding:12px 14px;border-right:1px solid var(--border);font-size:16px;color:#1C1A18;">프로젝트 · 사용자 · 조직</div>
-          <div style="padding:12px 14px;font-size:16px;color:#555;">작업 트리당</div>
-        </div>
-        <!-- 로드 -->
-        <div style="display:grid;grid-template-columns:100px 1fr 1fr;border-bottom:1px solid var(--border);">
-          <div style="padding:12px 14px;border-right:1px solid var(--border);font-size:15px;color:#AAAAAA;letter-spacing:0.06em;">로드</div>
-          <div style="padding:12px 14px;border-right:1px solid var(--border);font-size:16px;color:#1C1A18;">모든 세션</div>
-          <div style="padding:12px 14px;font-size:16px;color:#555;">모든 세션<br><span style="font-size:14px;color:#AAAAAA;">처음 200줄 또는 25KB</span></div>
-        </div>
-        <!-- 사용 목적 -->
-        <div style="display:grid;grid-template-columns:100px 1fr 1fr;">
-          <div style="padding:12px 14px;border-right:1px solid var(--border);font-size:15px;color:#AAAAAA;letter-spacing:0.06em;">목적</div>
-          <div style="padding:12px 14px;border-right:1px solid var(--border);font-size:16px;color:#1C1A18;">코딩 표준 · 워크플로우<br>프로젝트 아키텍처</div>
-          <div style="padding:12px 14px;font-size:16px;color:#555;">빌드 명령 · 디버깅<br>선호도 학습</div>
+        <div style="display:grid;grid-template-columns:2fr 1.5fr 1fr;">
+          <div style="padding:16px;border-right:1px solid var(--border);">
+            <div style="font-family:monospace;font-size:15px;color:#555;">my-project/CLAUDE.local.md</div>
+          </div>
+          <div style="padding:16px;border-right:1px solid var(--border);font-size:16px;color:#555;">이 프로젝트, 나만</div>
+          <div style="padding:16px;font-size:15px;color:#AAAAAA;">.gitignore 처리</div>
         </div>
       </div>
     </div>
@@ -1277,272 +1310,211 @@
 </div>
 
 
-<!-- ════ s20 | 로드 순서 & @ Import ════ -->
+<!-- ════ s20 | CLAUDE.md 완성본 ════ -->
 <div class="slide" id="s20">
   <div class="tb">
     <span class="tb-cap">CLAUDE.md</span>
-    <span class="tb-num">13</span>
+    <span class="tb-num">5</span>
   </div>
   <div class="body">
     <div class="l-panel" style="justify-content:flex-start;gap:0;padding-top:44px;">
       <div>
-        <div class="eyebrow">로드 방식</div>
-        <div class="big-title">파일 로드 순서</div>
+        <div class="eyebrow">완성본</div>
+        <div class="big-title">마케팅 성과<br>분석 프로젝트</div>
       </div>
-      <div style="margin-top:22px;display:flex;flex-direction:column;gap:8px;">
-        <div style="display:flex;gap:12px;align-items:flex-start;">
-          <div style="font-size:14px;font-weight:700;color:var(--p01);flex-shrink:0;min-width:20px;margin-top:1px;">1</div>
-          <div style="font-size:16px;color:#555;line-height:1.6;">작업 폴더에서 <strong>위쪽으로</strong> CLAUDE.md 탐색<br><span style="font-size:14px;color:#AAAAAA;">Git root까지 올라가며 자동 수집</span></div>
+      <div style="margin-top:18px;display:flex;flex-direction:column;gap:7px;">
+        <div style="display:flex;gap:10px;">
+          <div style="width:4px;height:4px;border-radius:50%;background:#AAAAAA;flex-shrink:0;margin-top:9px;"></div>
+          <div style="font-size:16px;color:#555;">프로젝트 개요</div>
         </div>
-        <div style="display:flex;gap:12px;align-items:flex-start;">
-          <div style="font-size:14px;font-weight:700;color:var(--p01);flex-shrink:0;min-width:20px;margin-top:1px;">2</div>
-          <div style="font-size:16px;color:#555;line-height:1.6;">CLAUDE.local.md는 CLAUDE.md 바로 뒤에 추가</div>
+        <div style="display:flex;gap:10px;">
+          <div style="width:4px;height:4px;border-radius:50%;background:#AAAAAA;flex-shrink:0;margin-top:9px;"></div>
+          <div style="font-size:16px;color:#555;">폴더 구조</div>
         </div>
-        <div style="display:flex;gap:12px;align-items:flex-start;">
-          <div style="font-size:14px;font-weight:700;color:var(--p01);flex-shrink:0;min-width:20px;margin-top:1px;">3</div>
-          <div style="font-size:16px;color:#555;line-height:1.6;">모든 파일을 <strong>순서대로 이어 붙여</strong> 전달<br><span style="font-size:14px;color:#AAAAAA;">규칙 충돌 시 Claude가 임의 선택 — 모순은 직접 정리</span></div>
+        <div style="display:flex;gap:10px;">
+          <div style="width:4px;height:4px;border-radius:50%;background:#AAAAAA;flex-shrink:0;margin-top:9px;"></div>
+          <div style="font-size:16px;color:#555;">기술 스택</div>
         </div>
-        <div style="display:flex;gap:12px;align-items:flex-start;">
-          <div style="font-size:14px;font-weight:700;color:#AAAAAA;flex-shrink:0;min-width:20px;margin-top:1px;">4</div>
-          <div style="font-size:16px;color:#777;line-height:1.6;">하위 폴더 CLAUDE.md는 <strong>lazy-load</strong><br><span style="font-size:14px;color:#AAAAAA;">해당 폴더 파일 접근할 때만 로드</span></div>
+        <div style="display:flex;gap:10px;">
+          <div style="width:4px;height:4px;border-radius:50%;background:var(--p01);flex-shrink:0;margin-top:9px;"></div>
+          <div style="font-size:16px;color:#555;font-weight:500;">시각화 규칙</div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <div style="width:4px;height:4px;border-radius:50%;background:var(--p01);flex-shrink:0;margin-top:9px;"></div>
+          <div style="font-size:16px;color:#555;font-weight:500;">차트 공통 요구사항</div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <div style="width:4px;height:4px;border-radius:50%;background:#AAAAAA;flex-shrink:0;margin-top:9px;"></div>
+          <div style="font-size:16px;color:#555;">데이터 처리 원칙</div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <div style="width:4px;height:4px;border-radius:50%;background:#AAAAAA;flex-shrink:0;margin-top:9px;"></div>
+          <div style="font-size:16px;color:#555;">리포트 형식</div>
         </div>
       </div>
     </div>
-    <!-- Right: @ Import 설명 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 48px;gap:16px;">
-
-      <div>
-        <div style="font-size:14px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">@ Import 문법</div>
-        <div style="border:1px solid var(--border);padding:16px 20px;background:#F8F7F4;margin-bottom:12px;">
-          <div style="font-size:16px;color:#555;line-height:1.8;">CLAUDE.md가 너무 길어지면 규칙을 별도 파일에 분리하고,<br><code style="font-size:15px;background:rgba(232,96,60,0.1);padding:1px 5px;border-radius:2px;">@파일경로</code> 로 불러와 참조할 수 있습니다.<br><span style="color:#AAAAAA;">파일이 여러 개여도 Claude는 하나처럼 읽습니다.</span></div>
-        </div>
+    <!-- Right: 코드 전체 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 36px;">
+      <div class="code-wrap" style="font-size:13.5px;line-height:1.75;">
+        <div class="code-accent"># 마케팅 성과 분석 — 데이터 시각화 프로젝트</div>
+        <div style="margin-top:6px;"></div>
+        <div class="code-hi">## 폴더 구조</div>
+        <div>- <span class="code-accent">data/raw/</span>        : 원본 데이터 (절대 수정 금지)</div>
+        <div>- data/processed/  : 전처리 완료 데이터</div>
+        <div>- <span class="code-hi">charts/</span>          : 생성된 차트 (PNG, HTML)</div>
+        <div>- reports/         : 최종 리포트 (Markdown)</div>
+        <div style="margin-top:6px;"></div>
+        <div class="code-hi">## 기술 스택</div>
+        <div>- Python 3.11, pandas, numpy</div>
+        <div>- matplotlib (정적 차트), plotly (인터랙티브)</div>
+        <div style="margin-top:6px;"></div>
+        <div class="code-hi">## 시각화 규칙</div>
+        <div>- 시간 흐름 → 라인 차트</div>
+        <div>- 카테고리 비교 (7개 이하) → 세로 막대 차트</div>
+        <div>- 비율/구성 → 파이 차트 (5개 이하만)</div>
+        <div style="margin-top:6px;"></div>
+        <div class="code-hi">## 차트 공통 요구사항</div>
+        <div>- 제목: 데이터 인사이트 한 줄</div>
+        <div>- 강조색: <span class="code-accent">#1E3A5F</span>, 나머지: #CCCCCC</div>
+        <div>- 레이블: <span class="code-hi">한국어</span> 사용</div>
+        <div>- 저장: PNG/HTML 모두 <span class="code-hi">charts/</span>에</div>
+        <div style="margin-top:6px;"></div>
+        <div class="code-hi">## 데이터 처리 원칙</div>
+        <div>- <span class="code-accent">data/raw/</span> 수정 절대 금지</div>
+        <div>- 전처리 결과 → data/processed/ 저장</div>
+        <div>- 결측값: 수치는 중앙값, 카테고리는 'Unknown'</div>
+        <div>- 날짜 형식: YYYY-MM-DD로 통일</div>
+        <div style="margin-top:6px;"></div>
+        <div class="code-hi">## 리포트 형식</div>
+        <div>- reports/에 Markdown(.md)으로 저장</div>
+        <div>- 구성: 요약 → 채널별 분석 → 인사이트 → 추천 액션</div>
       </div>
-
-      <div class="code-wrap" style="font-size:16px;line-height:1.85;">
-        <div class="code-comment"># CLAUDE.md</div>
-        <div style="margin-top:8px;"></div>
-        <div class="code-comment"># 프로젝트 루트 기준 상대 경로</div>
-        <div><span class="code-accent">@</span><span class="code-hi">docs/architecture.md</span></div>
-        <div><span class="code-accent">@</span><span class="code-hi">docs/viz-style.md</span></div>
-        <div style="margin-top:8px;"></div>
-        <div class="code-comment"># 홈 디렉토리 절대 경로</div>
-        <div><span class="code-accent">@</span><span class="code-hi">~/.claude/my-style-guide.md</span></div>
-      </div>
-
     </div>
   </div>
 </div>
 
 
-<!-- ════ s13 | CLAUDE.md 작성 시기 & 효과적인 지침 ════ -->
+<!-- ════ s13 | CLAUDE.md 작성 팁 ════ -->
 <div class="slide" id="s13">
   <div class="tb">
     <span class="tb-cap">CLAUDE.md</span>
-    <span class="tb-num">13</span>
+    <span class="tb-num">6</span>
   </div>
   <div class="body">
     <div class="l-panel" style="justify-content:flex-start;gap:0;padding-top:44px;">
       <div>
         <div class="eyebrow">작성 가이드</div>
-        <div class="big-title">CLAUDE.md<br>추가할 시기</div>
+        <div class="big-title">CLAUDE.md<br>작성 팁</div>
       </div>
-      <div style="margin-top:18px;display:flex;flex-direction:column;gap:8px;">
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <div style="width:5px;height:5px;border-radius:50%;background:#AAAAAA;flex-shrink:0;margin-top:8px;"></div>
-          <div style="font-size:16px;color:#555;line-height:1.6;">Claude가 같은 실수를 두 번째로 할 때</div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <div style="width:5px;height:5px;border-radius:50%;background:#AAAAAA;flex-shrink:0;margin-top:8px;"></div>
-          <div style="font-size:16px;color:#555;line-height:1.6;">지난 세션과 같은 수정·설명을 또 입력할 때</div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <div style="width:5px;height:5px;border-radius:50%;background:#AAAAAA;flex-shrink:0;margin-top:8px;"></div>
-          <div style="font-size:16px;color:#555;line-height:1.6;">코드 리뷰에서 Claude가 알아야 할 것을 발견할 때</div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <div style="width:5px;height:5px;border-radius:50%;background:#AAAAAA;flex-shrink:0;margin-top:8px;"></div>
-          <div style="font-size:16px;color:#555;line-height:1.6;">새 팀원이 같은 컨텍스트가 필요할 때</div>
-        </div>
-      </div>
-      <div style="margin-top:16px;padding:12px 16px;background:rgba(232,96,60,0.05);border:1px solid rgba(232,96,60,0.2);">
-        <div style="font-size:15px;color:#555;line-height:1.6;">반복될 때 채팅창에 입력:<br><span style="font-family:monospace;font-size:15px;color:var(--p01);">"이 규칙 CLAUDE.md에 추가해줘"</span></div>
+      <div style="margin-top:22px;padding:14px 18px;background:#F5F4F0;border:1px solid var(--border);">
+        <div style="font-size:16px;color:#555;line-height:1.8;">잘 쓰는 세 가지 원칙</div>
       </div>
     </div>
-    <!-- Right: 효과적인 지침 작성 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 48px;gap:12px;">
-      <div style="font-size:14px;color:#AAAAAA;letter-spacing:0.12em;margin-bottom:4px;">효과적인 지침 작성 4가지</div>
+    <!-- Right: 3가지 팁 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 52px;gap:14px;">
 
-      <div style="border:1px solid var(--border);padding:16px 22px;background:#fff;">
-        <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">크기 — 200줄 이하 권장</div>
-        <div style="font-size:16px;color:#555;line-height:1.6;">길수록 컨텍스트 소비 증가, 준수율 저하<br>길어지면 <code style="font-size:15px;">@ Import</code>로 별도 파일 분리 활용</div>
-      </div>
-
-      <div style="border:1px solid var(--border);padding:16px 22px;background:#fff;">
-        <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">구조 — 마크다운 헤더 + 글머리 기호</div>
-        <div style="font-size:16px;color:#555;line-height:1.6;">조밀한 단락보다 구조화된 섹션이 따르기 쉬움</div>
-      </div>
-
-      <div style="border:1px solid var(--border);padding:16px 22px;background:#fff;">
-        <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">구체성 — 검증 가능한 수준으로</div>
-        <div style="font-size:16px;color:#555;line-height:1.6;font-family:monospace;">
-          <span style="color:#AAAAAA;">✗</span> "코드를 제대로 포맷합니다"<br>
-          <span style="color:var(--p01);">✓</span> "2칸 들여쓰기 사용"
+      <div style="border:1px solid var(--border);padding:18px 22px;background:#fff;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:24px;font-weight:700;color:var(--p01);flex-shrink:0;line-height:1.1;">1</div>
+          <div>
+            <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:8px;">"규칙"보다 "이유"</div>
+            <div style="font-size:15px;color:#AAAAAA;margin-bottom:4px;">✗ "data/raw는 수정하지 마세요"</div>
+            <div style="font-size:15px;color:#555;line-height:1.6;">✓ "data/raw는 원본 데이터이므로 수정 금지.<br>&nbsp;&nbsp;&nbsp;모든 변환은 processed/에 저장"</div>
+          </div>
         </div>
       </div>
 
-      <div style="border:1px solid var(--border);padding:16px 22px;background:#fff;">
-        <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">일관성 — 모순 없이</div>
-        <div style="font-size:16px;color:#555;line-height:1.6;">두 규칙이 충돌하면 Claude가 임의 선택<br>오래된 지침 정기 검토 필요</div>
+      <div style="border:1px solid var(--border);padding:18px 22px;background:#fff;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:24px;font-weight:700;color:var(--p01);flex-shrink:0;line-height:1.1;">2</div>
+          <div>
+            <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:8px;">반복 요청 → 규칙으로</div>
+            <div style="font-size:15px;color:#555;line-height:1.7;">"차트 만들 때마다 한국어 레이블 써"라고<br>매번 말한다면 → CLAUDE.md에 한 줄 추가</div>
+          </div>
+        </div>
       </div>
+
+      <div style="border:1px solid var(--border);padding:18px 22px;background:#fff;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:24px;font-weight:700;color:var(--p01);flex-shrink:0;line-height:1.1;">3</div>
+          <div>
+            <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:8px;">/init 두 타이밍</div>
+            <div style="font-size:15px;color:#555;line-height:1.7;">새 프로젝트 시작할 때<br>결과물이 마음에 들었을 때</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
 
-<!-- ════ s27 | CLAUDE.md before/after ════ -->
+<!-- ════ s27 | 초안 만들기 ════ -->
 <div class="slide" id="s27">
   <div class="tb">
     <span class="tb-cap">CLAUDE.md</span>
-    <span class="tb-num">16</span>
+    <span class="tb-num">4</span>
   </div>
   <div class="body">
     <div class="l-panel" style="justify-content:flex-start;gap:0;padding-top:44px;">
       <div>
-        <div class="eyebrow">효과 차이</div>
-        <div class="big-title">CLAUDE.md<br>있을 때<br>없을 때</div>
+        <div class="eyebrow">실습</div>
+        <div class="big-title">초안<br>만들기</div>
+        <div class="body-text" style="margin-top:16px;">Claude에게 요청하면<br>초안을 만들어줌</div>
       </div>
-      <div style="margin-top:24px;padding:14px 18px;background:rgba(232,96,60,0.06);border:1px solid rgba(232,96,60,0.2);">
-        <div style="font-size:15px;color:#555;line-height:1.8;">동일 요청 → 결과 차이 비교<br><br>반복 수정 없이<br>처음부터 원하는 스타일</div>
+      <div style="margin-top:24px;padding:14px 18px;background:#F5F4F0;border:1px solid var(--border);">
+        <div style="font-size:15px;color:#555;line-height:1.8;">초안 받은 후<br>에디터에서 직접 수정</div>
       </div>
     </div>
-    <!-- Right: Before / After -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 52px;gap:20px;">
-
-      <!-- 요청 -->
-      <div style="border:1px solid var(--border);padding:14px 20px;background:#F8F7F4;text-align:center;">
-        <div style="font-size:16px;color:#888;margin-bottom:4px;">동일한 요청</div>
-        <div style="font-size:18px;font-weight:600;color:#1C1A18;">"채널별 전환율 차트 만들어줘"</div>
+    <!-- Right: 프롬프트 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 52px;">
+      <div style="font-size:14px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:10px;">채팅 입력 프롬프트</div>
+      <div class="code-wrap" style="font-size:17px;line-height:1.9;">
+        <div class="code-hi">이 프로젝트용 CLAUDE.md를 만들어줘.</div>
+        <div style="margin-top:10px;"></div>
+        <div>- 마케팅 채널 성과 분석 프로젝트야</div>
+        <div>- 파이썬(pandas, matplotlib, plotly)으로</div>
+        <div>&nbsp;&nbsp;차트 만들어</div>
+        <div>- <span class="code-accent">data/raw</span>는 절대 수정하지 말고,</div>
+        <div>&nbsp;&nbsp;결과는 <span class="code-accent">charts/</span>와 <span class="code-accent">reports/</span>에 저장해</div>
+        <div>- 차트 스타일은 한국어 레이블 사용,</div>
+        <div>&nbsp;&nbsp;강조색은 파란색</div>
       </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-
-        <!-- Before -->
-        <div>
-          <div style="font-size:15px;font-weight:700;color:#C0483C;letter-spacing:0.08em;margin-bottom:10px;">없을 때</div>
-          <div style="border:1px solid #E8C0B8;padding:16px 18px;background:#FDF8F7;">
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="display:flex;gap:8px;align-items:flex-start;">
-                <div style="color:#C0483C;flex-shrink:0;font-size:15px;">✗</div>
-                <div style="font-size:16px;color:#555;">영어 레이블 (Jan, Feb ...)</div>
-              </div>
-              <div style="display:flex;gap:8px;align-items:flex-start;">
-                <div style="color:#C0483C;flex-shrink:0;font-size:15px;">✗</div>
-                <div style="font-size:16px;color:#555;">기본 matplotlib 색상</div>
-              </div>
-              <div style="display:flex;gap:8px;align-items:flex-start;">
-                <div style="color:#C0483C;flex-shrink:0;font-size:15px;">✗</div>
-                <div style="font-size:16px;color:#555;">저장 경로 임의 선택</div>
-              </div>
-              <div style="display:flex;gap:8px;align-items:flex-start;">
-                <div style="color:#C0483C;flex-shrink:0;font-size:15px;">✗</div>
-                <div style="font-size:16px;color:#555;">매번 스타일 다름</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- After -->
-        <div>
-          <div style="font-size:15px;font-weight:700;color:#2A7A4A;letter-spacing:0.08em;margin-bottom:10px;">CLAUDE.md 있음</div>
-          <div style="border:1px solid #B8D8C4;padding:16px 18px;background:#F4FBF7;">
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="display:flex;gap:8px;align-items:flex-start;">
-                <div style="color:#2A7A4A;flex-shrink:0;font-size:15px;">✓</div>
-                <div style="font-size:16px;color:#555;">한국어 레이블 자동 적용</div>
-              </div>
-              <div style="display:flex;gap:8px;align-items:flex-start;">
-                <div style="color:#2A7A4A;flex-shrink:0;font-size:15px;">✓</div>
-                <div style="font-size:16px;color:#555;">팀 색상 팔레트 통일</div>
-              </div>
-              <div style="display:flex;gap:8px;align-items:flex-start;">
-                <div style="color:#2A7A4A;flex-shrink:0;font-size:15px;">✓</div>
-                <div style="font-size:16px;color:#555;">outputs/ 폴더에 자동 저장</div>
-              </div>
-              <div style="display:flex;gap:8px;align-items:flex-start;">
-                <div style="color:#2A7A4A;flex-shrink:0;font-size:15px;">✓</div>
-                <div style="font-size:16px;color:#555;">항상 같은 스타일 유지</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- CLAUDE.md 내용 힌트 -->
-      <div class="code-wrap" style="font-size:15px;line-height:1.7;padding:14px 18px;">
-        <div class="code-comment"># CLAUDE.md 규칙 예시</div>
-        <div style="margin-top:6px;"><span class="code-hi">차트 레이블은 항상 한국어, 색상은 #E8603C 기준 팔레트 사용</span></div>
-        <div><span class="code-hi">출력 파일은 outputs/ 폴더에 저장, data/raw/ 수정 금지</span></div>
-      </div>
-
     </div>
   </div>
 </div>
 
 
-<!-- ════ s17 | 실무 예시 — ai-pipeline-kit ════ -->
+<!-- ════ s17 | 핵심 정리 ════ -->
 <div class="slide" id="s17">
   <div class="tb">
     <span class="tb-cap">CLAUDE.md</span>
-    <span class="tb-num">14</span>
+    <span class="tb-num">8</span>
   </div>
   <div class="body">
-    <div class="l-panel">
+    <div class="l-panel" style="justify-content:flex-start;gap:0;padding-top:44px;">
       <div>
-        <div class="eyebrow">실제 프로젝트</div>
-        <div class="big-title">실무 예시</div>
-        <div class="body-text" style="margin-top:16px;">CLAUDE.md를 쌓아가면<br>이렇게 된다는 예시</div>
+        <div class="eyebrow">정리</div>
+        <div class="big-title">CLAUDE.md<br>한 번으로</div>
       </div>
-      <div style="margin-top:24px;padding:14px 18px;background:#F5F4F0;border:1px solid var(--border);">
-        <div style="font-size:15px;color:#888;line-height:1.8;">Skills · Subagents · MCP 등<br>나중 챕터에서 다룰 내용</div>
+      <div style="margin-top:22px;padding:14px 18px;background:rgba(232,96,60,0.04);border:1px solid rgba(232,96,60,0.2);">
+        <div style="font-size:15px;color:#555;line-height:1.8;">다음 클립<br>프로젝트 폴더 구조 파악하기</div>
       </div>
     </div>
-    <!-- Right: CLAUDE.md 구조 + 파이프라인 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 48px;gap:16px;">
-
-      <!-- CLAUDE.md 핵심 구조 -->
-      <div style="font-size:13px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:6px;font-family:monospace;">CLAUDE.md</div>
-      <div class="code-wrap" style="font-size:17px;line-height:1.75;">
-        <div class="code-accent"># AI Data Analysis Pipeline</div>
-        <div class="code-comment">7개 에이전트를 지휘하는 오케스트레이터</div>
-        <div style="margin-top:10px;"></div>
-        <div class="code-hi">## 실행 규칙</div>
-        <div>- <span style="color:rgba(255,255,255,0.65);">병렬 실행 금지</span> — 반드시 순서대로</div>
-        <div>- 이전 단계 파일 없으면 다음 단계 시작 금지</div>
-        <div style="margin-top:10px;"></div>
-        <div class="code-hi">## 시작 방법</div>
-        <div><span class="code-accent">/run-pipeline</span> <span class="code-comment">← Skill로 등록된 명령어</span></div>
+    <!-- Right: 정리 내용 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 52px;gap:14px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:16px 20px;border:1px solid var(--border);background:#fff;">
+        <div style="color:var(--p01);font-size:20px;flex-shrink:0;line-height:1.2;">✓</div>
+        <div style="font-size:17px;color:#1C1A18;line-height:1.6;">매번 반복하는 설명 → CLAUDE.md에 한 번 저장</div>
       </div>
-
-      <!-- 파이프라인 플로우 -->
-      <div style="border:1px solid var(--border);padding:18px 22px;">
-        <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:12px;">자동 실행 순서</div>
-        <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
-          <span style="font-size:17px;font-family:monospace;color:#888;background:rgba(0,0,0,0.04);border:1px solid var(--border);padding:4px 8px;">data-ingestion</span>
-          <span style="color:var(--p01);font-size:17px;">→</span>
-          <span style="font-size:17px;font-family:monospace;color:#888;background:rgba(0,0,0,0.04);border:1px solid var(--border);padding:4px 8px;">eda</span>
-          <span style="color:var(--p01);font-size:17px;">→</span>
-          <span style="font-size:17px;font-family:monospace;color:#888;background:rgba(0,0,0,0.04);border:1px solid var(--border);padding:4px 8px;">metrics</span>
-          <span style="color:var(--p01);font-size:17px;">→</span>
-          <span style="font-size:17px;font-family:monospace;color:#888;background:rgba(0,0,0,0.04);border:1px solid var(--border);padding:4px 8px;">analysis</span>
-          <span style="color:var(--p01);font-size:17px;">→</span>
-          <span style="font-size:17px;font-family:monospace;color:#1C1A18;background:rgba(232,96,60,0.06);border:1px solid rgba(232,96,60,0.2);padding:4px 8px;font-weight:500;">dashboard</span>
-          <span style="color:var(--p01);font-size:17px;">→</span>
-          <span style="font-size:17px;font-family:monospace;color:#1C1A18;background:rgba(232,96,60,0.06);border:1px solid rgba(232,96,60,0.2);padding:4px 8px;font-weight:500;">report</span>
-        </div>
-        <div style="margin-top:10px;font-size:17px;color:#AAAAAA;">CSV 넣고 명령어 하나 → 대시보드 + 임원 보고서 자동 생성</div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:16px 20px;border:1px solid var(--border);background:#fff;">
+        <div style="color:var(--p01);font-size:20px;flex-shrink:0;line-height:1.2;">✓</div>
+        <div style="font-size:17px;color:#1C1A18;line-height:1.6;">데이터 시각화 규칙 · 폴더 원칙 · 차트 스타일 영구 저장</div>
       </div>
-
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:16px 20px;border:1px solid var(--border);background:#fff;">
+        <div style="color:var(--p01);font-size:20px;flex-shrink:0;line-height:1.2;">✓</div>
+        <div style="font-size:17px;color:#1C1A18;line-height:1.6;">이후 모든 분석 요청에 자동 적용</div>
+      </div>
     </div>
   </div>
 </div>
