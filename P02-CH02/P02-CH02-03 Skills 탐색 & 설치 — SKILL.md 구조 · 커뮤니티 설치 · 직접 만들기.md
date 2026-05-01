@@ -4,7 +4,7 @@ time: 15분
 part: Part 02
 chapter: CH02
 clip: 03
-slides: s10,s17,s11,s12,s18,s24
+slides: s10,s17,s11,s12,s18,s25,s26,s24
 status: ✅ 대본완성
 ---
 
@@ -145,6 +145,57 @@ matplotlib·seaborn·plotly를 기반으로 한 시각화 전용 스킬도 있�
 
 오른쪽 화면이 skillsmp.com에서 "data visualization"으로 검색한 결과예요.
 주소는 skillsmp.com/ko입니다.
+
+---
+
+## s25 — 추천 사이트 2 aitmpl.com
+
+**[화면: 슬라이드]**
+
+탐색할 수 있는 곳이 하나 더 있어요.
+aitmpl.com/skills입니다.
+
+808개 스킬 템플릿이 모여 있고, npx 한 줄로 바로 설치할 수 있어요.
+
+오른쪽에 인기 스킬 네 가지가 있는데요.
+
+5,856번 설치된 `frontend-design`은 프로덕션급 UI 컴포넌트를 자동으로 생성해줍니다.
+
+4,494번 설치된 `code-reviewer`는 TypeScript, Python, Go 코드 리뷰를 자동화해요.
+
+2,768번 설치된 `skill-creator`는 스킬을 직접 만들고 성능까지 측정할 수 있고요.
+
+`mcp-builder`는 MCP 서버 제작 가이드 스킬이에요.
+
+데이터 분석이 아닌 다른 분야 스킬도 여기서 찾을 수 있어요.
+
+---
+
+## s26 — playwright-skill
+
+**[화면: 슬라이드]**
+
+데이터 분석 외에 추천하고 싶은 스킬이 하나 있어요.
+`playwright-skill`입니다.
+
+깃허브에서 별 2,500개가 넘고, lackeyjb라는 개발자가 만든 브라우저 자동화 스킬이에요.
+
+설치는 `/plugin marketplace add`로 합니다.
+
+```
+/plugin marketplace add lackeyjb/playwright-skill
+```
+
+설치하면 Claude가 맥락을 보고 자동으로 실행해줘요.
+별도로 "Playwright 써줘"라고 말 안 해도 됩니다.
+
+오른쪽에 실제 사용 예시 세 가지가 있어요.
+
+**웹 테스트**는 "홈페이지 테스트해줘", "회원가입 플로우 확인해줘"처럼 말하면 돼요.
+
+**스크린샷·반응형**은 "모바일·데스크톱 화면 캡쳐해줘"라고 하면 여러 뷰포트에서 레이아웃을 확인해줍니다.
+
+**폼·링크 검증**은 "등록 폼 입력하고 제출해줘", "브로큰 링크 전부 찾아줘"처럼 쓸 수 있어요.
 
 ---
 
