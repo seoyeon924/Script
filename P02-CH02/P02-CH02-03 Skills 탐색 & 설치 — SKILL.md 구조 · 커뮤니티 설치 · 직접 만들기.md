@@ -4,7 +4,7 @@ time: 15분
 part: Part 02
 chapter: CH02
 clip: 03
-slides: s10,s11,s12,s18,s17
+slides: s10,s11,s12,s18,s24,s17
 status: ✅ 대본완성
 ---
 
@@ -43,7 +43,7 @@ CLAUDE.md가 규칙·금지사항이라면 Skills는 단계별 작업 지시입�
 
 ## s12 — 커뮤니티 Skills & 직접 만들기
 
-**[화면: Antigravity 에디터 - Claude Code 채팅 패널]**
+**[화면: 슬라이드]**
 
 Skills를 쓰는 방법은 두 가지예요.
 커뮤니티에서 설치하거나, 직접 만들거나입니다.
@@ -86,11 +86,36 @@ skillsmp.com입니다.
 왼쪽에 데이터 분석 관련 스킬 세 가지가 있는데요.
 
 별점 10만 개가 넘는 `data-analyst`는 SQL·pandas·통계 분석 워크플로우를 담고 있어요.
+
 `data-visualization`은 차트 생성부터 멀티패널 분석 요약까지 다루고요.
+
 matplotlib·seaborn·plotly를 기반으로 한 시각화 전용 스킬도 있습니다.
 
 오른쪽 화면이 skillsmp.com에서 "data visualization"으로 검색한 결과예요.
 주소는 skillsmp.com/ko입니다.
+
+---
+
+## s24 — 각 스킬 사용법
+
+**[화면: 슬라이드]**
+
+설치가 끝나면 스킬 이름이 그대로 명령어가 돼요.
+`/plugin` → **Discover** → 스킬 선택 → 설치, 이 흐름으로 받아두면 바로 쓸 수 있어요.
+
+오른쪽에 실제로 어떻게 쓰는지 세 가지가 있어요.
+
+**첫 번째는 `data-analyst`예요.**
+"이 CSV 파일 분석해서 주요 인사이트 뽑아줘"라고 하면
+EDA, 이상치 탐지, 통계 리포트를 한 번에 만들어줍니다.
+
+**두 번째는 `data-visualization`이에요.**
+"월별 매출 트렌드랑 카테고리 비교 차트 만들어줘"라고 하면
+멀티패널 대시보드랑 분석 요약까지 한 번에 나와요.
+
+**세 번째도 `data-visualization`인데 Anthropics 버전이에요.**
+"상관관계 히트맵이랑 분포 그래프 그려줘"라고 하면
+matplotlib, seaborn, plotly 중에서 자동으로 골라서 고품질 PNG로 저장해줍니다.
 
 ---
 
