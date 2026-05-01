@@ -70,17 +70,24 @@ Firecrawl이 하는 일은 단순해요.
 **1단계**는 firecrawl.dev에서 무료 계정을 만들고 API 키를 복사합니다.
 신용카드는 필요 없어요.
 
-**2단계**는 Claude Code에 MCP를 연결하고 API 키를 환경변수로 등록해요.
+**2단계**는 MCP를 전역으로 등록해요. `--global`을 붙여야 어느 프로젝트에서든 동작해요.
 
 ```bash
-claude mcp add --transport stdio firecrawl -- npx -y firecrawl-mcp
-
-export FIRECRAWL_API_KEY="fc-..."
+claude mcp add --global --transport stdio firecrawl -- npx -y firecrawl-mcp
 ```
 
-**3단계**가 가장 중요합니다. 보안 주의사항이에요.
-API 키를 채팅창에 직접 입력하면 절대 안 돼요.
-환경변수로만 관리합니다.
+**3단계**는 API 키를 영구 저장합니다. `fc-...` 부분만 실제 키로 교체해요.
+
+```bash
+echo 'export FIRECRAWL_API_KEY="fc-실제키값"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+잘 됐는지 확인:
+
+```bash
+echo $FIRECRAWL_API_KEY
+```
 
 ---
 
