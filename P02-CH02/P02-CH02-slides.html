@@ -992,15 +992,34 @@
         <div class="big-title">세 가지<br>스케줄 방식</div>
         <div class="body-text" style="margin-top:16px;">상황에 맞는 방식 하나만<br>골라 쓰면 충분</div>
       </div>
-      <!-- 코드 예시 -->
-      <div style="margin-top:20px;">
-        <div style="font-size:16px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:8px;">기본 문법</div>
-        <div class="code-wrap" style="font-size:15px;line-height:1.9;">
-          <span class="code-accent">/loop</span> <span class="code-hi">30m</span> <span style="color:rgba(255,255,255,0.55);">"새 파일 분석 후 리포트"</span><br>
-          <span class="code-accent">/schedule</span> <span class="code-hi">daily report at 9am</span><br>
-          <span class="code-comment"># Skills와 조합 가능</span><br>
-          <span class="code-accent">/loop</span> <span class="code-hi">1h</span> <span style="color:rgba(255,255,255,0.55);">"<span class="code-accent">/data-analyst</span> 실행"</span>
+      <!-- 방식별 명령어 -->
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:15px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:2px;">실행 명령어</div>
+
+        <!-- /loop -->
+        <div>
+          <div style="font-size:13px;color:#AAAAAA;letter-spacing:0.08em;margin-bottom:4px;">/loop — CLI 채팅창에 입력</div>
+          <div class="code-wrap" style="font-size:13px;padding:7px 12px;line-height:1.6;">
+            <span class="code-accent">/loop</span> <span class="code-hi">30m</span> <span style="color:rgba(255,255,255,0.6);">"새 파일 분석 후 리포트"</span>
+          </div>
         </div>
+
+        <!-- Desktop Tasks -->
+        <div>
+          <div style="font-size:13px;color:#AAAAAA;letter-spacing:0.08em;margin-bottom:4px;">Desktop Tasks — 앱 UI에서 설정</div>
+          <div style="border:1px solid rgba(255,255,255,0.1);padding:7px 12px;background:#0A0C10;font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;">
+            앱 상단 메뉴 → Scheduled Tasks → 새 작업
+          </div>
+        </div>
+
+        <!-- Routines -->
+        <div>
+          <div style="font-size:13px;color:#AAAAAA;letter-spacing:0.08em;margin-bottom:4px;">Routines — CLI 채팅창에 입력</div>
+          <div class="code-wrap" style="font-size:13px;padding:7px 12px;line-height:1.6;">
+            <span class="code-accent">/schedule</span> <span class="code-hi">daily 9am</span> <span style="color:rgba(255,255,255,0.6);">"리포트 생성"</span>
+          </div>
+        </div>
+
       </div>
     </div>
     <!-- Right: 비교 표 -->
@@ -1075,7 +1094,7 @@
       </div>
       <!-- 핵심 포인트 -->
       <div style="margin-top:24px;border:1px solid rgba(232,96,60,0.25);padding:16px 20px;background:rgba(232,96,60,0.03);">
-        <div style="font-size:16px;color:var(--p01);letter-spacing:0.1em;margin-bottom:8px;">조합 공식</div>
+        <div style="font-size:16px;color:var(--p01);letter-spacing:0.1em;margin-bottom:8px;">조합 예시</div>
         <div class="code-wrap" style="font-size:15px;line-height:1.85;padding:12px 16px;">
           <span class="code-comment"># Skill을 스케줄에 태우기</span><br>
           <span class="code-accent">/loop</span> <span class="code-hi">1h</span> <span style="color:rgba(255,255,255,0.6);">"<span class="code-accent">/data-analyst</span> 실행해줘"</span><br>
