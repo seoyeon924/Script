@@ -50,34 +50,28 @@ Skills를 쓰는 방법은 두 가지예요.
 
 커뮤니티 설치 먼저 볼게요.
 
-Claude Code 채팅 패널에서 `/plugin`을 입력합니다.
-마켓플레이스를 등록하고 원하는 스킬을 설치하면 돼요.
+다섯 단계예요.
+
+1단계, 터미널에서 `claude`를 실행해서 세션을 시작합니다.
+
+2단계, `/plugin`을 입력해요.
+
+3단계, **Add Marketplace**를 선택하고 엔터를 누릅니다.
+
+4단계, 공식 스킬 저장소 URL을 입력하고 엔터예요.
 
 ```
-/plugin marketplace add https://github.com/fivetaku/gptaku_plugins.git
-/plugin install deep-research
+https://github.com/anthropics/claude-plugins-official
 ```
 
-설치되면 이렇게 바로 씁니다.
-
-```
-/deep-research 2024년 한국 이커머스 트렌드
-```
+5단계, 화살표로 **Discover** 탭으로 이동하면 설치 가능한 스킬 목록이 나와요.
+원하는 스킬을 선택해서 설치하면 됩니다.
 
 두 번째는 직접 만들기예요.
-설치 없이 파일 하나로 끝납니다.
+Claude에게 말로 요청하면 됩니다.
 
-세 단계예요.
-
-1단계, 터미널에서 폴더를 만들고요.
-```bash
-mkdir -p .claude/skills/data-analyst
-```
-
-2단계, Claude Code에 SKILL.md를 만들어달라고 합니다.
-"`.claude/skills/data-analyst/SKILL.md` 만들어줘. `/data-analyst` 호출 시 EDA → 차트 3개 → 리포트 생성"
-
-3단계, 이후부터 `/data-analyst`로 바로 호출하면 됩니다.
+"data-analyst 스킬 만들어줘"라고 하면 끝이에요.
+이후부터 `/data-analyst`로 바로 호출하면 됩니다.
 
 ---
 
