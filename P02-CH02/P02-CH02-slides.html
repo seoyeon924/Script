@@ -473,14 +473,16 @@
       </div>
     </div>
     <!-- Right: 3단계 절차 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;gap:20px;">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 52px;gap:24px;">
 
       <!-- Step 1 -->
       <div style="display:flex;gap:20px;align-items:flex-start;">
         <div style="flex-shrink:0;width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:#AAAAAA;letter-spacing:0.08em;">01</div>
         <div style="flex:1;padding-top:4px;">
-          <div style="font-size:16px;font-weight:500;color:#1C1A18;margin-bottom:6px;">firecrawl.dev 가입</div>
-          <div style="font-size:16px;color:#555;line-height:1.7;">무료 계정 가입 → API Keys 탭에서 키 복사</div>
+          <div style="font-size:16px;font-weight:500;color:#1C1A18;margin-bottom:10px;">MCP 등록 <span style="font-weight:400;color:#888;font-size:14px;">— 터미널에 그대로 복붙</span></div>
+          <div class="code-wrap">
+            <span class="code-hi">claude mcp add</span> <span class="code-accent">--transport stdio</span> firecrawl <span style="color:rgba(255,255,255,0.4);">--</span> <span class="code-comment">npx -y firecrawl-mcp</span>
+          </div>
         </div>
       </div>
 
@@ -488,24 +490,21 @@
       <div style="display:flex;gap:20px;align-items:flex-start;">
         <div style="flex-shrink:0;width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:#AAAAAA;letter-spacing:0.08em;">02</div>
         <div style="flex:1;padding-top:4px;">
-          <div style="font-size:16px;font-weight:500;color:#1C1A18;margin-bottom:10px;">MCP 연결 &amp; 환경변수 설정</div>
+          <div style="font-size:16px;font-weight:500;color:#1C1A18;margin-bottom:10px;">API 키 영구 저장 <span style="font-weight:400;color:#888;font-size:14px;">— fc-... 부분만 실제 키로 교체</span></div>
           <div class="code-wrap">
-            <span class="code-hi">claude mcp add</span> <span class="code-accent">--transport stdio</span> firecrawl \<br>
-            &nbsp;&nbsp;<span class="code-comment">-- npx -y firecrawl-mcp</span><br>
-            <br>
-            <span class="code-comment"># API 키는 환경변수로</span><br>
-            <span class="code-hi">export</span> <span class="code-accent">FIRECRAWL_API_KEY</span>=<span style="color:rgba(255,255,255,0.65);">"fc-..."</span>
+            <span class="code-hi">echo</span> <span style="color:rgba(255,255,255,0.65);">'export FIRECRAWL_API_KEY="fc-실제키값"'</span> >> <span class="code-accent">~/.zshrc</span><br>
+            <span class="code-hi">source</span> <span class="code-accent">~/.zshrc</span>
           </div>
         </div>
       </div>
 
-      <!-- Step 3 강조 박스 -->
+      <!-- Step 3 -->
       <div style="display:flex;gap:20px;align-items:flex-start;">
-        <div style="flex-shrink:0;width:28px;height:28px;border:1px solid rgba(232,96,60,0.3);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--p01);letter-spacing:0.08em;">03</div>
+        <div style="flex-shrink:0;width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:#AAAAAA;letter-spacing:0.08em;">03</div>
         <div style="flex:1;padding-top:4px;">
-          <div style="background:rgba(232,96,60,0.05);border:1px solid rgba(232,96,60,0.18);padding:16px 20px;">
-            <div style="font-size:16px;color:var(--p01);font-weight:500;letter-spacing:0.04em;">보안 주의</div>
-            <div style="font-size:16px;color:#555;margin-top:6px;line-height:1.7;">API 키를 채팅창에 직접 입력 금지<br>환경변수만 사용</div>
+          <div style="font-size:16px;font-weight:500;color:#1C1A18;margin-bottom:10px;">잘 됐는지 확인</div>
+          <div class="code-wrap">
+            <span class="code-hi">echo</span> <span class="code-accent">$FIRECRAWL_API_KEY</span>
           </div>
         </div>
       </div>
@@ -783,10 +782,10 @@
 
 
 <!-- ════ s19 | 커뮤니티 스킬 사용법 ════ -->
-<div class="slide" id="s19">
+<div class="slide" id="s24">
   <div class="tb">
     <span class="tb-cap">Skills 탐색 &amp; 설치</span>
-    <span class="tb-num">14</span>
+    <span class="tb-num">15</span>
   </div>
   <div class="body">
     <div class="l-panel">
@@ -1181,8 +1180,8 @@
 
 <script>
   const TOTAL = 20;
-  const ORDER = [1,2,3,14,4,16,5,15,6,7,19,10,11,12,18,17,20,21,22,13];
-  const CLIP_MAP = {1:0,2:0,3:0,14:0,4:0,16:0, 5:1,15:1,6:1,7:1,19:1, 10:2,11:2,12:2,18:2,17:2, 20:3,21:3,22:3,13:3};
+  const ORDER = [1,2,3,14,16,5,15,6,7,19,10,11,12,18,24,17,20,21,22,13];
+  const CLIP_MAP = {1:0,2:0,3:0,14:0,16:0, 5:1,15:1,6:1,7:1,19:1, 10:2,11:2,12:2,18:2,24:2,17:2, 20:3,21:3,22:3,13:3};
   const CLIP_LABELS = ['MCP란?','Firecrawl MCP','Skills 탐색','Skills 자동화'];
   let cur = 1;
 
