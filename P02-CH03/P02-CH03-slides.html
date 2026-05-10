@@ -16,7 +16,7 @@
     --sub: #888;
     --dim: #BBBBBB;
     --white: #1C1A18;
-    --border: #E0DDD9;
+    --border: #D8D5D0;
     --p01: #E8603C;
   }
 
@@ -64,11 +64,11 @@
   .sec-title { font-size: 50px; font-weight: 300; line-height: 1.35; color: var(--white); }
   .sec-sub { font-size: 18px; color: rgba(0,0,0,0.5); margin-top: 24px; line-height: 2; }
 
-  .eyebrow { display:inline-block; padding:7px 22px; background:#3A3630; color:rgba(255,255,255,0.85); border-radius:100px; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:24px; }
-  .big-title { font-size:64px; font-weight:700; line-height:1.15; letter-spacing:-0.03em; color:var(--text); margin-bottom:36px; }
+  .eyebrow { font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sub); margin-bottom: 22px; }
+  .big-title { font-size: 64px; font-weight: 700; line-height: 1.15; letter-spacing: -0.03em; color: var(--text); margin-bottom: 36px; }
 
   .code-wrap {
-    background: #0A0C10; border-radius: 10px;
+    background: #0A0C10;
     padding: 20px 26px; font-family: 'Menlo', 'Monaco', monospace;
     font-size: 15px; line-height: 1.85; color: rgba(255,255,255,0.5);
   }
@@ -77,7 +77,8 @@
   .code-accent { color: #E8603C; }
   .code-green { color: #35c995; }
 
-  .card { background:#fff; border:1px solid #e8e8e8; border-radius:12px; padding:22px 26px; }
+  .card { background:#F5F4F0; border:1px solid var(--border); padding:22px 26px; }
+  .card-accent { background:#F5F4F0; border:1px solid var(--border); border-left:3px solid var(--p01); padding:22px 26px; }
 </style>
 </head>
 <body>
@@ -144,39 +145,39 @@
   <div class="body" style="flex-direction:column;align-items:center;justify-content:flex-start;padding:44px 80px 32px;">
     <div style="text-align:center;margin-bottom:32px;">
       <div class="eyebrow">서브에이전트</div>
-      <div class="big-title" style="margin-bottom:0;">Claude가 <span style="color:var(--p01);">Claude를</span> 만든다</div>
+      <div class="big-title" style="margin-bottom:0;">메인 에이전트<br><span style="color:var(--p01);">→ 서브에이전트</span></div>
     </div>
     <!-- 다이어그램 -->
     <div style="width:100%;max-width:860px;display:flex;flex-direction:column;align-items:center;gap:0;">
       <!-- 사용자 -->
-      <div style="background:rgba(232,96,60,0.08);border:1px solid rgba(232,96,60,0.25);border-radius:10px;padding:14px 48px;font-size:18px;font-weight:600;color:#1C1A18;">사용자 요청</div>
+      <div style="background:#F5F4F0;border:1px solid var(--border);padding:14px 48px;font-size:18px;font-weight:600;color:#1C1A18;">사용자 요청</div>
       <div style="width:1px;height:24px;background:var(--border);"></div>
       <!-- 메인 에이전트 -->
-      <div style="background:#fff;border:2px solid var(--p01);border-radius:10px;padding:16px 48px;font-size:18px;font-weight:700;color:var(--p01);">메인 에이전트 (오케스트레이터)</div>
+      <div style="background:#F5F4F0;border:2px solid var(--text);padding:16px 48px;font-size:18px;font-weight:700;color:#1C1A18;">메인 에이전트 (오케스트레이터)</div>
       <div style="font-size:14px;color:#888;margin:6px 0 14px;">작업 분석 → 서브에이전트 생성 → 결과 취합</div>
       <!-- 서브에이전트 3개 -->
       <div style="display:flex;gap:24px;width:100%;justify-content:center;">
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
           <div style="width:1px;height:20px;background:#CCCCCC;"></div>
-          <div style="background:#F5F4F0;border:1px solid var(--border);border-radius:10px;padding:14px 24px;font-size:16px;color:#555;text-align:center;min-width:160px;">서브에이전트 1<br><span style="font-family:monospace;color:var(--p01);font-size:14px;">jan.csv 분석</span></div>
+          <div style="background:#F5F4F0;border:1px solid var(--border);padding:14px 24px;font-size:16px;color:#555;text-align:center;min-width:160px;">서브에이전트 1<br><span style="font-family:monospace;color:var(--p01);font-size:14px;">jan.csv 분석</span></div>
           <div style="width:1px;height:16px;background:#CCCCCC;"></div>
           <div style="font-size:14px;font-family:monospace;color:#888;">jan_result.md</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
           <div style="width:1px;height:20px;background:#CCCCCC;"></div>
-          <div style="background:#F5F4F0;border:1px solid var(--border);border-radius:10px;padding:14px 24px;font-size:16px;color:#555;text-align:center;min-width:160px;">서브에이전트 2<br><span style="font-family:monospace;color:var(--p01);font-size:14px;">feb.csv 분석</span></div>
+          <div style="background:#F5F4F0;border:1px solid var(--border);padding:14px 24px;font-size:16px;color:#555;text-align:center;min-width:160px;">서브에이전트 2<br><span style="font-family:monospace;color:var(--p01);font-size:14px;">feb.csv 분석</span></div>
           <div style="width:1px;height:16px;background:#CCCCCC;"></div>
           <div style="font-size:14px;font-family:monospace;color:#888;">feb_result.md</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
           <div style="width:1px;height:20px;background:#CCCCCC;"></div>
-          <div style="background:#F5F4F0;border:1px solid var(--border);border-radius:10px;padding:14px 24px;font-size:16px;color:#555;text-align:center;min-width:160px;">서브에이전트 3<br><span style="font-family:monospace;color:var(--p01);font-size:14px;">mar.csv 분석</span></div>
+          <div style="background:#F5F4F0;border:1px solid var(--border);padding:14px 24px;font-size:16px;color:#555;text-align:center;min-width:160px;">서브에이전트 3<br><span style="font-family:monospace;color:var(--p01);font-size:14px;">mar.csv 분석</span></div>
           <div style="width:1px;height:16px;background:#CCCCCC;"></div>
           <div style="font-size:14px;font-family:monospace;color:#888;">mar_result.md</div>
         </div>
       </div>
       <!-- 취합 -->
-      <div style="margin-top:14px;background:rgba(232,96,60,0.06);border:1px solid rgba(232,96,60,0.2);border-radius:10px;padding:12px 36px;font-size:16px;color:#555;">메인 에이전트 → 결과 취합 → 최종 리포트</div>
+      <div style="margin-top:14px;background:#F5F4F0;border:1px solid var(--border);padding:12px 36px;font-size:16px;color:#555;">메인 에이전트 → 결과 취합 → 최종 리포트</div>
     </div>
   </div>
 </div>
@@ -191,29 +192,29 @@
   <div class="body" style="flex-direction:column;align-items:center;justify-content:flex-start;padding:44px 80px 32px;">
     <div style="text-align:center;margin-bottom:36px;">
       <div class="eyebrow">주요 특성</div>
-      <div class="big-title" style="margin-bottom:0;">3가지를 <span style="color:var(--p01);">기억</span>하세요</div>
+      <div class="big-title" style="margin-bottom:0;">3가지 <span style="color:var(--p01);">주요 특성</span></div>
     </div>
     <div style="width:100%;max-width:900px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
       <!-- 독립 컨텍스트 -->
       <div class="card">
         <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#888;margin-bottom:14px;">01</div>
         <div style="font-size:22px;font-weight:700;color:#1C1A18;margin-bottom:12px;">독립 컨텍스트</div>
-        <div style="font-size:16px;color:#555;line-height:1.75;">서브에이전트는 메인 대화를 모릅니다. 지시 내용을 통째로 전달해야 해요.</div>
-        <div style="margin-top:14px;padding:10px 14px;background:#F5F4F0;border-radius:8px;font-size:15px;color:#888;font-family:monospace;">새 컨텍스트<br>→ 집중도 ↑</div>
+        <div style="font-size:16px;color:#555;line-height:1.75;">메인 대화 비공유<br>지시 내용 전문 전달 필요</div>
+        <div style="margin-top:14px;padding:10px 14px;background:#E8E6E2;border:1px solid var(--border);font-size:15px;color:#888;font-family:monospace;">새 컨텍스트<br>→ 집중도 ↑</div>
       </div>
       <!-- 병렬 실행 -->
-      <div class="card" style="border-color:rgba(232,96,60,0.25);">
+      <div class="card-accent">
         <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--p01);margin-bottom:14px;">02</div>
         <div style="font-size:22px;font-weight:700;color:#1C1A18;margin-bottom:12px;">병렬 실행</div>
-        <div style="font-size:16px;color:#555;line-height:1.75;">여러 서브에이전트가 동시에 작동해요. 10개 파일 = 이론상 1배 시간.</div>
-        <div style="margin-top:14px;padding:10px 14px;background:rgba(232,96,60,0.06);border-radius:8px;font-size:15px;color:var(--p01);font-family:monospace;">10개 파일<br>→ 동시 처리</div>
+        <div style="font-size:16px;color:#555;line-height:1.75;">복수 서브에이전트 동시 작동<br>10개 파일 = 이론상 1배 시간</div>
+        <div style="margin-top:14px;padding:10px 14px;background:#E8E6E2;border:1px solid var(--border);font-size:15px;color:var(--p01);font-family:monospace;">10개 파일<br>→ 동시 처리</div>
       </div>
       <!-- 파일 통신 -->
       <div class="card">
         <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#888;margin-bottom:14px;">03</div>
         <div style="font-size:22px;font-weight:700;color:#1C1A18;margin-bottom:12px;">파일 통신</div>
-        <div style="font-size:16px;color:#555;line-height:1.75;">에이전트끼리 직접 대화하지 않아요. 결과를 파일로 저장하고 메인이 읽습니다.</div>
-        <div style="margin-top:14px;padding:10px 14px;background:#F5F4F0;border-radius:8px;font-size:15px;color:#888;font-family:monospace;">outputs/<br>→ 소통 창구</div>
+        <div style="font-size:16px;color:#555;line-height:1.75;">에이전트 간 직접 통신 없음<br>파일 저장 후 메인이 취합</div>
+        <div style="margin-top:14px;padding:10px 14px;background:#E8E6E2;border:1px solid var(--border);font-size:15px;color:#888;font-family:monospace;">outputs/<br>→ 소통 창구</div>
       </div>
     </div>
   </div>
@@ -258,7 +259,7 @@
         <span style="color:rgba(255,255,255,0.6);">당신의 역할은 데이터를...</span>
       </div>
     </div>
-    <div style="margin-top:18px;width:100%;max-width:900px;padding:14px 24px;background:#fff;border:1px solid #e8e8e8;border-radius:10px;display:flex;align-items:center;gap:16px;">
+    <div style="margin-top:18px;width:100%;max-width:900px;padding:14px 24px;background:#F5F4F0;border:1px solid var(--border);display:flex;align-items:center;gap:16px;">
       <span style="font-size:16px;color:#888;">호출 방법</span>
       <span style="color:var(--p01);">→</span>
       <span style="font-size:16px;font-family:monospace;color:#1C1A18;">@data-ingestion 이 CSV 분석해줘</span>
@@ -326,7 +327,7 @@
         <div style="padding:10px 14px;border-right:1px solid var(--border);font-size:13px;font-family:monospace;color:#888;">05_analysis_report.md</div>
         <div style="padding:10px 14px;font-size:13px;color:#AAAAAA;">Haiku</div>
       </div>
-      <div style="display:grid;grid-template-columns:60px 1fr 1fr 1fr 80px;border-bottom:1px solid var(--border);background:rgba(232,96,60,0.03);">
+      <div style="display:grid;grid-template-columns:60px 1fr 1fr 1fr 80px;border-bottom:1px solid var(--border);background:#F5F4F0;">
         <div style="padding:10px 14px;border-right:1px solid var(--border);font-size:14px;color:#888;">06</div>
         <div style="padding:10px 14px;border-right:1px solid var(--border);font-size:14px;font-family:monospace;color:var(--p01);">@dashboard</div>
         <div style="padding:10px 14px;border-right:1px solid var(--border);font-size:14px;color:#555;">HTML 인터랙티브 대시보드</div>
@@ -400,7 +401,7 @@
         </div>
         <div class="card" style="padding:16px 20px;">
           <div style="font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#888;margin-bottom:8px;">.claude/agents/</div>
-          <div style="font-size:16px;color:#1C1A18;line-height:1.6;">역할이 고정된 팀원<br>각자 전문 분야만 처리</div>
+          <div style="font-size:16px;color:#1C1A18;line-height:1.6;">역할 고정 팀원<br>전문 분야 단독 처리</div>
         </div>
         <div class="card" style="padding:16px 20px;">
           <div style="font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#888;margin-bottom:8px;">.claude/skills/</div>
@@ -421,7 +422,7 @@
   <div class="body" style="flex-direction:column;align-items:center;justify-content:flex-start;padding:44px 80px 32px;">
     <div style="text-align:center;margin-bottom:28px;">
       <div class="eyebrow">팀장 역할</div>
-      <div class="big-title" style="font-size:56px;margin-bottom:0;"><span style="color:var(--p01);">CLAUDE.md</span>가 팀장</div>
+      <div class="big-title" style="font-size:56px;margin-bottom:0;"><span style="color:var(--p01);">CLAUDE.md</span> 오케스트레이터</div>
     </div>
     <div style="width:100%;max-width:900px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
       <!-- 코드: 파이프라인 정의 -->
@@ -444,12 +445,12 @@
       </div>
       <!-- 실행 방법 -->
       <div style="display:flex;flex-direction:column;gap:14px;">
-        <div style="font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#888;margin-bottom:2px;">실행 방법</div>
+        <div style="font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#888;margin-bottom:2px;">실행 순서</div>
         <div class="card" style="padding:18px 22px;">
           <div style="font-size:14px;color:#888;margin-bottom:8px;">1단계 — CSV 입력</div>
           <div style="font-size:15px;font-family:monospace;color:#1C1A18;">runs/latest/input/<br>→ CSV 파일 넣기</div>
         </div>
-        <div class="card" style="padding:18px 22px;border-color:rgba(232,96,60,0.25);">
+        <div class="card-accent" style="padding:18px 22px;">
           <div style="font-size:14px;color:#888;margin-bottom:8px;">2단계 — 명령어 하나</div>
           <div style="font-size:17px;font-family:monospace;color:var(--p01);font-weight:700;">/run-pipeline</div>
         </div>
@@ -478,15 +479,15 @@
     <div style="width:100%;max-width:900px;display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
       <div class="card" style="padding:20px 24px;">
         <div style="font-size:18px;font-weight:700;color:#1C1A18;margin-bottom:10px;">Haiku — 빠름 · 저렴</div>
-        <div style="font-size:15px;color:#555;line-height:1.75;">데이터 파악, EDA, 문제 정의,<br>KPI 계산, 분석, 리포트 작성<br>→ 정해진 규칙대로 처리하는 단계</div>
+        <div style="font-size:15px;color:#555;line-height:1.75;">데이터 파악, EDA, 문제 정의,<br>KPI 계산, 분석, 리포트 작성<br>→ 규칙 기반 처리 단계</div>
       </div>
-      <div class="card" style="border-color:rgba(232,96,60,0.3);padding:20px 24px;">
+      <div class="card-accent" style="padding:20px 24px;">
         <div style="font-size:18px;font-weight:700;color:var(--p01);margin-bottom:10px;">Sonnet — 창의성 필요</div>
         <div style="font-size:15px;color:#555;line-height:1.75;">HTML 대시보드 설계 · 디자인<br>→ 레이아웃 판단 + 시각적 결정<br>이 필요한 단계만 Sonnet 사용</div>
       </div>
     </div>
     <!-- 흐름 -->
-    <div style="width:100%;max-width:900px;display:flex;align-items:center;gap:6px;padding:14px 20px;background:#fff;border:1px solid #e8e8e8;border-radius:10px;flex-wrap:wrap;justify-content:center;">
+    <div style="width:100%;max-width:900px;display:flex;align-items:center;gap:6px;padding:14px 20px;background:#F5F4F0;border:1px solid var(--border);flex-wrap:wrap;justify-content:center;">
       <span style="font-size:15px;font-family:monospace;color:#888;">Haiku</span>
       <span style="color:var(--border);">→</span>
       <span style="font-size:15px;font-family:monospace;color:#888;">Haiku</span>
@@ -535,7 +536,7 @@
   </div>
   <div class="body" style="flex-direction:column;align-items:center;justify-content:flex-start;padding:44px 80px 32px;">
     <div style="text-align:center;margin-bottom:36px;">
-      <div class="eyebrow">병렬 처리의 힘</div>
+      <div class="eyebrow">처리 방식 비교</div>
       <div class="big-title" style="margin-bottom:0;">24분 <span style="color:var(--p01);">→ 2분</span></div>
     </div>
     <div style="width:100%;max-width:900px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
@@ -545,24 +546,24 @@
         <div style="font-size:32px;font-weight:700;color:#1C1A18;margin-bottom:14px;">24분</div>
         <div style="font-size:16px;color:#555;line-height:1.75;margin-bottom:16px;">12개 파일 × 2분/파일<br>= 하나씩 순서대로</div>
         <div style="display:flex;gap:4px;flex-wrap:wrap;">
-          <div style="width:28px;height:28px;background:#E0DDD9;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;">01</div>
+          <div style="width:28px;height:28px;background:#E0DDD9;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;">01</div>
           <div style="width:4px;display:flex;align-items:center;color:#CCCCCC;font-size:12px;">→</div>
-          <div style="width:28px;height:28px;background:#E0DDD9;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;">02</div>
+          <div style="width:28px;height:28px;background:#E0DDD9;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;">02</div>
           <div style="width:4px;display:flex;align-items:center;color:#CCCCCC;font-size:12px;">→</div>
-          <div style="width:28px;height:28px;background:#E0DDD9;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;">03</div>
+          <div style="width:28px;height:28px;background:#E0DDD9;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;">03</div>
           <div style="width:4px;display:flex;align-items:center;color:#CCCCCC;font-size:12px;">→</div>
           <span style="font-size:13px;color:#AAAAAA;display:flex;align-items:center;">… 12</span>
         </div>
       </div>
       <!-- 병렬 -->
-      <div class="card" style="border-color:rgba(232,96,60,0.3);padding:24px 28px;background:rgba(232,96,60,0.03);">
+      <div class="card-accent" style="padding:24px 28px;">
         <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--p01);margin-bottom:14px;">병렬 처리</div>
         <div style="font-size:32px;font-weight:700;color:var(--p01);margin-bottom:14px;">~2분</div>
         <div style="font-size:16px;color:#555;line-height:1.75;margin-bottom:16px;">12개 에이전트 × 동시 실행<br>= 실질적으로 1배 시간</div>
         <div style="display:flex;gap:4px;flex-wrap:wrap;">
-          <div style="width:28px;height:28px;background:rgba(232,96,60,0.15);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--p01);">01</div>
-          <div style="width:28px;height:28px;background:rgba(232,96,60,0.15);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--p01);">02</div>
-          <div style="width:28px;height:28px;background:rgba(232,96,60,0.15);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--p01);">03</div>
+          <div style="width:28px;height:28px;background:#E8E6E2;border:1px solid var(--p01);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--p01);">01</div>
+          <div style="width:28px;height:28px;background:#E8E6E2;border:1px solid var(--p01);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--p01);">02</div>
+          <div style="width:28px;height:28px;background:#E8E6E2;border:1px solid var(--p01);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--p01);">03</div>
           <span style="font-size:13px;color:var(--p01);display:flex;align-items:center;">… 동시</span>
         </div>
       </div>
@@ -602,7 +603,7 @@
         </div>
       </div>
       <!-- 패턴 2 -->
-      <div class="card" style="padding:18px 24px;border-color:rgba(232,96,60,0.25);">
+      <div class="card-accent" style="padding:18px 24px;">
         <div style="display:flex;align-items:flex-start;gap:16px;">
           <div style="min-width:80px;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--p01);padding-top:2px;">패턴 2</div>
           <div>
@@ -626,7 +627,7 @@
           <div style="min-width:80px;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#888;padding-top:2px;">패턴 3</div>
           <div>
             <div style="font-size:17px;font-weight:700;color:#1C1A18;margin-bottom:8px;">앙상블 (병렬 검토)</div>
-            <div style="font-size:15px;color:#555;line-height:1.65;">같은 작업을 여러 에이전트가 독립적으로 처리 → 결과 비교 → 최선 선택<br>품질이 중요한 분석에 활용</div>
+            <div style="font-size:15px;color:#555;line-height:1.65;">동일 작업 복수 에이전트 독립 처리 → 결과 비교 → 최선 선택<br>품질 우선 분석에 활용</div>
           </div>
         </div>
       </div>
@@ -677,8 +678,8 @@
         </div>
       </div>
     </div>
-    <div style="margin-top:18px;width:100%;max-width:860px;padding:14px 24px;background:rgba(232,96,60,0.05);border:1px solid rgba(232,96,60,0.2);border-radius:10px;text-align:center;">
-      <div style="font-size:17px;font-weight:600;color:var(--p01);">한 단계가 실패하면 그 단계만 재실행 — 처음부터 다시 안 해도 됩니다</div>
+    <div style="margin-top:18px;width:100%;max-width:860px;padding:14px 24px;background:#F5F4F0;border:1px solid var(--border);border-left:3px solid var(--p01);text-align:center;">
+      <div style="font-size:17px;font-weight:600;color:#1C1A18;">실패 단계만 재실행 · 전체 재시작 불필요</div>
     </div>
   </div>
 </div>
@@ -700,7 +701,7 @@
       </svg>
     </div>
     <div class="sec-label">CLIP 04 · 실무 최소 운영 팁</div>
-    <div class="sec-title">실무에서<br>꼭 아는 것</div>
+    <div class="sec-title">실무 최소 운영</div>
     <div class="sec-sub">Permissions · 세션 관리 · 검증 루프</div>
   </div>
 </div>
@@ -742,15 +743,15 @@
       <div style="display:flex;flex-direction:column;gap:12px;">
         <div class="card" style="padding:16px 20px;">
           <div style="font-size:14px;font-weight:600;color:var(--p01);margin-bottom:8px;">deny — 원본 보호</div>
-          <div style="font-size:15px;color:#555;line-height:1.7;"><code style="background:#F0EDE9;padding:2px 6px;border-radius:4px;font-size:14px;">data/raw/</code>는 절대 수정 불가. 실수로 덮어쓰면 복구가 힘들어요.</div>
+          <div style="font-size:15px;color:#555;line-height:1.7;"><code style="background:#E8E6E2;padding:2px 6px;font-size:14px;">data/raw/</code> 수정 불가 · 원본 덮어쓰기 복구 불가</div>
         </div>
         <div class="card" style="padding:16px 20px;">
           <div style="font-size:14px;font-weight:600;color:#1C1A18;margin-bottom:8px;">allow — 작업 공간 허용</div>
-          <div style="font-size:15px;color:#555;line-height:1.7;"><code style="background:#F0EDE9;padding:2px 6px;border-radius:4px;font-size:14px;">processed/</code>와 <code style="background:#F0EDE9;padding:2px 6px;border-radius:4px;font-size:14px;">runs/</code>는 Claude가 자유롭게 작업.</div>
+          <div style="font-size:15px;color:#555;line-height:1.7;"><code style="background:#E8E6E2;padding:2px 6px;font-size:14px;">processed/</code>·<code style="background:#E8E6E2;padding:2px 6px;font-size:14px;">runs/</code> Claude 자유 작업 영역</div>
         </div>
         <div class="card" style="padding:16px 20px;">
           <div style="font-size:14px;font-weight:600;color:#888;margin-bottom:8px;">팀 공유</div>
-          <div style="font-size:15px;color:#555;line-height:1.7;">settings.json을 git에 커밋하면 팀 전체가 같은 권한으로 작업해요.</div>
+          <div style="font-size:15px;color:#555;line-height:1.7;">settings.json git 커밋 → 팀 권한 통일</div>
         </div>
       </div>
     </div>
@@ -773,20 +774,20 @@
       <!-- /clear -->
       <div class="card" style="padding:28px 32px;">
         <div style="font-size:22px;font-weight:700;font-family:monospace;color:var(--p01);margin-bottom:16px;">/clear</div>
-        <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:12px;">새로 시작</div>
-        <div style="font-size:15px;color:#555;line-height:1.8;">대화 내용 전체를 지워요.<br>컨텍스트가 너무 길어지거나,<br>완전히 다른 작업을 시작할 때 씁니다.</div>
-        <div style="margin-top:18px;padding:12px 16px;background:#F5F4F0;border-radius:8px;font-size:14px;color:#888;">작업이 완전히 다를 때</div>
+        <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:12px;">전체 초기화</div>
+        <div style="font-size:15px;color:#555;line-height:1.8;">대화 내용 전체 삭제<br>컨텍스트 과부하 또는 완전 전환 시</div>
+        <div style="margin-top:18px;padding:12px 16px;background:#E8E6E2;border:1px solid var(--border);font-size:14px;color:#888;">작업 완전 전환 시</div>
       </div>
       <!-- /compact -->
-      <div class="card" style="border-color:rgba(232,96,60,0.25);padding:28px 32px;">
+      <div class="card-accent" style="padding:28px 32px;">
         <div style="font-size:22px;font-weight:700;font-family:monospace;color:var(--p01);margin-bottom:16px;">/compact</div>
-        <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:12px;">압축해서 이어가기</div>
-        <div style="font-size:15px;color:#555;line-height:1.8;">대화를 요약해서 컨텍스트를 줄여요.<br>같은 작업 맥락을 유지하면서<br>더 길게 이어갈 때 씁니다.</div>
-        <div style="margin-top:18px;padding:12px 16px;background:rgba(232,96,60,0.06);border-radius:8px;font-size:14px;color:var(--p01);">같은 작업 계속할 때</div>
+        <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:12px;">컨텍스트 압축 후 유지</div>
+        <div style="font-size:15px;color:#555;line-height:1.8;">대화 요약 · 컨텍스트 축소<br>동일 맥락 유지 장기 작업 시</div>
+        <div style="margin-top:18px;padding:12px 16px;background:#E8E6E2;border:1px solid var(--border);font-size:14px;color:var(--p01);">동일 작업 지속 시</div>
       </div>
     </div>
-    <div style="margin-top:18px;width:100%;max-width:860px;padding:14px 24px;background:#fff;border:1px solid #e8e8e8;border-radius:10px;text-align:center;">
-      <div style="font-size:16px;color:#888;">파이프라인 실행 중 오류 나도 <span style="color:#1C1A18;font-weight:600;">/clear 금지</span> — 맥락을 잃으면 에이전트가 처음부터 다시 시작해요</div>
+    <div style="margin-top:18px;width:100%;max-width:860px;padding:14px 24px;background:#F5F4F0;border:1px solid var(--border);border-left:3px solid var(--p01);text-align:center;">
+      <div style="font-size:16px;color:#1C1A18;">파이프라인 오류 시 <span style="font-family:monospace;font-weight:700;color:var(--p01);">/clear</span> 금지 · 맥락 손실 → 전체 재시작</div>
     </div>
   </div>
 </div>
@@ -800,41 +801,41 @@
   </div>
   <div class="body" style="flex-direction:column;align-items:center;justify-content:flex-start;padding:44px 80px 32px;">
     <div style="text-align:center;margin-bottom:32px;">
-      <div class="eyebrow">검증 습관</div>
-      <div class="big-title" style="margin-bottom:0;">했다 <span style="color:var(--p01);">≠</span> 됐다</div>
+      <div class="eyebrow">검증 루프</div>
+      <div class="big-title" style="margin-bottom:0;">완료 <span style="color:var(--p01);">≠</span> 검증</div>
     </div>
     <div style="width:100%;max-width:860px;display:flex;flex-direction:column;gap:12px;">
       <!-- 체크리스트 -->
       <div class="card" style="padding:20px 28px;">
         <div style="font-size:14px;letter-spacing:0.12em;text-transform:uppercase;color:#888;margin-bottom:14px;">파이프라인 완료 후 확인 루틴</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F4F0;border-radius:8px;">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#E8E6E2;border:1px solid var(--border);">
             <span style="color:var(--p01);font-size:18px;font-weight:700;">✓</span>
-            <span style="font-size:15px;color:#555;">outputs/ 폴더에 7개 파일 있는지</span>
+            <span style="font-size:15px;color:#555;">outputs/ 폴더 7개 파일 확인</span>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F4F0;border-radius:8px;">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#E8E6E2;border:1px solid var(--border);">
             <span style="color:var(--p01);font-size:18px;font-weight:700;">✓</span>
-            <span style="font-size:15px;color:#555;">06_dashboard.html 브라우저에서 열기</span>
+            <span style="font-size:15px;color:#555;">06_dashboard.html 브라우저 확인</span>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F4F0;border-radius:8px;">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#E8E6E2;border:1px solid var(--border);">
             <span style="color:var(--p01);font-size:18px;font-weight:700;">✓</span>
-            <span style="font-size:15px;color:#555;">data/raw/ 파일이 변경됐는지 확인</span>
+            <span style="font-size:15px;color:#555;">data/raw/ 변경 여부 확인</span>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F4F0;border-radius:8px;">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#E8E6E2;border:1px solid var(--border);">
             <span style="color:var(--p01);font-size:18px;font-weight:700;">✓</span>
-            <span style="font-size:15px;color:#555;">KPI 수치가 원본 데이터랑 맞는지</span>
+            <span style="font-size:15px;color:#555;">KPI 수치 원본 데이터 대조</span>
           </div>
         </div>
       </div>
-      <!-- 핵심 원칙 -->
+      <!-- 원칙 -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div class="card" style="padding:18px 22px;">
-          <div style="font-size:16px;font-weight:600;color:#1C1A18;margin-bottom:8px;">"완료했습니다" ≠ 정확함</div>
-          <div style="font-size:15px;color:#555;line-height:1.7;">Claude가 했다고 해도 결과물을 직접 열어서 확인하세요. 항상.</div>
+          <div style="font-size:16px;font-weight:600;color:#1C1A18;margin-bottom:8px;">"완료" ≠ 정확</div>
+          <div style="font-size:15px;color:#555;line-height:1.7;">Claude 완료 보고 후 결과물 직접 검증 필수</div>
         </div>
-        <div class="card" style="padding:18px 22px;border-color:rgba(232,96,60,0.25);">
-          <div style="font-size:16px;font-weight:600;color:var(--p01);margin-bottom:8px;">오류는 해당 단계만 재실행</div>
-          <div style="font-size:15px;color:#555;line-height:1.7;">@analysis만 다시 → <code style="background:#F0EDE9;padding:2px 5px;border-radius:3px;font-size:13px;">@analysis 재실행해줘</code></div>
+        <div class="card-accent" style="padding:18px 22px;">
+          <div style="font-size:16px;font-weight:600;color:var(--p01);margin-bottom:8px;">오류 — 해당 단계만 재실행</div>
+          <div style="font-size:15px;color:#555;line-height:1.7;">@analysis만 → <code style="background:#E8E6E2;padding:2px 5px;font-size:13px;">@analysis 재실행해줘</code></div>
         </div>
       </div>
     </div>
