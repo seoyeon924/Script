@@ -178,6 +178,11 @@
         <div class="big-title" style="margin-bottom:18px;">Claude 모델<br>→ 서브에이전트</div>
         <div style="font-size:22px;color:#333;line-height:1.85;font-weight:400;">독립 컨텍스트에서<br>병렬 실행 후<br>파일로 결과 취합</div>
       </div>
+      <div style="padding:16px 18px;background:#F0EFE9;border:1px solid var(--border);border-left:3px solid #b09848;">
+        <div style="font-size:11px;font-weight:700;color:#888;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">내장 서브에이전트</div>
+        <div style="font-size:14px;color:#1C1A18;font-weight:600;margin-bottom:4px;">Explore · Plan · General-purpose</div>
+        <div style="font-size:13px;color:#555;line-height:1.5;">Claude Code에 기본 탑재, 자동 호출<br>직접 만들면 용도에 맞게 확장 가능</div>
+      </div>
     </div>
     <!-- Right: 다이어그램 -->
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:44px 56px;gap:0;">
@@ -412,44 +417,59 @@
     <span class="tb-num">5</span>
   </div>
   <div class="body" style="flex-direction:row;">
-    <!-- Left panel: 2 cards only -->
-    <div style="width:38%;border-right:1px solid var(--border);padding:44px 36px;display:flex;flex-direction:column;gap:14px;justify-content:center;overflow:hidden;">
+    <!-- Left panel -->
+    <div style="width:38%;border-right:1px solid var(--border);padding:44px 36px;display:flex;flex-direction:column;gap:12px;justify-content:center;overflow:hidden;">
       <div class="eyebrow">에이전트 등록 위치</div>
-      <div style="font-size:26px;font-weight:700;color:var(--text);font-family:'Menlo','Monaco',monospace;letter-spacing:-0.02em;margin-bottom:8px;">.claude/agents/</div>
       <div style="border:1px solid var(--border);border-left:3px solid #888888;padding:18px 20px;background:#ECEAE5;">
         <div style="font-family:monospace;font-size:12px;color:#888;font-weight:600;margin-bottom:8px;">CLAUDE.md</div>
         <div style="font-size:16px;font-weight:700;color:#1C1A18;margin-bottom:6px;">메인 지시서</div>
         <div style="font-size:14px;color:#333;line-height:1.6;">누가 언제 어떤 에이전트를<br>호출할지 지시</div>
       </div>
-      <div style="border:1px solid var(--border);border-left:3px solid #6aac98;padding:18px 20px;background:#ECEAE5;">
-        <div style="font-family:monospace;font-size:12px;color:#5a9080;font-weight:600;margin-bottom:8px;">.claude/agents/</div>
-        <div style="font-size:16px;font-weight:700;color:#1C1A18;margin-bottom:6px;">에이전트 한 명 = 파일 하나</div>
-        <div style="font-size:14px;color:#333;line-height:1.6;">역할 · 모델 · 도구를<br>파일 안에 선언</div>
+      <div style="border:1px solid var(--border);border-left:3px solid #6aac98;padding:16px 20px;background:#ECEAE5;">
+        <div style="font-family:monospace;font-size:12px;color:#5a9080;font-weight:600;margin-bottom:6px;">.claude/agents/</div>
+        <div style="font-size:15px;font-weight:700;color:#1C1A18;margin-bottom:4px;">프로젝트 전용</div>
+        <div style="font-size:13px;color:#555;line-height:1.5;">git으로 팀 전체 공유 가능</div>
       </div>
-      <div style="padding:14px 20px;background:#F0EFE9;border:1px solid var(--border);border-left:3px solid #888;margin-top:4px;">
-        <div style="font-size:11px;font-weight:600;color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">이렇게 쓰면 됨</div>
-        <div style="font-size:16px;font-family:monospace;color:#1C1A18;">@eda 탐색 분석해줘</div>
+      <div style="border:1px solid var(--border);border-left:3px solid #b09848;padding:16px 20px;background:#ECEAE5;">
+        <div style="font-family:monospace;font-size:12px;color:#9a7a30;font-weight:600;margin-bottom:6px;">~/.claude/agents/</div>
+        <div style="font-size:15px;font-weight:700;color:#1C1A18;margin-bottom:4px;">개인 에이전트</div>
+        <div style="font-size:13px;color:#555;line-height:1.5;">내 모든 프로젝트에서 사용 가능</div>
+      </div>
+      <div style="padding:12px 16px;background:#F0EFE9;border:1px solid var(--border);border-left:3px solid #888;margin-top:2px;">
+        <div style="font-size:11px;font-weight:600;color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">이렇게 쓰면 됨</div>
+        <div style="font-size:15px;font-family:monospace;color:#1C1A18;">@eda 탐색 분석해줘</div>
       </div>
     </div>
-    <!-- Right panel: agents/ 중심 폴더 트리 -->
-    <div style="flex:1;background:#1C1A18;padding:48px 52px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;">
-      <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:18px;">에이전트 등록 구조</div>
-      <div style="font-family:'Menlo','Monaco',monospace;font-size:15px;line-height:2.2;">
-        <div style="color:rgba(255,255,255,0.75);font-weight:600;margin-bottom:4px;">my-project/</div>
-        <div><span style="color:rgba(255,255,255,0.25);">├── </span><span style="color:rgba(255,255,255,0.5);">CLAUDE.md</span><span style="color:rgba(255,255,255,0.2);font-size:12px;margin-left:12px;"># 작업 흐름 지시서</span></div>
-        <div><span style="color:rgba(255,255,255,0.25);">└── </span><span style="color:rgba(255,255,255,0.4);">.claude/</span></div>
-        <div style="padding-left:24px;">
-          <div><span style="color:rgba(255,255,255,0.25);">└── </span><span style="color:#6aac98;font-weight:600;">agents/</span><span style="color:rgba(106,172,152,0.55);font-size:12px;margin-left:10px;"># 역할이 고정된 AI 에이전트</span></div>
+    <!-- Right panel: 두 범위 폴더 트리 -->
+    <div style="flex:1;background:#1C1A18;padding:40px 52px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;gap:28px;">
+      <!-- 프로젝트 범위 -->
+      <div>
+        <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#6aac98;margin-bottom:12px;font-weight:600;">프로젝트 전용</div>
+        <div style="font-family:'Menlo','Monaco',monospace;font-size:14px;line-height:2.0;">
+          <div style="color:rgba(255,255,255,0.75);font-weight:600;">my-project/</div>
+          <div><span style="color:rgba(255,255,255,0.25);">├── </span><span style="color:rgba(255,255,255,0.5);">CLAUDE.md</span></div>
+          <div><span style="color:rgba(255,255,255,0.25);">└── </span><span style="color:rgba(255,255,255,0.4);">.claude/</span><span style="color:rgba(255,255,255,0.2);font-size:12px;margin-left:8px;"># git으로 팀 공유</span></div>
           <div style="padding-left:24px;">
-            <div><span style="color:rgba(255,255,255,0.25);">├── </span><span style="color:#6aac98;">ingestion.md</span><span style="color:rgba(106,172,152,0.45);font-size:12px;margin-left:8px;">데이터 수집 · 전처리</span></div>
-            <div><span style="color:rgba(255,255,255,0.25);">├── </span><span style="color:#6aac98;">eda.md</span><span style="color:rgba(106,172,152,0.45);font-size:12px;margin-left:8px;">탐색적 분석 · 시각화</span></div>
-            <div><span style="color:rgba(255,255,255,0.25);">├── </span><span style="color:#6aac98;">modeler.md</span><span style="color:rgba(106,172,152,0.45);font-size:12px;margin-left:8px;">모델링 · 통계 분석</span></div>
-            <div><span style="color:rgba(255,255,255,0.25);">└── </span><span style="color:#6aac98;">reporter.md</span><span style="color:rgba(106,172,152,0.45);font-size:12px;margin-left:8px;">결과 정리 · 보고서</span></div>
+            <div><span style="color:rgba(255,255,255,0.25);">└── </span><span style="color:#6aac98;font-weight:600;">agents/</span></div>
+            <div style="padding-left:24px;">
+              <div><span style="color:rgba(255,255,255,0.25);">├── </span><span style="color:#6aac98;">ingestion.md</span></div>
+              <div><span style="color:rgba(255,255,255,0.25);">└── </span><span style="color:#6aac98;">eda.md</span></div>
+            </div>
           </div>
         </div>
       </div>
-      <div style="margin-top:28px;padding:16px 20px;border:1px solid rgba(255,255,255,0.08);font-size:14px;color:rgba(255,255,255,0.3);font-family:monospace;">
-        skills/ · outputs/ → Clip 03 · 04에서 소개
+      <!-- 구분선 -->
+      <div style="border-top:1px solid rgba(255,255,255,0.08);"></div>
+      <!-- 개인 범위 -->
+      <div>
+        <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#b09848;margin-bottom:12px;font-weight:600;">개인 에이전트 (모든 프로젝트)</div>
+        <div style="font-family:'Menlo','Monaco',monospace;font-size:14px;line-height:2.0;">
+          <div style="color:rgba(255,255,255,0.75);font-weight:600;">~/.claude/</div>
+          <div><span style="color:rgba(255,255,255,0.25);">└── </span><span style="color:#b09848;font-weight:600;">agents/</span><span style="color:rgba(176,152,72,0.5);font-size:12px;margin-left:8px;"># 어디서든 @로 호출 가능</span></div>
+          <div style="padding-left:24px;">
+            <div><span style="color:rgba(255,255,255,0.25);">└── </span><span style="color:#b09848;">code-reviewer.md</span></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
