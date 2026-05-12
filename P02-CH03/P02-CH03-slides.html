@@ -351,7 +351,7 @@
     <div class="principle-col">
       <div>
         <div class="principle-n">02</div>
-        <div class="principle-title">동시 실행</div>
+        <div class="principle-title">순차 또는 병렬 실행</div>
         <!-- SVG: 순차 vs 병렬 Gantt 비교 -->
         <svg width="220" height="110" viewBox="0 0 220 110" style="margin:24px 0 20px;display:block;">
           <text x="0" y="14" font-size="10" fill="#777" font-family="monospace">순차</text>
@@ -369,9 +369,9 @@
           <polygon points="210,32 204,29 204,35" fill="#E0DDD9"/>
           <text x="212" y="36" font-size="9" fill="#777">시간</text>
         </svg>
-        <div class="principle-body">3명이 동시에 시작<br>10개 작업도<br>기다리는 시간 같음</div>
+        <div class="principle-body">의존성 있으면 순차<br>없으면 병렬<br>상황에 맞게 선택</div>
         <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--border);padding-top:14px;">
-          <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-size:13px;font-weight:700;color:#6aac98;">+</span><span style="font-size:14px;color:#333;">처리 시간 대폭 단축</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-size:13px;font-weight:700;color:#6aac98;">+</span><span style="font-size:14px;color:#333;">병렬 시 처리 시간 단축</span></div>
           <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-size:13px;font-weight:700;color:#E8603C;">−</span><span style="font-size:14px;color:#555;">에이전트 수만큼 비용 증가</span></div>
         </div>
       </div>
