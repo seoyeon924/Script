@@ -982,57 +982,60 @@
   <div class="body">
     <div class="l-panel">
       <div>
-        <div class="eyebrow">처리 구조 비교</div>
-        <div class="big-title" style="margin-bottom:18px;">순차 처리<br>vs 병렬 처리</div>
-        <div style="font-size:20px;color:#333;line-height:1.85;">같은 작업을<br>구조만 바꿔도<br>결과가 달라짐</div>
+        <div class="eyebrow">실행 구조 선택</div>
+        <div class="big-title" style="margin-bottom:18px;">순차 vs 병렬<br>언제 어떻게?</div>
+        <div style="font-size:18px;color:#555;line-height:1.8;">작업 간 의존성이<br>있으면 순차,<br>없으면 병렬</div>
       </div>
-      <div style="font-size:16px;color:#444;line-height:1.7;">서브에이전트는<br>각자 독립 컨텍스트로 실행</div>
+      <div style="font-size:14px;color:#888;line-height:1.7;">두 구조 모두<br>서브에이전트로 구성</div>
     </div>
-    <!-- Right: 두 구조 나란히 -->
+    <!-- Right: 순차 / 병렬 -->
     <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:0;">
-      <!-- 순차 -->
-      <div style="padding:48px 44px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:20px;">
-        <div style="font-size:13px;font-family:monospace;color:#555;letter-spacing:0.14em;text-transform:uppercase;">순차 처리</div>
-        <div style="font-size:22px;font-weight:700;color:#1C1A18;margin-bottom:4px;">한 번에 하나씩</div>
-        <div style="font-size:17px;color:#444;line-height:1.75;margin-bottom:16px;">앞 작업이 끝나야<br>다음 작업 시작</div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="width:44px;height:32px;background:#E8E6E2;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:monospace;color:#444;">작업 1</div>
-            <span style="font-size:16px;color:#666;">→ 완료 후</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="width:44px;height:32px;background:#E8E6E2;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:monospace;color:#444;">작업 2</div>
-            <span style="font-size:16px;color:#666;">→ 완료 후</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="width:44px;height:32px;background:#E8E6E2;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:monospace;color:#444;">작업 3</div>
-            <span style="font-size:16px;color:#666;">→ …</span>
+
+      <!-- 순차 실행 -->
+      <div style="padding:40px 36px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:16px;overflow:hidden;">
+        <div style="font-size:12px;font-family:monospace;color:#888;letter-spacing:0.14em;text-transform:uppercase;">순차 실행</div>
+        <div style="font-size:19px;font-weight:700;color:#1C1A18;">앞 결과가 다음 입력일 때</div>
+        <div style="font-size:14px;color:#555;font-family:monospace;line-height:2.0;">
+          @ingestion → ingestion.md<br>
+          @eda &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ eda.md<br>
+          @analysis → analysis.md<br>
+          @report &nbsp;&nbsp;→ report.md
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+          <div style="font-size:12px;font-weight:700;color:#888;letter-spacing:0.08em;text-transform:uppercase;">서브에이전트를 쓰는 이유</div>
+          <div style="font-size:13px;color:#444;line-height:1.7;">
+            각 단계가 독립 컨텍스트에서 실행<br>
+            → 메인 창이 안 쌓임<br>
+            단계별 모델 최적화 (Haiku / Sonnet)<br>
+            실패 단계만 재실행 가능
           </div>
         </div>
-        <div style="margin-top:auto;padding:14px 16px;background:#ECEAE5;border-left:3px solid #888;font-size:15px;color:#333;">작업 수 늘수록<br>대기 시간 선형 증가</div>
+        <div style="margin-top:auto;padding:12px 14px;background:#ECEAE5;border-left:3px solid #6aac98;font-size:12px;color:#333;font-family:monospace;line-height:1.7;">## 규칙<br>반드시 순차 실행.<br>이전 파일 확인 후 다음 단계 시작.</div>
       </div>
-      <!-- 병렬 -->
-      <div style="padding:48px 44px;display:flex;flex-direction:column;gap:20px;">
-        <div style="font-size:13px;font-family:monospace;color:#E8603C;letter-spacing:0.14em;text-transform:uppercase;">병렬 처리</div>
-        <div style="font-size:22px;font-weight:700;color:#1C1A18;margin-bottom:4px;">서브에이전트 동시 실행</div>
-        <div style="font-size:17px;color:#444;line-height:1.75;margin-bottom:16px;">Claude 모델이 Agent 도구로<br>각 서브에이전트 생성 후 동시 실행</div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="width:44px;height:32px;border:1.5px solid #6aac98;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:monospace;color:#3a8c68;">작업 1</div>
-            <div style="flex:1;height:1.5px;background:#6aac98;"></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="width:44px;height:32px;border:1.5px solid #6aac98;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:monospace;color:#3a8c68;">작업 2</div>
-            <div style="flex:1;height:1.5px;background:#6aac98;"></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="width:44px;height:32px;border:1.5px solid #6aac98;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:monospace;color:#3a8c68;">작업 3</div>
-            <div style="flex:1;height:1.5px;background:#6aac98;"></div>
-            <div style="border:1.5px solid #E8603C;padding:4px 10px;font-size:12px;font-family:monospace;color:#E8603C;white-space:nowrap;">final.md</div>
+
+      <!-- 병렬 실행 -->
+      <div style="padding:40px 36px;display:flex;flex-direction:column;gap:16px;overflow:hidden;">
+        <div style="font-size:12px;font-family:monospace;color:#6aac98;letter-spacing:0.14em;text-transform:uppercase;">병렬 실행</div>
+        <div style="font-size:19px;font-weight:700;color:#1C1A18;">작업 간 의존성이 없을 때</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+          <div style="font-size:12px;font-weight:700;color:#888;letter-spacing:0.08em;text-transform:uppercase;">쓰기 좋은 예시</div>
+          <div style="font-size:13px;color:#444;line-height:1.9;">
+            CSV 파일 5개 동시 분석<br>
+            같은 코드를 3가지 관점으로 리뷰<br>
+            여러 경쟁사 자료 동시 리서치<br>
+            앙상블 — 결과 비교 후 최선 선택
           </div>
         </div>
-        <div style="margin-top:auto;padding:14px 16px;background:#ECEAE5;border-left:3px solid #E8603C;font-size:15px;color:#333;">작업 수가 늘어도<br>대기 시간은 거의 동일</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+          <div style="font-size:12px;font-weight:700;color:#888;letter-spacing:0.08em;text-transform:uppercase;">서브에이전트를 쓰는 이유</div>
+          <div style="font-size:13px;color:#444;line-height:1.7;">
+            동시 처리로 속도 단축<br>
+            독립 컨텍스트로 혼선 없음
+          </div>
+        </div>
+        <div style="margin-top:auto;padding:12px 14px;background:#ECEAE5;border-left:3px solid #6aac98;font-size:12px;color:#333;font-family:monospace;line-height:1.7;">Claude에게 "동시에 실행해줘"<br>또는 Skill에 명시하지 않으면<br>Claude가 자동 판단</div>
       </div>
+
     </div>
   </div>
 </div>
