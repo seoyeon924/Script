@@ -3,88 +3,93 @@ tags: #P02 #CH02 #MCP #외부도구 #에이전트확장
 time: 10분
 part: Part 02
 chapter: CH02
+clip: 01
+slides: s2,s3,s14,s4,s16
 status: ✅ 대본완성
 ---
 
 # P02-CH02-01 MCP란 무엇인가 — 데이터 시각화에 활용 가능한 MCP들
 
-## 📌 클립 정보
-- **예상시간:** 10분
-- **유형:** 슬라이드 4장 + 화면 녹화
-- **준비물:** Claude Code 설치 완료, Node.js 설치 (npx 사용)
+---
+
+## s2 — CLIP 01 섹션 브레이크
+
+첫 번째 클립, MCP입니다.
+
+Claude Code는 기본적으로 코드를 쓰고 파일을 읽어요.
+MCP를 연결하면 데이터베이스, 웹 크롤링, 구글 시트까지 직접 처리할 수 있게 됩니다.
 
 ---
 
-## 오프닝 (30초)
+## s3 — 스마트폰에 앱을 설치하듯
 
-Claude Code는 기본적으로 터미널 명령어를 실행하고 파일을 읽고 씁니다.
-MCP를 연결하면 데이터베이스, 구글 시트, 웹 크롤링까지 직접 처리할 수 있습니다.
+**[화면: 슬라이드]**
 
----
+MCP를 한 마디로 설명하면 이렇습니다.
 
-## MCP란 무엇인가 (3분)
+스마트폰을 생각해보세요.
+처음에는 전화랑 메시지만 돼요.
+카카오맵을 설치하면 내비게이션이 생기죠.
 
-MCP(Model Context Protocol)는 에이전트에게 새로운 도구를 연결하는 프로토콜입니다.
+Claude Code도 똑같아요.
+기본으로는 코드 작성이랑 파일 처리만 가능해요.
+MCP 서버를 연결하면 데이터베이스 연결, 웹 크롤링, 파일 시스템 확장까지 할 수 있게 됩니다.
 
-스마트폰에 앱을 설치하는 것과 같습니다.
-스마트폰 자체는 전화와 메시지만 됩니다.
-카카오맵을 설치하면 내비게이션이 됩니다.
-Claude Code도 MCP 서버를 연결하면 새로운 능력이 생깁니다.
-
-**MCP 작동 구조:**
-
-```
-Claude Code (에이전트)
-     ↓ 요청
-MCP 서버 (파일시스템/DB/Firecrawl 등)
-     ↓ 응답
-Claude Code (에이전트)
-```
+오른쪽 아래 작동 구조를 보시면요.
+Claude Code가 요청을 MCP 서버로 보내고, MCP 서버가 처리한 뒤 결과를 돌려줘요.
+MCP 서버가 중간 다리 역할을 하는 거예요.
 
 ---
 
-## 데이터 시각화에 활용 가능한 MCP들 (5분)
+## s14 — AI의 USB-C
 
-| MCP 서버 | 기능 | 시각화 활용 사례 |
-|---------|------|--------------|
-| `@modelcontextprotocol/server-filesystem` | 파일 읽기/쓰기 | 프로젝트 파일 접근 |
-| `@modelcontextprotocol/server-postgres` | PostgreSQL 연결 | DB에서 직접 데이터 추출 |
-| `@modelcontextprotocol/server-sqlite` | SQLite 연결 | 로컬 DB 분석 |
-| `firecrawl-mcp` | 웹 크롤링 | 경쟁사 데이터 수집 |
-| Google Sheets MCP | 스프레드시트 연동 | 팀 공유 데이터 직접 읽기 |
+**[화면: 슬라이드]**
+
+비유를 하나 더 드릴게요.
+
+예전에는 노트북마다 충전 케이블이 달랐어요.
+삼성은 삼성 케이블, 애플은 라이트닝 케이블.
+USB-C가 나오면서 하나의 케이블로 다 연결됩니다.
+
+MCP가 AI 세계의 USB-C예요.
+각 서비스마다 따로 연결해야 했던 걸, MCP 하나의 방식으로 표준화한 거예요.
+
+오른쪽 이미지가 MCP 전체 아키텍처예요.
+Claude Code가 중심에 있고, 여러 MCP 서버들이 주변에 연결되는 구조입니다.
 
 ---
 
-## MCP 추가 기본 명령어 (2분)
+## s4 — 데이터 시각화에 유용한 MCP들
+
+**[화면: 슬라이드]**
+
+데이터 시각화 프로젝트에서 어떤 MCP가 쓸 만한지 봐요.
+
+오른쪽 표를 보시면요.
+`server-filesystem`은 파일 읽기·쓰기에요.
+`server-postgres`, `server-sqlite`는 데이터베이스를 직접 연결합니다.
+`firecrawl-mcp`는 웹 크롤링이고, `Google Sheets MCP`는 스프레드시트를 바로 읽어요.
+
+왼쪽 아래 연결 명령어도 있어요.
 
 ```bash
 claude mcp add --transport stdio filesystem -- npx -y @modelcontextprotocol/server-filesystem ~/Desktop
-
-# 연결된 MCP 목록 확인
-claude mcp list
 ```
 
-`.mcp.json` 파일로도 관리할 수 있습니다:
-
-```json
-{
-  "mcpServers": {
-    "postgres": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@anthropic/mcp-postgres"],
-      "env": { "DATABASE_URL": "${DATABASE_URL}" }
-    }
-  }
-}
-```
-
-**핵심:** 비밀값은 반드시 환경변수(`${변수명}`)로만 — 코드에 직접 입력 절대 금지.
+이 패턴을 기억해두시면 됩니다.
+MCP 이름이랑 패키지만 바꾸면 어떤 MCP든 같은 방식으로 연결할 수 있어요.
 
 ---
 
-## 핵심 정리 (30초)
+## s16 — MCP 마켓플레이스
 
-MCP는 Claude Code에 새로운 도구를 연결하는 프로토콜입니다.
-데이터 시각화에는 파일시스템, DB, Firecrawl, Google Sheets MCP가 특히 유용합니다.
-다음 클립에서는 Firecrawl MCP로 웹 크롤링 데이터를 수집합니다.
+**[화면: 슬라이드]**
+
+MCP 서버를 탐색하기 좋은 곳이 있어요.
+
+mcpmarket.com입니다.
+현재 31,000개 이상의 MCP 서버가 등록돼 있고, 계속 늘어나고 있어요.
+
+검색창에 원하는 기능을 입력하면 관련 MCP들이 나오고, 연결 명령어도 바로 복사할 수 있습니다.
+
+다음 클립에서는 웹 크롤링에 가장 많이 쓰이는 Firecrawl MCP를 직접 연결해봅니다.

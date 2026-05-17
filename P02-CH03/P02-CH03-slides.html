@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P02-CH03 — 데이터 분석 협업 구조 만들기</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #F2F2EF;
+    --text: #1C1A18;
+    --sub: #4a4a4a;
+    --dim: #777;
+    --white: #1C1A18;
+    --border: #D8D5D0;
+    --p01: #E8603C;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+  }
+
+  .deck { width: 1280px; height: 800px; transform-origin: top left; position: fixed; top: 0; left: 0; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; background: var(--bg); }
+  .slide.active { display: flex; }
+
+  .tb {
+    height: 48px; min-height: 48px;
+    padding: 0 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .tb-cap { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
+  .tb-num { font-size: 13px; color: var(--dim); letter-spacing: 0.08em; }
+
+  .body { flex: 1; display: flex; min-height: 0; }
+
+  .nav {
+    position: fixed; bottom: 24px; right: 40px;
+    display: flex; align-items: center; gap: 12px; z-index: 100;
+  }
+  .nav-ctr { font-size: 11px; color: #666; letter-spacing: 0.08em; }
+  .nav-btn { background: none; border: none; color: var(--sub); cursor: pointer; font-size: 18px; padding: 4px; transition: color 0.15s; }
+  .nav-btn:hover { color: var(--white); }
+  .progress { position: fixed; bottom: 0; left: 0; height: 2px; background: var(--p01); transition: width 0.3s; z-index: 100; }
+
+  .clip-dots {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px; z-index: 100;
+  }
+  .clip-dot { width: 6px; height: 6px; border-radius: 50%; background: #CCCCCC; transition: background 0.2s; }
+  .clip-dot.active { background: var(--p01); }
+
+  .sec-break { background: var(--bg); flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .sec-label { font-size: 18px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(0,0,0,0.65); margin-bottom: 24px; }
+  .sec-title { font-size: 70px; font-weight: 700; line-height: 1.25; color: var(--white); }
+  .sec-sub { font-size: 24px; color: rgba(0,0,0,0.7); margin-top: 24px; line-height: 2; }
+
+  .eyebrow { font-size: 17px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sub); margin-bottom: 22px; }
+  .big-title { font-size: 54px; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; color: var(--text); margin-bottom: 32px; }
+  .body-text { font-size: 23px; color: #222; line-height: 1.85; }
+
+  .l-panel { width: 38%; border-right: 1px solid var(--border); padding: 52px; display: flex; flex-direction: column; justify-content: space-between; }
+
+  .principle-col { flex: 1; border-right: 1px solid var(--border); padding: 52px 48px; display: flex; flex-direction: column; }
+  .principle-col:last-child { border-right: none; }
+  .principle-n { font-size: 64px; font-weight: 300; color: #DDDDDD; line-height: 1; margin-bottom: 22px; }
+  .principle-title { font-size: 25px; font-weight: 600; color: var(--text); margin-bottom: 14px; }
+  .principle-body { font-size: 22px; color: #222; line-height: 1.85; }
+
+  .pipe-row { display: flex; align-items: center; border-bottom: 1px solid var(--border); padding: 22px 44px; gap: 24px; }
+  .pipe-row:last-child { border-bottom: none; }
+  .pipe-n { font-size: 15px; color: #666; width: 36px; flex-shrink: 0; }
+  .pipe-name { font-size: 21px; font-weight: 500; color: var(--text); width: 190px; flex-shrink: 0; font-family: 'Menlo','Monaco',monospace; }
+  .pipe-desc { font-size: 20px; color: #222; flex: 1; line-height: 1.65; }
+
+  .row-item { padding: 24px 32px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+  .row-item:last-child { border-bottom: none; }
+  .row-label { font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; }
+  .row-title { font-size: 25px; font-weight: 600; color: var(--text); }
+  .row-body { font-size: 20px; color: #222; line-height: 1.75; }
+
+  .code-wrap {
+    background: #0A0C10;
+    padding: 20px 26px; font-family: 'Menlo', 'Monaco', monospace;
+    font-size: 17px; line-height: 1.85; color: rgba(255,255,255,0.78);
+  }
+  .code-hi { color: rgba(255,255,255,0.95); }
+  .code-comment { color: rgba(255,255,255,0.5); }
+  .code-accent { color: #8dc8b4; }
+  .code-green { color: #35c995; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+
+<!-- ════ s1 | 챕터 표지 ════ -->
+<div class="slide active" id="s1">
+  <div class="body" style="flex-direction:column;padding:64px 80px 72px;">
+    <div>
+      <div style="font-size:16px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(0,0,0,0.55);margin-bottom:20px;font-family:'Poppins',sans-serif;">P02 · CH03 · 데이터 분석 협업 구조 만들기</div>
+      <div style="font-size:50px;font-weight:600;color:#1C1A18;line-height:1.25;letter-spacing:-0.02em;font-family:'Poppins',sans-serif;">데이터 분석<br>협업 구조</div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:18px;">
+      <div style="width:200px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:15px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 01</div>
+        <div style="font-size:17px;color:#1C1A18;line-height:1.55;">서브에이전트<br>구조 이해</div>
+      </div>
+      <div style="width:200px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:15px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 02</div>
+        <div style="font-size:17px;color:#1C1A18;line-height:1.55;">역할 설계<br>&amp; 구성</div>
+      </div>
+      <div style="width:200px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:15px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 03</div>
+        <div style="font-size:17px;color:#1C1A18;line-height:1.55;">파이프라인<br>실행하기</div>
+      </div>
+      <div style="width:200px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:15px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 04</div>
+        <div style="font-size:17px;color:#1C1A18;line-height:1.55;">에이전트 실무<br>운영 팁</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s28 | 챕터 조감도 ════ -->
+<!-- 조감도 공통 박스 스타일 정의:
+     HL  = 하이라이트 (현재 클립)
+     DIM = 나머지 클립 -->
+
+<!-- ════ s28 | 조감도 — CLIP 01 하이라이트 ════ -->
+<div class="slide" id="s28">
+  <div class="tb"><span class="tb-cap">챕터 구성</span><span class="tb-num">2</span></div>
+  <div class="body" style="flex-direction:column;align-items:center;justify-content:center;padding:52px 80px;gap:0;">
+    <div style="font-size:13px;letter-spacing:0.14em;color:#999;text-transform:uppercase;margin-bottom:40px;">이번 챕터에서 만드는 것</div>
+    <div style="display:flex;align-items:stretch;gap:0;width:100%;">
+      <!-- HL: CLIP 01 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:2px solid #1C1A18;border-radius:8px;gap:14px;background:rgba(106,172,152,0.05);">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#6aac98;text-transform:uppercase;font-weight:700;">CLIP 01</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">서브에이전트<br>구조 이해</div>
+        <div style="width:32px;height:2px;background:#6aac98;"></div>
+        <div style="font-size:13px;color:#444;text-align:center;line-height:1.8;">.claude/agents/<br>역할 · 모델 선언</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">@metrics .md</div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:20px;">→</div>
+      <!-- DIM: CLIP 02 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:1.5px solid #E8E6E2;border-radius:8px;gap:14px;opacity:0.35;">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 02</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">역할 설계<br>&amp; 구성</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">CLAUDE.md<br>순서 · 모델 지정</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">CLAUDE.md</div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:20px;opacity:0.35;">→</div>
+      <!-- DIM: CLIP 03 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:1.5px solid #E8E6E2;border-radius:8px;gap:14px;opacity:0.35;">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 03</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">파이프라인<br>실행하기</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">Skills /run-task<br>체크포인트 자동화</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">/run-task</div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:20px;opacity:0.35;">→</div>
+      <!-- DIM: CLIP 04 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:1.5px solid #E8E6E2;border-radius:8px;gap:14px;opacity:0.35;">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 04</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">에이전트 실무<br>운영 팁</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">원본 보호<br>오류 대응 · Hooks</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">Permissions</div>
+      </div>
+    </div>
+    <div style="margin-top:36px;font-size:16px;color:#555;text-align:center;">만들고 &nbsp;·&nbsp; 관리하고 &nbsp;·&nbsp; 실행하고 &nbsp;·&nbsp; 운영하기</div>
+  </div>
+</div>
+
+
+<!-- ════ s29 | 조감도 — CLIP 02 하이라이트 ════ -->
+<div class="slide" id="s29">
+  <div class="tb"><span class="tb-cap">챕터 구성</span><span class="tb-num">—</span></div>
+  <div class="body" style="flex-direction:column;align-items:center;justify-content:center;padding:52px 80px;gap:0;">
+    <div style="font-size:13px;letter-spacing:0.14em;color:#999;text-transform:uppercase;margin-bottom:40px;">이번 챕터에서 만드는 것</div>
+    <div style="display:flex;align-items:stretch;gap:0;width:100%;">
+      <!-- DIM: CLIP 01 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:1.5px solid #E8E6E2;border-radius:8px;gap:14px;opacity:0.35;">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 01</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">서브에이전트<br>구조 이해</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">.claude/agents/<br>역할 · 모델 선언</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">@metrics .md</div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:20px;">→</div>
+      <!-- HL: CLIP 02 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:2px solid #1C1A18;border-radius:8px;gap:14px;background:rgba(106,172,152,0.05);">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#6aac98;text-transform:uppercase;font-weight:700;">CLIP 02</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">역할 설계<br>&amp; 구성</div>
+        <div style="width:32px;height:2px;background:#6aac98;"></div>
+        <div style="font-size:13px;color:#444;text-align:center;line-height:1.8;">CLAUDE.md<br>순서 · 모델 지정</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">CLAUDE.md</div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:20px;opacity:0.35;">→</div>
+      <!-- DIM: CLIP 03 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:1.5px solid #E8E6E2;border-radius:8px;gap:14px;opacity:0.35;">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 03</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">파이프라인<br>실행하기</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">Skills /run-task<br>체크포인트 자동화</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">/run-task</div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:20px;opacity:0.35;">→</div>
+      <!-- DIM: CLIP 04 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:1.5px solid #E8E6E2;border-radius:8px;gap:14px;opacity:0.35;">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 04</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">에이전트 실무<br>운영 팁</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">원본 보호<br>오류 대응 · Hooks</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">Permissions</div>
+      </div>
+    </div>
+    <div style="margin-top:36px;font-size:16px;color:#555;text-align:center;">만들고 &nbsp;·&nbsp; 관리하고 &nbsp;·&nbsp; 실행하고 &nbsp;·&nbsp; 운영하기</div>
+  </div>
+</div>
+
+
+<!-- ════ s30 | 조감도 — CLIP 03 하이라이트 ════ -->
+<div class="slide" id="s30">
+  <div class="tb"><span class="tb-cap">챕터 구성</span><span class="tb-num">—</span></div>
+  <div class="body" style="flex-direction:column;align-items:center;justify-content:center;padding:52px 80px;gap:0;">
+    <div style="font-size:13px;letter-spacing:0.14em;color:#999;text-transform:uppercase;margin-bottom:40px;">이번 챕터에서 만드는 것</div>
+    <div style="display:flex;align-items:stretch;gap:0;width:100%;">
+      <!-- DIM: CLIP 01 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:1.5px solid #E8E6E2;border-radius:8px;gap:14px;opacity:0.35;">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 01</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">서브에이전트<br>구조 이해</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">.claude/agents/<br>역할 · 모델 선언</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">@metrics .md</div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:20px;opacity:0.35;">→</div>
+      <!-- DIM: CLIP 02 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:1.5px solid #E8E6E2;border-radius:8px;gap:14px;opacity:0.35;">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 02</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">역할 설계<br>&amp; 구성</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">CLAUDE.md<br>순서 · 모델 지정</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">CLAUDE.md</div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:20px;">→</div>
+      <!-- HL: CLIP 03 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:2px solid #1C1A18;border-radius:8px;gap:14px;background:rgba(106,172,152,0.05);">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#6aac98;text-transform:uppercase;font-weight:700;">CLIP 03</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">파이프라인<br>실행하기</div>
+        <div style="width:32px;height:2px;background:#6aac98;"></div>
+        <div style="font-size:13px;color:#444;text-align:center;line-height:1.8;">Skills /run-task<br>체크포인트 자동화</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">/run-task</div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:20px;opacity:0.35;">→</div>
+      <!-- DIM: CLIP 04 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:1.5px solid #E8E6E2;border-radius:8px;gap:14px;opacity:0.35;">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 04</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">에이전트 실무<br>운영 팁</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">원본 보호<br>오류 대응 · Hooks</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">Permissions</div>
+      </div>
+    </div>
+    <div style="margin-top:36px;font-size:16px;color:#555;text-align:center;">만들고 &nbsp;·&nbsp; 관리하고 &nbsp;·&nbsp; 실행하고 &nbsp;·&nbsp; 운영하기</div>
+  </div>
+</div>
+
+
+<!-- ════ s31 | 조감도 — CLIP 04 하이라이트 ════ -->
+<div class="slide" id="s31">
+  <div class="tb"><span class="tb-cap">챕터 구성</span><span class="tb-num">—</span></div>
+  <div class="body" style="flex-direction:column;align-items:center;justify-content:center;padding:52px 80px;gap:0;">
+    <div style="font-size:13px;letter-spacing:0.14em;color:#999;text-transform:uppercase;margin-bottom:40px;">이번 챕터에서 만드는 것</div>
+    <div style="display:flex;align-items:stretch;gap:0;width:100%;">
+      <!-- DIM: CLIP 01 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:1.5px solid #E8E6E2;border-radius:8px;gap:14px;opacity:0.35;">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 01</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">서브에이전트<br>구조 이해</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">.claude/agents/<br>역할 · 모델 선언</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">@metrics .md</div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:20px;opacity:0.35;">→</div>
+      <!-- DIM: CLIP 02 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:1.5px solid #E8E6E2;border-radius:8px;gap:14px;opacity:0.35;">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 02</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">역할 설계<br>&amp; 구성</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">CLAUDE.md<br>순서 · 모델 지정</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">CLAUDE.md</div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:20px;opacity:0.35;">→</div>
+      <!-- DIM: CLIP 03 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:1.5px solid #E8E6E2;border-radius:8px;gap:14px;opacity:0.35;">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 03</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">파이프라인<br>실행하기</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">Skills /run-task<br>체크포인트 자동화</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">/run-task</div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:20px;">→</div>
+      <!-- HL: CLIP 04 -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:32px 24px;border:2px solid #1C1A18;border-radius:8px;gap:14px;background:rgba(106,172,152,0.05);">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#6aac98;text-transform:uppercase;font-weight:700;">CLIP 04</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;text-align:center;">에이전트 실무<br>운영 팁</div>
+        <div style="width:32px;height:2px;background:#6aac98;"></div>
+        <div style="font-size:13px;color:#444;text-align:center;line-height:1.8;">원본 보호<br>오류 대응 · Hooks</div>
+        <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">Permissions</div>
+      </div>
+    </div>
+    <div style="margin-top:36px;font-size:16px;color:#555;text-align:center;">만들고 &nbsp;·&nbsp; 관리하고 &nbsp;·&nbsp; 실행하고 &nbsp;·&nbsp; 운영하기</div>
+  </div>
+</div>
+
+
+<!-- ════ s2 | Clip 01 sec-break ════ -->
+<div class="slide" id="s2">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+        <!-- MAIN box -->
+        <rect x="18" y="5" width="24" height="13" rx="2" stroke="#AAAAAA" stroke-width="1.2"/>
+        <text x="30" y="14.5" text-anchor="middle" font-size="7" fill="#555" font-family="monospace">MAIN</text>
+        <!-- fan lines -->
+        <line x1="30" y1="18" x2="11" y2="40" stroke="#CCCCCC" stroke-width="1"/>
+        <line x1="30" y1="18" x2="30" y2="40" stroke="#CCCCCC" stroke-width="1"/>
+        <line x1="30" y1="18" x2="49" y2="40" stroke="#CCCCCC" stroke-width="1"/>
+        <!-- arrowheads -->
+        <polygon points="11,40 8,34 14,34" fill="#CCCCCC"/>
+        <polygon points="30,40 27,34 33,34" fill="#CCCCCC"/>
+        <polygon points="49,40 46,34 52,34" fill="#CCCCCC"/>
+        <!-- agent boxes -->
+        <rect x="4" y="40" width="14" height="13" rx="2" stroke="#6aac98" stroke-width="1.2"/>
+        <text x="11" y="49.5" text-anchor="middle" font-size="7" fill="#6aac98" font-family="monospace">A</text>
+        <rect x="23" y="40" width="14" height="13" rx="2" stroke="#6aac98" stroke-width="1.2"/>
+        <text x="30" y="49.5" text-anchor="middle" font-size="7" fill="#6aac98" font-family="monospace">B</text>
+        <rect x="42" y="40" width="14" height="13" rx="2" stroke="#6aac98" stroke-width="1.2"/>
+        <text x="49" y="49.5" text-anchor="middle" font-size="7" fill="#6aac98" font-family="monospace">C</text>
+      </svg>
+    </div>
+    <div class="sec-label">CLIP 01 · 서브에이전트 구조 이해</div>
+    <div class="sec-title">서브에이전트란</div>
+    <div class="sec-sub">구조 · 특성 · 장단점 · 에이전트 팀 비교</div>
+  </div>
+</div>
+
+
+<!-- ════ s3 | 서브에이전트란? ════ -->
+<div class="slide" id="s3">
+  <div class="tb">
+    <span class="tb-cap">서브에이전트 구조 이해</span>
+    <span class="tb-num">3</span>
+  </div>
+  <div class="body">
+    <!-- Left panel -->
+    <div style="width:38%;border-right:1px solid var(--border);padding:52px;display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div class="eyebrow" style="font-size:16px;">서브에이전트</div>
+        <div class="big-title" style="margin-bottom:18px;">Claude 모델<br>→ 서브에이전트</div>
+        <div style="font-size:22px;color:#333;line-height:1.85;font-weight:400;">독립 컨텍스트에서<br>순차 또는 병렬 실행<br>파일로 결과 취합</div>
+      </div>
+      <div style="padding:16px 18px;background:#F0EFE9;border:1px solid var(--border);border-left:3px solid #b09848;">
+        <div style="font-size:11px;font-weight:700;color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">내장 서브에이전트</div>
+        <div style="font-size:14px;color:#1C1A18;font-weight:600;margin-bottom:4px;">Explore · Plan · General-purpose</div>
+        <div style="font-size:13px;color:#333;line-height:1.5;">Claude Code에 기본 탑재, 자동 호출<br>직접 만들면 용도에 맞게 확장 가능</div>
+      </div>
+    </div>
+    <!-- Right: 다이어그램 -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:44px 56px;gap:0;">
+      <div style="width:100%;max-width:600px;display:flex;flex-direction:column;align-items:center;">
+        <div style="border:1px solid var(--border);padding:12px 44px;font-size:18px;font-weight:500;color:#555;">사용자 요청</div>
+        <div style="width:1px;height:20px;background:var(--border);"></div>
+        <div style="border:1.5px solid #1C1A18;padding:14px 44px;font-size:20px;font-weight:700;color:#1C1A18;">Claude 모델 (현재 세션)</div>
+        <div style="font-size:15px;color:#333;margin:6px 0 14px;letter-spacing:0.04em;">작업 분석 → 서브에이전트 생성 → 결과 취합</div>
+        <!-- 서브에이전트 3개 -->
+        <div style="display:flex;gap:20px;width:100%;justify-content:center;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <div style="width:1px;height:16px;background:var(--border);"></div>
+            <div style="border:1px solid var(--border);padding:12px 18px;font-size:17px;color:#333;text-align:center;min-width:148px;">서브에이전트 1<br><span style="font-family:monospace;color:#555;font-size:13px;">task-a 처리</span></div>
+            <div style="width:1px;height:12px;background:var(--border);"></div>
+            <div style="font-size:13px;font-family:monospace;color:#333;">result-a.md</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <div style="width:1px;height:16px;background:var(--border);"></div>
+            <div style="border:1px solid var(--border);padding:12px 18px;font-size:17px;color:#333;text-align:center;min-width:148px;">서브에이전트 2<br><span style="font-family:monospace;color:#333;font-size:13px;">task-b 처리</span></div>
+            <div style="width:1px;height:12px;background:var(--border);"></div>
+            <div style="font-size:13px;font-family:monospace;color:#333;">result-b.md</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <div style="width:1px;height:16px;background:var(--border);"></div>
+            <div style="border:1px solid var(--border);padding:12px 18px;font-size:17px;color:#333;text-align:center;min-width:148px;">서브에이전트 3<br><span style="font-family:monospace;color:#333;font-size:13px;">task-c 처리</span></div>
+            <div style="width:1px;height:12px;background:var(--border);"></div>
+            <div style="font-size:13px;font-family:monospace;color:#333;">result-c.md</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;border:1px solid var(--border);border-top:none;padding:10px 32px;font-size:17px;color:#222;">Claude 모델 → 결과 취합 → 최종 리포트</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s27 | 서브에이전트 장단점 ════ -->
+<div class="slide" id="s27">
+  <div class="tb">
+    <span class="tb-cap">서브에이전트 구조 이해</span>
+    <span class="tb-num">4</span>
+  </div>
+  <div class="body" style="flex-direction:column;padding:52px 64px;justify-content:center;gap:0;">
+
+    <div style="margin-bottom:32px;">
+      <div class="eyebrow" style="margin-bottom:8px;">활용 판단</div>
+      <div style="font-size:34px;font-weight:600;letter-spacing:-0.02em;color:var(--text);">서브에이전트, 언제 쓰면 좋을까</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);">
+
+      <!-- 장점 -->
+      <div style="border-right:1px solid var(--border);">
+        <div style="padding:16px 28px;border-bottom:1px solid var(--border);background:#ECEAE5;display:flex;align-items:center;gap:10px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#6aac98;flex-shrink:0;"></div>
+          <div style="font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#333;">이럴 때 쓰면 좋음</div>
+        </div>
+        <div class="row-item" style="padding:20px 28px;border-bottom:1px solid var(--border);">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-size:14px;font-weight:700;color:#6aac98;flex-shrink:0;">+</span>
+            <div>
+              <div style="font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px;">작업이 쪼개질 때</div>
+              <div style="font-size:15px;color:#333;">수집 · 분석 · 시각화처럼 역할이 나뉘는 작업</div>
+            </div>
+          </div>
+        </div>
+        <div class="row-item" style="padding:20px 28px;border-bottom:1px solid var(--border);">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-size:14px;font-weight:700;color:#6aac98;flex-shrink:0;">+</span>
+            <div>
+              <div style="font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px;">반복 실행이 잦을 때</div>
+              <div style="font-size:15px;color:#333;">같은 파이프라인을 매주 돌려야 하는 경우</div>
+            </div>
+          </div>
+        </div>
+        <div class="row-item" style="padding:20px 28px;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-size:14px;font-weight:700;color:#6aac98;flex-shrink:0;">+</span>
+            <div>
+              <div style="font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px;">팀과 공유할 때</div>
+              <div style="font-size:15px;color:#333;">.md 파일이라 git으로 팀 전체가 같은 에이전트 사용</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 단점 -->
+      <div>
+        <div style="padding:16px 28px;border-bottom:1px solid var(--border);background:#ECEAE5;display:flex;align-items:center;gap:10px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#E8603C;flex-shrink:0;"></div>
+          <div style="font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#333;">주의할 점</div>
+        </div>
+        <div class="row-item" style="padding:20px 28px;border-bottom:1px solid var(--border);">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-size:14px;font-weight:700;color:#E8603C;flex-shrink:0;">−</span>
+            <div>
+              <div style="font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px;">비용이 올라감</div>
+              <div style="font-size:15px;color:#333;">에이전트 수만큼 컨텍스트 창 별도 생성</div>
+            </div>
+          </div>
+        </div>
+        <div class="row-item" style="padding:20px 28px;border-bottom:1px solid var(--border);">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-size:14px;font-weight:700;color:#E8603C;flex-shrink:0;">−</span>
+            <div>
+              <div style="font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px;">초기 설정 필요</div>
+              <div style="font-size:15px;color:#333;">파일 구성·역할 정의에 시간 투자 필요</div>
+            </div>
+          </div>
+        </div>
+        <div class="row-item" style="padding:20px 28px;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-size:14px;font-weight:700;color:#E8603C;flex-shrink:0;">−</span>
+            <div>
+              <div style="font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px;">간단한 작업엔 과함</div>
+              <div style="font-size:15px;color:#333;">한 번짜리 질문은 그냥 Claude에게 바로 물어보는 게 빠름</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s4 | 서브에이전트 3가지 특성 ════ -->
+<div class="slide" id="s4">
+  <div class="tb">
+    <span class="tb-cap">서브에이전트 구조 이해</span>
+    <span class="tb-num">4</span>
+  </div>
+  <div class="body">
+    <div class="principle-col">
+      <div>
+        <div class="principle-n">01</div>
+        <div class="principle-title">독립 실행</div>
+        <!-- SVG: MAIN → A, B, C 각각. 에이전트 간 연결 없음 -->
+        <svg width="220" height="110" viewBox="0 0 220 110" style="margin:24px 0 20px;display:block;">
+          <rect x="80" y="4" width="60" height="26" rx="3" stroke="#AAAAAA" stroke-width="1.2" fill="none"/>
+          <text x="110" y="22" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">MAIN</text>
+          <line x1="96" y1="30" x2="30" y2="68" stroke="#CCCCCC" stroke-width="1.2"/>
+          <line x1="110" y1="30" x2="110" y2="68" stroke="#CCCCCC" stroke-width="1.2"/>
+          <line x1="124" y1="30" x2="190" y2="68" stroke="#CCCCCC" stroke-width="1.2"/>
+          <polygon points="30,68 25,61 35,61" fill="#CCCCCC"/>
+          <polygon points="110,68 105,61 115,61" fill="#CCCCCC"/>
+          <polygon points="190,68 185,61 195,61" fill="#CCCCCC"/>
+          <rect x="8" y="70" width="44" height="26" rx="3" stroke="#6aac98" stroke-width="1.2" fill="none"/>
+          <text x="30" y="87" text-anchor="middle" font-size="11" fill="#6aac98" font-family="monospace">A</text>
+          <rect x="88" y="70" width="44" height="26" rx="3" stroke="#6aac98" stroke-width="1.2" fill="none"/>
+          <text x="110" y="87" text-anchor="middle" font-size="11" fill="#6aac98" font-family="monospace">B</text>
+          <rect x="168" y="70" width="44" height="26" rx="3" stroke="#6aac98" stroke-width="1.2" fill="none"/>
+          <text x="190" y="87" text-anchor="middle" font-size="11" fill="#6aac98" font-family="monospace">C</text>
+          <line x1="56" y1="79" x2="84" y2="91" stroke="#E0DDD9" stroke-width="2"/>
+          <line x1="56" y1="91" x2="84" y2="79" stroke="#E0DDD9" stroke-width="2"/>
+          <line x1="136" y1="79" x2="164" y2="91" stroke="#E0DDD9" stroke-width="2"/>
+          <line x1="136" y1="91" x2="164" y2="79" stroke="#E0DDD9" stroke-width="2"/>
+        </svg>
+        <div class="principle-body">자기 일만 받아서 처리<br>전체 대화는 모름<br>→ 혼선 없음</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--border);padding-top:14px;">
+          <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-size:17px;font-weight:700;color:#6aac98;">+</span><span style="font-size:17px;color:#333;">집중도 높음 · 역할 명확</span></div>
+          <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-size:17px;font-weight:700;color:#E8603C;">−</span><span style="font-size:17px;color:#444;">맥락 따로 전달해야 함</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="principle-col">
+      <div>
+        <div class="principle-n">02</div>
+        <div class="principle-title">순차 또는 병렬 실행</div>
+        <!-- SVG: 순차 vs 병렬 Gantt 비교 -->
+        <svg width="220" height="110" viewBox="0 0 220 110" style="margin:24px 0 20px;display:block;">
+          <text x="0" y="14" font-size="10" fill="#777" font-family="monospace">순차</text>
+          <rect x="36" y="4" width="48" height="16" rx="2" fill="#DDDDDD"/>
+          <rect x="87" y="4" width="48" height="16" rx="2" fill="#CCCCCC"/>
+          <rect x="138" y="4" width="48" height="16" rx="2" fill="#BBBBBB"/>
+          <line x1="36" y1="26" x2="186" y2="26" stroke="#DDDDDD" stroke-width="0.8" stroke-dasharray="3,2"/>
+          <text x="0" y="58" font-size="10" fill="#6aac98" font-family="monospace">병렬</text>
+          <rect x="36" y="46" width="48" height="14" rx="2" fill="#6aac98" opacity="0.5"/>
+          <rect x="36" y="63" width="48" height="14" rx="2" fill="#6aac98" opacity="0.5"/>
+          <rect x="36" y="80" width="48" height="14" rx="2" fill="#6aac98" opacity="0.5"/>
+          <line x1="36" y1="102" x2="88" y2="102" stroke="#6aac98" stroke-width="1" stroke-dasharray="3,2"/>
+          <text x="36" y="110" font-size="9" fill="#6aac98" font-family="monospace">훨씬 짧음</text>
+          <line x1="36" y1="32" x2="210" y2="32" stroke="#E0DDD9" stroke-width="1"/>
+          <polygon points="210,32 204,29 204,35" fill="#E0DDD9"/>
+          <text x="212" y="36" font-size="9" fill="#777">시간</text>
+        </svg>
+        <div class="principle-body">의존성 있으면 순차<br>없으면 병렬<br>상황에 맞게 선택</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--border);padding-top:14px;">
+          <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-size:17px;font-weight:700;color:#6aac98;">+</span><span style="font-size:17px;color:#333;">병렬 시 처리 시간 단축</span></div>
+          <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-size:17px;font-weight:700;color:#E8603C;">−</span><span style="font-size:17px;color:#444;">에이전트 수만큼 비용 증가</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="principle-col">
+      <div>
+        <div class="principle-n">03</div>
+        <div class="principle-title">파일로만 소통</div>
+        <!-- SVG: A, B, C → outputs/ → MAIN. 에이전트 간 직접 화살표 없음 -->
+        <svg width="220" height="110" viewBox="0 0 220 110" style="margin:24px 0 20px;display:block;">
+          <rect x="4" y="10" width="36" height="22" rx="3" stroke="#6aac98" stroke-width="1.2" fill="none"/>
+          <text x="22" y="25" text-anchor="middle" font-size="11" fill="#6aac98" font-family="monospace">A</text>
+          <rect x="4" y="44" width="36" height="22" rx="3" stroke="#6aac98" stroke-width="1.2" fill="none"/>
+          <text x="22" y="59" text-anchor="middle" font-size="11" fill="#6aac98" font-family="monospace">B</text>
+          <rect x="4" y="78" width="36" height="22" rx="3" stroke="#6aac98" stroke-width="1.2" fill="none"/>
+          <text x="22" y="93" text-anchor="middle" font-size="11" fill="#6aac98" font-family="monospace">C</text>
+          <line x1="40" y1="21" x2="84" y2="44" stroke="#BBBBBB" stroke-width="1.2"/>
+          <line x1="40" y1="55" x2="84" y2="55" stroke="#BBBBBB" stroke-width="1.2"/>
+          <line x1="40" y1="89" x2="84" y2="66" stroke="#BBBBBB" stroke-width="1.2"/>
+          <rect x="84" y="36" width="52" height="38" rx="3" stroke="#b09848" stroke-width="1.5" fill="none"/>
+          <rect x="84" y="29" width="24" height="9" rx="2" stroke="#b09848" stroke-width="1.5" fill="none"/>
+          <text x="110" y="60" text-anchor="middle" font-size="9" fill="#b09848" font-family="monospace">outputs/</text>
+          <line x1="136" y1="55" x2="172" y2="55" stroke="#BBBBBB" stroke-width="1.2"/>
+          <polygon points="172,55 166,51 166,59" fill="#BBBBBB"/>
+          <rect x="172" y="42" width="44" height="26" rx="3" stroke="#AAAAAA" stroke-width="1.2" fill="none"/>
+          <text x="194" y="59" text-anchor="middle" font-size="10" fill="#555" font-family="monospace">MAIN</text>
+        </svg>
+        <div class="principle-body">에이전트끼리 직접 연결 없음<br>결과 → 파일 저장<br>메인이 마지막에 수집</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--border);padding-top:14px;">
+          <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-size:17px;font-weight:700;color:#6aac98;">+</span><span style="font-size:17px;color:#333;">결과 추적 · 재실행 쉬움</span></div>
+          <div style="display:flex;align-items:baseline;gap:10px;"><span style="font-size:17px;font-weight:700;color:#E8603C;">−</span><span style="font-size:17px;color:#444;">파일 저장 명시적으로 지시해야 함</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s5 | 에이전트 파일 구조 ════ -->
+<div class="slide" id="s5">
+  <div class="tb">
+    <span class="tb-cap">서브에이전트 구조 이해</span>
+    <span class="tb-num">5</span>
+  </div>
+  <div class="body" style="flex-direction:row;">
+    <!-- Left panel -->
+    <div style="width:38%;border-right:1px solid var(--border);padding:44px 36px;display:flex;flex-direction:column;gap:14px;justify-content:center;overflow:hidden;">
+      <div class="eyebrow">에이전트 등록 위치</div>
+      <div style="border:1px solid var(--border);border-left:3px solid #888888;padding:18px 20px;background:#ECEAE5;">
+        <div style="font-family:monospace;font-size:14px;color:#555;font-weight:600;margin-bottom:8px;">CLAUDE.md</div>
+        <div style="font-size:17px;font-weight:700;color:#1C1A18;margin-bottom:6px;">메인 지시서</div>
+        <div style="font-size:16px;color:#333;line-height:1.6;">누가 언제 어떤 에이전트를<br>호출할지 지시</div>
+      </div>
+      <div style="border:1px solid var(--border);border-left:3px solid #6aac98;padding:16px 20px;background:#ECEAE5;">
+        <div style="font-family:monospace;font-size:14px;color:#5a9080;font-weight:600;margin-bottom:6px;">.claude/agents/</div>
+        <div style="font-size:17px;font-weight:700;color:#1C1A18;margin-bottom:4px;">프로젝트 전용</div>
+        <div style="font-size:16px;color:#333;line-height:1.5;">git으로 팀 전체 공유 가능</div>
+      </div>
+      <div style="border:1px solid var(--border);border-left:3px solid #b09848;padding:16px 20px;background:#ECEAE5;">
+        <div style="font-family:monospace;font-size:14px;color:#9a7a30;font-weight:600;margin-bottom:6px;">~/.claude/agents/</div>
+        <div style="font-size:17px;font-weight:700;color:#1C1A18;margin-bottom:4px;">개인 에이전트</div>
+        <div style="font-size:16px;color:#333;line-height:1.5;">내 모든 프로젝트에서 사용 가능</div>
+      </div>
+      <div style="padding:14px 18px;background:#F0EFE9;border:1px solid var(--border);border-left:3px solid #888;">
+        <div style="font-size:13px;font-weight:600;color:#333;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">이렇게 쓰면 됨</div>
+        <div style="font-size:17px;font-family:monospace;color:#1C1A18;">@metrics 탐색 분석해줘</div>
+      </div>
+    </div>
+    <!-- Right panel: 두 범위 폴더 트리 -->
+    <div style="flex:1;background:#1C1A18;padding:40px 52px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;gap:32px;">
+      <!-- 프로젝트 범위 -->
+      <div>
+        <div style="font-size:16px;letter-spacing:0.08em;text-transform:uppercase;color:#6aac98;margin-bottom:18px;font-weight:700;">프로젝트 전용</div>
+        <div style="font-family:'Menlo','Monaco',monospace;font-size:17px;line-height:2.1;">
+          <!-- my-project/ -->
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+            <svg width="20" height="16" viewBox="0 0 20 16" style="flex-shrink:0;opacity:0.75;">
+              <rect x="0" y="4.5" width="20" height="11.5" rx="2" fill="rgba(255,255,255,0.6)"/>
+              <rect x="0" y="2" width="9" height="4.5" rx="1.5" fill="rgba(255,255,255,0.6)"/>
+            </svg>
+            <span style="color:rgba(255,255,255,0.92);font-weight:600;">my-project/</span>
+          </div>
+          <!-- CLAUDE.md -->
+          <div style="padding-left:28px;display:flex;align-items:center;">
+            <span style="color:rgba(255,255,255,0.45);">├──&nbsp;</span>
+            <svg width="14" height="17" viewBox="0 0 14 17" style="margin:0 7px;flex-shrink:0;opacity:0.7;">
+              <rect x="0" y="0" width="11" height="16" rx="1.5" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.2"/>
+              <polygon points="8,0 11,3 8,3" fill="rgba(255,255,255,0.4)"/>
+              <line x1="2" y1="7" x2="9" y2="7" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+              <line x1="2" y1="10" x2="9" y2="10" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+            </svg>
+            <span style="color:rgba(255,255,255,0.72);">CLAUDE.md</span>
+          </div>
+          <!-- .claude/ -->
+          <div style="padding-left:28px;display:flex;align-items:center;">
+            <span style="color:rgba(255,255,255,0.45);">└──&nbsp;</span>
+            <svg width="18" height="14" viewBox="0 0 18 14" style="margin:0 7px;flex-shrink:0;opacity:0.65;">
+              <rect x="0" y="4" width="18" height="10" rx="2" fill="rgba(255,255,255,0.5)"/>
+              <rect x="0" y="2" width="8" height="4" rx="1.5" fill="rgba(255,255,255,0.5)"/>
+            </svg>
+            <span style="color:rgba(255,255,255,0.62);">.claude/</span>
+            <span style="color:rgba(255,255,255,0.3);font-size:14px;margin-left:12px;"># git으로 팀 공유</span>
+          </div>
+          <!-- agents/ -->
+          <div style="padding-left:56px;display:flex;align-items:center;">
+            <span style="color:rgba(255,255,255,0.45);">└──&nbsp;</span>
+            <svg width="18" height="14" viewBox="0 0 18 14" style="margin:0 7px;flex-shrink:0;">
+              <rect x="0" y="4" width="18" height="10" rx="2" fill="#6aac98"/>
+              <rect x="0" y="2" width="8" height="4" rx="1.5" fill="#6aac98"/>
+            </svg>
+            <span style="color:#6aac98;font-weight:600;">agents/</span>
+          </div>
+          <!-- .md files -->
+          <div style="padding-left:84px;">
+            <div style="display:flex;align-items:center;">
+              <span style="color:rgba(255,255,255,0.45);">├──&nbsp;</span>
+              <svg width="14" height="17" viewBox="0 0 14 17" style="margin:0 7px;flex-shrink:0;">
+                <rect x="0" y="0" width="11" height="16" rx="1.5" fill="none" stroke="#6aac98" stroke-width="1.2"/>
+                <polygon points="8,0 11,3 8,3" fill="#6aac98" opacity="0.6"/>
+              </svg>
+              <span style="color:#6aac98;">eda.md</span>
+            </div>
+            <div style="display:flex;align-items:center;">
+              <span style="color:rgba(255,255,255,0.45);">└──&nbsp;</span>
+              <svg width="14" height="17" viewBox="0 0 14 17" style="margin:0 7px;flex-shrink:0;">
+                <rect x="0" y="0" width="11" height="16" rx="1.5" fill="none" stroke="#6aac98" stroke-width="1.2"/>
+                <polygon points="8,0 11,3 8,3" fill="#6aac98" opacity="0.6"/>
+              </svg>
+              <span style="color:#6aac98;">metrics.md</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 구분선 -->
+      <div style="border-top:1px solid rgba(255,255,255,0.08);"></div>
+      <!-- 개인 범위 -->
+      <div>
+        <div style="font-size:16px;letter-spacing:0.08em;text-transform:uppercase;color:#b09848;margin-bottom:18px;font-weight:700;">개인 에이전트 (모든 프로젝트)</div>
+        <div style="font-family:'Menlo','Monaco',monospace;font-size:17px;line-height:2.1;">
+          <!-- ~/.claude/ -->
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+            <svg width="20" height="16" viewBox="0 0 20 16" style="flex-shrink:0;opacity:0.75;">
+              <rect x="0" y="4.5" width="20" height="11.5" rx="2" fill="rgba(255,255,255,0.6)"/>
+              <rect x="0" y="2" width="9" height="4.5" rx="1.5" fill="rgba(255,255,255,0.6)"/>
+            </svg>
+            <span style="color:rgba(255,255,255,0.92);font-weight:600;">~/.claude/</span>
+          </div>
+          <!-- agents/ -->
+          <div style="padding-left:28px;display:flex;align-items:center;">
+            <span style="color:rgba(255,255,255,0.45);">└──&nbsp;</span>
+            <svg width="18" height="14" viewBox="0 0 18 14" style="margin:0 7px;flex-shrink:0;">
+              <rect x="0" y="4" width="18" height="10" rx="2" fill="#b09848"/>
+              <rect x="0" y="2" width="8" height="4" rx="1.5" fill="#b09848"/>
+            </svg>
+            <span style="color:#b09848;font-weight:600;">agents/</span>
+            <span style="color:rgba(176,152,72,0.5);font-size:14px;margin-left:12px;"># 어디서든 @로 호출</span>
+          </div>
+          <!-- code-reviewer.md -->
+          <div style="padding-left:56px;display:flex;align-items:center;">
+            <span style="color:rgba(255,255,255,0.45);">└──&nbsp;</span>
+            <svg width="14" height="17" viewBox="0 0 14 17" style="margin:0 7px;flex-shrink:0;">
+              <rect x="0" y="0" width="11" height="16" rx="1.5" fill="none" stroke="#b09848" stroke-width="1.2"/>
+              <polygon points="8,0 11,3 8,3" fill="#b09848" opacity="0.6"/>
+            </svg>
+            <span style="color:#b09848;">code-reviewer.md</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s6 | 에이전트 파일 작성법 ════ -->
+<div class="slide" id="s6">
+  <div class="tb">
+    <span class="tb-cap">서브에이전트 구조 이해</span>
+    <span class="tb-num">6</span>
+  </div>
+  <div class="body">
+    <!-- Left: 3항목 설명 -->
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">에이전트 설정</div>
+        <div class="big-title" style="margin-bottom:24px;">에이전트 파일<br>작성법</div>
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:24px;height:24px;background:#1C1A18;color:white;display:flex;align-items:center;justify-content:center;font-size:11px;font-family:monospace;flex-shrink:0;margin-top:2px;">1</div>
+            <div>
+              <div style="font-size:16px;font-weight:700;color:#1C1A18;margin-bottom:4px;">이름 + 설명</div>
+              <div style="font-size:14px;color:#333;line-height:1.6;"><code style="font-family:monospace;color:#6aac98;">name</code> — @로 호출할 이름<br><code style="font-family:monospace;color:#6aac98;">description</code> — 한 줄 역할 요약</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:24px;height:24px;background:#888;color:white;display:flex;align-items:center;justify-content:center;font-size:11px;font-family:monospace;flex-shrink:0;margin-top:2px;">2</div>
+            <div>
+              <div style="font-size:16px;font-weight:700;color:#1C1A18;margin-bottom:4px;">모델 + 도구 <span style="font-size:13px;font-weight:400;color:#666;">(둘 다 선택)</span></div>
+              <div style="font-size:14px;color:#333;line-height:1.6;"><code style="font-family:monospace;color:#c8a060;">model</code> — 없으면 세션 모델 상속<br><code style="font-family:monospace;color:#c8a060;">tools</code> — 없으면 모든 도구 허용</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:24px;height:24px;background:#1C1A18;color:white;display:flex;align-items:center;justify-content:center;font-size:11px;font-family:monospace;flex-shrink:0;margin-top:2px;">3</div>
+            <div>
+              <div style="font-size:16px;font-weight:700;color:#1C1A18;margin-bottom:4px;">역할 지시서</div>
+              <div style="font-size:14px;color:#333;line-height:1.6;">--- 아래에 자연어로 작성<br>무엇을 · 어떻게 · 어디에 저장할지</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:14px;color:#666;font-family:monospace;">name + description 두 필드만 필수</div>
+    </div>
+    <!-- Right: 완성된 파일 전체 -->
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
+      <div style="flex:1;background:#1C1A18;padding:44px 52px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;">
+        <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:20px;">.claude/agents/metrics.md</div>
+        <div style="font-family:'Menlo','Monaco',monospace;font-size:15px;line-height:2.1;">
+          <div style="color:rgba(255,255,255,0.52);">---</div>
+          <div style="display:flex;align-items:baseline;gap:0;">
+            <span style="color:#6aac98;">name</span><span style="color:rgba(255,255,255,0.58);">: </span><span style="color:rgba(255,255,255,0.9);">eda</span>
+            <span style="margin-left:24px;font-size:12px;color:rgba(255,255,255,0.2);">← ❶ @metrics 로 호출</span>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:0;">
+            <span style="color:#6aac98;">description</span><span style="color:rgba(255,255,255,0.58);">: </span><span style="color:rgba(255,255,255,0.82);">탐색적 분석 및 시각화 전담</span>
+            <span style="margin-left:12px;font-size:12px;color:rgba(255,255,255,0.2);">← ❶ 역할 요약</span>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:0;">
+            <span style="color:#6aac98;">model</span><span style="color:rgba(255,255,255,0.58);">: </span><span style="color:rgba(255,255,255,0.55);">haiku</span>
+            <span style="margin-left:48px;font-size:12px;color:rgba(255,255,255,0.2);">← ❷ 선택</span>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:0;">
+            <span style="color:#6aac98;">tools</span><span style="color:rgba(255,255,255,0.58);">: </span><span style="color:rgba(255,255,255,0.72);">Bash, Read, Write</span>
+            <span style="margin-left:24px;font-size:12px;color:rgba(255,255,255,0.2);">← ❷ 선택</span>
+          </div>
+          <div style="color:rgba(255,255,255,0.52);">---</div>
+          <div style="margin-top:8px;display:flex;align-items:baseline;gap:0;">
+            <span style="color:rgba(255,255,255,0.88);">데이터를 탐색 분석하고</span>
+            <span style="margin-left:24px;font-size:12px;color:rgba(255,255,255,0.2);">← ❸ 역할 지시서</span>
+          </div>
+          <div style="color:rgba(255,255,255,0.88);">outputs/metrics.md 에 저장한다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s24 | 에이전트 만드는 방법 1·2 ════ -->
+<div class="slide" id="s24">
+  <div class="tb">
+    <span class="tb-cap">서브에이전트 구조 이해</span>
+    <span class="tb-num">7</span>
+  </div>
+  <div class="body">
+    <!-- Left panel -->
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow" style="color:#333;">에이전트 생성</div>
+        <div class="big-title" style="margin-bottom:18px;">두 가지<br>만드는 방법</div>
+        <div style="font-size:20px;color:#333;line-height:1.85;">에디터와 터미널,<br>방식이 달라요</div>
+      </div>
+      <div style="font-size:17px;color:#222;line-height:1.7;"><strong>name</strong> + <strong>description</strong><br>두 필드만 필수</div>
+    </div>
+    <!-- Right: two methods -->
+    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:0;">
+      <!-- Method 1: 에디터 -->
+      <div style="padding:48px 44px;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+        <div style="font-size:13px;font-family:monospace;color:#333;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:14px;">방법 1 — 코드에디터</div>
+        <div style="font-size:22px;font-weight:700;color:#1C1A18;margin-bottom:4px;">안티그래비티 · VS Code</div>
+        <div style="font-size:16px;color:#222;margin-bottom:24px;">Claude에게 생성 요청<br>/agents 명령 사용 불가</div>
+        <div style="display:flex;flex-direction:column;gap:18px;flex:1;">
+          <div style="display:flex;gap:14px;">
+            <div style="width:26px;height:26px;background:#1C1A18;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:monospace;flex-shrink:0;">1</div>
+            <div style="flex:1;">
+              <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:8px;">Claude에게 프롬프트</div>
+              <div style="background:#1C1A18;padding:10px 14px;font-family:'Menlo','Monaco',monospace;font-size:14px;color:rgba(255,255,255,0.9);line-height:1.6;">
+                <span style="color:rgba(255,255,255,0.45);">"</span>데이터 분석 에이전트 생성해줘<span style="color:rgba(255,255,255,0.45);">"</span>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;">
+            <div style="width:26px;height:26px;background:#1C1A18;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:monospace;flex-shrink:0;">2</div>
+            <div>
+              <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:3px;">.claude/agents/ 파일 자동 생성</div>
+              <div style="font-size:14px;color:#222;">name · description 포함</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;">
+            <div style="width:26px;height:26px;background:#1C1A18;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:monospace;flex-shrink:0;">3</div>
+            <div>
+              <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:3px;">Claude Code 세션 재시작</div>
+              <div style="font-size:14px;color:#222;">→ @analyst 즉시 호출 가능</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:13px 16px;border-left:3px solid #888;background:#ECEAE5;font-size:15px;color:#333;">세션 재시작 필요</div>
+      </div>
+      <!-- Method 2: 터미널 -->
+      <div style="padding:48px 44px;display:flex;flex-direction:column;">
+        <div style="font-size:13px;font-family:monospace;color:#333;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:14px;">방법 2 — 터미널</div>
+        <div style="font-size:22px;font-weight:700;color:#1C1A18;margin-bottom:4px;">터미널</div>
+        <div style="font-size:16px;color:#222;margin-bottom:24px;">/agents 슬래시 명령<br>인터랙티브 UI로 생성</div>
+        <div style="display:flex;flex-direction:column;gap:18px;flex:1;">
+          <div style="display:flex;gap:14px;">
+            <div style="width:26px;height:26px;background:#E8603C;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:monospace;flex-shrink:0;">1</div>
+            <div>
+              <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">터미널에서 입력</div>
+              <div style="font-size:20px;font-family:monospace;color:#E8603C;font-weight:700;">/agents</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;">
+            <div style="width:26px;height:26px;background:#E8603C;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:monospace;flex-shrink:0;">2</div>
+            <div>
+              <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:3px;">이름 · 역할 입력</div>
+              <div style="font-size:14px;color:#222;">UI 안내에 따라 작성</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;">
+            <div style="width:26px;height:26px;background:#E8603C;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:monospace;flex-shrink:0;">3</div>
+            <div>
+              <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:3px;">저장 즉시 사용 가능</div>
+              <div style="font-size:14px;color:#222;">재시작 불필요</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:13px 16px;border-left:3px solid #E8603C;background:#ECEAE5;font-size:15px;color:#333;">.md 파일 자동 저장 → git 관리 가능</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s19 | 실습 — 첫 에이전트 만들기 ════ -->
+<div class="slide" id="s19">
+  <div class="tb">
+    <span class="tb-cap">서브에이전트 구조 이해</span>
+    <span class="tb-num">7</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">실습해보기</div>
+        <div class="big-title" style="margin-bottom:18px;">서브에이전트<br>3명 구성</div>
+        <div class="body-text">역할만 설명하면<br>.md 파일 자동 생성</div>
+      </div>
+      <div style="font-size:15px;color:#222;line-height:1.7;">복붙해서 바로 써도 됨</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
+      <div style="flex:1;background:#1C1A18;padding:44px 52px;display:flex;flex-direction:column;justify-content:center;gap:32px;overflow:hidden;">
+        <!-- 요청 프롬프트 -->
+        <div>
+          <div style="font-size:11px;letter-spacing:0.14em;color:rgba(255,255,255,0.45);margin-bottom:14px;text-transform:uppercase;">요청</div>
+          <div style="font-family:'Menlo','Monaco',monospace;font-size:17px;line-height:1.75;color:rgba(255,255,255,0.9);">
+            <span style="color:rgba(255,255,255,0.45);">"</span>데이터 분석용 서브에이전트<br>3개 만들어줘 — EDA, 지표설계,<br>시각화 역할로<span style="color:rgba(255,255,255,0.45);">"</span>
+          </div>
+        </div>
+        <!-- 생성 결과 -->
+        <div style="border-top:1px solid rgba(255,255,255,0.07);padding-top:28px;">
+          <div style="font-size:11px;letter-spacing:0.14em;color:rgba(255,255,255,0.45);margin-bottom:16px;text-transform:uppercase;">.claude/agents/ 에 생성됨</div>
+          <div style="font-family:'Menlo','Monaco',monospace;font-size:15px;line-height:2.1;">
+            <div><span style="color:rgba(255,255,255,0.45);">├── </span><span style="color:#6aac98;">metrics.md</span><span style="color:rgba(255,255,255,0.52);font-size:13px;margin-left:12px;">탐색적 분석 · 이상값 탐지</span></div>
+            <div><span style="color:rgba(255,255,255,0.45);">├── </span><span style="color:#6aac98;">metrics.md</span><span style="color:rgba(255,255,255,0.52);font-size:13px;margin-left:12px;">지표 설계 · 기준값 정의</span></div>
+            <div><span style="color:rgba(255,255,255,0.45);">└── </span><span style="color:#6aac98;">visualizer.md</span><span style="color:rgba(255,255,255,0.52);font-size:13px;margin-left:12px;">차트 생성 · 시각화</span></div>
+          </div>
+        </div>
+        <!-- 호출 -->
+        <div style="border-top:1px solid rgba(255,255,255,0.07);padding-top:24px;">
+          <div style="font-size:11px;letter-spacing:0.14em;color:rgba(255,255,255,0.45);margin-bottom:12px;text-transform:uppercase;">호출</div>
+          <div style="font-family:'Menlo','Monaco',monospace;font-size:16px;color:rgba(255,255,255,0.9);">
+            <span style="color:#6aac98;">@metrics</span>
+            <span style="color:rgba(255,255,255,0.45);margin:0 10px;">/</span>
+            <span style="color:#6aac98;">@metrics</span>
+            <span style="color:rgba(255,255,255,0.45);margin:0 10px;">/</span>
+            <span style="color:#6aac98;">@visualizer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s7 | Clip 02 sec-break ════ -->
+<div class="slide" id="s7">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+        <!-- folder body: agents/ -->
+        <rect x="4" y="20" width="52" height="36" rx="3" stroke="#b09848" stroke-width="1.5"/>
+        <!-- folder tab -->
+        <rect x="4" y="14" width="22" height="8" rx="2" stroke="#b09848" stroke-width="1.5"/>
+        <text x="15" y="20.5" text-anchor="middle" font-size="6" fill="#b09848" font-family="monospace">agents/</text>
+        <!-- 3 .md files inside -->
+        <rect x="10" y="26" width="40" height="8" rx="1" stroke="#6aac98" stroke-width="1"/>
+        <text x="13" y="32.5" font-size="6.5" fill="#6aac98" font-family="monospace">metrics.md</text>
+        <rect x="10" y="37" width="40" height="8" rx="1" stroke="#6aac98" stroke-width="1"/>
+        <text x="13" y="43.5" font-size="6.5" fill="#6aac98" font-family="monospace">report.md</text>
+        <rect x="10" y="48" width="40" height="7" rx="1" stroke="#6aac98" stroke-width="1"/>
+        <text x="13" y="54" font-size="6.5" fill="#6aac98" font-family="monospace">viz.md</text>
+      </svg>
+    </div>
+    <div class="sec-label">CLIP 02 · 에이전트 팀 구성</div>
+    <div class="sec-title">역할 설계<br>&amp; 구성</div>
+    <div class="sec-sub">CLAUDE.md 작업 흐름 · 폴더 구조 · 에이전트 역할 설계</div>
+  </div>
+</div>
+
+
+<!-- ════ s8 | CLAUDE.md 흐름 설계 ════ -->
+<div class="slide" id="s8">
+  <div class="tb">
+    <span class="tb-cap">CLAUDE.md 흐름 설계</span>
+    <span class="tb-num">8</span>
+  </div>
+  <div class="body">
+    <!-- Left panel -->
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">CLAUDE.md 흐름 설계</div>
+        <div class="big-title" style="margin-bottom:20px;">에이전트 관리<br>CLAUDE.md</div>
+        <div class="body-text">역할 분담 → 에이전트<br>실행 순서 → CLAUDE.md</div>
+      </div>
+      <div style="font-size:15px;color:#222;line-height:1.9;">@에이전트명 + 순서만 써도<br>메인이 그대로 실행<br><br><span style="color:#666;">에이전트별 모델도<br>여기서 지정해요</span></div>
+    </div>
+    <!-- Right: CLAUDE.md raw file -->
+    <div style="flex:1;background:#1C1A18;padding:44px 52px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;">
+      <div style="font-size:17px;font-weight:600;font-family:'Menlo','Monaco',monospace;color:rgba(255,255,255,0.75);margin-bottom:20px;">CLAUDE.md</div>
+      <pre style="font-family:'Menlo','Monaco',monospace;font-size:14px;line-height:1.9;color:rgba(255,255,255,0.82);margin:0;white-space:pre-wrap;"># AI 데이터 분석 파이프라인
+
+7개의 전문 AI 에이전트를 순서대로 지휘합니다.
+
+## 파이프라인
+
+@eda → @metrics → @visualizer
+
+| 단계 | 에이전트    | 모델   | 산출물          |
+|------|-------------|--------|-----------------|
+| 1    | @eda  | haiku  | 01_profile.md   |
+| 2    | @metrics        | sonnet | 02_metrics.md       |
+| 3    | @visualizer   | sonnet | 03_report.md    |
+
+## 실행 규칙
+
+- 반드시 순서대로
+- 이전 단계 파일이 있어야 다음 단계 시작
+- 실패 시 해당 단계에서 중단 후 보고</pre>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s10 | 에이전트 역할표 + 모델 ════ -->
+<div class="slide" id="s10">
+  <div class="tb">
+    <span class="tb-cap">에이전트 팀 구성</span>
+    <span class="tb-num">10</span>
+  </div>
+  <div class="body">
+    <!-- Left panel -->
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">모델 선택 기준</div>
+        <div class="big-title" style="margin-bottom:18px;">작업 성격에<br>맞는 모델</div>
+        <div class="body-text">Haiku · Sonnet · Opus<br>작업 성격에 따라 선택</div>
+      </div>
+      <div style="font-size:15px;color:#222;line-height:1.75;">기본값은 inherit<br>(대화 모델 그대로 상속)</div>
+    </div>
+    <!-- Right: model table -->
+    <div style="flex:1;display:flex;align-items:center;padding:52px 56px;">
+      <table style="width:100%;border-collapse:collapse;font-size:16px;">
+        <thead>
+          <tr style="border-bottom:1px solid #DDDDDD;">
+            <th style="text-align:left;padding:0 0 16px;font-size:12px;letter-spacing:0.1em;color:#999;font-weight:500;text-transform:uppercase;width:22%;">모델</th>
+            <th style="text-align:left;padding:0 0 16px;font-size:12px;letter-spacing:0.1em;color:#999;font-weight:500;text-transform:uppercase;width:32%;">적합한 작업</th>
+            <th style="text-align:left;padding:0 0 16px;font-size:12px;letter-spacing:0.1em;color:#999;font-weight:500;text-transform:uppercase;">예시</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #EEEEEE;">
+            <td style="padding:20px 0;font-weight:600;font-size:17px;color:#1C1A18;">Haiku</td>
+            <td style="padding:20px 0;color:#333;">반복 · 규칙 기반</td>
+            <td style="padding:20px 0;color:#666;font-size:15px;">자료 수집, 파일 처리, 검토</td>
+          </tr>
+          <tr style="border-bottom:1px solid #EEEEEE;">
+            <td style="padding:20px 0;font-weight:600;font-size:17px;color:#1C1A18;">Sonnet</td>
+            <td style="padding:20px 0;color:#333;">복잡한 추론 · 설계</td>
+            <td style="padding:20px 0;color:#666;font-size:15px;">구조 설계, 코드 생성, 분석</td>
+          </tr>
+          <tr style="border-bottom:1px solid #EEEEEE;">
+            <td style="padding:20px 0;font-weight:600;font-size:17px;color:#1C1A18;">Opus</td>
+            <td style="padding:20px 0;color:#333;">고난도 추론 · 정확도 우선</td>
+            <td style="padding:20px 0;color:#666;font-size:15px;">복잡한 판단, 정확도가 중요한 작업</td>
+          </tr>
+          <tr>
+            <td style="padding:20px 0;font-weight:600;font-size:17px;color:#1C1A18;">inherit</td>
+            <td style="padding:20px 0;color:#333;">기본값</td>
+            <td style="padding:20px 0;color:#666;font-size:15px;">대화 모델 그대로 상속</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s21 | 실습 — CLAUDE.md 흐름 설계 ════ -->
+<div class="slide" id="s21">
+  <div class="tb">
+    <span class="tb-cap">CLAUDE.md 흐름 설계</span>
+    <span class="tb-num">11</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">실습해보기</div>
+        <div class="big-title" style="margin-bottom:18px;">CLAUDE.md에<br>흐름 쓰기</div>
+        <div class="body-text">에이전트 순서와<br>모델을 CLAUDE.md에<br>자연어로 작성</div>
+      </div>
+      <div style="font-size:15px;color:#222;line-height:1.75;">순서 + 모델 한 번만 써두면<br>매번 다시 지시 불필요<br><br><span style="color:#666;">에이전트 한번에 묶으려면?<br>다음 클립에서 /run-task</span></div>
+    </div>
+    <div style="flex:1;background:#1C1A18;padding:48px 52px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;">
+      <div style="font-size:11px;letter-spacing:0.14em;color:rgba(255,255,255,0.45);margin-bottom:24px;text-transform:uppercase;">Claude에게 요청</div>
+      <div style="font-family:'Menlo','Monaco',monospace;font-size:17px;line-height:2.0;color:rgba(255,255,255,0.9);">
+        <span style="color:rgba(255,255,255,0.45);">"</span>이 에이전트들 관리하는 CLAUDE.md 만들어줘<br>
+        <span style="color:rgba(255,255,255,0.45);">순서:</span> @eda → @metrics → @visualizer<br>
+        <span style="color:rgba(255,255,255,0.45);">모델:</span> eda는 haiku, 나머지는 sonnet<span style="color:rgba(255,255,255,0.45);">"</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s11 | Clip 03 sec-break ════ -->
+<div class="slide" id="s11">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+        <!-- 순차 label -->
+        <text x="2" y="11" font-size="6" fill="#777" font-family="monospace">순차</text>
+        <!-- 순차 bars: horizontal chain (one after another) -->
+        <rect x="14" y="4" width="13" height="8" rx="1" fill="#DDDDDD"/>
+        <rect x="28" y="4" width="13" height="8" rx="1" fill="#CCCCCC"/>
+        <rect x="42" y="4" width="13" height="8" rx="1" fill="#BBBBBB"/>
+        <!-- divider -->
+        <line x1="2" y1="19" x2="58" y2="19" stroke="#EEEEEE" stroke-width="0.5"/>
+        <!-- 병렬 label -->
+        <text x="2" y="30" font-size="6" fill="#6aac98" font-family="monospace">병렬</text>
+        <!-- 병렬 bars: all start same x, 3 lanes -->
+        <rect x="14" y="22" width="13" height="7" rx="1" fill="#6aac98" fill-opacity="0.5"/>
+        <rect x="14" y="31" width="13" height="7" rx="1" fill="#6aac98" fill-opacity="0.5"/>
+        <rect x="14" y="40" width="13" height="7" rx="1" fill="#6aac98" fill-opacity="0.5"/>
+        <!-- time arrow -->
+        <line x1="14" y1="54" x2="56" y2="54" stroke="#E0DDD9" stroke-width="1"/>
+        <polygon points="57,54 52,52 52,56" fill="#E0DDD9"/>
+        <text x="2" y="58" font-size="5" fill="#777" font-family="monospace">시간</text>
+      </svg>
+    </div>
+    <div class="sec-label">CLIP 03 · 실행 &amp; 병렬 처리</div>
+    <div class="sec-title">파이프라인<br>실행하기</div>
+    <div class="sec-sub">Skills 파일 만들기 · 체크포인트 · 실습</div>
+  </div>
+</div>
+
+
+<!-- ════ s12 | 병렬 vs 순차 ════ -->
+<div class="slide" id="s12">
+  <div class="tb">
+    <span class="tb-cap">파이프라인 실행</span>
+    <span class="tb-num">12</span>
+  </div>
+  <div class="body">
+    <!-- Left panel -->
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">처리 방식 비교</div>
+        <div class="big-title" style="margin-bottom:18px;">순차 vs<br>병렬 처리</div>
+        <div class="body-text">같은 작업, 다른 구조</div>
+      </div>
+      <div style="font-size:15px;color:#222;">서브에이전트 병렬 실행 원리</div>
+    </div>
+    <!-- Right: two columns -->
+    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:0;">
+      <!-- 순차 -->
+      <div style="padding:52px 40px;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+        <div class="eyebrow" style="margin-bottom:24px;">순차 처리</div>
+        <div style="font-size:22px;font-weight:600;color:var(--text);margin-bottom:14px;">파일 하나씩<br>순서대로</div>
+        <div style="font-size:17px;color:#222;line-height:1.85;margin-bottom:28px;">이전 작업이 끝나야<br>다음 작업 시작</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <div style="width:34px;height:34px;background:#E8E6E2;display:flex;align-items:center;justify-content:center;font-size:13px;color:#555;font-family:monospace;">01</div>
+          <span style="color:#CCCCCC;font-size:16px;">→</span>
+          <div style="width:34px;height:34px;background:#E8E6E2;display:flex;align-items:center;justify-content:center;font-size:13px;color:#555;font-family:monospace;">02</div>
+          <span style="color:#CCCCCC;font-size:16px;">→</span>
+          <div style="width:34px;height:34px;background:#E8E6E2;display:flex;align-items:center;justify-content:center;font-size:13px;color:#555;font-family:monospace;">03</div>
+          <span style="font-size:15px;color:#CCCCCC;">→ …</span>
+        </div>
+      </div>
+      <!-- 병렬 -->
+      <div style="padding:52px 40px;display:flex;flex-direction:column;">
+        <div class="eyebrow" style="margin-bottom:24px;">병렬 처리</div>
+        <div style="font-size:22px;font-weight:600;color:var(--text);margin-bottom:14px;">여러 파일<br>동시에</div>
+        <div style="font-size:17px;color:#222;line-height:1.85;margin-bottom:28px;">서브에이전트가 각 파일을<br>독립 컨텍스트에서 동시 처리</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <div style="width:34px;height:34px;border:1px solid #AAAAAA;display:flex;align-items:center;justify-content:center;font-size:13px;color:#333;font-family:monospace;">01</div>
+          <div style="width:34px;height:34px;border:1px solid #AAAAAA;display:flex;align-items:center;justify-content:center;font-size:13px;color:#333;font-family:monospace;">02</div>
+          <div style="width:34px;height:34px;border:1px solid #AAAAAA;display:flex;align-items:center;justify-content:center;font-size:13px;color:#333;font-family:monospace;">03</div>
+          <span style="font-size:15px;color:#555;">… 동시</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s20 | 순차 vs 병렬 구조 비교 ════ -->
+<div class="slide" id="s20">
+  <div class="tb">
+    <span class="tb-cap">파이프라인 실행</span>
+    <span class="tb-num">13</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow" style="margin-bottom:20px;">순차 vs 병렬 · 선택 기준</div>
+        <div style="font-size:40px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:6px;">의존성 있으면<br>순차</div>
+        <div style="font-size:40px;font-weight:700;color:#6aac98;line-height:1.3;margin-bottom:28px;">없으면 병렬</div>
+      </div>
+      <div style="font-size:14px;color:#555;line-height:1.7;">두 구조 모두<br>서브에이전트로 구성</div>
+    </div>
+    <!-- Right: 순차 / 병렬 -->
+    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:0;">
+
+      <!-- 순차 실행 -->
+      <div style="padding:40px 36px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:16px;overflow:hidden;">
+        <div style="font-size:12px;font-family:monospace;color:#555;letter-spacing:0.14em;text-transform:uppercase;">순차 실행</div>
+        <div style="font-size:19px;font-weight:700;color:#1C1A18;">앞 결과가 다음 입력일 때</div>
+        <div style="font-size:14px;color:#333;font-family:monospace;line-height:2.0;">
+          @eda → eda.md<br>
+          @metrics &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ metrics.md<br>
+          @analysis → analysis.md<br>
+          @report &nbsp;&nbsp;→ report.md
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+          <div style="font-size:12px;font-weight:700;color:#555;letter-spacing:0.08em;text-transform:uppercase;">서브에이전트를 쓰는 이유</div>
+          <div style="font-size:13px;color:#222;line-height:1.7;">
+            각 단계가 독립 컨텍스트에서 실행<br>
+            → 메인 창이 안 쌓임<br>
+            단계별 모델 최적화 (Haiku / Sonnet)<br>
+            실패 단계만 재실행 가능
+          </div>
+        </div>
+        <div style="margin-top:auto;padding:12px 14px;background:#ECEAE5;border-left:3px solid #6aac98;font-size:12px;color:#333;font-family:monospace;line-height:1.7;">## 규칙<br>반드시 순차 실행.<br>이전 파일 확인 후 다음 단계 시작.</div>
+      </div>
+
+      <!-- 병렬 실행 -->
+      <div style="padding:40px 36px;display:flex;flex-direction:column;gap:16px;overflow:hidden;">
+        <div style="font-size:12px;font-family:monospace;color:#6aac98;letter-spacing:0.14em;text-transform:uppercase;">병렬 실행</div>
+        <div style="font-size:19px;font-weight:700;color:#1C1A18;">작업 간 의존성이 없을 때</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+          <div style="font-size:12px;font-weight:700;color:#555;letter-spacing:0.08em;text-transform:uppercase;">쓰기 좋은 예시</div>
+          <div style="font-size:13px;color:#222;line-height:1.9;">
+            CSV 파일 5개 동시 분석<br>
+            같은 코드를 3가지 관점으로 리뷰<br>
+            여러 경쟁사 자료 동시 리서치<br>
+            앙상블 — 결과 비교 후 최선 선택
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+          <div style="font-size:12px;font-weight:700;color:#555;letter-spacing:0.08em;text-transform:uppercase;">서브에이전트를 쓰는 이유</div>
+          <div style="font-size:13px;color:#222;line-height:1.7;">
+            동시 처리로 속도 단축<br>
+            독립 컨텍스트로 혼선 없음
+          </div>
+        </div>
+        <div style="margin-top:auto;padding:12px 14px;background:#ECEAE5;border-left:3px solid #6aac98;font-size:12px;color:#333;font-family:monospace;line-height:1.7;">Claude에게 "동시에 실행해줘"<br>또는 Skill에 명시하지 않으면<br>Claude가 자동 판단</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- s13 삭제됨 -->
+<div class="slide" id="s13" style="display:none!important">
+  <div class="tb">
+    <span class="tb-cap">파이프라인 실행</span>
+    <span class="tb-num">13</span>
+  </div>
+  <div class="body">
+    <!-- Left panel -->
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">설계 패턴</div>
+        <div class="big-title" style="margin-bottom:18px;">병렬 처리<br>3가지 패턴</div>
+        <div class="body-text" style="margin-bottom:20px;">에이전트 구조,<br>짤 때마다 막막했죠?</div>
+        <div style="font-size:18px;color:#222;line-height:1.7;">이 세 가지만 알면<br>대부분 해결됩니다</div>
+      </div>
+    </div>
+    <!-- Right: 3 pipe-rows -->
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
+      <div class="pipe-row" style="flex:1;align-items:flex-start;padding-top:32px;">
+        <div class="pipe-n">01</div>
+        <div style="display:flex;flex-direction:column;gap:10px;flex:1;">
+          <div style="font-size:20px;font-weight:600;color:var(--text);">분할 · 처리 · 합산</div>
+          <div style="font-size:16px;color:#333;line-height:1.75;">
+            월별 CSV 12개 → 에이전트 12명 동시 분석<br>
+            → 각 result.md → 메인이 연간 보고서 취합
+          </div>
+        </div>
+      </div>
+      <div class="pipe-row" style="flex:1;align-items:flex-start;padding-top:32px;">
+        <div class="pipe-n">02</div>
+        <div style="display:flex;flex-direction:column;gap:10px;flex:1;">
+          <div style="font-size:20px;font-weight:600;color:var(--text);">역할 분리 파이프라인</div>
+          <div style="font-size:16px;color:#333;line-height:1.75;">
+            <span style="font-family:monospace;color:#6aac98;">@eda → @metrics → @analyst → @visualizer</span><br>
+            수집부터 리포트까지, 각 단계 전문 에이전트 전담
+          </div>
+        </div>
+      </div>
+      <div class="pipe-row" style="flex:1;align-items:flex-start;padding-top:32px;">
+        <div class="pipe-n">03</div>
+        <div style="display:flex;flex-direction:column;gap:10px;flex:1;">
+          <div style="font-size:20px;font-weight:600;color:var(--text);">앙상블 (병렬 검토)</div>
+          <div style="font-size:16px;color:#333;line-height:1.75;">
+            코드 리뷰를 보안 · 성능 · 유지보수 관점으로 동시에<br>
+            → 3개 리뷰 비교해서 최선 선택
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s32 | 프롬프트 vs /run-task 스킬 비교 ════ -->
+<div class="slide" id="s32">
+  <div class="tb">
+    <span class="tb-cap">파이프라인 실행하기</span>
+    <span class="tb-num">32</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">스킬을 만드는 이유</div>
+        <div class="big-title" style="margin-bottom:18px;">프롬프트 vs<br>/run-task</div>
+        <div class="body-text" style="font-size:20px;">매번 설명하는 것과<br>한 번 만들어두는 것의<br>차이</div>
+      </div>
+    </div>
+    <!-- 오른쪽: 비교표 -->
+    <div style="flex:1;padding:44px 52px;display:flex;flex-direction:column;justify-content:center;">
+      <table style="width:100%;border-collapse:collapse;">
+        <!-- 헤더 -->
+        <thead>
+          <tr>
+            <th style="text-align:left;padding:14px 18px;font-size:11px;letter-spacing:0.14em;color:#999;font-weight:500;text-transform:uppercase;border-bottom:2px solid #1C1A18;width:26%;"></th>
+            <th style="text-align:center;padding:14px 0;font-size:14px;font-weight:600;color:#888;border-bottom:2px solid #D8D5D0;width:37%;background:#ECEAE5;border-radius:8px 8px 0 0;">그냥 프롬프트</th>
+            <th style="width:2%;border-bottom:2px solid #1C1A18;"></th>
+            <th style="text-align:center;padding:14px 0;font-size:14px;font-weight:700;color:#fff;border-bottom:2px solid #1C1A18;width:37%;background:#1C1A18;border-radius:8px 8px 0 0;">/run-task 스킬</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 실행 -->
+          <tr>
+            <td style="padding:16px 18px;font-size:13px;color:#777;font-weight:500;border-bottom:1px solid #E8E5E0;">실행</td>
+            <td style="padding:14px 20px;text-align:center;font-size:12px;color:#999;font-family:'Menlo','Monaco',monospace;background:#F5F4F0;border-bottom:1px solid #E0DDD8;">"eda→metrics→visualizer<br>순서로 실행해줘"</td>
+            <td style="border-bottom:1px solid #E8E5E0;"></td>
+            <td style="padding:14px 20px;text-align:center;font-size:14px;color:#6aac98;font-family:'Menlo','Monaco',monospace;font-weight:600;background:#1C1A18;border-bottom:1px solid rgba(255,255,255,0.06);">/run-task 실행해줘</td>
+          </tr>
+          <!-- 체크포인트 -->
+          <tr>
+            <td style="padding:16px 18px;font-size:13px;color:#777;font-weight:500;border-bottom:1px solid #E8E5E0;">체크포인트</td>
+            <td style="padding:14px 20px;text-align:center;background:#F5F4F0;border-bottom:1px solid #E0DDD8;">
+              <span style="font-size:18px;opacity:0.5;">✕</span>
+              <span style="font-size:12px;color:#bbb;display:block;margin-top:2px;">없음</span>
+            </td>
+            <td style="border-bottom:1px solid #E8E5E0;"></td>
+            <td style="padding:14px 20px;text-align:center;background:#1C1A18;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <span style="font-size:18px;color:#6aac98;">✓</span>
+              <span style="font-size:12px;color:#6aac98;display:block;margin-top:2px;">완료 단계 자동 skip</span>
+            </td>
+          </tr>
+          <!-- 실패 대응 -->
+          <tr>
+            <td style="padding:16px 18px;font-size:13px;color:#777;font-weight:500;border-bottom:1px solid #E8E5E0;">실패 대응</td>
+            <td style="padding:14px 20px;text-align:center;font-size:13px;color:#aaa;background:#F5F4F0;border-bottom:1px solid #E0DDD8;">처음부터 다시</td>
+            <td style="border-bottom:1px solid #E8E5E0;"></td>
+            <td style="padding:14px 20px;text-align:center;font-size:13px;color:rgba(255,255,255,0.8);background:#1C1A18;border-bottom:1px solid rgba(255,255,255,0.06);">실패 단계부터 재시작</td>
+          </tr>
+          <!-- 재현성 -->
+          <tr>
+            <td style="padding:16px 18px;font-size:13px;color:#777;font-weight:500;border-bottom:1px solid #E8E5E0;">재현성</td>
+            <td style="padding:14px 20px;text-align:center;font-size:13px;color:#aaa;background:#F5F4F0;border-bottom:1px solid #E0DDD8;">매번 다시 설명</td>
+            <td style="border-bottom:1px solid #E8E5E0;"></td>
+            <td style="padding:14px 20px;text-align:center;font-size:13px;color:rgba(255,255,255,0.8);background:#1C1A18;border-bottom:1px solid rgba(255,255,255,0.06);">항상 동일한 규칙</td>
+          </tr>
+          <!-- 팀 공유 -->
+          <tr>
+            <td style="padding:16px 18px;font-size:13px;color:#777;font-weight:500;">팀 공유</td>
+            <td style="padding:14px 20px;text-align:center;font-size:13px;color:#aaa;background:#F5F4F0;border-radius:0 0 8px 0;">대화에만 존재</td>
+            <td></td>
+            <td style="padding:14px 20px;text-align:center;font-size:13px;color:rgba(255,255,255,0.8);background:#1C1A18;border-radius:0 0 8px 0;">파일로 git 공유</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s14 | Skills /run-task — 체크포인트 ════ -->
+<div class="slide" id="s14">
+  <div class="tb">
+    <span class="tb-cap">Skills /run-task</span>
+    <span class="tb-num">14</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">실습해보기</div>
+        <div class="big-title" style="margin-bottom:18px;">/run-task<br>스킬 만들기</div>
+        <div class="body-text">파일 하나면<br>/run-task 명령어가<br>생겨요</div>
+      </div>
+      <div style="font-size:14px;color:#555;line-height:1.9;">완료된 단계는<br>outputs/ 파일로 확인<br><br><span style="color:#888;font-size:13px;">파일 있으면 skip<br>없으면 실행</span></div>
+    </div>
+    <!-- 오른쪽: 라이트 배경 + 두 박스 분리 -->
+    <div style="flex:1;padding:36px 44px;display:flex;flex-direction:column;gap:16px;justify-content:center;">
+
+      <!-- 박스 1: 프롬프트 -->
+      <div style="border:1.5px solid #2A2826;border-radius:10px;background:#1C1A18;padding:22px 28px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.38);margin-bottom:14px;">Claude에게 요청</div>
+        <div style="font-family:'Menlo','Monaco',monospace;font-size:13.5px;line-height:1.9;color:rgba(255,255,255,0.88);">
+          <span style="color:rgba(255,255,255,0.32);">"</span>run-task 스킬 파일 만들어줘<br>
+          <span style="color:rgba(255,255,255,0.32);">순서:</span> @eda → @metrics → @visualizer<br>
+          <span style="color:rgba(255,255,255,0.32);">각 단계 완료 후</span> outputs/<span style="color:rgba(255,255,255,0.32);">에 마커 파일 저장</span><br>
+          <span style="color:rgba(255,255,255,0.32);">재실행 시</span> 마커 있으면 skip<span style="color:rgba(255,255,255,0.32);">, 없으면 실행</span><br>
+          <span style="color:rgba(255,255,255,0.32);">실패 시</span> 어느 단계인지 알려주고 중단<span style="color:rgba(255,255,255,0.32);">"</span>
+        </div>
+      </div>
+
+      <!-- 박스 2: 폴더 구조 -->
+      <div style="border:1.5px solid #2A2826;border-radius:10px;background:#1C1A18;padding:22px 28px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.38);margin-bottom:18px;">생성되는 파일 구조</div>
+        <div style="display:flex;gap:48px;">
+
+          <!-- 스킬 파일 -->
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6aac98;margin-bottom:12px;font-weight:700;">스킬 파일</div>
+            <div style="font-family:'Menlo','Monaco',monospace;font-size:14px;line-height:2.1;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <svg width="18" height="14" viewBox="0 0 18 14" style="flex-shrink:0;opacity:0.6;"><rect x="0" y="4" width="18" height="10" rx="2" fill="rgba(255,255,255,0.6)"/><rect x="0" y="2" width="8" height="4" rx="1.5" fill="rgba(255,255,255,0.6)"/></svg>
+                <span style="color:rgba(255,255,255,0.65);">.claude/</span>
+              </div>
+              <div style="padding-left:26px;display:flex;align-items:center;">
+                <span style="color:rgba(255,255,255,0.3);">└──&nbsp;</span>
+                <svg width="16" height="13" viewBox="0 0 18 14" style="margin:0 6px;flex-shrink:0;opacity:0.4;"><rect x="0" y="4" width="18" height="10" rx="2" fill="rgba(255,255,255,0.6)"/><rect x="0" y="2" width="8" height="4" rx="1.5" fill="rgba(255,255,255,0.6)"/></svg>
+                <span style="color:rgba(255,255,255,0.42);">skills/</span>
+              </div>
+              <div style="padding-left:52px;display:flex;align-items:center;">
+                <span style="color:rgba(255,255,255,0.3);">└──&nbsp;</span>
+                <svg width="16" height="13" viewBox="0 0 18 14" style="margin:0 6px;flex-shrink:0;"><rect x="0" y="4" width="18" height="10" rx="2" fill="#6aac98"/><rect x="0" y="2" width="8" height="4" rx="1.5" fill="#6aac98"/></svg>
+                <span style="color:#6aac98;font-weight:600;">run-task/</span>
+              </div>
+              <div style="padding-left:78px;display:flex;align-items:center;">
+                <span style="color:rgba(255,255,255,0.3);">└──&nbsp;</span>
+                <svg width="12" height="15" viewBox="0 0 14 17" style="margin:0 6px;flex-shrink:0;"><rect x="0" y="0" width="11" height="16" rx="1.5" fill="none" stroke="#6aac98" stroke-width="1.2"/><polygon points="8,0 11,3 8,3" fill="#6aac98" opacity="0.6"/></svg>
+                <span style="color:#6aac98;font-weight:600;">SKILL.md</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 체크포인트 출력물 -->
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#b09848;margin-bottom:12px;font-weight:700;">체크포인트 출력물</div>
+            <div style="font-family:'Menlo','Monaco',monospace;font-size:14px;line-height:2.1;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <svg width="18" height="14" viewBox="0 0 18 14" style="flex-shrink:0;"><rect x="0" y="4" width="18" height="10" rx="2" fill="#b09848"/><rect x="0" y="2" width="8" height="4" rx="1.5" fill="#b09848"/></svg>
+                <span style="color:#b09848;font-weight:600;">outputs/</span>
+                <span style="color:rgba(176,152,72,0.4);font-size:11px;margin-left:4px;"># 파일 있으면 skip</span>
+              </div>
+              <div style="padding-left:26px;display:flex;align-items:center;">
+                <span style="color:rgba(255,255,255,0.3);">├──&nbsp;</span>
+                <svg width="12" height="15" viewBox="0 0 14 17" style="margin:0 6px;flex-shrink:0;"><rect x="0" y="0" width="11" height="16" rx="1.5" fill="none" stroke="#6aac98" stroke-width="1.2"/><polygon points="8,0 11,3 8,3" fill="#6aac98" opacity="0.6"/></svg>
+                <span style="color:#6aac98;">eda.md</span>
+                <span style="color:rgba(106,172,152,0.6);font-size:12px;margin-left:8px;">✅</span>
+              </div>
+              <div style="padding-left:26px;display:flex;align-items:center;">
+                <span style="color:rgba(255,255,255,0.3);">├──&nbsp;</span>
+                <svg width="12" height="15" viewBox="0 0 14 17" style="margin:0 6px;flex-shrink:0;"><rect x="0" y="0" width="11" height="16" rx="1.5" fill="none" stroke="#6aac98" stroke-width="1.2"/><polygon points="8,0 11,3 8,3" fill="#6aac98" opacity="0.6"/></svg>
+                <span style="color:#6aac98;">metrics.md</span>
+                <span style="color:rgba(106,172,152,0.6);font-size:12px;margin-left:8px;">✅</span>
+              </div>
+              <div style="padding-left:26px;display:flex;align-items:center;">
+                <span style="color:rgba(255,255,255,0.3);">└──&nbsp;</span>
+                <svg width="12" height="15" viewBox="0 0 14 17" style="margin:0 6px;flex-shrink:0;opacity:0.3;"><rect x="0" y="0" width="11" height="16" rx="1.5" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><polygon points="8,0 11,3 8,3" fill="rgba(255,255,255,0.4)"/></svg>
+                <span style="color:rgba(255,255,255,0.28);">visualizer.md</span>
+                <span style="color:rgba(255,255,255,0.18);font-size:12px;margin-left:8px;">⏳</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s22 | 실습 — /run-task 실행해보기 ════ -->
+<div class="slide" id="s22">
+  <div class="tb">
+    <span class="tb-cap">파이프라인 실행</span>
+    <span class="tb-num">15</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">실습해보기</div>
+        <div class="big-title" style="margin-bottom:18px;">분석<br>실행하기</div>
+        <div style="font-size:28px;font-weight:500;font-family:monospace;color:#6aac98;margin-bottom:20px;">/run-task</div>
+        <div class="body-text">입력 파일만 넣으면<br>서브에이전트들이 순서대로 실행</div>
+      </div>
+      <div style="font-size:14px;color:#222;">실패 단계만 서브에이전트 재호출 가능</div>
+    </div>
+    <div style="flex:1;background:#1C1A18;padding:48px 56px;display:flex;flex-direction:column;justify-content:center;gap:28px;overflow:hidden;">
+      <!-- 실행 프롬프트 -->
+      <div>
+        <div style="font-size:11px;letter-spacing:0.14em;color:rgba(255,255,255,0.45);margin-bottom:14px;text-transform:uppercase;">실행</div>
+        <div style="font-family:'Menlo','Monaco',monospace;font-size:18px;color:rgba(255,255,255,0.9);">
+          <span style="color:rgba(255,255,255,0.4);">"</span><span style="color:#6aac98;">/run-task</span> 실행해줘<span style="color:rgba(255,255,255,0.4);">"</span>
+        </div>
+      </div>
+      <!-- 파이프라인 실행 흐름 -->
+      <div style="border-top:1px solid rgba(255,255,255,0.07);padding-top:24px;display:flex;flex-direction:column;gap:0;">
+        <div style="font-size:11px;letter-spacing:0.14em;color:rgba(255,255,255,0.45);margin-bottom:18px;text-transform:uppercase;">실행 흐름</div>
+        <!-- step 1 -->
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+          <div style="font-family:monospace;font-size:11px;color:rgba(255,255,255,0.3);width:48px;">STEP 1</div>
+          <div style="font-family:monospace;font-size:15px;color:#6aac98;flex:1;">@eda</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.35);">데이터 수집</div>
+          <div style="font-family:monospace;font-size:13px;color:#6aac98;margin-left:16px;">✅</div>
+        </div>
+        <!-- arrow -->
+        <div style="padding:4px 0 4px 48px;font-family:monospace;font-size:11px;color:rgba(255,255,255,0.2);">↓</div>
+        <!-- step 2 -->
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+          <div style="font-family:monospace;font-size:11px;color:rgba(255,255,255,0.3);width:48px;">STEP 2</div>
+          <div style="font-family:monospace;font-size:15px;color:#6aac98;flex:1;">@metrics</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.35);">탐색 분석</div>
+          <div style="font-family:monospace;font-size:13px;color:#6aac98;margin-left:16px;">✅</div>
+        </div>
+        <!-- arrow -->
+        <div style="padding:4px 0 4px 48px;font-family:monospace;font-size:11px;color:rgba(255,255,255,0.2);">↓</div>
+        <!-- step 3 -->
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+          <div style="font-family:monospace;font-size:11px;color:rgba(255,255,255,0.3);width:48px;">STEP 3</div>
+          <div style="font-family:monospace;font-size:15px;color:#6aac98;flex:1;">@visualizer</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.35);">리포트 생성</div>
+          <div style="font-family:monospace;font-size:13px;color:#6aac98;margin-left:16px;">✅</div>
+        </div>
+        <!-- 완료 -->
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);font-family:monospace;font-size:14px;color:rgba(255,255,255,0.6);">
+          ✅ <span style="color:rgba(255,255,255,0.8);">파이프라인 완료</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s15 | Clip 04 sec-break ════ -->
+<div class="slide" id="s15">
+  <div class="body sec-break">
+    <div style="margin-bottom:28px;">
+      <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+        <!-- outer box -->
+        <rect x="4" y="8" width="52" height="44" rx="3" stroke="#AAAAAA" stroke-width="1.2"/>
+        <!-- center divider -->
+        <line x1="30" y1="8" x2="30" y2="52" stroke="#DDDDDD" stroke-width="1"/>
+        <!-- allow label -->
+        <text x="17" y="22" text-anchor="middle" font-size="7" fill="#6aac98" font-family="monospace">allow</text>
+        <!-- check mark -->
+        <polyline points="10,35 16,42 26,28" stroke="#6aac98" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- deny label -->
+        <text x="43" y="22" text-anchor="middle" font-size="7" fill="#E0DDD9" font-family="monospace">deny</text>
+        <!-- X mark -->
+        <line x1="35" y1="29" x2="51" y2="45" stroke="#E0DDD9" stroke-width="2" stroke-linecap="round"/>
+        <line x1="51" y1="29" x2="35" y2="45" stroke="#E0DDD9" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="sec-label">CLIP 04 · 실무 운영</div>
+    <div class="sec-title">에이전트<br>실무 운영 팁</div>
+    <div class="sec-sub">원본 보호 · 오류 대응 · 자동화</div>
+  </div>
+</div>
+
+
+<!-- ════ s16 | Permissions ════ -->
+<div class="slide" id="s16">
+  <div class="tb">
+    <span class="tb-cap">에이전트 실무 운영</span>
+    <span class="tb-num">16</span>
+  </div>
+  <div class="body">
+    <!-- Left panel -->
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">실수 방지</div>
+        <div class="big-title" style="margin-bottom:18px;">건드려도 되는<br>곳만 허용</div>
+        <div class="body-text">원본 파일은 잠그고<br>작업 폴더만 열어두는<br>안전장치</div>
+      </div>
+      <div style="font-family:monospace;font-size:14px;color:#666;">.claude/settings.json</div>
+    </div>
+    <!-- Right: code + rows -->
+    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:0;">
+      <!-- 코드 -->
+      <div style="padding:44px 32px;border-right:1px solid var(--border);">
+        <div class="eyebrow" style="margin-bottom:14px;">.claude/settings.json</div>
+        <div class="code-wrap" style="font-size:14px;line-height:1.9;">
+          {<br>
+          &nbsp;&nbsp;<span class="code-hi">"permissions"</span>: {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-green">"allow"</span>: [<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.82);">"Read(*)"</span>,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.82);">"Write(data/processed/**)"</span>,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.82);">"Write(runs/**)"</span>,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.82);">"Bash(git *)"</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;],<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-accent">"deny"</span>: [<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.82);">"Write(data/raw/**)"</span>,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.82);">"Bash(rm -rf *)"</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;]<br>
+          &nbsp;&nbsp;}<br>
+          }
+        </div>
+      </div>
+      <!-- 설명 -->
+      <div style="display:flex;flex-direction:column;min-height:0;">
+        <div class="row-item" style="flex:1;justify-content:center;">
+          <div class="row-label">deny — 잠금</div>
+          <div class="row-title">원본 파일 보호</div>
+          <div class="row-body"><code style="background:#E8E6E2;padding:2px 6px;font-size:13px;">data/raw/</code> 덮어쓰기 차단<br>실수로 원본 날리면 복구 불가</div>
+        </div>
+        <div class="row-item" style="flex:1;justify-content:center;">
+          <div class="row-label">allow — 허용</div>
+          <div class="row-title">작업 폴더만 열기</div>
+          <div class="row-body"><code style="background:#E8E6E2;padding:2px 6px;font-size:13px;">processed/</code> · <code style="background:#E8E6E2;padding:2px 6px;font-size:13px;">runs/</code><br>여기서만 자유롭게 작업</div>
+        </div>
+        <div class="row-item" style="flex:1;justify-content:center;">
+          <div class="row-label">팀 공유</div>
+          <div class="row-title">파일 하나로 팀 전체 적용</div>
+          <div class="row-body">git 커밋하면 팀원 모두 동일한 규칙</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s17 | 세션 관리 ════ -->
+<div class="slide" id="s17">
+  <div class="tb">
+    <span class="tb-cap">에이전트 실무 운영</span>
+    <span class="tb-num">21</span>
+  </div>
+  <div class="body">
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">파이프라인 오류 대응</div>
+        <div class="big-title" style="margin-bottom:18px;">실패했을 때<br>어떻게 하나</div>
+        <div class="body-text">에이전트 하나가<br>실패해도 전체를<br>다시 돌리지 않아요</div>
+      </div>
+      <div style="font-size:15px;color:#222;line-height:1.9;">파일이 체크포인트<br>— 완료된 단계는 그대로<br><br><span style="color:#666;">컨텍스트가 완전히 꼬였을 때만<br>/clear로 전체 리셋</span></div>
+    </div>
+    <!-- Right: three scenarios -->
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
+      <div class="row-item" style="flex:1;justify-content:center;">
+        <div class="row-label">에이전트 하나 실패</div>
+        <div class="row-title">해당 에이전트만 재호출</div>
+        <div class="row-body"><span style="font-family:monospace;color:#6aac98;">@metrics 다시 실행해줘</span><br>앞 단계 산출물은 그대로 유지</div>
+      </div>
+      <div class="row-item" style="flex:1;justify-content:center;">
+        <div class="row-label">컨텍스트 너무 길어졌을 때</div>
+        <div class="row-title">/compact — 요약하고 계속</div>
+        <div class="row-body">대화 내용을 압축해 맥락 유지<br>파이프라인 흐름은 그대로</div>
+      </div>
+      <div class="row-item" style="flex:1;justify-content:center;">
+        <div class="row-label">완전히 처음부터 다시</div>
+        <div class="row-title">/clear — 전체 리셋</div>
+        <div class="row-body">컨텍스트가 완전히 꼬인 경우<br>outputs/ 비우고 파이프라인 재실행</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s18 | 한번에 vs 서브에이전트 ════ -->
+<div class="slide" id="s18">
+  <div class="tb">
+    <span class="tb-cap">서브에이전트 활용 이유</span>
+    <span class="tb-num">18</span>
+  </div>
+  <div class="body">
+    <!-- Left panel -->
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">데이터 시각화에서</div>
+        <div class="big-title" style="font-size:44px;margin-bottom:20px;">서브에이전트의<br>장단점</div>
+      </div>
+      <div style="font-size:15px;color:#666;line-height:1.7;">데이터 분석 파이프라인<br>기준 예시</div>
+    </div>
+    <!-- Right: 장점 / 단점 columns -->
+    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:0;">
+      <!-- 장점 -->
+      <div style="border-right:1px solid var(--border);padding:44px 40px;display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;">
+          <div style="width:8px;height:8px;background:#6aac98;border-radius:50%;flex-shrink:0;"></div>
+          <div class="eyebrow" style="margin-bottom:0;color:#6aac98;">장점</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:22px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <span style="font-size:13px;color:#6aac98;width:20px;flex-shrink:0;font-family:monospace;opacity:0.7;">01</span>
+            <div>
+              <div style="font-size:17px;color:#1C1A18;font-weight:600;margin-bottom:4px;">실패 단계만 재실행 가능</div>
+              <div style="font-size:14px;color:#333;line-height:1.6;">EDA 완료됐으면 ingestion·EDA 건너뛰고<br><span style="color:#b09848;">지표 설계(@analyst)만 다시</span></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <span style="font-size:13px;color:#6aac98;width:20px;flex-shrink:0;font-family:monospace;opacity:0.7;">02</span>
+            <div>
+              <div style="font-size:17px;color:#1C1A18;font-weight:600;margin-bottom:4px;">역할별 독립 컨텍스트가 있어 혼선 방지</div>
+              <div style="font-size:14px;color:#333;line-height:1.6;">@metrics는 탐색만, @analyst는 지표만<br>역할 혼선 없음</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <span style="font-size:13px;color:#6aac98;width:20px;flex-shrink:0;font-family:monospace;opacity:0.7;">03</span>
+            <div>
+              <div style="font-size:17px;color:#1C1A18;font-weight:600;margin-bottom:4px;">병렬 처리도 선택적으로 가능</div>
+              <div style="font-size:14px;color:#333;line-height:1.6;">CSV 여러 파일 동시 분석처럼<br>독립 작업은 한꺼번에</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 단점 -->
+      <div style="padding:44px 40px;display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;">
+          <div style="width:8px;height:8px;background:#E0DDD9;border-radius:50%;flex-shrink:0;"></div>
+          <div class="eyebrow" style="margin-bottom:0;">단점</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:22px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <span style="font-size:13px;color:#CCCCCC;width:20px;flex-shrink:0;font-family:monospace;">01</span>
+            <div>
+              <div style="font-size:17px;color:#333;font-weight:600;margin-bottom:4px;">초기 설정 필요</div>
+              <div style="font-size:14px;color:#666;line-height:1.6;">에이전트 .md 파일 있어야 함</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <span style="font-size:13px;color:#CCCCCC;width:20px;flex-shrink:0;font-family:monospace;">02</span>
+            <div>
+              <div style="font-size:17px;color:#333;font-weight:600;margin-bottom:4px;">단순 작업엔 오버스펙</div>
+              <div style="font-size:14px;color:#666;line-height:1.6;">짧은 작업은 한번에 요청이 빠름</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <span style="font-size:13px;color:#CCCCCC;width:20px;flex-shrink:0;font-family:monospace;">03</span>
+            <div>
+              <div style="font-size:17px;color:#333;font-weight:600;margin-bottom:4px;">에이전트 간 직접 소통 불가</div>
+              <div style="font-size:14px;color:#666;line-height:1.6;">파일 경유만 — 유연성 제한</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ════ s23 | 치트시트 — 에이전트 워크플로우 한 장 정리 ════ -->
+<div class="slide" id="s23">
+  <div class="tb">
+    <span class="tb-cap">에이전트 실무 운영</span>
+    <span class="tb-num">23</span>
+  </div>
+  <div class="body" style="flex-direction:column;padding:40px 64px;justify-content:center;">
+
+    <div style="text-align:center;margin-bottom:28px;">
+      <div class="eyebrow" style="margin-bottom:6px;">한 장 정리</div>
+      <div style="font-size:30px;font-weight:700;color:#1C1A18;letter-spacing:-0.02em;">Claude Code 에이전트 팀 구성 — 치트시트</div>
+    </div>
+
+    <!-- 4단계 흐름 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;border:1px solid var(--border);margin-bottom:16px;">
+
+      <div style="padding:22px 24px;border-right:1px solid var(--border);">
+        <div style="font-size:11px;font-family:monospace;color:#333;letter-spacing:0.12em;margin-bottom:10px;">STEP 01</div>
+        <div style="font-size:18px;font-weight:700;color:#1C1A18;margin-bottom:10px;">폴더 만들기</div>
+        <div style="font-family:monospace;font-size:13px;color:#6aac98;line-height:1.8;">.claude/agents/<br>.claude/skills/<br>outputs/</div>
+      </div>
+
+      <div style="padding:22px 24px;border-right:1px solid var(--border);">
+        <div style="font-size:11px;font-family:monospace;color:#333;letter-spacing:0.12em;margin-bottom:10px;">STEP 02</div>
+        <div style="font-size:18px;font-weight:700;color:#1C1A18;margin-bottom:10px;">서브에이전트 선언</div>
+        <div style="font-family:monospace;font-size:13px;color:#6aac98;line-height:1.8;">eda.md<br>metrics.md<br>visualizer.md</div>
+        <div style="font-size:12px;color:#222;margin-top:8px;">단순 작업 → Haiku<br>복잡 판단 → Sonnet</div>
+      </div>
+
+      <div style="padding:22px 24px;border-right:1px solid var(--border);">
+        <div style="font-size:11px;font-family:monospace;color:#333;letter-spacing:0.12em;margin-bottom:10px;">STEP 03</div>
+        <div style="font-size:18px;font-weight:700;color:#1C1A18;margin-bottom:10px;">CLAUDE.md 흐름 작성</div>
+        <div style="font-family:monospace;font-size:13px;color:#E8603C;line-height:1.8;">@eda → eda.md<br>@metrics → metrics.md<br>@visualizer → visualizer.md</div>
+      </div>
+
+      <div style="padding:22px 24px;">
+        <div style="font-size:11px;font-family:monospace;color:#333;letter-spacing:0.12em;margin-bottom:10px;">STEP 04</div>
+        <div style="font-size:18px;font-weight:700;color:#1C1A18;margin-bottom:10px;">실행 & 검증</div>
+        <div style="font-family:monospace;font-size:16px;color:#E8603C;font-weight:600;margin-bottom:8px;">/run-task</div>
+        <div style="font-size:12px;color:#222;line-height:1.7;">오류 시 해당 서브에이전트만<br>@agent 재호출<br>전체 재시작 불필요<br><span style="color:#666;margin-top:4px;display:block;">Hooks로 완료 알림 자동화</span></div>
+      </div>
+    </div>
+
+    <!-- 하단 핵심 원칙 3개 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--border);border-top:none;">
+      <div style="padding:16px 24px;border-right:1px solid var(--border);display:flex;align-items:center;gap:14px;">
+        <div style="width:6px;height:6px;background:#6aac98;border-radius:50%;flex-shrink:0;"></div>
+        <div style="font-size:15px;color:#333;line-height:1.5;"><strong style="color:#1C1A18;">파일 통신</strong> — 에이전트 간 직접 대화 없음<br>outputs/ 폴더로만 소통</div>
+      </div>
+      <div style="padding:16px 24px;border-right:1px solid var(--border);display:flex;align-items:center;gap:14px;">
+        <div style="width:6px;height:6px;background:#E8603C;border-radius:50%;flex-shrink:0;"></div>
+        <div style="font-size:15px;color:#333;line-height:1.5;"><strong style="color:#1C1A18;">원본 보호</strong> — data/raw/ 쓰기 deny<br>processed/ · runs/만 허용</div>
+      </div>
+      <div style="padding:16px 24px;display:flex;align-items:center;gap:14px;">
+        <div style="width:6px;height:6px;background:#1C1A18;border-radius:50%;flex-shrink:0;"></div>
+        <div style="font-size:15px;color:#333;line-height:1.5;"><strong style="color:#1C1A18;">완료 ≠ 검증</strong> — "완료" 후 outputs/<br>직접 열어서 수치 대조</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<!-- ════ s25 | 에이전트 팀 ════ -->
+<div class="slide" id="s25">
+  <div class="tb">
+    <span class="tb-cap">에이전트 실무 운영</span>
+    <span class="tb-num">24</span>
+  </div>
+  <div class="body" style="flex-direction:column;padding:44px 64px;gap:0;justify-content:center;">
+
+    <!-- 헤더 -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;">
+      <div>
+        <div style="font-size:52px;font-weight:700;letter-spacing:-0.025em;color:var(--text);line-height:1.15;">에이전트 팀 모드<br><span style="font-size:28px;font-weight:500;color:#E8603C;letter-spacing:0;">실험 기능</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="display:inline-block;padding:5px 12px;border:1px solid #E8603C;font-size:11px;font-family:monospace;color:#E8603C;letter-spacing:0.1em;">EXPERIMENTAL</div>
+        <div style="font-family:monospace;font-size:12px;color:#666;">.claude/settings.json</div>
+      </div>
+    </div>
+
+    <!-- 비교표 + 활성화 코드 -->
+    <div style="display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:start;">
+
+      <!-- 비교표 -->
+      <div style="border:1px solid var(--border);">
+        <!-- 헤더 행 -->
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;background:#ECEAE5;border-bottom:1px solid var(--border);">
+          <div style="padding:14px 20px;border-right:1px solid var(--border);"></div>
+          <div style="padding:14px 20px;border-right:1px solid var(--border);font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#333;">서브에이전트</div>
+          <div style="padding:14px 20px;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#333;">에이전트 팀</div>
+        </div>
+        <!-- 인스턴스 -->
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:20px;border-right:1px solid var(--border);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#666;display:flex;align-items:center;">인스턴스</div>
+          <div style="padding:20px;border-right:1px solid var(--border);font-size:17px;color:#333;">단일 Claude<br>+ 서브에이전트</div>
+          <div style="padding:20px;font-size:17px;color:#333;">독립 Claude<br>인스턴스 여럿</div>
+        </div>
+        <!-- 소통 -->
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:20px;border-right:1px solid var(--border);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#666;display:flex;align-items:center;">소통</div>
+          <div style="padding:20px;border-right:1px solid var(--border);font-size:17px;color:#333;">파일로만 소통<br><span style="font-family:monospace;font-size:13px;color:#555;">outputs/</span></div>
+          <div style="padding:20px;font-size:17px;color:#333;">팀원 간<br>직접 소통</div>
+        </div>
+        <!-- 토큰 비용 -->
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;border-bottom:1px solid var(--border);">
+          <div style="padding:20px;border-right:1px solid var(--border);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#666;display:flex;align-items:center;">토큰 비용</div>
+          <div style="padding:20px;border-right:1px solid var(--border);font-size:17px;color:#333;">기준</div>
+          <div style="padding:20px;font-size:22px;font-weight:700;color:#E8603C;">약 7배</div>
+        </div>
+        <!-- 최적 용도 -->
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;">
+          <div style="padding:20px;border-right:1px solid var(--border);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#666;display:flex;align-items:center;">최적 용도</div>
+          <div style="padding:20px;border-right:1px solid var(--border);font-size:17px;color:#333;">순차 파이프라인</div>
+          <div style="padding:20px;font-size:17px;color:#333;">병렬 연구 ·<br>앙상블 검토</div>
+        </div>
+      </div>
+
+      <!-- 활성화 코드 + 참고 -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div class="eyebrow" style="margin-bottom:0;">활성화</div>
+        <div class="code-wrap" style="font-size:12px;line-height:1.9;">
+          {<br>
+          &nbsp;&nbsp;<span class="code-hi">"env"</span>: {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-accent">"CLAUDE_CODE_EXPERIMENTAL</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-accent">&nbsp;_AGENT_TEAMS"</span><span style="color:rgba(255,255,255,0.72);">: </span><span class="code-green">"1"</span><br>
+          &nbsp;&nbsp;}<br>
+          }
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <div style="font-size:12px;color:#666;width:18px;flex-shrink:0;">01</div>
+            <div style="font-size:15px;color:#333;">팀장 + 팀원 3~5명 권장</div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <div style="font-size:12px;color:#666;width:18px;flex-shrink:0;">02</div>
+            <div style="font-size:15px;color:#333;">병렬 연구 · 경쟁 가설 검증에 적합</div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <div style="font-size:12px;color:#666;width:18px;flex-shrink:0;">03</div>
+            <div style="font-size:15px;color:#333;">비용이 크므로 필요할 때만</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s26 | Hooks ════ -->
+<div class="slide" id="s26">
+  <div class="tb">
+    <span class="tb-cap">에이전트 실무 운영</span>
+    <span class="tb-num">17</span>
+  </div>
+  <div class="body">
+    <!-- Left panel -->
+    <div class="l-panel">
+      <div>
+        <div class="eyebrow">파이프라인 자동화</div>
+        <div class="big-title" style="margin-bottom:18px;">Hooks</div>
+        <div class="body-text">에이전트가 뭔가<br>하기 전후에 자동으로<br>실행되는 셸 명령</div>
+      </div>
+      <div style="font-family:monospace;font-size:13px;color:#666;">.claude/settings.json<br>"hooks" 키</div>
+    </div>
+    <!-- Right: 3 pipe-rows -->
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
+      <div class="pipe-row" style="flex:1;align-items:flex-start;padding-top:32px;">
+        <div class="pipe-n">01</div>
+        <div style="display:flex;flex-direction:column;gap:8px;flex:1;">
+          <div style="font-family:monospace;font-size:16px;font-weight:600;color:#8dc8b4;">PreToolUse</div>
+          <div style="font-size:18px;font-weight:600;color:var(--text);">실행 전 입력 검증</div>
+          <div style="font-size:16px;color:#222;line-height:1.7;">다음 단계 시작 전 이전 산출물 있는지 확인<br>input/ 파일 없으면 실행 차단</div>
+        </div>
+      </div>
+      <div class="pipe-row" style="flex:1;align-items:flex-start;padding-top:32px;">
+        <div class="pipe-n">02</div>
+        <div style="display:flex;flex-direction:column;gap:8px;flex:1;">
+          <div style="font-family:monospace;font-size:16px;font-weight:600;color:#8dc8b4;">PostToolUse</div>
+          <div style="font-size:18px;font-weight:600;color:var(--text);">산출물 자동 저장</div>
+          <div style="font-size:16px;color:#222;line-height:1.7;">outputs/ 파일 생성 후 자동 git commit<br>파이프라인 실행 기록 자동 보존</div>
+        </div>
+      </div>
+      <div class="pipe-row" style="flex:1;align-items:flex-start;padding-top:32px;">
+        <div class="pipe-n">03</div>
+        <div style="display:flex;flex-direction:column;gap:8px;flex:1;">
+          <div style="font-family:monospace;font-size:16px;font-weight:600;color:#8dc8b4;">Notification</div>
+          <div style="font-size:18px;font-weight:600;color:var(--text);">파이프라인 완료 알림</div>
+          <div style="font-size:16px;color:#222;line-height:1.7;">전체 파이프라인 완료 시 슬랙·데스크톱 알림<br>자리 비워도 완료 시점 놓치지 않음</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<div class="nav">
+  <span class="nav-ctr" id="nav-ctr">1 / 18</span>
+  <button class="nav-btn" onclick="prev()">←</button>
+  <button class="nav-btn" onclick="next()">→</button>
+</div>
+<div class="progress" id="progress"></div>
+<div class="clip-dots" id="clip-dots">
+  <div class="clip-dot active"></div>
+  <div class="clip-dot"></div>
+  <div class="clip-dot"></div>
+  <div class="clip-dot"></div>
+</div>
+
+<script>
+  const TOTAL = 26;
+  const ORDER = [1,28,2,3,27,4,18,5,6,24,19,29,7,8,21,30,11,32,14,22,31,15,16,17,26,23];
+  const CLIP_MAP = {1:0,28:0,2:0,3:0,27:0,4:0,18:0,5:0,6:0,24:0,19:0, 29:1,7:1,8:1,21:1, 30:2,11:2,32:2,14:2,22:2, 31:3,15:3,16:3,17:3,26:3,23:3};
+  const CLIP_LABELS = ['서브에이전트 구조','에이전트 팀 구성','파이프라인 실행','실무 운영 팁'];
+  let cur = 1;
+
+  function scale() {
+    const s = Math.min(window.innerWidth / 1280, window.innerHeight / 800);
+    const d = document.querySelector('.deck');
+    d.style.transform = `scale(${s})`;
+    d.style.top = `${(window.innerHeight - 800*s)/2}px`;
+    d.style.left = `${(window.innerWidth - 1280*s)/2}px`;
+  }
+  scale(); window.addEventListener('resize', scale);
+
+  function show(n) {
+    if (n < 1 || n > TOTAL) return;
+    const slideId = ORDER[n-1];
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById('s'+slideId);
+    if (el) {
+      el.classList.add('active');
+      const numEl = el.querySelector('.tb-num');
+      if (numEl) numEl.textContent = n;
+    }
+    document.getElementById('nav-ctr').textContent = n + ' / ' + TOTAL;
+    document.getElementById('progress').style.width = (n/TOTAL*100)+'%';
+    const clipIdx = CLIP_MAP[slideId] ?? 0;
+    document.querySelectorAll('.clip-dot').forEach((d,i) => d.classList.toggle('active', i===clipIdx));
+    cur = n;
+  }
+  function next() { show(cur+1); }
+  function prev() { show(cur-1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); next(); }
+    if (e.key==='ArrowLeft') { e.preventDefault(); prev(); }
+  });
+  let tx = 0;
+  document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    if (Math.abs(tx - e.changedTouches[0].clientX) > 40) tx > e.changedTouches[0].clientX ? next() : prev();
+  });
+  show(1);
+</script>
+</body>
+</html>

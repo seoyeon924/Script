@@ -486,10 +486,7 @@
     </div>
     <!-- Right: 영상 -->
     <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#0F0E0C;overflow:hidden;">
-      <video style="width:100%;height:100%;object-fit:contain;display:block;" controls>
-        <source src="assets/antigravity-demo.mov" type="video/quicktime">
-        <source src="assets/antigravity-demo.mov" type="video/mp4">
-      </video>
+      <img src="assets/antigravity-demo-thumb.jpg" alt="Antigravity Demo" style="width:100%;height:100%;object-fit:contain;display:block;">
     </div>
   </div>
 </div>
@@ -616,12 +613,7 @@
     <span class="tb-num">15</span>
   </div>
   <div class="body">
-    <iframe
-      src="https://www.youtube.com/embed/SVCBA-pBgt0?rel=0&modestbranding=1"
-      style="width:100%;height:100%;border:none;"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
+    <img src="assets/antigravity-youtube-thumb.jpg" alt="Google Antigravity YouTube" style="width:100%;height:100%;object-fit:cover;display:block;">
   </div>
 </div>
 
@@ -664,50 +656,6 @@
           <div style="font-size:14px;color:#1C1A18;line-height:1.8;">방금 만든 CSV 읽고 채널별 매출 바 차트 HTML 만들어줘.</div>
           <div style="font-size:12px;color:#AAAAAA;margin-top:8px;">→ HTML 열면 차트 나오면 세팅 완료</div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ════ s17 | 터미널 없이 ════ -->
-<div class="slide" id="s17">
-  <div class="tb">
-    <span class="tb-cap">Antigravity 에디터 환경 세팅</span>
-    <span class="tb-num">17</span>
-  </div>
-  <div class="body">
-    <div class="l-panel">
-      <div>
-        <div class="eyebrow">핵심 원칙</div>
-        <div class="big-title">터미널 명령어 X<br>자연어 O</div>
-        <div class="body-text" style="margin-top:16px;">채팅 패널 → Claude 자동 실행</div>
-      </div>
-      <div style="padding:16px 18px;background:#F8F7F4;border:1px solid var(--border);">
-        <div style="font-size:11px;color:#AAAAAA;letter-spacing:0.1em;margin-bottom:8px;">이 강의에서 우리가 주로 쓸 것</div>
-        <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#888;line-height:1.7;">
-          <div>💬 Claude Code 채팅 패널</div>
-          <div>📁 에디터 (파일 확인)</div>
-          <div style="color:#CCCCCC;">⌨️ 터미널 (가끔)</div>
-        </div>
-      </div>
-    </div>
-    <!-- Right: 비교 -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:52px 60px;gap:20px;">
-      <div style="border:1px solid var(--border);overflow:hidden;">
-        <div style="padding:14px 18px;border-bottom:1px solid var(--border);font-size:11px;color:#AAAAAA;letter-spacing:0.1em;background:rgba(0,0,0,0.02);">채팅 패널에서 이렇게 말하면</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);">
-          <div style="background:#fff;padding:22px 24px;">
-            <div style="font-size:11px;color:#AAAAAA;margin-bottom:10px;letter-spacing:0.08em;">말로</div>
-            <div style="font-size:14px;color:#555;line-height:1.8;">data.csv 파일 읽고<br>채널별 합계 만들어줘</div>
-          </div>
-          <div style="background:#FDF8F5;border:1px solid rgba(232,96,60,0.1);padding:22px 24px;">
-            <div style="font-size:11px;color:#E8603C;margin-bottom:10px;letter-spacing:0.08em;">Claude가 실행</div>
-            <div style="font-size:13px;color:#555;font-family:monospace;line-height:1.8;">import pandas as pd<br>df = pd.read_csv('data.csv')<br>result = df.groupby(...)...</div>
-          </div>
-        </div>
-      </div>
-      <div style="text-align:center;padding:20px;">
-        <div style="font-size:15px;color:#888;line-height:1.8;">파이썬 지식 불필요<br>요청 → 코드 작성·실행 자동</div>
       </div>
     </div>
   </div>
@@ -782,8 +730,8 @@
 </div>
 
 <script>
-  const TOTAL = 16;
-  const ORDER = [1,4,5,6,7,8,9,10,15,19,11,12,13,16,17,18];
+  const TOTAL = 15;
+  const ORDER = [1,4,5,6,7,8,9,10,15,19,11,12,13,16,18];
   const CLIP_MAP = {
     1:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,
     19:1,11:1,12:1,13:1,15:1,16:1,17:1,18:1
