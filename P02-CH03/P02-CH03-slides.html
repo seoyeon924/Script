@@ -1571,50 +1571,62 @@
     <!-- Left panel -->
     <div class="l-panel">
       <div>
-        <div class="eyebrow">실수 방지</div>
-        <div class="big-title" style="margin-bottom:18px;">건드려도 되는<br>곳만 허용</div>
-        <div class="body-text">원본 파일은 잠그고<br>작업 폴더만 열어두는<br>안전장치</div>
+        <div class="eyebrow">원본 데이터 보호</div>
+        <div class="big-title" style="margin-bottom:18px;">써도 되는 곳만<br>열어두기</div>
+        <div class="body-text">원본 CSV는 잠그고<br>분석 결과 폴더만<br>쓰기 허용</div>
       </div>
-      <div style="font-family:monospace;font-size:14px;color:#666;">.claude/settings.json</div>
     </div>
-    <!-- Right: code + rows -->
+    <!-- Right: dark demo (요청 + settings.json) + 설명 rows -->
     <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:0;">
-      <!-- 코드 -->
-      <div style="padding:44px 32px;border-right:1px solid var(--border);">
-        <div class="eyebrow" style="margin-bottom:14px;">.claude/settings.json</div>
-        <div class="code-wrap" style="font-size:14px;line-height:1.9;">
-          {<br>
-          &nbsp;&nbsp;<span class="code-hi">"permissions"</span>: {<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-green">"allow"</span>: [<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.82);">"Read(*)"</span>,<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.82);">"Write(data/processed/**)"</span>,<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.82);">"Write(runs/**)"</span>,<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.82);">"Bash(git *)"</span><br>
-          &nbsp;&nbsp;&nbsp;&nbsp;],<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-accent">"deny"</span>: [<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.82);">"Write(data/raw/**)"</span>,<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.82);">"Bash(rm -rf *)"</span><br>
-          &nbsp;&nbsp;&nbsp;&nbsp;]<br>
-          &nbsp;&nbsp;}<br>
-          }
+      <!-- 요청 → 자동 생성 → 코드 (dark) -->
+      <div style="background:#1C1A18;padding:30px 26px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;">
+        <!-- ① 요청 (chat bubble style) -->
+        <div>
+          <div style="font-size:12px;letter-spacing:0.14em;color:rgba(255,255,255,0.5);margin-bottom:10px;text-transform:uppercase;">① 이렇게 요청하면</div>
+          <div style="background:rgba(255,255,255,0.06);border-left:3px solid #b09848;padding:14px 16px;">
+            <div style="font-size:15px;line-height:1.7;color:rgba(255,255,255,0.95);">
+              원본 data/raw는 쓰기 금지,<br>
+              processed·charts·reports만 허용.<br>
+              git push는 매번 확인하게 해줘
+            </div>
+          </div>
+        </div>
+        <!-- 화살표 -->
+        <div style="display:flex;align-items:center;justify-content:center;padding:14px 0;gap:12px;">
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.12);"></div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);letter-spacing:0.12em;">자동 생성 ↓</div>
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.12);"></div>
+        </div>
+        <!-- ② 결과 code -->
+        <div>
+          <div style="font-size:12px;letter-spacing:0.14em;color:rgba(255,255,255,0.5);margin-bottom:10px;text-transform:uppercase;">② .claude/settings.json</div>
+          <div style="font-family:'Menlo','Monaco',monospace;font-size:14px;line-height:1.9;color:rgba(255,255,255,0.9);">
+            <span style="color:rgba(255,255,255,0.88);">"permissions"</span>: {<br>
+            &nbsp;&nbsp;<span style="color:#6aac98;">"allow"</span>: [<span style="color:rgba(255,255,255,0.78);">"Write(processed/**)"</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.78);">"Write(charts/**)"</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgba(255,255,255,0.78);">"Write(reports/**)"</span>],<br>
+            &nbsp;&nbsp;<span style="color:#b09848;">"ask"</span>: &nbsp;[<span style="color:rgba(255,255,255,0.78);">"Bash(git push *)"</span>],<br>
+            &nbsp;&nbsp;<span style="color:#E8603C;">"deny"</span>: &nbsp;[<span style="color:rgba(255,255,255,0.78);">"Write(data/raw/**)"</span>]<br>
+            }
+          </div>
         </div>
       </div>
       <!-- 설명 -->
       <div style="display:flex;flex-direction:column;min-height:0;">
         <div class="row-item" style="flex:1;justify-content:center;">
-          <div class="row-label">deny — 잠금</div>
-          <div class="row-title">원본 파일 보호</div>
-          <div class="row-body"><code style="background:#E8E6E2;padding:2px 6px;font-size:13px;">data/raw/</code> 덮어쓰기 차단<br>실수로 원본 날리면 복구 불가</div>
+          <div style="font-size:15px;color:#E8603C;font-weight:600;letter-spacing:0.05em;margin-bottom:8px;">deny — 잠금</div>
+          <div style="font-size:19px;font-weight:600;color:#1C1A18;margin-bottom:8px;">원본 폴더 보호</div>
+          <div style="font-size:16px;color:#222;line-height:1.7;">덮어쓰기 차단<br>실수로 날리면 복구 불가</div>
         </div>
         <div class="row-item" style="flex:1;justify-content:center;">
-          <div class="row-label">allow — 허용</div>
-          <div class="row-title">작업 폴더만 열기</div>
-          <div class="row-body"><code style="background:#E8E6E2;padding:2px 6px;font-size:13px;">processed/</code> · <code style="background:#E8E6E2;padding:2px 6px;font-size:13px;">runs/</code><br>여기서만 자유롭게 작업</div>
+          <div style="font-size:15px;color:#b09848;font-weight:600;letter-spacing:0.05em;margin-bottom:8px;">ask — 매번 확인</div>
+          <div style="font-size:19px;font-weight:600;color:#1C1A18;margin-bottom:8px;">위험하지만 필요한 명령</div>
+          <div style="font-size:16px;color:#222;line-height:1.7;">git push · 차트 외부 업로드<br>막진 말되 매번 사람 승인</div>
         </div>
         <div class="row-item" style="flex:1;justify-content:center;">
-          <div class="row-label">팀 공유</div>
-          <div class="row-title">파일 하나로 팀 전체 적용</div>
-          <div class="row-body">git 커밋하면 팀원 모두 동일한 규칙</div>
+          <div style="font-size:15px;color:#6aac98;font-weight:600;letter-spacing:0.05em;margin-bottom:8px;">allow — 자유 허용</div>
+          <div style="font-size:19px;font-weight:600;color:#1C1A18;margin-bottom:8px;">작업용 폴더만 쓰기 허용</div>
+          <div style="font-size:16px;color:#222;line-height:1.7;">원본은 그대로 두고<br>결과 만드는 폴더에서만 자유롭게</div>
         </div>
       </div>
     </div>
@@ -1631,28 +1643,27 @@
   <div class="body">
     <div class="l-panel">
       <div>
-        <div class="eyebrow">파이프라인 오류 대응</div>
-        <div class="big-title" style="margin-bottom:18px;">실패했을 때<br>어떻게 하나</div>
-        <div class="body-text">에이전트 하나가<br>실패해도 전체를<br>다시 돌리지 않아요</div>
+        <div class="eyebrow">파이프라인 운영</div>
+        <div class="big-title" style="margin-bottom:18px;">잘 돌리는<br>3가지 팁</div>
+        <div class="body-text">파이프라인이 길어질수록<br>차이가 나는<br>일상 운영 습관</div>
       </div>
-      <div style="font-size:15px;color:#222;line-height:1.9;">파일이 체크포인트<br>— 완료된 단계는 그대로<br><br><span style="color:#666;">컨텍스트가 완전히 꼬였을 때만<br>/clear로 전체 리셋</span></div>
     </div>
-    <!-- Right: three scenarios -->
+    <!-- Right: three tips -->
     <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
       <div class="row-item" style="flex:1;justify-content:center;">
-        <div class="row-label">에이전트 하나 실패</div>
-        <div class="row-title">해당 에이전트만 재호출</div>
-        <div class="row-body"><span style="font-family:monospace;color:#6aac98;">@metrics 다시 실행해줘</span><br>앞 단계 산출물은 그대로 유지</div>
+        <div style="font-size:15px;color:#888;font-weight:600;letter-spacing:0.05em;margin-bottom:8px;">TIP 1 · 대화 관리</div>
+        <div style="font-size:19px;font-weight:600;color:#1C1A18;margin-bottom:8px;">/compact 으로 방향 지정 압축</div>
+        <div style="font-size:16px;font-family:monospace;color:#6aac98;line-height:1.7;">"/compact 분석 결과 유지,<br>&nbsp;시행착오 버려"</div>
       </div>
       <div class="row-item" style="flex:1;justify-content:center;">
-        <div class="row-label">컨텍스트 너무 길어졌을 때</div>
-        <div class="row-title">/compact — 요약하고 계속</div>
-        <div class="row-body">대화 내용을 압축해 맥락 유지<br>파이프라인 흐름은 그대로</div>
+        <div style="font-size:15px;color:#888;font-weight:600;letter-spacing:0.05em;margin-bottom:8px;">TIP 2 · 실행 제어</div>
+        <div style="font-size:19px;font-weight:600;color:#1C1A18;margin-bottom:8px;">@에이전트 이름으로 콕 집어 호출</div>
+        <div style="font-size:16px;font-family:monospace;color:#6aac98;line-height:1.7;">"@visualizer 차트 다시 만들어줘"</div>
       </div>
       <div class="row-item" style="flex:1;justify-content:center;">
-        <div class="row-label">완전히 처음부터 다시</div>
-        <div class="row-title">/clear — 전체 리셋</div>
-        <div class="row-body">컨텍스트가 완전히 꼬인 경우<br>outputs/ 비우고 파이프라인 재실행</div>
+        <div style="font-size:15px;color:#888;font-weight:600;letter-spacing:0.05em;margin-bottom:8px;">TIP 3 · 비용·속도</div>
+        <div style="font-size:19px;font-weight:600;color:#1C1A18;margin-bottom:8px;">에이전트별 모델 따로 지정</div>
+        <div style="font-size:16px;color:#222;line-height:1.7;">단순 EDA는 <span style="font-family:monospace;color:#6aac98;">Haiku</span>, 깊은 분석은 <span style="font-family:monospace;color:#6aac98;">Sonnet</span></div>
       </div>
     </div>
   </div>
@@ -1905,36 +1916,53 @@
     <!-- Left panel -->
     <div class="l-panel">
       <div>
-        <div class="eyebrow">파이프라인 자동화</div>
-        <div class="big-title" style="margin-bottom:18px;">Hooks</div>
-        <div class="body-text">에이전트가 뭔가<br>하기 전후에 자동으로<br>실행되는 셸 명령</div>
+        <div class="eyebrow">차트 자동 확인</div>
+        <div class="big-title" style="margin-bottom:18px;">사람 대신<br>챙겨주기</div>
+        <div class="body-text">차트가 완성되면<br>자동으로 화면에 띄워<br>바로 눈으로 확인</div>
       </div>
-      <div style="font-family:monospace;font-size:13px;color:#666;">.claude/settings.json<br>"hooks" 키</div>
     </div>
-    <!-- Right: 3 pipe-rows -->
+    <!-- Right: practical demo -->
     <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
-      <div class="pipe-row" style="flex:1;align-items:flex-start;padding-top:32px;">
-        <div class="pipe-n">01</div>
-        <div style="display:flex;flex-direction:column;gap:8px;flex:1;">
-          <div style="font-family:monospace;font-size:16px;font-weight:600;color:#8dc8b4;">PreToolUse</div>
-          <div style="font-size:18px;font-weight:600;color:var(--text);">실행 전 입력 검증</div>
-          <div style="font-size:16px;color:#222;line-height:1.7;">다음 단계 시작 전 이전 산출물 있는지 확인<br>input/ 파일 없으면 실행 차단</div>
+      <div style="flex:1;background:#1C1A18;padding:36px 48px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;">
+        <!-- ① 요청 (chat bubble) -->
+        <div>
+          <div style="font-size:13px;letter-spacing:0.14em;color:rgba(255,255,255,0.55);margin-bottom:12px;text-transform:uppercase;">① 이렇게 요청하면</div>
+          <div style="background:rgba(255,255,255,0.06);border-left:3px solid #b09848;padding:14px 18px;">
+            <div style="font-size:17px;line-height:1.7;color:rgba(255,255,255,0.95);">
+              charts 폴더에 차트 파일 생길 때마다<br>
+              자동으로 열어주는 훅 추가해줘
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="pipe-row" style="flex:1;align-items:flex-start;padding-top:32px;">
-        <div class="pipe-n">02</div>
-        <div style="display:flex;flex-direction:column;gap:8px;flex:1;">
-          <div style="font-family:monospace;font-size:16px;font-weight:600;color:#8dc8b4;">PostToolUse</div>
-          <div style="font-size:18px;font-weight:600;color:var(--text);">산출물 자동 저장</div>
-          <div style="font-size:16px;color:#222;line-height:1.7;">outputs/ 파일 생성 후 자동 git commit<br>파이프라인 실행 기록 자동 보존</div>
+        <!-- 화살표 1 -->
+        <div style="display:flex;align-items:center;justify-content:center;padding:12px 0;gap:12px;">
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.12);"></div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);letter-spacing:0.12em;">자동 생성 ↓</div>
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.12);"></div>
         </div>
-      </div>
-      <div class="pipe-row" style="flex:1;align-items:flex-start;padding-top:32px;">
-        <div class="pipe-n">03</div>
-        <div style="display:flex;flex-direction:column;gap:8px;flex:1;">
-          <div style="font-family:monospace;font-size:16px;font-weight:600;color:#8dc8b4;">Notification</div>
-          <div style="font-size:18px;font-weight:600;color:var(--text);">파이프라인 완료 알림</div>
-          <div style="font-size:16px;color:#222;line-height:1.7;">전체 파이프라인 완료 시 슬랙·데스크톱 알림<br>자리 비워도 완료 시점 놓치지 않음</div>
+        <!-- ② settings.json -->
+        <div>
+          <div style="font-size:13px;letter-spacing:0.14em;color:rgba(255,255,255,0.55);margin-bottom:12px;text-transform:uppercase;">② .claude/settings.json</div>
+          <div style="font-family:'Menlo','Monaco',monospace;font-size:15px;line-height:1.9;color:rgba(255,255,255,0.9);">
+            "hooks": { <span style="color:#8dc8b4;">"PostToolUse"</span>: [{<br>
+            &nbsp;&nbsp;"matcher": <span style="color:#E8603C;">"Write"</span>,<br>
+            &nbsp;&nbsp;"command": <span style="color:#E8603C;">"open charts/*.png"</span><br>
+            }]}
+          </div>
+        </div>
+        <!-- 화살표 2 -->
+        <div style="display:flex;align-items:center;justify-content:center;padding:12px 0;gap:12px;">
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.12);"></div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);letter-spacing:0.12em;">실행 시 ↓</div>
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.12);"></div>
+        </div>
+        <!-- ③ 효과 -->
+        <div>
+          <div style="font-size:13px;letter-spacing:0.14em;color:rgba(255,255,255,0.55);margin-bottom:10px;text-transform:uppercase;">③ 이렇게 작동</div>
+          <div style="font-size:16px;line-height:1.7;color:rgba(255,255,255,0.92);">
+            차트 그릴 때마다 자동으로 열림<br>
+            <span style="color:rgba(255,255,255,0.6);">매번 폴더 열어서 확인할 필요 없음</span>
+          </div>
         </div>
       </div>
     </div>
