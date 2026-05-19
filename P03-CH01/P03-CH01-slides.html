@@ -344,6 +344,10 @@
             <div style="color:#888;">│   &nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">analysis.md</span></div>
             <div style="color:#888;">│   &nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e8a86a;">dashboard.md</span></div>
             <div style="color:#888;">│   &nbsp;&nbsp;&nbsp;&nbsp;└── <span style="color:#e0ddd9;">report.md</span></div>
+            <div style="color:#888;">│   └── <span style="color:#e8a86a;">skills/</span></div>
+            <div style="color:#888;">│   &nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e8a86a;">run-pipeline/SKILL.md</span></div>
+            <div style="color:#888;">│   &nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e8a86a;">dashboard-design/SKILL.md</span></div>
+            <div style="color:#888;">│   &nbsp;&nbsp;&nbsp;&nbsp;└── <span style="color:#e8a86a;">visualize/SKILL.md</span></div>
             <div style="color:#888;">└── <span style="color:#6aac98;">runs/</span></div>
             <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;└── <span style="color:#6aac98;">latest/</span></div>
             <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">input/</span>&nbsp;&nbsp;<span style="color:#555;">← CSV 여기</span></div>
@@ -953,6 +957,61 @@
 </div>
 
 
+<!-- ════ s22 | 3개 스킬 역할 ════ -->
+<div class="slide" id="s22">
+  <div class="tb"><span class="tb-cap">3개 스킬 — 이 파이프라인에서 하는 일</span><span class="tb-num">22</span></div>
+  <div class="body">
+    <!-- SKILL 01 -->
+    <div style="flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+      <div style="padding:28px 36px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:14px;">
+        <div style="font-size:13px;font-weight:700;color:#e8a86a;letter-spacing:0.1em;font-family:monospace;">SKILL 01</div>
+        <div style="font-size:21px;font-weight:600;color:#1C1A18;font-family:monospace;">/run-pipeline</div>
+      </div>
+      <div style="padding:28px 36px;flex:1;display:flex;flex-direction:column;gap:16px;">
+        <div style="font-size:18px;color:#333;line-height:1.75;">7단계를 순서대로 실행하는 <strong>파이프라인 컨트롤러</strong>예요. 산출물 파일이 있으면 skip, 없으면 실행해요.</div>
+        <div class="code-wrap" style="font-size:14px;line-height:1.8;border-radius:4px;">
+          <div style="color:#555;"># 사용법</div>
+          <div><span class="code-green">/run-pipeline</span></div>
+          <br>
+          <div style="color:#555;"># 개별 재실행</div>
+          <div><span class="code-accent">@analysis</span> <span style="color:#888;">다시 실행해줘</span></div>
+        </div>
+        <div style="font-size:16px;color:#666;line-height:1.7;padding:14px 16px;border-left:3px solid #e8a86a;background:rgba(232,168,106,0.04);">P02-CH03에서 만든 /run-task와 같은 구조예요. 여기선 7단계 데이터 분석 전용 버전이에요.</div>
+      </div>
+    </div>
+    <!-- SKILL 02 + 03 -->
+    <div style="flex:1;display:flex;flex-direction:column;">
+      <!-- dashboard-design -->
+      <div style="flex:1;border-bottom:1px solid var(--border);display:flex;flex-direction:column;">
+        <div style="padding:20px 36px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:14px;">
+          <div style="font-size:13px;font-weight:700;color:#e8a86a;letter-spacing:0.1em;font-family:monospace;">SKILL 02</div>
+          <div style="font-size:21px;font-weight:600;color:#1C1A18;font-family:monospace;">dashboard-design</div>
+        </div>
+        <div style="padding:20px 36px;flex:1;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:17px;color:#333;line-height:1.7;"><strong>@dashboard 전용</strong> 디자인 시스템 규칙집이에요. 에이전트 파일에 한 줄 선언하면 색상·레이아웃·타이포 규칙이 자동 주입돼요.</div>
+          <div class="code-wrap" style="font-size:14px;line-height:1.8;border-radius:4px;">
+            <div style="color:#555;"># dashboard.md 안에</div>
+            <div><span class="code-accent">skills</span>:</div>
+            <div>&nbsp;&nbsp;- <span class="code-green">dashboard-design</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- visualize -->
+      <div style="flex:1;display:flex;flex-direction:column;">
+        <div style="padding:20px 36px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:14px;">
+          <div style="font-size:13px;font-weight:700;color:#e8a86a;letter-spacing:0.1em;font-family:monospace;">SKILL 03</div>
+          <div style="font-size:21px;font-weight:600;color:#1C1A18;font-family:monospace;">visualize</div>
+        </div>
+        <div style="padding:20px 36px;flex:1;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:17px;color:#333;line-height:1.7;"><strong>@dashboard 전용</strong> 차트 제작 가이드예요. SVG/Canvas 기반 인터랙티브 차트 패턴을 @dashboard에 제공해요.</div>
+          <div style="font-size:15px;color:#888;padding:10px 14px;border:1px solid var(--border);border-radius:4px;font-family:monospace;">CDN 라이브러리(Chart.js, D3) 금지 → 순수 SVG만 사용</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- ════ s21 | 치트시트 ════ -->
 <div class="slide" id="s21">
   <div class="tb"><span class="tb-cap">치트시트</span><span class="tb-num">21</span></div>
@@ -1007,7 +1066,7 @@
 
 <!-- Navigation -->
 <div class="nav">
-  <span class="nav-ctr" id="ctr">1 / 21</span>
+  <span class="nav-ctr" id="ctr">1 / 22</span>
   <button class="nav-btn" id="prev">←</button>
   <button class="nav-btn" id="next">→</button>
 </div>
@@ -1015,13 +1074,13 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const TOTAL = 21;
-  const ORDER = [1,2,3,4,5,6,7, 8,9,10,11,12, 13,14,15,16, 17,18,19,20,21];
+  const TOTAL = 22;
+  const ORDER = [1,2,3,4,5,6,7, 8,9,10,11,12, 13,14,15,16, 17,18,19,20,22,21];
   const CLIP_MAP = {
     1:0,2:0,3:0,4:0,5:0,6:0,7:0,
     8:1,9:1,10:1,11:1,12:1,
     13:2,14:2,15:2,16:2,
-    17:3,18:3,19:3,20:3,21:3
+    17:3,18:3,19:3,20:3,22:3,21:3
   };
   const CLIP_LABELS = ['파이프라인 구조 & 세팅','데이터 수집·탐색 에이전트','분석 방향 설계 에이전트','대시보드·보고서 완성'];
   const CLIPS = 4;
