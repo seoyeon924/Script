@@ -189,7 +189,10 @@
   <div class="body">
     <div style="width:42%;border-right:1px solid var(--border);padding:52px 52px;display:flex;flex-direction:column;justify-content:center;gap:28px;">
       <div>
-        <div class="eyebrow">AI 에이전트 플랫폼</div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
+          <img src="../../fastcampus-assets/images/openclaw-logo.jpg" style="width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;">
+          <div class="eyebrow" style="margin-bottom:0;">AI 에이전트 플랫폼</div>
+        </div>
         <div style="font-size:52px;font-weight:600;line-height:1.2;letter-spacing:-0.025em;color:var(--text);">OpenClaw</div>
         <div style="font-size:22px;color:#555;margin-top:16px;line-height:1.7;">Claude Code 에이전트를 관리·스케줄링·모니터링하는 플랫폼이에요</div>
       </div>
@@ -208,24 +211,10 @@
         </div>
       </div>
     </div>
-    <div style="flex:1;padding:44px 52px;display:flex;flex-direction:column;gap:20px;justify-content:center;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">실제 이 컴퓨터 구성</div>
-      <div class="code-wrap" style="font-size:14px;line-height:2;border-radius:6px;">
-        <div style="color:#555;"># ~/.openclaw/openclaw.json</div>
-        <br>
-        <div><span class="code-accent">agents</span>: {</div>
-        <div>&nbsp;&nbsp;<span class="code-accent">defaults</span>: {</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-hi">model</span>: <span class="code-yellow">"claude-sonnet-4-6"</span></div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-hi">maxConcurrent</span>: 4</div>
-        <div>&nbsp;&nbsp;},</div>
-        <div>&nbsp;&nbsp;<span class="code-accent">list</span>: [</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;{ id: <span class="code-yellow">"main"</span>, identity: { name: <span class="code-green">"Echo"</span> } },</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;{ id: <span class="code-yellow">"evan"</span>, agentDir: <span class="code-hi">"…/agents/evan/agent"</span> },</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;{ id: <span class="code-yellow">"min"</span>,  agentDir: <span class="code-hi">"…/agents/min/agent"</span>  }</div>
-        <div>&nbsp;&nbsp;]</div>
-        <div>}</div>
-      </div>
-      <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;font-size:17px;color:#444;line-height:1.7;">에이전트 3개가 각자 독립된 workspace와<br>메모리(sqlite)로 동작해요</div>
+    <div style="flex:1;background:#0a0c10;overflow:hidden;">
+      <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
+        <source src="../../fastcampus-assets/videos/21_5-1_.MOV" type="video/mp4">
+      </video>
     </div>
   </div>
 </div>
@@ -236,26 +225,24 @@
   <div class="tb"><span class="tb-cap">Claude API 키 연결</span><span class="tb-num">5</span></div>
   <div class="body">
     <div style="width:52%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
-      <div style="padding:28px 40px 20px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">연결 방법 — openclaw wizard</div>
+      <div style="padding:28px 40px 20px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">연결 방법 — openclaw onboard</div>
       <div class="code-wrap" style="flex:1;font-size:14.5px;line-height:2;">
-        <div style="color:#555;"># 1. 설치 후 초기 설정</div>
-        <div><span class="code-green">openclaw wizard</span></div>
+        <div style="color:#555;"># 1. 초기 온보딩 마법사 (채널·모델·워크스페이스)</div>
+        <div><span class="code-green">openclaw onboard</span></div>
         <br>
-        <div style="color:#555;"># 2. API 키 등록 (Anthropic 콘솔에서 발급)</div>
-        <div><span class="code-green">openclaw auth add</span> <span class="code-yellow">--provider anthropic</span></div>
+        <div style="color:#555;"># 2. 채널·API 키 설정 변경</div>
+        <div><span class="code-green">openclaw configure</span></div>
         <br>
-        <div style="color:#555;"># 3. 에이전트 시작</div>
-        <div><span class="code-green">openclaw start</span></div>
+        <div style="color:#555;"># 3. 게이트웨이 실행 (백그라운드 서비스)</div>
+        <div><span class="code-green">openclaw gateway</span></div>
         <br>
-        <div style="color:#555;"># 4. 상태 확인</div>
+        <div style="color:#555;"># 4. 웹 대시보드 열기</div>
+        <div><span class="code-green">openclaw dashboard</span></div>
+        <br>
+        <div style="color:#555;"># 5. 상태 확인</div>
         <div><span class="code-green">openclaw status</span></div>
         <br>
-        <div style="color:#555;"># ~/.openclaw/auth-profiles.json 에 저장됨</div>
-        <div style="color:#555;">{</div>
-        <div style="color:#555;">&nbsp;&nbsp;"anthropic:default": {</div>
-        <div style="color:#555;">&nbsp;&nbsp;&nbsp;&nbsp;"provider": "anthropic", "mode": "token"</div>
-        <div style="color:#555;">&nbsp;&nbsp;}</div>
-        <div style="color:#555;">}</div>
+        <div style="color:#555;"># 설정 파일: ~/.openclaw/auth-profiles.json</div>
       </div>
     </div>
     <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:20px;">
@@ -400,40 +387,43 @@
   <div class="tb"><span class="tb-cap">agentDir — 에이전트별 컨텍스트 분리</span><span class="tb-num">9</span></div>
   <div class="body">
     <div style="width:54%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
-      <div style="padding:28px 40px 20px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">openclaw.json — agentDir 설정</div>
+      <div style="padding:28px 40px 20px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">openclaw.json — workspace & agentDir 설정</div>
       <div class="code-wrap" style="flex:1;font-size:14.5px;line-height:1.9;">
         <div>{</div>
         <div>&nbsp;&nbsp;<span class="code-accent">"agents"</span>: {</div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-accent">"list"</span>: [</div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-hi">"id"</span>: <span class="code-yellow">"evan"</span>,</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-hi">"workspace"</span>: <span class="code-yellow">"~/.openclaw/workspace-evan"</span>,</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-green">"agentDir"</span>: <span class="code-yellow">"~/.openclaw/agents/evan/agent"</span>,</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-green">"workspace"</span>: <span class="code-yellow">"~/.openclaw/workspace"</span>,&nbsp;&nbsp;<span style="color:#555;">← 역할 정의 파일 위치</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-hi">"agentDir"</span>: <span class="code-yellow">"~/.openclaw/agents/evan/agent"</span>,&nbsp;<span style="color:#555;">← 내부 데이터</span></div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-hi">"identity"</span>: { <span class="code-accent">"name"</span>: <span class="code-yellow">"Evan"</span> }</div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;]</div>
         <div>&nbsp;&nbsp;}</div>
         <div>}</div>
         <br>
-        <div style="color:#555;"># agentDir 폴더 구조</div>
-        <div>agents/evan/agent/</div>
-        <div>&nbsp;&nbsp;<span class="code-green">CLAUDE.md</span>&nbsp;&nbsp;<span style="color:#555;">← 이 에이전트의 역할 정의</span></div>
-        <div>&nbsp;&nbsp;<span style="color:#888;">auth-profiles.json</span></div>
+        <div style="color:#555;"># workspace — 에이전트 정체성 파일들</div>
+        <div>~/.openclaw/workspace/</div>
+        <div>&nbsp;&nbsp;<span class="code-green">SOUL.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;">← 성격·역할·원칙 정의</span></div>
+        <div>&nbsp;&nbsp;<span class="code-green">IDENTITY.md</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;">← 이름·이모지·아바타</span></div>
+        <div>&nbsp;&nbsp;<span class="code-green">AGENTS.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;">← 행동 규칙·메모리 체계</span></div>
+        <div>&nbsp;&nbsp;<span class="code-accent">MEMORY.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;">← 장기 기억</span></div>
+        <div>&nbsp;&nbsp;<span style="color:#888;">agentDir/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← 내부 세션 데이터만</span></div>
       </div>
     </div>
     <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:20px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">agentDir의 역할</div>
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">두 경로의 차이</div>
       <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
-        <div style="font-size:14px;color:#6aac98;font-weight:600;">CLAUDE.md = 에이전트의 장기 기억</div>
-        <div style="font-size:17px;color:#333;line-height:1.65;">일반 Claude Code의 CLAUDE.md와 동일한 구조예요. 이 에이전트가 무엇을, 어떻게, 어디서 작업하는지 정의해요</div>
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">workspace = 에이전트의 정체성</div>
+        <div style="font-size:17px;color:#333;line-height:1.65;">SOUL.md · IDENTITY.md · USER.md · MEMORY.md — 에이전트가 누구인지, 어떻게 행동하는지 정의해요</div>
       </div>
       <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
-        <div style="font-size:14px;color:#6aac98;font-weight:600;">독립 workspace = 독립된 작업 공간</div>
-        <div style="font-size:17px;color:#333;line-height:1.65;">에이전트마다 다른 workspace 폴더에서 동작해요. 서로 다른 프로젝트 파일을 건드리지 않아요</div>
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">agentDir = 내부 세션 데이터</div>
+        <div style="font-size:17px;color:#333;line-height:1.65;">auth-profiles.json, 세션 상태 저장용 내부 폴더예요. 역할 정의 파일이 아니에요</div>
       </div>
       <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
-        <div style="font-size:14px;color:#6aac98;font-weight:600;">에이전트별 메모리 분리</div>
-        <div style="font-size:17px;color:#333;line-height:1.65;">각 에이전트는 자신만의 SQLite 메모리를 가져요. main.sqlite / evan.sqlite / min.sqlite</div>
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">역할을 바꾸려면 → workspace 파일 수정</div>
+        <div style="font-size:17px;color:#333;line-height:1.65;">에이전트 행동을 바꾸고 싶으면 workspace의 SOUL.md를 수정해요. agentDir은 건드릴 필요 없어요</div>
       </div>
     </div>
   </div>
@@ -454,8 +444,8 @@
       <div style="display:flex;align-items:center;padding:0 16px;color:#CCC;font-size:22px;">→</div>
       <div style="flex:1;padding:28px 32px;border:1px solid var(--border);display:flex;flex-direction:column;gap:12px;">
         <div style="font-size:13px;font-weight:700;color:#6aac98;letter-spacing:0.1em;">STEP 02</div>
-        <div style="font-size:20px;font-weight:600;color:#1C1A18;">agentDir 폴더 생성</div>
-        <div style="font-family:monospace;font-size:14px;color:#555;line-height:1.8;">~/.openclaw/agents/[id]/agent/<br>CLAUDE.md 작성<br>이 에이전트의 역할 정의</div>
+        <div style="font-size:20px;font-weight:600;color:#1C1A18;">workspace 파일 작성</div>
+        <div style="font-family:monospace;font-size:14px;color:#555;line-height:1.8;">workspace/SOUL.md<br>→ 성격·역할·원칙 정의<br>IDENTITY.md · USER.md</div>
       </div>
       <div style="display:flex;align-items:center;padding:0 16px;color:#CCC;font-size:22px;">→</div>
       <div style="flex:1;padding:28px 32px;border:1px solid var(--border);border-radius:0 6px 6px 0;display:flex;flex-direction:column;gap:12px;">
@@ -465,7 +455,7 @@
       </div>
     </div>
     <div style="padding:18px 28px;background:rgba(106,172,152,0.06);border-radius:6px;font-size:17px;color:#333;text-align:center;line-height:1.8;">
-      에이전트가 많을수록 역할이 명확해야 해요 &nbsp;·&nbsp; CLAUDE.md 한 파일이 에이전트의 정체성을 결정해요
+      에이전트가 많을수록 역할이 명확해야 해요 &nbsp;·&nbsp; workspace/SOUL.md 한 파일이 에이전트의 정체성을 결정해요
     </div>
   </div>
 </div>
@@ -787,25 +777,10 @@
         </div>
       </div>
     </div>
-    <div style="flex:1;padding:44px 48px;display:flex;flex-direction:column;gap:18px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">Dashboard에서 할 수 있는 것</div>
-      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:6px;">
-        <div style="font-size:14px;color:#6aac98;font-weight:600;">에이전트 카드 클릭</div>
-        <div style="font-size:17px;color:#333;line-height:1.65;">해당 에이전트의 세션 목록 · 히스토리 · 파일 탭으로 이동해요</div>
-      </div>
-      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:6px;">
-        <div style="font-size:14px;color:#6aac98;font-weight:600;">메시지 전송 탭</div>
-        <div style="font-size:17px;color:#333;line-height:1.65;">에이전트에게 직접 메시지를 보내요. 크론과 별개로 즉시 실행시킬 수 있어요</div>
-      </div>
-      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:6px;">
-        <div style="font-size:14px;color:#6aac98;font-weight:600;">openclaw status — 실시간 조회</div>
-        <div style="font-size:17px;color:#333;line-height:1.65;">새로고침 버튼으로 현재 에이전트 상태를 CLI 출력 형태로 확인해요</div>
-      </div>
-      <div style="padding:14px 20px;border:1px solid var(--border);border-radius:6px;font-family:monospace;font-size:14px;color:#555;line-height:2;">
-        # Tauri 앱 실행 방법<br>
-        cd ~/Projects/openclaw-manager<br>
-        <span style="color:#6aac98;">bun run tauri dev</span>
-      </div>
+    <div style="flex:1;background:#0a0c10;overflow:hidden;">
+      <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
+        <source src="../../fastcampus-assets/videos/23_5-3_.mov" type="video/mp4">
+      </video>
     </div>
   </div>
 </div>
@@ -965,81 +940,66 @@
       </div>
       <div style="font-size:15px;color:#777;line-height:1.7;">사람이 직접 채팅하는 것과 완전히 동일해요.<br>이 문장이 크론 시간마다 에이전트에게 자동 전달돼요.</div>
     </div>
-    <div style="flex:1;padding:44px 48px;display:flex;flex-direction:column;gap:20px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">이게 자동으로 만들어져요</div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="padding:14px 20px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:14px;">
-          <div style="font-size:20px;">📊</div>
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#1C1A18;font-family:monospace;">06_dashboard.html</div>
-            <div style="font-size:13px;color:#888;">인터랙티브 SVG 대시보드</div>
-          </div>
-        </div>
-        <div style="padding:14px 20px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:14px;">
-          <div style="font-size:20px;">📄</div>
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#1C1A18;font-family:monospace;">07_executive_report.md</div>
-            <div style="font-size:13px;color:#888;">임원 보고서 마크다운</div>
-          </div>
-        </div>
-        <div style="padding:14px 20px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:14px;">
-          <div style="font-size:20px;">🔍</div>
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#1C1A18;font-family:monospace;">02_problem.md · 04_insight.md</div>
-            <div style="font-size:13px;color:#888;">문제 정의 · 인사이트 분석</div>
-          </div>
-        </div>
+    <div style="flex:1;display:flex;flex-direction:column;border-left:1px solid var(--border);">
+      <div style="padding:12px 20px;border-bottom:1px solid var(--border);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#999;display:flex;align-items:center;justify-content:space-between;">
+        <span>06_dashboard.html — 자동 생성 결과물</span>
+        <span style="font-size:11px;color:#6aac98;">📅 매주 월요일 오전 9시 자동 실행</span>
       </div>
-      <div style="padding:18px 20px;background:rgba(106,172,152,0.07);border-radius:6px;font-size:17px;color:#444;line-height:1.85;text-align:center;">
-        📅 매주 월요일 오전 9시<br>
-        <span style="color:#6aac98;font-weight:600;">자는 동안 자동으로 완성돼요</span>
-      </div>
+      <iframe src="../../fastcampus-webinar/runs/latest/outputs/06_dashboard.html"
+        style="flex:1;border:none;width:100%;background:#f5f5f5;"
+        sandbox="allow-scripts allow-same-origin">
+      </iframe>
     </div>
   </div>
 </div>
 
 
-<!-- ════ s22 | agentDir CLAUDE.md — 실제로 이렇게 써요 ════ -->
+<!-- ════ s22 | workspace SOUL.md — 에이전트 정체성 정의 ════ -->
 <div class="slide" id="s22">
-  <div class="tb"><span class="tb-cap">agentDir CLAUDE.md — 실제로 이렇게 써요</span><span class="tb-num">22</span></div>
+  <div class="tb"><span class="tb-cap">workspace — SOUL.md로 에이전트 정체성 정의</span><span class="tb-num">22</span></div>
   <div class="body">
     <div style="width:57%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
-      <div style="padding:22px 40px 18px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">~/.openclaw/agents/evan/agent/CLAUDE.md</div>
-      <div class="code-wrap" style="flex:1;font-size:14.5px;line-height:2.0;">
-        <div style="color:#818cf8;font-weight:700;"># Evan — 데이터 분석 전담 에이전트</div>
+      <div style="padding:22px 40px 18px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">~/.openclaw/workspace/SOUL.md (Echo 실제 예시)</div>
+      <div class="code-wrap" style="flex:1;font-size:14px;line-height:1.85;">
+        <div style="color:#818cf8;font-weight:700;"># SOUL.md - Echo</div>
+        <br>
+        <div>나는 <span class="code-green">Echo</span>. 메인 에이전트.</div>
+        <br>
+        <div style="color:#e8c87a;">## 성격</div>
+        <div>분석가. 데이터 보면 바로 패턴 보임.</div>
+        <div>감성보단 팩트, 추측보단 근거.</div>
         <br>
         <div style="color:#e8c87a;">## 역할</div>
-        <div>판매·마케팅 데이터를 받아</div>
-        <div>ai-pipeline-kit으로 분석하고</div>
-        <div>대시보드를 자동 생성하는 전담 에이전트예요.</div>
+        <div>- 메인 에이전트 — 주요 프로젝트 총괄</div>
+        <div>- 개발, 배포, 코딩 작업 담당</div>
+        <div>- <span class="code-green">/run-pipeline</span> 으로 분석 파이프라인 실행</div>
         <br>
-        <div style="color:#e8c87a;">## 항상 사용하는 명령</div>
-        <div><span class="code-green">/run-pipeline</span> — 7단계 파이프라인 자동 실행</div>
-        <br>
-        <div style="color:#e8c87a;">## 작업 경로</div>
-        <div>- 입력 데이터: <span class="code-accent">~/Projects/ai-pipeline-kit/</span></div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-accent">runs/latest/input/</span></div>
-        <div>- 결과물: <span class="code-accent">runs/latest/output/</span></div>
-        <br>
-        <div style="color:#e8c87a;">## 출력 원칙</div>
-        <div>- 완료 시 생성된 파일 목록 반드시 출력</div>
-        <div>- 오류 시 에러 메시지와 파일 경로 함께 출력</div>
+        <div style="color:#e8c87a;">## 핵심 원칙</div>
+        <div>- 칭찬보다 팩트 먼저</div>
+        <div>- "가능해요!" 보다 "이 조건이면 가능해요"</div>
       </div>
     </div>
-    <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:20px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">이걸 쓰는 이유</div>
-      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
-        <div style="font-size:14px;color:#6aac98;font-weight:600;">크론으로 깨어났을 때 역할을 기억해요</div>
-        <div style="font-size:16px;color:#333;line-height:1.65;">매번 설명 없이도 이 파일이 있으면 Evan은 자기가 뭘 해야 하는지 알아요</div>
+    <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:18px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">workspace의 핵심 파일들</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-family:monospace;font-size:13px;color:#35c995;font-weight:700;width:110px;flex-shrink:0;">SOUL.md</div>
+          <div style="font-size:15px;color:#333;line-height:1.6;">성격·역할·원칙 정의. 크론으로 깨어날 때마다 이 파일을 읽고 역할을 기억해요</div>
+        </div>
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-family:monospace;font-size:13px;color:#35c995;font-weight:700;width:110px;flex-shrink:0;">IDENTITY.md</div>
+          <div style="font-size:15px;color:#333;line-height:1.6;">이름, 이모지, 아바타 이미지. 매니저 대시보드에 표시돼요</div>
+        </div>
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-family:monospace;font-size:13px;color:#35c995;font-weight:700;width:110px;flex-shrink:0;">AGENTS.md</div>
+          <div style="font-size:15px;color:#333;line-height:1.6;">행동 규칙 · 메모리 체계 · 워크스페이스 안내. 매 세션 시작 시 자동 로드</div>
+        </div>
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-family:monospace;font-size:13px;color:#8dc8b4;font-weight:700;width:110px;flex-shrink:0;">MEMORY.md</div>
+          <div style="font-size:15px;color:#333;line-height:1.6;">장기 기억 — 프로젝트·결정·인사이트 누적</div>
+        </div>
       </div>
-      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
-        <div style="font-size:14px;color:#6aac98;font-weight:600;">에이전트마다 전문성이 생겨요</div>
-        <div style="font-size:16px;color:#333;line-height:1.65;">Echo는 보고서, Evan은 분석, Min은 수집 — CLAUDE.md 하나가 전문화된 에이전트를 만들어요</div>
-      </div>
-      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
-        <div style="font-size:14px;color:#6aac98;font-weight:600;">이미 아는 CLAUDE.md 구조 그대로예요</div>
-        <div style="font-size:16px;color:#333;line-height:1.65;">Claude Code에서 쓰던 CLAUDE.md 작성법 그대로예요. 새로 배울 것이 없어요</div>
-      </div>
+      <div style="padding:14px 20px;background:rgba(106,172,152,0.06);border-radius:6px;font-size:15px;color:#555;line-height:1.7;text-align:center;">에이전트 역할을 바꾸려면 → <span style="font-family:monospace;color:#6aac98;">workspace/SOUL.md</span> 수정<br>agentDir은 내부 데이터 — 건드릴 필요 없어요</div>
     </div>
   </div>
 </div>
