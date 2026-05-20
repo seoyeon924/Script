@@ -945,6 +945,168 @@
 </div>
 
 
+<!-- ════ s21 | 이 프롬프트 한 줄이 대시보드를 만들어요 ════ -->
+<div class="slide" id="s21">
+  <div class="tb"><span class="tb-cap">실제 프롬프트 — Echo에게 이렇게 보내요</span><span class="tb-num">21</span></div>
+  <div class="body">
+    <div style="width:55%;border-right:1px solid var(--border);padding:44px 52px;display:flex;flex-direction:column;gap:24px;">
+      <div>
+        <div class="eyebrow">크론이 Echo에게 보내는 메시지</div>
+        <div style="font-size:36px;font-weight:600;line-height:1.25;letter-spacing:-0.02em;color:var(--text);">이 프롬프트 한 줄이<br>대시보드를 만들어요</div>
+      </div>
+      <div style="background:#0A0C10;border-radius:8px;padding:28px 32px;display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:11px;letter-spacing:0.1em;color:#555;text-transform:uppercase;">payload.message (크론이 에이전트에게 보내는 것)</div>
+        <div style="font-size:17px;color:rgba(255,255,255,0.88);line-height:2.1;font-family:'Menlo','Monaco',monospace;">
+          파일 경로:<br>
+          <span style="color:#8dc8b4;">~/Projects/ai-pipeline-kit/runs/<br>latest/input/weekly_sales.csv</span><br><br>
+          <span style="color:#35c995;">/run-pipeline</span> 을 실행하세요.<br>
+          완료 후 생성된 파일 목록을<br>알려주세요.
+        </div>
+      </div>
+      <div style="font-size:15px;color:#777;line-height:1.7;">사람이 직접 채팅하는 것과 완전히 동일해요.<br>이 문장이 크론 시간마다 에이전트에게 자동 전달돼요.</div>
+    </div>
+    <div style="flex:1;padding:44px 48px;display:flex;flex-direction:column;gap:20px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">이게 자동으로 만들어져요</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="padding:14px 20px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:14px;">
+          <div style="font-size:20px;">📊</div>
+          <div>
+            <div style="font-size:15px;font-weight:600;color:#1C1A18;font-family:monospace;">06_dashboard.html</div>
+            <div style="font-size:13px;color:#888;">인터랙티브 SVG 대시보드</div>
+          </div>
+        </div>
+        <div style="padding:14px 20px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:14px;">
+          <div style="font-size:20px;">📄</div>
+          <div>
+            <div style="font-size:15px;font-weight:600;color:#1C1A18;font-family:monospace;">07_executive_report.md</div>
+            <div style="font-size:13px;color:#888;">임원 보고서 마크다운</div>
+          </div>
+        </div>
+        <div style="padding:14px 20px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:14px;">
+          <div style="font-size:20px;">🔍</div>
+          <div>
+            <div style="font-size:15px;font-weight:600;color:#1C1A18;font-family:monospace;">02_problem.md · 04_insight.md</div>
+            <div style="font-size:13px;color:#888;">문제 정의 · 인사이트 분석</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:18px 20px;background:rgba(106,172,152,0.07);border-radius:6px;font-size:17px;color:#444;line-height:1.85;text-align:center;">
+        📅 매주 월요일 오전 9시<br>
+        <span style="color:#6aac98;font-weight:600;">자는 동안 자동으로 완성돼요</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s22 | agentDir CLAUDE.md — 실제로 이렇게 써요 ════ -->
+<div class="slide" id="s22">
+  <div class="tb"><span class="tb-cap">agentDir CLAUDE.md — 실제로 이렇게 써요</span><span class="tb-num">22</span></div>
+  <div class="body">
+    <div style="width:57%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+      <div style="padding:22px 40px 18px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">~/.openclaw/agents/evan/agent/CLAUDE.md</div>
+      <div class="code-wrap" style="flex:1;font-size:14.5px;line-height:2.0;">
+        <div style="color:#818cf8;font-weight:700;"># Evan — 데이터 분석 전담 에이전트</div>
+        <br>
+        <div style="color:#e8c87a;">## 역할</div>
+        <div>판매·마케팅 데이터를 받아</div>
+        <div>ai-pipeline-kit으로 분석하고</div>
+        <div>대시보드를 자동 생성하는 전담 에이전트예요.</div>
+        <br>
+        <div style="color:#e8c87a;">## 항상 사용하는 명령</div>
+        <div><span class="code-green">/run-pipeline</span> — 7단계 파이프라인 자동 실행</div>
+        <br>
+        <div style="color:#e8c87a;">## 작업 경로</div>
+        <div>- 입력 데이터: <span class="code-accent">~/Projects/ai-pipeline-kit/</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-accent">runs/latest/input/</span></div>
+        <div>- 결과물: <span class="code-accent">runs/latest/output/</span></div>
+        <br>
+        <div style="color:#e8c87a;">## 출력 원칙</div>
+        <div>- 완료 시 생성된 파일 목록 반드시 출력</div>
+        <div>- 오류 시 에러 메시지와 파일 경로 함께 출력</div>
+      </div>
+    </div>
+    <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:20px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">이걸 쓰는 이유</div>
+      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">크론으로 깨어났을 때 역할을 기억해요</div>
+        <div style="font-size:16px;color:#333;line-height:1.65;">매번 설명 없이도 이 파일이 있으면 Evan은 자기가 뭘 해야 하는지 알아요</div>
+      </div>
+      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">에이전트마다 전문성이 생겨요</div>
+        <div style="font-size:16px;color:#333;line-height:1.65;">Echo는 보고서, Evan은 분석, Min은 수집 — CLAUDE.md 하나가 전문화된 에이전트를 만들어요</div>
+      </div>
+      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">이미 아는 CLAUDE.md 구조 그대로예요</div>
+        <div style="font-size:16px;color:#333;line-height:1.65;">Claude Code에서 쓰던 CLAUDE.md 작성법 그대로예요. 새로 배울 것이 없어요</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s23 | 크론 message — 바로 쓸 수 있는 프롬프트 ════ -->
+<div class="slide" id="s23">
+  <div class="tb"><span class="tb-cap">크론 message — 바로 쓸 수 있는 프롬프트</span><span class="tb-num">23</span></div>
+  <div class="body">
+    <div style="width:57%;border-right:1px solid var(--border);padding:36px 48px;display:flex;flex-direction:column;gap:18px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">이렇게 쓰면 돼요</div>
+      <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+        <div style="padding:10px 16px;background:rgba(129,140,248,0.08);font-size:12px;color:#818cf8;font-weight:600;letter-spacing:0.06em;">주간 대시보드 자동 생성</div>
+        <div style="background:#0A0C10;padding:18px 22px;font-family:monospace;font-size:14px;color:rgba(255,255,255,0.85);line-height:1.9;">
+          파일 경로:<br>
+          <span style="color:#8dc8b4;">~/Projects/ai-pipeline-kit/runs/<br>latest/input/weekly_sales.csv</span><br>
+          <span style="color:#35c995;">/run-pipeline</span> 을 실행하세요.<br>
+          완료 후 생성된 파일 목록을 알려주세요.
+        </div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+        <div style="padding:10px 16px;background:rgba(52,211,153,0.08);font-size:12px;color:#34d399;font-weight:600;letter-spacing:0.06em;">매일 데이터 요약</div>
+        <div style="background:#0A0C10;padding:18px 22px;font-family:monospace;font-size:14px;color:rgba(255,255,255,0.85);line-height:1.9;">
+          <span style="color:#8dc8b4;">~/Projects/data/daily_metrics.csv</span> 를<br>
+          분석해서 핵심 지표 3개와<br>
+          전일 대비 변화를 요약해 주세요.
+        </div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+        <div style="padding:10px 16px;background:rgba(251,146,60,0.08);font-size:12px;color:#fb923c;font-weight:600;letter-spacing:0.06em;">데이터 수집 & 저장</div>
+        <div style="background:#0A0C10;padding:18px 22px;font-family:monospace;font-size:14px;color:rgba(255,255,255,0.85);line-height:1.9;">
+          외부 데이터를 수집해서<br>
+          <span style="color:#8dc8b4;">runs/latest/input/</span> 에 저장하고<br>
+          git commit &amp; push 하세요.
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;padding:36px 44px;display:flex;flex-direction:column;gap:18px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">프롬프트 작성 팁</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:24px;flex-shrink:0;line-height:1.1;color:var(--p01);font-weight:700;">①</div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#1C1A18;margin-bottom:4px;">파일 경로를 절대경로로</div>
+            <div style="font-size:15px;color:#555;line-height:1.6;">에이전트가 어디를 봐야 할지 명확하게. 상대경로는 실패 가능성이 있어요</div>
+          </div>
+        </div>
+        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:24px;flex-shrink:0;line-height:1.1;color:var(--p01);font-weight:700;">②</div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#1C1A18;margin-bottom:4px;">완료 조건을 명시</div>
+            <div style="font-size:15px;color:#555;line-height:1.6;">"완료 후 파일 목록을 알려주세요"처럼 끝내는 조건을 써야 에이전트가 멈춰요</div>
+          </div>
+        </div>
+        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:24px;flex-shrink:0;line-height:1.1;color:var(--p01);font-weight:700;">③</div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#1C1A18;margin-bottom:4px;">슬래시 명령어 직접 사용</div>
+            <div style="font-size:15px;color:#555;line-height:1.6;"><span style="font-family:monospace;color:#6aac98;">/run-pipeline</span> 같은 skill 명령어를 프롬프트 안에 직접 넣으면 돼요</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </div><!-- /deck -->
 
 <!-- Navigation -->
@@ -957,12 +1119,12 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const TOTAL = 20;
-  const ORDER = [1,2,3,4,5, 6,7,8,9,10, 11,12,13,14,15, 16,17,18,19,20];
+  const TOTAL = 23;
+  const ORDER = [1,2,3,4,21,5, 6,7,8,9,22,10, 11,12,13,23,14,15, 16,17,18,19,20];
   const CLIP_MAP = {
-    1:0,2:0,3:0,4:0,5:0,
-    6:1,7:1,8:1,9:1,10:1,
-    11:2,12:2,13:2,14:2,15:2,
+    1:0,2:0,3:0,4:0,21:0,5:0,
+    6:1,7:1,8:1,9:1,22:1,10:1,
+    11:2,12:2,13:2,23:2,14:2,15:2,
     16:3,17:3,18:3,19:3,20:3
   };
   const CLIP_LABELS = ['OpenClaw 소개 & 연결','에이전트 설정 & agentDir','크론 자동화 파이프라인 연동','Manager Dashboard'];
