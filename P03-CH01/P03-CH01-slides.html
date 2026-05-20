@@ -1062,6 +1062,248 @@
 </div>
 
 
+
+<!-- ════ s23 | 에이전트 설계 철학 — 역할 단일화 ════ -->
+<div class="slide" id="s23">
+  <div class="tb"><span class="tb-cap">에이전트 설계 철학</span><span class="tb-num">23</span></div>
+  <div class="body">
+    <div style="flex:1.2;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;padding:40px 48px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:20px;">각 에이전트가 하는 일 — 딱 하나만</div>
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);">
+          <div style="font-family:monospace;font-size:14.5px;font-weight:600;color:#1C1A18;width:175px;">@data-ingestion</div>
+          <div style="font-size:17px;color:#444;flex:1;">구조·품질 파악</div>
+          <div style="font-size:13.5px;color:#888;font-style:italic;">분석 안 한다</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);">
+          <div style="font-family:monospace;font-size:14.5px;font-weight:600;color:#1C1A18;width:175px;">@eda</div>
+          <div style="font-size:17px;color:#444;flex:1;">패턴 탐색</div>
+          <div style="font-size:13.5px;color:#888;font-style:italic;">결론 내리지 않는다</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);">
+          <div style="font-family:monospace;font-size:14.5px;font-weight:600;color:#1C1A18;width:175px;">@problem</div>
+          <div style="font-size:17px;color:#444;flex:1;">왜 일어났나 정의</div>
+          <div style="font-size:13.5px;color:#888;font-style:italic;">What 아닌 Why</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);">
+          <div style="font-family:monospace;font-size:14.5px;font-weight:600;color:#1C1A18;width:175px;">@metrics</div>
+          <div style="font-size:17px;color:#444;flex:1;">지표 정의</div>
+          <div style="font-size:13.5px;color:#888;font-style:italic;">모호함 없앤다</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);">
+          <div style="font-family:monospace;font-size:14.5px;font-weight:600;color:#1C1A18;width:175px;">@analysis</div>
+          <div style="font-size:17px;color:#444;flex:1;">데이터로 검증</div>
+          <div style="font-size:13.5px;color:#888;font-style:italic;">지표 재정의 안 한다</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);">
+          <div style="font-family:monospace;font-size:14.5px;font-weight:600;color:#E8603C;width:175px;">@dashboard</div>
+          <div style="font-size:17px;color:#444;flex:1;">인터랙티브 HTML 제작</div>
+          <div style="font-size:13.5px;color:#888;font-style:italic;">3초 안에 읽히게</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 0;">
+          <div style="font-family:monospace;font-size:14.5px;font-weight:600;color:#1C1A18;width:175px;">@report</div>
+          <div style="font-size:17px;color:#444;flex:1;">임원 보고서 압축</div>
+          <div style="font-size:13.5px;color:#888;font-style:italic;">새로운 발견 없음</div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;justify-content:center;gap:20px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">왜 이렇게 나눴나</div>
+      <div style="padding:20px 24px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">실패 시 그 단계만 재실행</div>
+        <div style="font-size:17px;color:#333;line-height:1.65;">EDA가 실패해도 data-ingestion을 다시 안 해도 돼요. 산출물 파일이 체크포인트 역할을 해요</div>
+      </div>
+      <div style="padding:20px 24px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">역할 명확 → 환각 감소</div>
+        <div style="font-size:17px;color:#333;line-height:1.65;">@eda에 "차트 만들어"라고 안 했어요. 역할이 좁을수록 Claude가 정확하게 작동해요</div>
+      </div>
+      <div style="padding:20px 24px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">파일로만 소통 → 컨텍스트 비대화 방지</div>
+        <div style="font-size:17px;color:#333;line-height:1.65;">에이전트 간 대화 없이 파일로만 소통해요. 컨텍스트 창이 중간 과정으로 꽉 차지 않아요</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s24 | @problem — MECE 원인 계층 구조 ════ -->
+<div class="slide" id="s24">
+  <div class="tb"><span class="tb-cap">@problem — MECE 원인 계층 구조</span><span class="tb-num">24</span></div>
+  <div class="body">
+    <div style="width:56%;border-right:1px solid var(--border);padding:36px 44px;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">@problem이 만드는 구조 (예시)</div>
+      <div class="code-wrap" style="flex:1;font-size:14px;line-height:2;border-radius:6px;">
+        <div style="color:#ef7d86;font-weight:600;">문제: Furniture 마진이 4배 낮다</div>
+        <div style="margin-top:4px;"></div>
+        <div><span style="color:#555;">├─ </span><span class="code-accent">원인 1:</span> <span class="code-hi">고할인 집중 (40%+ 상품이 72% 차지)</span></div>
+        <div><span style="color:#555;">│ &nbsp; ├─ </span><span style="color:#888;">원인의 원인: 시즌 프로모션 의존</span></div>
+        <div><span style="color:#555;">│ &nbsp; └─ </span><span class="code-yellow">해결: 카테고리별 할인 한도 설정</span></div>
+        <div><span style="color:#555;">│ &nbsp; &nbsp; &nbsp; → </span><span style="color:#666;">목표 지표: 카테고리 마진율</span></div>
+        <div></div>
+        <div><span style="color:#555;">├─ </span><span class="code-accent">원인 2:</span> <span class="code-hi">저마진 채널 비중 증가</span></div>
+        <div><span style="color:#555;">│ &nbsp; ├─ </span><span style="color:#888;">원인의 원인: 온라인 공격 출점</span></div>
+        <div><span style="color:#555;">│ &nbsp; └─ </span><span class="code-yellow">해결: 채널별 마진 기준 재설정</span></div>
+        <div></div>
+        <div><span style="color:#555;">└─ </span><span class="code-accent">원인 3:</span> <span class="code-hi">운송비·처리비용 상승</span></div>
+        <div><span style="color:#555;">&nbsp; &nbsp; └─ </span><span class="code-yellow">해결: 물류 파트너 재협상</span></div>
+        <div><span style="color:#555;">&nbsp; &nbsp; &nbsp; &nbsp; → </span><span style="color:#666;">목표 지표: 카테고리별 운송비율</span></div>
+      </div>
+    </div>
+    <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:18px;justify-content:center;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">왜 MECE 구조인가</div>
+      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">겹치지 않음 (Mutually Exclusive)</div>
+        <div style="font-size:17px;color:#333;line-height:1.65;">같은 원인을 두 군데서 분석하지 않아요. @analysis가 중복 검증 없이 정확하게 움직여요</div>
+      </div>
+      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">빠짐없음 (Collectively Exhaustive)</div>
+        <div style="font-size:17px;color:#333;line-height:1.65;">놓치는 원인이 없어요. 대시보드 액션 아이템이 원인 전체를 커버해요</div>
+      </div>
+      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">What → Why → How 3단 흐름</div>
+        <div style="font-size:17px;color:#333;line-height:1.65;">@eda(무엇) → @problem(왜) → @metrics/@analysis(얼마나) → @dashboard(보여주기)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s25 | @dashboard 설계 원칙 — 3초 룰 ════ -->
+<div class="slide" id="s25">
+  <div class="tb"><span class="tb-cap">@dashboard 설계 원칙 — 3초 룰</span><span class="tb-num">25</span></div>
+  <div class="body">
+    <div style="width:50%;border-right:1px solid var(--border);padding:40px 44px;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">General → Specific 레이아웃 순서</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="padding:15px 20px;border-left:3px solid #35c995;background:rgba(53,201,149,0.04);display:flex;align-items:center;gap:16px;">
+          <div style="font-size:11px;color:#35c995;font-weight:700;font-family:monospace;white-space:nowrap;width:52px;">KPI 카드</div>
+          <div style="font-size:16px;color:#333;">핵심 지표 3~5개 전체 현황 — 최상단 고정</div>
+        </div>
+        <div style="padding:15px 20px;border-left:3px solid #6aac98;background:rgba(106,172,152,0.04);display:flex;align-items:center;gap:16px;">
+          <div style="font-size:11px;color:#6aac98;font-weight:700;font-family:monospace;white-space:nowrap;width:52px;">추세</div>
+          <div style="font-size:16px;color:#333;">시간 흐름 — 라인 차트, 변화점 표시</div>
+        </div>
+        <div style="padding:15px 20px;border-left:3px solid #6aac98;background:rgba(106,172,152,0.04);display:flex;align-items:center;gap:16px;">
+          <div style="font-size:11px;color:#6aac98;font-weight:700;font-family:monospace;white-space:nowrap;width:52px;">비교</div>
+          <div style="font-size:16px;color:#333;">그룹 간 차이 — 정렬된 바 차트</div>
+        </div>
+        <div style="padding:15px 20px;border-left:3px solid #e8c87a;background:rgba(232,200,122,0.04);display:flex;align-items:center;gap:16px;">
+          <div style="font-size:11px;color:#c8a048;font-weight:700;font-family:monospace;white-space:nowrap;width:52px;">스토리</div>
+          <div style="font-size:16px;color:#333;">현황 → 원인 → 결과 → 기회 4칸 블록</div>
+        </div>
+        <div style="padding:15px 20px;border-left:3px solid #E8603C;background:rgba(232,96,60,0.04);display:flex;align-items:center;gap:16px;">
+          <div style="font-size:11px;color:#E8603C;font-weight:700;font-family:monospace;white-space:nowrap;width:52px;">액션</div>
+          <div style="font-size:16px;color:#333;">즉각 실행 가능한 과제 3개 이상</div>
+        </div>
+        <div style="padding:15px 20px;border-left:3px solid #AAA;background:rgba(0,0,0,0.02);display:flex;align-items:center;gap:16px;">
+          <div style="font-size:11px;color:#999;font-weight:700;font-family:monospace;white-space:nowrap;width:52px;">테이블</div>
+          <div style="font-size:16px;color:#333;">마지막 탭 — 집계 원본 데이터 확인</div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:18px;">
+      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:14px;color:#6aac98;font-weight:600;">차트 제목 원칙 — 결론형으로</div>
+        <div style="font-size:15.5px;color:#888;padding:8px 12px;border-radius:4px;background:rgba(239,125,134,0.06);">❌ &nbsp;"매출 현황" &nbsp;·&nbsp; "카테고리 비교"</div>
+        <div style="font-size:15.5px;color:#333;padding:8px 12px;border-radius:4px;background:rgba(53,201,149,0.06);">✓ &nbsp;"왜 Furniture 마진이 4배 낮은가?"</div>
+        <div style="font-size:14px;color:#999;margin-top:4px;">의사결정자가 보자마자 판단할 수 있어야 해요</div>
+      </div>
+      <div style="padding:18px 22px;border:1px solid #ef7d86;border-radius:6px;background:rgba(239,125,134,0.03);">
+        <div style="font-size:14px;color:#c85060;font-weight:600;margin-bottom:12px;">설계 금지 목록</div>
+        <div style="display:flex;flex-direction:column;gap:7px;font-size:16px;color:#444;">
+          <div>KPI 수치에 빨강·초록 색상 — 수치는 검정 고정</div>
+          <div>CDN 라이브러리 (Chart.js · D3 · Plotly)</div>
+          <div>파이차트 / 3D 차트 / 이모지(📊) — SVG로 대체</div>
+          <div>한 탭에 차트 8개 이상 / 한쪽 변만 있는 border</div>
+        </div>
+      </div>
+      <div style="padding:14px 22px;background:rgba(232,96,60,0.05);border-radius:6px;font-size:18px;color:#555;line-height:1.7;text-align:center;">"예쁜 시각화"가 아니라<br>"3초 안에 핵심이 읽히는 대시보드"</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s26 | dashboard-design 스킬 — 색상·차트 시스템 ════ -->
+<div class="slide" id="s26">
+  <div class="tb"><span class="tb-cap">dashboard-design 스킬 — 색상·차트 시스템</span><span class="tb-num">26</span></div>
+  <div class="body">
+    <div style="width:38%;border-right:1px solid var(--border);padding:40px 44px;display:flex;flex-direction:column;gap:20px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">색상 원칙 — 의미가 있어야 쓴다</div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:center;gap:18px;">
+          <div style="width:48px;height:48px;border-radius:8px;background:#35c995;flex-shrink:0;"></div>
+          <div>
+            <div style="font-size:13.5px;font-family:monospace;color:#35c995;margin-bottom:3px;">#35c995</div>
+            <div style="font-size:18px;color:#1C1A18;font-weight:600;">좋음 · 긍정 · 안전</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:18px;">
+          <div style="width:48px;height:48px;border-radius:8px;background:#ef7d86;flex-shrink:0;"></div>
+          <div>
+            <div style="font-size:13.5px;font-family:monospace;color:#ef7d86;margin-bottom:3px;">#ef7d86</div>
+            <div style="font-size:18px;color:#1C1A18;font-weight:600;">나쁨 · 위험</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:18px;">
+          <div style="width:48px;height:48px;border-radius:8px;background:#efb05d;flex-shrink:0;"></div>
+          <div>
+            <div style="font-size:13.5px;font-family:monospace;color:#c88030;margin-bottom:3px;">#efb05d</div>
+            <div style="font-size:18px;color:#1C1A18;font-weight:600;">경고 · 보통</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:18px;padding:14px 16px;border:2px dashed #D8D5D0;border-radius:8px;">
+          <div style="width:48px;height:48px;border-radius:8px;background:#0a0a0a;flex-shrink:0;border:1px solid #CCC;"></div>
+          <div>
+            <div style="font-size:13.5px;font-family:monospace;color:#666;margin-bottom:3px;">#0a0a0a</div>
+            <div style="font-size:17px;color:#1C1A18;font-weight:600;">KPI 수치 — 색상 절대 금지</div>
+            <div style="font-size:13px;color:#999;margin-top:3px;">수치는 항상 검정 고정</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:20px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">차트 선택 원칙</div>
+      <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+        <div style="display:flex;padding:11px 18px;background:#F7F6F3;border-bottom:1px solid var(--border);">
+          <div style="font-size:12px;font-weight:600;color:#555;width:150px;">목적</div>
+          <div style="font-size:12px;font-weight:600;color:#555;flex:1;">차트 유형</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:13px 18px;border-bottom:1px solid var(--border);">
+          <div style="font-size:16px;color:#444;width:150px;">추세 · 시계열</div>
+          <div style="font-size:16px;color:#1C1A18;font-weight:600;">라인 차트</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:13px 18px;border-bottom:1px solid var(--border);">
+          <div style="font-size:16px;color:#444;width:150px;">범주 비교</div>
+          <div style="font-size:16px;color:#1C1A18;font-weight:600;">정렬된 바 차트</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:13px 18px;border-bottom:1px solid var(--border);">
+          <div style="font-size:16px;color:#444;width:150px;">비율 · 구성</div>
+          <div style="font-size:16px;color:#1C1A18;font-weight:600;">스택 바 &nbsp;<span style="font-size:14px;color:#ef7d86;font-weight:400;">(파이 차트 지양)</span></div>
+        </div>
+        <div style="display:flex;align-items:center;padding:13px 18px;border-bottom:1px solid var(--border);">
+          <div style="font-size:16px;color:#444;width:150px;">분포</div>
+          <div style="font-size:16px;color:#1C1A18;font-weight:600;">히스토그램</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:13px 18px;">
+          <div style="font-size:16px;color:#444;width:150px;">두 지표 동시</div>
+          <div style="font-size:16px;color:#1C1A18;font-weight:600;">듀얼 바 · 버블 &nbsp;<span style="font-size:14px;color:#e8a86a;font-weight:400;">(이유 있을 때만)</span></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <div style="flex:1;padding:16px 20px;border:1px solid var(--border);border-radius:6px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:6px;">SVG 전용 — CDN 금지</div>
+          <div style="font-size:15.5px;color:#444;line-height:1.7;">Chart.js · D3 · Plotly 금지<br>순수 SVG/Canvas로만 그려요</div>
+        </div>
+        <div style="flex:1;padding:16px 20px;border:1px solid var(--border);border-radius:6px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:6px;">SVG 바 차트 계산식</div>
+          <div style="font-family:monospace;font-size:14px;color:#444;line-height:1.9;">y = (1 - v/max) × h<br>height = (v/max) × h</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </div><!-- /deck -->
 
 <!-- Navigation -->
@@ -1074,13 +1316,13 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const TOTAL = 22;
-  const ORDER = [1,2,3,4,5,6,7, 8,9,10,11,12, 13,14,15,16, 17,18,19,20,22,21];
+  const TOTAL = 26;
+  const ORDER = [1,2,3,4,5,6,7, 8,9,10,11,23,12, 13,14,15,24,16, 17,18,19,25,26,20,22,21];
   const CLIP_MAP = {
     1:0,2:0,3:0,4:0,5:0,6:0,7:0,
-    8:1,9:1,10:1,11:1,12:1,
-    13:2,14:2,15:2,16:2,
-    17:3,18:3,19:3,20:3,22:3,21:3
+    8:1,9:1,10:1,11:1,23:1,12:1,
+    13:2,14:2,15:2,24:2,16:2,
+    17:3,18:3,19:3,25:3,26:3,20:3,22:3,21:3
   };
   const CLIP_LABELS = ['파이프라인 구조 & 세팅','데이터 수집·탐색 에이전트','분석 방향 설계 에이전트','대시보드·보고서 완성'];
   const CLIPS = 4;
