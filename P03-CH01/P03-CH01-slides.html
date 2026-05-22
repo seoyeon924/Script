@@ -174,8 +174,41 @@
     <div style="padding:0 52px;font-size:36px;color:#CCC;flex-shrink:0;">→</div>
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 44px;border:2px solid rgba(106,172,152,0.35);border-radius:12px;background:rgba(106,172,152,0.04);gap:16px;">
       <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#6aac98;">이번 챕터 — P03 CH01</div>
-      <div style="font-size:30px;font-weight:700;color:#1C1A18;line-height:1.3;">세 가지를 하나의<br>데이터 분석 운영체계로</div>
-      <div style="font-size:18px;color:#444;line-height:1.9;">CSV 입력부터 분석 보고서·대시보드 출력까지<br>단계별로 연결된 실행 흐름을 만든다</div>
+      <div style="font-size:30px;font-weight:700;color:#1C1A18;line-height:1.3;">세 가지를 하나의<br>실행 흐름 예시로</div>
+      <div style="font-size:18px;color:#444;line-height:1.9;">7단계로 분석 과정을 나눠<br>흐름을 확인하는 교육용 참조 구조입니다</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s35 | 이 구조를 사용하기 전에 ════ -->
+<div class="slide" id="s35">
+  <div class="tb"><span class="tb-cap">이 구조를 사용하기 전에</span><span class="tb-num">—</span></div>
+  <div class="body" style="flex-direction:column;align-items:center;justify-content:center;padding:48px 80px;gap:0;">
+    <div style="width:100%;max-width:1000px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:28px;text-align:center;">이 7단계 구조에 대해</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div style="padding:28px 30px;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;letter-spacing:0.06em;">교육용 참조 구조</div>
+          <div style="font-size:19px;font-weight:600;color:#1C1A18;line-height:1.35;">이 7단계는 분석 흐름을<br>끊어서 이해하기 위한 분해입니다</div>
+          <div style="font-size:16px;color:#555;line-height:1.75;">복잡한 분석 과정을 학습하기 좋게 역할별로 나눈 것입니다. 7이라는 숫자 자체가 중요한 것이 아닙니다.</div>
+        </div>
+        <div style="padding:28px 30px;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;letter-spacing:0.06em;">실무에서는 단순해질 수 있습니다</div>
+          <div style="font-size:19px;font-weight:600;color:#1C1A18;line-height:1.35;">단계를 합치거나 생략해도<br>됩니다</div>
+          <div style="font-size:16px;color:#555;line-height:1.75;">데이터 규모, 팀 구조, 프로젝트 성격에 따라 2~3단계로 압축하거나 특정 단계를 건너뛸 수 있습니다.</div>
+        </div>
+        <div style="padding:28px 30px;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;letter-spacing:0.06em;">흐름이 중요합니다</div>
+          <div style="font-size:19px;font-weight:600;color:#1C1A18;line-height:1.35;">단계 개수보다 분석 방향이<br>먼저 있어야 합니다</div>
+          <div style="font-size:16px;color:#555;line-height:1.75;">문제 정의 → 지표 설계 → 검증 → 전달. 이 흐름이 유지되는 한 구조는 조정할 수 있습니다.</div>
+        </div>
+        <div style="padding:28px 30px;border:1.5px solid rgba(232,96,60,0.25);border-radius:8px;background:rgba(232,96,60,0.02);display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:13px;color:#E8603C;font-weight:600;letter-spacing:0.06em;">이 챕터의 학습 목표</div>
+          <div style="font-size:19px;font-weight:600;color:#1C1A18;line-height:1.35;">에이전트로 분석 흐름을<br>단계별로 실행해보기</div>
+          <div style="font-size:16px;color:#555;line-height:1.75;">7개로 나눈 이유는 각 단계의 역할과 산출물을 명확히 보기 위해서입니다. 이 구조를 직접 써본 뒤 필요에 맞게 조정하면 됩니다.</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -219,8 +252,7 @@
         <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">06_.html · 07_.md</div>
       </div>
     </div>
-    <div style="margin-top:36px;font-size:16px;color:#555;text-align:center;">에이전트 7개 만들기 &nbsp;·&nbsp; 파이프라인 연결 &nbsp;·&nbsp; /run-pipeline 완성</div>
-    <div style="margin-top:10px;font-size:14px;color:#999;text-align:center;font-family:monospace;">/run-pipeline 한 줄 → 분석 자동 실행 + 대시보드 + 임원 보고서</div>
+    <div style="margin-top:36px;font-size:16px;color:#555;text-align:center;">7단계 흐름을 직접 만들며 각 에이전트의 역할과 산출물 연결 방식을 확인합니다</div>
   </div>
 </div>
 
@@ -288,7 +320,7 @@
           <div style="display:flex;flex-direction:column;gap:8px;padding:0 4px;">
             <div style="display:flex;gap:12px;align-items:flex-start;">
               <div style="font-size:17px;color:#6aac98;flex-shrink:0;margin-top:3px;">✓</div>
-              <div style="font-size:18px;color:#333;line-height:1.6;">전문 에이전트 7개가 역할 분담</div>
+              <div style="font-size:18px;color:#333;line-height:1.6;">7개로 역할을 나눠 각 단계를 분리</div>
             </div>
             <div style="display:flex;gap:12px;align-items:flex-start;">
               <div style="font-size:17px;color:#6aac98;flex-shrink:0;margin-top:3px;">✓</div>
@@ -359,7 +391,7 @@
   <div class="tb"><span class="tb-cap">7단계 파이프라인</span><span class="tb-num">5</span></div>
   <div class="body" style="flex-direction:column;align-items:center;justify-content:center;padding:20px 20px 24px;">
     <div style="width:100%;max-width:1240px;margin-bottom:14px;display:flex;align-items:baseline;justify-content:space-between;">
-      <div style="font-size:21px;font-weight:600;color:#1C1A18;">CSV 입력부터 대시보드·보고서 출력까지 — 7개 에이전트가 단계별로 처리</div>
+      <div style="font-size:21px;font-weight:600;color:#1C1A18;">이 강의에서 쓰는 참조 구조 — 7단계로 분석 흐름을 나눈 예시</div>
       <div style="font-size:14px;color:#999;white-space:nowrap;margin-left:32px;">각 단계 결과물이 다음 단계의 입력이 됨</div>
     </div>
     <div style="width:100%;max-width:1240px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;">
@@ -407,7 +439,8 @@
       </div>
     </div>
     <div style="width:100%;max-width:1240px;margin-top:12px;padding:12px 24px;background:rgba(106,172,152,0.06);border-radius:6px;font-size:15px;color:#333;line-height:1.7;">
-      이 구조의 목적은 예쁘게 나누는 게 아니라, <strong>중간 단계만 다시 실행하고 결과를 검증할 수 있게 만드는 것</strong>입니다. EDA가 실패해도 data-ingestion은 재실행 안 해도 됩니다.
+      이 구조의 목적은 예쁘게 나누는 게 아니라, <strong>중간 단계만 다시 실행하고 결과를 검증할 수 있게 만드는 것</strong>입니다. EDA가 실패해도 data-ingestion은 재실행 안 해도 됩니다.<br>
+      <span style="color:#888;font-size:14px;margin-top:4px;display:inline-block;">실무에서는 단계를 합치거나 생략할 수 있습니다. 이 구조는 분석 흐름을 끊어서 이해하기 위한 교육용 분해입니다.</span>
     </div>
   </div>
 </div>
@@ -485,7 +518,7 @@
   <div class="tb"><span class="tb-cap">CLAUDE.md — 실행 순서와 규칙</span><span class="tb-num">7</span></div>
   <div class="body">
     <div style="flex:1;padding:40px 48px;display:flex;flex-direction:column;gap:24px;">
-      <div style="font-size:19px;color:#444;line-height:1.7;">CLAUDE.md는 에이전트를 <strong>어떤 순서로, 어떤 규칙으로</strong> 실행할지 선언하는 파일이에요.</div>
+      <div style="font-size:19px;color:#444;line-height:1.7;">CLAUDE.md는 에이전트를 <strong>어떤 순서로, 어떤 규칙으로</strong> 실행할지 선언하는 파일입니다.</div>
       <div class="code-wrap" style="flex:1;border-radius:4px;">
         <div style="color:#555;margin-bottom:12px;"># CLAUDE.md (ai-pipeline-kit)</div>
         <div>파이프라인</div>
@@ -1471,6 +1504,9 @@
     <div style="padding:16px 28px;background:rgba(106,172,152,0.06);border-radius:6px;font-size:18px;color:#333;text-align:center;line-height:1.8;">
       <strong>파일로 소통</strong> &nbsp;·&nbsp; 순서대로 실행 &nbsp;·&nbsp; 실패하면 그 단계만 &nbsp;·&nbsp; /run-pipeline으로 하나로
     </div>
+    <div style="padding:14px 28px;border:1px solid var(--border);border-radius:6px;font-size:15px;color:#555;line-height:1.7;text-align:center;">
+      다음 챕터(CH02)에서는 이 구조를 실제 데이터로 직접 실행합니다. 산출물을 하나씩 확인하고 필요한 단계만 다시 호출하는 흐름을 경험합니다.
+    </div>
     </div><!-- /padding wrapper -->
   </div>
 </div>
@@ -2067,10 +2103,10 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const TOTAL = 33;
-  const ORDER = [1,31,2,3,4,5,28,6,29, 8,9,32,10,11,12,23, 13,14,33,15,24,16,27, 17,18,34,19,25,26,20,22,30,21];
+  const TOTAL = 34;
+  const ORDER = [1,31,35,2,3,4,5,28,6,29, 8,9,32,10,11,12,23, 13,14,33,15,24,16,27, 17,18,34,19,25,26,20,22,30,21];
   const CLIP_MAP = {
-    1:0,31:0,2:0,3:0,4:0,5:0,28:0,6:0,29:0,
+    1:0,31:0,35:0,2:0,3:0,4:0,5:0,28:0,6:0,29:0,
     8:1,9:1,32:1,10:1,11:1,12:1,23:1,
     13:2,14:2,33:2,15:2,24:2,16:2,27:2,
     17:3,18:3,34:3,19:3,25:3,26:3,20:3,22:3,30:3,21:3
