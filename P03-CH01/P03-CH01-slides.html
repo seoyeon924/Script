@@ -1653,7 +1653,7 @@
   <div class="body" style="flex-direction:column;">
     <div style="padding:18px 48px 14px;border-bottom:1px solid var(--border);flex-shrink:0;">
       <div style="font-size:24px;font-weight:700;color:#1C1A18;">대시보드 설계 원칙</div>
-      <div style="font-size:14px;color:#666;margin-top:4px;">요약 KPI → 1차 분석 → 2차 분석 → 원본 데이터 — 계층 구조가 스토리를 만든다</div>
+      <div style="font-size:14px;color:#666;margin-top:4px;">요약 KPI → 1차 분석 → 2차 분석 → 원본 데이터 — 계층 구조로 설계하기</div>
     </div>
     <!-- Diagram -->
     <div style="flex:1;display:flex;padding:14px 20px;gap:8px;min-height:0;align-items:stretch;">
@@ -1836,16 +1836,6 @@
         <div style="display:flex;align-items:center;padding:13px 18px;">
           <div style="font-size:16px;color:#444;width:150px;">두 지표 동시</div>
           <div style="font-size:16px;color:#1C1A18;font-weight:600;">듀얼 바 · 버블 &nbsp;<span style="font-size:14px;color:#e8a86a;font-weight:400;">(이유 있을 때만)</span></div>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;">
-        <div style="flex:1;padding:16px 20px;border:1px solid var(--border);border-radius:6px;">
-          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:6px;">SVG 전용 — CDN 금지</div>
-          <div style="font-size:15.5px;color:#444;line-height:1.7;">외부 라이브러리는 네트워크 끊기거나 버전 바뀌면 차트가 통째로 깨진다. SVG로 직접 그리면 어디서든 열린다</div>
-        </div>
-        <div style="flex:1;padding:16px 20px;border:1px solid var(--border);border-radius:6px;">
-          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:6px;">SVG 바 차트 계산식</div>
-          <div style="font-family:monospace;font-size:14px;color:#444;line-height:1.9;">y = (1 - v/max) × h<br>height = (v/max) × h</div>
         </div>
       </div>
     </div>
