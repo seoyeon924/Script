@@ -128,7 +128,9 @@
         <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">mcp-google-sheets</div>
       </div>
     </div>
-    <div style="margin-top:32px;font-size:16px;color:#555;text-align:center;">CH01에서 만든 파이프라인을 실제 데이터로 돌려봐요</div>
+    <div style="margin-top:32px;display:flex;flex-direction:column;gap:6px;text-align:center;">
+      <div style="font-size:16px;color:#333;">실행 한 번으로 7개 산출물이 생성된다 — 결과는 파일로 남기 때문에 리뷰와 수정이 가능하다</div>
+    </div>
   </div>
 </div>
 
@@ -139,8 +141,8 @@
     <div class="sec-label">Clip 01</div>
     <div class="sec-title">실데이터 투입<br>& 실행</div>
     <div class="sec-sub">
-      CSV 파일 하나를 넣고 /run-pipeline 실행해요.<br>
-      7개 산출물이 자동으로 생성되는 걸 확인해봐요.
+      CSV 파일 하나를 넣고 /run-pipeline 실행.<br>
+      7개 산출물이 순차적으로 생성된다.
     </div>
   </div>
 </div>
@@ -152,7 +154,7 @@
   <div class="body">
     <div style="flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column;padding:44px 48px;gap:24px;">
       <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#6aac98;">Step 1 — 파일 넣기</div>
-      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">runs/latest/input/ 폴더에<br>분석할 파일을 넣으면 끝이에요</div>
+      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">runs/latest/input/ 폴더에<br>분석할 파일을 넣으면 끝</div>
       <div style="background:#111417;border-radius:8px;padding:24px 28px;font-family:monospace;font-size:15px;line-height:2.1;">
         <div style="color:#555;font-size:12px;margin-bottom:10px;">runs/latest/input/</div>
         <div style="color:#6aac98;">sales_2026_q1.csv</div>
@@ -175,7 +177,7 @@
     </div>
     <div style="flex:1;padding:44px 48px;display:flex;flex-direction:column;gap:24px;">
       <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#6aac98;">Step 2 — 실행</div>
-      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">Claude에게 한 마디면 돼요</div>
+      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">실행은 /run-pipeline 한 줄이면 된다</div>
       <div style="background:#f4faf8;border:1.5px solid #b8dcd4;border-radius:8px;padding:24px 28px;display:flex;flex-direction:column;gap:12px;">
         <div style="font-size:13px;color:#6aac98;font-weight:600;">방법 A — 슬래시 커맨드</div>
         <div style="font-size:19px;color:#1C1A18;font-family:monospace;font-weight:600;">/run-pipeline</div>
@@ -184,7 +186,52 @@
         <div style="font-size:13px;color:#888;font-weight:600;">방법 B — 자연어</div>
         <div style="font-size:18px;color:#333;font-style:italic;">"파이프라인 실행해줘"</div>
       </div>
-      <div style="font-size:16px;color:#666;line-height:1.7;padding:14px 16px;border-left:3px solid #D8D5D0;">파일이 없으면 Claude가 먼저<br>input/ 폴더에 파일을 넣어달라고 알려줘요</div>
+      <div style="font-size:16px;color:#666;line-height:1.7;padding:14px 16px;border-left:3px solid #D8D5D0;">파일이 없으면 Claude가 먼저<br>input/ 폴더에 파일을 넣으라고 안내</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s20 | 내 데이터로 교체하기 ════ -->
+<div class="slide" id="s20">
+  <div class="tb"><span class="tb-cap">내 데이터로 교체하기</span><span class="tb-num">—</span></div>
+  <div class="body" style="align-items:center;justify-content:center;padding:36px 72px;">
+    <div style="width:100%;max-width:1060px;border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;background:#fff;">
+      <!-- Left: 준비 + 방법 1 -->
+      <div style="flex:0 0 400px;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+        <div style="padding:28px 32px;border-bottom:1px solid var(--border);">
+          <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:14px;">준비 — ZIP 받기</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="min-width:20px;height:20px;background:#1C1A18;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0;margin-top:2px;">1</div>
+              <div style="font-size:15px;color:#333;line-height:1.65;">강의 자료 <span style="font-family:monospace;font-size:13px;color:#6aac98;">ai-pipeline-kit.zip</span> 압축 해제</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="min-width:20px;height:20px;background:#1C1A18;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0;margin-top:2px;">2</div>
+              <div style="font-size:15px;color:#333;line-height:1.65;"><span style="font-family:monospace;font-size:13px;color:#6aac98;">runs/latest/input/</span> 에 내 CSV 파일 넣기</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:24px 32px;flex:1;display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">방법 1 — 터미널에서</div>
+          <div class="code-wrap" style="font-size:14.5px;line-height:2;border-radius:4px;">
+            <div><span class="code-green">cd</span> <span class="code-hi">ai-pipeline-kit</span></div>
+            <div><span class="code-green">claude</span> <span class="code-hi">.</span></div>
+            <br>
+            <div style="color:#e8c87a;">"파이프라인 실행해줘"</div>
+          </div>
+        </div>
+      </div>
+      <!-- Right: 방법 2 + 이미지 -->
+      <div style="flex:1;display:flex;flex-direction:column;">
+        <div style="padding:24px 32px;border-bottom:1px solid var(--border);">
+          <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:10px;">방법 2 — VS Code / Cursor에서</div>
+          <div style="font-size:15px;color:#333;line-height:1.7;">압축 해제한 <span style="font-family:monospace;font-size:13px;color:#6aac98;">ai-pipeline-kit</span> 폴더 열기 → Claude Code 사이드바 → <span style="font-family:monospace;font-size:13px;color:#444;">"파이프라인 실행해줘"</span></div>
+        </div>
+        <div style="flex:1;padding:20px 32px;display:flex;align-items:center;justify-content:center;">
+          <img src="../../fastcampus-webinar/데이터 입력 폴더 위치.png" alt="데이터 입력 폴더 위치" style="max-width:100%;max-height:280px;object-fit:contain;object-position:left center;border-radius:6px;border:1px solid var(--border);">
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -289,7 +336,7 @@
     <div class="sec-title">산출물 리뷰<br>& 재호출</div>
     <div class="sec-sub">
       각 .md 파일에 뭐가 들어있는지 확인하고<br>
-      마음에 안 드는 단계만 다시 돌리는 방법이에요.
+      마음에 안 드는 단계만 다시 돌리는 방법.
     </div>
   </div>
 </div>
@@ -298,39 +345,56 @@
 <!-- ════ s8 | 단계별 산출물 내용 ════ -->
 <div class="slide" id="s8">
   <div class="tb"><span class="tb-cap">산출물 파일 훑기</span><span class="tb-num">8</span></div>
-  <div class="body" style="flex-direction:column;padding:0;">
-    <div class="pipe-row" style="background:rgba(106,172,152,0.04);">
-      <div class="pipe-n">01</div>
-      <div class="pipe-name" style="color:#6aac98;font-size:16px;">dataset_profile.md</div>
-      <div class="pipe-desc">컬럼 구조 표 · 결측치·이상치·중복 진단 · 수행한 전처리 내역</div>
-      <div style="font-size:13px;color:#aaa;">→ 데이터 신뢰도 판단</div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-n">02</div>
-      <div class="pipe-name" style="color:#6aac98;font-size:16px;">eda_report.md</div>
-      <div class="pipe-desc">일변량 통계 · 그룹별 비교 · 핵심 발견 3개 · 분석 방법론 후보</div>
-      <div style="font-size:13px;color:#aaa;">→ 분석 방향 확인</div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-n">03</div>
-      <div class="pipe-name" style="color:#6aac98;font-size:16px;">problem_definition.md</div>
-      <div class="pipe-desc">비즈니스 문제 정의 · MECE 원인 계층 · 핵심 분석 질문 Top 3</div>
-      <div style="font-size:13px;color:#aaa;">→ 문제 정의 검토</div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-n">04</div>
-      <div class="pipe-name" style="color:#6aac98;font-size:16px;">kpi_summary.md</div>
-      <div class="pipe-desc">KPI 정의서 (이름·계산식·단위) · 결과·선행·진단 지표 분류</div>
-      <div style="font-size:13px;color:#aaa;">→ 지표 계산식 검증</div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-n">05</div>
-      <div class="pipe-name" style="color:#6aac98;font-size:16px;">analysis_report.md</div>
-      <div class="pipe-desc">General→Specific 분석 흐름 · 수치 근거 인사이트 · 권고 액션</div>
-      <div style="font-size:13px;color:#aaa;">→ 인사이트 검토</div>
-    </div>
-    <div style="padding:18px 44px;background:rgba(106,172,152,0.04);border-top:1px solid var(--border);font-size:16px;color:#555;">
-      파일을 열어보고 내용이 맞지 않으면 → 해당 단계만 재호출
+  <div class="body" style="align-items:center;justify-content:center;padding:24px 20px;">
+    <div style="width:100%;max-width:1240px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;">
+      <div class="pipe-row" style="padding:16px 28px;background:rgba(106,172,152,0.04);">
+        <div class="pipe-n">01</div>
+        <div class="pipe-name" style="color:#6aac98;font-size:15px;width:220px;">dataset_profile.md</div>
+        <div class="pipe-desc" style="font-size:17px;white-space:nowrap;">컬럼 구조 표 · 결측치·이상치·중복 진단 · 수행한 전처리 내역</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:auto;white-space:nowrap;">
+          <div style="font-size:13px;color:#aaa;">→ 데이터 신뢰도 판단</div>
+          <div style="font-size:11.5px;color:#c88;font-style:italic;">구조 오독 시 이후 모든 단계 흔들림</div>
+        </div>
+      </div>
+      <div class="pipe-row" style="padding:16px 28px;">
+        <div class="pipe-n">02</div>
+        <div class="pipe-name" style="color:#6aac98;font-size:15px;width:220px;">eda_report.md</div>
+        <div class="pipe-desc" style="font-size:17px;white-space:nowrap;">일변량 통계 · 그룹별 비교 · 핵심 발견 3개 · 분석 방법론 후보</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:auto;white-space:nowrap;">
+          <div style="font-size:13px;color:#aaa;">→ 분석 방향 확인</div>
+          <div style="font-size:11.5px;color:#c88;font-style:italic;">숫자 나열이면 @problem이 방향을 못 잡음</div>
+        </div>
+      </div>
+      <div class="pipe-row" style="padding:16px 28px;">
+        <div class="pipe-n">03</div>
+        <div class="pipe-name" style="color:#6aac98;font-size:15px;width:220px;">problem_definition.md</div>
+        <div class="pipe-desc" style="font-size:17px;white-space:nowrap;">비즈니스 문제 정의 · MECE 원인 계층 · 핵심 분석 질문 Top 3</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:auto;white-space:nowrap;">
+          <div style="font-size:13px;color:#aaa;">→ 문제 정의 검토</div>
+          <div style="font-size:11.5px;color:#c88;font-style:italic;">범위가 넓으면 KPI와 분석도 같이 흐릿해짐</div>
+        </div>
+      </div>
+      <div class="pipe-row" style="padding:16px 28px;">
+        <div class="pipe-n">04</div>
+        <div class="pipe-name" style="color:#6aac98;font-size:15px;width:220px;">kpi_summary.md</div>
+        <div class="pipe-desc" style="font-size:17px;white-space:nowrap;">KPI 정의서 (이름·계산식·단위) · 결과·선행·진단 지표 분류</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:auto;white-space:nowrap;">
+          <div style="font-size:13px;color:#aaa;">→ 지표 계산식 검증</div>
+          <div style="font-size:11.5px;color:#c88;font-style:italic;">계산식·단위 모호하면 재현 불가</div>
+        </div>
+      </div>
+      <div class="pipe-row" style="padding:16px 28px;">
+        <div class="pipe-n">05</div>
+        <div class="pipe-name" style="color:#6aac98;font-size:15px;width:220px;">analysis_report.md</div>
+        <div class="pipe-desc" style="font-size:17px;white-space:nowrap;">General→Specific 분석 흐름 · 수치 근거 인사이트 · 권고 액션</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:auto;white-space:nowrap;">
+          <div style="font-size:13px;color:#aaa;">→ 인사이트 검토</div>
+          <div style="font-size:11.5px;color:#c88;font-style:italic;">발견+근거+임팩트 없으면 보고서로 못 씀</div>
+        </div>
+      </div>
+      <div style="padding:15px 28px;background:rgba(106,172,152,0.04);border-top:1px solid var(--border);font-size:15px;color:#555;">
+        파일을 열어보고 내용이 맞지 않으면 → 해당 단계만 재호출
+      </div>
     </div>
   </div>
 </div>
@@ -390,7 +454,7 @@
   <div class="body">
     <div style="flex:1;border-right:1px solid var(--border);padding:44px 48px;display:flex;flex-direction:column;gap:20px;">
       <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">처음부터 다시 돌리고 싶을 때</div>
-      <div style="font-size:19px;color:#333;line-height:1.7;">outputs/ 폴더를 비우거나<br>.run_id 파일을 삭제하면<br>모든 체크포인트가 초기화돼요</div>
+      <div style="font-size:19px;color:#333;line-height:1.7;">outputs/ 폴더를 비우거나<br>.run_id 파일을 삭제하면<br>모든 체크포인트 초기화</div>
       <div class="code-wrap" style="border-radius:4px;font-size:14px;line-height:1.85;">
         <div style="color:#555;"># 방법 1 — 자연어</div>
         <div style="color:#c8c0b4;font-style:italic;">"처음부터 다시 실행해줘"</div>
@@ -471,7 +535,7 @@
     <div class="sec-title">대시보드·보고서<br>결과물 확인</div>
     <div class="sec-sub">
       06_dashboard.html과 07_executive_report.md가<br>
-      어떻게 나오는지 확인해봐요.
+      어떻게 나오는지 확인.
     </div>
   </div>
 </div>
@@ -482,8 +546,9 @@
   <div class="tb"><span class="tb-cap">06_dashboard.html</span><span class="tb-num">13</span></div>
   <div class="body">
     <div style="flex:1;border-right:1px solid var(--border);padding:40px 44px;display:flex;flex-direction:column;gap:18px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#e8a86a;">@dashboard 산출물</div>
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#e8a86a;">@dashboard 산출물 — 탐색·공유용</div>
       <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">브라우저에서 바로 열리는<br>인터랙티브 HTML 대시보드</div>
+      <div style="font-size:15px;color:#777;margin-top:-4px;">같이 열어보며 드릴다운하는 도구 — 보고서가 아니라 탐색 공간</div>
       <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px;">
         <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
           <div style="font-size:20px;color:#6aac98;flex-shrink:0;">◈</div>
@@ -531,8 +596,9 @@
   <div class="tb"><span class="tb-cap">07_executive_report.md</span><span class="tb-num">14</span></div>
   <div class="body">
     <div style="flex:1;border-right:1px solid var(--border);padding:40px 44px;display:flex;flex-direction:column;gap:18px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#6aac98;">@report 산출물</div>
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#6aac98;">@report 산출물 — 의사결정 보고용</div>
       <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">임원이 5분 안에 읽는<br>Executive Summary</div>
+      <div style="font-size:15px;color:#777;margin-top:-4px;">맥락 없이도 혼자 읽고 결정할 수 있어야 하는 문서</div>
       <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
         <div style="padding:14px 18px;border-left:3px solid #6aac98;background:rgba(106,172,152,0.04);">
           <div style="font-size:14px;color:#6aac98;font-weight:600;margin-bottom:4px;">Executive Summary</div>
@@ -597,10 +663,10 @@
       </div>
       <div class="ov-arrow">→</div>
       <div class="ov-hl">
-        <div style="font-size:11px;letter-spacing:0.12em;color:#6aac98;text-transform:uppercase;font-weight:700;">CLIP 04</div>
+        <div style="font-size:11px;letter-spacing:0.12em;color:#6aac98;text-transform:uppercase;font-weight:700;">CLIP 04 — 확장</div>
         <div style="font-size:19px;font-weight:700;color:#1C1A18;text-align:center;">Google Sheets<br>MCP 연동</div>
         <div style="width:32px;height:2px;background:#6aac98;"></div>
-        <div style="font-size:12px;color:#444;text-align:center;line-height:1.8;">Sheets 읽기·쓰기<br>자동 갱신</div>
+        <div style="font-size:12px;color:#444;text-align:center;line-height:1.8;">팀 공유 데이터 연결<br>결과 자동 내보내기</div>
         <div style="margin-top:auto;font-family:monospace;font-size:12px;color:#6aac98;">mcp-google-sheets</div>
       </div>
     </div>
@@ -611,11 +677,11 @@
 <!-- ════ s16 | CLIP 04 섹션 브레이크 ════ -->
 <div class="slide" id="s16">
   <div class="sec-break">
-    <div class="sec-label">Clip 04</div>
+    <div class="sec-label">Clip 04 — 확장 실습</div>
     <div class="sec-title">Google Sheets<br>MCP 연동</div>
     <div class="sec-sub">
-      팀이 공유하는 Sheets를 직접 읽고 쓸 수 있어요.<br>
-      파이프라인 결과가 Sheets로 자동 저장돼요.
+      팀이 공유하는 Sheets를 입력·출력으로 연결한다.<br>
+      분석 결과를 Sheets로 내보내 팀과 공유하는 확장 구성.
     </div>
   </div>
 </div>
@@ -642,7 +708,7 @@
     </div>
     <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:18px;">
       <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">P02-CH02 MCP와 같은 방식</div>
-      <div style="font-size:18px;color:#333;line-height:1.75;">Firecrawl MCP 설치할 때와<br>똑같은 구조예요. MCP 이름과<br>패키지만 다를 뿐이에요.</div>
+      <div style="font-size:18px;color:#333;line-height:1.75;">Firecrawl MCP 설치할 때와<br>똑같은 구조. MCP 이름과<br>패키지만 다를 뿐.</div>
       <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
         <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;font-size:16px;color:#444;display:flex;align-items:center;gap:12px;">
           <span style="font-family:monospace;color:#6aac98;">firecrawl</span> <span style="color:#999;">→</span> 웹페이지 읽기
@@ -652,7 +718,7 @@
         </div>
       </div>
       <div style="padding:16px 18px;background:rgba(106,172,152,0.06);border-radius:6px;font-size:16px;color:#555;line-height:1.7;">
-        credentials.json은 Google Cloud Console에서<br>서비스 계정 키로 발급받아요
+        credentials.json은 Google Cloud Console에서<br>서비스 계정 키로 발급
       </div>
     </div>
   </div>
@@ -665,7 +731,7 @@
   <div class="body">
     <div style="flex:1;border-right:1px solid var(--border);padding:40px 44px;display:flex;flex-direction:column;gap:20px;">
       <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">Sheets → 파이프라인 (읽기)</div>
-      <div style="font-size:18px;color:#333;line-height:1.7;">팀 공유 시트의 데이터를 파이프라인 인풋으로 사용해요</div>
+      <div style="font-size:18px;color:#333;line-height:1.7;">팀 공유 시트의 데이터를 파이프라인 인풋으로 사용</div>
       <div style="background:#f4faf8;border:1px solid #b8dcd4;border-radius:6px;padding:18px 22px;">
         <div style="font-size:14px;color:#6aac98;font-weight:600;margin-bottom:8px;">예시 프롬프트</div>
         <div style="font-size:16px;color:#1C1A18;line-height:1.8;font-style:italic;">"[스프레드시트 ID]의 '마케팅 성과' 시트를<br>runs/latest/input/에 저장하고<br>/run-pipeline 실행해줘"</div>
@@ -680,7 +746,7 @@
     </div>
     <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:20px;">
       <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">파이프라인 → Sheets (쓰기)</div>
-      <div style="font-size:18px;color:#333;line-height:1.7;">분석 결과 KPI를 팀 시트에 자동 업데이트해요</div>
+      <div style="font-size:18px;color:#333;line-height:1.7;">분석 결과 KPI를 팀 시트에 자동 업데이트</div>
       <div style="background:#f4faf8;border:1px solid #b8dcd4;border-radius:6px;padding:18px 22px;">
         <div style="font-size:14px;color:#6aac98;font-weight:600;margin-bottom:8px;">예시 프롬프트</div>
         <div style="font-size:16px;color:#1C1A18;line-height:1.8;font-style:italic;">"04_kpi_summary.md의 KPI 수치를<br>시트 '분석 결과' 탭에 업데이트해줘"</div>
@@ -726,10 +792,10 @@
       </div>
       <div style="padding:20px 24px;border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column;gap:8px;">
         <div style="display:flex;align-items:center;gap:10px;">
-          <div style="font-size:13px;font-weight:700;color:#6aac98;letter-spacing:0.1em;">CLIP 04</div>
+          <div style="font-size:13px;font-weight:700;color:#6aac98;letter-spacing:0.1em;">CLIP 04 — 확장</div>
           <div style="font-size:18px;font-weight:600;color:#1C1A18;">Sheets 연동</div>
         </div>
-        <div style="font-size:15px;color:#666;line-height:1.7;">claude mcp add gsheets 설치<br>Sheets → input/ 읽기 · outputs/ → Sheets 쓰기</div>
+        <div style="font-size:15px;color:#666;line-height:1.7;">claude mcp add gsheets 설치<br>Sheets → input/ 읽기 · outputs/ → Sheets 내보내기</div>
       </div>
     </div>
     <div style="padding:16px 24px;background:rgba(106,172,152,0.06);border-radius:6px;font-size:17px;color:#333;text-align:center;line-height:1.8;">
@@ -750,10 +816,10 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const TOTAL = 19;
-  const ORDER = [1,2,3,4,5, 6,7,8,9,10, 11,12,13,14, 15,16,17,18,19];
+  const TOTAL = 20;
+  const ORDER = [1,2,3,4,20,5, 6,7,8,9,10, 11,12,13,14, 15,16,17,18,19];
   const CLIP_MAP = {
-    1:0,2:0,3:0,4:0,5:0,
+    1:0,2:0,3:0,4:0,20:0,5:0,
     6:1,7:1,8:1,9:1,10:1,
     11:2,12:2,13:2,14:2,
     15:3,16:3,17:3,18:3,19:3
