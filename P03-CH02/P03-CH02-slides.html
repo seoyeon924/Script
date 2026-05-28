@@ -174,7 +174,7 @@
   <div class="body">
     <div style="flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column;padding:44px 48px;gap:20px;">
       <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#6aac98;">파일 형식별 주의사항</div>
-      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">형식마다 걸리는 지점이<br>다릅니다</div>
+      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">형식마다 주의할 점</div>
       <div style="display:flex;flex-direction:column;gap:9px;">
         <div style="padding:13px 18px;border:1px solid var(--border);border-radius:6px;display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:start;">
           <div style="font-size:13px;color:#6aac98;font-family:monospace;font-weight:600;padding-top:1px;">CSV</div>
@@ -200,7 +200,7 @@
     </div>
     <div style="flex:1;padding:44px 48px;display:flex;flex-direction:column;gap:24px;">
       <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#6aac98;">Step 2 — 실행</div>
-      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">실행은 /run-pipeline 한 줄이면 된다</div>
+      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">실행은 /run-pipeline 한 줄로</div>
       <div style="background:#f4faf8;border:1.5px solid #b8dcd4;border-radius:8px;padding:24px 28px;display:flex;flex-direction:column;gap:12px;">
         <div style="font-size:13px;color:#6aac98;font-weight:600;">방법 A — 슬래시 커맨드</div>
         <div style="font-size:19px;color:#1C1A18;font-family:monospace;font-weight:600;">/run-pipeline</div>
@@ -372,7 +372,6 @@
         <div class="pipe-desc" style="font-size:17px;white-space:nowrap;">컬럼 구조 표 · 결측치·이상치·중복 진단 · 수행한 전처리 내역</div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:auto;white-space:nowrap;">
           <div style="font-size:13px;color:#aaa;">→ 데이터 신뢰도 판단</div>
-          <div style="font-size:11.5px;color:#c88;font-style:italic;">구조 오독 시 이후 모든 단계 흔들림</div>
         </div>
       </div>
       <div class="pipe-row" style="padding:16px 28px;">
@@ -381,7 +380,6 @@
         <div class="pipe-desc" style="font-size:17px;white-space:nowrap;">일변량 통계 · 그룹별 비교 · 주요 발견 3개 · 분석 방향 후보</div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:auto;white-space:nowrap;">
           <div style="font-size:13px;color:#aaa;">→ 분석 방향 확인</div>
-          <div style="font-size:11.5px;color:#c88;font-style:italic;">숫자 나열이면 @problem이 방향을 못 잡음</div>
         </div>
       </div>
       <div class="pipe-row" style="padding:16px 28px;">
@@ -390,7 +388,6 @@
         <div class="pipe-desc" style="font-size:17px;white-space:nowrap;">비즈니스 문제 정의 · MECE 원인 계층 · 분석 질문 Top 3</div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:auto;white-space:nowrap;">
           <div style="font-size:13px;color:#aaa;">→ 문제 정의 검토</div>
-          <div style="font-size:11.5px;color:#c88;font-style:italic;">범위가 넓으면 KPI와 분석도 같이 흐릿해짐</div>
         </div>
       </div>
       <div class="pipe-row" style="padding:16px 28px;">
@@ -399,7 +396,6 @@
         <div class="pipe-desc" style="font-size:17px;white-space:nowrap;">KPI 정의서 (이름·계산식·단위) · 결과·선행·진단 지표 분류</div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:auto;white-space:nowrap;">
           <div style="font-size:13px;color:#aaa;">→ 지표 계산식 검증</div>
-          <div style="font-size:11.5px;color:#c88;font-style:italic;">계산식·단위 모호하면 재현 불가</div>
         </div>
       </div>
       <div class="pipe-row" style="padding:16px 28px;">
@@ -408,7 +404,6 @@
         <div class="pipe-desc" style="font-size:17px;white-space:nowrap;">General→Specific 분석 흐름 · 수치 근거 인사이트 · 권고 액션</div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:auto;white-space:nowrap;">
           <div style="font-size:13px;color:#aaa;">→ 인사이트 검토</div>
-          <div style="font-size:11.5px;color:#c88;font-style:italic;">발견+근거+임팩트 없으면 보고서로 못 씀</div>
         </div>
       </div>
       <div style="padding:15px 28px;background:rgba(106,172,152,0.04);border-top:1px solid var(--border);font-size:15px;color:#555;">
@@ -524,15 +519,39 @@
       <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">처음부터 다시 돌리고 싶을 때</div>
       <div style="padding:12px 16px;background:rgba(232,96,60,0.05);border:1px solid rgba(232,96,60,0.2);border-radius:6px;font-size:15px;color:#555;line-height:1.65;">특정 단계만 재실행해서 해결되지 않을 때 씁니다. 이 방법은 모든 산출물을 지웁니다.</div>
       <div style="font-size:19px;color:#333;line-height:1.7;">outputs/ 폴더를 비우면<br>모든 체크포인트가 초기화됩니다</div>
-      <div class="code-wrap" style="border-radius:4px;font-size:14px;line-height:1.85;">
-        <div style="color:#555;"># 방법 1 — 자연어</div>
-        <div style="color:#c8c0b4;font-style:italic;">"처음부터 다시 실행해줘"</div>
-        <br>
-        <div style="color:#555;"># 방법 2 — 직접 삭제</div>
-        <div><span style="color:#E8603C;">rm</span> <span class="code-hi">runs/latest/outputs/*</span></div>
-        <div><span style="color:#E8603C;">rm</span> <span class="code-hi">runs/latest/.run_id</span></div>
-        <br>
-        <div style="color:#555;"># 이후 다시 실행</div>
+      <!-- 방법 1 — 자연어 -->
+      <div style="padding:14px 18px;background:rgba(106,172,152,0.05);border:1px solid #b8dcd4;border-radius:6px;">
+        <div style="font-size:12px;color:#6aac98;font-weight:600;margin-bottom:6px;">방법 1 — 자연어 (Mac · Windows 공통)</div>
+        <div style="font-size:16px;color:#333;font-style:italic;">"처음부터 다시 실행해줘"</div>
+      </div>
+      <!-- 방법 2 — 직접 삭제 -->
+      <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+        <div style="padding:10px 16px;background:#f0f0ed;font-size:12px;font-weight:600;color:#555;letter-spacing:0.06em;">방법 2 — 직접 삭제</div>
+        <div style="display:flex;border-bottom:1px solid var(--border);">
+          <div style="flex:1;border-right:1px solid var(--border);padding:14px 18px;">
+            <div style="font-size:11px;color:#999;margin-bottom:8px;">Mac — Terminal.app 또는 iTerm2</div>
+            <div class="code-wrap" style="border-radius:4px;font-size:13px;line-height:1.9;padding:12px 16px;">
+              <div><span style="color:#E8603C;">rm</span> <span class="code-hi">runs/latest/outputs/*</span></div>
+              <div><span style="color:#E8603C;">rm</span> <span class="code-hi">runs/latest/.run_id</span></div>
+            </div>
+          </div>
+          <div style="flex:1;padding:14px 18px;">
+            <div style="font-size:11px;color:#999;margin-bottom:8px;">Windows — Git Bash 또는 PowerShell</div>
+            <div class="code-wrap" style="border-radius:4px;font-size:13px;line-height:1.9;padding:12px 16px;">
+              <div style="color:#555;"># Git Bash (권장)</div>
+              <div><span style="color:#E8603C;">rm</span> <span class="code-hi">runs/latest/outputs/*</span></div>
+              <div style="margin-top:6px;color:#555;"># PowerShell</div>
+              <div><span style="color:#E8603C;">Remove-Item</span> <span class="code-hi">runs\latest\outputs\*</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:10px 18px;background:#f9f8f6;font-size:13px;color:#666;">
+          터미널 여는 방법 — Mac: <span style="font-family:monospace;color:#444;">Cmd+Space → "Terminal"</span> &nbsp;·&nbsp; Windows: <span style="font-family:monospace;color:#444;">검색 → "Git Bash"</span>
+        </div>
+      </div>
+      <!-- 이후 실행 -->
+      <div class="code-wrap" style="border-radius:4px;font-size:14px;line-height:1.85;padding:12px 18px;">
+        <div style="color:#555;"># 삭제 후 Claude Code에서</div>
         <div><span class="code-green">/run-pipeline</span></div>
       </div>
     </div>
