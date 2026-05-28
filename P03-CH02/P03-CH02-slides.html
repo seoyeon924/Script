@@ -172,26 +172,29 @@
 <div class="slide" id="s4">
   <div class="tb"><span class="tb-cap">데이터 투입</span><span class="tb-num">4</span></div>
   <div class="body">
-    <div style="flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column;padding:44px 48px;gap:24px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#6aac98;">Step 1 — 파일 넣기</div>
-      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">runs/latest/input/ 폴더에<br>분석할 파일을 넣으면 끝</div>
-      <div style="background:#111417;border-radius:8px;padding:24px 28px;font-family:monospace;font-size:15px;line-height:2.1;">
-        <div style="color:#555;font-size:12px;margin-bottom:10px;">runs/latest/input/</div>
-        <div style="color:#6aac98;">sales_2026_q1.csv</div>
-        <div style="color:#555;font-size:13px;margin-top:8px;">← 여기에 파일 드래그하거나 복사</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px;">
-        <div style="display:flex;gap:12px;align-items:center;">
-          <div style="font-size:14px;color:#6aac98;font-family:monospace;white-space:nowrap;">CSV · Excel</div>
-          <div style="font-size:17px;color:#444;">가장 일반적인 형식</div>
+    <div style="flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column;padding:44px 48px;gap:20px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#6aac98;">파일 형식별 주의사항</div>
+      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">형식마다 걸리는 지점이<br>다릅니다</div>
+      <div style="display:flex;flex-direction:column;gap:9px;">
+        <div style="padding:13px 18px;border:1px solid var(--border);border-radius:6px;display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:start;">
+          <div style="font-size:13px;color:#6aac98;font-family:monospace;font-weight:600;padding-top:1px;">CSV</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;">인코딩은 UTF-8로. EUC-KR이면 한글 컬럼명이 깨짐</div>
         </div>
-        <div style="display:flex;gap:12px;align-items:center;">
-          <div style="font-size:14px;color:#6aac98;font-family:monospace;white-space:nowrap;">JSON · TSV</div>
-          <div style="font-size:17px;color:#444;">@data-ingestion이 자동 감지</div>
+        <div style="padding:13px 18px;border:1px solid var(--border);border-radius:6px;display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:start;">
+          <div style="font-size:13px;color:#6aac98;font-family:monospace;font-weight:600;padding-top:1px;">Excel</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;">.xlsx만 인식. 병합 셀은 @data-ingestion이 자동 해제</div>
         </div>
-        <div style="display:flex;gap:12px;align-items:center;">
-          <div style="font-size:14px;color:#6aac98;font-family:monospace;white-space:nowrap;">PDF</div>
-          <div style="font-size:17px;color:#444;">텍스트·표 추출 후 처리</div>
+        <div style="padding:13px 18px;border:1px solid var(--border);border-radius:6px;display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:start;">
+          <div style="font-size:13px;color:#6aac98;font-family:monospace;font-weight:600;padding-top:1px;">JSON</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;">배열 구조여야 인식. 중첩 객체는 자동 flatten</div>
+        </div>
+        <div style="padding:13px 18px;border:1px solid var(--border);border-radius:6px;display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:start;">
+          <div style="font-size:13px;color:#6aac98;font-family:monospace;font-weight:600;padding-top:1px;">PDF</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;">표·텍스트 기반만 가능. 스캔 이미지는 추출 불가</div>
+        </div>
+        <div style="padding:13px 18px;border:1.5px solid rgba(232,96,60,0.25);border-radius:6px;background:rgba(232,96,60,0.02);">
+          <div style="font-size:12px;color:#E8603C;font-weight:600;margin-bottom:4px;">한글 컬럼명</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;">에이전트가 컬럼명을 참조할 때 인코딩 오류 가능 — 영문 권장</div>
         </div>
       </div>
     </div>
@@ -554,6 +557,152 @@
 </div>
 
 
+<!-- ════ s15 | 재실행 의존성 지도 ════ -->
+<div class="slide" id="s15">
+  <div class="tb"><span class="tb-cap">재실행 의존성</span><span class="tb-num">—</span></div>
+  <div class="body" style="flex-direction:column;padding:28px 52px;gap:20px;">
+    <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">앞 단계 산출물이 바뀌면 뒤 단계도 다시 돌려야 한다</div>
+    <!-- 파이프라인 체인 -->
+    <div style="display:flex;align-items:center;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fff;">
+      <div style="padding:14px 18px;text-align:center;border-right:1px solid var(--border);flex:1;">
+        <div style="font-size:10px;color:#999;letter-spacing:0.1em;font-family:monospace;margin-bottom:4px;">01</div>
+        <div style="font-size:13px;font-weight:600;color:#6aac98;font-family:monospace;">@data-<br>ingestion</div>
+      </div>
+      <div style="color:#CCC;padding:0 4px;font-size:14px;">→</div>
+      <div style="padding:14px 18px;text-align:center;border-right:1px solid var(--border);flex:1;">
+        <div style="font-size:10px;color:#999;letter-spacing:0.1em;font-family:monospace;margin-bottom:4px;">02</div>
+        <div style="font-size:13px;font-weight:600;color:#6aac98;font-family:monospace;">@eda</div>
+      </div>
+      <div style="color:#CCC;padding:0 4px;font-size:14px;">→</div>
+      <div style="padding:14px 18px;text-align:center;border-right:1px solid var(--border);flex:1;">
+        <div style="font-size:10px;color:#999;letter-spacing:0.1em;font-family:monospace;margin-bottom:4px;">03</div>
+        <div style="font-size:13px;font-weight:600;color:#6aac98;font-family:monospace;">@problem</div>
+      </div>
+      <div style="color:#CCC;padding:0 4px;font-size:14px;">→</div>
+      <div style="padding:14px 18px;text-align:center;border-right:1px solid var(--border);flex:1;">
+        <div style="font-size:10px;color:#999;letter-spacing:0.1em;font-family:monospace;margin-bottom:4px;">04</div>
+        <div style="font-size:13px;font-weight:600;color:#6aac98;font-family:monospace;">@metrics</div>
+      </div>
+      <div style="color:#CCC;padding:0 4px;font-size:14px;">→</div>
+      <div style="padding:14px 18px;text-align:center;border-right:1px solid var(--border);flex:1;">
+        <div style="font-size:10px;color:#999;letter-spacing:0.1em;font-family:monospace;margin-bottom:4px;">05</div>
+        <div style="font-size:13px;font-weight:600;color:#6aac98;font-family:monospace;">@analysis</div>
+      </div>
+      <div style="color:#CCC;padding:0 4px;font-size:14px;">→</div>
+      <div style="padding:14px 18px;text-align:center;border-right:1px solid var(--border);flex:1;">
+        <div style="font-size:10px;color:#e8a86a;letter-spacing:0.1em;font-family:monospace;margin-bottom:4px;">06</div>
+        <div style="font-size:13px;font-weight:600;color:#e8a86a;font-family:monospace;">@dashboard</div>
+      </div>
+      <div style="color:#CCC;padding:0 4px;font-size:14px;">→</div>
+      <div style="padding:14px 18px;text-align:center;flex:1;">
+        <div style="font-size:10px;color:#999;letter-spacing:0.1em;font-family:monospace;margin-bottom:4px;">07</div>
+        <div style="font-size:13px;font-weight:600;color:#6aac98;font-family:monospace;">@report</div>
+      </div>
+    </div>
+    <!-- 3가지 시나리오 -->
+    <div style="display:flex;flex-direction:column;gap:10px;flex:1;">
+      <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:grid;grid-template-columns:220px 1fr;gap:16px;align-items:center;">
+        <div>
+          <div style="font-size:12px;color:#999;margin-bottom:4px;">@problem (03) 재실행 시</div>
+          <div style="font-size:16px;font-weight:600;color:#1C1A18;">문제 정의 범위를 좁혔을 때</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(106,172,152,0.1);color:#6aac98;">01</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(106,172,152,0.1);color:#6aac98;">02</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:#6aac98;color:#fff;font-weight:700;">03*</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(232,96,60,0.12);color:#E8603C;">04</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(232,96,60,0.12);color:#E8603C;">05</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(232,96,60,0.12);color:#E8603C;">06</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(232,96,60,0.12);color:#E8603C;">07</div>
+          <div style="font-size:13px;color:#E8603C;margin-left:6px;">← 4개 재실행 필요</div>
+        </div>
+      </div>
+      <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:grid;grid-template-columns:220px 1fr;gap:16px;align-items:center;">
+        <div>
+          <div style="font-size:12px;color:#999;margin-bottom:4px;">@metrics (04) 재실행 시</div>
+          <div style="font-size:16px;font-weight:600;color:#1C1A18;">KPI 계산식을 수정했을 때</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(106,172,152,0.1);color:#6aac98;">01</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(106,172,152,0.1);color:#6aac98;">02</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(106,172,152,0.1);color:#6aac98;">03</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:#6aac98;color:#fff;font-weight:700;">04*</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(232,96,60,0.12);color:#E8603C;">05</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(232,96,60,0.12);color:#E8603C;">06</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(232,96,60,0.12);color:#E8603C;">07</div>
+          <div style="font-size:13px;color:#E8603C;margin-left:6px;">← 3개 재실행 필요</div>
+        </div>
+      </div>
+      <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:grid;grid-template-columns:220px 1fr;gap:16px;align-items:center;">
+        <div>
+          <div style="font-size:12px;color:#999;margin-bottom:4px;">@dashboard (06) 재실행 시</div>
+          <div style="font-size:16px;font-weight:600;color:#1C1A18;">레이아웃만 바꿀 때</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(106,172,152,0.1);color:#6aac98;">01</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(106,172,152,0.1);color:#6aac98;">02</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(106,172,152,0.1);color:#6aac98;">03</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(106,172,152,0.1);color:#6aac98;">04</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(106,172,152,0.1);color:#6aac98;">05</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:#e8a86a;color:#fff;font-weight:700;">06*</div>
+          <div style="padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace;background:rgba(106,172,152,0.1);color:#6aac98;">07</div>
+          <div style="font-size:13px;color:#6aac98;margin-left:6px;">← 1개만 재실행</div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:14px 20px;background:rgba(106,172,152,0.05);border-radius:6px;font-size:15px;color:#444;text-align:center;">재실행 후 <span style="font-family:monospace;color:#6aac98;">/run-pipeline</span> → 앞 파일 있으면 skip, 변경된 이후 단계만 실행</div>
+  </div>
+</div>
+
+
+<!-- ════ s16 | CLAUDE.md 커스터마이징 ════ -->
+<div class="slide" id="s16">
+  <div class="tb"><span class="tb-cap">CLAUDE.md — 실행 전 지시 추가하기</span><span class="tb-num">—</span></div>
+  <div class="body">
+    <div style="flex:1;border-right:1px solid var(--border);padding:36px 44px;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">기본 상태 — 지시 없음</div>
+      <div style="font-size:17px;color:#555;line-height:1.65;">파이프라인이 데이터를 보고 분석 방향을 스스로 결정합니다.<br>결과가 예상과 다를 수 있습니다.</div>
+      <div class="code-wrap" style="flex:1;border-radius:6px;font-size:13.5px;line-height:1.9;">
+        <div style="color:#555;margin-bottom:8px;"># CLAUDE.md (기본)</div>
+        <div style="color:#888;">파이프라인:</div>
+        <div style="color:#6aac98;">@data-ingestion → @eda → @problem</div>
+        <div style="color:#6aac98;">→ @metrics → @analysis → @dashboard → @report</div>
+        <br>
+        <div style="color:#555;">실행 규칙</div>
+        <div style="color:#888;">- 병렬 실행 금지</div>
+        <div style="color:#888;">- 이전 단계 파일이 존재해야 다음 단계 시작</div>
+        <div style="color:#888;">- 단계 실패 시 해당 단계에서 중단</div>
+        <br>
+        <div style="color:#555;"># 분석 목적, 타겟 컬럼, 제외 조건이 없음</div>
+        <div style="color:#555;"># → @problem이 범위를 넓게 설정할 가능성 높음</div>
+      </div>
+    </div>
+    <div style="flex:1;padding:36px 44px;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#6aac98;">지시 추가 후 — 결과가 달라짐</div>
+      <div style="font-size:17px;color:#444;line-height:1.65;">실행 전에 목적·타겟·제외 조건을 적어두면<br>@problem부터 방향이 좁아집니다.</div>
+      <div class="code-wrap" style="flex:1;border-radius:6px;font-size:13.5px;line-height:1.9;">
+        <div style="color:#555;margin-bottom:8px;"># CLAUDE.md (지시 추가)</div>
+        <div style="color:#888;">파이프라인:</div>
+        <div style="color:#6aac98;">@data-ingestion → @eda → @problem</div>
+        <div style="color:#6aac98;">→ @metrics → @analysis → @dashboard → @report</div>
+        <br>
+        <div style="color:#e8c87a;">분석 목적:</div>
+        <div style="color:#c8c0b4;padding-left:14px;">마케팅 채널별 ROI 비교</div>
+        <br>
+        <div style="color:#e8c87a;">타겟 컬럼:</div>
+        <div style="color:#c8c0b4;padding-left:14px;">channel, revenue, cost, date</div>
+        <br>
+        <div style="color:#e8c87a;">제외 조건:</div>
+        <div style="color:#c8c0b4;padding-left:14px;">internal=True 행 제외</div>
+        <br>
+        <div style="color:#e8c87a;">보고서 대상:</div>
+        <div style="color:#c8c0b4;padding-left:14px;">마케팅팀 (기술 용어 최소화)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- ════ s11 | 조감도 — CLIP 03 HL ════ -->
 <div class="slide" id="s11">
   <div class="tb"><span class="tb-cap">챕터 구성</span><span class="tb-num">—</span></div>
@@ -604,30 +753,24 @@
   <div class="tb"><span class="tb-cap">06_dashboard.html</span><span class="tb-num">13</span></div>
   <div class="body">
     <div style="flex:1;border-right:1px solid var(--border);padding:40px 44px;display:flex;flex-direction:column;gap:18px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#e8a86a;">@dashboard 산출물 — 탐색·공유용</div>
-      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">브라우저에서 바로 열리는<br>인터랙티브 HTML 대시보드</div>
-      <div style="font-size:15px;color:#777;margin-top:-4px;">같이 열어보며 드릴다운하는 도구 — 보고서가 아니라 탐색 공간</div>
-      <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px;">
-        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
-          <div style="font-size:20px;color:#6aac98;flex-shrink:0;">◈</div>
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">KPI 카드 섹션</div>
-            <div style="font-size:16px;color:#555;">주요 수치 + 전월 대비 변화율</div>
-          </div>
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#e8a86a;">열기 전 확인 체크리스트</div>
+      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">숫자가 맞는지<br>직접 검산하기</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:4px;">파일이 만들어졌는가</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;font-family:monospace;">runs/latest/outputs/06_dashboard.html</div>
         </div>
-        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
-          <div style="font-size:20px;color:#6aac98;flex-shrink:0;">◈</div>
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">인터랙티브 차트</div>
-            <div style="font-size:16px;color:#555;">순수 SVG · 클릭·필터 가능 · CDN 없음</div>
-          </div>
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:4px;">KPI 수치가 데이터와 맞는가</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;">CSV를 직접 열어 한두 개 수동 검산. 에이전트는 집계 방법을 임의로 선택할 수 있음</div>
         </div>
-        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
-          <div style="font-size:20px;color:#6aac98;flex-shrink:0;">◈</div>
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">인사이트 텍스트</div>
-            <div style="font-size:16px;color:#555;">@analysis 결과 기반 설명 문구</div>
-          </div>
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:4px;">차트 축이 이상하지 않은가</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;">날짜 역순, Y축이 0에서 시작하지 않는 경우 자주 발생</div>
+        </div>
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:4px;">인사이트에 수치 근거가 있는가</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;">"증가했다" → ✗ &nbsp;&nbsp;"3월 대비 12% 증가" → ✓</div>
         </div>
       </div>
     </div>
@@ -654,21 +797,24 @@
   <div class="tb"><span class="tb-cap">07_executive_report.md</span><span class="tb-num">14</span></div>
   <div class="body">
     <div style="flex:1;border-right:1px solid var(--border);padding:40px 44px;display:flex;flex-direction:column;gap:18px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#6aac98;">@report 산출물 — 의사결정 보고용</div>
-      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">임원이 5분 안에 읽는<br>임원용 요약 보고서</div>
-      <div style="font-size:15px;color:#777;margin-top:-4px;">맥락 없이도 혼자 읽고 결정할 수 있어야 하는 문서</div>
-      <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
-        <div style="padding:14px 18px;border-left:3px solid #6aac98;background:rgba(106,172,152,0.04);">
-          <div style="font-size:14px;color:#6aac98;font-weight:600;margin-bottom:4px;">임원용 요약 보고서</div>
-          <div style="font-size:16px;color:#444;">분석 배경 · 주요 발견 · 결론 1페이지</div>
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#6aac98;">보고서 검토 체크리스트</div>
+      <div style="font-size:22px;font-weight:600;color:#1C1A18;line-height:1.3;">받는 사람 입장에서<br>한 번 더 읽기</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:4px;">결론이 첫 단락에 있는가</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;">임원은 끝까지 읽지 않음. 결론 → 근거 순서여야 함</div>
         </div>
-        <div style="padding:14px 18px;border-left:3px solid #6aac98;background:rgba(106,172,152,0.04);">
-          <div style="font-size:14px;color:#6aac98;font-weight:600;margin-bottom:4px;">주요 발견 3가지</div>
-          <div style="font-size:16px;color:#444;">수치 근거 포함 · 비즈니스 임팩트 명시</div>
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:4px;">맥락 없이 혼자 읽히는가</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;">배경 설명 없이 첫 단락만 봐도 무슨 분석인지 파악 가능해야</div>
         </div>
-        <div style="padding:14px 18px;border-left:3px solid #6aac98;background:rgba(106,172,152,0.04);">
-          <div style="font-size:14px;color:#6aac98;font-weight:600;margin-bottom:4px;">권고 액션 플랜</div>
-          <div style="font-size:16px;color:#444;">실무진·임원 각각 다른 관점으로 정리</div>
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:4px;">주장 옆에 수치 근거가 있는가</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;">"줄었다" → ✗ &nbsp;&nbsp;"전분기 대비 18% 감소" → ✓</div>
+        </div>
+        <div style="padding:14px 18px;border:1.5px solid rgba(232,96,60,0.25);border-radius:6px;background:rgba(232,96,60,0.02);">
+          <div style="font-size:13px;color:#E8603C;font-weight:600;margin-bottom:4px;">권고 액션이 구체적인가</div>
+          <div style="font-size:15px;color:#444;line-height:1.6;">"검토 필요" 수준은 의미없음. "채널 X 예산 20% 축소" 수준이어야</div>
         </div>
       </div>
     </div>
@@ -761,11 +907,11 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const TOTAL = 18;
-  const ORDER = [1,23,2,3,4,20,5, 6,7,8,21,9,10, 11,12,13,14,22];
+  const TOTAL = 19;
+  const ORDER = [1,23,2,3,4,20, 6,7,8,21,9,15,16,10, 11,12,13,14,22];
   const CLIP_MAP = {
-    1:0,23:0,2:0,3:0,4:0,20:0,5:0,
-    6:1,7:1,8:1,21:1,9:1,10:1,
+    1:0,23:0,2:0,3:0,4:0,20:0,
+    6:1,7:1,8:1,21:1,9:1,15:1,16:1,10:1,
     11:2,12:2,13:2,14:2,22:2
   };
   const CLIP_LABELS = ['실데이터 투입 & 실행','산출물 리뷰 & 재실행','결과물 확인 & 마무리'];
