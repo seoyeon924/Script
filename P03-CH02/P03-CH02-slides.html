@@ -209,9 +209,8 @@
         <div style="font-size:13px;color:#888;font-weight:600;">방법 B — 자연어</div>
         <div style="font-size:18px;color:#333;font-style:italic;">"파이프라인 실행해줘"</div>
       </div>
-      <div style="padding:16px 18px;background:rgba(106,172,152,0.05);border-radius:6px;border-left:3px solid #6aac98;">
-        <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:6px;">왜 처음에 전체를 실행하는가</div>
-        <div style="font-size:16px;color:#444;line-height:1.7;">어느 단계에서 문제가 생기는지는 실행해봐야 알 수 있습니다. 전체를 한 번 돌려두면 이후 수정은 해당 단계만 재실행하면 됩니다.</div>
+      <div style="padding:16px 18px;background:rgba(106,172,152,0.05);border-radius:6px;">
+        <div style="font-size:16px;color:#444;line-height:1.7;">어느 단계에서 문제가 생기는지는 실행해봐야 알 수 있어요!</div>
       </div>
     </div>
   </div>
@@ -418,7 +417,7 @@
 <div class="slide" id="s21">
   <div class="tb"><span class="tb-cap">처음 실행 시 자주 생기는 실수</span><span class="tb-num">—</span></div>
   <div class="body" style="flex-direction:column;padding:28px 60px;gap:16px;">
-    <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">처음 실행에서 흔한 상황 3가지</div>
+    <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">처음 실행 시 실수할 수 있는 부분</div>
     <div style="display:flex;flex-direction:column;gap:12px;flex:1;">
 
       <div style="padding:20px 24px;border:1px solid var(--border);border-radius:8px;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
@@ -517,8 +516,8 @@
   <div class="body">
     <div style="flex:1;border-right:1px solid var(--border);padding:44px 48px;display:flex;flex-direction:column;gap:20px;">
       <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">처음부터 다시 돌리고 싶을 때</div>
-      <div style="padding:12px 16px;background:rgba(232,96,60,0.05);border:1px solid rgba(232,96,60,0.2);border-radius:6px;font-size:15px;color:#555;line-height:1.65;">특정 단계만 재실행해서 해결되지 않을 때 씁니다. 이 방법은 모든 산출물을 지웁니다.</div>
-      <div style="font-size:19px;color:#333;line-height:1.7;">outputs/ 폴더를 비우면<br>모든 체크포인트가 초기화됩니다</div>
+      <div style="padding:12px 16px;background:rgba(232,96,60,0.05);border:1px solid rgba(232,96,60,0.2);border-radius:6px;font-size:15px;color:#555;line-height:1.65;">특정 단계만 재실행해서 해결되지 않을 때, 여태까지 모든 산출물을 지우는 방법</div>
+      <div style="font-size:19px;color:#333;line-height:1.7;">outputs/ 폴더를 비우면<br>모든 체크포인트 초기화</div>
       <!-- 방법 1 — 자연어 -->
       <div style="padding:14px 18px;background:rgba(106,172,152,0.05);border:1px solid #b8dcd4;border-radius:6px;">
         <div style="font-size:12px;color:#6aac98;font-weight:600;margin-bottom:6px;">방법 1 — 자연어 (Mac · Windows 공통)</div>
@@ -566,9 +565,26 @@
           <div style="font-size:14px;color:#c8a048;font-weight:600;margin-bottom:6px;">결과가 전반적으로 맞지 않을 때</div>
           <div style="font-size:17px;color:#333;">CLAUDE.md에 추가 지시 작성 후<br>전체 재실행</div>
         </div>
-        <div style="padding:18px 20px;border-left:3px solid #E8603C;background:rgba(232,96,60,0.04);">
-          <div style="font-size:14px;color:#E8603C;font-weight:600;margin-bottom:6px;">새 데이터로 바꿀 때</div>
-          <div style="font-size:17px;color:#333;">input/ 교체 → outputs/ 초기화 →<br>/run-pipeline 새로 실행</div>
+        <div style="padding:18px 20px;border:1px solid rgba(232,96,60,0.25);border-radius:6px;background:rgba(232,96,60,0.03);">
+          <div style="font-size:14px;color:#E8603C;font-weight:600;margin-bottom:12px;">새 프로젝트 시작 순서</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <div style="min-width:20px;height:20px;background:#E8603C;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0;margin-top:1px;">1</div>
+              <div style="font-size:15px;color:#333;">input/ 기존 파일 삭제 → 새 CSV 복사</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <div style="min-width:20px;height:20px;background:#E8603C;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0;margin-top:1px;">2</div>
+              <div style="font-size:15px;color:#333;font-family:monospace;">rm runs/latest/outputs/*<br>rm runs/latest/.run_id</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <div style="min-width:20px;height:20px;background:#E8603C;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0;margin-top:1px;">3</div>
+              <div style="font-size:15px;color:#333;">CLAUDE.md 분석 목적·타겟 컬럼 업데이트 <span style="color:#999;font-size:13px;">(선택)</span></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <div style="min-width:20px;height:20px;background:#E8603C;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0;margin-top:1px;">4</div>
+              <div style="font-size:15px;color:#333;font-family:monospace;">/run-pipeline</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -580,7 +596,6 @@
 <div class="slide" id="s15">
   <div class="tb"><span class="tb-cap">재실행 의존성</span><span class="tb-num">—</span></div>
   <div class="body" style="flex-direction:column;padding:28px 52px;gap:20px;">
-    <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">앞 단계 산출물이 바뀌면 뒤 단계도 다시 돌려야 한다</div>
     <!-- 파이프라인 체인 -->
     <div style="display:flex;align-items:center;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fff;">
       <div style="padding:14px 18px;text-align:center;border-right:1px solid var(--border);flex:1;">
