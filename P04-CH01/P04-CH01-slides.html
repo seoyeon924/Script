@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P04-CH01 — Interactive Data Art</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #F2F2EF;
+    --text: #1C1A18;
+    --sub: #4a4a4a;
+    --dim: #777;
+    --white: #1C1A18;
+    --border: #D8D5D0;
+    --p01: #E8603C;
+    --green: #6aac98;
+  }
+
+  html, body { background: var(--bg); color: var(--text); font-family: 'Pretendard', -apple-system, sans-serif; width: 100vw; height: 100vh; overflow: hidden; }
+
+  .deck { width: 1280px; height: 800px; transform-origin: top left; position: fixed; top: 0; left: 0; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; background: var(--bg); }
+  .slide.active { display: flex; }
+
+  .tb { height: 48px; min-height: 48px; padding: 0 52px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .tb-cap { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
+  .tb-num { font-size: 13px; color: var(--dim); letter-spacing: 0.08em; }
+
+  .body { flex: 1; display: flex; min-height: 0; }
+
+  .nav { position: fixed; bottom: 24px; right: 40px; display: flex; align-items: center; gap: 12px; z-index: 100; }
+  .nav-ctr { font-size: 11px; color: #666; letter-spacing: 0.08em; }
+  .nav-btn { background: none; border: none; color: var(--sub); cursor: pointer; font-size: 18px; padding: 4px; transition: color 0.15s; }
+  .nav-btn:hover { color: var(--white); }
+  .progress { position: fixed; bottom: 0; left: 0; height: 2px; background: var(--p01); transition: width 0.3s; z-index: 100; }
+
+  .clip-dots { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 100; }
+  .clip-dot { width: 6px; height: 6px; border-radius: 50%; background: #CCCCCC; transition: background 0.2s; }
+  .clip-dot.active { background: var(--p01); }
+
+  .sec-break { background: var(--bg); flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .sec-label { font-size: 18px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(0,0,0,0.55); margin-bottom: 24px; }
+  .sec-title { font-size: 70px; font-weight: 600; line-height: 1.2; color: var(--white); font-family: 'Poppins', sans-serif; }
+  .sec-sub { font-size: 22px; color: rgba(0,0,0,0.6); margin-top: 28px; line-height: 1.9; }
+
+  .eyebrow { font-size: 17px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sub); margin-bottom: 22px; }
+  .big-title { font-size: 54px; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; color: var(--text); margin-bottom: 32px; }
+  .body-text { font-size: 23px; color: #222; line-height: 1.85; }
+
+  .l-panel { width: 38%; border-right: 1px solid var(--border); padding: 52px; display: flex; flex-direction: column; justify-content: space-between; }
+
+  .principle-col { flex: 1; border-right: 1px solid var(--border); padding: 52px 48px; display: flex; flex-direction: column; }
+  .principle-col:last-child { border-right: none; }
+  .principle-n { font-size: 64px; font-weight: 300; color: #DDDDDD; line-height: 1; margin-bottom: 22px; }
+  .principle-title { font-size: 25px; font-weight: 600; color: var(--text); margin-bottom: 14px; }
+  .principle-body { font-size: 20px; color: #444; line-height: 1.85; }
+
+  .row-item { padding: 24px 32px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+  .row-item:last-child { border-bottom: none; }
+  .row-label { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: #888; white-space: nowrap; }
+  .row-title { font-size: 24px; font-weight: 600; color: var(--text); }
+  .row-body { font-size: 19px; color: #444; line-height: 1.75; }
+
+  .code-wrap { background: #0A0C10; padding: 20px 26px; font-family: 'Menlo', 'Monaco', monospace; font-size: 15px; line-height: 1.9; color: rgba(255,255,255,0.78); border-radius: 4px; }
+  .code-hi { color: rgba(255,255,255,0.95); }
+  .code-comment { color: rgba(255,255,255,0.45); }
+  .code-accent { color: #8dc8b4; }
+  .code-orange { color: #E8603C; }
+  .code-yellow { color: #e8c87a; }
+
+  .ov-hl { flex:1; display:flex; flex-direction:column; align-items:center; padding:32px 20px; border:2px solid #1C1A18; border-radius:8px; gap:12px; background:rgba(106,172,152,0.05); }
+  .ov-dim { flex:1; display:flex; flex-direction:column; align-items:center; padding:32px 20px; border:1.5px solid #E8E6E2; border-radius:8px; gap:12px; opacity:0.4; }
+  .ov-arrow { display:flex; align-items:center; padding:0 10px; color:#CCCCCC; font-size:20px; }
+  .ov-arrow.dim { opacity:0.35; }
+
+  .tag { display:inline-block; font-size:13px; font-family:monospace; padding:3px 10px; border-radius:3px; border:1px solid var(--border); color:var(--sub); }
+  .tag-orange { border-color:#E8603C; color:#E8603C; background:rgba(232,96,60,0.06); }
+  .tag-green { border-color:#6aac98; color:#6aac98; background:rgba(106,172,152,0.06); }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+
+<!-- ════ s1 | 챕터 표지 ════ -->
+<div class="slide active" id="s1">
+  <div class="body" style="flex-direction:column;padding:64px 80px 72px;">
+    <div>
+      <div style="font-size:16px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(0,0,0,0.45);margin-bottom:20px;font-family:'Poppins',sans-serif;">P04 · CH01 · Interactive Data Art</div>
+      <div style="font-size:52px;font-weight:600;color:#1C1A18;line-height:1.2;letter-spacing:-0.02em;font-family:'Poppins',sans-serif;">고급 인터랙티브<br>시각화</div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:18px;">
+      <div style="width:210px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:13px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.3);">Clip 01</div>
+        <div style="font-size:16px;color:#1C1A18;line-height:1.6;">Interactive Data Art<br>기획</div>
+      </div>
+      <div style="width:210px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:13px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.3);">Clip 02</div>
+        <div style="font-size:16px;color:#1C1A18;line-height:1.6;">어벤져스<br>네트워크 차트</div>
+      </div>
+      <div style="width:210px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:13px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.3);">Clip 03</div>
+        <div style="font-size:16px;color:#1C1A18;line-height:1.6;">Tableau Extension<br>연결</div>
+      </div>
+      <div style="width:210px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:13px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.3);">Clip 04</div>
+        <div style="font-size:16px;color:#1C1A18;line-height:1.6;">3D Globe<br>시각화</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s2 | 챕터 조감도 ════ -->
+<div class="slide" id="s2">
+  <div class="tb"><span class="tb-cap">이번 챕터에서 만드는 것</span><span class="tb-num">—</span></div>
+  <div class="body" style="flex-direction:column;align-items:center;justify-content:center;padding:52px 80px;gap:0;">
+    <div style="display:flex;align-items:stretch;gap:0;width:100%;">
+      <div class="ov-hl">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#6aac98;text-transform:uppercase;font-weight:700;">CLIP 01</div>
+        <div style="font-size:19px;font-weight:600;color:#1C1A18;text-align:center;">Interactive<br>Data Art 기획</div>
+        <div style="width:32px;height:2px;background:#6aac98;"></div>
+        <div style="font-size:13px;color:#444;text-align:center;line-height:1.8;">Claude Code 기획 요청<br>D3.js 선택 근거</div>
+      </div>
+      <div class="ov-arrow dim">→</div>
+      <div class="ov-dim">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 02</div>
+        <div style="font-size:19px;font-weight:600;color:#1C1A18;text-align:center;">어벤져스<br>네트워크 차트</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">D3.js 원형 레이아웃<br>레퍼런스 방법론</div>
+      </div>
+      <div class="ov-arrow dim">→</div>
+      <div class="ov-dim">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 03</div>
+        <div style="font-size:19px;font-weight:600;color:#1C1A18;text-align:center;">Tableau Extension<br>연결</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">.trex 패키징<br>Tableau API 연동</div>
+      </div>
+      <div class="ov-arrow dim">→</div>
+      <div class="ov-dim">
+        <div style="font-size:11px;letter-spacing:0.12em;color:#999;text-transform:uppercase;">CLIP 04</div>
+        <div style="font-size:19px;font-weight:600;color:#1C1A18;text-align:center;">3D Globe<br>시각화</div>
+        <div style="width:32px;height:2px;background:#E0DDD9;"></div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">Three.js + WebGL<br>지리 데이터 시각화</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s3 | CLIP 01 섹션 브레이크 ════ -->
+<div class="slide" id="s3">
+  <div class="sec-break">
+    <div class="sec-label">Clip 01</div>
+    <div class="sec-title">Interactive Data Art<br>기획</div>
+    <div class="sec-sub">
+      일반 차트와의 차이, 기획 방법<br>
+      Claude Code에게 아이디어 뽑는 프롬프트 구조
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s4 | 일반 차트 vs Interactive Data Art ════ -->
+<div class="slide" id="s4">
+  <div class="tb"><span class="tb-cap">일반 차트 vs Interactive Data Art</span><span class="tb-num">4</span></div>
+  <div class="body">
+    <!-- Left: 일반 차트 -->
+    <div style="flex:1;border-right:1px solid var(--border);padding:52px 48px;display:flex;flex-direction:column;gap:28px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">일반 차트</div>
+      <div style="font-size:36px;font-weight:600;color:#1C1A18;line-height:1.2;">정보 전달</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:4px;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:15px;color:#AAAAAA;flex-shrink:0;margin-top:3px;">○</div>
+          <div style="font-size:20px;color:#555;line-height:1.6;">정적 이미지 — 클릭·드래그 없음</div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:15px;color:#AAAAAA;flex-shrink:0;margin-top:3px;">○</div>
+          <div style="font-size:20px;color:#555;line-height:1.6;">분석가가 미리 필터링 → 결과만 보여줌</div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:15px;color:#AAAAAA;flex-shrink:0;margin-top:3px;">○</div>
+          <div style="font-size:20px;color:#555;line-height:1.6;">보는 사람은 주어진 그래프만 소비</div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:15px;color:#AAAAAA;flex-shrink:0;margin-top:3px;">○</div>
+          <div style="font-size:20px;color:#555;line-height:1.6;">막대·선·파이 같은 표준 차트 타입</div>
+        </div>
+      </div>
+      <div style="margin-top:auto;padding:18px 22px;background:#F8F7F5;border-radius:6px;border:1px solid var(--border);">
+        <div style="font-size:16px;color:#888;">예시: 월별 매출 막대 차트, 채널별 파이 차트</div>
+      </div>
+    </div>
+    <!-- Right: Interactive Data Art -->
+    <div style="flex:1;padding:52px 48px;display:flex;flex-direction:column;gap:28px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#E8603C;margin-bottom:4px;">Interactive Data Art</div>
+      <div style="font-size:36px;font-weight:600;color:#1C1A18;line-height:1.2;">경험 설계</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:4px;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:15px;color:#E8603C;flex-shrink:0;margin-top:3px;">●</div>
+          <div style="font-size:20px;color:#333;line-height:1.6;">클릭·드래그·줌 — 사용자가 직접 탐색</div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:15px;color:#E8603C;flex-shrink:0;margin-top:3px;">●</div>
+          <div style="font-size:20px;color:#333;line-height:1.6;">데이터 전체를 열어두고 원하는 것 탐색</div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:15px;color:#E8603C;flex-shrink:0;margin-top:3px;">●</div>
+          <div style="font-size:20px;color:#333;line-height:1.6;">보는 사람이 직접 파고드는 구조</div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:15px;color:#E8603C;flex-shrink:0;margin-top:3px;">●</div>
+          <div style="font-size:20px;color:#333;line-height:1.6;">네트워크·3D Globe·커스텀 레이아웃</div>
+        </div>
+      </div>
+      <div style="margin-top:auto;padding:18px 22px;background:rgba(232,96,60,0.04);border-radius:6px;border:1px solid rgba(232,96,60,0.18);">
+        <div style="font-size:16px;color:#888;">예시: 어벤져스 관계 네트워크, 이민 데이터 3D Globe</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s5 | 결과물 미리보기 (영상) ════ -->
+<div class="slide" id="s5">
+  <div class="tb"><span class="tb-cap">이번 챕터 결과물</span><span class="tb-num">5</span></div>
+  <div class="body" style="gap:0;">
+    <!-- Left: Avengers Network -->
+    <div style="flex:1;border-right:1px solid var(--border);position:relative;overflow:hidden;display:flex;flex-direction:column;background:#111;">
+      <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0.92;">
+        <source src="../assets/videos/avengers-network.mp4" type="video/mp4">
+      </video>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 28px;background:linear-gradient(transparent,rgba(0,0,0,0.75));">
+        <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:4px;">Clip 02</div>
+        <div style="font-size:19px;font-weight:600;color:#fff;">어벤져스 네트워크 차트</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-top:4px;">D3.js 원형 레이아웃 · Tableau Extension</div>
+      </div>
+    </div>
+    <!-- Right: Globe -->
+    <div style="flex:1;position:relative;overflow:hidden;display:flex;flex-direction:column;background:#0a0a12;">
+      <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0.92;">
+        <source src="../assets/videos/globe.mp4" type="video/mp4">
+      </video>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 28px;background:linear-gradient(transparent,rgba(0,0,0,0.75));">
+        <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:4px;">Clip 04</div>
+        <div style="font-size:19px;font-weight:600;color:#fff;">3D Globe 시각화</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-top:4px;">Three.js + WebGL · 지리 데이터 아크</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s6 | 어벤져스 네트워크 — 실제 기획 흐름 ════ -->
+<div class="slide" id="s6">
+  <div class="tb"><span class="tb-cap">어벤져스 네트워크 — 실제 기획 흐름</span><span class="tb-num">6</span></div>
+  <div class="body" style="flex-direction:column;">
+
+    <!-- Top: headline -->
+    <div style="padding:36px 52px 28px;border-bottom:1px solid var(--border);flex-shrink:0;">
+      <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:10px;">Clip 02 — 코딩 전 기획 단계</div>
+      <div style="font-size:34px;font-weight:600;color:#1C1A18;line-height:1.2;letter-spacing:-0.02em;">Extension 전에 먼저,<br>레퍼런스와 데이터부터</div>
+    </div>
+
+    <!-- Bottom: 4-step flow cards -->
+    <div style="flex:1;display:flex;align-items:center;padding:24px 52px;gap:10px;">
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:24px 22px;display:flex;flex-direction:column;gap:12px;align-self:stretch;justify-content:center;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;">01</div>
+        <div style="font-size:17px;font-weight:600;color:#1C1A18;">레퍼런스 이미지 수집</div>
+        <div style="font-size:13px;color:#777;line-height:1.7;">원하는 시각화 스크린샷을<br>이미지로 다수 수집<br><span style="color:#AAA;font-size:12px;">Awwwards · Observable HQ</span></div>
+      </div>
+
+      <div style="color:#CCC;font-size:14px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:24px 22px;display:flex;flex-direction:column;gap:12px;align-self:stretch;justify-content:center;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;">02</div>
+        <div style="font-size:17px;font-weight:600;color:#1C1A18;">Gemini / GPT에 구조 분석</div>
+        <div style="font-size:13px;color:#777;line-height:1.7;">이미지를 주고 물어봄<br>"이거 어떻게 구현해?<br>어떤 프롬프트 써야 해?"</div>
+      </div>
+
+      <div style="color:#CCC;font-size:14px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:24px 22px;display:flex;flex-direction:column;gap:12px;align-self:stretch;justify-content:center;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;">03</div>
+        <div style="font-size:17px;font-weight:600;color:#1C1A18;">Firecrawl로 데이터 수집</div>
+        <div style="font-size:13px;color:#777;line-height:1.7;">어벤져스 캐릭터 관계<br>공동 출연·관계 유형<br>크롤링으로 확보</div>
+      </div>
+
+      <div style="color:#CCC;font-size:14px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid rgba(232,96,60,0.35);border-radius:8px;padding:24px 22px;display:flex;flex-direction:column;gap:12px;align-self:stretch;justify-content:center;background:rgba(232,96,60,0.03);">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;">04</div>
+        <div style="font-size:17px;font-weight:600;color:#E8603C;">Claude Code에 전달</div>
+        <div style="font-size:13px;color:#777;line-height:1.7;">이미지 + Gemini 답변<br>+ 데이터를 컨텍스트로<br>→ 구현 프롬프트 시작</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s7 | D3.js vs 다른 라이브러리 ════ -->
+<div class="slide" id="s7">
+  <div class="tb"><span class="tb-cap">D3.js vs 다른 시각화 라이브러리</span><span class="tb-num">7</span></div>
+  <div class="body" style="flex-direction:column;padding:0;">
+
+    <!-- Top headline -->
+    <div style="padding:26px 52px 20px;border-bottom:1px solid var(--border);flex-shrink:0;">
+      <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">라이브러리 비교</div>
+      <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">커스텀 레이아웃이 필요하면,<br>D3.js가 유일한 선택</div>
+    </div>
+
+    <!-- Comparison table -->
+    <div style="flex:1;display:flex;padding:18px 52px 20px;gap:12px;align-items:stretch;">
+
+      <!-- Row labels -->
+      <div style="width:136px;flex-shrink:0;display:flex;flex-direction:column;padding-top:52px;gap:0;">
+        <div style="flex:1;display:flex;align-items:center;font-size:12px;color:#999;font-weight:600;letter-spacing:0.06em;border-bottom:1px solid var(--border);">렌더링 방식</div>
+        <div style="flex:1;display:flex;align-items:center;font-size:12px;color:#999;font-weight:600;letter-spacing:0.06em;border-bottom:1px solid var(--border);">커스터마이징</div>
+        <div style="flex:1;display:flex;align-items:center;font-size:12px;color:#999;font-weight:600;letter-spacing:0.06em;border-bottom:1px solid var(--border);">네트워크 레이아웃</div>
+        <div style="flex:1;display:flex;align-items:center;font-size:12px;color:#999;font-weight:600;letter-spacing:0.06em;border-bottom:1px solid var(--border);">학습 난이도</div>
+        <div style="flex:1;display:flex;align-items:center;font-size:12px;color:#999;font-weight:600;letter-spacing:0.06em;">주요 사용처</div>
+      </div>
+
+      <!-- Chart.js -->
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+        <div style="padding:10px 16px 10px;border-bottom:1px solid var(--border);background:#F8F7F5;height:52px;display:flex;flex-direction:column;justify-content:center;flex-shrink:0;">
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;">Chart.js</div>
+          <div style="font-size:11px;color:#999;">빠른 기본 차트</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;">
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #F0EEEA;font-size:13px;color:#555;">Canvas 기반</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #F0EEEA;font-size:13px;color:#AAAAAA;">제한적</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #F0EEEA;font-size:13px;color:#CCCCCC;">불가</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #F0EEEA;font-size:13px;color:#6aac98;">쉬움</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;font-size:12px;color:#777;line-height:1.5;">빠른 대시보드<br>학습 프로젝트</div>
+        </div>
+      </div>
+
+      <!-- Plotly.js -->
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+        <div style="padding:10px 16px 10px;border-bottom:1px solid var(--border);background:#F8F7F5;height:52px;display:flex;flex-direction:column;justify-content:center;flex-shrink:0;">
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;">Plotly.js</div>
+          <div style="font-size:11px;color:#999;">데이터 분석용</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;">
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #F0EEEA;font-size:13px;color:#555;">SVG / WebGL</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #F0EEEA;font-size:13px;color:#888;">보통</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #F0EEEA;font-size:13px;color:#AAAAAA;">제한적</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #F0EEEA;font-size:13px;color:#6aac98;">보통</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;font-size:12px;color:#777;line-height:1.5;">통계 시각화<br>Python 연동</div>
+        </div>
+      </div>
+
+      <!-- Vega-Lite -->
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+        <div style="padding:10px 16px 10px;border-bottom:1px solid var(--border);background:#F8F7F5;height:52px;display:flex;flex-direction:column;justify-content:center;flex-shrink:0;">
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;">Vega-Lite</div>
+          <div style="font-size:11px;color:#999;">선언형 문법</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;">
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #F0EEEA;font-size:13px;color:#555;">SVG</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #F0EEEA;font-size:13px;color:#AAAAAA;">제한적</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #F0EEEA;font-size:13px;color:#CCCCCC;">불가</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #F0EEEA;font-size:13px;color:#6aac98;">보통</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;font-size:12px;color:#777;line-height:1.5;">학술 데이터<br>탐색적 분석</div>
+        </div>
+      </div>
+
+      <!-- D3.js — highlighted -->
+      <div style="flex:1;border:2px solid #E8603C;border-radius:8px;display:flex;flex-direction:column;overflow:hidden;background:rgba(232,96,60,0.02);">
+        <div style="padding:10px 16px 10px;border-bottom:1px solid rgba(232,96,60,0.2);background:rgba(232,96,60,0.07);height:52px;display:flex;flex-direction:column;justify-content:center;flex-shrink:0;">
+          <div style="font-size:15px;font-weight:600;color:#E8603C;">D3.js v7</div>
+          <div style="font-size:11px;color:#E8603C;opacity:0.75;">이번 챕터 사용</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;">
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(232,96,60,0.1);font-size:13px;color:#333;font-weight:500;">SVG 직접 제어</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(232,96,60,0.1);font-size:13px;color:#E8603C;font-weight:600;">무제한</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(232,96,60,0.1);font-size:13px;color:#E8603C;font-weight:600;">완벽 지원</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(232,96,60,0.1);font-size:13px;color:#888;">높음</div>
+          <div style="flex:1;display:flex;align-items:center;padding:0 16px;font-size:12px;color:#444;font-weight:500;line-height:1.5;">NYT · Guardian<br>Observable HQ</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s8 | CLIP 02 섹션 브레이크 ════ -->
+<div class="slide" id="s8">
+  <div class="sec-break">
+    <div class="sec-label">Clip 02</div>
+    <div class="sec-title">어벤져스<br>네트워크 차트</div>
+    <div class="sec-sub">
+      D3.js 원형 레이아웃으로 39개 캐릭터 관계 시각화<br>
+      레퍼런스 복붙 → Tableau Extension 연결까지
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s9 | 네트워크 그래프 개념 ════ -->
+<div class="slide" id="s9">
+  <div class="tb"><span class="tb-cap">네트워크 그래프 구조</span><span class="tb-num">9</span></div>
+  <div class="body">
+    <!-- Left: SVG diagram -->
+    <div style="width:46%;border-right:1px solid var(--border);display:flex;align-items:center;justify-content:center;padding:40px;">
+      <svg width="380" height="380" viewBox="0 0 380 380">
+        <!-- edges -->
+        <line x1="190" y1="80" x2="300" y2="155" stroke="#D8D5D0" stroke-width="2.5"/>
+        <line x1="190" y1="80" x2="80" y2="155" stroke="#D8D5D0" stroke-width="2.5"/>
+        <line x1="300" y1="155" x2="300" y2="270" stroke="#D8D5D0" stroke-width="1.5"/>
+        <line x1="80" y1="155" x2="80" y2="270" stroke="#D8D5D0" stroke-width="1.5"/>
+        <line x1="300" y1="270" x2="190" y2="330" stroke="#D8D5D0" stroke-width="2"/>
+        <line x1="80" y1="270" x2="190" y2="330" stroke="#D8D5D0" stroke-width="2"/>
+        <line x1="190" y1="80" x2="300" y2="270" stroke="#E8D0C8" stroke-width="1.5" stroke-dasharray="5,4"/>
+        <line x1="80" y1="155" x2="300" y2="155" stroke="#E8D0C8" stroke-width="1.5" stroke-dasharray="5,4"/>
+        <!-- edge labels -->
+        <text x="258" y="112" font-size="11" fill="#AAAAAA" font-family="Menlo,monospace">동료</text>
+        <text x="96" y="112" font-size="11" fill="#AAAAAA" font-family="Menlo,monospace">가족</text>
+        <!-- nodes -->
+        <circle cx="190" cy="80" r="28" fill="#fff" stroke="#E8603C" stroke-width="2.5"/>
+        <text x="190" y="75" text-anchor="middle" font-size="11" fill="#333" font-family="Pretendard,sans-serif">Iron</text>
+        <text x="190" y="90" text-anchor="middle" font-size="11" fill="#333" font-family="Pretendard,sans-serif">Man</text>
+        <circle cx="300" cy="155" r="22" fill="#fff" stroke="#D8D5D0" stroke-width="1.5"/>
+        <text x="300" y="150" text-anchor="middle" font-size="11" fill="#555" font-family="Pretendard,sans-serif">Thor</text>
+        <text x="300" y="165" text-anchor="middle" font-size="10" fill="#aaa" font-family="Pretendard,sans-serif">38min</text>
+        <circle cx="80" cy="155" r="26" fill="#fff" stroke="#D8D5D0" stroke-width="1.5"/>
+        <text x="80" y="150" text-anchor="middle" font-size="10" fill="#555" font-family="Pretendard,sans-serif">Captain</text>
+        <text x="80" y="163" text-anchor="middle" font-size="10" fill="#555" font-family="Pretendard,sans-serif">America</text>
+        <circle cx="300" cy="270" r="18" fill="#fff" stroke="#D8D5D0" stroke-width="1.5"/>
+        <text x="300" y="275" text-anchor="middle" font-size="11" fill="#555" font-family="Pretendard,sans-serif">Hulk</text>
+        <circle cx="80" cy="270" r="20" fill="#fff" stroke="#D8D5D0" stroke-width="1.5"/>
+        <text x="80" y="275" text-anchor="middle" font-size="11" fill="#555" font-family="Pretendard,sans-serif">Widow</text>
+        <circle cx="190" cy="330" r="24" fill="#fff" stroke="#D8D5D0" stroke-width="1.5"/>
+        <text x="190" y="325" text-anchor="middle" font-size="11" fill="#555" font-family="Pretendard,sans-serif">Spider</text>
+        <text x="190" y="340" text-anchor="middle" font-size="11" fill="#555" font-family="Pretendard,sans-serif">Man</text>
+        <!-- legend -->
+        <circle cx="30" cy="360" r="6" fill="#E8603C"/>
+        <text x="42" y="365" font-size="12" fill="#888" font-family="Pretendard,sans-serif">노드 — 등장 시간에 비례</text>
+        <line x1="10" y1="20" x2="40" y2="20" stroke="#D8D5D0" stroke-width="2"/>
+        <text x="46" y="25" font-size="12" fill="#888" font-family="Pretendard,sans-serif">엣지 — 공동 등장 횟수에 비례</text>
+      </svg>
+    </div>
+    <!-- Right: actual avengers network logic -->
+    <div style="flex:1;display:flex;flex-direction:column;padding:28px 36px;gap:14px;justify-content:center;">
+      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">어벤져스 네트워크 — 시각 인코딩</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;gap:16px;align-items:flex-start;">
+          <div style="font-size:22px;flex-shrink:0;">●</div>
+          <div>
+            <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">노드 크기 = Source_Importance</div>
+            <div style="font-size:13px;color:#666;line-height:1.6;">등장 비중이 높을수록 원이 커짐. Iron Man·Thor는 크고, Eitri는 작음</div>
+          </div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;gap:16px;align-items:flex-start;">
+          <div style="font-size:14px;flex-shrink:0;margin-top:3px;">━━━<br><span style="font-size:10px;">──</span></div>
+          <div>
+            <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">선 굵기 = Strength</div>
+            <div style="font-size:13px;color:#666;line-height:1.6;">두 캐릭터가 함께 등장한 장면 수·관계 강도. 수치가 높을수록 굵음</div>
+          </div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;gap:16px;align-items:flex-start;">
+          <div style="font-size:14px;flex-shrink:0;color:#E8603C;margin-top:2px;">━ 동료<br><span style="color:#888;">━ 적</span></div>
+          <div>
+            <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">선 색상 = Type</div>
+            <div style="font-size:13px;color:#666;line-height:1.6;">ally / enemy / romantic — 관계 유형마다 색이 다름</div>
+          </div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;gap:16px;align-items:flex-start;">
+          <div style="font-size:13px;font-family:monospace;color:#6aac98;flex-shrink:0;margin-top:2px;">Group</div>
+          <div>
+            <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">그룹 = Source_Group</div>
+            <div style="font-size:13px;color:#666;line-height:1.6;">Avengers · Asgardians · Guardians · Mystic Arts — 파벌 단위로 필터 가능</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s10 | 어벤져스 네트워크 데모 (영상) ════ -->
+<div class="slide" id="s10">
+  <div class="tb"><span class="tb-cap">어벤져스 네트워크 차트 — 결과물</span><span class="tb-num">10</span></div>
+  <div class="body" style="position:relative;overflow:hidden;background:#0a0812;">
+    <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
+      <source src="../assets/videos/avengers.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 52px;background:linear-gradient(transparent,rgba(0,0,0,0.7));display:flex;align-items:flex-end;gap:24px;">
+      <div>
+        <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:4px;">github.com/seoyeon924/avengers-network</div>
+        <div style="font-size:16px;color:rgba(255,255,255,0.75);">D3.js v7 원형 레이아웃 · Tableau Extensions API · WebGL 갤럭시 배경</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:10px;">
+        <span class="tag-orange" style="font-size:12px;border-color:#E8603C;color:#E8603C;background:rgba(232,96,60,0.1);">39 캐릭터</span>
+        <span class="tag" style="font-size:12px;border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.06);">관계 유형 4종</span>
+        <span class="tag" style="font-size:12px;border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.06);">클릭 인터랙션</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s11 | 구현 방법론 ════ -->
+<div class="slide" id="s11">
+  <div class="tb"><span class="tb-cap">구현 방법론</span><span class="tb-num">11</span></div>
+  <div class="body" style="flex-direction:column;padding:44px 60px;gap:28px;">
+    <!-- Track A -->
+    <div style="flex:1;display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#E8603C;">방법 A — 코드 레퍼런스</div>
+      <div style="display:flex;gap:0;align-items:stretch;">
+        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:18px 22px;">
+          <div style="font-size:13px;color:#999;margin-bottom:6px;">Step 1</div>
+          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">레퍼런스 탐색</div>
+          <div style="font-size:14px;color:#666;line-height:1.7;">Observable HQ<br>D3 Gallery · Codepen</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:0 14px;color:#CCCCCC;font-size:20px;flex-shrink:0;">→</div>
+        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:18px 22px;">
+          <div style="font-size:13px;color:#999;margin-bottom:6px;">Step 2</div>
+          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">개발자도구 코드 복붙</div>
+          <div style="font-size:14px;color:#666;line-height:1.7;">Chrome DevTools<br>Sources 탭 → 전체 복사</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:0 14px;color:#CCCCCC;font-size:20px;flex-shrink:0;">→</div>
+        <div style="flex:1;border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:18px 22px;background:rgba(232,96,60,0.03);">
+          <div style="font-size:13px;color:#999;margin-bottom:6px;">Step 3</div>
+          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">Claude Code 요청</div>
+          <div style="font-size:14px;color:#666;line-height:1.7;">"이 코드 기반으로<br>우리 데이터에 맞게 만들어줘"</div>
+        </div>
+      </div>
+    </div>
+    <!-- Divider -->
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div style="flex:1;height:1px;background:var(--border);"></div>
+      <div style="font-size:14px;color:#BBBBBB;letter-spacing:0.08em;">또는</div>
+      <div style="flex:1;height:1px;background:var(--border);"></div>
+    </div>
+    <!-- Track B -->
+    <div style="flex:1;display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#4A7AB5;">방법 B — Gemini 해석</div>
+      <div style="display:flex;gap:0;align-items:stretch;">
+        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:18px 22px;">
+          <div style="font-size:13px;color:#999;margin-bottom:6px;">Step 1</div>
+          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">영상·이미지 수집</div>
+          <div style="font-size:14px;color:#666;line-height:1.7;">원하는 시각화<br>스크린샷 또는 영상</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:0 14px;color:#CCCCCC;font-size:20px;flex-shrink:0;">→</div>
+        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:18px 22px;">
+          <div style="font-size:13px;color:#999;margin-bottom:6px;">Step 2</div>
+          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">Gemini로 구조 파악</div>
+          <div style="font-size:14px;color:#666;line-height:1.7;">"이 시각화 어떻게<br>구현됐어? 기술 스택은?"</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:0 14px;color:#CCCCCC;font-size:20px;flex-shrink:0;">→</div>
+        <div style="flex:1;border:1px solid rgba(74,122,181,0.3);border-radius:6px;padding:18px 22px;background:rgba(74,122,181,0.03);">
+          <div style="font-size:13px;color:#999;margin-bottom:6px;">Step 3</div>
+          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">Claude Code 프롬프트</div>
+          <div style="font-size:14px;color:#666;line-height:1.7;">Gemini 답변을 프롬프트에<br>그대로 붙여넣기</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s12 | 어벤져스 네트워크 제작 흐름 ════ -->
+<div class="slide" id="s12">
+  <div class="tb"><span class="tb-cap">어벤져스 네트워크 — 기획에서 완성까지</span><span class="tb-num">12</span></div>
+  <div class="body" style="flex-direction:column;padding:20px 28px;gap:14px;">
+
+    <!-- Row 1 -->
+    <div style="flex:1;display:flex;gap:14px;">
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:20px 24px;display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:11px;font-family:monospace;color:#E8603C;flex-shrink:0;">01</span>
+          <span style="font-size:15px;font-weight:600;color:#1C1A18;">레퍼런스 탐색 + 주제 선정</span>
+        </div>
+        <div style="font-size:13px;font-family:monospace;background:#F4F3F1;padding:10px 14px;border-radius:4px;color:#444;line-height:1.7;">레퍼런스 사진 첨부 →<br>"이런 네트워크 시각화 만들고 싶어.<br>어떤 데이터가 잘 어울릴까?"</div>
+        <div style="font-size:12px;color:#888;">→ Claude가 어벤져스 추천 — 등장인물 많고 관계 복잡한 데이터에 딱 맞음</div>
+      </div>
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:20px 24px;display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:11px;font-family:monospace;color:#E8603C;flex-shrink:0;">02</span>
+          <span style="font-size:15px;font-weight:600;color:#1C1A18;">Firecrawl로 데이터 수집</span>
+        </div>
+        <div style="font-size:13px;font-family:monospace;background:#F4F3F1;padding:10px 14px;border-radius:4px;color:#444;line-height:1.7;">"Firecrawl로 어벤져스 캐릭터<br>공동 출연·관계 유형 데이터<br>CSV로 수집해줘"</div>
+        <div style="font-size:12px;color:#888;">→ Source, Target, Strength, Type 컬럼 CSV 완성</div>
+      </div>
+
+    </div>
+
+    <!-- Row 2 -->
+    <div style="flex:1;display:flex;gap:14px;">
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:20px 24px;display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:11px;font-family:monospace;color:#E8603C;flex-shrink:0;">03</span>
+          <span style="font-size:15px;font-weight:600;color:#1C1A18;">차트 제작 + 디자인 고도화</span>
+        </div>
+        <div style="font-size:13px;font-family:monospace;background:#F4F3F1;padding:10px 14px;border-radius:4px;color:#444;line-height:1.7;">"D3.js 원형 네트워크 만들어줘" →<br>레퍼런스 사진 추가하며<br>"이 느낌으로 텍스처·배경·애니메이션 넣어줘"</div>
+        <div style="font-size:12px;color:#888;">→ 기본 차트 → 텍스처 → WebGL 갤럭시 배경 → 클릭 스핀 애니메이션 순서로 발전</div>
+      </div>
+
+      <div style="flex:1;border:1px solid rgba(232,96,60,0.35);border-radius:8px;padding:20px 24px;display:flex;flex-direction:column;gap:10px;background:rgba(232,96,60,0.02);">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:11px;font-family:monospace;color:#E8603C;flex-shrink:0;">04</span>
+          <span style="font-size:15px;font-weight:600;color:#E8603C;">Tableau Extension 전환</span>
+        </div>
+        <div style="font-size:13px;font-family:monospace;background:#F4F3F1;padding:10px 14px;border-radius:4px;color:#444;line-height:1.7;">"이걸 Tableau Extension으로<br>만들려면 어떻게 해?"</div>
+        <div style="font-size:12px;color:#888;">→ .trex 파일 · Tableau API 연동 · Netlify 배포 · 스타워즈 데이터로 재사용 검증</div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s13 | 구조 재사용 ════ -->
+<div class="slide" id="s13">
+  <div class="tb"><span class="tb-cap">구조 재사용 — 스타워즈 데이터로 Tableau 실행</span><span class="tb-num">13</span></div>
+  <div class="body">
+    <!-- Left: reuse prompt -->
+    <div style="flex:1;border-right:1px solid var(--border);padding:36px 40px;display:flex;flex-direction:column;gap:18px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">재사용 프롬프트</div>
+      <div class="code-wrap" style="flex:1;font-size:13.5px;line-height:1.9;">
+        <div style="color:#555;margin-bottom:6px;"># Step 1 — Extension 전환 요청</div>
+        <div style="color:#6aac98;">이 네트워크 차트를</div>
+        <div style="color:#6aac98;">Tableau Extension으로 만들고 싶어.</div>
+        <div style="color:#6aac98;">.trex 파일 만들어줘.</div>
+        <br>
+        <div style="color:#555;margin-bottom:6px;"># Step 2 — 다른 데이터 재사용</div>
+        <div>전혀 다른 데이터로도 쓸 수 있게</div>
+        <div><span style="color:#e8c87a;">Source, Target, Strength</span></div>
+        <div>3개 컬럼만 있으면 동작하게 해줘.</div>
+      </div>
+      <div style="padding:12px 16px;background:#F8F7F5;border-radius:4px;font-size:13px;color:#777;line-height:1.65;">
+        .trex 파일 하나로 어벤져스·스타워즈·채널 데이터 모두 재사용
+      </div>
+    </div>
+    <!-- Right: 실제 실행 영상 (스타워즈 Tableau) -->
+    <div style="flex:1.1;position:relative;overflow:hidden;background:#0a0812;">
+      <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0.95;">
+        <source src="../assets/videos/avengers-tableau.mp4" type="video/mp4">
+      </video>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:16px 28px;background:linear-gradient(transparent,rgba(0,0,0,0.75));">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:4px;">실제 실행 화면</div>
+        <div style="font-size:16px;font-weight:600;color:#fff;">스타워즈 데이터 — Tableau Extension 동일 적용</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:3px;">avengers_network Extension · StarWars CSV · Tableau Marks 카드 필드 매핑</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s14 | CLIP 03 섹션 브레이크 ════ -->
+<div class="slide" id="s14">
+  <div class="sec-break">
+    <div class="sec-label">Clip 03</div>
+    <div class="sec-title">Tableau Extension<br>연결</div>
+    <div class="sec-sub">
+      D3.js 시각화를 .trex 파일로 패키징해서<br>
+      Tableau 대시보드 안에 직접 임베드
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s15 | Extension 파일 구조 ════ -->
+<div class="slide" id="s15">
+  <div class="tb"><span class="tb-cap">Tableau Extension 파일 구조</span><span class="tb-num">15</span></div>
+  <div class="body">
+    <!-- Left: file tree -->
+    <div style="width:46%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+      <div style="padding:40px 44px 24px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">파일 구조</div>
+      <div style="flex:1;display:flex;align-items:center;">
+        <div style="padding:32px 44px;width:100%;">
+          <div style="background:#111417;border-radius:8px;padding:28px 32px;font-family:'Menlo','Monaco',monospace;font-size:15px;line-height:2.1;">
+            <div style="color:#6aac98;margin-bottom:6px;">avengers-network/</div>
+            <div style="color:#888;">├── <span style="color:#e0ddd9;">index.html</span><span style="color:#555;font-size:13px;"> ← 브라우저 독립 실행</span></div>
+            <div style="color:#888;">└── <span style="color:#6aac98;">tableau-extension/</span></div>
+            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#E8603C;">avengers-network.trex</span></div>
+            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">manifest.trex</span><span style="color:#555;font-size:12px;"> ← 메타데이터</span></div>
+            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">avengers-network.html</span></div>
+            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">avengers-network.js</span></div>
+            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e8c87a;">avengers-network-data.js</span></div>
+            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">galaxy-background.js</span></div>
+            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;└── <span style="color:#555;">_redirects</span><span style="color:#555;font-size:12px;"> ← Netlify</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Right: explanation -->
+    <div style="flex:1;display:flex;flex-direction:column;">
+      <div class="row-item">
+        <div class="row-label">.trex 파일</div>
+        <div class="row-title">Tableau Extension 패키지</div>
+        <div class="row-body">manifest.trex + 웹앱 파일 묶음. Tableau Desktop에서 바로 불러와서 씀</div>
+      </div>
+      <div class="row-item">
+        <div class="row-label">manifest.trex</div>
+        <div class="row-title">Extension 메타데이터</div>
+        <div class="row-body">이름·버전·권한·URL 선언. 앱 정보 주면 Claude Code가 생성</div>
+      </div>
+      <div class="row-item">
+        <div class="row-label">변환 방법</div>
+        <div class="row-title">브라우저 HTML → Tableau Extension</div>
+        <div class="row-body">브라우저용 D3.js 코드 → Tableau API 형식으로 변환</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s16 | Tableau Extension 사용 방법 ════ -->
+<div class="slide" id="s16">
+  <div class="tb"><span class="tb-cap">Tableau Viz Extension — 사용 방법</span><span class="tb-num">16</span></div>
+  <div class="body">
+    <!-- Left: 3 steps -->
+    <div style="flex:1;border-right:1px solid var(--border);padding:0;display:flex;flex-direction:column;">
+      <div style="padding:36px 44px;border-bottom:1px solid var(--border);flex:1;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:22px;font-weight:300;color:#DDD;font-family:'Poppins',sans-serif;flex-shrink:0;width:32px;line-height:1;">1</div>
+          <div>
+            <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">데이터 연결</div>
+            <div style="font-size:14px;color:#666;line-height:1.7;">Tableau Desktop → Connect → Text file<br>→ <span style="font-family:monospace;color:#444;">avengers_network_data.csv</span></div>
+            <div style="margin-top:10px;background:#F8F7F5;padding:10px 14px;border-radius:4px;font-family:monospace;font-size:12px;color:#666;line-height:1.7;">
+              Required: Source, Target, Strength<br>
+              Optional: Type, Source_Image, Target_Image
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:36px 44px;border-bottom:1px solid var(--border);flex:1;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:22px;font-weight:300;color:#DDD;font-family:'Poppins',sans-serif;flex-shrink:0;width:32px;line-height:1;">2</div>
+          <div>
+            <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">Extension 추가</div>
+            <div style="font-size:14px;color:#666;line-height:1.7;">Marks 카드 → Mark 타입 드롭다운<br>→ <strong>Add Extension</strong> → Access Local Extensions<br>→ <span style="font-family:monospace;color:#E8603C;">avengers-network.trex</span> 선택</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:36px 44px;flex:1;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:22px;font-weight:300;color:#DDD;font-family:'Poppins',sans-serif;flex-shrink:0;width:32px;line-height:1;">3</div>
+          <div>
+            <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">필드 할당</div>
+            <div style="font-size:14px;color:#666;line-height:1.7;">인코딩 4개를 Marks 카드에 연결</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Right: encoding table + note -->
+    <div style="flex:1;padding:44px 48px;display:flex;flex-direction:column;gap:24px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">인코딩 매핑</div>
+      <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+        <div style="display:flex;background:#F8F7F5;padding:10px 20px;border-bottom:1px solid var(--border);">
+          <div style="flex:1;font-size:12px;letter-spacing:0.1em;color:#888;text-transform:uppercase;">Encoding</div>
+          <div style="flex:1;font-size:12px;letter-spacing:0.1em;color:#888;text-transform:uppercase;">Field</div>
+          <div style="flex:1;font-size:12px;letter-spacing:0.1em;color:#888;text-transform:uppercase;">Type</div>
+        </div>
+        <div style="display:flex;padding:12px 20px;border-bottom:1px solid var(--border);align-items:center;">
+          <div style="flex:1;font-family:monospace;font-size:14px;color:#E8603C;">source</div>
+          <div style="flex:1;font-family:monospace;font-size:14px;color:#444;">Source</div>
+          <div style="flex:1;font-size:13px;color:#666;">Dimension</div>
+        </div>
+        <div style="display:flex;padding:12px 20px;border-bottom:1px solid var(--border);align-items:center;">
+          <div style="flex:1;font-family:monospace;font-size:14px;color:#E8603C;">target</div>
+          <div style="flex:1;font-family:monospace;font-size:14px;color:#444;">Target</div>
+          <div style="flex:1;font-size:13px;color:#666;">Dimension</div>
+        </div>
+        <div style="display:flex;padding:12px 20px;border-bottom:1px solid var(--border);align-items:center;">
+          <div style="flex:1;font-family:monospace;font-size:14px;color:#E8603C;">strength</div>
+          <div style="flex:1;font-family:monospace;font-size:14px;color:#444;">Strength</div>
+          <div style="flex:1;font-size:13px;color:#666;">Measure</div>
+        </div>
+        <div style="display:flex;padding:12px 20px;align-items:center;">
+          <div style="flex:1;font-family:monospace;font-size:14px;color:#999;">type</div>
+          <div style="flex:1;font-family:monospace;font-size:14px;color:#444;">Type</div>
+          <div style="flex:1;font-size:13px;color:#666;">Dimension (선택)</div>
+        </div>
+      </div>
+      <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;">
+        <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:6px;">로컬 서버 불필요</div>
+        <div style="font-size:14px;color:#666;line-height:1.7;">.trex 파일만 있으면 인터넷 연결만으로 실행<br>(Netlify 배포 URL이 manifest에 등록되어 있음)</div>
+      </div>
+      <div style="padding:16px 20px;background:#F8F7F5;border-radius:6px;">
+        <div style="font-size:13px;color:#888;margin-bottom:6px;">내 데이터로 사용할 때</div>
+        <div style="font-size:13px;color:#555;line-height:1.7;font-family:monospace;">Source, Target, Strength 3컬럼이면<br>어떤 네트워크 데이터든 바로 적용 가능</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s17 | CLIP 04 섹션 브레이크 ════ -->
+<div class="slide" id="s17">
+  <div class="sec-break">
+    <div class="sec-label">Clip 04</div>
+    <div class="sec-title">3D Globe<br>시각화</div>
+    <div class="sec-sub">
+      Three.js WebGL로 지구본 만들기<br>
+      국가 데이터 → 버블 + 아크로 올리기
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s18 | Globe 데모 (영상) ════ -->
+<div class="slide" id="s18">
+  <div class="tb"><span class="tb-cap">3D Globe 시각화 — 결과물</span><span class="tb-num">18</span></div>
+  <div class="body" style="position:relative;overflow:hidden;background:#020510;">
+    <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
+      <source src="../assets/videos/globe.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 52px;background:linear-gradient(transparent,rgba(0,0,0,0.7));display:flex;align-items:flex-end;gap:24px;">
+      <div>
+        <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:4px;">github.com/seoyeon924/globe</div>
+        <div style="font-size:16px;color:rgba(255,255,255,0.75);">Three.js r128 · GSAP 3 · GLSL 셰이더 · UNHCR 이민 데이터 110M+</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:10px;">
+        <span class="tag-orange" style="font-size:12px;border-color:#E8603C;color:#E8603C;background:rgba(232,96,60,0.1);">드래그 회전</span>
+        <span class="tag" style="font-size:12px;border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.06);">국가 클릭 필터</span>
+        <span class="tag" style="font-size:12px;border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.06);">아크 애니메이션</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s19 | Globe 제작 접근법 ════ -->
+<div class="slide" id="s19">
+  <div class="tb"><span class="tb-cap">3D Globe — 제작 접근법</span><span class="tb-num">19</span></div>
+  <div style="padding:22px 52px 18px;border-bottom:1px solid var(--border);flex-shrink:0;">
+    <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">3D GLOBE 제작 방법</div>
+    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">레퍼런스 이미지부터,<br>코드 복붙이 아니라</div>
+  </div>
+  <div class="body">
+    <div style="flex:1;border-right:1px solid var(--border);padding:24px 36px;display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">레퍼런스 → Claude Code → 반복</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:16px 20px;">
+          <div style="font-size:12px;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 1 — 레퍼런스 이미지 수집</div>
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:5px;">원하는 느낌의 Globe 스크린샷 모으기</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">데이터 시각화 어워드·SNS에서<br>마음에 드는 3D Globe 레퍼런스 여러 장 수집</div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:16px 20px;">
+          <div style="font-size:12px;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 2 — 이미지 + 데이터 → Claude Code</div>
+          <div style="font-family:monospace;font-size:12.5px;color:#444;line-height:1.7;background:#F8F7F5;padding:10px 14px;border-radius:4px;">"이 느낌으로 3D Globe 만들어줘.<br>Three.js r128 + GSAP 사용.<br>unhcr_data.csv로 아크 시각화."</div>
+        </div>
+        <div style="border:1px solid rgba(232,96,60,0.2);border-radius:6px;padding:16px 20px;background:rgba(232,96,60,0.03);">
+          <div style="font-size:12px;color:#E8603C;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 3 — 개발자도구로 수정 포인트 확인</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">Elements 탭 → 원하는 요소 클릭 → 속성 확인<br>→ "이 부분 이렇게 바꿔줘" 반복</div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;padding:24px 36px;display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">Three.js Globe 핵심 구성</div>
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div style="padding:13px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;">
+          <div style="font-family:monospace;font-size:12px;color:#6aac98;flex-shrink:0;margin-top:2px;width:56px;">Scene</div>
+          <div style="font-size:14px;color:#444;line-height:1.6;">WebGLRenderer + PerspectiveCamera + 조명 설정</div>
+        </div>
+        <div style="padding:13px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;">
+          <div style="font-family:monospace;font-size:12px;color:#6aac98;flex-shrink:0;margin-top:2px;width:56px;">Globe</div>
+          <div style="font-size:14px;color:#444;line-height:1.6;">SphereGeometry + earth_atmos 텍스처 매핑</div>
+        </div>
+        <div style="padding:13px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;">
+          <div style="font-family:monospace;font-size:12px;color:#6aac98;flex-shrink:0;margin-top:2px;width:56px;">Arcs</div>
+          <div style="font-size:14px;color:#444;line-height:1.6;">위·경도 → 3D 좌표 변환 + CatmullRomCurve3 아크</div>
+        </div>
+        <div style="padding:13px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;">
+          <div style="font-family:monospace;font-size:12px;color:#6aac98;flex-shrink:0;margin-top:2px;width:56px;">Stars</div>
+          <div style="font-size:14px;color:#444;line-height:1.6;">GLSL 파티클 셰이더 + GSAP 애니메이션</div>
+        </div>
+        <div style="padding:13px 0;display:flex;gap:16px;align-items:flex-start;">
+          <div style="font-family:monospace;font-size:12px;color:#6aac98;flex-shrink:0;margin-top:2px;width:56px;">Config</div>
+          <div style="font-size:14px;color:#444;line-height:1.6;">파일 상단 CONFIG 객체에서 모든 파라미터 조정</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s20 | Globe 반복 제작 ════ -->
+<div class="slide" id="s20">
+  <div class="tb"><span class="tb-cap">3D Globe — 실제 제작 흐름</span><span class="tb-num">20</span></div>
+  <div style="padding:22px 52px 18px;border-bottom:1px solid var(--border);flex-shrink:0;">
+    <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">3D GLOBE 제작 흐름</div>
+    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">한 번에 나오지 않아요,<br>레퍼런스 반복이 방법이에요</div>
+  </div>
+  <div class="body">
+    <div style="flex:1;border-right:1px solid var(--border);padding:24px 36px;display:flex;flex-direction:column;gap:12px;">
+      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">실제 반복 프롬프트 — 수십 번</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;">Phase 1 — 기초 구현</div>
+        <div style="font-family:monospace;font-size:12.5px;background:#F8F7F5;padding:10px 14px;border-radius:4px;color:#444;line-height:1.75;">unhcr_data.csv로 3D Globe 아크 시각화.<br>Origin ISO → Asylum ISO 방향 아크,<br>Refugees 수 = 아크 굵기.<br>Three.js r128 + GSAP 사용.</div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;">Phase 2 — 시각 고도화 (여러 번 반복)</div>
+        <div style="font-family:monospace;font-size:12.5px;background:#F8F7F5;padding:10px 14px;border-radius:4px;color:#444;line-height:1.75;">glow 효과 더 강하게, 별 3배 크게<br>→ arcs를 흐르는 대시 애니메이션으로<br>→ 배경 더 어둡게, 우주 느낌으로</div>
+      </div>
+      <div style="border:1px solid rgba(232,96,60,0.3);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;gap:8px;background:rgba(232,96,60,0.02);">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;">Phase 3 — 기능 추가</div>
+        <div style="font-family:monospace;font-size:12.5px;background:#F8F7F5;padding:10px 14px;border-radius:4px;color:#444;line-height:1.75;">국가 검색 필터 추가해줘<br>→ 클릭 시 인트로 오버레이 만들어줘<br>→ 모바일 터치도 지원하게</div>
+      </div>
+    </div>
+    <div style="flex:1;padding:24px 36px;display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">수정할 때 — 개발자도구 활용</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:18px 20px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:14px;font-weight:600;color:#1C1A18;margin-bottom:2px;">Elements 탭으로 수정 포인트 찾기</div>
+        <div style="font-size:13px;color:#666;line-height:1.75;">① Elements 탭 → 바꾸고 싶은 요소 클릭<br>② 색상·크기·opacity 속성 값 확인<br>③ Claude Code에 "이 요소의 [속성]을 [값]으로"</div>
+      </div>
+      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">UNHCR 데이터 구조</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 16px;display:flex;gap:12px;align-items:center;">
+          <span style="font-family:monospace;font-size:11.5px;color:#e8c87a;flex-shrink:0;">Country of Origin ISO</span>
+          <span style="font-size:12px;color:#666;">아크 출발지 — 난민이 떠나는 국가</span>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 16px;display:flex;gap:12px;align-items:center;">
+          <span style="font-family:monospace;font-size:11.5px;color:#8dc8b4;flex-shrink:0;">Country of Asylum ISO</span>
+          <span style="font-size:12px;color:#666;">아크 도착지 — 난민이 향하는 국가</span>
+        </div>
+        <div style="border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:11px 16px;display:flex;gap:12px;align-items:center;background:rgba(232,96,60,0.02);">
+          <span style="font-family:monospace;font-size:11.5px;color:#E8603C;flex-shrink:0;">Refugees</span>
+          <span style="font-size:12px;color:#666;">아크 굵기 — 난민 수에 비례</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s21 | 전체 정리 ════ -->
+<div class="slide" id="s21">
+  <div class="tb"><span class="tb-cap">CH01 정리</span><span class="tb-num">21</span></div>
+  <div style="padding:22px 52px 18px;border-bottom:1px solid var(--border);flex-shrink:0;">
+    <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">이번 챕터 요약</div>
+    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">4개 클립으로 완성하는<br>인터랙티브 데이터 아트</div>
+  </div>
+  <div class="body" style="flex-direction:column;padding:20px 44px 28px;gap:14px;">
+    <div style="display:flex;gap:20px;flex:1;">
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:28px 28px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">Clip 01</div>
+        <div style="font-size:20px;font-weight:600;color:#1C1A18;">Interactive Data Art 기획</div>
+        <div style="width:28px;height:2px;background:#E8603C;"></div>
+        <div style="font-size:15px;color:#555;line-height:1.75;">
+          데이터 구조 → Claude Code 기획 요청<br>
+          아이디어 3개 제안 받기<br>
+          D3.js 선택 이유
+        </div>
+      </div>
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:28px 28px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">Clip 02</div>
+        <div style="font-size:20px;font-weight:600;color:#1C1A18;">어벤져스 네트워크 차트</div>
+        <div style="width:28px;height:2px;background:#E8603C;"></div>
+        <div style="font-size:15px;color:#555;line-height:1.75;">
+          레퍼런스 → 개발자도구 → Claude Code<br>
+          D3.js 원형 레이아웃 + PROMPTS.md<br>
+          구조 재사용 전략
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:20px;flex:1;">
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:28px 28px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">Clip 03</div>
+        <div style="font-size:20px;font-weight:600;color:#1C1A18;">Tableau Extension 연결</div>
+        <div style="width:28px;height:2px;background:#E8603C;"></div>
+        <div style="font-size:15px;color:#555;line-height:1.75;">
+          .trex 파일 구조 이해<br>
+          D3.js → Tableau Extension 변환<br>
+          Netlify 배포 + Tableau 임베드
+        </div>
+      </div>
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:28px 28px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">Clip 04</div>
+        <div style="font-size:20px;font-weight:600;color:#1C1A18;">3D Globe 시각화</div>
+        <div style="width:28px;height:2px;background:#E8603C;"></div>
+        <div style="font-size:15px;color:#555;line-height:1.75;">
+          Three.js r128 + GLSL 셰이더<br>
+          텍스처 레퍼런스 → 데이터 아크 적용<br>
+          위·경도 CSV 구조 + CONFIG 파라미터
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- ════ s22 | 레퍼런스 사이트 ════ -->
+<div class="slide" id="s22">
+  <div class="tb"><span class="tb-cap">레퍼런스 탐색 — 어디서 찾나</span><span class="tb-num">22</span></div>
+  <div style="padding:22px 52px 18px;border-bottom:1px solid var(--border);flex-shrink:0;">
+    <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">레퍼런스 수집</div>
+    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">레퍼런스는 여기서 찾기,<br>두 곳으로 충분해요</div>
+  </div>
+  <div class="body" style="gap:0;">
+    <!-- Left: Awwwards -->
+    <div style="flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+      <div style="padding:22px 36px 16px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">웹 디자인 · 인터랙티브 어워드</div>
+        <div style="font-size:20px;font-weight:600;color:#1C1A18;">Awwwards</div>
+        <div style="font-family:monospace;font-size:13px;color:#E8603C;">awwwards.com</div>
+      </div>
+      <!-- Browser frame -->
+      <div style="margin:16px 24px;border:1px solid var(--border);border-radius:6px;overflow:hidden;flex:1;display:flex;flex-direction:column;">
+        <div style="height:28px;background:#F8F7F5;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:6px;flex-shrink:0;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#E8D0C8;"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#E8E0C8;"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#C8E8D0;"></div>
+          <div style="font-size:11px;color:#AAAAAA;margin-left:8px;font-family:monospace;">awwwards.com</div>
+        </div>
+        <img src="../assets/images/ref-awwwards.png" alt="Awwwards" style="width:100%;flex:1;object-fit:cover;object-position:top;">
+      </div>
+      <div style="padding:12px 24px 20px;display:flex;gap:8px;flex-wrap:wrap;">
+        <div style="font-size:12px;color:#666;padding:4px 10px;background:#F8F7F5;border-radius:4px;border:1px solid var(--border);">Explore → Data Visualization 필터</div>
+        <div style="font-size:12px;color:#666;padding:4px 10px;background:#F8F7F5;border-radius:4px;border:1px solid var(--border);">인터랙션 패턴 · 레이아웃 구조 참고</div>
+      </div>
+    </div>
+    <!-- Right: IIB Awards -->
+    <div style="flex:1;display:flex;flex-direction:column;">
+      <div style="padding:22px 36px 16px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">데이터 시각화 전문 어워드</div>
+        <div style="font-size:20px;font-weight:600;color:#1C1A18;">Information is Beautiful Awards</div>
+        <div style="font-family:monospace;font-size:13px;color:#E8603C;">informationisbeautifulawards.com</div>
+      </div>
+      <div style="margin:16px 24px;border:1px solid var(--border);border-radius:6px;overflow:hidden;flex:1;display:flex;flex-direction:column;">
+        <div style="height:28px;background:#F8F7F5;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:6px;flex-shrink:0;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#E8D0C8;"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#E8E0C8;"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#C8E8D0;"></div>
+          <div style="font-size:11px;color:#AAAAAA;margin-left:8px;font-family:monospace;">informationisbeautifulawards.com</div>
+        </div>
+        <img src="../assets/images/ref-iib.png" alt="IIB Awards" style="width:100%;flex:1;object-fit:cover;object-position:top;">
+      </div>
+      <div style="padding:12px 24px 20px;display:flex;gap:8px;flex-wrap:wrap;">
+        <div style="font-size:12px;color:#666;padding:4px 10px;background:#F8F7F5;border-radius:4px;border:1px solid var(--border);">연도별 수상작 → Winners 갤러리</div>
+        <div style="font-size:12px;color:#666;padding:4px 10px;background:#F8F7F5;border-radius:4px;border:1px solid var(--border);">데이터 인코딩 방식 · 주제 선택 참고</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s23 | 데이터 아트 기획 ════ -->
+<div class="slide" id="s23">
+  <div class="tb"><span class="tb-cap">데이터 아트 기획</span><span class="tb-num">23</span></div>
+  <div class="body" style="flex-direction:column;">
+
+    <!-- Top: one message -->
+    <div style="padding:44px 64px 32px;border-bottom:1px solid var(--border);flex-shrink:0;">
+      <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:14px;">Interactive Data Art</div>
+      <div style="font-size:40px;font-weight:600;color:#1C1A18;line-height:1.18;letter-spacing:-0.025em;">차트 자체보다는,<br>경험을 설계하기</div>
+      <div style="margin-top:20px;display:flex;gap:12px;align-items:center;">
+        <div style="padding:7px 18px;background:#F4F3F1;border-radius:4px;font-size:13px;color:#888;border:1px solid var(--border);">BI — "어떤 차트로 보여줄까?"</div>
+        <div style="font-size:16px;color:#CCC;">→</div>
+        <div style="padding:7px 18px;border:1px solid rgba(232,96,60,0.28);border-radius:4px;font-size:13px;color:#E8603C;background:rgba(232,96,60,0.04);">데이터 아트 — "어떤 경험을 만들까?"</div>
+      </div>
+    </div>
+
+    <!-- Bottom: 5-step flow — individual bordered cards -->
+    <div style="flex:1;display:flex;align-items:center;padding:24px 36px;gap:10px;">
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:24px 20px;display:flex;flex-direction:column;gap:12px;align-self:stretch;justify-content:center;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;letter-spacing:0.06em;">01</div>
+        <div style="font-size:18px;font-weight:600;color:#1C1A18;">느낌 정의</div>
+        <div style="font-size:13px;color:#777;line-height:1.75;font-style:italic;">"보는 사람이<br>___ 를 느끼길"</div>
+      </div>
+
+      <div style="color:#CCC;font-size:14px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:24px 20px;display:flex;flex-direction:column;gap:12px;align-self:stretch;justify-content:center;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;letter-spacing:0.06em;">02</div>
+        <div style="font-size:18px;font-weight:600;color:#1C1A18;">인코딩 설계</div>
+        <div style="font-size:13px;color:#777;line-height:1.75;">위치 · 크기 · 색<br>움직임 중 선택</div>
+      </div>
+
+      <div style="color:#CCC;font-size:14px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:24px 20px;display:flex;flex-direction:column;gap:12px;align-self:stretch;justify-content:center;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;letter-spacing:0.06em;">03</div>
+        <div style="font-size:18px;font-weight:600;color:#1C1A18;">인터랙션 설계</div>
+        <div style="font-size:13px;color:#777;line-height:1.75;">처음 화면<br>탐색 중<br>탐색 완료 상태</div>
+      </div>
+
+      <div style="color:#CCC;font-size:14px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:24px 20px;display:flex;flex-direction:column;gap:12px;align-self:stretch;justify-content:center;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;letter-spacing:0.06em;">04</div>
+        <div style="font-size:18px;font-weight:600;color:#1C1A18;">레퍼런스 수집</div>
+        <div style="font-size:13px;color:#777;line-height:1.75;">5~10개<br>데이터 viz<br>아니어도 됨</div>
+      </div>
+
+      <div style="color:#CCC;font-size:14px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid rgba(232,96,60,0.35);border-radius:8px;padding:24px 20px;display:flex;flex-direction:column;gap:12px;align-self:stretch;justify-content:center;background:rgba(232,96,60,0.03);">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;letter-spacing:0.06em;">05</div>
+        <div style="font-size:18px;font-weight:600;color:#E8603C;">코딩 시작</div>
+        <div style="font-size:13px;color:#777;line-height:1.75;">D3.js · Three.js<br>Claude Code<br>프롬프트 작성</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+</div><!-- /deck -->
+
+<!-- Navigation -->
+<div class="nav">
+  <span class="nav-ctr" id="ctr">1 / 23</span>
+  <button class="nav-btn" id="prev">←</button>
+  <button class="nav-btn" id="next">→</button>
+</div>
+<div class="progress" id="prog"></div>
+<div class="clip-dots" id="dots"></div>
+
+<script>
+  const TOTAL = 23;
+  const ORDER = [1,2,3,4,5,22,23,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
+  const CLIP_MAP = {
+    1:0, 2:0,
+    3:0, 4:0, 5:0, 22:0, 23:0, 6:0, 7:0,
+    8:1, 9:1, 10:1, 11:1, 12:1, 13:1,
+    14:2, 15:2, 16:2,
+    17:3, 18:3, 19:3, 20:3, 21:3
+  };
+  const CLIP_LABELS = ['Interactive Data Art 기획', '어벤져스 네트워크 차트', 'Tableau Extension 연결', '3D Globe 시각화'];
+  const CLIPS = 4;
+
+  let cur = 0;
+
+  function show(idx) {
+    const slides = document.querySelectorAll('.slide');
+    slides.forEach(s => s.classList.remove('active'));
+    const slideId = ORDER[idx];
+    document.getElementById('s' + slideId).classList.add('active');
+    document.getElementById('ctr').textContent = (idx + 1) + ' / ' + TOTAL;
+    document.getElementById('prog').style.width = ((idx + 1) / TOTAL * 100) + '%';
+    const dots = document.querySelectorAll('.clip-dot');
+    dots.forEach((d, i) => d.classList.toggle('active', i === CLIP_MAP[slideId]));
+  }
+
+  document.getElementById('next').onclick = () => { if (cur < TOTAL - 1) show(++cur); };
+  document.getElementById('prev').onclick = () => { if (cur > 0) show(--cur); };
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); if (cur < TOTAL - 1) show(++cur); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); if (cur > 0) show(--cur); }
+  });
+
+  const dotsEl = document.getElementById('dots');
+  for (let i = 0; i < CLIPS; i++) {
+    const d = document.createElement('div');
+    d.className = 'clip-dot' + (i === 0 ? ' active' : '');
+    dotsEl.appendChild(d);
+  }
+
+  function scale() {
+    const s = Math.min(window.innerWidth / 1280, window.innerHeight / 800);
+    document.getElementById('deck').style.transform = 'scale(' + s + ')';
+    document.getElementById('deck').style.left = ((window.innerWidth - 1280 * s) / 2) + 'px';
+    document.getElementById('deck').style.top = ((window.innerHeight - 800 * s) / 2) + 'px';
+  }
+  window.addEventListener('resize', scale);
+  scale();
+  show(0);
+</script>
+</body>
+</html>
