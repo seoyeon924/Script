@@ -841,51 +841,42 @@
   <div class="tb"><span class="tb-cap">3D Globe — 제작 접근법</span><span class="tb-num">19</span></div>
   <div style="padding:22px 52px 18px;border-bottom:1px solid var(--border);flex-shrink:0;">
     <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">3D GLOBE 제작 방법</div>
-    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">레퍼런스 이미지부터,<br>코드 복붙이 아니라</div>
+    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">느낌은 레퍼런스로,<br>텍스처는 URL 복붙으로 시작하기</div>
   </div>
   <div class="body">
     <div style="flex:1;border-right:1px solid var(--border);padding:24px 36px;display:flex;flex-direction:column;gap:14px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">레퍼런스 → Claude Code → 반복</div>
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">레퍼런스 → URL 복사 → Claude Code</div>
       <div style="display:flex;flex-direction:column;gap:12px;">
         <div style="border:1px solid var(--border);border-radius:6px;padding:16px 20px;">
           <div style="font-size:12px;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 1 — 레퍼런스 이미지 수집</div>
           <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:5px;">원하는 느낌의 Globe 스크린샷 모으기</div>
-          <div style="font-size:13px;color:#666;line-height:1.6;">데이터 시각화 어워드·SNS에서<br>마음에 드는 3D Globe 레퍼런스 여러 장 수집</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">데이터 시각화 어워드·SNS에서<br>마음에 드는 3D Globe 레퍼런스 수집</div>
+        </div>
+        <div style="border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:16px 20px;background:rgba(232,96,60,0.03);">
+          <div style="font-size:12px;color:#E8603C;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 2 — 개발자도구 Network 탭 → 텍스처 URL 복사</div>
+          <div style="font-size:13px;color:#555;line-height:1.65;">F12 → Network 탭 → 페이지 새로고침<br><span style="font-family:monospace;font-size:12px;color:#E8603C;">.jpg</span> 파일 클릭 → 주소창 URL 그대로 복사</div>
         </div>
         <div style="border:1px solid var(--border);border-radius:6px;padding:16px 20px;">
-          <div style="font-size:12px;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 2 — 이미지 + 데이터 → Claude Code</div>
-          <div style="font-family:monospace;font-size:12.5px;color:#444;line-height:1.7;background:#F8F7F5;padding:10px 14px;border-radius:4px;">"이 느낌으로 3D Globe 만들어줘.<br>Three.js r128 + GSAP 사용.<br>unhcr_data.csv로 아크 시각화."</div>
-        </div>
-        <div style="border:1px solid rgba(232,96,60,0.2);border-radius:6px;padding:16px 20px;background:rgba(232,96,60,0.03);">
-          <div style="font-size:12px;color:#E8603C;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 3 — 개발자도구로 수정 포인트 확인</div>
-          <div style="font-size:13px;color:#666;line-height:1.6;">Elements 탭 → 원하는 요소 클릭 → 속성 확인<br>→ "이 부분 이렇게 바꿔줘" 반복</div>
+          <div style="font-size:12px;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 3 — URL + 레퍼런스 이미지 → Claude Code</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">복사한 URL을 프롬프트에 그대로 붙여넣기<br>레퍼런스 이미지 함께 전달해 분위기 지정</div>
         </div>
       </div>
     </div>
-    <div style="flex:1;padding:24px 36px;display:flex;flex-direction:column;gap:14px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">Three.js Globe 핵심 구성</div>
-      <div style="display:flex;flex-direction:column;gap:0;">
-        <div style="padding:13px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;">
-          <div style="font-family:monospace;font-size:12px;color:#6aac98;flex-shrink:0;margin-top:2px;width:56px;">Scene</div>
-          <div style="font-size:14px;color:#444;line-height:1.6;">WebGLRenderer + PerspectiveCamera + 조명 설정</div>
-        </div>
-        <div style="padding:13px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;">
-          <div style="font-family:monospace;font-size:12px;color:#6aac98;flex-shrink:0;margin-top:2px;width:56px;">Globe</div>
-          <div style="font-size:14px;color:#444;line-height:1.6;">SphereGeometry + earth_atmos 텍스처 매핑</div>
-        </div>
-        <div style="padding:13px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;">
-          <div style="font-family:monospace;font-size:12px;color:#6aac98;flex-shrink:0;margin-top:2px;width:56px;">Arcs</div>
-          <div style="font-size:14px;color:#444;line-height:1.6;">위·경도 → 3D 좌표 변환 + CatmullRomCurve3 아크</div>
-        </div>
-        <div style="padding:13px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;">
-          <div style="font-family:monospace;font-size:12px;color:#6aac98;flex-shrink:0;margin-top:2px;width:56px;">Stars</div>
-          <div style="font-size:14px;color:#444;line-height:1.6;">GLSL 파티클 셰이더 + GSAP 애니메이션</div>
-        </div>
-        <div style="padding:13px 0;display:flex;gap:16px;align-items:flex-start;">
-          <div style="font-family:monospace;font-size:12px;color:#6aac98;flex-shrink:0;margin-top:2px;width:56px;">Config</div>
-          <div style="font-size:14px;color:#444;line-height:1.6;">파일 상단 CONFIG 객체에서 모든 파라미터 조정</div>
-        </div>
-      </div>
+    <div style="flex:1;padding:24px 36px;display:flex;flex-direction:column;gap:14px;align-items:flex-start;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">실제 텍스처 URL — 그대로 복붙</div>
+      <div class="code-wrap" style="font-size:12px;line-height:1.85;width:100%;">var loader = new THREE.TextureLoader();
+earthMaterial.map = loader.load(
+  'https://cdn.jsdelivr.net/gh/mrdoob/'
+  + 'three.js@r128/examples/textures/'
+  + 'planets/earth_atmos_2048.jpg'
+);</div>
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">Claude Code 프롬프트 — 복붙 후 바로 사용</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;background:#F8F7F5;font-family:monospace;font-size:12px;color:#444;line-height:1.85;white-space:pre-wrap;width:100%;">Three.js r128 + GSAP으로 3D 지구본.
+텍스처: https://cdn.jsdelivr.net/gh/mrdoob/
+  three.js@r128/examples/textures/
+  planets/earth_atmos_2048.jpg
+데이터: unhcr_data.csv
+(Origin ISO→Asylum ISO, Refugees=아크굵기)</div>
     </div>
   </div>
 </div>
@@ -896,7 +887,7 @@
   <div class="tb"><span class="tb-cap">3D Globe — 실제 제작 흐름</span><span class="tb-num">20</span></div>
   <div style="padding:22px 52px 18px;border-bottom:1px solid var(--border);flex-shrink:0;">
     <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">3D GLOBE 제작 흐름</div>
-    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">한 번에 나오지 않아요,<br>레퍼런스 반복이 방법이에요</div>
+    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">한 번에 나오지 않아요,<br>토큰 기반으로 단계별 반복하기</div>
   </div>
   <div class="body">
     <div style="flex:1;border-right:1px solid var(--border);padding:24px 36px;display:flex;flex-direction:column;gap:12px;">
@@ -935,6 +926,52 @@
           <span style="font-size:12px;color:#666;">아크 굵기 — 난민 수에 비례</span>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s24 | 디자인 토큰 ════ -->
+<div class="slide" id="s24">
+  <div class="tb"><span class="tb-cap">디자인 토큰 정의</span><span class="tb-num">24</span></div>
+  <div style="padding:22px 52px 18px;border-bottom:1px solid var(--border);flex-shrink:0;">
+    <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">3D GLOBE — 디자인 전략</div>
+    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">반복 전에 먼저,<br>디자인 토큰 정의하기</div>
+  </div>
+  <div class="body">
+    <div style="flex:1;border-right:1px solid var(--border);padding:24px 36px;display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">레퍼런스 반복 vs 토큰 정의</div>
+      <div style="border:1px solid rgba(180,60,60,0.3);border-radius:8px;padding:18px 20px;background:rgba(180,60,60,0.02);">
+        <div style="font-size:12px;color:#b44444;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">❌ 토큰 없이 반복</div>
+        <div style="font-size:14px;color:#555;line-height:1.75;">레퍼런스 이미지를 매번 첨부<br>→ API 토큰 소모 ↑<br>→ 결과물이 매번 조금씩 달라짐</div>
+      </div>
+      <div style="display:flex;justify-content:center;color:#CCC;font-size:20px;flex-shrink:0;padding:2px 0;">↓ 해결책</div>
+      <div style="border:1px solid rgba(232,96,60,0.35);border-radius:8px;padding:18px 20px;background:rgba(232,96,60,0.03);">
+        <div style="font-size:12px;color:#E8603C;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">✅ 디자인 토큰 정의 후 반복</div>
+        <div style="font-size:14px;color:#555;line-height:1.75;">색상·폰트·효과를 텍스트로 한 번 정의<br>→ 이후 이미지 첨부 없이도<br>→ 일관된 스타일로 계속 수정 가능</div>
+      </div>
+    </div>
+    <div style="flex:1;padding:24px 36px;display:flex;flex-direction:column;gap:14px;align-items:flex-start;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">MIGRATION ATLAS — 실제 디자인 토큰</div>
+      <div class="code-wrap" style="font-size:12px;line-height:1.9;width:100%;flex:1;">/* 배경 */
+bg: radial-gradient(
+  #0d1a2d 0%, #0a0a12 60%, #000 100%)
+
+/* 강조색 */
+accent: #00CCFF
+
+/* 폰트 */
+font-family: 'Michroma', sans-serif
+text-transform: uppercase
+letter-spacing: 0.2em
+
+/* 발광 효과 */
+glow: rgba(0, 204, 255, 0.15)
+
+/* 아크 색상 */
+arc-origin: rgba(0, 204, 255, 0.7)
+arc-dest:   rgba(255, 100, 100, 0.7)</div>
+      <div style="font-size:12.5px;color:#666;line-height:1.7;border:1px solid var(--border);border-radius:6px;padding:12px 16px;background:#F8F7F5;width:100%;">이 토큰을 첫 프롬프트에 붙여넣으면<br>이후 "glow 더 강하게", "accent 색 바꿔" 처럼<br>이미지 없이 텍스트만으로 일관성 유지</div>
     </div>
   </div>
 </div>
@@ -1003,7 +1040,7 @@
   <div class="tb"><span class="tb-cap">레퍼런스 탐색 — 어디서 찾나</span><span class="tb-num">22</span></div>
   <div style="padding:22px 52px 18px;border-bottom:1px solid var(--border);flex-shrink:0;">
     <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">레퍼런스 수집</div>
-    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">레퍼런스는 여기서 찾기,<br>두 곳으로 충분해요</div>
+    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">데이터 아트 레퍼런스 찾기</div>
   </div>
   <div class="body" style="gap:0;">
     <!-- Left: Awwwards -->
@@ -1127,14 +1164,14 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const TOTAL = 23;
-  const ORDER = [1,2,3,4,5,22,23,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
+  const TOTAL = 24;
+  const ORDER = [1,2,3,4,5,22,23,6,7,8,9,10,11,12,13,14,15,16,17,18,19,24,20,21];
   const CLIP_MAP = {
     1:0, 2:0,
     3:0, 4:0, 5:0, 22:0, 23:0, 6:0, 7:0,
     8:1, 9:1, 10:1, 11:1, 12:1, 13:1,
     14:2, 15:2, 16:2,
-    17:3, 18:3, 19:3, 20:3, 21:3
+    17:3, 18:3, 19:3, 24:3, 20:3, 21:3
   };
   const CLIP_LABELS = ['Interactive Data Art 기획', '어벤져스 네트워크 차트', 'Tableau Extension 연결', '3D Globe 시각화'];
   const CLIPS = 4;
