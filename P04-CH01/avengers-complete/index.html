@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avengers — Character Network</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+
+  body {
+    background: #000000;
+    color: #ddd;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    height: 100vh; width: 100vw;
+    cursor: default;
+    user-select: none;
+  }
+
+  /* Background image layer */
+  #bg-image {
+    position: fixed; inset: 0; z-index: 0;
+    width: 100%; height: 100%;
+    background: url('background.jpg') center top / cover no-repeat;
+    filter: brightness(0.7) saturate(0.6);
+  }
+
+  #galaxy-container { position: fixed; inset: 0; z-index: 1; width: 100%; height: 100%; }
+  #galaxy-container canvas { width: 100% !important; height: 100% !important; display: block; }
+  svg#viz { position: fixed; inset: 0; z-index: 2; }
+
+  /* Atmospheric fog layers */
+  .fog { position: fixed; bottom: 0; left: 0; right: 0; pointer-events: none; z-index: 3; }
+  .fog-1 { height: 18vh; background: linear-gradient(0deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,.1) 40%, transparent 100%); }
+  .fog-2 { height: 30vh; background: linear-gradient(0deg, rgba(0,0,0,.1) 0%, transparent 50%); filter: blur(40px); }
+  .fog-3 { height: 8vh; background: linear-gradient(0deg, rgba(0,0,0,.3) 0%, transparent 100%); }
+
+  .vignette {
+    position: fixed; inset: 0; z-index: 3; pointer-events: none;
+    background: radial-gradient(ellipse at 38% 50%, transparent 45%, rgba(0,0,0,.35) 100%);
+  }
+
+  /* Header */
+  #header {
+    position: fixed; top: 24px; left: 28px; z-index: 10;
+    pointer-events: none;
+  }
+  #header .logo-img {
+    width: 120px; height: auto;
+    opacity: 0.65;
+    filter: brightness(1.1);
+    display: block;
+  }
+  #header .sub-text {
+    font-size: 11px; color: rgba(255,255,255,0.6); letter-spacing: 3px;
+    text-transform: uppercase; margin-top: 8px;
+  }
+  #header .credit-text {
+    font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 2.5px;
+    text-transform: uppercase; margin-top: 4px;
+  }
+
+  /* Selected character info - positioned above the selected circle */
+  #selected-info {
+    position: fixed; z-index: 10; pointer-events: none;
+    transition: opacity .15s ease, top .2s cubic-bezier(.4,0,.2,1), left .2s cubic-bezier(.4,0,.2,1);
+    padding: 6px 16px;
+  }
+  #selected-info.hidden { opacity: 0; }
+  .sel-name {
+    font-family: 'Cinzel', serif;
+    font-size: 24px; font-weight: 700; letter-spacing: 4px; color: #bbb;
+    text-align: left; line-height: 1.05;
+    text-shadow: 0 0 30px rgba(0,0,0,1), 0 0 60px rgba(0,0,0,.9), 0 0 90px rgba(0,0,0,.7);
+    white-space: nowrap;
+  }
+  .sel-meta {
+    font-size: 10px; letter-spacing: 4px; color: #444;
+    text-transform: uppercase; text-align: left; margin-top: 6px;
+    text-shadow: 0 0 20px rgba(0,0,0,1), 0 0 40px rgba(0,0,0,.8);
+  }
+
+  /* Bottom left vertical text */
+  #bottom-label {
+    position: fixed; bottom: 28px; left: 36px; z-index: 10;
+    font-size: 9px; color: #333; letter-spacing: 3px;
+    text-transform: uppercase;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+  }
+  #bottom-number {
+    position: fixed; bottom: 28px; left: 54px; z-index: 10;
+    font-family: 'Cinzel', serif;
+    font-size: 22px; font-weight: 600; color: #333;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+  }
+
+  /* Credit */
+  #credit {
+    position: fixed; bottom: 28px; right: 36px; z-index: 10;
+    font-size: 8px; color: #333; letter-spacing: 2.5px;
+    text-transform: uppercase;
+  }
+
+  /* Click hint */
+  #click-hint {
+    position: fixed; bottom: 52px; right: 36px; z-index: 10;
+    font-size: 9px; color: #333; letter-spacing: 1.5px;
+    transition: opacity .5s;
+  }
+
+  /* Node tooltip */
+  .tooltip {
+    position: absolute; pointer-events: none; z-index: 200;
+    background: rgba(12,14,24,.92); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 8px; padding: 10px 14px;
+    backdrop-filter: blur(10px);
+    opacity: 0; transition: opacity .12s;
+  }
+  .tooltip.visible { opacity: 1; }
+  .tooltip .tt-name { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 600; color: #fff; letter-spacing: 1px; }
+  .tooltip .tt-group { font-size: 10px; color: #888; margin-top: 2px; letter-spacing: 1px; text-transform: uppercase; }
+  .tooltip .tt-time { font-size: 10px; color: #aaa; margin-top: 5px; }
+
+  /* Search */
+  #search-box {
+    position: fixed; top: 28px; right: 36px; z-index: 11;
+    width: 180px;
+  }
+  #search-box input {
+    width: 100%; padding: 6px 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 400;
+    letter-spacing: 1.5px; color: #aaa;
+    outline: none;
+    transition: all .3s ease;
+  }
+  #search-box input::placeholder { color: #555; letter-spacing: 2px; text-transform: uppercase; }
+  #search-box input:focus {
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.06);
+    color: #ddd;
+  }
+  #search-box .search-results {
+    margin-top: 4px;
+    display: none;
+  }
+  #search-box .search-results.open { display: block; }
+  #search-box .search-item {
+    padding: 5px 12px; cursor: pointer;
+    font-size: 9px; color: #666; letter-spacing: 1.5px; text-transform: uppercase;
+    border-radius: 12px;
+    transition: all .2s ease;
+  }
+  #search-box .search-item:hover,
+  #search-box .search-item.active {
+    color: #ccc; background: rgba(255,255,255,0.05);
+  }
+  #search-box .search-item .search-group {
+    font-size: 7px; color: #444; margin-left: 6px; letter-spacing: 1px;
+  }
+
+  /* Filters */
+  #filters {
+    position: fixed; top: 72px; right: 36px; z-index: 10;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 5px;
+  }
+  #filters .filter-label {
+    font-size: 8px; color: #444; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  #filters .filter-btn {
+    background: none; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 20px; padding: 4px 14px;
+    font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: #555; cursor: pointer;
+    transition: all .35s cubic-bezier(.4,0,.2,1);
+  }
+  #filters .filter-btn:hover {
+    color: #999; border-color: rgba(255,255,255,.15);
+    background: rgba(255,255,255,.02);
+  }
+  #filters .filter-btn.active {
+    color: #aaa; border-color: rgba(255,255,255,.2);
+    background: rgba(255,255,255,.04);
+  }
+
+  /* Audio controls */
+  #audio-ctrl {
+    position: fixed; bottom: 28px; right: 36px; z-index: 10;
+    display: flex; align-items: center; gap: 8px;
+    opacity: 0.4; transition: opacity .3s;
+  }
+  #audio-ctrl:hover { opacity: 0.9; }
+  #audio-ctrl button {
+    background: none; border: none; cursor: pointer; padding: 0;
+    color: #888; font-size: 16px; line-height: 1; transition: color .2s;
+  }
+  #audio-ctrl button:hover { color: #fff; }
+  #audio-ctrl input[type="range"] {
+    -webkit-appearance: none; appearance: none;
+    width: 60px; height: 2px; background: #444; border-radius: 1px;
+    outline: none; cursor: pointer;
+  }
+  #audio-ctrl input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #999; cursor: pointer; transition: background .2s;
+  }
+  #audio-ctrl input[type="range"]:hover::-webkit-slider-thumb { background: #fff; }
+
+  /* Connection panel — glass card */
+  #connection-panel {
+    position: fixed; bottom: 60px; right: 36px; z-index: 10;
+    width: 224px; max-height: 35vh;
+    overflow-y: auto; overflow-x: hidden;
+    background: linear-gradient(165deg, rgba(255,255,255,0.015) 0%, rgba(255,255,255,0.005) 100%);
+    border: 1px solid rgba(255,255,255,0.03);
+    border-radius: 14px;
+    backdrop-filter: blur(6px) saturate(1.1);
+    -webkit-backdrop-filter: blur(6px) saturate(1.1);
+    padding: 16px 16px 12px;
+    transition: opacity .5s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15),
+                inset 0 1px 0 rgba(255,255,255,0.04),
+                inset 0 -1px 0 rgba(255,255,255,0.01);
+  }
+  #connection-panel::-webkit-scrollbar { width: 2px; }
+  #connection-panel::-webkit-scrollbar-track { background: transparent; }
+  #connection-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+  #connection-panel .panel-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px; padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  #connection-panel .panel-title {
+    font-size: 8px; color: #999; letter-spacing: 2.5px;
+    text-transform: uppercase;
+  }
+  #connection-panel .panel-count {
+    font-family: 'Cinzel', serif;
+    font-size: 11px; color: #aaa; font-weight: 600;
+  }
+  /* Connection rows */
+  #connection-panel .conn-row {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    transition: opacity .2s ease;
+  }
+  #connection-panel .conn-row:last-child { border-bottom: none; }
+  #connection-panel .conn-row:hover { opacity: 0.7; }
+  #connection-panel .conn-top {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 3px;
+  }
+  #connection-panel .conn-name {
+    font-size: 9px; font-weight: 400; color: #777;
+    letter-spacing: 1.8px; text-transform: uppercase;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  #connection-panel .conn-type {
+    font-size: 7px; color: #999; flex-shrink: 0; margin-left: 8px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  #connection-panel .conn-bar-bg {
+    width: 100%; height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px; overflow: hidden;
+  }
+  #connection-panel .conn-bar {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.35), rgba(255,255,255,0.08));
+    box-shadow: 0 0 8px rgba(255,255,255,0.06);
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* Filter divider */
+  #filters .filter-divider {
+    width: 50%; height: 1px;
+    background: rgba(255,255,255,0.06);
+    margin: 4px 0;
+    align-self: flex-end;
+  }
+
+  /* Credit */
+  #credit {
+    position: fixed; bottom: 28px; left: 36px; z-index: 10;
+    font-size: 7px; color: #333; letter-spacing: 2.5px;
+    text-transform: uppercase; font-family: 'Inter', sans-serif;
+  }
+
+  /* ── Portrait / Vertical (YouTube Shorts 9:16) ── */
+  @media (max-aspect-ratio: 10/13) {
+    .vignette {
+      background: radial-gradient(ellipse at 50% 36%, transparent 28%, rgba(0,0,0,.5) 100%) !important;
+    }
+
+    #header {
+      left: 50% !important; right: auto !important;
+      transform: translateX(-50%); top: 20px !important;
+    }
+    #header { left: 50%; transform: translateX(-50%); }
+
+    .sel-name {
+      text-align: center !important; font-size: 20px !important;
+      letter-spacing: 3px !important;
+    }
+    .sel-meta { text-align: center !important; }
+
+    #filters {
+      top: auto !important; bottom: 28px !important;
+      right: auto !important;
+      left: 50% !important; transform: translateX(-50%);
+      flex-direction: row !important; flex-wrap: wrap !important;
+      justify-content: center !important; align-items: center !important;
+      gap: 4px !important;
+      max-width: 94vw;
+    }
+    #filters .filter-label {
+      font-size: 6px !important;
+      margin-bottom: 0 !important;
+      padding: 0 4px;
+    }
+    #filters .filter-btn {
+      padding: 3px 9px !important;
+      font-size: 7px !important;
+      letter-spacing: 1.5px !important;
+    }
+    #filters .filter-divider {
+      width: 1px !important; height: 14px !important;
+      margin: 0 6px !important; align-self: center !important;
+    }
+
+    #connection-panel { display: none !important; }
+    #bottom-label, #bottom-number { display: none !important; }
+    #click-hint { display: none !important; }
+
+    #credit {
+      left: 50% !important; transform: translateX(-50%);
+      bottom: 8px !important;
+    }
+
+    #audio-ctrl {
+      bottom: auto !important; top: 20px !important; right: 20px !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="bg-image"></div>
+<div id="galaxy-container"></div>
+<svg id="viz"></svg>
+<div class="fog fog-2"></div>
+<div class="fog fog-1"></div>
+<div class="fog fog-3"></div>
+<div class="vignette"></div>
+
+<div id="header">
+  <img class="logo-img" src="avengers-logo2.png" alt="Marvel's The Avengers">
+  <div class="sub-text">Character Network</div>
+  <div class="credit-text">by Seoyeon Jun</div>
+</div>
+
+<div id="selected-info" class="hidden">
+  <div class="sel-name" id="sel-name"></div>
+  <div class="sel-meta" id="sel-meta"></div>
+</div>
+
+<div id="bottom-label">connections</div>
+<div id="bottom-number" id="conn-count"></div>
+
+<div id="search-box">
+  <input type="text" id="search-input" placeholder="Search" autocomplete="off">
+  <div class="search-results" id="search-results"></div>
+</div>
+
+<div id="filters">
+  <div class="filter-label">Relations</div>
+  <button class="filter-btn rel-btn active" data-type="all">All</button>
+  <button class="filter-btn rel-btn" data-type="ally">Alliance</button>
+  <button class="filter-btn rel-btn" data-type="enemy">Conflict</button>
+  <button class="filter-btn rel-btn" data-type="romantic">Romance</button>
+  <button class="filter-btn rel-btn" data-type="family">Family</button>
+  <div class="filter-divider"></div>
+  <div class="filter-label">Groups</div>
+  <button class="filter-btn group-btn active" data-group="all">All</button>
+  <button class="filter-btn group-btn" data-group="Avengers">Avengers</button>
+  <button class="filter-btn group-btn" data-group="Guardians">Guardians</button>
+  <button class="filter-btn group-btn" data-group="Asgardians">Asgardians</button>
+  <button class="filter-btn group-btn" data-group="Wakanda">Wakanda</button>
+  <button class="filter-btn group-btn" data-group="Mystic Arts">Mystic Arts</button>
+  <button class="filter-btn group-btn" data-group="Black Order">Black Order</button>
+  <button class="filter-btn group-btn" data-group="Villain">Villain</button>
+  <button class="filter-btn group-btn" data-group="Supporting">Supporting</button>
+</div>
+
+<div id="connection-panel">
+  <div class="panel-header">
+    <div class="panel-title">Connections</div>
+    <div class="panel-count" id="panel-count"></div>
+  </div>
+  <div id="conn-list"></div>
+</div>
+
+<div id="credit">Designed by Seoyeon Jun</div>
+<div id="click-hint">Click any character to explore connections</div>
+
+<audio id="bgm" loop preload="auto" src="The%20Avengers.mp3"></audio>
+<div id="audio-ctrl">
+  <button id="audio-restart" title="Restart from beginning (5s delay)">&#8634;</button>
+  <button id="audio-pause" title="Pause">&#10074;&#10074;</button>
+  <button id="audio-toggle" title="Play">&#9835;</button>
+  <input type="range" id="audio-vol" min="0" max="1" step="0.01" value="0.3">
+</div>
+
+<div id="credit">Created by Seoyeon Jun</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════
+const nodes = [
+  {id:"thanos",name:"Thanos",group:"Villain",importance:10,time:"29:00"},
+  {id:"gamora",name:"Gamora",group:"Guardians",importance:9,time:"19:30"},
+  {id:"iron_man",name:"Iron Man",group:"Avengers",importance:9,time:"18:00"},
+  {id:"thor",name:"Thor",group:"Asgardians",importance:8,time:"14:30"},
+  {id:"doctor_strange",name:"Doctor Strange",group:"Mystic Arts",importance:7,time:"11:30"},
+  {id:"star_lord",name:"Star-Lord",group:"Guardians",importance:6,time:"10:15"},
+  {id:"vision",name:"Vision",group:"Avengers",importance:6,time:"9:45"},
+  {id:"scarlet_witch",name:"Scarlet Witch",group:"Avengers",importance:6,time:"9:00"},
+  {id:"hulk",name:"Hulk",group:"Avengers",importance:6,time:"8:45"},
+  {id:"spider_man",name:"Spider-Man",group:"Avengers",importance:5,time:"7:30"},
+  {id:"captain_america",name:"Captain America",group:"Avengers",importance:5,time:"6:45"},
+  {id:"rocket",name:"Rocket",group:"Guardians",importance:5,time:"6:00"},
+  {id:"black_widow",name:"Black Widow",group:"Avengers",importance:4,time:"5:00"},
+  {id:"drax",name:"Drax",group:"Guardians",importance:4,time:"4:45"},
+  {id:"mantis",name:"Mantis",group:"Guardians",importance:4,time:"4:45"},
+  {id:"ebony_maw",name:"Ebony Maw",group:"Black Order",importance:4,time:"4:00"},
+  {id:"proxima_midnight",name:"Proxima Midnight",group:"Black Order",importance:3,time:"3:30"},
+  {id:"cull_obsidian",name:"Cull Obsidian",group:"Black Order",importance:3,time:"3:30"},
+  {id:"corvus_glaive",name:"Corvus Glaive",group:"Black Order",importance:3,time:"3:30"},
+  {id:"black_panther",name:"Black Panther",group:"Wakanda",importance:4,time:"3:30"},
+  {id:"groot",name:"Groot",group:"Guardians",importance:3,time:"3:15"},
+  {id:"nebula",name:"Nebula",group:"Guardians",importance:3,time:"3:15"},
+  {id:"okoye",name:"Okoye",group:"Wakanda",importance:3,time:"3:15"},
+  {id:"loki",name:"Loki",group:"Asgardians",importance:3,time:"3:15"},
+  {id:"war_machine",name:"War Machine",group:"Avengers",importance:3,time:"3:00"},
+  {id:"eitri",name:"Eitri",group:"Asgardians",importance:2,time:"2:45"},
+  {id:"wong",name:"Wong",group:"Mystic Arts",importance:2,time:"2:45"},
+  {id:"falcon",name:"Falcon",group:"Avengers",importance:2,time:"2:15"},
+  {id:"winter_soldier",name:"Winter Soldier",group:"Avengers",importance:2,time:"2:00"},
+  {id:"pepper_potts",name:"Pepper Potts",group:"Supporting",importance:1,time:"1:30"},
+  {id:"red_skull",name:"Red Skull",group:"Supporting",importance:2,time:"1:30"},
+  {id:"shuri",name:"Shuri",group:"Wakanda",importance:2,time:"1:00"},
+  {id:"mbaku",name:"M'Baku",group:"Wakanda",importance:2,time:"1:00"},
+  {id:"thaddeus_ross",name:"Secretary Ross",group:"Supporting",importance:1,time:"1:00"},
+  {id:"nick_fury",name:"Nick Fury",group:"Supporting",importance:2,time:"1:00"},
+  {id:"maria_hill",name:"Maria Hill",group:"Supporting",importance:1,time:"0:45"},
+  {id:"heimdall",name:"Heimdall",group:"Asgardians",importance:1,time:"0:45"},
+  {id:"collector",name:"The Collector",group:"Supporting",importance:1,time:"0:45"},
+  {id:"ned_leeds",name:"Ned Leeds",group:"Supporting",importance:1,time:"0:15"}
+];
+
+const links = [
+  {source:"thor",target:"rocket",strength:8,type:"ally"},
+  {source:"thor",target:"groot",strength:7,type:"ally"},
+  {source:"rocket",target:"groot",strength:10,type:"ally"},
+  {source:"thor",target:"eitri",strength:6,type:"ally"},
+  {source:"iron_man",target:"doctor_strange",strength:8,type:"ally"},
+  {source:"iron_man",target:"spider_man",strength:9,type:"ally"},
+  {source:"iron_man",target:"star_lord",strength:6,type:"ally"},
+  {source:"doctor_strange",target:"spider_man",strength:7,type:"ally"},
+  {source:"doctor_strange",target:"wong",strength:9,type:"ally"},
+  {source:"star_lord",target:"drax",strength:9,type:"ally"},
+  {source:"star_lord",target:"mantis",strength:8,type:"ally"},
+  {source:"drax",target:"mantis",strength:7,type:"ally"},
+  {source:"vision",target:"scarlet_witch",strength:10,type:"romantic"},
+  {source:"captain_america",target:"scarlet_witch",strength:7,type:"ally"},
+  {source:"captain_america",target:"black_widow",strength:9,type:"ally"},
+  {source:"captain_america",target:"falcon",strength:9,type:"ally"},
+  {source:"captain_america",target:"winter_soldier",strength:10,type:"ally"},
+  {source:"black_widow",target:"falcon",strength:7,type:"ally"},
+  {source:"black_widow",target:"winter_soldier",strength:6,type:"ally"},
+  {source:"captain_america",target:"black_panther",strength:7,type:"ally"},
+  {source:"black_panther",target:"okoye",strength:10,type:"ally"},
+  {source:"black_panther",target:"shuri",strength:9,type:"family"},
+  {source:"black_panther",target:"mbaku",strength:7,type:"ally"},
+  {source:"okoye",target:"shuri",strength:7,type:"ally"},
+  {source:"iron_man",target:"pepper_potts",strength:10,type:"romantic"},
+  {source:"star_lord",target:"gamora",strength:10,type:"romantic"},
+  {source:"gamora",target:"nebula",strength:8,type:"family"},
+  {source:"gamora",target:"drax",strength:8,type:"ally"},
+  {source:"gamora",target:"rocket",strength:7,type:"ally"},
+  {source:"gamora",target:"groot",strength:6,type:"ally"},
+  {source:"gamora",target:"mantis",strength:6,type:"ally"},
+  {source:"star_lord",target:"rocket",strength:9,type:"ally"},
+  {source:"star_lord",target:"groot",strength:8,type:"ally"},
+  {source:"nebula",target:"rocket",strength:5,type:"ally"},
+  {source:"thor",target:"loki",strength:9,type:"family"},
+  {source:"thor",target:"heimdall",strength:7,type:"ally"},
+  {source:"loki",target:"heimdall",strength:5,type:"ally"},
+  {source:"iron_man",target:"hulk",strength:7,type:"ally"},
+  {source:"iron_man",target:"captain_america",strength:6,type:"ally"},
+  {source:"iron_man",target:"war_machine",strength:10,type:"ally"},
+  {source:"hulk",target:"thor",strength:7,type:"ally"},
+  {source:"captain_america",target:"vision",strength:6,type:"ally"},
+  {source:"war_machine",target:"falcon",strength:7,type:"ally"},
+  {source:"captain_america",target:"groot",strength:5,type:"ally"},
+  {source:"winter_soldier",target:"rocket",strength:6,type:"ally"},
+  {source:"vision",target:"shuri",strength:5,type:"ally"},
+  {source:"thanos",target:"iron_man",strength:9,type:"enemy"},
+  {source:"thanos",target:"thor",strength:9,type:"enemy"},
+  {source:"thanos",target:"captain_america",strength:8,type:"enemy"},
+  {source:"thanos",target:"doctor_strange",strength:9,type:"enemy"},
+  {source:"thanos",target:"star_lord",strength:8,type:"enemy"},
+  {source:"thanos",target:"gamora",strength:10,type:"family"},
+  {source:"thanos",target:"nebula",strength:8,type:"family"},
+  {source:"thanos",target:"loki",strength:7,type:"enemy"},
+  {source:"thanos",target:"vision",strength:8,type:"enemy"},
+  {source:"thanos",target:"scarlet_witch",strength:7,type:"enemy"},
+  {source:"thanos",target:"red_skull",strength:5,type:"ally"},
+  {source:"thanos",target:"collector",strength:5,type:"enemy"},
+  {source:"thanos",target:"ebony_maw",strength:9,type:"ally"},
+  {source:"thanos",target:"proxima_midnight",strength:8,type:"ally"},
+  {source:"thanos",target:"corvus_glaive",strength:8,type:"ally"},
+  {source:"thanos",target:"cull_obsidian",strength:8,type:"ally"},
+  {source:"ebony_maw",target:"iron_man",strength:8,type:"enemy"},
+  {source:"ebony_maw",target:"doctor_strange",strength:9,type:"enemy"},
+  {source:"ebony_maw",target:"spider_man",strength:7,type:"enemy"},
+  {source:"proxima_midnight",target:"captain_america",strength:7,type:"enemy"},
+  {source:"proxima_midnight",target:"black_widow",strength:8,type:"enemy"},
+  {source:"proxima_midnight",target:"scarlet_witch",strength:7,type:"enemy"},
+  {source:"proxima_midnight",target:"okoye",strength:7,type:"enemy"},
+  {source:"corvus_glaive",target:"vision",strength:9,type:"enemy"},
+  {source:"corvus_glaive",target:"scarlet_witch",strength:7,type:"enemy"},
+  {source:"corvus_glaive",target:"captain_america",strength:6,type:"enemy"},
+  {source:"cull_obsidian",target:"iron_man",strength:7,type:"enemy"},
+  {source:"cull_obsidian",target:"hulk",strength:8,type:"enemy"},
+  {source:"cull_obsidian",target:"wong",strength:7,type:"enemy"},
+  {source:"cull_obsidian",target:"spider_man",strength:6,type:"enemy"},
+  {source:"ebony_maw",target:"cull_obsidian",strength:7,type:"ally"},
+  {source:"proxima_midnight",target:"corvus_glaive",strength:9,type:"ally"},
+  {source:"spider_man",target:"ned_leeds",strength:9,type:"ally"},
+  {source:"nick_fury",target:"maria_hill",strength:9,type:"ally"}
+];
+
+// ═══════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════
+const _neutral = { fill: "#4a4e58", stroke: "#a0a8b8" };
+const groupColors = {
+  "Avengers":    _neutral,
+  "Guardians":   _neutral,
+  "Wakanda":     _neutral,
+  "Asgardians":  _neutral,
+  "Mystic Arts": _neutral,
+  "Black Order": _neutral,
+  "Villain":     _neutral,
+  "Supporting":  _neutral
+};
+
+const nodeMap = {};
+nodes.forEach(n => nodeMap[n.id] = n);
+
+// Face image URLs
+const faceImages = {
+  "thanos": "https://www.fxguide.com/wp-content/uploads/2019/05/thanos3.jpg",
+  "gamora": "https://upload.wikimedia.org/wikipedia/en/5/54/Zoe_Saldana_as_Gamora.jpeg",
+  "iron_man": "https://bustedhalo.com/wp-content/uploads/2026/01/ironman-3.jpg",
+  "thor": "https://upload.wikimedia.org/wikipedia/en/3/3c/Chris_Hemsworth_as_Thor.jpg",
+  "doctor_strange": "https://upload.wikimedia.org/wikipedia/en/1/18/Benedict_Cumberbatch_as_Doctor_Strange.jpeg",
+  "star_lord": "https://upload.wikimedia.org/wikipedia/en/b/b2/Chris_Pratt_as_Peter_Quill.jpeg",
+  "vision": "https://upload.wikimedia.org/wikipedia/en/f/fc/Paul_Bettany_as_Vision.jpg",
+  "scarlet_witch": "https://upload.wikimedia.org/wikipedia/en/d/d9/Elizabeth_Olsen_as_Wanda_Maximoff.jpg",
+  "hulk": "https://blogs-images.forbes.com/danidiplacido/files/2017/10/hpNTUvvUfJCx.jpg",
+  "spider_man": "https://upload.wikimedia.org/wikipedia/en/0/0f/Tom_Holland_as_Spider-Man.jpg",
+  "captain_america": "https://upload.wikimedia.org/wikipedia/en/6/6b/Chris_Evans_as_Steve_Rogers_Captain_America.jpg",
+  "rocket": "https://upload.wikimedia.org/wikipedia/en/f/fc/Rocket_Raccoon_singing_in_a_spaceship%2C_from_Guardians_of_the_Galaxy_Vol_3%2C_2023.png",
+  "black_widow": "https://upload.wikimedia.org/wikipedia/en/f/f6/Scarlett_Johansson_as_Black_Widow.jpg",
+  "drax": "https://upload.wikimedia.org/wikipedia/en/3/3d/Dave_Bautista_as_Drax.jpg",
+  "mantis": "https://static.wikia.nocookie.net/heroes-and-villain/images/d/d5/Profile_-_Mantis.png/revision/latest?cb=20200422010329",
+  "ebony_maw": "https://upload.wikimedia.org/wikipedia/en/9/9d/Ebony_Maw.jpg",
+  "proxima_midnight": "https://cdn.marvel.com/content/2x/141prx_ons_cut_mob_01_1.jpg",
+  "cull_obsidian": "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/f/f5/Cull_Obsidian.JPG/revision/latest?cb=20210525191742",
+  "corvus_glaive": "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/0/0f/Corvus_Glaive_Infobox.png/revision/latest?cb=20180604193419",
+  "black_panther": "https://upload.wikimedia.org/wikipedia/en/1/1a/Chadwick_Boseman_as_T%27Challa.jpg",
+  "groot": "https://static.wikia.nocookie.net/marvelmovies/images/4/4c/GOTG_Groot_Poster.jpg/revision/latest?cb=20160512212218",
+  "nebula": "https://upload.wikimedia.org/wikipedia/en/0/0c/Karen_Gillan_as_Nebula.png",
+  "okoye": "https://static.wikia.nocookie.net/disney/images/6/6f/Okoye_-_Profile.png/revision/latest?cb=20230224222454",
+  "loki": "https://static0.srcdn.com/wordpress/wp-content/uploads/2022/06/Tom-Hiddleston-as-Loki.jpg",
+  "war_machine": "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/77/WarMachine-EndgameProfile.jpg/revision/latest?cb=20231025163822",
+  "eitri": "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/ac/Eitri.png/revision/latest?cb=20220205165648",
+  "wong": "https://upload.wikimedia.org/wikipedia/en/d/d7/Benedict_Wong_as_Wong.jpg",
+  "falcon": "https://static.wikia.nocookie.net/ultimatepopculture/images/d/d6/Falcon_MCU.png/revision/latest?cb=20201230161754",
+  "winter_soldier": "https://upload.wikimedia.org/wikipedia/en/4/4b/Sebastian_Stan_as_Bucky_Barnes.jpg",
+  "pepper_potts": "https://upload.wikimedia.org/wikipedia/en/9/92/Gwyneth_Paltrow_as_Pepper_Potts.jpg",
+  "red_skull": "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/6/6d/Red_Skull_Infobox.png/revision/latest?cb=20190808103105",
+  "shuri": "https://upload.wikimedia.org/wikipedia/en/5/5b/Letitia_Wright_as_Shuri_in_Black_Panther_Wakanda_Forever_poster.jpg",
+  "mbaku": "https://static.wikia.nocookie.net/heroes-and-villain/images/5/59/MCU_Man-Ape.jpg/revision/latest?cb=20181127195837",
+  "thaddeus_ross": "https://static.wikia.nocookie.net/characters-in-fiction/images/f/f2/Thaddeus_Ross_%28Earth-199999%29_from_Captain_America-_Civil_War_001.jpg/revision/latest?cb=20200414221123",
+  "nick_fury": "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/e4/Nick_Fury_Profile.png/revision/latest?cb=20240802141551",
+  "maria_hill": "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/f/f4/Maria_Hill_Infobox.jpg/revision/latest?cb=20250203210426",
+  "heimdall": "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/ea/Heimdall_Infobox.jpg/revision/latest?cb=20250203022212",
+  "collector": "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/df/CollectorGotgTextlessPoster.jpg/revision/latest?cb=20231022154628",
+  "ned_leeds": "https://static0.srcdn.com/wordpress/wp-content/uploads/2026/01/spider-man-far-from-home-jacob-batalon-ned-leeds.jpg"
+};
+
+// Per-character face image positioning (for cropping fix)
+const facePositions = {
+  "spider_man": "top center",
+  "star_lord": "top center"
+};
+
+// Track which images loaded successfully
+const imageLoaded = {};
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let W = window.innerWidth;
+let H = window.innerHeight;
+let selectedId = "thanos";
+let positions = {};
+let isTransitioning = false;
+let isInitialState = true;
+let _firstSelection = true;
+let activeFilter = "all";
+let activeGroupFilter = "all";
+
+// Render mode flags (set by spinToNext, consumed by render)
+let _snapPositions = false;   // skip position transitions, snap instantly
+let _bounceSize = false;      // use easeBackOut for node size growth
+let _staggerLines = false;    // stagger line entrance with delay
+let _animateConnectedLines = false; // grow connected lines from selected node after spin
+let hoveredId = null; // proximity hover tracking
+let _spinRotationRad = 0; // current spin rotation in radians (for hover during spin)
+let _prevSelectedForSnap = null; // previous selected id before snap (to skip unchanged face updates)
+
+// Fixed circle order (all nodes, sorted by group then importance)
+const groupOrder = ["Avengers","Guardians","Asgardians","Wakanda","Mystic Arts","Black Order","Villain","Supporting"];
+const circleOrder = [...nodes].sort((a, b) => {
+  const ga = groupOrder.indexOf(a.group);
+  const gb = groupOrder.indexOf(b.group);
+  if (ga !== gb) return ga - gb;
+  return b.importance - a.importance;
+});
+
+// ═══════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════
+function getConnections(nodeId) {
+  const conns = [];
+  links.forEach(l => {
+    if (l.source === nodeId) conns.push({ node: nodeMap[l.target], strength: l.strength, type: l.type });
+    else if (l.target === nodeId) conns.push({ node: nodeMap[l.source], strength: l.strength, type: l.type });
+  });
+  return conns;
+}
+
+function nodeRadius(d, isSelected) {
+  if (isSelected) return Math.min(W, H) * 0.038;
+  return Math.min(W, H) * 0.013;
+}
+
+// ═══════════════════════════════════════════════
+// LAYOUT CALCULATION
+// ═══════════════════════════════════════════════
+// Get nodes that have at least one link of the given type
+function getFilteredNodeIds(filterType, groupFilter) {
+  let ids;
+  if (filterType === "all") {
+    ids = new Set(nodes.map(n => n.id));
+  } else {
+    ids = new Set();
+    links.forEach(l => {
+      if (l.type === filterType) { ids.add(l.source); ids.add(l.target); }
+    });
+  }
+  if (groupFilter && groupFilter !== "all") {
+    const groupIds = new Set(nodes.filter(n => n.group === groupFilter).map(n => n.id));
+    ids = new Set([...ids].filter(id => groupIds.has(id)));
+  }
+  return ids;
+}
+
+function calculateLayout(selId) {
+  const pos = {};
+  const padding = Math.min(W, H) * 0.16;
+  const conns = getConnections(selId);
+  const connIds = new Set(conns.map(c => c.node.id));
+  const connMap = {};
+  conns.forEach(c => { connMap[c.node.id] = c; });
+
+  // Filter: only nodes involved in the active relationship type
+  const filteredIds = getFilteredNodeIds(activeFilter, activeGroupFilter);
+  filteredIds.add(selId); // selected always visible
+
+  // Visible nodes in circle order
+  const visibleOrder = circleOrder.filter(n => filteredIds.has(n.id));
+  const N = visibleOrder.length;
+
+  const portrait = H > W * 1.2;
+  let R, cx, cy;
+  if (portrait) {
+    R = (W / 2) - padding;
+    cx = W / 2;
+    cy = H * 0.38;
+  } else {
+    R = (H / 2) - padding;
+    cy = H / 2;
+    cx = W * 0.2 + R;
+    cx = Math.max(cx, padding + R);
+    cx = Math.min(cx, W - padding - R);
+  }
+  pos._center = { x: cx, y: cy };
+  pos._R = R;
+  pos._portrait = portrait;
+  pos._visibleIds = filteredIds;
+
+  // Find selected in the visible order
+  const selIdx = visibleOrder.findIndex(n => n.id === selId);
+
+  // Equal angular spacing — all nodes on the same radius
+  const slotAngle = N > 0 ? (2 * Math.PI) / N : 0;
+
+  visibleOrder.forEach((n, i) => {
+    const isConn = connIds.has(n.id);
+    const relIdx = ((i - selIdx) + N) % N;
+    const angle = Math.PI + relIdx * slotAngle;
+
+    pos[n.id] = {
+      x: cx + Math.cos(angle) * R,
+      y: cy + Math.sin(angle) * R,
+      connected: isConn,
+      strength: isConn ? connMap[n.id].strength : 0,
+      type: isConn ? connMap[n.id].type : null,
+      selected: n.id === selId
+    };
+  });
+
+  // Hidden nodes: collapse to center
+  circleOrder.forEach(n => {
+    if (!filteredIds.has(n.id)) {
+      pos[n.id] = {
+        x: cx, y: cy,
+        connected: false, strength: 0, type: null,
+        hidden: true
+      };
+    }
+  });
+
+  return pos;
+}
+
+// ═══════════════════════════════════════════════
+// SVG SETUP
+// ═══════════════════════════════════════════════
+const svg = d3.select("#viz").attr("width", W).attr("height", H);
+const defs = svg.append("defs");
+
+// Background
+const bgGrad = defs.append("radialGradient").attr("id","bg-grad")
+  .attr("cx","50%").attr("cy","48%").attr("r","60%");
+bgGrad.append("stop").attr("offset","0%").attr("stop-color","#000000");
+bgGrad.append("stop").attr("offset","100%").attr("stop-color","#000000");
+svg.append("rect").attr("width",W).attr("height",H).attr("fill","url(#bg-grad)").attr("opacity", 0.4);
+
+// Glow filters
+const glowSmall = defs.append("filter").attr("id","glow-sm").attr("x","-80%").attr("y","-80%").attr("width","260%").attr("height","260%");
+glowSmall.append("feGaussianBlur").attr("stdDeviation","3").attr("result","b");
+glowSmall.append("feMerge").selectAll("feMergeNode").data(["b","SourceGraphic"]).enter().append("feMergeNode").attr("in",d=>d);
+
+const glowBig = defs.append("filter").attr("id","glow-lg").attr("x","-100%").attr("y","-100%").attr("width","300%").attr("height","300%");
+glowBig.append("feGaussianBlur").attr("stdDeviation","8").attr("result","b");
+glowBig.append("feMerge").selectAll("feMergeNode").data(["b","SourceGraphic"]).enter().append("feMergeNode").attr("in",d=>d);
+
+// Conflict glow filter (cyberpunk neon pink/red)
+const glowConflict = defs.append("filter").attr("id","glow-conflict").attr("x","-50%").attr("y","-50%").attr("width","200%").attr("height","200%");
+glowConflict.append("feGaussianBlur").attr("in","SourceGraphic").attr("stdDeviation","4").attr("result","blur");
+glowConflict.append("feFlood").attr("flood-color","#950606").attr("flood-opacity","0.6").attr("result","color");
+glowConflict.append("feComposite").attr("in","color").attr("in2","blur").attr("operator","in").attr("result","glow");
+const glowConflictMerge = glowConflict.append("feMerge");
+glowConflictMerge.append("feMergeNode").attr("in","glow");
+glowConflictMerge.append("feMergeNode").attr("in","SourceGraphic");
+
+// Line glow filters per relationship type
+function makeLineGlow(id, color, stdDev, opacity) {
+  const f = defs.append("filter").attr("id", id)
+    .attr("x","-60%").attr("y","-60%").attr("width","220%").attr("height","220%");
+  f.append("feGaussianBlur").attr("in","SourceGraphic").attr("stdDeviation", stdDev).attr("result","blur1");
+  f.append("feFlood").attr("flood-color", color).attr("flood-opacity", opacity).attr("result","color1");
+  f.append("feComposite").attr("in","color1").attr("in2","blur1").attr("operator","in").attr("result","glow1");
+  f.append("feGaussianBlur").attr("in","SourceGraphic").attr("stdDeviation", stdDev * 0.4).attr("result","blur2");
+  const mg = f.append("feMerge");
+  mg.append("feMergeNode").attr("in","glow1");
+  mg.append("feMergeNode").attr("in","blur2");
+  mg.append("feMergeNode").attr("in","SourceGraphic");
+}
+makeLineGlow("glow-line-ally", "#00c8ff", 7, 0.55);
+makeLineGlow("glow-line-enemy", "#ff2020", 8, 0.6);
+makeLineGlow("glow-line-romantic", "#c040ff", 7, 0.55);
+makeLineGlow("glow-line-family", "#c0c8d0", 6, 0.5);
+
+// Node gradients
+Object.entries(groupColors).forEach(([group, colors]) => {
+  const grad = defs.append("radialGradient").attr("id", `grad-${group.replace(/\s/g,'')}`)
+    .attr("cx","35%").attr("cy","35%").attr("r","65%");
+  grad.append("stop").attr("offset","0%").attr("stop-color", colors.stroke);
+  grad.append("stop").attr("offset","100%").attr("stop-color", colors.fill);
+});
+
+// SVG cloud shapes at bottom
+const cloudGroup = svg.append("g").attr("class","clouds").style("opacity", 0.5);
+function addCloud(cx, cy, rx, ry, opacity) {
+  cloudGroup.append("ellipse").attr("cx",cx).attr("cy",cy).attr("rx",rx).attr("ry",ry)
+    .attr("fill","#000000").attr("filter","url(#glow-lg)").style("opacity", opacity);
+}
+addCloud(W*0.15, H*0.92, W*0.25, 60, 0.6);
+addCloud(W*0.5, H*0.95, W*0.35, 80, 0.5);
+addCloud(W*0.8, H*0.9, W*0.2, 50, 0.55);
+addCloud(W*0.35, H*0.88, W*0.15, 40, 0.4);
+addCloud(W*0.7, H*0.96, W*0.3, 70, 0.45);
+
+const mainGroup = svg.append("g");
+const linkGroup = mainGroup.append("g").attr("class","links");
+const nodeGroup = mainGroup.append("g").attr("class","nodes");
+const labelGroup = mainGroup.append("g").attr("class","labels");
+
+// ═══════════════════════════════════════════════
+// CURVED LINE GENERATOR
+// ═══════════════════════════════════════════════
+function makeCurve(sx, sy, tx, ty) {
+  const dx = tx - sx, dy = ty - sy;
+  const dist = Math.sqrt(dx*dx + dy*dy);
+  if (dist < 1) return `M${sx},${sy}L${tx},${ty}`;
+
+  const nx = -dy / dist, ny = dx / dist;
+  const curvature = dist * 0.18;
+  const mx = (sx + tx) / 2 + nx * curvature;
+  const my = (sy + ty) / 2 + ny * curvature;
+
+  return `M${sx},${sy} Q${mx},${my} ${tx},${ty}`;
+}
+
+// ═══════════════════════════════════════════════
+// TEXT ROTATION HELPER
+// ═══════════════════════════════════════════════
+function getTextAttrs(nx, ny, cx, cy, radius) {
+  const dx = nx - cx, dy = ny - cy;
+  const angle = Math.atan2(dy, dx);
+  const deg = angle * 180 / Math.PI;
+  const offset = radius + 10;
+  const tx = nx + Math.cos(angle) * offset;
+  const ty = ny + Math.sin(angle) * offset;
+
+  let rot, anchor;
+  // For 360° layout: flip text on left side so it reads left-to-right
+  if (deg > -90 && deg < 90) {
+    rot = deg; anchor = "start";
+  } else {
+    rot = deg + 180; anchor = "end";
+  }
+  return { x: tx, y: ty, rotation: rot, anchor };
+}
+
+// ═══════════════════════════════════════════════
+// PROXIMITY HOVER SYSTEM
+// ═══════════════════════════════════════════════
+function highlightNode(id, pageX, pageY) {
+  if (id === selectedId) return;
+  const d = nodeMap[id];
+  if (!d) return;
+  hoveredId = id;
+
+  // Tooltip
+  const tt = document.getElementById("tooltip");
+  const gc = groupColors[d.group];
+  tt.innerHTML = `<div class="tt-name">${d.name}</div>
+    <div class="tt-group" style="color:${gc.stroke}">${d.group}</div>
+    <div class="tt-time">Screen time: ${d.time}</div>`;
+  tt.classList.add("visible");
+  if (pageX != null) {
+    tt.style.left = (pageX + 16) + "px";
+    tt.style.top = (pageY - 8) + "px";
+  }
+
+  // Node — very fast highlight
+  const nodeEl = nodeGroup.selectAll("g.node").filter(n => n.id === id);
+  nodeEl.select(".ring").transition("hover").duration(60)
+    .attr("stroke", "#ffffff")
+    .attr("stroke-opacity", 0.6)
+    .attr("r", nodeRadius(d, false) + 6);
+  nodeEl.select(".body").transition("hover").duration(60)
+    .attr("stroke", "#ffffff").attr("stroke-width", 2)
+    .attr("filter", "url(#glow-lg)");
+  nodeEl.transition("hover").duration(60)
+    .style("opacity", 1);
+
+  // Label — letter-spacing expansion + white glow
+  labelGroup.selectAll("text.label").filter(l => l.id === id)
+    .transition("hover").duration(80)
+    .attr("fill", "#ffffff")
+    .attr("font-weight", "700")
+    .attr("letter-spacing", "4px")
+    .style("opacity", 1)
+    .style("text-shadow", "0 0 12px rgba(255,255,255,.35), 0 0 25px rgba(255,255,255,.15), 0 0 6px rgba(255,255,255,.4)");
+}
+
+function unhighlightNode(id) {
+  if (!id) return;
+  const d = nodeMap[id];
+  if (!d || id === selectedId) return;
+  hoveredId = null;
+
+  document.getElementById("tooltip").classList.remove("visible");
+
+  const conns = getConnections(selectedId);
+  const isConn = conns.some(c => c.node.id === id);
+  const allSmall = isInitialState;
+
+  // Restore node
+  const nodeEl = nodeGroup.selectAll("g.node").filter(n => n.id === id);
+  nodeEl.select(".ring").transition("hover").duration(150)
+    .attr("stroke", "#fff")
+    .attr("stroke-opacity", allSmall ? 0.1 : (isConn ? 0.2 : 0.04))
+    .attr("r", nodeRadius(d, false) + 2);
+  nodeEl.select(".body").transition("hover").duration(150)
+    .attr("stroke", allSmall ? "rgba(255,255,255,0.3)" : (isConn ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)"))
+    .attr("stroke-width", allSmall ? 1.5 : 0.8)
+    .attr("filter", "url(#glow-sm)");
+  nodeEl.transition("hover").duration(150)
+    .style("opacity", allSmall ? 0.9 : (isConn ? 0.95 : 0.4));
+
+  // Restore label
+  labelGroup.selectAll("text.label").filter(l => l.id === id)
+    .transition("hover").duration(150)
+    .attr("fill", allSmall ? "#ffffff" : (isConn ? "#ffffff" : "#999"))
+    .attr("font-weight", allSmall ? (d.importance >= 6 ? "600" : "400") : (isConn ? (d.importance >= 6 ? "700" : "600") : "400"))
+    .attr("letter-spacing", allSmall ? "2px" : (isConn ? "2.5px" : "2px"))
+    .style("opacity", allSmall ? 1 : (isConn ? 1 : 0.55))
+    .style("text-shadow", allSmall
+      ? "0 0 12px rgba(0,0,0,1), 0 0 30px rgba(0,0,0,.9), 0 0 50px rgba(0,0,0,.7)"
+      : (isConn
+        ? "0 0 20px rgba(255,255,255,.15), 0 0 40px rgba(0,0,0,.9)"
+        : "0 0 16px rgba(0,0,0,.95)"));
+}
+
+// ═══════════════════════════════════════════════
+// RENDER / UPDATE
+// ═══════════════════════════════════════════════
+function render(selId, animate) {
+  positions = calculateLayout(selId);
+  const selPos = positions[selId];
+  const selNode = nodeMap[selId];
+  const conns = getConnections(selId);
+  const connIds = new Set(conns.map(c => c.node.id));
+  const dur = animate ? 350 : 0;
+  const ease = d3.easeExpOut;
+  const shouldSnap = _snapPositions;
+
+  // Hide click hint after first interaction
+  document.getElementById("click-hint").style.opacity = "0";
+
+  // ── All relationship links ──
+  const visibleIds = positions._visibleIds || new Set(nodes.map(n => n.id));
+  const allLinkData = links.map(l => ({
+    id: `${l.source}-${l.target}`,
+    sourceId: l.source,
+    targetId: l.target,
+    strength: l.strength,
+    type: l.type,
+    visible: visibleIds.has(l.source) && visibleIds.has(l.target) &&
+             (activeFilter === "all" || l.type === activeFilter)
+  }));
+
+  const linkSel = linkGroup.selectAll("path.link").data(allLinkData, d => d.id);
+  linkSel.exit().transition().duration(dur/2).attr("stroke-opacity", 0).remove();
+
+  const linkEnter = linkSel.enter().append("path").attr("class","link")
+    .attr("fill","none")
+    .attr("stroke-linecap","round")
+    .attr("stroke-opacity", 0);
+
+  const linkMerge = linkEnter.merge(linkSel);
+
+  const linkDur = shouldSnap ? 0 : dur;
+  // Helper: line styling per link
+  function linkWidth(d) {
+    if (!d.visible) return 0;
+    if (isInitialState) return 0.02 + Math.pow(d.strength / 10, 3.5) * 5;
+    const isSel = d.sourceId === selId || d.targetId === selId;
+    if (isSel) return 0.5 + Math.pow(d.strength / 10, 2) * 2;
+    return 0.1 + Math.pow(d.strength / 10, 3) * 0.8;
+  }
+  function linkOpacity(d) {
+    if (!d.visible) return 0;
+    if (isInitialState) return 0.06 + d.strength * 0.06;
+    const isSel = d.sourceId === selId || d.targetId === selId;
+    if (isSel) return 0.6 + Math.pow(d.strength / 10, 2) * 0.4;
+    return 0.02 + Math.pow(d.strength / 10, 3) * 0.12;
+  }
+  function linkFilter() { return null; }
+
+  if (shouldSnap) {
+    linkMerge.interrupt("link-style").interrupt("link-dash").interrupt("line-grow")
+      .attr("d", d => {
+        const sp = positions[d.sourceId];
+        const tp = positions[d.targetId];
+        return makeCurve(sp.x, sp.y, tp.x, tp.y);
+      })
+      .attr("stroke", "#ffffff")
+      .attr("stroke-width", linkWidth)
+      .attr("stroke-opacity", linkOpacity)
+      .attr("stroke-dasharray", null)
+      .attr("filter", linkFilter);
+  } else {
+    // Non-selected lines snap to background styling quickly;
+    // selected lines get styled via _animateConnectedLines
+    linkMerge.each(function(d) {
+      const el = d3.select(this);
+      const isSel = d.sourceId === selId || d.targetId === selId;
+      const sp = positions[d.sourceId];
+      const tp = positions[d.targetId];
+      const path = makeCurve(sp.x, sp.y, tp.x, tp.y);
+
+      if (isSel && _animateConnectedLines) {
+        // Selected lines: set to background level instantly (animation will reveal them)
+        el.interrupt("link-style")
+          .attr("d", path)
+          .attr("stroke", "#ffffff")
+          .attr("stroke-width", linkWidth(d))
+          .attr("stroke-opacity", 0)
+          .attr("filter", null);
+      } else {
+        // Background / previously-selected lines: fast fade to dim
+        el.transition("link-style").duration(120).ease(ease)
+          .attr("d", path)
+          .attr("stroke", "#ffffff")
+          .attr("stroke-width", linkWidth(d))
+          .attr("stroke-opacity", linkOpacity(d))
+          .attr("filter", null);
+      }
+    });
+  }
+
+  // Line draw animation
+  if (animate && _staggerLines) {
+    // Stagger mode: ALL visible lines fan out sequentially from selected
+    let lineIdx = 0;
+    linkMerge.each(function(d) {
+      if (!d.visible) { d3.select(this).attr("stroke-opacity", 0); return; }
+      const isSelected = d.sourceId === selId || d.targetId === selId;
+      const targetOpacity = isSelected ? 0.7 + Math.pow(d.strength / 10, 2) * 0.3 : 0.02 + Math.pow(d.strength / 10, 3) * 0.12;
+      const length = 1200;
+      d3.select(this).interrupt("link-style").interrupt("link-dash")
+        .attr("stroke-opacity", 0)
+        .attr("stroke-dasharray", length)
+        .attr("stroke-dashoffset", length)
+        .transition("link-dash").delay(lineIdx * 3).duration(60).ease(d3.easeLinear)
+        .attr("stroke-opacity", targetOpacity)
+        .attr("stroke-dashoffset", 0)
+        .on("end", function() { d3.select(this).attr("stroke-dasharray", null); });
+      lineIdx++;
+    });
+    _staggerLines = false;
+  } else if (animate) {
+    // Normal mode: only new links animate
+    linkEnter.each(function() {
+      const length = 1200;
+      d3.select(this)
+        .attr("stroke-dasharray", length)
+        .attr("stroke-dashoffset", length)
+        .transition("link-dash").delay(0).duration(60).ease(d3.easeLinear)
+        .attr("stroke-dashoffset", 0)
+        .on("end", function() { d3.select(this).attr("stroke-dasharray", null); });
+    });
+  }
+
+  // ── Connected lines grow-from-selected animation (after spin) ──
+  if (_animateConnectedLines) {
+    _animateConnectedLines = false;
+    const connLineItems = [];
+    linkMerge.each(function(d) {
+      if (!d.visible) return;
+      const isConnToSel = d.sourceId === selId || d.targetId === selId;
+      if (!isConnToSel) return;
+      connLineItems.push({ el: this, d: d });
+    });
+    const L = Math.max(W, H) * 1.5; // fixed dash length (avoids costly getTotalLength)
+    connLineItems.forEach((item, idx) => {
+      const el = d3.select(item.el);
+      const fromStart = item.d.sourceId === selId;
+      const startOffset = fromStart ? L : -L;
+
+      el.attr("stroke-dasharray", L)
+        .attr("stroke-dashoffset", startOffset)
+        .attr("stroke-opacity", 0)
+        .attr("stroke-width", linkWidth(item.d))
+        .attr("filter", null)
+        .transition("line-grow")
+        .delay(60 + idx * 20)
+        .duration(350)
+        .ease(d3.easeCubicOut)
+        .attr("stroke-dashoffset", 0)
+        .attr("stroke-opacity", linkOpacity(item.d))
+        .on("end", function() {
+          d3.select(this).attr("stroke-dasharray", null);
+        });
+    });
+  }
+
+  // ── Nodes ──
+  const nodeSel = nodeGroup.selectAll("g.node").data(nodes, d => d.id);
+
+  const nodeEnter = nodeSel.enter().append("g").attr("class","node")
+    .attr("transform", d => `translate(${positions[d.id]?.x || W/2},${positions[d.id]?.y || H/2})`)
+    .style("cursor","pointer")
+    .style("opacity", 0);
+
+  // Outer glow ring
+  nodeEnter.append("circle").attr("class","ring")
+    .attr("fill","none")
+    .attr("stroke","#fff")
+    .attr("stroke-opacity", 0);
+
+  // Main circle (colored border / fallback)
+  nodeEnter.append("circle").attr("class","body")
+    .attr("stroke-width", 1.5);
+
+  // Face image via foreignObject
+  nodeEnter.each(function(d) {
+    const imgUrl = faceImages[d.id];
+    if (!imgUrl) return;
+
+    const r = nodeRadius(d, false);
+    const fo = d3.select(this).append("foreignObject")
+      .attr("class","face")
+      .attr("x", -r).attr("y", -r)
+      .attr("width", r * 2).attr("height", r * 2)
+      .style("pointer-events","none")
+      .style("overflow","hidden")
+      .style("border-radius","50%");
+
+    const div = fo.append("xhtml:div")
+      .style("width","100%").style("height","100%")
+      .style("border-radius","50%")
+      .style("overflow","hidden");
+
+    div.append("xhtml:img")
+      .attr("src", imgUrl)
+      .style("width","100%").style("height","100%")
+      .style("object-fit","cover")
+      .style("object-position", facePositions[d.id] || "center")
+      .style("display","block")
+      .on("load", function() { imageLoaded[d.id] = true; })
+      .on("error", function() {
+        imageLoaded[d.id] = false;
+        d3.select(this.parentNode.parentNode).style("display","none");
+      });
+  });
+
+
+  const nodeMerge = nodeEnter.merge(nodeSel);
+
+  // ── Position: snap instantly after spin, or transition normally ──
+  const allSmall = isInitialState; // initial: every node is small
+  if (_snapPositions) {
+    nodeMerge.interrupt()
+      .attr("transform", d => `translate(${positions[d.id].x},${positions[d.id].y})`)
+      .style("opacity", d => {
+        if (positions[d.id].hidden) return 0;
+        if (d.id === selId) return 1;
+        if (connIds.has(d.id)) return 0.95;
+        return 0.4;
+      });
+    _snapPositions = false;
+  } else {
+    nodeMerge.transition().duration(dur).ease(ease)
+      .attr("transform", d => `translate(${positions[d.id].x},${positions[d.id].y})`)
+      .style("opacity", d => {
+        if (positions[d.id].hidden) return 0;
+        if (allSmall) return 0.9;
+        if (d.id === selId) return 1;
+        if (connIds.has(d.id)) return 0.95;
+        return 0.4;
+      });
+  }
+
+  // ── Size: snap instantly after spin, or normal ease ──
+  if (_bounceSize) _bounceSize = false;
+  const sizeDur = shouldSnap ? 0 : dur;
+  // After spin: selected node grows only on first selection
+  const growSelected = shouldSnap && !allSmall && _firstSelection;
+  const growDur = 400;
+  const growEase = d3.easeBackOut.overshoot(1.2);
+
+  if (shouldSnap && !growSelected) {
+    // Fully instant — no transition at all
+    nodeMerge.select(".ring")
+      .attr("r", d => {
+        const isSel = !allSmall && d.id === selId;
+        return nodeRadius(d, isSel) + (isSel ? 6 : 2);
+      })
+      .attr("stroke-width", d => (!allSmall && d.id === selId) ? 1.5 : 0.5)
+      .attr("stroke-opacity", d => {
+        if (allSmall) return 0.1;
+        if (d.id === selId) return 0.3;
+        if (connIds.has(d.id)) return 0.2;
+        return 0.04;
+      });
+    nodeMerge.select(".body")
+      .attr("r", d => nodeRadius(d, !allSmall && d.id === selId))
+      .attr("fill", d => `url(#grad-${d.group.replace(/\s/g,'')})`)
+      .attr("stroke", d => {
+        if (allSmall) return "rgba(255,255,255,0.3)";
+        if (d.id === selId) return "#ffffff";
+        return connIds.has(d.id) ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)";
+      })
+      .attr("stroke-width", d => (!allSmall && d.id === selId) ? 2 : 0.8);
+    // Only update foreignObject for nodes whose size actually changed (max 2: new + old selected)
+    // This avoids expensive HTML relayout inside foreignObject for ~37 unchanged nodes
+    const _faceChanged = new Set([selId]);
+    if (_prevSelectedForSnap) _faceChanged.add(_prevSelectedForSnap);
+    nodeMerge.filter(d => _faceChanged.has(d.id)).select(".face").each(function(d) {
+      const r = nodeRadius(d, !allSmall && d.id === selId) - 2;
+      this.setAttribute("x", -r);
+      this.setAttribute("y", -r);
+      this.setAttribute("width", r * 2);
+      this.setAttribute("height", r * 2);
+    });
+    _prevSelectedForSnap = null;
+  } else {
+    nodeMerge.select(".ring")
+      .transition().duration(growSelected ? 0 : sizeDur).ease(ease)
+      .attr("r", d => {
+        const isSel = !allSmall && d.id === selId;
+        if (growSelected && d.id === selId) return nodeRadius(d, false) + 2;
+        return nodeRadius(d, isSel) + (isSel ? 6 : 2);
+      })
+      .attr("stroke-width", d => (!allSmall && d.id === selId) ? 1.5 : 0.5)
+      .attr("stroke-opacity", d => {
+        if (allSmall) return 0.1;
+        if (d.id === selId) return 0.3;
+        if (connIds.has(d.id)) return 0.2;
+        return 0.04;
+      });
+    nodeMerge.select(".body")
+      .transition().duration(growSelected ? 0 : sizeDur).ease(ease)
+      .attr("r", d => {
+        if (growSelected && d.id === selId) return nodeRadius(d, false);
+        return nodeRadius(d, !allSmall && d.id === selId);
+      })
+      .attr("fill", d => `url(#grad-${d.group.replace(/\s/g,'')})`)
+      .attr("stroke", d => {
+        if (allSmall) return "rgba(255,255,255,0.3)";
+        if (d.id === selId) return "#ffffff";
+        return connIds.has(d.id) ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)";
+      })
+      .attr("stroke-width", d => (!allSmall && d.id === selId) ? 2 : 0.8);
+    nodeMerge.select(".face")
+      .transition().duration(growSelected ? 0 : sizeDur).ease(ease)
+      .attr("x", d => { const r = nodeRadius(d, growSelected ? false : (!allSmall && d.id === selId)) - 2; return -r; })
+      .attr("y", d => { const r = nodeRadius(d, growSelected ? false : (!allSmall && d.id === selId)) - 2; return -r; })
+      .attr("width", d => { const r = nodeRadius(d, growSelected ? false : (!allSmall && d.id === selId)) - 2; return r * 2; })
+      .attr("height", d => { const r = nodeRadius(d, growSelected ? false : (!allSmall && d.id === selId)) - 2; return r * 2; });
+  }
+
+  // Grow animation: selected node expands only on first selection
+  if (growSelected) {
+    _firstSelection = false;
+    const selNodes = nodeMerge.filter(d => d.id === selId);
+    selNodes.select(".ring")
+      .transition().delay(30).duration(growDur).ease(growEase)
+      .attr("r", nodeRadius(selNode, true) + 6)
+      .attr("stroke-width", 1.5).attr("stroke-opacity", 0.3);
+    selNodes.select(".body")
+      .transition().delay(30).duration(growDur).ease(growEase)
+      .attr("r", nodeRadius(selNode, true))
+      .attr("stroke", "#ffffff").attr("stroke-width", 2);
+    const bigR = nodeRadius(selNode, true) - 2;
+    selNodes.select(".face")
+      .transition().delay(30).duration(growDur).ease(growEase)
+      .attr("x", -bigR).attr("y", -bigR)
+      .attr("width", bigR * 2).attr("height", bigR * 2);
+  }
+
+  // Selected node glow filter
+  nodeMerge.select(".body")
+    .attr("filter", d => d.id === selId ? "url(#glow-lg)" : "url(#glow-sm)");
+
+  // ── Labels (rotated, radial from circle center) ──
+  const center = positions._center || selPos;
+  const labelData = nodes.filter(n => (allSmall || n.id !== selId) && visibleIds.has(n.id));
+  const lblSel = labelGroup.selectAll("text.label").data(labelData, d => d.id);
+
+  lblSel.exit().transition().duration(dur/2).style("opacity",0).remove();
+
+  const lblEnter = lblSel.enter().append("text").attr("class","label")
+    .style("pointer-events","none")
+    .style("opacity", 0);
+
+  const lblMerge = lblEnter.merge(lblSel);
+
+  const lblDur = shouldSnap ? 0 : dur;
+
+  if (shouldSnap) {
+    // Snap labels instantly (no transition after spin)
+    lblMerge.interrupt()
+      .each(function(d) {
+        const p = positions[d.id];
+        const r = nodeRadius(d, false);
+        const ta = getTextAttrs(p.x, p.y, center.x, center.y, r);
+        d3.select(this).attr("transform", `translate(${ta.x},${ta.y}) rotate(${ta.rotation})`);
+      })
+      .text(d => d.name.toUpperCase())
+      .attr("text-anchor", d => {
+        const p = positions[d.id];
+        return getTextAttrs(p.x, p.y, center.x, center.y, nodeRadius(d,false)).anchor;
+      })
+      .attr("dominant-baseline","central")
+      .attr("fill", d => allSmall ? "#ffffff" : (connIds.has(d.id) ? "#ffffff" : "#999"))
+      .attr("font-size", d => {
+        if (allSmall) {
+          if (d.importance >= 7) return "10px";
+          if (d.importance >= 4) return "8.5px";
+          return "7.5px";
+        }
+        if (!connIds.has(d.id)) return "7.5px";
+        if (d.importance >= 7) return "11px";
+        if (d.importance >= 4) return "9.5px";
+        return "8.5px";
+      })
+      .attr("font-weight", d => {
+        if (allSmall) return d.importance >= 6 ? "600" : "400";
+        if (!connIds.has(d.id)) return "400";
+        return d.importance >= 6 ? "700" : "600";
+      })
+      .attr("letter-spacing", d => {
+        if (allSmall) return "2px";
+        if (connIds.has(d.id)) return "2.5px";
+        return "2px";
+      })
+      .style("opacity", d => {
+        if (allSmall) return 1;
+        if (connIds.has(d.id)) return 1;
+        return 0.55;
+      })
+      .style("text-shadow", d => allSmall
+        ? "0 0 12px rgba(0,0,0,1), 0 0 30px rgba(0,0,0,.9), 0 0 50px rgba(0,0,0,.7)"
+        : (connIds.has(d.id)
+          ? "0 0 20px rgba(255,255,255,.15), 0 0 40px rgba(0,0,0,.9)"
+          : "0 0 16px rgba(0,0,0,.95)"));
+  } else {
+    lblMerge.transition().duration(dur).ease(ease)
+      .attrTween("transform", function(d) {
+        const prev = d3.select(this).attr("transform") || `translate(${W/2},${H/2}) rotate(0)`;
+        const p = positions[d.id];
+        const r = nodeRadius(d, false);
+        const ta = getTextAttrs(p.x, p.y, center.x, center.y, r);
+        const target = `translate(${ta.x},${ta.y}) rotate(${ta.rotation})`;
+        return d3.interpolateString(prev, target);
+      })
+      .text(d => d.name.toUpperCase())
+      .attr("text-anchor", d => {
+        const p = positions[d.id];
+        return getTextAttrs(p.x, p.y, center.x, center.y, nodeRadius(d,false)).anchor;
+      })
+      .attr("dominant-baseline","central")
+      .attr("fill", d => allSmall ? "#ffffff" : (connIds.has(d.id) ? "#ffffff" : "#999"))
+      .attr("font-size", d => {
+        if (allSmall) {
+          if (d.importance >= 7) return "10px";
+          if (d.importance >= 4) return "8.5px";
+          return "7.5px";
+        }
+        if (!connIds.has(d.id)) return "7.5px";
+        if (d.importance >= 7) return "11px";
+        if (d.importance >= 4) return "9.5px";
+        return "8.5px";
+      })
+      .attr("font-weight", d => {
+        if (allSmall) return d.importance >= 6 ? "600" : "400";
+        if (!connIds.has(d.id)) return "400";
+        return d.importance >= 6 ? "700" : "600";
+      })
+      .attr("letter-spacing", d => {
+        if (allSmall) return "2px";
+        if (connIds.has(d.id)) return "2.5px";
+        return "2px";
+      })
+      .style("opacity", d => {
+        if (allSmall) return 1;
+        if (connIds.has(d.id)) return 1;
+        return 0.55;
+      })
+      .style("text-shadow", d => allSmall
+        ? "0 0 12px rgba(0,0,0,1), 0 0 30px rgba(0,0,0,.9), 0 0 50px rgba(0,0,0,.7)"
+        : (connIds.has(d.id)
+          ? "0 0 20px rgba(255,255,255,.15), 0 0 40px rgba(0,0,0,.9)"
+          : "0 0 16px rgba(0,0,0,.95)"));
+  }
+
+  // ── Selected info text (to the right of selected circle) ──
+  const info = document.getElementById("selected-info");
+  if (allSmall) {
+    info.classList.add("hidden");
+  } else {
+    const selR = nodeRadius(selNode, true);
+    if (positions._portrait) {
+      const center = positions._center;
+      info.style.top = (center.y - positions._R - 24) + "px";
+      info.style.left = center.x + "px";
+      info.style.transform = "translate(-50%, -100%)";
+    } else {
+      info.style.top = (selPos.y - selR * 0.3) + "px";
+      info.style.left = (selPos.x + selR + 16) + "px";
+      info.style.transform = "translate(0, -50%)";
+    }
+    info.classList.remove("hidden");
+  }
+
+  // ── Connection panel (bar chart) ──
+  if (allSmall) {
+    document.getElementById("connection-panel").style.opacity = "0";
+  }
+  // Filter connections by active filter + group filter, sort by strength desc
+  let panelConns = [...conns];
+  if (activeFilter !== "all") {
+    panelConns = panelConns.filter(c => c.type === activeFilter);
+  }
+  if (activeGroupFilter !== "all") {
+    panelConns = panelConns.filter(c => nodeMap[c.node.id].group === activeGroupFilter);
+  }
+  function timeToSec(t) { const [m, s] = t.split(":").map(Number); return m * 60 + s; }
+  panelConns.sort((a, b) => timeToSec(b.node.time) - timeToSec(a.node.time));
+
+  document.getElementById("sel-name").textContent = selNode.name;
+  document.getElementById("sel-meta").textContent = panelConns.length + " connections";
+  document.getElementById("bottom-number").textContent = panelConns.length;
+
+  document.getElementById("panel-count").textContent = panelConns.length;
+  const connListEl = document.getElementById("conn-list");
+  const typeLabel = { ally: "Alliance", enemy: "Conflict", romantic: "Romance", family: "Family" };
+  // Defer heavy innerHTML to next frame so it doesn't block the render
+  requestAnimationFrame(() => {
+    connListEl.innerHTML = panelConns.map(c => {
+      const pct = (timeToSec(c.node.time) / timeToSec("29:00")) * 100;
+      return `<div class="conn-row">
+        <div class="conn-top">
+          <span class="conn-name">${c.node.name}</span>
+          <span class="conn-type">${typeLabel[c.type] || c.type} · ${c.node.time}</span>
+        </div>
+        <div class="conn-bar-bg"><div class="conn-bar" style="width:${pct}%"></div></div>
+      </div>`;
+    }).join("");
+  });
+
+  // ── Node click (hover is handled by SVG proximity system) ──
+  nodeMerge
+    .on("mouseenter", null).on("mousemove", null).on("mouseleave", null)
+    .on("click", function(event, d) {
+      event.stopPropagation();
+      if (d.id === selectedId || isTransitioning) return;
+      if (hoveredId) unhighlightNode(hoveredId);
+      document.getElementById("tooltip").classList.remove("visible");
+      spinTo(d.id);
+    });
+
+  // ── Labels: clickable ──
+  lblMerge
+    .style("pointer-events", "all")
+    .style("cursor", "pointer")
+    .on("click", function(event, d) {
+      event.stopPropagation();
+      if (d.id === selectedId || isTransitioning) return;
+      if (hoveredId) unhighlightNode(hoveredId);
+      document.getElementById("tooltip").classList.remove("visible");
+      spinTo(d.id);
+    });
+}
+
+// (Galaxy WebGL background is initialized via module script below)
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+render(selectedId, true);
+
+// Click background to deselect (reset to default)
+svg.on("click", () => {
+  if (isTransitioning) return;
+});
+
+// ═══════════════════════════════════════════════
+// SVG PROXIMITY HOVER
+// ═══════════════════════════════════════════════
+svg.on("mousemove.hover", function(event) {
+  const [mx, my] = d3.pointer(event);
+  let closestId = null;
+  let closestDist = Infinity;
+  const threshold = Math.min(W, H) * 0.055;
+  const ctr = positions._center;
+
+  // During spin, apply current rotation to stored positions for accurate hit-testing
+  const spinning = _spinRotationRad !== 0 && ctr;
+  const cosR = spinning ? Math.cos(_spinRotationRad) : 1;
+  const sinR = spinning ? Math.sin(_spinRotationRad) : 0;
+
+  nodes.forEach(n => {
+    if (n.id === selectedId) return;
+    const p = positions[n.id];
+    if (!p || p.hidden) return;
+    if (positions._visibleIds && !positions._visibleIds.has(n.id)) return;
+
+    // Get visual position (rotated if spinning)
+    let vx = p.x, vy = p.y;
+    if (spinning) {
+      const dx = p.x - ctr.x, dy = p.y - ctr.y;
+      vx = ctr.x + dx * cosR - dy * sinR;
+      vy = ctr.y + dx * sinR + dy * cosR;
+    }
+
+    // Distance to node center
+    let dist = Math.hypot(mx - vx, my - vy);
+
+    // Also check distance to label area
+    if (ctr) {
+      const r = nodeRadius(n, false);
+      const ta = getTextAttrs(vx, vy, ctr.x, ctr.y, r);
+      dist = Math.min(dist, Math.hypot(mx - ta.x, my - ta.y));
+      dist = Math.min(dist, Math.hypot(mx - (vx + ta.x) / 2, my - (vy + ta.y) / 2));
+    }
+
+    if (dist < closestDist) {
+      closestDist = dist;
+      closestId = n.id;
+    }
+  });
+
+  if (closestDist > threshold) closestId = null;
+
+  if (closestId !== hoveredId) {
+    if (hoveredId) unhighlightNode(hoveredId);
+    if (closestId) highlightNode(closestId, event.pageX, event.pageY);
+  } else if (hoveredId) {
+    const tt = document.getElementById("tooltip");
+    tt.style.left = (event.pageX + 16) + "px";
+    tt.style.top = (event.pageY - 8) + "px";
+  }
+}).on("mouseleave.hover", function() {
+  if (hoveredId) unhighlightNode(hoveredId);
+});
+
+// ═══════════════════════════════════════════════
+// SPIN ANIMATION — SVG group rotation + face cycling spotlight
+// ═══════════════════════════════════════════════
+function spinTo(targetId) {
+  const visible = circleOrder.filter(n => getFilteredNodeIds(activeFilter, activeGroupFilter).has(n.id));
+  if (visible.length <= 1 || isTransitioning || targetId === selectedId) return;
+  isTransitioning = true;
+  isInitialState = false;
+
+  const N = visible.length;
+  const center = positions._center;
+  const R = positions._R;
+  const slotAngle = (2 * Math.PI) / N;
+
+  const curIdx = visible.findIndex(n => n.id === selectedId);
+  const targetIdx = visible.findIndex(n => n.id === targetId);
+  if (curIdx < 0 || targetIdx < 0) { isTransitioning = false; return; }
+
+  // Find shortest direction
+  const fwd = ((targetIdx - curIdx) + N) % N;
+  const bwd = ((curIdx - targetIdx) + N) % N;
+  let steps, dir;
+  if (fwd <= bwd) { steps = fwd; dir = 1; }
+  else { steps = bwd; dir = -1; }
+
+  // Total rotation: only the exact steps between current and target (no extra spins)
+  const extraSpins = 0;
+  const totalAngleRad = -dir * (steps * slotAngle + extraSpins * 2 * Math.PI);
+  const totalAngleDeg = totalAngleRad * 180 / Math.PI;
+
+  // Anchor position (where selected node sits = angle Math.PI)
+  const anchorX = positions[selectedId].x;
+  const anchorY = positions[selectedId].y;
+
+  // Phase 1: Dim labels, keep selected-info visible, hide connection panel
+  document.getElementById("connection-panel").style.opacity = "0";
+
+  // Shrink selected node instantly (spotlight covers it)
+  const smallR = Math.min(W, H) * 0.013;
+  nodeGroup.selectAll("g.node").filter(d => d.id === selectedId).each(function() {
+    d3.select(this).select(".body").attr("r", smallR);
+    d3.select(this).select(".ring")
+      .attr("r", smallR + 2).attr("stroke-width", 0.5).attr("stroke-opacity", 0.04);
+    d3.select(this).select(".face")
+      .attr("x", -(smallR - 2)).attr("y", -(smallR - 2))
+      .attr("width", (smallR - 2) * 2).attr("height", (smallR - 2) * 2);
+  });
+
+  // Create spotlight at anchor (big node with cycling faces, ON TOP of mainGroup)
+  const bigR = Math.min(W, H) * 0.038;
+  const spotGroup = svg.append("g").attr("class", "spotlight")
+    .attr("transform", `translate(${anchorX},${anchorY})`);
+
+  spotGroup.append("circle")
+    .attr("r", bigR + 6).attr("fill", "none")
+    .attr("stroke", "#fff").attr("stroke-width", 1.5).attr("stroke-opacity", 0.3);
+
+  const curGroup = nodeMap[selectedId].group.replace(/\s/g, '');
+  spotGroup.append("circle").attr("class", "spot-body")
+    .attr("r", bigR).attr("fill", `url(#grad-${curGroup})`)
+    .attr("stroke", "#ffffff").attr("stroke-width", 2).attr("filter", "url(#glow-lg)");
+
+  const spotFo = spotGroup.append("foreignObject")
+    .attr("x", -(bigR - 2)).attr("y", -(bigR - 2))
+    .attr("width", (bigR - 2) * 2).attr("height", (bigR - 2) * 2)
+    .style("pointer-events", "none").style("overflow", "hidden").style("border-radius", "50%");
+  const spotDiv = spotFo.append("xhtml:div")
+    .style("width", "100%").style("height", "100%")
+    .style("border-radius", "50%").style("overflow", "hidden");
+  const spotImg = spotDiv.append("xhtml:img")
+    .style("width", "100%").style("height", "100%")
+    .style("object-fit", "cover")
+    .style("object-position", facePositions[selectedId] || "center")
+    .style("display", "block");
+  if (faceImages[selectedId]) spotImg.attr("src", faceImages[selectedId]);
+
+  const flashCircle = spotGroup.append("circle")
+    .attr("r", bigR).attr("fill", "#ffffff").attr("opacity", 0);
+
+  // Capture original angles for face detection
+  const origAngles = {};
+  visible.forEach(n => {
+    origAngles[n.id] = Math.atan2(
+      positions[n.id].y - center.y,
+      positions[n.id].x - center.x
+    );
+  });
+
+  // Phase 2: SVG group rotation — fast start, slow settle
+  const spinDur = Math.min(1200, 300 + steps * 40);
+  let startTime = null;
+  let lastFaceId = selectedId;
+
+  function easeOutQuint(t) {
+    return 1 - Math.pow(1 - t, 5);
+  }
+
+  function angleDist(a, b) {
+    let d = a - b;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    return Math.abs(d);
+  }
+
+  function tick(now) {
+    if (!startTime) startTime = now;
+    const t = Math.min((now - startTime) / spinDur, 1);
+    const eased = easeOutQuint(t);
+    const currentDeg = totalAngleDeg * eased;
+    const currentRad = currentDeg * Math.PI / 180;
+    _spinRotationRad = currentRad;
+
+    // Rotate entire mainGroup around center — circle size stays PERFECTLY constant
+    mainGroup.attr("transform", `rotate(${currentDeg},${center.x},${center.y})`);
+
+    // Find which node is closest to the anchor (Math.PI angle)
+    let closestId = lastFaceId;
+    let closestDist = Infinity;
+    visible.forEach(n => {
+      const curAngle = origAngles[n.id] + currentRad;
+      const dist = angleDist(curAngle, Math.PI);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closestId = n.id;
+      }
+    });
+
+    // Update spotlight face + name when a new character passes the anchor
+    if (closestId !== lastFaceId) {
+      lastFaceId = closestId;
+      if (faceImages[closestId]) {
+        spotImg.attr("src", faceImages[closestId]);
+        spotImg.style("object-position", facePositions[closestId] || "center");
+      }
+      const grp = nodeMap[closestId].group.replace(/\s/g, '');
+      spotGroup.select(".spot-body").attr("fill", `url(#grad-${grp})`);
+
+      // Update selected-info name during spin
+      document.getElementById("sel-name").textContent = nodeMap[closestId].name;
+      document.getElementById("sel-meta").textContent = nodeMap[closestId].group;
+
+      // no flash
+    }
+
+    if (t < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      // Phase 3: Settle — snap positions (spotlight covers the jump), animate lines
+      mainGroup.attr("transform", null);
+      _spinRotationRad = 0;
+
+      _prevSelectedForSnap = selectedId;
+      selectedId = targetId;
+      _snapPositions = true;
+      _bounceSize = false;
+      _staggerLines = false;
+      _animateConnectedLines = true;
+
+      document.getElementById("connection-panel").style.opacity = "";
+      render(selectedId, false);
+
+      // Spotlight fades out revealing the snapped layout underneath
+      spotGroup.transition().duration(100).style("opacity", 0).remove();
+
+      setTimeout(() => { isTransitioning = false; }, 120);
+    }
+  }
+
+  // Start spin immediately
+  requestAnimationFrame(tick);
+}
+
+// One-step wrapper for keyboard/scroll
+function spinToNext(dir) {
+  const visible = circleOrder.filter(n => getFilteredNodeIds(activeFilter, activeGroupFilter).has(n.id));
+  if (visible.length <= 1 || isTransitioning) return;
+  const N = visible.length;
+  const curIdx = visible.findIndex(n => n.id === selectedId);
+  const nextIdx = (curIdx + dir + N) % N;
+  spinTo(visible[nextIdx].id);
+}
+
+// Keyboard navigation
+document.addEventListener("keydown", e => {
+  if (isTransitioning || document.activeElement === searchInput) return;
+  if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+    e.preventDefault();
+    spinToNext(1);
+  }
+  if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+    e.preventDefault();
+    spinToNext(-1);
+  }
+});
+
+// Scroll-based spin
+let scrollAccum = 0;
+const scrollThreshold = 50;
+document.addEventListener("wheel", e => {
+  if (isTransitioning) return;
+  e.preventDefault();
+  scrollAccum += e.deltaY;
+  if (Math.abs(scrollAccum) < scrollThreshold) return;
+  const dir = scrollAccum > 0 ? 1 : -1;
+  scrollAccum = 0;
+  spinToNext(dir);
+}, { passive: false });
+
+// Relation filter buttons
+document.querySelectorAll(".rel-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    if (isTransitioning) return;
+    const type = btn.dataset.type;
+    if (type === activeFilter) return;
+
+    document.querySelectorAll(".rel-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeFilter = type;
+
+    const filteredIds = getFilteredNodeIds(activeFilter, activeGroupFilter);
+    if (!filteredIds.has(selectedId)) {
+      const first = circleOrder.find(n => filteredIds.has(n.id));
+      if (first) selectedId = first.id;
+    }
+
+    isTransitioning = true;
+    render(selectedId, true);
+    setTimeout(() => { isTransitioning = false; }, 150);
+  });
+});
+
+// Group filter buttons
+document.querySelectorAll(".group-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    if (isTransitioning) return;
+    const group = btn.dataset.group;
+    if (group === activeGroupFilter) return;
+
+    document.querySelectorAll(".group-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeGroupFilter = group;
+
+    const filteredIds = getFilteredNodeIds(activeFilter, activeGroupFilter);
+    if (!filteredIds.has(selectedId)) {
+      const first = circleOrder.find(n => filteredIds.has(n.id));
+      if (first) selectedId = first.id;
+    }
+
+    isTransitioning = true;
+    render(selectedId, true);
+    setTimeout(() => { isTransitioning = false; }, 150);
+  });
+});
+
+// ── Search ──
+const searchInput = document.getElementById("search-input");
+const searchResults = document.getElementById("search-results");
+let searchActiveIdx = -1;
+
+searchInput.addEventListener("input", () => {
+  const q = searchInput.value.trim().toLowerCase();
+  if (!q) { searchResults.classList.remove("open"); searchResults.innerHTML = ""; searchActiveIdx = -1; return; }
+  const matches = nodes.filter(n => n.name.toLowerCase().includes(q)).slice(0, 6);
+  if (!matches.length) { searchResults.classList.remove("open"); searchResults.innerHTML = ""; searchActiveIdx = -1; return; }
+  searchActiveIdx = -1;
+  searchResults.innerHTML = matches.map((n, i) =>
+    `<div class="search-item" data-id="${n.id}">${n.name}<span class="search-group">${n.group}</span></div>`
+  ).join("");
+  searchResults.classList.add("open");
+  searchResults.querySelectorAll(".search-item").forEach(el => {
+    el.addEventListener("click", () => { pickSearch(el.dataset.id); });
+  });
+});
+
+searchInput.addEventListener("keydown", e => {
+  const items = searchResults.querySelectorAll(".search-item");
+  if (!items.length) return;
+  if (e.key === "ArrowDown") { e.preventDefault(); searchActiveIdx = Math.min(searchActiveIdx + 1, items.length - 1); updateSearchActive(items); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); searchActiveIdx = Math.max(searchActiveIdx - 1, 0); updateSearchActive(items); }
+  else if (e.key === "Enter" && searchActiveIdx >= 0) { e.preventDefault(); pickSearch(items[searchActiveIdx].dataset.id); }
+  else if (e.key === "Escape") { searchInput.blur(); searchResults.classList.remove("open"); searchResults.innerHTML = ""; }
+});
+
+function updateSearchActive(items) {
+  items.forEach((el, i) => el.classList.toggle("active", i === searchActiveIdx));
+}
+
+function pickSearch(id) {
+  searchInput.value = ""; searchResults.classList.remove("open"); searchResults.innerHTML = "";
+  searchInput.blur();
+  if (isTransitioning || id === selectedId) return;
+  isInitialState = false;
+  selectedId = id;
+  _animateConnectedLines = true;
+  isTransitioning = true;
+  render(selectedId, true);
+  setTimeout(() => { isTransitioning = false; }, 550);
+}
+
+document.addEventListener("click", e => {
+  if (!e.target.closest("#search-box")) { searchResults.classList.remove("open"); searchResults.innerHTML = ""; }
+});
+
+// Resize
+window.addEventListener("resize", () => {
+  W = window.innerWidth; H = window.innerHeight;
+  svg.attr("width", W).attr("height", H);
+  svg.select("rect").attr("width", W).attr("height", H);
+
+  cloudGroup.selectAll("*").remove();
+  addCloud(W*0.15, H*0.92, W*0.25, 60, 0.6);
+  addCloud(W*0.5, H*0.95, W*0.35, 80, 0.5);
+  addCloud(W*0.8, H*0.9, W*0.2, 50, 0.55);
+
+  render(selectedId, false);
+});
+</script>
+
+<script type="module">
+import { Renderer, Program, Mesh, Color, Triangle } from 'https://esm.sh/ogl@1.0.8';
+
+const vertexShader = `
+attribute vec2 uv;
+attribute vec2 position;
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = vec4(position, 0, 1);
+}
+`;
+
+const fragmentShader = `
+precision highp float;
+
+uniform float uTime;
+uniform vec3 uResolution;
+uniform vec2 uFocal;
+uniform vec2 uRotation;
+uniform float uStarSpeed;
+uniform float uDensity;
+uniform float uHueShift;
+uniform float uSpeed;
+uniform vec2 uMouse;
+uniform float uGlowIntensity;
+uniform float uSaturation;
+uniform bool uMouseRepulsion;
+uniform float uTwinkleIntensity;
+uniform float uRotationSpeed;
+uniform float uRepulsionStrength;
+uniform float uMouseActiveFactor;
+uniform float uAutoCenterRepulsion;
+uniform bool uTransparent;
+
+varying vec2 vUv;
+
+#define NUM_LAYER 4.0
+#define STAR_COLOR_CUTOFF 0.2
+#define MAT45 mat2(0.7071, -0.7071, 0.7071, 0.7071)
+#define PERIOD 3.0
+
+float Hash21(vec2 p) {
+  p = fract(p * vec2(123.34, 456.21));
+  p += dot(p, p + 45.32);
+  return fract(p.x * p.y);
+}
+
+// Smooth value noise for nebula
+float vnoise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  float a = Hash21(i);
+  float b = Hash21(i + vec2(1.0, 0.0));
+  float c = Hash21(i + vec2(0.0, 1.0));
+  float d = Hash21(i + vec2(1.0, 1.0));
+  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+}
+
+float fbm(vec2 p) {
+  float v = 0.0;
+  float a = 0.5;
+  for (int i = 0; i < 5; i++) {
+    v += a * vnoise(p);
+    p *= 2.0;
+    a *= 0.5;
+  }
+  return v;
+}
+
+vec3 nebula(vec2 uv) {
+  float t = uTime * 0.02;
+  float n1 = fbm(uv * 1.2 + vec2(t * 0.3, t * 0.1));
+  float n2 = fbm(uv * 1.5 + vec2(-t * 0.2, t * 0.15) + 100.0);
+  float n3 = fbm(uv * 0.8 + vec2(t * 0.1, -t * 0.25) + 200.0);
+
+  // Purple/magenta nebula
+  vec3 purple = vec3(0.35, 0.05, 0.55) * smoothstep(0.3, 0.7, n1);
+  // Deep blue nebula
+  vec3 blue = vec3(0.08, 0.1, 0.45) * smoothstep(0.35, 0.75, n2);
+  // Warm gold/orange accents
+  vec3 gold = vec3(0.5, 0.25, 0.05) * smoothstep(0.5, 0.85, n3);
+  // Pink highlight
+  vec3 pink = vec3(0.45, 0.08, 0.3) * smoothstep(0.55, 0.8, n1 * n2);
+
+  vec3 col = purple + blue + gold + pink;
+
+  // Fade at edges
+  float dist = length(uv);
+  col *= smoothstep(3.0, 0.5, dist) * 0.35;
+
+  return col;
+}
+
+float tri(float x) {
+  return abs(fract(x) * 2.0 - 1.0);
+}
+
+float tris(float x) {
+  float t = fract(x);
+  return 1.0 - smoothstep(0.0, 1.0, abs(2.0 * t - 1.0));
+}
+
+float trisn(float x) {
+  float t = fract(x);
+  return 2.0 * (1.0 - smoothstep(0.0, 1.0, abs(2.0 * t - 1.0))) - 1.0;
+}
+
+vec3 hsv2rgb(vec3 c) {
+  vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+  vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+  return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
+
+float Star(vec2 uv, float flare) {
+  float d = length(uv);
+  float m = (0.05 * uGlowIntensity) / d;
+  float rays = smoothstep(0.0, 1.0, 1.0 - abs(uv.x * uv.y * 1000.0));
+  m += rays * flare * uGlowIntensity;
+  uv *= MAT45;
+  rays = smoothstep(0.0, 1.0, 1.0 - abs(uv.x * uv.y * 1000.0));
+  m += rays * 0.3 * flare * uGlowIntensity;
+  m *= smoothstep(1.0, 0.2, d);
+  return m;
+}
+
+vec3 StarLayer(vec2 uv) {
+  vec3 col = vec3(0.0);
+  vec2 gv = fract(uv) - 0.5;
+  vec2 id = floor(uv);
+
+  for (int y = -1; y <= 1; y++) {
+    for (int x = -1; x <= 1; x++) {
+      vec2 offset = vec2(float(x), float(y));
+      vec2 si = id + vec2(float(x), float(y));
+      float seed = Hash21(si);
+      float size = fract(seed * 345.32);
+      float glossLocal = tri(uStarSpeed / (PERIOD * seed + 1.0));
+      float flareSize = smoothstep(0.9, 1.0, size) * glossLocal;
+
+      // Pure white stars
+      vec3 base = vec3(1.0);
+
+      vec2 pad = vec2(tris(seed * 34.0 + uTime * uSpeed / 10.0), tris(seed * 38.0 + uTime * uSpeed / 30.0)) - 0.5;
+
+      float star = Star(gv - offset - pad, flareSize);
+      vec3 color = base;
+
+      float twinkle = trisn(uTime * uSpeed + seed * 6.2831) * 0.5 + 1.0;
+      twinkle = mix(1.0, twinkle, uTwinkleIntensity);
+      star *= twinkle;
+
+      col += star * size * color;
+    }
+  }
+  return col;
+}
+
+void main() {
+  vec2 focalPx = uFocal * uResolution.xy;
+  vec2 uv = (vUv * uResolution.xy - focalPx) / uResolution.y;
+
+  vec2 mouseNorm = uMouse - vec2(0.5);
+
+  if (uAutoCenterRepulsion > 0.0) {
+    vec2 centerUV = vec2(0.0, 0.0);
+    float centerDist = length(uv - centerUV);
+    vec2 repulsion = normalize(uv - centerUV) * (uAutoCenterRepulsion / (centerDist + 0.1));
+    uv += repulsion * 0.05;
+  } else if (uMouseRepulsion) {
+    vec2 mousePosUV = (uMouse * uResolution.xy - focalPx) / uResolution.y;
+    float mouseDist = length(uv - mousePosUV);
+    vec2 repulsion = normalize(uv - mousePosUV) * (uRepulsionStrength / (mouseDist + 0.1));
+    uv += repulsion * 0.05 * uMouseActiveFactor;
+  } else {
+    vec2 mouseOffset = mouseNorm * 0.1 * uMouseActiveFactor;
+    uv += mouseOffset;
+  }
+
+  float autoRotAngle = uTime * uRotationSpeed;
+  mat2 autoRot = mat2(cos(autoRotAngle), -sin(autoRotAngle), sin(autoRotAngle), cos(autoRotAngle));
+  uv = autoRot * uv;
+
+  uv = mat2(uRotation.x, -uRotation.y, uRotation.y, uRotation.x) * uv;
+
+  // Pure black background
+  vec3 col = vec3(0.0);
+
+  for (float i = 0.0; i < 1.0; i += 1.0 / NUM_LAYER) {
+    float depth = fract(i + uStarSpeed * uSpeed);
+    float scale = mix(20.0 * uDensity, 0.5 * uDensity, depth);
+    float fade = depth * smoothstep(1.0, 0.9, depth);
+    col += StarLayer(uv * scale + i * 453.32) * fade;
+  }
+
+  float alpha = length(col);
+  alpha = smoothstep(0.15, 0.85, alpha);
+  alpha = min(alpha, 1.0);
+  gl_FragColor = vec4(col, alpha);
+}
+`;
+
+// Galaxy config
+const focal = [0.5, 0.5];
+const rotation = [1.0, 0.0];
+const starSpeed = 0.5;
+const density = 1;
+const hueShift = 270;
+const speed = 0.8;
+const glowIntensity = 0.25;
+const saturation = 0.65;
+const mouseRepulsion = true;
+const repulsionStrength = 2;
+const twinkleIntensity = 0.3;
+const rotationSpeed = 0.05;
+const autoCenterRepulsion = 0;
+
+const ctn = document.getElementById('galaxy-container');
+const targetMouse = { x: 0.5, y: 0.5 };
+const smoothMouse = { x: 0.5, y: 0.5 };
+let targetActive = 0.0;
+let smoothActive = 0.0;
+
+const renderer = new Renderer({ alpha: true, premultipliedAlpha: false });
+const gl = renderer.gl;
+gl.enable(gl.BLEND);
+gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+gl.clearColor(0, 0, 0, 0);
+
+let program;
+
+function resizeGalaxy() {
+  renderer.setSize(ctn.offsetWidth, ctn.offsetHeight);
+  if (program) {
+    program.uniforms.uResolution.value = new Color(
+      gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height
+    );
+  }
+}
+window.addEventListener('resize', resizeGalaxy, false);
+resizeGalaxy();
+
+const geometry = new Triangle(gl);
+program = new Program(gl, {
+  vertex: vertexShader,
+  fragment: fragmentShader,
+  uniforms: {
+    uTime: { value: 0 },
+    uResolution: { value: new Color(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height) },
+    uFocal: { value: new Float32Array(focal) },
+    uRotation: { value: new Float32Array(rotation) },
+    uStarSpeed: { value: starSpeed },
+    uDensity: { value: density },
+    uHueShift: { value: hueShift },
+    uSpeed: { value: speed },
+    uMouse: { value: new Float32Array([0.5, 0.5]) },
+    uGlowIntensity: { value: glowIntensity },
+    uSaturation: { value: saturation },
+    uMouseRepulsion: { value: mouseRepulsion },
+    uTwinkleIntensity: { value: twinkleIntensity },
+    uRotationSpeed: { value: rotationSpeed },
+    uRepulsionStrength: { value: repulsionStrength },
+    uMouseActiveFactor: { value: 0.0 },
+    uAutoCenterRepulsion: { value: autoCenterRepulsion },
+    uTransparent: { value: true }
+  }
+});
+
+const mesh = new Mesh(gl, { geometry, program });
+
+function updateGalaxy(t) {
+  requestAnimationFrame(updateGalaxy);
+  program.uniforms.uTime.value = t * 0.001;
+  program.uniforms.uStarSpeed.value = (t * 0.001 * starSpeed) / 10.0;
+
+  const lerpFactor = 0.05;
+  smoothMouse.x += (targetMouse.x - smoothMouse.x) * lerpFactor;
+  smoothMouse.y += (targetMouse.y - smoothMouse.y) * lerpFactor;
+  smoothActive += (targetActive - smoothActive) * lerpFactor;
+
+  program.uniforms.uMouse.value[0] = smoothMouse.x;
+  program.uniforms.uMouse.value[1] = smoothMouse.y;
+  program.uniforms.uMouseActiveFactor.value = smoothActive;
+
+  renderer.render({ scene: mesh });
+}
+requestAnimationFrame(updateGalaxy);
+ctn.appendChild(gl.canvas);
+
+ctn.addEventListener('mousemove', (e) => {
+  const rect = ctn.getBoundingClientRect();
+  targetMouse.x = (e.clientX - rect.left) / rect.width;
+  targetMouse.y = 1.0 - (e.clientY - rect.top) / rect.height;
+  targetActive = 1.0;
+});
+ctn.addEventListener('mouseleave', () => { targetActive = 0.0; });
+
+// ═══════════════════════════════════════════════
+// BGM AUDIO CONTROL
+// ═══════════════════════════════════════════════
+const bgm = document.getElementById("bgm");
+const audioToggle = document.getElementById("audio-toggle");
+const audioVol = document.getElementById("audio-vol");
+bgm.volume = 0.3;
+
+// Autoplay on first user interaction (browsers block autoplay without gesture)
+let bgmStarted = false;
+function startBGM() {
+  if (bgmStarted) return;
+  bgmStarted = true;
+  bgm.play().catch(() => {});
+}
+document.addEventListener("click", startBGM, { once: false });
+document.addEventListener("keydown", startBGM, { once: false });
+document.addEventListener("wheel", startBGM, { once: false });
+
+audioToggle.addEventListener("click", (e) => {
+  e.stopPropagation();
+  bgm.play().catch(() => {});
+  bgmStarted = true;
+  audioToggle.style.color = "#fff";
+  audioPause.style.color = "";
+});
+
+const audioPause = document.getElementById("audio-pause");
+audioPause.addEventListener("click", (e) => {
+  e.stopPropagation();
+  bgm.pause();
+  audioPause.style.color = "#fff";
+  audioToggle.style.color = "";
+});
+audioVol.addEventListener("input", () => { bgm.volume = parseFloat(audioVol.value); });
+
+// Restart button — pause, rewind to 0, play after 5s
+const audioRestart = document.getElementById("audio-restart");
+let restartTimer = null;
+audioRestart.addEventListener("click", (e) => {
+  e.stopPropagation();
+  bgm.pause();
+  bgm.currentTime = 0;
+  audioToggle.style.color = "#555";
+  audioRestart.style.color = "#fff";
+  if (restartTimer) clearTimeout(restartTimer);
+  restartTimer = setTimeout(() => {
+    bgm.play().catch(() => {});
+    audioToggle.style.color = "#fff";
+    audioRestart.style.color = "";
+    bgmStarted = true;
+    restartTimer = null;
+  }, 5000);
+});
+</script>
+</body>
+</html>

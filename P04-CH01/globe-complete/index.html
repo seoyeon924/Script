@@ -1,0 +1,2895 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>MIGRATION ATLAS</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      background: radial-gradient(ellipse at 30% 20%, #0d1a2d 0%, #0a0a12 35%, #050508 70%, #000000 100%);
+      color:#ffffff;
+      overflow:hidden;
+      font-family:'Michroma',system-ui,sans-serif;
+      text-transform:uppercase;
+    }
+    body.intro-active #header,
+    body.intro-active #data-panel,
+    body.intro-active #hud-left,
+    body.intro-active #hud-right,
+    body.intro-active #interactive,
+    body.intro-active #author-credit,
+    body.intro-active #location,
+    body.intro-active #tooltip,
+    body.intro-active #detail-panel{
+      opacity:0;
+      pointer-events:none;
+    }
+    a{color:#00CCFF;text-decoration:none;transition:color 0.3s}
+    a:hover{color:#fff}
+    
+    #wrapper{position:fixed;top:0;left:0;width:100%;height:100%}
+    #interactive{
+      position:fixed;top:0;left:0;width:100%;height:100%;cursor:move;
+      filter: brightness(1.1) contrast(1.1);
+    }
+    /* Glow layer */
+    #glow-layer{
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      pointer-events:none;
+      background:radial-gradient(circle at 50% 50%, rgba(255,19,19,0.15) 0%, transparent 50%);
+      mix-blend-mode:screen;
+    }
+
+    #intro-overlay{
+      position:fixed;
+      inset:0;
+      z-index:1000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:radial-gradient(circle at center, rgba(5,10,18,0.5) 0%, rgba(0,0,0,0.92) 70%);
+      transition:opacity 0.8s ease, visibility 0.8s ease;
+    }
+    #intro-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .intro-card{max-width:760px;text-align:center;text-transform:none;color:rgba(255,255,255,0.88)}
+    .intro-title{font-family:'Michroma',sans-serif;font-size:42px;letter-spacing:3px;color:#fff;text-transform:uppercase}
+    .intro-subtitle{margin-top:10px;color:rgba(255,255,255,0.62);font-size:15px;font-style:italic}
+    .intro-description{margin-top:40px;line-height:1.9;color:rgba(255,255,255,0.74);font-size:15px}
+    .intro-start{
+      margin:40px auto 20px;width:185px;height:185px;border-radius:50%;
+      border:1px solid rgba(0,204,255,0.5);
+      background:radial-gradient(circle at 30% 30%, rgba(0,204,255,0.45), rgba(0,36,82,0.8) 55%, rgba(0,0,0,0.9) 100%);
+      color:#fff;font-family:'Michroma',sans-serif;font-size:26px;text-transform:none;cursor:pointer;
+      box-shadow:0 0 28px rgba(0,204,255,0.35);transition:transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .intro-start:hover{transform:scale(1.05);box-shadow:0 0 40px rgba(0,204,255,0.55)}
+    .intro-footnote{margin-top:14px;font-size:11px;color:rgba(255,255,255,0.42);letter-spacing:0.5px}
+    
+    /* UI Ring - exactly like LAUNCH IT */
+    #ui{
+      position:fixed;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      width:100%;max-width:1400px;min-width:800px;
+      height:auto;padding:5px;
+      text-align:center;pointer-events:none;
+    }
+    #ui svg{margin:25px}
+    .svg-stop{stop-color:#00CCFF}
+    .svg-stop-fade{stop-opacity:0}
+    .faded50{opacity:0.5}
+    .faded75{opacity:0.25}
+    
+    /* Header - PROJECTY style */
+    #header{
+      position:fixed;top:40px;left:40px;
+      text-align:left;
+      text-decoration:none;
+    }
+    #header strong{
+      font-family:'Michroma',sans-serif;
+      font-size:48px;
+      letter-spacing:4px;
+      color:#fff;
+      line-height:1.1;
+      display:block;
+    }
+    #header .subtitle{
+      font-family:'Michroma',sans-serif;
+      font-weight:400;
+      font-size:10px;
+      color:rgba(255,255,255,0.5);
+      margin-top:12px;
+      text-transform:none;
+      letter-spacing:1px;
+    }
+    
+    /* Navigation */
+    #nav{position:fixed;top:50%;left:0;width:100%;pointer-events:none}
+    #nav-inner{max-width:1400px;margin:0 auto;padding:5px}
+    #nav-left,#nav-right{
+      position:absolute;top:50%;width:125px;
+      margin-top:-25px;
+      text-shadow:0 0 10px rgba(0,0,0,0.8);
+      pointer-events:auto;
+    }
+    #nav-left{left:55px;text-align:left}
+    #nav-right{right:55px;text-align:right}
+    #nav a{font-size:24px;line-height:32px;display:block}
+    
+    /* Settings - exactly like LAUNCH IT */
+    .settings{
+      position:fixed;bottom:45px;
+      font-size:0;text-transform:uppercase;
+      pointer-events:auto;
+    }
+    #settings-left{right:50%;margin-right:115px;text-align:right}
+    #settings-right{left:50%;margin-left:115px;text-align:left}
+    .settings .category{
+      display:block;font-size:12px;line-height:20px;
+      font-weight:700;
+      text-shadow:0 0 10px rgba(0,0,0,0.8);
+    }
+    .settings a{
+      display:inline-block;padding:0 3px;
+      font-size:10px;line-height:15px;
+      margin:0 1px;
+      border:1px solid rgba(0,204,255,0.15);
+      border-radius:3px;
+      transition:all 0.3s;
+    }
+    .settings a:hover{background:transparent;color:#fff}
+    .settings a.active{background:#00CCFF;color:#000}
+    .settings a.active:hover{background:#fff;color:#000}
+    
+    /* GOD'S EYE HUD PANELS */
+    .hud-panel{
+      position:fixed;
+      font-family:'Michroma',sans-serif;
+      font-size:9px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      pointer-events:auto;
+    }
+    .hud-panel::before{
+      content:'';
+      position:absolute;
+      width:100%;height:100%;
+      border:1px solid rgba(0,204,255,0.3);
+      clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+      pointer-events:none;
+    }
+    .hud-label{
+      color:#00CCFF;opacity:0.6;
+      font-size:8px;margin-bottom:4px;
+      display:flex;align-items:center;gap:4px;
+    }
+    .hud-label::before{content:'[';}
+    .hud-label::after{content:']';}
+    .hud-blink{animation:blink 1s infinite}
+    @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0.3}}
+    .hud-value{color:#fff;font-size:11px;margin:2px 0}
+    .hud-sub{color:#00CCFF;opacity:0.5;font-size:9px}
+    .hud-divider{
+      width:100%;height:1px;
+      background:linear-gradient(90deg,transparent,#00CCFF,transparent);
+      margin:6px 0;opacity:0.3;
+    }
+    #hud-left{
+      top:50%;left:20px;
+      transform:translateY(-50%);
+      padding:12px 16px;
+      text-align:left;
+    }
+    #hud-right{
+      top:50%;right:20px;
+      transform:translateY(-50%);
+      padding:12px 16px;
+      text-align:right;
+    }
+    #hud-left .hud-panel-inner,
+    #hud-right .hud-panel-inner{
+      min-width:120px;
+    }
+    .hud-stat{margin:8px 0}
+    .hud-stat-row{display:flex;justify-content:space-between;gap:12px}
+    .hud-corner{
+      position:absolute;width:6px;height:6px;
+      border-color:#00CCFF;border-style:solid;
+    }
+    .hud-corner.tl{top:-1px;left:-1px;border-width:1px 0 0 1px}
+    .hud-corner.tr{top:-1px;right:-1px;border-width:1px 1px 0 0}
+    .hud-corner.bl{bottom:-1px;left:-1px;border-width:0 0 1px 1px}
+    .hud-corner.br{bottom:-1px;right:-1px;border-width:0 1px 1px 0}
+    .scanline{
+      position:absolute;top:0;left:0;right:0;
+      height:2px;background:rgba(0,204,255,0.1);
+      animation:scan 3s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes scan{0%{top:0}100%{top:100%}}
+    
+    /* DATA PANEL - Right side */
+    #data-panel{
+      position:fixed;top:50%;right:20px;
+      transform:translateY(-50%);
+      width:240px;padding:12px 14px;
+      font-family:'Michroma',sans-serif;
+      font-size:8px;text-transform:uppercase;
+      letter-spacing:0.3px;
+      border:1px solid rgba(0,204,255,0.25);
+      background:rgba(0,0,0,0.85);
+    }
+    #data-panel::before{
+      content:'';position:absolute;top:0;right:0;
+      width:12px;height:12px;
+      border-top:1px solid #00CCFF;
+      border-right:1px solid #00CCFF;
+    }
+    #data-panel::after{
+      content:'';position:absolute;bottom:0;left:0;
+      width:12px;height:12px;
+      border-bottom:1px solid #00CCFF;
+      border-left:1px solid #00CCFF;
+    }
+    .data-section{margin-bottom:12px}
+    .data-title{
+      color:#00CCFF;font-size:8px;opacity:0.6;
+      margin-bottom:6px;letter-spacing:1px;
+    }
+    .data-title::before{content:'[ ';}
+    .data-title::after{content:' ]';}
+    
+    /* Country Filter */
+    .hud-select{
+      width:100%;padding:4px 6px;
+      background:#0a1a20;color:#00CCFF;
+      border:1px solid rgba(0,204,255,0.3);
+      font-family:'Michroma',sans-serif;
+      font-size:8px;text-transform:uppercase;
+      cursor:pointer;outline:none;
+    }
+    .hud-select:focus{border-color:#00CCFF}
+    .hud-select option{background:#0a1a20;color:#00CCFF}
+    
+    /* Search Input */
+    .search-container{position:relative}
+    .hud-search{
+      width:100%;padding:6px 8px;
+      background:#0a1a20;color:#00CCFF;
+      border:1px solid rgba(0,204,255,0.3);
+      font-family:'Michroma',sans-serif;
+      font-size:8px;text-transform:uppercase;
+      outline:none;
+    }
+    .hud-search:focus{border-color:#00CCFF}
+    .hud-search::placeholder{color:rgba(0,204,255,0.4)}
+    .search-dropdown{
+      display:none;
+      position:absolute;
+      top:100%;left:0;right:0;
+      max-height:150px;
+      overflow-y:auto;
+      background:#0a1a20;
+      border:1px solid rgba(0,204,255,0.3);
+      border-top:none;
+      z-index:100;
+    }
+    .search-dropdown.active{display:block}
+    .search-item{
+      padding:6px 8px;
+      font-size:8px;
+      color:#00CCFF;
+      cursor:pointer;
+      text-transform:uppercase;
+    }
+    .search-item:hover,.search-item.selected{
+      background:rgba(0,204,255,0.15);
+      color:#fff;
+    }
+    
+    /* Bar Chart - Enhanced */
+    .bar-chart{margin-top:8px}
+    .bar-row{
+      display:flex;align-items:center;
+      margin:6px 0;font-size:9px;
+      padding:6px 8px;
+      background:rgba(0,0,0,0.3);
+      border-left:2px solid transparent;
+      transition:all 0.4s ease;
+      cursor:pointer;
+      position:relative;
+      transform-origin:left center;
+    }
+    .bar-row:hover{
+      background:rgba(0,204,255,0.08);
+      border-left-color:#00CCFF;
+    }
+    .bar-row:hover .bar-fill{
+      filter:brightness(1.3);
+    }
+    .bar-rank{
+      width:18px;color:rgba(255,255,255,0.25);
+      font-size:10px;font-weight:bold;
+    }
+    .bar-label{
+      width:65px;color:#fff;opacity:0.9;
+      white-space:nowrap;overflow:hidden;
+      font-weight:500;letter-spacing:0.3px;
+      font-size:8px;
+    }
+    .bar-track{
+      flex:1;height:6px;
+      background:rgba(255,255,255,0.1);
+      margin:0 10px;position:relative;
+      border-radius:3px;
+      overflow:hidden;
+    }
+    .bar-fill{
+      height:100%;position:absolute;left:0;top:0;
+      transition:width 0.5s ease;
+      border-radius:3px;
+    }
+    .bar-fill.outflow{background:#FF4444}
+    .bar-fill.inflow{background:#00E5FF}
+    .bar-value{
+      width:40px;text-align:right;
+      font-family:'Michroma',sans-serif;
+      font-size:11px;letter-spacing:0.5px;
+      color:#fff;
+    }
+    .bar-row.outflow-row .bar-value{color:#FF6666}
+    .bar-row.inflow-row .bar-value{color:#00E5FF}
+    .bar-change{
+      width:24px;text-align:center;
+      font-size:8px;margin-left:4px;
+    }
+    .bar-change.up{color:#00FF00}
+    .bar-change.down{color:#FF3333}
+    
+    /* KPI Cards */
+    .kpi-grid{display:flex;gap:8px;margin-bottom:10px}
+    .kpi-card{
+      flex:1;padding:6px;
+      background:rgba(0,204,255,0.05);
+      border:1px solid rgba(0,204,255,0.15);
+      text-align:center;
+    }
+    .kpi-num{color:#FF1313;font-size:14px;font-weight:bold}
+    .kpi-num.cyan{color:#00E5FF}
+    .kpi-label{color:#00CCFF;font-size:7px;opacity:0.6;margin-top:2px}
+    
+    /* COUNTRY DETAIL VIEW - hidden, using inline panel instead */
+    #country-detail{display:none !important}
+    .detail-close{
+      position:absolute;top:20px;right:30px;
+      font-size:24px;color:#fff;cursor:pointer;
+      opacity:0.6;transition:opacity 0.3s;
+    }
+    .detail-close:hover{opacity:1}
+    .detail-header{
+      margin-bottom:30px;
+    }
+    .detail-country{
+      font-family:'Michroma',sans-serif;
+      font-size:72px;color:#fff;
+      line-height:1;letter-spacing:4px;
+    }
+    .detail-status{
+      display:inline-block;
+      padding:4px 12px;margin-top:10px;
+      background:#ff3333;color:#fff;
+      font-size:11px;letter-spacing:1px;
+    }
+    .detail-status.inflow{background:#33ff66;color:#000}
+    .detail-kpi-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;margin:30px 0;
+    }
+    .detail-kpi{
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.1);
+      padding:20px;text-align:center;
+    }
+    .detail-kpi-num{
+      font-family:'Michroma',sans-serif;
+      font-size:32px;color:#ff3333;
+    }
+    .detail-kpi-num.green{color:#33ff66}
+    .detail-kpi-label{
+      font-size:10px;color:rgba(255,255,255,0.5);
+      margin-top:8px;letter-spacing:1px;
+    }
+    .detail-section{margin:30px 0}
+    .detail-section-title{
+      font-size:12px;color:#ff8c00;
+      letter-spacing:2px;margin-bottom:15px;
+      padding-bottom:8px;
+      border-bottom:1px solid rgba(255,140,0,0.3);
+    }
+    .detail-event{
+      font-size:14px;color:rgba(255,255,255,0.8);
+      line-height:1.8;text-transform:none;
+    }
+    /* Trend Chart */
+    .trend-chart{
+      height:150px;display:flex;
+      align-items:flex-end;gap:8px;
+      padding:20px 0;
+    }
+    .trend-bar-wrap{
+      flex:1;display:flex;flex-direction:column;
+      align-items:center;
+    }
+    .trend-bar{
+      width:100%;background:linear-gradient(180deg,#ff3333,#ff6666);
+      border-radius:2px 2px 0 0;
+      transition:height 0.5s ease;
+    }
+    .trend-bar.mint{background:linear-gradient(180deg,#00E5FF,#66F0FF)}
+    .trend-year{
+      font-size:9px;color:rgba(255,255,255,0.4);
+      margin-top:8px;
+    }
+    .trend-val{
+      font-size:8px;color:#fff;
+      margin-bottom:4px;
+    }
+    
+    /* Palette */
+    #palette{
+      position:fixed;bottom:10px;left:50%;
+      transform:translateX(-50%);
+      display:flex;gap:4px;
+    }
+    .color{width:5px;height:5px;transition:background 0.5s}
+    #paletteHighlight{background:#FF1313}
+    #paletteBase{background:#33CCFF}
+    #paletteBase50{background:#1a6680}
+    #paletteBase75{background:#0d3340}
+    #paletteBase85{background:#081f26}
+    
+    /* Rotation toggle */
+    #rotationMode{
+      position:fixed;bottom:5px;left:50%;margin-left:35px;
+      font-size:10px;text-transform:uppercase;
+    }
+    #rotationMode a{color:#1a6680}
+    #rotationMode a.active{color:#33CCFF}
+    
+    /* Tooltip */
+    #tooltip{
+      display:none;visibility:hidden;opacity:0;
+      position:fixed;
+      padding:10px 14px;
+      background:rgba(0,0,0,0.95);
+      border:1px solid rgba(0,204,255,0.4);
+      border-radius:4px;
+      font-size:12px;line-height:18px;
+      white-space:nowrap;
+      z-index:100;
+      text-transform:uppercase;
+      backdrop-filter:blur(4px);
+      -webkit-backdrop-filter:blur(4px);
+      transition:opacity 0.3s;
+    }
+    #tooltip .label{
+      color:#00CCFF;
+      font-weight:500;
+    }
+    #tooltip.visible{
+      display:block;visibility:visible;opacity:1;
+    }
+    
+    /* Cross lines */
+    .cross{
+      stroke-width:0.5;
+      transition:opacity 0.3s, visibility 0.3s;
+    }
+    
+    /* Location display */
+    #location{
+      display:none;position:fixed;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      text-align:center;text-transform:uppercase;
+      text-shadow:0 0 10px rgba(0,0,0,0.8);
+      color:#FF0000;pointer-events:none;
+    }
+    #location .title{font-size:60px;line-height:60px}
+    #location .booktype{font-size:18px;line-height:24px}
+    
+    /* Social */
+    #social{position:fixed;top:20px;right:15px}
+    #social a{margin-left:10px;font-size:18px}
+    .social-icon{text-decoration:none}
+    
+    /* Sound Button - LAUNCH IT style */
+    #soundButton{
+      display:block;position:fixed;
+      width:15px;height:10px;
+      right:50%;bottom:10px;
+      margin-right:50px;
+      cursor:pointer;
+    }
+    #soundButton .bar{
+      position:relative;float:left;
+      margin-right:1px;width:2px;height:100%;
+    }
+    #soundButton .bar:after{
+      background:#00CCFF;content:'';
+      display:block;position:absolute;
+      bottom:0;left:0;width:1px;height:10%;
+    }
+    #soundButton.on .bar:after{
+      animation:soundBar 1s infinite alternate;
+    }
+    #soundButton .bar:nth-child(2):after{animation-duration:1.04s}
+    #soundButton .bar:nth-child(3):after{animation-duration:0.97s}
+    #soundButton .bar:nth-child(4):after{animation-duration:0.96s}
+    #soundButton .bar:nth-child(5):after{animation-duration:1.03s}
+    #soundButton .bar:nth-child(6):after{animation-duration:1.01s}
+    #soundButton.off .bar:after{height:10%;animation:none}
+    
+    @keyframes soundBar{
+      0%{height:1%}
+      100%{height:100%}
+    }
+    
+    /* Overlay Modal - LAUNCH IT style */
+    #overlay{
+      display:none;position:fixed;top:0;left:0;
+      width:100%;height:100%;
+      background:rgba(0,0,0,0.85);z-index:200;
+    }
+    #overlayRing{
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      width:100%;max-width:800px;min-width:600px;
+      pointer-events:none;
+    }
+    #overlayRing svg{width:100%;height:auto}
+    #overlayInner{
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      width:80%;max-width:600px;
+      text-align:center;color:#fff;
+    }
+    #overlayInner h2{
+      font-size:28px;margin-bottom:20px;color:#00CCFF;
+    }
+    #overlayInner p{
+      font-size:14px;line-height:1.6;margin-bottom:15px;
+      color:rgba(255,255,255,0.8);
+    }
+    #overlayInner strong{color:#00CCFF}
+    #stats-modal{
+      display:flex;justify-content:center;gap:30px;
+      margin:25px 0;
+    }
+    .stat-item{display:flex;flex-direction:column;align-items:center}
+    .stat-item .num{font-size:32px;color:#FF1313;font-weight:700}
+    .stat-item .label{font-size:10px;color:rgba(255,255,255,0.5);margin-top:4px}
+    #datalink{
+      display:inline-block;margin-top:20px;
+      padding:8px 20px;border:1px solid #00CCFF;
+      font-size:12px;transition:all 0.3s;
+    }
+    #datalink:hover{background:#00CCFF;color:#000}
+    #overlay .close{
+      position:absolute;top:20px;right:20px;
+      width:50px;height:50px;cursor:pointer;
+    }
+    #overlay .close svg{width:100%;height:100%}
+    #overlay .close:hover line{stroke:#00CCFF}
+    .faded25{opacity:0.75}
+    
+    /* ============== MOBILE RESPONSIVE ============== */
+    @media (max-width: 768px) {
+      .intro-title{font-size:28px}
+      .intro-subtitle{font-size:12px}
+      .intro-description{font-size:12px;line-height:1.7;margin-top:24px}
+      .intro-start{width:140px;height:140px;font-size:20px;margin-top:28px}
+      .intro-footnote{font-size:9px}
+
+      /* Header - smaller, top left */
+      #header{
+        top:16px;left:16px;right:auto;
+        text-align:left;
+      }
+      #header strong{
+        font-size:18px;
+        letter-spacing:1px;
+      }
+      #header .subtitle{
+        font-size:7px;
+        margin-top:6px;
+      }
+      
+      /* Hide desktop HUD panels */
+      #hud-left{display:none}
+      #ui{display:none}
+      
+      /* Data panel - right side, bottom aligned */
+      #data-panel{
+        position:fixed;
+        top:auto;
+        bottom:20px;
+        left:auto;
+        right:12px;
+        transform:none;
+        width:150px;
+        max-height:65vh;
+        overflow-y:auto;
+        padding:8px 8px 10px;
+        border:1px solid rgba(0,204,255,0.25);
+        border-radius:8px;
+        background:rgba(0,0,0,0.9);
+        backdrop-filter:blur(10px);
+        -webkit-backdrop-filter:blur(10px);
+      }
+      #data-panel::before,
+      #data-panel::after{display:none}
+      
+      /* Hide mobile handle on side panel */
+      #data-panel .mobile-handle{display:none !important}
+      
+      /* Country filter - compact */
+      .hud-select{
+        padding:6px 8px;
+        font-size:7px;
+        border-radius:4px;
+      }
+      
+      /* KPI grid - stacked */
+      .kpi-grid{
+        display:flex;
+        flex-direction:column;
+        gap:6px;
+        margin-bottom:10px;
+      }
+      .kpi-card{
+        padding:8px 6px;
+        border-radius:4px;
+      }
+      .kpi-num{font-size:12px}
+      .kpi-label{font-size:6px;margin-top:2px}
+      
+      /* Bar chart - compact */
+      .bar-row{
+        padding:4px 6px;
+        margin:4px 0;
+        border-radius:3px;
+      }
+      .bar-rank{font-size:8px;width:14px}
+      .bar-label{font-size:6px;width:40px}
+      .bar-value{font-size:8px;width:28px}
+      .bar-track{height:4px;border-radius:2px;margin:0 4px}
+      
+      /* Section titles */
+      .data-title{
+        font-size:7px;
+        margin-bottom:6px;
+      }
+      .data-section{margin-bottom:10px}
+      
+      /* Author credit */
+      #author-credit{
+        position:fixed;
+        bottom:16px;
+        left:16px;
+        top:auto;
+        transform:none;
+        font-size:7px;
+      }
+      
+      /* Settings - hide on mobile */
+      .settings{display:none}
+      
+      /* Country header in panel */
+      #panel-country-header{
+        text-align:left;
+        margin-bottom:8px !important;
+      }
+      #panel-country-name{
+        font-size:10px !important;
+        letter-spacing:1px !important;
+      }
+      #panel-country-status{
+        font-size:6px !important;
+        padding:1px 4px !important;
+      }
+    }
+    
+    /* Small phones - even more compact */
+    @media (max-width: 480px) {
+      #header strong{font-size:16px}
+      #header .subtitle{font-size:6px}
+      #data-panel{
+        width:130px;
+        padding:6px;
+        right:8px;
+        bottom:16px;
+        max-height:60vh;
+      }
+      .kpi-num{font-size:11px}
+      .kpi-label{font-size:5px}
+      .bar-label{width:32px;font-size:5px}
+      .bar-value{font-size:7px;width:24px}
+      .bar-rank{font-size:7px;width:12px}
+    }
+    
+    /* Landscape mobile - wider panel */
+    @media (max-width: 768px) and (orientation: landscape) {
+      #header{
+        top:8px;
+        left:10px;
+      }
+      #header strong{font-size:14px}
+      #data-panel{
+        width:160px;
+        bottom:10px;
+        right:10px;
+        padding:8px;
+        max-height:70vh;
+      }
+      .kpi-grid{flex-direction:row}
+      .bar-label{width:40px;font-size:6px}
+      .bar-value{font-size:8px}
+      #author-credit{
+        bottom:8px;
+        left:10px;
+      }
+    }
+  </style>
+</head>
+<body class="intro-active">
+<div id="intro-overlay">
+  <div class="intro-card">
+    <h1 class="intro-title">Migration Atlas</h1>
+    <p class="intro-subtitle">An interactive visualization of global displacement journeys</p>
+    <p class="intro-description">
+      Explore how forced migration flows reshape our world.<br>
+      Track outflow hotspots, asylum destinations, and crisis timelines.<br>
+      Click and drag the globe to discover migration paths yourself.
+    </p>
+    <button class="intro-start" id="introStartButton" type="button">Click<br>to start</button>
+    <p class="intro-footnote">Data source: UNHCR (2020-2025)</p>
+  </div>
+</div>
+<div id="wrapper">
+  <div id="interactive"></div>
+  <div id="glow-layer"></div>
+  
+  <!-- UI Ring Overlay -->
+  <div id="ui">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" style="transform:rotate(-90deg)">
+      <defs>
+        <linearGradient id="glowInner" x1="0" x2="0" y1="0" y2="1">
+          <stop class="svg-stop" offset="0%" stop-color="#FF1313"/>
+          <stop class="svg-stop svg-stop-fade" offset="10%" stop-color="#FF1313"/>
+          <stop class="svg-stop svg-stop-fade" offset="90%" stop-color="#FF1313"/>
+          <stop class="svg-stop" offset="100%" stop-color="#FF1313"/>
+        </linearGradient>
+        <linearGradient id="linearInner">
+          <stop class="svg-stop" offset="0%"/>
+          <stop class="svg-stop svg-stop-fade" offset="35%"/>
+          <stop class="svg-stop svg-stop-fade" offset="65%"/>
+          <stop class="svg-stop" offset="100%"/>
+        </linearGradient>
+        <linearGradient id="linearOuter">
+          <stop class="svg-stop svg-stop-fade" offset="0%"/>
+          <stop class="svg-stop" offset="50%"/>
+          <stop class="svg-stop svg-stop-fade" offset="100%"/>
+        </linearGradient>
+      </defs>
+      <circle cx="500" cy="500" r="380" stroke="url(#linearInner)" stroke-width="0.25" fill="none" class="faded50" id="bracket-inner"/>
+      <circle cx="500" cy="500" r="499" stroke="url(#linearOuter)" stroke-width="0.5" fill="none" class="faded50"/>
+      <circle cx="500" cy="500" r="490" stroke="url(#linearOuter)" stroke-width="0.5" fill="none" class="faded75"/>
+      <circle cx="500" cy="500" r="490" stroke="#00CCFF" stroke-width="1" fill="none" class="svg-ring faded50" id="bracket-left" style="stroke-dasharray:307.976,3089.76;stroke-dashoffset:-615.952"/>
+      <circle cx="500" cy="500" r="490" stroke="#00CCFF" stroke-width="1" fill="none" class="svg-ring faded50" id="bracket-right" style="stroke-dasharray:307.976,3089.76;stroke-dashoffset:-2155.83"/>
+      <!-- Cross lines (hidden by default) -->
+      <line fill="none" stroke="#00CCFF" x1="150" y1="150" x2="850" y2="850" class="cross" id="cross1" style="visibility:hidden;opacity:0"/>
+      <line fill="none" stroke="#00CCFF" x1="150" y1="850" x2="850" y2="150" class="cross" id="cross2" style="visibility:hidden;opacity:0"/>
+    </svg>
+  </div>
+  
+  <div id="header">
+    <div><strong>MIGRATION<br>ATLAS</strong></div>
+    <div class="subtitle">Global refugee and displacement flows. Data: UNHCR 2020-2025</div>
+    <a href="https://www.linkedin.com/in/seoyeonjun/" target="_blank" style="font-size:9px;color:#00CCFF;opacity:0.7;margin-top:8px;display:inline-block">by Seoyeon Jun</a>
+  </div>
+  
+  <!-- GOD'S EYE HUD PANELS -->
+  <div id="hud-left" class="hud-panel">
+    <div class="scanline"></div>
+    <div class="hud-corner tl"></div>
+    <div class="hud-corner bl"></div>
+    <div class="hud-panel-inner">
+      <div class="hud-label">SYS<span class="hud-blink">_</span>INTEL</div>
+      <div class="hud-divider"></div>
+      <div class="hud-stat">
+        <div class="hud-sub">DISPLACED</div>
+        <div class="hud-value">117.3M</div>
+      </div>
+      <div class="hud-stat">
+        <div class="hud-sub">REFUGEES</div>
+        <div class="hud-value">43.4M</div>
+      </div>
+      <div class="hud-stat">
+        <div class="hud-sub">ASYLUM</div>
+        <div class="hud-value">6.9M</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- DATA PANEL - KPI + Filter + Charts -->
+  <div id="data-panel">
+    <div class="mobile-handle" style="display:none"></div>
+    <div class="scanline"></div>
+    
+    <!-- Country Title (shown when selected) -->
+    <div id="panel-country-header" style="display:none;margin-bottom:12px">
+      <div id="panel-country-name" style="font-family:'Michroma',sans-serif;font-size:20px;color:#fff;letter-spacing:2px"></div>
+      <div id="panel-country-status" style="display:inline-block;padding:2px 8px;background:#ff3333;color:#fff;font-size:8px;margin-top:4px"></div>
+    </div>
+    
+    <!-- KPI Summary -->
+    <div class="data-section">
+      <div class="data-title" id="kpi-title">GLOBAL KPI</div>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-num" id="kpi-outflow">7.6M</div>
+          <div class="kpi-label" id="kpi-outflow-label">OUTFLOW</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-num cyan" id="kpi-inflow">5.2M</div>
+          <div class="kpi-label" id="kpi-inflow-label">INFLOW</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Country Filter with Search -->
+    <div class="data-section">
+      <div class="data-title">COUNTRY FILTER</div>
+      <div class="search-container">
+        <input type="text" class="hud-search" id="countrySearch" placeholder="Search country..." autocomplete="off">
+        <div class="search-dropdown" id="searchDropdown"></div>
+      </div>
+      <select class="hud-select" id="countryFilter" onchange="filterCountry(this.value)" style="display:none">
+        <option value="all">-- ALL REGIONS --</option>
+      </select>
+    </div>
+    
+    <!-- Crisis Info (shown when country selected) -->
+    <div id="panel-crisis-info" class="data-section" style="display:none">
+      <div class="data-title">// CRISIS</div>
+      <div id="panel-crisis-text" style="font-size:9px;color:rgba(255,255,255,0.6);line-height:1.5;text-transform:none"></div>
+    </div>
+    
+    <!-- Mini Trend Chart -->
+    <div id="panel-trend" class="data-section" style="display:none">
+      <div class="data-title">// TREND 2015-2024</div>
+      <div id="panel-trend-chart" style="display:flex;align-items:flex-end;gap:3px;height:50px"></div>
+    </div>
+    
+    <!-- Outflow Chart -->
+    <div class="data-section">
+      <div class="data-title">OUTFLOW (EMIGRATION)</div>
+      <div class="bar-chart" id="outflowChart">
+        <div class="bar-row outflow-row" onclick="filterCountry('syria')">
+          <div class="bar-rank">01</div>
+          <div class="bar-label">SYRIA</div>
+          <div class="bar-track"><div class="bar-fill outflow" style="width:95%"></div></div>
+          <div class="bar-value">6.8M</div>
+        </div>
+        <div class="bar-row outflow-row" onclick="filterCountry('ukraine')">
+          <div class="bar-rank">02</div>
+          <div class="bar-label">UKRAINE</div>
+          <div class="bar-track"><div class="bar-fill outflow" style="width:88%"></div></div>
+          <div class="bar-value">6.3M</div>
+        </div>
+        <div class="bar-row outflow-row" onclick="filterCountry('afghanistan')">
+          <div class="bar-rank">03</div>
+          <div class="bar-label">AFGHAN</div>
+          <div class="bar-track"><div class="bar-fill outflow" style="width:79%"></div></div>
+          <div class="bar-value">5.7M</div>
+        </div>
+        <div class="bar-row outflow-row" onclick="filterCountry('venezuela')">
+          <div class="bar-rank">04</div>
+          <div class="bar-label">VENEZUELA</div>
+          <div class="bar-track"><div class="bar-fill outflow" style="width:69%"></div></div>
+          <div class="bar-value">5.0M</div>
+        </div>
+        <div class="bar-row outflow-row" onclick="filterCountry('sudan')">
+          <div class="bar-rank">05</div>
+          <div class="bar-label">SUDAN</div>
+          <div class="bar-track"><div class="bar-fill outflow" style="width:39%"></div></div>
+          <div class="bar-value">2.8M</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Inflow Chart (changes to destinations when country selected) -->
+    <div class="data-section" id="inflow-section">
+      <div class="data-title" id="inflow-title">INFLOW (IMMIGRATION)</div>
+      <div class="bar-chart" id="inflowChart">
+        <div class="bar-row inflow-row">
+          <div class="bar-rank">01</div>
+          <div class="bar-label">TURKEY</div>
+          <div class="bar-track"><div class="bar-fill inflow" style="width:90%"></div></div>
+          <div class="bar-value">3.6M</div>
+        </div>
+        <div class="bar-row inflow-row">
+          <div class="bar-rank">02</div>
+          <div class="bar-label">GERMANY</div>
+          <div class="bar-track"><div class="bar-fill inflow" style="width:63%"></div></div>
+          <div class="bar-value">2.5M</div>
+        </div>
+        <div class="bar-row inflow-row">
+          <div class="bar-rank">03</div>
+          <div class="bar-label">POLAND</div>
+          <div class="bar-track"><div class="bar-fill inflow" style="width:48%"></div></div>
+          <div class="bar-value">1.9M</div>
+        </div>
+        <div class="bar-row inflow-row">
+          <div class="bar-rank">04</div>
+          <div class="bar-label">COLOMBIA</div>
+          <div class="bar-track"><div class="bar-fill inflow" style="width:45%"></div></div>
+          <div class="bar-value">1.8M</div>
+        </div>
+        <div class="bar-row inflow-row">
+          <div class="bar-rank">05</div>
+          <div class="bar-label">PAKISTAN</div>
+          <div class="bar-track"><div class="bar-fill inflow" style="width:40%"></div></div>
+          <div class="bar-value">1.6M</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Source -->
+    <div style="font-size:7px;color:#00CCFF;opacity:0.4;text-align:right;margin-top:8px">
+      SOURCE: UNHCR MID-2024
+    </div>
+  </div>
+  
+  <!-- Controls removed for clean UI -->
+  <div id="palette" style="display:none">
+    <div id="paletteHighlight" class="color"></div>
+    <div id="paletteBase85" class="color"></div>
+    <div id="paletteBase75" class="color"></div>
+    <div id="paletteBase50" class="color"></div>
+    <div id="paletteBase" class="color"></div>
+  </div>
+  
+  <!-- Removed: rotationMode, soundButton, social -->
+  
+  <div id="location">
+    <div class="title"></div>
+    <div class="booktype"></div>
+  </div>
+  
+  <div id="tooltip"><div class="label"></div></div>
+  
+  <!-- COUNTRY DETAIL VIEW -->
+  <div id="country-detail">
+    <div class="detail-close" onclick="closeCountryDetail()">✕</div>
+    <div class="detail-header">
+      <div class="detail-country" id="detail-name">SYRIA</div>
+      <div class="detail-status" id="detail-status">OUTFLOW CRISIS</div>
+    </div>
+    
+    <div class="detail-kpi-grid">
+      <div class="detail-kpi">
+        <div class="detail-kpi-num" id="detail-total">6.8M</div>
+        <div class="detail-kpi-label">TOTAL DISPLACED</div>
+      </div>
+      <div class="detail-kpi">
+        <div class="detail-kpi-num" id="detail-refugees">5.4M</div>
+        <div class="detail-kpi-label">REFUGEES ABROAD</div>
+      </div>
+      <div class="detail-kpi">
+        <div class="detail-kpi-num green" id="detail-internal">6.9M</div>
+        <div class="detail-kpi-label">INTERNALLY DISPLACED</div>
+      </div>
+      <div class="detail-kpi">
+        <div class="detail-kpi-num" id="detail-year">2011</div>
+        <div class="detail-kpi-label">CRISIS START</div>
+      </div>
+    </div>
+    
+    <div class="detail-section">
+      <div class="detail-section-title">// CRISIS BACKGROUND</div>
+      <div class="detail-event" id="detail-event">
+        The Syrian Civil War began in 2011 as part of the Arab Spring protests. 
+        What started as peaceful demonstrations escalated into armed conflict, 
+        creating one of the largest displacement crises in modern history.
+      </div>
+    </div>
+    
+    <div class="detail-section">
+      <div class="detail-section-title">// DISPLACEMENT TREND (2015-2024)</div>
+      <div class="trend-chart" id="trend-chart">
+        <!-- Bars will be generated by JS -->
+      </div>
+    </div>
+    
+    <div class="detail-section">
+      <div class="detail-section-title">// TOP DESTINATION COUNTRIES</div>
+      <div id="detail-destinations" style="display:flex;gap:15px;flex-wrap:wrap">
+        <!-- Will be populated by JS -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Overlay Modal -->
+  <div id="overlay">
+    <div id="overlayRing">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+        <circle cx="500" cy="500" r="490" stroke="none" fill="#000000" class="faded25"/>
+        <circle cx="500" cy="500" r="490" stroke="#00CCFF" stroke-width="1" fill="none" class="svg-ring faded50"/>
+        <circle cx="500" cy="500" r="499" stroke="#00CCFF" stroke-width="0.5" fill="none" class="svg-ring faded75"/>
+      </svg>
+    </div>
+    <div id="overlayInner">
+      <div id="about" class="content">
+        <h2>Global Migration Crisis</h2>
+        <p>This visualization shows the flow of <strong>110+ million</strong> displaced people worldwide as of 2024. Data sourced from UNHCR.</p>
+        <p>The <strong>7 major crisis zones</strong> shown are Syria, Venezuela, Afghanistan, Ukraine, Sudan, Burkina Faso, and Myanmar. Refugees flow to <strong>31+ destination countries</strong> across Europe, Americas, Middle East, and beyond.</p>
+        <div id="stats-modal">
+          <div class="stat-item"><span class="num">110M</span><span class="label">Displaced</span></div>
+          <div class="stat-item"><span class="num">36M</span><span class="label">Refugees</span></div>
+          <div class="stat-item"><span class="num">62M</span><span class="label">Internal</span></div>
+        </div>
+        <a href="https://www.unhcr.org/global-trends" target="_blank" id="datalink">VIEW UNHCR DATA →</a>
+      </div>
+    </div>
+    <a href="#" class="close" onclick="hideInfo();return false">
+      <svg viewBox="0 0 50 50">
+        <polyline class="bracket_x" fill="none" stroke="#00CCFF" stroke-miterlimit="10" points="25,0.5 0.5,0.5 0.5,49.5 25,49.5"/>
+        <polyline class="bracket_x" fill="none" stroke="#00CCFF" stroke-miterlimit="10" points="25,49.5 49.5,49.5 49.5,0.5 25,0.5"/>
+        <line class="line1" fill="none" stroke="#fff" x1="15" y1="15" x2="35" y2="35"/>
+        <line class="line2" fill="none" stroke="#fff" x1="35" y1="15" x2="15" y2="35"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<!-- Shaders -->
+<script type="x-shader/x-vertex" id="vertexshader">
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+    gl_Position = projectionMatrix * mvPosition;
+  }
+</script>
+<script type="x-shader/x-fragment" id="fragmentshader">
+  varying vec2 vUv;
+  uniform vec3 color;
+  uniform sampler2D texture;
+  void main() {
+    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = gl_FragColor * texture2D(texture, vUv);
+  }
+</script>
+<script type="x-shader/x-vertex" id="particle_vertex">
+  attribute float size;
+  attribute float alpha;
+  varying float vAlpha;
+  void main() {
+    vAlpha = alpha;
+    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+    gl_PointSize = size * (300.0 / -mvPosition.z);
+    gl_Position = projectionMatrix * mvPosition;
+  }
+</script>
+<script type="x-shader/x-fragment" id="particle_fragment">
+  uniform vec3 color;
+  uniform sampler2D texture;
+  varying float vAlpha;
+  void main() {
+    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = gl_FragColor * texture2D(texture, gl_PointCoord);
+    gl_FragColor.a *= vAlpha;
+  }
+</script>
+<script type="x-shader/x-vertex" id="line_vertex">
+  attribute float alpha;
+  attribute vec3 arcColor;
+  attribute float lineIndex;
+  varying float vAlpha;
+  varying vec3 vColor;
+  varying float vLineIndex;
+  void main() {
+    vAlpha = alpha;
+    vColor = arcColor;
+    vLineIndex = lineIndex;
+    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+    gl_Position = projectionMatrix * mvPosition;
+  }
+</script>
+<script type="x-shader/x-fragment" id="line_fragment">
+  varying float vAlpha;
+  varying vec3 vColor;
+  varying float vLineIndex;
+  uniform vec3 fogColor;
+  uniform float fogNear;
+  uniform float fogFar;
+  uniform float uTime;
+  void main() {
+    // Flowing dashed line effect
+    float dashSize = 0.15;
+    float gapSize = 0.1;
+    float pattern = mod(vLineIndex - uTime * 0.11, dashSize + gapSize);
+    float dash = step(pattern, dashSize);
+    
+    // Smooth edges
+    float edgeSoftness = 0.02;
+    dash = smoothstep(0.0, edgeSoftness, pattern) * (1.0 - smoothstep(dashSize - edgeSoftness, dashSize, pattern));
+    
+    if (dash < 0.1) discard;
+    
+    gl_FragColor = vec4(vColor, vAlpha * dash);
+    #ifdef USE_FOG
+      #ifdef USE_LOGDEPTHBUF_EXT
+        float depth = gl_FragDepthEXT / gl_FragCoord.w;
+      #else
+        float depth = gl_FragCoord.z / gl_FragCoord.w;
+      #endif
+      float fogFactor = smoothstep(fogNear, fogFar, depth);
+      gl_FragColor.rgb = mix(gl_FragColor.rgb, fogColor, fogFactor);
+    #endif
+  }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+// ============== CONFIG ==============
+var CONFIG = {
+  globeRadius: 65,
+  arcDivisions: 12,
+  arcAnimSpeed: 0.04,
+  autoRotateSpeed: 0.001,
+  cameraZ: 250
+};
+
+// Primary color (LAUNCH IT style cyan)
+var colorPrimary = '#00CCFF';
+var colorHighlight = '#FF1313';
+var colorBase = new THREE.Color(colorPrimary);
+var colorBase50 = new THREE.Color('#1a6680');
+var colorBase75 = new THREE.Color('#0d3340');
+var colorBase85 = new THREE.Color('#081f26');
+var colorAccent = new THREE.Color(colorHighlight);
+
+// ============== DATA ==============
+// ISO3 -> Coordinates lookup
+var COUNTRY_COORDS = {
+  AFG:{lat:34.5,lng:69.2,name:'Afghanistan'},SYR:{lat:35.0,lng:38.0,name:'Syria'},
+  UKR:{lat:50.4,lng:30.5,name:'Ukraine'},VEN:{lat:10.5,lng:-66.9,name:'Venezuela'},
+  SDN:{lat:15.5,lng:32.5,name:'Sudan'},MMR:{lat:16.0,lng:96.0,name:'Myanmar'},
+  BFA:{lat:12.0,lng:-1.5,name:'Burkina Faso'},COD:{lat:-4.3,lng:15.3,name:'DR Congo'},
+  SSD:{lat:4.9,lng:31.6,name:'South Sudan'},SOM:{lat:2.0,lng:45.3,name:'Somalia'},
+  ERI:{lat:15.3,lng:38.9,name:'Eritrea'},CAF:{lat:6.6,lng:20.9,name:'Central African Rep'},
+  YEM:{lat:15.5,lng:48.5,name:'Yemen'},MLI:{lat:17.6,lng:-4.0,name:'Mali'},
+  NGA:{lat:9.1,lng:7.5,name:'Nigeria'},IRQ:{lat:33.3,lng:44.4,name:'Iraq'},
+  PAK:{lat:33.7,lng:73.1,name:'Pakistan'},IRN:{lat:35.7,lng:51.4,name:'Iran'},
+  DEU:{lat:52.5,lng:13.4,name:'Germany'},FRA:{lat:48.9,lng:2.4,name:'France'},
+  GBR:{lat:51.5,lng:-0.1,name:'UK'},ITA:{lat:41.9,lng:12.5,name:'Italy'},
+  ESP:{lat:40.4,lng:-3.7,name:'Spain'},POL:{lat:52.2,lng:21.0,name:'Poland'},
+  SWE:{lat:59.3,lng:18.1,name:'Sweden'},NLD:{lat:52.4,lng:4.9,name:'Netherlands'},
+  AUT:{lat:48.2,lng:16.4,name:'Austria'},TUR:{lat:41.0,lng:29.0,name:'Turkey'},
+  LBN:{lat:33.9,lng:35.5,name:'Lebanon'},JOR:{lat:31.9,lng:35.9,name:'Jordan'},
+  USA:{lat:40.7,lng:-74.0,name:'USA'},CAN:{lat:43.7,lng:-79.4,name:'Canada'},
+  COL:{lat:4.6,lng:-74.1,name:'Colombia'},BRA:{lat:-23.6,lng:-46.6,name:'Brazil'},
+  AUS:{lat:-33.9,lng:151.2,name:'Australia'},UGA:{lat:0.3,lng:32.6,name:'Uganda'},
+  KEN:{lat:-1.3,lng:36.8,name:'Kenya'},ETH:{lat:9.0,lng:38.7,name:'Ethiopia'},
+  EGY:{lat:30.0,lng:31.2,name:'Egypt'},ZAF:{lat:-25.7,lng:28.2,name:'South Africa'},
+  RWA:{lat:-1.9,lng:29.9,name:'Rwanda'},TZA:{lat:-6.2,lng:35.7,name:'Tanzania'},
+  CHE:{lat:46.9,lng:7.4,name:'Switzerland'},BEL:{lat:50.8,lng:4.4,name:'Belgium'},
+  GRC:{lat:37.98,lng:23.7,name:'Greece'},RUS:{lat:55.75,lng:37.6,name:'Russia'},
+  MEX:{lat:19.4,lng:-99.1,name:'Mexico'},CHL:{lat:-33.4,lng:-70.6,name:'Chile'},
+  PER:{lat:-12.0,lng:-77.0,name:'Peru'},ARG:{lat:-34.6,lng:-58.4,name:'Argentina'},
+  TCD:{lat:12.1,lng:15.0,name:'Chad'},CMR:{lat:3.9,lng:11.5,name:'Cameroon'},
+  NER:{lat:13.5,lng:2.1,name:'Niger'},MRT:{lat:18.1,lng:-15.9,name:'Mauritania'},
+  BGD:{lat:23.8,lng:90.4,name:'Bangladesh'},MYS:{lat:3.1,lng:101.7,name:'Malaysia'},
+  THA:{lat:13.75,lng:100.5,name:'Thailand'},IND:{lat:20.6,lng:78.96,name:'India'},
+  CHN:{lat:39.9,lng:116.4,name:'China'},JPN:{lat:35.7,lng:139.7,name:'Japan'},
+  KOR:{lat:37.6,lng:127.0,name:'South Korea'},IDN:{lat:-6.2,lng:106.8,name:'Indonesia'},
+  NOR:{lat:59.9,lng:10.75,name:'Norway'},DNK:{lat:55.7,lng:12.6,name:'Denmark'},
+  FIN:{lat:60.2,lng:24.9,name:'Finland'},HUN:{lat:47.5,lng:19.0,name:'Hungary'},
+  CZE:{lat:50.1,lng:14.4,name:'Czechia'},ROU:{lat:44.4,lng:26.1,name:'Romania'},
+  BGR:{lat:42.7,lng:23.3,name:'Bulgaria'},SRB:{lat:44.8,lng:20.5,name:'Serbia'},
+  HRV:{lat:45.8,lng:16.0,name:'Croatia'},SVN:{lat:46.1,lng:14.5,name:'Slovenia'},
+  SVK:{lat:48.1,lng:17.1,name:'Slovakia'},PRT:{lat:38.7,lng:-9.1,name:'Portugal'},
+  IRL:{lat:53.3,lng:-6.26,name:'Ireland'},ISR:{lat:32.1,lng:34.8,name:'Israel'},
+  SAU:{lat:24.7,lng:46.7,name:'Saudi Arabia'},ARE:{lat:24.5,lng:54.4,name:'UAE'},
+  KWT:{lat:29.4,lng:47.98,name:'Kuwait'},QAT:{lat:25.3,lng:51.5,name:'Qatar'},
+  NZL:{lat:-41.3,lng:174.8,name:'New Zealand'},LBY:{lat:26.3,lng:17.2,name:'Libya'},
+  DZA:{lat:36.8,lng:3.0,name:'Algeria'},MAR:{lat:34.0,lng:-6.8,name:'Morocco'},
+  TUN:{lat:36.8,lng:10.2,name:'Tunisia'},AGO:{lat:-8.8,lng:13.2,name:'Angola'},
+  MOZ:{lat:-25.9,lng:32.6,name:'Mozambique'},ZMB:{lat:-15.4,lng:28.3,name:'Zambia'},
+  ZWE:{lat:-17.8,lng:31.0,name:'Zimbabwe'},MWI:{lat:-13.98,lng:33.8,name:'Malawi'},
+  COG:{lat:-4.3,lng:15.3,name:'Congo'},SEN:{lat:14.7,lng:-17.5,name:'Senegal'},
+  GHA:{lat:5.6,lng:-0.2,name:'Ghana'},CIV:{lat:6.8,lng:-5.3,name:'Ivory Coast'},
+  GIN:{lat:9.6,lng:-13.6,name:'Guinea'},LBR:{lat:6.3,lng:-10.8,name:'Liberia'},
+  SLE:{lat:8.5,lng:-13.2,name:'Sierra Leone'},BEN:{lat:6.4,lng:2.5,name:'Benin'},
+  TGO:{lat:6.1,lng:1.2,name:'Togo'},GMB:{lat:13.5,lng:-16.6,name:'Gambia'},
+  GNB:{lat:11.9,lng:-15.6,name:'Guinea-Bissau'},LKA:{lat:6.93,lng:79.8,name:'Sri Lanka'},
+  NPL:{lat:27.7,lng:85.3,name:'Nepal'},BTN:{lat:27.5,lng:89.6,name:'Bhutan'},
+  PRK:{lat:39.0,lng:125.8,name:'North Korea'},LAO:{lat:18.0,lng:102.6,name:'Laos'},
+  KHM:{lat:11.6,lng:104.9,name:'Cambodia'},VNM:{lat:21.0,lng:105.9,name:'Vietnam'},
+  PHL:{lat:14.6,lng:121.0,name:'Philippines'},PNG:{lat:-6.3,lng:143.96,name:'Papua New Guinea'},
+  CRI:{lat:9.93,lng:-84.1,name:'Costa Rica'},GTM:{lat:14.6,lng:-90.5,name:'Guatemala'},
+  HND:{lat:14.1,lng:-87.2,name:'Honduras'},SLV:{lat:13.7,lng:-89.2,name:'El Salvador'},
+  NIC:{lat:12.1,lng:-86.3,name:'Nicaragua'},PAN:{lat:9.0,lng:-79.5,name:'Panama'},
+  ECU:{lat:-0.2,lng:-78.5,name:'Ecuador'},BOL:{lat:-16.5,lng:-68.2,name:'Bolivia'},
+  PRY:{lat:-25.3,lng:-57.6,name:'Paraguay'},URY:{lat:-34.9,lng:-56.2,name:'Uruguay'},
+  CUB:{lat:23.0,lng:-82.4,name:'Cuba'},HTI:{lat:18.5,lng:-72.3,name:'Haiti'},
+  DOM:{lat:18.5,lng:-69.9,name:'Dominican Rep'},JAM:{lat:18.0,lng:-76.8,name:'Jamaica'},
+  TTO:{lat:10.65,lng:-61.5,name:'Trinidad'},BLZ:{lat:17.25,lng:-88.8,name:'Belize'},
+  GEO:{lat:41.7,lng:44.8,name:'Georgia'},ARM:{lat:40.2,lng:44.5,name:'Armenia'},
+  AZE:{lat:40.4,lng:49.9,name:'Azerbaijan'},KAZ:{lat:51.2,lng:71.45,name:'Kazakhstan'},
+  UZB:{lat:41.3,lng:69.3,name:'Uzbekistan'},TJK:{lat:38.6,lng:68.8,name:'Tajikistan'},
+  KGZ:{lat:42.9,lng:74.6,name:'Kyrgyzstan'},TKM:{lat:37.95,lng:58.4,name:'Turkmenistan'},
+  MNG:{lat:47.9,lng:106.9,name:'Mongolia'},BIH:{lat:43.9,lng:18.4,name:'Bosnia'},
+  MKD:{lat:42.0,lng:21.4,name:'North Macedonia'},ALB:{lat:41.3,lng:19.8,name:'Albania'},
+  MNE:{lat:42.4,lng:19.3,name:'Montenegro'},BLR:{lat:53.9,lng:27.6,name:'Belarus'},
+  MDA:{lat:47.0,lng:28.9,name:'Moldova'},LTU:{lat:54.7,lng:25.3,name:'Lithuania'},
+  LVA:{lat:56.95,lng:24.1,name:'Latvia'},EST:{lat:59.4,lng:24.7,name:'Estonia'},
+  CYP:{lat:35.2,lng:33.4,name:'Cyprus'},MLT:{lat:35.9,lng:14.5,name:'Malta'},
+  ISL:{lat:64.1,lng:-21.9,name:'Iceland'},LUX:{lat:49.6,lng:6.1,name:'Luxembourg'},
+  LIE:{lat:47.2,lng:9.5,name:'Liechtenstein'},DJI:{lat:11.6,lng:43.1,name:'Djibouti'},
+  PSE:{lat:31.9,lng:35.2,name:'Palestine'},NAM:{lat:-22.6,lng:17.1,name:'Namibia'},
+  BWA:{lat:-24.65,lng:25.9,name:'Botswana'},SWZ:{lat:-26.3,lng:31.1,name:'Eswatini'},
+  LSO:{lat:-29.3,lng:28.5,name:'Lesotho'},GAB:{lat:0.4,lng:9.45,name:'Gabon'},
+  GNQ:{lat:1.65,lng:10.3,name:'Eq Guinea'},BDI:{lat:-3.4,lng:29.4,name:'Burundi'},
+  OMN:{lat:21.5,lng:55.9,name:'Oman'},BHR:{lat:26.0,lng:50.6,name:'Bahrain'},
+  PRK:{lat:39.0,lng:125.8,name:'N Korea'},HKG:{lat:22.3,lng:114.2,name:'Hong Kong'}
+};
+
+// Data loaded from CSV
+var FLOWS = [];
+var LOCATIONS = [];
+var flowsByOrigin = {};
+var flowsByAsylum = {};
+var totalRefugees = 0;
+var totalAsylumSeekers = 0;
+var currentYear = 2025;
+
+// Load and parse UNHCR CSV
+async function loadUNHCRData() {
+  try {
+    var resp = await fetch('unhcr_data.csv');
+    var text = await resp.text();
+    var lines = text.split('\n');
+    var header = lines[0];
+    
+    // Clear previous data
+    FLOWS = [];
+    flowsByOrigin = {};
+    flowsByAsylum = {};
+    totalRefugees = 0;
+    totalAsylumSeekers = 0;
+    
+    // Parse lines for selected year
+    for (var i = 1; i < lines.length; i++) {
+      var line = lines[i].trim();
+      if (!line) continue;
+      
+      // Parse CSV (handle quoted fields)
+      var fields = parseCSVLine(line);
+      if (fields.length < 7) continue;
+      
+      var year = parseInt(fields[0]);
+      if (year !== currentYear) continue;
+      
+      var asylumISO = fields[3];
+      var originISO = fields[4];
+      var refugees = parseInt(fields[5]) || 0;
+      var asylumSeekers = parseInt(fields[6]) || 0;
+      var total = refugees + asylumSeekers;
+      
+      if (total < 100) continue; // Filter small flows
+      if (!COUNTRY_COORDS[originISO] || !COUNTRY_COORDS[asylumISO]) continue;
+      if (originISO === asylumISO) continue; // No internal
+      
+      // Aggregate by origin
+      if (!flowsByOrigin[originISO]) flowsByOrigin[originISO] = {total: 0, destinations: {}};
+      flowsByOrigin[originISO].total += total;
+      flowsByOrigin[originISO].destinations[asylumISO] = (flowsByOrigin[originISO].destinations[asylumISO] || 0) + total;
+      
+      // Aggregate by asylum
+      if (!flowsByAsylum[asylumISO]) flowsByAsylum[asylumISO] = {total: 0, origins: {}};
+      flowsByAsylum[asylumISO].total += total;
+      flowsByAsylum[asylumISO].origins[originISO] = (flowsByAsylum[asylumISO].origins[originISO] || 0) + total;
+      
+      totalRefugees += refugees;
+      totalAsylumSeekers += asylumSeekers;
+      
+      FLOWS.push({
+        origin: originISO,
+        asylum: asylumISO,
+        refugees: refugees,
+        asylumSeekers: asylumSeekers,
+        total: total
+      });
+    }
+    
+    // Build LOCATIONS from data
+    buildLocationsFromData();
+    updateKPIs();
+    updateBarCharts();
+    updateCountryFilter();
+    
+    console.log('Loaded ' + FLOWS.length + ' flows for ' + currentYear);
+    return true;
+  } catch(e) {
+    console.error('Failed to load UNHCR data:', e);
+    return false;
+  }
+}
+
+function parseCSVLine(line) {
+  var result = [];
+  var current = '';
+  var inQuotes = false;
+  for (var i = 0; i < line.length; i++) {
+    var c = line[i];
+    if (c === '"') {
+      inQuotes = !inQuotes;
+    } else if (c === ',' && !inQuotes) {
+      result.push(current.trim());
+      current = '';
+    } else {
+      current += c;
+    }
+  }
+  result.push(current.trim());
+  return result;
+}
+
+function buildLocationsFromData() {
+  LOCATIONS = [];
+  var added = {};
+  
+  // Get top origins (outflow - red) - top 30
+  var origins = Object.entries(flowsByOrigin)
+    .sort(function(a,b){return b[1].total - a[1].total})
+    .slice(0, 30);
+  
+  origins.forEach(function(e) {
+    var iso = e[0];
+    if (added[iso]) return;
+    var c = COUNTRY_COORDS[iso];
+    if (!c) return;
+    LOCATIONS.push({lat: c.lat, lng: c.lng, name: c.name, iso: iso, type: 2, flow: e[1].total});
+    added[iso] = true;
+  });
+  
+  // Get top asylums (inflow - cyan) - top 30
+  var asylums = Object.entries(flowsByAsylum)
+    .sort(function(a,b){return b[1].total - a[1].total})
+    .slice(0, 30);
+  
+  asylums.forEach(function(e) {
+    var iso = e[0];
+    if (added[iso]) { // Already origin, mark as both
+      var loc = LOCATIONS.find(function(l){return l.iso === iso;});
+      if (loc) loc.type = 3; // Both
+      return;
+    }
+    var c = COUNTRY_COORDS[iso];
+    if (!c) return;
+    LOCATIONS.push({lat: c.lat, lng: c.lng, name: c.name, iso: iso, type: 1, flow: e[1].total});
+    added[iso] = true;
+  });
+}
+
+function updateKPIs() {
+  var topOrigin = Object.entries(flowsByOrigin).sort(function(a,b){return b[1].total - a[1].total;})[0];
+  var topAsylum = Object.entries(flowsByAsylum).sort(function(a,b){return b[1].total - a[1].total;})[0];
+  
+  document.getElementById('kpi-outflow').textContent = formatNumber(topOrigin ? topOrigin[1].total : 0);
+  document.getElementById('kpi-inflow').textContent = formatNumber(topAsylum ? topAsylum[1].total : 0);
+  
+  // Update left HUD
+  var totalDisplaced = totalRefugees + totalAsylumSeekers;
+  document.querySelector('#hud-left .hud-value').textContent = formatNumber(totalDisplaced);
+  document.querySelectorAll('#hud-left .hud-value')[1].textContent = formatNumber(totalRefugees);
+  document.querySelectorAll('#hud-left .hud-value')[2].textContent = formatNumber(totalAsylumSeekers);
+}
+
+function formatNumber(n) {
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n/1000).toFixed(0) + 'K';
+  return n.toString();
+}
+
+function updateBarCharts() {
+  // Top 5 outflow origins
+  var topOrigins = Object.entries(flowsByOrigin)
+    .sort(function(a,b){return b[1].total - a[1].total})
+    .slice(0, 5);
+  var maxOut = topOrigins[0] ? topOrigins[0][1].total : 1;
+  
+  var outflowHTML = '';
+  topOrigins.forEach(function(e, i) {
+    var iso = e[0];
+    var pct = (e[1].total / maxOut * 100).toFixed(0);
+    var name = COUNTRY_COORDS[iso] ? COUNTRY_COORDS[iso].name.substring(0,8).toUpperCase() : iso;
+    outflowHTML += '<div class="bar-row outflow-row" onclick="filterCountry(\'' + iso.toLowerCase() + '\')">' +
+      '<div class="bar-rank">' + (i+1) + '</div>' +
+      '<div class="bar-label">' + name + '</div>' +
+      '<div class="bar-track"><div class="bar-fill outflow" style="width:' + pct + '%"></div></div>' +
+      '<div class="bar-value">' + formatNumber(e[1].total) + '</div></div>';
+  });
+  document.getElementById('outflowChart').innerHTML = outflowHTML;
+  
+  // Top 5 inflow destinations
+  var topAsylums = Object.entries(flowsByAsylum)
+    .sort(function(a,b){return b[1].total - a[1].total})
+    .slice(0, 5);
+  var maxIn = topAsylums[0] ? topAsylums[0][1].total : 1;
+  
+  var inflowHTML = '';
+  topAsylums.forEach(function(e, i) {
+    var iso = e[0];
+    var pct = (e[1].total / maxIn * 100).toFixed(0);
+    var name = COUNTRY_COORDS[iso] ? COUNTRY_COORDS[iso].name.substring(0,8).toUpperCase() : iso;
+    inflowHTML += '<div class="bar-row inflow-row">' +
+      '<div class="bar-rank">' + (i+1) + '</div>' +
+      '<div class="bar-label">' + name + '</div>' +
+      '<div class="bar-track"><div class="bar-fill inflow" style="width:' + pct + '%"></div></div>' +
+      '<div class="bar-value">' + formatNumber(e[1].total) + '</div></div>';
+  });
+  document.getElementById('inflowChart').innerHTML = inflowHTML;
+}
+
+var countryList = [];
+
+function updateCountryFilter() {
+  var select = document.getElementById('countryFilter');
+  select.innerHTML = '<option value="all">-- ALL REGIONS --</option>';
+  
+  // Top 30 origin countries in dropdown
+  var topOrigins = Object.entries(flowsByOrigin)
+    .sort(function(a,b){return b[1].total - a[1].total})
+    .slice(0, 30);
+  
+  countryList = [{iso: 'all', name: 'ALL REGIONS'}];
+  
+  topOrigins.forEach(function(e) {
+    var iso = e[0];
+    var name = COUNTRY_COORDS[iso] ? COUNTRY_COORDS[iso].name.toUpperCase() : iso;
+    var opt = document.createElement('option');
+    opt.value = iso.toLowerCase();
+    opt.textContent = name;
+    select.appendChild(opt);
+    countryList.push({iso: iso.toLowerCase(), name: name});
+  });
+  
+  // Setup search
+  setupCountrySearch();
+}
+
+function setupCountrySearch() {
+  var input = document.getElementById('countrySearch');
+  var dropdown = document.getElementById('searchDropdown');
+  if (!input || !dropdown) return;
+  
+  input.value = 'ALL REGIONS';
+  
+  input.addEventListener('focus', function() {
+    this.select();
+    showSearchResults('');
+  });
+  
+  input.addEventListener('input', function() {
+    showSearchResults(this.value);
+  });
+  
+  input.addEventListener('blur', function() {
+    setTimeout(function() { dropdown.classList.remove('active'); }, 200);
+  });
+  
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      var first = dropdown.querySelector('.search-item');
+      if (first) first.click();
+    } else if (e.key === 'Escape') {
+      dropdown.classList.remove('active');
+      input.blur();
+    }
+  });
+}
+
+function showSearchResults(query) {
+  var dropdown = document.getElementById('searchDropdown');
+  var q = query.toLowerCase().trim();
+  
+  var filtered = countryList.filter(function(c) {
+    return c.name.toLowerCase().indexOf(q) !== -1;
+  });
+  
+  if (filtered.length === 0) {
+    dropdown.innerHTML = '<div class="search-item" style="opacity:0.5">No results</div>';
+  } else {
+    dropdown.innerHTML = filtered.map(function(c) {
+      return '<div class="search-item" data-iso="' + c.iso + '">' + c.name + '</div>';
+    }).join('');
+    
+    dropdown.querySelectorAll('.search-item').forEach(function(item) {
+      item.addEventListener('click', function() {
+        var iso = this.dataset.iso;
+        document.getElementById('countrySearch').value = this.textContent;
+        dropdown.classList.remove('active');
+        filterCountry(iso);
+      });
+    });
+  }
+  
+  dropdown.classList.add('active');
+}
+
+// ============== GLOBALS ==============
+var container, camera, scene, renderer;
+var rotationObject, earthObject;
+var mouseX = 0, mouseY = 0, mouseXOnDown = 0, mouseYOnDown = 0;
+var targetRotationX = 0.45, targetRotationY = 65 * Math.PI/180;
+var targetRotationXOnDown = 0, targetRotationYOnDown = 0;
+var isMouseDown = false, isAutoRotate = true;
+var toRAD = Math.PI / 180;
+
+// Objects
+var globeInnerMesh, globeOuterMesh, globeCloudMesh;
+var dotSprites = [], dotDetails = [];
+var arcSnakeObject, arcSnakeMesh, arcSnakeAnim, arcSnakeDetails = [], arcSnakeVerts = [];
+var arcRocketObject, arcRocketMesh, arcRocketAnim, arcRocketDetails = [], arcRocketVerts = [];
+var arcBloomObject, arcBloomMesh, arcBloomVerts = [];
+var ringsObject;
+var currentMode = 'snake';
+var raycaster = new THREE.Raycaster();
+raycaster.params.Points = {threshold: 3};
+var mouse = new THREE.Vector2();
+var hasDragged = false;
+
+// ============== INIT ==============
+async function init() {
+  container = document.getElementById('interactive');
+  var w = window.innerWidth, h = window.innerHeight;
+  
+  // Load UNHCR data first
+  await loadUNHCRData();
+  
+  scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x000000, 0, 400);
+  
+  camera = new THREE.PerspectiveCamera(45, w/h, 1, 2000);
+  camera.position.z = CONFIG.cameraZ;
+  
+  renderer = new THREE.WebGLRenderer({antialias: false, alpha: false, powerPreference: 'high-performance'});
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x050508, 1);
+  container.appendChild(renderer.domElement);
+  
+  createGroups();
+  createLights();
+  starfield = createStarfield();
+  createGlobe();
+  createRings();
+  createDots();
+  createArcsFromFlows();  // Use real data
+  
+  addEvents();
+  animate();
+  
+  // Start animation
+  setTimeout(function() {
+    if (arcSnakeAnim) arcSnakeAnim.play();
+  }, 500);
+}
+
+function createGroups() {
+  rotationObject = new THREE.Group();
+  rotationObject.rotation.x = targetRotationX;
+  rotationObject.rotation.y = targetRotationY;
+  scene.add(rotationObject);
+  
+  earthObject = new THREE.Group();
+  earthObject.rotation.y = -90 * toRAD;
+  rotationObject.add(earthObject);
+}
+
+function createLights() {
+  var l1 = new THREE.PointLight(colorBase, 1.25, 400, 2);
+  l1.position.set(-50, 150, 75);
+  scene.add(l1);
+  
+  var l2 = new THREE.PointLight(colorBase, 1.25, 400, 2);
+  l2.position.set(100, 50, 50);
+  scene.add(l2);
+  
+  var l3 = new THREE.PointLight(colorBase, 1.25, 400, 2);
+  l3.position.set(0, -300, 50);
+  scene.add(l3);
+}
+
+function createGlobe() {
+  var geo = new THREE.SphereGeometry(CONFIG.globeRadius, 48, 48);
+  var loader = new THREE.TextureLoader();
+  
+  // Use lightweight earth texture from fast CDN
+  var earthTexture = loader.load('https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_atmos_2048.jpg');
+  
+  // Inner globe (backside) - very dim to not show through
+  var innerMat = new THREE.MeshBasicMaterial({
+    map: earthTexture,
+    color: 0x111111,
+    transparent: true,
+    side: THREE.BackSide,
+    opacity: 0.3,
+    depthWrite: false
+  });
+  globeInnerMesh = new THREE.Mesh(geo, innerMat);
+  earthObject.add(globeInnerMesh);
+  
+  // Outer globe (frontside) with texture - solid, not see-through
+  var outerMat = new THREE.MeshBasicMaterial({
+    map: earthTexture,
+    color: colorBase,
+    transparent: false,
+    side: THREE.FrontSide,
+    opacity: 1.0,
+    depthWrite: true
+  });
+  globeOuterMesh = new THREE.Mesh(geo, outerMat);
+  earthObject.add(globeOuterMesh);
+  
+  // Wireframe removed for cleaner look
+  
+  // Outer atmosphere glow - cyan/blue
+  var glowGeo = new THREE.SphereGeometry(CONFIG.globeRadius * 1.25, 48, 48);
+  var glowMat = new THREE.MeshBasicMaterial({
+    color: 0x00aaff,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    side: THREE.BackSide,
+    opacity: 0.12,
+    depthWrite: false
+  });
+  var glowMesh = new THREE.Mesh(glowGeo, glowMat);
+  earthObject.add(glowMesh);
+  
+  // Mid glow layer - teal
+  var glowGeo2 = new THREE.SphereGeometry(CONFIG.globeRadius * 1.15, 48, 48);
+  var glowMat2 = new THREE.MeshBasicMaterial({
+    color: 0x00e5ff,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    side: THREE.BackSide,
+    opacity: 0.18,
+    depthWrite: false
+  });
+  var glowMesh2 = new THREE.Mesh(glowGeo2, glowMat2);
+  earthObject.add(glowMesh2);
+  
+  // Inner rim glow - bright cyan
+  var glowGeo3 = new THREE.SphereGeometry(CONFIG.globeRadius * 1.06, 48, 48);
+  var glowMat3 = new THREE.MeshBasicMaterial({
+    color: 0x66ffff,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    side: THREE.BackSide,
+    opacity: 0.25,
+    depthWrite: false
+  });
+  var glowMesh3 = new THREE.Mesh(glowGeo3, glowMat3);
+  earthObject.add(glowMesh3);
+  
+  // Shield for lighting interaction
+  var shieldMat = new THREE.MeshPhongMaterial({
+    color: colorBase50,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    side: THREE.FrontSide,
+    opacity: 0.5,
+    depthWrite: false
+  });
+  var shieldMesh = new THREE.Mesh(geo, shieldMat);
+  scene.add(shieldMesh);
+}
+
+function createStarfield() {
+  var starGeo = new THREE.BufferGeometry();
+  var starCount = 2000;
+  var positions = new Float32Array(starCount * 3);
+  var sizes = new Float32Array(starCount);
+  var colors = new Float32Array(starCount * 3);
+  
+  var cameraDirection = camera.position.clone().normalize();
+  var cameraX = cameraDirection.x;
+  var cameraY = cameraDirection.y;
+  var cameraZ = cameraDirection.z;
+
+  for (var i = 0; i < starCount; i++) {
+    // Distribute stars in a sphere around the scene
+    var radius = 300 + Math.random() * 400;
+    var theta = Math.random() * Math.PI * 2;
+    var phi = Math.acos(2 * Math.random() - 1);
+    
+    positions[i*3] = radius * Math.sin(phi) * Math.cos(theta);
+    positions[i*3+1] = radius * Math.sin(phi) * Math.sin(theta);
+    positions[i*3+2] = radius * Math.cos(phi);
+    
+    sizes[i] = 10 + Math.random() * 20;
+
+    // Make stars on the hemisphere behind the earth 3x smaller (camera-based)
+    var dot = positions[i*3] * cameraX + positions[i*3+1] * cameraY + positions[i*3+2] * cameraZ;
+    if (dot < 0) {
+      sizes[i] /= 3;
+    }
+    
+    // Blue + white mix
+    var colorChoice = Math.random();
+    if (colorChoice < 0.4) {
+      // White
+      colors[i*3] = 0.9; colors[i*3+1] = 0.95; colors[i*3+2] = 1;
+    } else if (colorChoice < 0.7) {
+      // Cyan
+      colors[i*3] = 0.4; colors[i*3+1] = 0.85; colors[i*3+2] = 1;
+    } else if (colorChoice < 0.9) {
+      // Light blue
+      colors[i*3] = 0.6; colors[i*3+1] = 0.75; colors[i*3+2] = 1;
+    } else {
+      // Bright cyan
+      colors[i*3] = 0; colors[i*3+1] = 0.9; colors[i*3+2] = 1;
+    }
+  }
+  
+  starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  starGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+  starGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  
+  var starMat = new THREE.ShaderMaterial({
+    uniforms: { time: {value: 0} },
+    vertexShader: `
+      attribute float size;
+      attribute vec3 color;
+      varying vec3 vColor;
+      void main() {
+        vColor = color;
+        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+        gl_PointSize = size * (450.0 / -mvPosition.z);
+        gl_Position = projectionMatrix * mvPosition;
+      }
+    `,
+    fragmentShader: `
+      varying vec3 vColor;
+      void main() {
+        float d = length(gl_PointCoord - vec2(0.5));
+        if (d > 0.5) discard;
+        float alpha = smoothstep(0.5, 0.0, d) * 0.9;
+        gl_FragColor = vec4(vColor, alpha);
+      }
+    `,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+  
+  var stars = new THREE.Points(starGeo, starMat);
+  stars.userData.material = starMat;
+  scene.add(stars);
+  return stars;
+}
+
+var starfield;
+
+function createRings() {
+  ringsObject = new THREE.Group();
+  scene.add(ringsObject);
+  
+  var ringGeo1 = new THREE.RingGeometry(200, 195, 128);
+  var ringGeo2 = new THREE.RingGeometry(100, 98, 128);
+  
+  var ringMat1 = new THREE.MeshBasicMaterial({
+    color: colorBase75,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide,
+    fog: true,
+    depthWrite: false
+  });
+  
+  var ringMat2 = new THREE.MeshBasicMaterial({
+    color: colorBase50,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide,
+    fog: true,
+    depthWrite: false
+  });
+  
+  var ring1 = new THREE.Mesh(ringGeo1, ringMat1);
+  ring1.rotation.x = 90 * toRAD;
+  ring1.position.y = 90;
+  ringsObject.add(ring1);
+  
+  var ring2 = ring1.clone();
+  ring2.position.y = -90;
+  ringsObject.add(ring2);
+  
+  var ring3 = new THREE.Mesh(ringGeo2, ringMat2);
+  ring3.rotation.x = 90 * toRAD;
+  ring3.position.y = 100;
+  ringsObject.add(ring3);
+  
+  var ring4 = ring3.clone();
+  ring4.position.y = -100;
+  ringsObject.add(ring4);
+}
+
+function latLngToVec3(lat, lng, r, h) {
+  var phi = (90 - lat) * toRAD;
+  var theta = (lng + 180) * toRAD;
+  var rad = r + (h || 0);
+  return new THREE.Vector3(
+    -rad * Math.sin(phi) * Math.cos(theta),
+    rad * Math.cos(phi),
+    rad * Math.sin(phi) * Math.sin(theta)
+  );
+}
+
+// Create circular glow texture
+function createGlowTexture(color, softness) {
+  var canvas = document.createElement('canvas');
+  canvas.width = 64;
+  canvas.height = 64;
+  var ctx = canvas.getContext('2d');
+  var gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gradient.addColorStop(0, color || 'rgba(255,255,255,1)');
+  gradient.addColorStop(softness || 0.3, color || 'rgba(255,255,255,0.5)');
+  gradient.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 64, 64);
+  var texture = new THREE.CanvasTexture(canvas);
+  return texture;
+}
+
+function createDots() {
+  // Create textures - Cyber Mint for inflow (#00FFCC)
+  var glowTexWhite = createGlowTexture('rgba(255,255,255,1)', 0.15);
+  var glowTexRed = createGlowTexture('rgba(255,50,50,1)', 0.3);       // Outflow (emigration)
+  var glowTexMint = createGlowTexture('rgba(0,229,255,1)', 0.3);      // Fluorescent Sky Blue for inflow
+  var glowTexRedSoft = createGlowTexture('rgba(255,100,100,1)', 0.5);
+  var glowTexMintSoft = createGlowTexture('rgba(0,220,255,1)', 0.5);
+  
+  var dotGeo = new THREE.PlaneGeometry(1, 1);
+  
+  // Calculate max flow for intensity normalization
+  var maxOriginFlow = 1;
+  var maxAsylumFlow = 1;
+  Object.values(flowsByOrigin).forEach(function(d) { if (d.total > maxOriginFlow) maxOriginFlow = d.total; });
+  Object.values(flowsByAsylum).forEach(function(d) { if (d.total > maxAsylumFlow) maxAsylumFlow = d.total; });
+  
+  LOCATIONS.forEach(function(loc, i) {
+    var pos = latLngToVec3(loc.lat, loc.lng, CONFIG.globeRadius, 0.5);
+    
+    // Calculate intensity from actual flow data
+    var iso = loc.iso;
+    var originFlow = flowsByOrigin[iso] ? flowsByOrigin[iso].total : 0;
+    var asylumFlow = flowsByAsylum[iso] ? flowsByAsylum[iso].total : 0;
+    var intensity = loc.type === 2 ? 
+      (originFlow / maxOriginFlow) : 
+      (asylumFlow / maxAsylumFlow);
+    intensity = Math.max(0.15, Math.min(1, intensity)); // Clamp
+    
+    // Type 2 = Outflow (RED), Type 1 = Inflow (Fluorescent Sky Blue #00E5FF), Type 3 = Both
+    var isOutflow = loc.type === 2 || loc.type === 3;
+    var dotColor = isOutflow ? 0xff3333 : 0x00e5ff;  // Fluorescent sky blue
+    var dotTex = isOutflow ? glowTexRed : glowTexMint;
+    
+    var dotMat = new THREE.MeshBasicMaterial({
+      map: dotTex,
+      color: dotColor,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      side: THREE.DoubleSide,
+      fog: true,
+      depthWrite: false
+    });
+    
+    var dot = new THREE.Mesh(dotGeo, dotMat);
+    dot.position.copy(pos);
+    dot.lookAt(new THREE.Vector3(0,0,0));
+    
+    // Scale based on intensity (more migrants = bigger)
+    var baseScale = isOutflow ? 4 : 2.5;
+    var scale = baseScale * (0.6 + intensity * 0.8);
+    dot.scale.set(scale, scale, scale);
+    
+    dot.userData = {id: i, name: loc.name, type: loc.type};
+    dotSprites.push(dot);
+    dotDetails.push({position: pos.clone(), type: loc.type});
+    earthObject.add(dot);
+    
+    // Add WHITE HOT CORE for high intensity locations (both outflow and inflow)
+    if (intensity > 0.3) {
+      // White hot core - brighter for higher intensity
+      var coreOpacity = 0.5 + intensity * 0.5;
+      var coreMat = new THREE.MeshBasicMaterial({
+        map: glowTexWhite,
+        color: 0xffffff,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide,
+        opacity: coreOpacity,
+        depthWrite: false
+      });
+      var core = new THREE.Mesh(dotGeo, coreMat);
+      core.position.copy(pos);
+      core.lookAt(new THREE.Vector3(0,0,0));
+      var coreScale = 1.5 + intensity * 1.5;
+      core.scale.set(coreScale, coreScale, coreScale);
+      earthObject.add(core);
+    }
+    
+    // Add extra glow layers for high-intensity hubs
+    if (intensity > 0.5) {
+      var glowTex = isOutflow ? glowTexRedSoft : glowTexMintSoft;
+      var glowColor1 = isOutflow ? 0xff4444 : 0x00c8ff;
+      var glowColor2 = isOutflow ? 0xff2222 : 0x00e5ff;
+      
+      // Medium glow - color based on type
+      var glowMat1 = new THREE.MeshBasicMaterial({
+        map: glowTex,
+        color: glowColor1,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide,
+        opacity: 0.6 * intensity,
+        depthWrite: false
+      });
+      var glow1 = new THREE.Mesh(dotGeo, glowMat1);
+      glow1.position.copy(pos);
+      glow1.lookAt(new THREE.Vector3(0,0,0));
+      var glow1Scale = 6 + intensity * 4;
+      glow1.scale.set(glow1Scale, glow1Scale, glow1Scale);
+      earthObject.add(glow1);
+      
+      // Outer glow - color based on type
+      var glowMat2 = new THREE.MeshBasicMaterial({
+        map: glowTex,
+        color: glowColor2,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide,
+        opacity: 0.3 * intensity,
+        depthWrite: false
+      });
+      var glow2 = new THREE.Mesh(dotGeo, glowMat2);
+      glow2.position.copy(pos);
+      glow2.lookAt(new THREE.Vector3(0,0,0));
+      var glow2Scale = 10 + intensity * 6;
+      glow2.scale.set(glow2Scale, glow2Scale, glow2Scale);
+      earthObject.add(glow2);
+    }
+  });
+  
+  // Spikes removed - using arcs only
+}
+
+// Store arc meshes by country for filtering
+var arcsByCountry = {};
+
+// CREATE ARCS FROM REAL UNHCR FLOW DATA
+function createArcsFromFlows() {
+  arcSnakeObject = new THREE.Group();
+  earthObject.add(arcSnakeObject);
+  
+  // Colors: Red for origin, Fluorescent Sky Blue for destination
+  var colorStart = new THREE.Color(0xff3333);
+  var colorEnd = new THREE.Color(0x00E5FF);
+  
+  // Group flows by origin country
+  var originGroups = {};
+  FLOWS.forEach(function(flow) {
+    var originISO = flow.origin;
+    if (!originGroups[originISO]) originGroups[originISO] = [];
+    originGroups[originISO].push(flow);
+  });
+  
+  // Find max flow for scaling
+  var maxFlow = Math.max.apply(null, FLOWS.map(function(f){return f.total;})) || 1;
+  
+  // Create arcs for each origin country
+  Object.keys(originGroups).forEach(function(originISO) {
+    var flows = originGroups[originISO];
+    var origin = COUNTRY_COORDS[originISO];
+    if (!origin) return;
+    
+    var countryKey = originISO.toLowerCase();
+    var countryVerts = [];
+    var countryColors = [];
+    var countryDetails = [];
+    var countryLineIdx = [];
+    
+    // Sort flows by size and take top destinations
+    flows.sort(function(a,b){return b.total - a.total;});
+    var topFlows = flows.slice(0, 8); // Max 8 destinations per origin
+    
+    topFlows.forEach(function(flow) {
+      var dest = COUNTRY_COORDS[flow.asylum];
+      if (!dest) return;
+      
+      // Number of arcs based on flow volume (2-8) - more arcs = thicker bundle
+      var numArcs = Math.max(2, Math.min(8, Math.ceil(flow.total / maxFlow * 8)));
+      
+      for (var a = 0; a < numArcs; a++) {
+        // Tighter spread for bundled look
+        var sLat = origin.lat + (Math.random() - 0.5) * 0.8;
+        var sLng = origin.lng + (Math.random() - 0.5) * 0.8;
+        var eLat = dest.lat + (Math.random() - 0.5) * 0.5;
+        var eLng = dest.lng + (Math.random() - 0.5) * 0.5;
+        
+        var start = latLngToVec3(sLat, sLng, CONFIG.globeRadius, 0.5);
+        var end = latLngToVec3(eLat, eLng, CONFIG.globeRadius, 0.5);
+        
+        var dist = start.distanceTo(end);
+        var h = 1 + dist * 0.0065;
+        
+        var mid = new THREE.Vector3().addVectors(start, end).normalize().multiplyScalar(CONFIG.globeRadius * h);
+        var h2 = 1 + dist * 0.0065 * 0.5;
+        var ctrl1 = new THREE.Vector3().addVectors(start, mid).normalize().multiplyScalar(CONFIG.globeRadius * h2);
+        var ctrl2 = new THREE.Vector3().addVectors(mid, end).normalize().multiplyScalar(CONFIG.globeRadius * h2);
+        
+        var curve = new THREE.CubicBezierCurve3(start, ctrl1, ctrl2, end);
+        var pts = curve.getPoints(CONFIG.arcDivisions);
+        
+        for (var i = 0; i < CONFIG.arcDivisions; i++) {
+          countryVerts.push(pts[i]);
+          countryVerts.push(pts[i+1]);
+          countryDetails.push({alpha: 0.7});
+          countryDetails.push({alpha: 0.7});
+          
+          var t1 = i / CONFIG.arcDivisions;
+          var t2 = (i+1) / CONFIG.arcDivisions;
+          var c1 = new THREE.Color().lerpColors(colorStart, colorEnd, t1);
+          var c2 = new THREE.Color().lerpColors(colorStart, colorEnd, t2);
+          countryColors.push(c1.r, c1.g, c1.b);
+          countryColors.push(c2.r, c2.g, c2.b);
+          // Line index for dashed animation (0 to 1 along arc)
+          countryLineIdx.push(t1, t2);
+        }
+      }
+    });
+    
+    if (countryVerts.length > 0) {
+      var geo = new THREE.BufferGeometry();
+      var pos = new Float32Array(countryVerts.length * 3);
+      var col = new Float32Array(countryColors);
+      var alp = new Float32Array(countryVerts.length);
+      var idx = new Float32Array(countryLineIdx);
+      
+      for (var i = 0; i < countryVerts.length; i++) {
+        pos[i*3] = countryVerts[i].x;
+        pos[i*3+1] = countryVerts[i].y;
+        pos[i*3+2] = countryVerts[i].z;
+        alp[i] = 1.0;
+      }
+      
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      geo.setAttribute('arcColor', new THREE.BufferAttribute(col, 3));
+      geo.setAttribute('alpha', new THREE.BufferAttribute(alp, 1));
+      geo.setAttribute('lineIndex', new THREE.BufferAttribute(idx, 1));
+      
+      var mat = new THREE.ShaderMaterial({
+        uniforms: {
+          fogColor: {value: scene.fog.color},
+          fogNear: {value: scene.fog.near},
+          fogFar: {value: scene.fog.far},
+          uTime: {value: 0}
+        },
+        vertexShader: document.getElementById('line_vertex').textContent,
+        fragmentShader: document.getElementById('line_fragment').textContent,
+        blending: THREE.AdditiveBlending,
+        transparent: true,
+        depthTest: false,
+        fog: true
+      });
+      
+      var mesh = new THREE.LineSegments(geo, mat);
+      mesh.userData = {country: countryKey, iso: originISO, details: countryDetails};
+      arcSnakeObject.add(mesh);
+      arcsByCountry[countryKey] = mesh;
+    }
+  });
+  
+  // Animation
+  arcSnakeAnim = {
+    time: 0,
+    speed: 2.0,
+    play: function() { this.running = true; },
+    pause: function() { this.running = false; },
+    running: true
+  };
+  
+  arcSnakeObject.children.forEach(function(mesh, countryIdx) {
+    var details = mesh.userData.details;
+    var segmentSize = CONFIG.arcDivisions * 2;
+    for (var i = 0; i < details.length; i += 2) {
+      var segIdx = Math.floor(i / segmentSize);
+      var ptIdx = (i / 2) % CONFIG.arcDivisions;
+      var phase = (countryIdx * 0.5) + (segIdx * 0.2) + (ptIdx * 0.06);
+      details[i].phase = phase;
+      details[i+1].phase = phase;
+    }
+  });
+}
+
+// Filter arcs by country (ISO code)
+var currentFilterISO = 'ALL';
+
+function filterArcsByCountry(countryISO) {
+  if (!arcSnakeObject) return;
+  
+  currentFilterISO = countryISO ? countryISO.toUpperCase() : 'ALL';
+  
+  arcSnakeObject.children.forEach(function(mesh) {
+    var attrs = mesh.geometry.attributes;
+    var meshISO = mesh.userData.iso || mesh.userData.country.toUpperCase();
+    
+    if (currentFilterISO === 'ALL') {
+      mesh.visible = true;
+      mesh.userData.filtered = false;
+    } else {
+      mesh.visible = (meshISO === currentFilterISO);
+      mesh.userData.filtered = mesh.visible; // true if this is the selected country
+    }
+    attrs.alpha.needsUpdate = true;
+  });
+}
+
+function createArcsRocket() {
+  arcRocketObject = new THREE.Group();
+  arcRocketObject.visible = false;
+  earthObject.add(arcRocketObject);
+  
+  var origins = LOCATIONS.filter(function(l) { return l.type === 2; });
+  var dests = LOCATIONS.filter(function(l) { return l.type === 1; });
+  
+  origins.forEach(function(origin) {
+    dests.forEach(function(dest) {
+      // Reduced arcs for performance
+      var numArcs = 2;
+      for (var a = 0; a < numArcs; a++) {
+        var sLat = origin.lat + (Math.random() - 0.5) * 2;
+        var sLng = origin.lng + (Math.random() - 0.5) * 2;
+        var eLat = dest.lat + (Math.random() - 0.5) * 1.5;
+        var eLng = dest.lng + (Math.random() - 0.5) * 1.5;
+        
+        var start = latLngToVec3(sLat, sLng, CONFIG.globeRadius, 0.5);
+        var end = latLngToVec3(eLat, eLng, CONFIG.globeRadius, 0.5);
+        
+        var dist = start.distanceTo(end);
+        var h = 1 + dist * 0.006;
+        
+        var mid = new THREE.Vector3().addVectors(start, end).normalize().multiplyScalar(CONFIG.globeRadius * h);
+        var h2 = 1 + dist * 0.006 * 0.5;
+        var ctrl1 = new THREE.Vector3().addVectors(start, mid).normalize().multiplyScalar(CONFIG.globeRadius * h2);
+        var ctrl2 = new THREE.Vector3().addVectors(mid, end).normalize().multiplyScalar(CONFIG.globeRadius * h2);
+        
+        var curve = new THREE.CubicBezierCurve3(start, ctrl1, ctrl2, end);
+        var pts = curve.getPoints(CONFIG.arcDivisions);
+        
+        for (var i = 0; i < CONFIG.arcDivisions; i++) {
+          arcRocketVerts.push(pts[i], pts[i+1]);
+          arcRocketDetails.push({alpha: 0}, {alpha: 0});
+        }
+      }
+    });
+  });
+  
+  var geo = new THREE.BufferGeometry();
+  var pos = new Float32Array(arcRocketVerts.length * 3);
+  var alp = new Float32Array(arcRocketVerts.length);
+  
+  for (var i = 0; i < arcRocketVerts.length; i++) {
+    pos[i*3] = arcRocketVerts[i].x;
+    pos[i*3+1] = arcRocketVerts[i].y;
+    pos[i*3+2] = arcRocketVerts[i].z;
+    alp[i] = 0;
+  }
+  
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('alpha', new THREE.BufferAttribute(alp, 1));
+  
+  var mat = new THREE.ShaderMaterial({
+    uniforms: {
+      color: {value: colorAccent},
+      fogColor: {value: scene.fog.color},
+      fogNear: {value: scene.fog.near},
+      fogFar: {value: scene.fog.far}
+    },
+    vertexShader: document.getElementById('line_vertex').textContent,
+    fragmentShader: document.getElementById('line_fragment').textContent,
+    blending: THREE.AdditiveBlending,
+    transparent: true,
+    depthTest: false,
+    fog: true
+  });
+  
+  arcRocketMesh = new THREE.LineSegments(geo, mat);
+  arcRocketObject.add(arcRocketMesh);
+  
+  arcRocketAnim = gsap.timeline({paused: true, repeat: -1, onUpdate: function() {
+    var attrs = arcRocketMesh.geometry.attributes;
+    for (var i = 0; i < arcRocketDetails.length; i++) {
+      attrs.alpha.array[i] = arcRocketDetails[i].alpha;
+    }
+    attrs.alpha.needsUpdate = true;
+  }});
+  arcRocketAnim.staggerTo(arcRocketDetails, 0.25, {alpha: 0}, CONFIG.arcAnimSpeed, 2);
+  arcRocketAnim.staggerFromTo(arcRocketDetails, 0.25, {alpha: 0}, {alpha: 1}, CONFIG.arcAnimSpeed, 0);
+  arcRocketAnim.timeScale(2);
+}
+
+function createArcsBloom() {
+  arcBloomObject = new THREE.Group();
+  arcBloomObject.visible = false;
+  earthObject.add(arcBloomObject);
+  
+  var origins = LOCATIONS.filter(function(l) { return l.type === 2; });
+  var dests = LOCATIONS.filter(function(l) { return l.type === 1; });
+  
+  origins.forEach(function(origin) {
+    dests.forEach(function(dest) {
+      // Reduced arcs for performance
+      var numArcs = 3;
+      for (var a = 0; a < numArcs; a++) {
+        var sLat = origin.lat + (Math.random() - 0.5) * 2;
+        var sLng = origin.lng + (Math.random() - 0.5) * 2;
+        var eLat = dest.lat + (Math.random() - 0.5) * 1.5;
+        var eLng = dest.lng + (Math.random() - 0.5) * 1.5;
+        
+        var start = latLngToVec3(sLat, sLng, CONFIG.globeRadius, 0.5);
+        var end = latLngToVec3(eLat, eLng, CONFIG.globeRadius, 0.5);
+        
+        var dist = start.distanceTo(end);
+        var h = 1 + dist * 0.005;
+        
+        var mid = new THREE.Vector3().addVectors(start, end).normalize().multiplyScalar(CONFIG.globeRadius * h);
+        var h2 = 1 + dist * 0.005 * 0.5;
+        var ctrl1 = new THREE.Vector3().addVectors(start, mid).normalize().multiplyScalar(CONFIG.globeRadius * h2);
+        var ctrl2 = new THREE.Vector3().addVectors(mid, end).normalize().multiplyScalar(CONFIG.globeRadius * h2);
+        
+        var curve = new THREE.CubicBezierCurve3(start, ctrl1, ctrl2, end);
+        var pts = curve.getPoints(CONFIG.arcDivisions);
+        
+        for (var i = 0; i < CONFIG.arcDivisions; i++) {
+          arcBloomVerts.push(pts[i], pts[i+1]);
+        }
+      }
+    });
+  });
+  
+  var geo = new THREE.BufferGeometry();
+  var pos = new Float32Array(arcBloomVerts.length * 3);
+  
+  for (var i = 0; i < arcBloomVerts.length; i++) {
+    pos[i*3] = arcBloomVerts[i].x;
+    pos[i*3+1] = arcBloomVerts[i].y;
+    pos[i*3+2] = arcBloomVerts[i].z;
+  }
+  
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  
+  var mat = new THREE.LineBasicMaterial({
+    color: colorAccent,
+    transparent: true,
+    opacity: 0.8,
+    blending: THREE.AdditiveBlending,
+    fog: true,
+    depthWrite: false
+  });
+  
+  arcBloomMesh = new THREE.LineSegments(geo, mat);
+  arcBloomObject.add(arcBloomMesh);
+}
+
+function setArcMode(mode) {
+  currentMode = mode;
+  
+  document.querySelectorAll('#settings-left a').forEach(function(a) {
+    a.classList.remove('active');
+    if (a.classList.contains(mode)) a.classList.add('active');
+  });
+  
+  arcSnakeAnim.pause();
+  arcRocketAnim.pause();
+  
+  arcSnakeObject.visible = false;
+  arcRocketObject.visible = false;
+  arcBloomObject.visible = false;
+  
+  if (mode === 'snake') {
+    arcSnakeObject.visible = true;
+    arcSnakeAnim.play();
+  } else if (mode === 'rocket') {
+    arcRocketObject.visible = true;
+    arcRocketAnim.play();
+  } else if (mode === 'bloom') {
+    arcBloomObject.visible = true;
+  }
+}
+
+function setColors(scheme) {
+  document.querySelectorAll('#settings-right a').forEach(function(a) {
+    a.classList.remove('active');
+    if (a.classList.contains(scheme)) a.classList.add('active');
+  });
+  
+  var newBase, newAccent;
+  if (scheme === 'blue') {
+    newBase = new THREE.Color('#00CCFF');
+    newAccent = new THREE.Color('#FF1313');
+  } else if (scheme === 'invert') {
+    newBase = new THREE.Color('#FF1313');
+    newAccent = new THREE.Color('#00CCFF');
+  } else {
+    newBase = new THREE.Color().setHSL(Math.random(), 0.8, 0.5);
+    newAccent = new THREE.Color().setHSL(Math.random(), 0.8, 0.6);
+  }
+  
+  colorBase.copy(newBase);
+  colorAccent.copy(newAccent);
+  
+  // Update materials
+  globeInnerMesh.material.color.copy(newBase);
+  globeOuterMesh.material.color.copy(newBase);
+  arcSnakeMesh.material.uniforms.color.value.copy(newAccent);
+  arcRocketMesh.material.uniforms.color.value.copy(newAccent);
+  arcBloomMesh.material.color.copy(newAccent);
+  
+  dotSprites.forEach(function(d) { d.material.color.copy(newAccent); });
+}
+
+function toggleRotation() {
+  isAutoRotate = !isAutoRotate;
+  document.querySelector('#rotationMode a').classList.toggle('active', isAutoRotate);
+}
+
+function toggleSound() {
+  var btn = document.getElementById('soundButton');
+  btn.classList.toggle('on');
+  btn.classList.toggle('off');
+}
+
+function showInfo() {
+  document.getElementById('overlay').style.display = 'block';
+  document.querySelector('#overlay .content').style.display = 'block';
+  gsap.fromTo('#overlay', {opacity: 0}, {opacity: 1, duration: 0.5});
+  gsap.fromTo('#overlayRing', {scale: 0.8, opacity: 0}, {scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out'});
+  gsap.fromTo('#overlayInner', {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.5, delay: 0.2});
+}
+
+function hideInfo() {
+  gsap.to('#overlay', {opacity: 0, duration: 0.3, onComplete: function() {
+    document.getElementById('overlay').style.display = 'none';
+  }});
+}
+
+// Globe interaction - hover tooltip
+function handleGlobeHover(e) {
+  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  
+  var intersects = raycaster.intersectObjects(dotSprites);
+  var tooltip = document.getElementById('tooltip');
+  
+  if (intersects.length > 0) {
+    var dot = intersects[0].object;
+    var name = dot.userData.name;
+    var type = dot.userData.type === 2 ? 'ORIGIN' : 'DESTINATION';
+    tooltip.innerHTML = '<span class="label">' + name + '</span><br><span style="font-size:8px;opacity:0.6">' + type + '</span>';
+    tooltip.style.left = (e.clientX + 15) + 'px';
+    tooltip.style.top = (e.clientY - 10) + 'px';
+    tooltip.classList.add('visible');
+    container.style.cursor = 'pointer';
+  } else {
+    tooltip.classList.remove('visible');
+    container.style.cursor = 'move';
+  }
+}
+
+// Globe interaction - click to filter
+function handleGlobeClick(e) {
+  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  
+  var intersects = raycaster.intersectObjects(dotSprites);
+  if (intersects.length > 0) {
+    var dot = intersects[0].object;
+    var name = dot.userData.name.toLowerCase();
+    if (dot.userData.type === 2 && COUNTRY_DATA[name]) {
+      document.getElementById('countryFilter').value = name;
+      filterCountry(name);
+    }
+  }
+}
+
+function addEvents() {
+  var el = container;
+  
+  el.addEventListener('mousedown', function(e) {
+    isMouseDown = true;
+    mouseXOnDown = e.clientX - window.innerWidth/2;
+    mouseYOnDown = e.clientY - window.innerHeight/2;
+    targetRotationXOnDown = targetRotationX;
+    targetRotationYOnDown = targetRotationY;
+  });
+  
+  el.addEventListener('mousemove', function(e) {
+    if (isMouseDown) {
+      mouseX = e.clientX - window.innerWidth/2;
+      mouseY = e.clientY - window.innerHeight/2;
+      targetRotationY = targetRotationYOnDown + (mouseX - mouseXOnDown) * 0.005;
+      targetRotationX = targetRotationXOnDown + (mouseY - mouseYOnDown) * 0.005;
+    }
+  });
+  
+  el.addEventListener('mouseup', function(e) { 
+    if (!hasDragged) handleGlobeClick(e);
+    isMouseDown = false; 
+    hasDragged = false;
+  });
+  el.addEventListener('mouseleave', function() { isMouseDown = false; });
+  el.addEventListener('mousemove', function(e) {
+    if (isMouseDown) {
+      hasDragged = true;
+    } else {
+      handleGlobeHover(e);
+    }
+  });
+  
+  // Touch
+  el.addEventListener('touchstart', function(e) {
+    if (e.touches.length === 1) {
+      isMouseDown = true;
+      mouseXOnDown = e.touches[0].clientX - window.innerWidth/2;
+      mouseYOnDown = e.touches[0].clientY - window.innerHeight/2;
+      targetRotationXOnDown = targetRotationX;
+      targetRotationYOnDown = targetRotationY;
+    }
+  }, {passive: true});
+  
+  el.addEventListener('touchmove', function(e) {
+    if (isMouseDown && e.touches.length === 1) {
+      mouseX = e.touches[0].clientX - window.innerWidth/2;
+      mouseY = e.touches[0].clientY - window.innerHeight/2;
+      targetRotationY = targetRotationYOnDown + (mouseX - mouseXOnDown) * 0.005;
+      targetRotationX = targetRotationXOnDown + (mouseY - mouseYOnDown) * 0.005;
+    }
+  }, {passive: true});
+  
+  el.addEventListener('touchend', function() { isMouseDown = false; }, {passive: true});
+  
+  // Zoom
+  el.addEventListener('wheel', function(e) {
+    camera.position.z += e.deltaY * 0.1;
+    camera.position.z = Math.max(90, Math.min(400, camera.position.z));
+  }, {passive: true});
+  
+  // Resize
+  window.addEventListener('resize', function() {
+    var w = window.innerWidth, h = window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  
+  // Auto rotate
+  if (isAutoRotate && !isMouseDown) {
+    targetRotationY += CONFIG.autoRotateSpeed;
+  }
+  
+  // Smooth interpolation
+  rotationObject.rotation.x += (targetRotationX - rotationObject.rotation.x) * 0.1;
+  rotationObject.rotation.y += (targetRotationY - rotationObject.rotation.y) * 0.1;
+  
+  // Arc snake animation - flowing dashed lines
+  if (arcSnakeAnim && arcSnakeAnim.running) {
+    arcSnakeAnim.time += 0.016 * arcSnakeAnim.speed;
+    
+    arcSnakeObject.children.forEach(function(mesh) {
+      if (!mesh.visible) return;
+      
+      // Update uTime for dashed line animation
+      if (mesh.material.uniforms && mesh.material.uniforms.uTime) {
+        mesh.material.uniforms.uTime.value = arcSnakeAnim.time;
+      }
+      
+      // Update alpha based on filter state
+      var attrs = mesh.geometry.attributes;
+      var isFiltered = mesh.userData.filtered;
+      var baseAlpha = isFiltered ? 1.0 : (currentFilterISO === 'ALL' ? 0.85 : 0.3);
+      
+      for (var i = 0; i < attrs.alpha.array.length; i++) {
+        attrs.alpha.array[i] = baseAlpha;
+      }
+      attrs.alpha.needsUpdate = true;
+    });
+  }
+  
+  renderer.render(scene, camera);
+}
+
+// COUNTRY DATA (UNHCR 2024)
+var COUNTRY_DATA = {
+  syria: {
+    name: 'SYRIA',
+    type: 'outflow',
+    total: '6.8M',
+    refugees: '5.4M',
+    internal: '6.9M',
+    year: '2011',
+    event: 'The Syrian Civil War began in 2011 as part of the Arab Spring protests. What started as peaceful demonstrations against President Assad escalated into a multi-sided armed conflict involving government forces, rebel groups, and ISIS. Over 500,000 people have died, and more than half the population has been displaced.',
+    trend: [4.2, 4.8, 5.5, 6.1, 6.3, 6.5, 6.6, 6.7, 6.8, 6.8],
+    destinations: ['Turkey 3.6M', 'Lebanon 0.8M', 'Jordan 0.7M', 'Germany 0.8M', 'Iraq 0.3M']
+  },
+  ukraine: {
+    name: 'UKRAINE',
+    type: 'outflow',
+    total: '6.3M',
+    refugees: '6.3M',
+    internal: '3.7M',
+    year: '2022',
+    event: 'Russia launched a full-scale invasion of Ukraine on February 24, 2022. This triggered the largest refugee crisis in Europe since World War II. Within months, millions fled to neighboring countries, with Poland receiving the largest number of refugees.',
+    trend: [0, 0, 0, 0, 0, 0, 0, 0.1, 6.3, 6.3],
+    destinations: ['Poland 1.6M', 'Germany 1.1M', 'Czechia 0.5M', 'UK 0.2M', 'Spain 0.2M']
+  },
+  afghanistan: {
+    name: 'AFGHANISTAN',
+    type: 'outflow',
+    total: '5.7M',
+    refugees: '5.7M',
+    internal: '3.2M',
+    year: '1979',
+    event: 'Decades of conflict since the Soviet invasion in 1979, followed by civil war, Taliban rule, US intervention, and the Taliban takeover in August 2021 have created waves of displacement. The 2021 collapse led to a massive new exodus.',
+    trend: [2.6, 2.5, 2.5, 2.6, 2.7, 2.8, 2.6, 2.6, 5.7, 5.7],
+    destinations: ['Pakistan 1.7M', 'Iran 3.4M', 'Germany 0.2M', 'Turkey 0.1M', 'Austria 0.04M']
+  },
+  venezuela: {
+    name: 'VENEZUELA',
+    type: 'outflow',
+    total: '5.0M',
+    refugees: '5.0M',
+    internal: '0.1M',
+    year: '2014',
+    event: 'Economic collapse, hyperinflation, political crisis under the Maduro government, and severe shortages of food and medicine have driven millions to flee. Unlike war refugees, most Venezuelans are economic migrants seeking survival.',
+    trend: [0.1, 0.2, 0.5, 1.5, 3.4, 4.5, 4.6, 4.8, 5.0, 5.0],
+    destinations: ['Colombia 1.8M', 'Peru 0.5M', 'USA 0.5M', 'Ecuador 0.4M', 'Chile 0.4M']
+  },
+  sudan: {
+    name: 'SUDAN',
+    type: 'outflow',
+    total: '2.8M',
+    refugees: '1.1M',
+    internal: '7.1M',
+    year: '2023',
+    event: 'Armed conflict erupted in April 2023 between the Sudanese Armed Forces and the Rapid Support Forces paramilitary group. The fighting has caused massive displacement, with millions fleeing to Chad, Egypt, and South Sudan.',
+    trend: [0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 1.1, 2.8],
+    destinations: ['Chad 0.6M', 'Egypt 0.5M', 'South Sudan 0.3M', 'Ethiopia 0.1M', 'CAR 0.05M']
+  },
+  myanmar: {
+    name: 'MYANMAR',
+    type: 'outflow',
+    total: '1.3M',
+    refugees: '1.3M',
+    internal: '1.9M',
+    year: '2017',
+    event: 'Military operations against the Rohingya population in 2017 led to mass exodus to Bangladesh. The 2021 military coup intensified displacement, with ongoing civil conflict creating new waves of refugees.',
+    trend: [0.5, 0.5, 0.5, 1.1, 1.1, 1.1, 1.2, 1.2, 1.3, 1.3],
+    destinations: ['Bangladesh 0.9M', 'Thailand 0.1M', 'Malaysia 0.1M', 'India 0.04M', 'China 0.02M']
+  }
+};
+
+function showCountryDetail(country) {
+  var data = COUNTRY_DATA[country];
+  if (!data) return;
+  
+  document.getElementById('detail-name').textContent = data.name;
+  document.getElementById('detail-status').textContent = data.type === 'outflow' ? 'OUTFLOW CRISIS' : 'INFLOW DESTINATION';
+  document.getElementById('detail-status').className = 'detail-status' + (data.type === 'inflow' ? ' inflow' : '');
+  document.getElementById('detail-total').textContent = data.total;
+  document.getElementById('detail-refugees').textContent = data.refugees;
+  document.getElementById('detail-internal').textContent = data.internal;
+  document.getElementById('detail-year').textContent = data.year;
+  document.getElementById('detail-event').textContent = data.event;
+  
+  // Generate trend chart
+  var chartHtml = '';
+  var years = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024'];
+  var maxVal = Math.max.apply(null, data.trend);
+  data.trend.forEach(function(val, i) {
+    var h = maxVal > 0 ? (val / maxVal * 120) : 0;
+    chartHtml += '<div class="trend-bar-wrap">';
+    chartHtml += '<div class="trend-val">' + val + 'M</div>';
+    chartHtml += '<div class="trend-bar" style="height:' + h + 'px"></div>';
+    chartHtml += '<div class="trend-year">' + years[i] + '</div>';
+    chartHtml += '</div>';
+  });
+  document.getElementById('trend-chart').innerHTML = chartHtml;
+  
+  // Generate destinations
+  var destHtml = '';
+  data.destinations.forEach(function(d) {
+    destHtml += '<div style="background:rgba(255,255,255,0.05);padding:8px 12px;border:1px solid rgba(255,255,255,0.1);font-size:11px">' + d + '</div>';
+  });
+  document.getElementById('detail-destinations').innerHTML = destHtml;
+  
+  document.getElementById('country-detail').classList.add('active');
+}
+
+function closeCountryDetail() {
+  document.getElementById('country-detail').classList.remove('active');
+}
+
+// Update right panel with country data (inline, no fullscreen)
+function updatePanelWithCountry(iso) {
+  var coords = COUNTRY_COORDS[iso];
+  var originData = flowsByOrigin[iso];
+  if (!coords) return;
+  
+  var isOrigin = !!originData && originData.total > 0;
+  var asylumData = flowsByAsylum[iso];
+  
+  // Show country header
+  document.getElementById('panel-country-header').style.display = 'block';
+  document.getElementById('panel-country-name').textContent = coords.name.toUpperCase();
+  document.getElementById('panel-country-status').textContent = isOrigin ? 'OUTFLOW CRISIS' : 'ASYLUM';
+  document.getElementById('panel-country-status').style.background = isOrigin ? '#ff3333' : '#00E5FF';
+  document.getElementById('panel-country-status').style.color = isOrigin ? '#fff' : '#000';
+  
+  // Update KPI
+  document.getElementById('kpi-title').textContent = coords.name.toUpperCase() + ' KPI';
+  document.getElementById('kpi-outflow').textContent = formatNumber(originData ? originData.total : 0);
+  document.getElementById('kpi-outflow-label').textContent = 'OUTFLOW';
+  document.getElementById('kpi-inflow').textContent = formatNumber(asylumData ? asylumData.total : 0);
+  document.getElementById('kpi-inflow-label').textContent = 'INFLOW';
+  
+  // Hide crisis info and trend (no hardcoded data)
+  var crisisInfo = document.getElementById('panel-crisis-info');
+  var panelTrend = document.getElementById('panel-trend');
+  if (crisisInfo) crisisInfo.style.display = 'none';
+  if (panelTrend) panelTrend.style.display = 'none';
+}
+
+// Reset panel to global view
+function resetPanelToGlobal() {
+  document.getElementById('panel-country-header').style.display = 'none';
+  document.getElementById('kpi-title').textContent = 'GLOBAL KPI';
+  
+  // Get top origin and asylum for global KPIs
+  var topOrigin = Object.entries(flowsByOrigin).sort(function(a,b){return b[1].total - a[1].total;})[0];
+  var topAsylum = Object.entries(flowsByAsylum).sort(function(a,b){return b[1].total - a[1].total;})[0];
+  
+  document.getElementById('kpi-outflow').textContent = formatNumber(topOrigin ? topOrigin[1].total : 0);
+  document.getElementById('kpi-outflow-label').textContent = 'TOP OUTFLOW';
+  document.getElementById('kpi-inflow').textContent = formatNumber(topAsylum ? topAsylum[1].total : 0);
+  document.getElementById('kpi-inflow-label').textContent = 'TOP INFLOW';
+  
+  var crisisInfo = document.getElementById('panel-crisis-info');
+  var panelTrend = document.getElementById('panel-trend');
+  if (crisisInfo) crisisInfo.style.display = 'none';
+  if (panelTrend) panelTrend.style.display = 'none';
+  
+  // Reset bar chart highlights
+  document.querySelectorAll('.bar-row').forEach(function(row) {
+    row.style.opacity = '1';
+    row.style.transform = 'scale(1)';
+    row.style.background = 'rgba(0,0,0,0.3)';
+  });
+  
+  // Also reset the inflow chart title
+  document.getElementById('inflow-title').textContent = 'INFLOW (IMMIGRATION)';
+}
+
+// Destination country name mapping (from COUNTRY_DATA destinations to LOCATIONS names)
+var DEST_NAME_MAP = {
+  'turkey': 'Turkey', 'lebanon': 'Lebanon', 'jordan': 'Jordan', 'germany': 'Germany',
+  'iraq': 'Iraq', 'poland': 'Poland', 'czechia': 'Czechia', 'uk': 'UK', 'spain': 'Spain',
+  'pakistan': 'Pakistan', 'iran': 'Iran', 'austria': 'Austria', 'colombia': 'Colombia',
+  'peru': 'Peru', 'usa': 'USA', 'ecuador': 'Ecuador', 'chile': 'Chile', 'chad': 'Chad',
+  'egypt': 'Egypt', 'south sudan': 'South Sudan', 'ethiopia': 'Ethiopia', 'car': 'CAR',
+  'bangladesh': 'Bangladesh', 'thailand': 'Thailand', 'malaysia': 'Malaysia', 'india': 'India',
+  'china': 'China', 'brazil': 'Brazil', 'canada': 'Canada', 'france': 'France', 
+  'italy': 'Italy', 'sweden': 'Sweden', 'netherlands': 'Netherlands', 'australia': 'Australia',
+  'uganda': 'Uganda', 'kenya': 'Kenya'
+};
+
+// Store original dot scales for reset
+var originalDotScales = [];
+
+// Highlight origin + destination dots
+function highlightCountryDots(country) {
+  var data = COUNTRY_DATA[country];
+  if (!data) return;
+  
+  // Parse destination country names from "Turkey 3.6M" format
+  var destNames = data.destinations.map(function(d) {
+    return d.split(' ')[0].toLowerCase();
+  });
+  
+  // Find origin country name
+  var originName = data.name;
+  
+  dotSprites.forEach(function(dot, i) {
+    var dotName = dot.userData.name;
+    var dotNameLower = dotName.toLowerCase();
+    
+    // Save original scale if not saved
+    if (!originalDotScales[i]) {
+      originalDotScales[i] = dot.scale.x;
+    }
+    
+    var isOrigin = dotNameLower === country || dotName === originName;
+    var isDestination = destNames.some(function(dest) {
+      return dotNameLower.includes(dest) || dest.includes(dotNameLower);
+    });
+    
+    if (isOrigin) {
+      // Origin country - bright red, pulse animation
+      gsap.to(dot.scale, {x: originalDotScales[i] * 1.5, y: originalDotScales[i] * 1.5, z: originalDotScales[i] * 1.5, duration: 0.5, ease: 'power2.out'});
+      dot.material.opacity = 1;
+    } else if (isDestination) {
+      // Destination country - bright cyan, enlarged
+      gsap.to(dot.scale, {x: originalDotScales[i] * 1.8, y: originalDotScales[i] * 1.8, z: originalDotScales[i] * 1.8, duration: 0.5, ease: 'power2.out'});
+      dot.material.opacity = 1;
+      // Make destination dots extra bright
+      dot.material.color.setHex(0x00ffff);
+    } else {
+      // Other countries - dim
+      gsap.to(dot.scale, {x: originalDotScales[i] * 0.5, y: originalDotScales[i] * 0.5, z: originalDotScales[i] * 0.5, duration: 0.5, ease: 'power2.out'});
+      dot.material.opacity = 0.2;
+    }
+  });
+}
+
+// Reset all dots to original state
+function resetDotHighlights() {
+  dotSprites.forEach(function(dot, i) {
+    var isOutflow = dot.userData.type === 2;
+    
+    // Reset color
+    dot.material.color.setHex(isOutflow ? 0xff3333 : 0x00e5ff);
+    dot.material.opacity = 1;
+    
+    // Reset scale
+    if (originalDotScales[i]) {
+      gsap.to(dot.scale, {x: originalDotScales[i], y: originalDotScales[i], z: originalDotScales[i], duration: 0.5, ease: 'power2.out'});
+    }
+  });
+}
+
+// Country filter function
+function filterCountry(countryInput) {
+  var iso = countryInput.toUpperCase();
+  var coords = COUNTRY_COORDS[iso];
+  
+  if (countryInput === 'all' || !coords) {
+    // Reset to default view
+    gsap.to(camera.position, {z: 250, duration: 1, ease: 'power2.out'});
+    targetRotationX = 0.3;
+    targetRotationY = 0;
+    resetPanelToGlobal();
+    filterArcsByCountry('all');
+    
+    // Reset inflow chart to global
+    document.getElementById('inflow-title').textContent = 'INFLOW (IMMIGRATION)';
+    updateBarCharts();
+  } else if (coords) {
+    // Update panel with country data
+    updatePanelWithCountry(iso);
+    filterArcsByCountry(iso);
+    
+    // Rotate globe to center the country
+    targetRotationY = -coords.lng * toRAD;
+    targetRotationX = coords.lat * toRAD * 0.8;
+    gsap.to(camera.position, {z: 140, duration: 1, ease: 'power2.out'});
+    
+    // Update inflow chart to show destinations from this origin
+    var originData = flowsByOrigin[iso];
+    if (originData && originData.destinations) {
+      document.getElementById('inflow-title').textContent = 'DESTINATIONS FROM ' + coords.name.toUpperCase();
+      var dests = Object.entries(originData.destinations)
+        .sort(function(a,b){return b[1] - a[1];})
+        .slice(0, 5);
+      var maxVal = dests[0] ? dests[0][1] : 1;
+      
+      var html = dests.map(function(d, i) {
+        var destISO = d[0];
+        var destCoords = COUNTRY_COORDS[destISO];
+        var name = destCoords ? destCoords.name.substring(0,8).toUpperCase() : destISO;
+        var pct = (d[1] / maxVal * 100).toFixed(0);
+        return '<div class="bar-row inflow-row">' +
+          '<div class="bar-rank">' + (i+1) + '</div>' +
+          '<div class="bar-label">' + name + '</div>' +
+          '<div class="bar-track"><div class="bar-fill inflow" style="width:' + pct + '%"></div></div>' +
+          '<div class="bar-value">' + formatNumber(d[1]) + '</div></div>';
+      }).join('');
+      document.getElementById('inflowChart').innerHTML = html;
+    }
+    
+    // Update outflow KPI for this country
+    document.getElementById('kpi-outflow').textContent = formatNumber(originData ? originData.total : 0);
+    document.getElementById('kpi-outflow-label').textContent = 'FROM ' + coords.name.toUpperCase();
+  }
+}
+
+// Generate global inflow chart HTML (fallback, using updateBarCharts instead)
+function generateGlobalInflowChart() {
+  var topAsylums = Object.entries(flowsByAsylum)
+    .sort(function(a,b){return b[1].total - a[1].total})
+    .slice(0, 5);
+  var maxIn = topAsylums[0] ? topAsylums[0][1].total : 1;
+  
+  return topAsylums.map(function(e, i) {
+    var iso = e[0];
+    var pct = (e[1].total / maxIn * 100).toFixed(0);
+    var name = COUNTRY_COORDS[iso] ? COUNTRY_COORDS[iso].name.substring(0,8).toUpperCase() : iso;
+    return '<div class="bar-row inflow-row">' +
+      '<div class="bar-rank">' + (i+1) + '</div>' +
+      '<div class="bar-label">' + name + '</div>' +
+      '<div class="bar-track"><div class="bar-fill inflow" style="width:' + pct + '%"></div></div>' +
+      '<div class="bar-value">' + formatNumber(e[1].total) + '</div></div>';
+  }).join('');
+}
+
+// Generate destination chart for a specific country (keeping for compatibility)
+function generateDestinationChart(iso) {
+  var originData = flowsByOrigin[iso.toUpperCase()];
+  if (!originData || !originData.destinations) return '';
+  
+  var dests = Object.entries(originData.destinations)
+    .sort(function(a,b){return b[1] - a[1];})
+    .slice(0, 5);
+  var maxVal = dests[0] ? dests[0][1] : 1;
+  
+  return dests.map(function(d, i) {
+    var destISO = d[0];
+    var destCoords = COUNTRY_COORDS[destISO];
+    var name = destCoords ? destCoords.name.substring(0,8).toUpperCase() : destISO;
+    var pct = (d[1] / maxVal * 100).toFixed(0);
+    return '<div class="bar-row inflow-row">' +
+      '<div class="bar-rank">' + (i+1) + '</div>' +
+      '<div class="bar-label">' + name + '</div>' +
+      '<div class="bar-track"><div class="bar-fill inflow" style="width:' + pct + '%"></div></div>' +
+      '<div class="bar-value">' + formatNumber(d[1]) + '</div></div>';
+  }).join('');
+}
+
+function startExperience() {
+  document.body.classList.remove('intro-active');
+  document.getElementById('intro-overlay').classList.add('hidden');
+}
+
+document.getElementById('introStartButton').addEventListener('click', startExperience);
+
+// Start
+init();
+</script>
+</body>
+</html>
