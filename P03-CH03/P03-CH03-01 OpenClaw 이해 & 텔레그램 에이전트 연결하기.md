@@ -52,26 +52,38 @@ openclaw onboard
 
 #### s26 — openclaw onboard 단계별 `[데모 — 터미널 전체화면]`
 
+**⚠ 보안 주의:** API 키와 봇 토큰은 반드시 터미널 마법사에서만 입력. AI 채팅창에 붙여넣으면 Anthropic 서버로 전송됨.
+
+**열 것:** 터미널 전체화면
+
 ```bash
+# 1. Echo (메인) 설정
 openclaw onboard
 ```
-
 ```
-? Select setup mode:   ❯ QuickStart
-? Select AI provider:  ❯ Anthropic API key
-? API key:             sk-ant-xxxxxx  ← 붙여넣기
-? Workspace:           Enter 그대로
-? Gateway port:        Enter 그대로
-? Channels:            ◉ Telegram  ← 스페이스 후 Enter
-? Bot token:           8233034938:AAHr64...  ← BotFather 토큰
-? DM policy:           Enter 그대로 (pairing)
-? Daemon:              ❯ Node
+? Mode:       ❯ QuickStart
+? Auth:       ❯ Anthropic API key
+? API key:    sk-ant-xxxxxx  ← 붙여넣기
+? Workspace:  Enter 그대로
+? Gateway:    Enter 그대로
+? Channels:   ◉ Telegram
+? Bot token:  [Echo 봇 토큰]  ← BotFather에서 복사한 것
+? DM policy:  pairing → Enter
+? Daemon:     ❯ Node
+```
+
+```bash
+# 2. 나머지 4명 — 각각 한 번씩
+openclaw onboard --agent aria   # Aria 봇 토큰 입력
+openclaw onboard --agent sam    # Sam 봇 토큰 입력
+openclaw onboard --agent min    # Min 봇 토큰 입력
+openclaw onboard --agent evan   # Evan 봇 토큰 입력
 ```
 
 완료 확인:
 ```bash
 openclaw status
-# agents: 1 active (main/Echo) / gateway: running on :18789
+# agents: 5 active / gateway: running on :18789
 ```
 
 ---
@@ -151,19 +163,30 @@ OpenClaw를 처음 쓰려면 API 키 연결이 필요해요. `openclaw onboard`�
 
 **[화면: 터미널 전체화면]**
 
+API 키랑 봇 토큰은 AI 채팅창에 절대 넣으면 안 돼요. Anthropic 서버로 전송돼요. 터미널 마법사에서만 입력하면 로컬에서만 처리돼요.
+
 터미널에서 `openclaw onboard` 실행하면 마법사가 시작돼요.
 
-**Mode** — QuickStart 선택하세요. 기본값 자동 적용돼요.
+**Mode** — QuickStart 선택.
 
-**Auth** — Anthropic API key 선택하고 콘솔에서 발급한 키 붙여넣기. `platform.anthropic.com`에서 발급해요.
+**Auth** — Anthropic API key 선택하고 `platform.anthropic.com`에서 발급한 키 붙여넣기.
 
-**Workspace / Gateway** — 전부 Enter. 건드릴 것 없어요.
+**Workspace / Gateway** — 전부 Enter.
 
-**Channels** — Telegram 선택하고 BotFather에서 받은 토큰 붙여넣기. DM policy는 pairing 그대로 Enter.
+**Channels** — Telegram 선택하고 Echo 봇 토큰 붙여넣기. DM policy는 pairing 그대로 Enter.
 
 **Daemon** — Node 선택.
 
-여기까지 하면 OpenClaw가 백그라운드 서비스로 자동 실행돼요.
+Echo 설정이 끝나면 나머지 4명도 같은 방식으로 등록해요.
+
+```bash
+openclaw onboard --agent aria
+openclaw onboard --agent sam
+openclaw onboard --agent min
+openclaw onboard --agent evan
+```
+
+각각 실행하면 해당 에이전트 봇 토큰만 물어봐요. BotFather에서 만든 토큰을 붙여넣으면 끝이에요.
 
 ---
 

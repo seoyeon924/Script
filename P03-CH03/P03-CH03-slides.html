@@ -270,63 +270,70 @@
 <div class="slide" id="s26">
   <div class="tb"><span class="tb-cap">openclaw onboard — 단계별 선택</span><span class="tb-num">5-1</span></div>
   <div class="body" style="gap:0;">
-    <div style="width:52%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
-      <div style="padding:16px 28px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">터미널에서 실행</div>
-      <div style="flex:1;background:#111;padding:20px 24px;font-family:monospace;font-size:13.5px;line-height:1.85;color:#ccc;overflow:hidden;">
-        <div style="color:#666;margin-bottom:8px;">$ openclaw onboard</div>
+    <!-- Left: 터미널 -->
+    <div style="width:48%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+      <div style="padding:12px 24px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">터미널에서 실행 — API 키 & 봇 토큰은 여기서만</div>
+      <div style="flex:1;background:#111;padding:18px 22px;font-family:monospace;font-size:12.5px;line-height:1.8;color:#ccc;overflow:hidden;">
+        <div style="color:#666;margin-bottom:6px;">$ openclaw onboard</div>
 
-        <div style="color:#666;margin-top:10px;">── Step 0. Mode ──────────────────</div>
-        <div style="color:#aaa;">❯ <span style="color:#6aac98;">QuickStart</span> &nbsp;&nbsp;<span style="color:#555;">← 선택</span></div>
-        <div style="color:#555;">&nbsp; Advanced</div>
+        <div style="color:#666;margin-top:8px;">── Step 0. Mode ──────────────</div>
+        <div style="color:#aaa;">❯ <span style="color:#6aac98;">QuickStart</span> <span style="color:#555;">← 선택</span></div>
 
-        <div style="color:#666;margin-top:10px;">── Step 1. Auth ──────────────────</div>
-        <div style="color:#555;">&nbsp; Anthropic Claude CLI</div>
+        <div style="color:#666;margin-top:8px;">── Step 1. Auth ──────────────</div>
         <div style="color:#aaa;">❯ <span style="color:#6aac98;">Anthropic API key</span> <span style="color:#555;">← 선택</span></div>
-        <div style="color:#555;">&nbsp; OpenAI / xAI / 기타…</div>
-        <div style="color:#aaa;">&nbsp; API key: <span style="color:#e8c87a;">sk-ant-api03-...</span> &nbsp;<span style="color:#555;">← 붙여넣기</span></div>
+        <div style="color:#aaa;">&nbsp; API key: <span style="color:#e8c87a;">sk-ant-api03-...</span> <span style="color:#555;">← 붙여넣기</span></div>
 
-        <div style="color:#666;margin-top:10px;">── Step 2. Workspace ─────────────</div>
-        <div style="color:#aaa;">&nbsp; Path [~/.openclaw/workspace]: <span style="color:#6aac98;">Enter</span> <span style="color:#555;">← 기본값</span></div>
+        <div style="color:#666;margin-top:8px;">── Step 2, 3. Workspace / Gateway ─</div>
+        <div style="color:#aaa;">&nbsp; <span style="color:#6aac98;">Enter</span> <span style="color:#555;">← 기본값 그대로</span></div>
 
-        <div style="color:#666;margin-top:10px;">── Step 3. Gateway ───────────────</div>
-        <div style="color:#aaa;">&nbsp; Port [18789]: <span style="color:#6aac98;">Enter</span></div>
-        <div style="color:#aaa;">&nbsp; Auth mode: <span style="color:#6aac98;">Token</span> → Enter</div>
-
-        <div style="color:#666;margin-top:10px;">── Step 4. Channels ──────────────</div>
-        <div style="color:#aaa;">❯ <span style="color:#6aac98;">[✓] Telegram</span> &nbsp;&nbsp;<span style="color:#555;">← 선택</span></div>
-        <div style="color:#aaa;">&nbsp; Bot token: <span style="color:#e8c87a;">1234567890:AAF...</span> <span style="color:#555;">← 붙여넣기</span></div>
+        <div style="color:#666;margin-top:8px;">── Step 4. Channels ──────────</div>
+        <div style="color:#aaa;">❯ <span style="color:#6aac98;">[✓] Telegram</span></div>
+        <div style="color:#aaa;">&nbsp; Bot token: <span style="color:#e8c87a;">Echo 토큰</span> <span style="color:#555;">← 붙여넣기</span></div>
         <div style="color:#aaa;">&nbsp; DM policy: <span style="color:#6aac98;">pairing</span> → Enter</div>
 
-        <div style="color:#666;margin-top:10px;">── Step 5. Daemon ────────────────</div>
-        <div style="color:#aaa;">❯ <span style="color:#6aac98;">Node</span> (권장) &nbsp;&nbsp;<span style="color:#555;">← 선택</span></div>
+        <div style="color:#666;margin-top:8px;">── Step 5. Daemon ────────────</div>
+        <div style="color:#aaa;">❯ <span style="color:#6aac98;">Node</span> (권장)</div>
+
+        <div style="margin-top:14px;color:#555;">── 추가 에이전트 봇 등록 ────────</div>
+        <div style="color:#666;font-size:11.5px;margin-top:2px;">$ openclaw onboard --agent aria</div>
+        <div style="color:#aaa;font-size:11.5px;">&nbsp; Bot token: <span style="color:#e8c87a;">Aria 토큰</span> ← 붙여넣기</div>
+        <div style="color:#666;font-size:11.5px;">$ openclaw onboard --agent sam</div>
+        <div style="color:#666;font-size:11.5px;">$ openclaw onboard --agent min</div>
+        <div style="color:#666;font-size:11.5px;">$ openclaw onboard --agent evan</div>
       </div>
     </div>
-    <div style="flex:1;padding:24px 32px;display:flex;flex-direction:column;gap:10px;align-items:flex-start;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">각 단계 요약</div>
+    <!-- Right: 요약 -->
+    <div style="flex:1;padding:20px 26px;display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+      <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#999;margin-bottom:2px;">단계 요약</div>
 
-      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;">
-        <div style="font-size:12px;color:#6aac98;font-weight:600;margin-bottom:4px;">STEP 0 — Mode</div>
-        <div style="font-size:16px;color:#333;"><span style="background:#f0f0f0;padding:2px 8px;border-radius:4px;font-family:monospace;font-size:14px;">QuickStart</span> 선택. 기본값 자동 적용</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;">
+        <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:3px;">STEP 0 — Mode</div>
+        <div style="font-size:14px;color:#333;"><code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">QuickStart</code> 선택</div>
       </div>
 
-      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;">
-        <div style="font-size:12px;color:#6aac98;font-weight:600;margin-bottom:4px;">STEP 1 — Auth</div>
-        <div style="font-size:16px;color:#333;"><span style="background:#f0f0f0;padding:2px 8px;border-radius:4px;font-family:monospace;font-size:14px;">Anthropic API key</span> → 콘솔에서 발급한 키 붙여넣기</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;">
+        <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:3px;">STEP 1 — Auth</div>
+        <div style="font-size:14px;color:#333;"><code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">Anthropic API key</code> → 키 붙여넣기</div>
       </div>
 
-      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;">
-        <div style="font-size:12px;color:#999;font-weight:600;margin-bottom:4px;">STEP 2, 3 — Workspace / Gateway</div>
-        <div style="font-size:16px;color:#333;">전부 Enter. 기본값 그대로</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;">
+        <div style="font-size:11px;color:#999;font-weight:700;margin-bottom:3px;">STEP 2, 3 — Workspace / Gateway</div>
+        <div style="font-size:14px;color:#333;">전부 Enter — 기본값 그대로</div>
       </div>
 
-      <div style="border:1px solid rgba(232,96,60,0.35);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;background:rgba(232,96,60,0.03);">
-        <div style="font-size:12px;color:#e8603c;font-weight:600;margin-bottom:4px;">STEP 4 — Channels ← 중요</div>
-        <div style="font-size:16px;color:#333;line-height:1.6;">Telegram 체크 → <span style="color:#e8603c;font-weight:600;">BotFather 토큰</span> 붙여넣기<br>DM policy: <span style="background:#f0f0f0;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px;">pairing</span> 그대로 Enter</div>
+      <div style="border:2px solid rgba(232,96,60,0.35);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(232,96,60,0.03);">
+        <div style="font-size:11px;color:#e8603c;font-weight:700;margin-bottom:3px;">STEP 4 — Channels ← 중요</div>
+        <div style="font-size:14px;color:#333;line-height:1.6;">Telegram 체크 → <strong>Echo 봇 토큰</strong> 붙여넣기<br><code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:12px;">pairing</code> 그대로 Enter</div>
       </div>
 
-      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;">
-        <div style="font-size:12px;color:#999;font-weight:600;margin-bottom:4px;">STEP 5 — Daemon</div>
-        <div style="font-size:16px;color:#333;"><span style="background:#f0f0f0;padding:2px 8px;border-radius:4px;font-family:monospace;font-size:14px;">Node</span> 선택 (권장)</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;">
+        <div style="font-size:11px;color:#999;font-weight:700;margin-bottom:3px;">STEP 5 — Daemon</div>
+        <div style="font-size:14px;color:#333;"><code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">Node</code> 선택</div>
+      </div>
+
+      <div style="border:2px solid rgba(106,172,152,0.4);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.04);">
+        <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:3px;">추가 에이전트 (Aria · Sam · Min · Evan)</div>
+        <div style="font-size:13px;color:#333;line-height:1.7;"><code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:11px;">openclaw onboard --agent aria</code> 로 각각 토큰 등록<br><span style="color:#888;font-size:12px;">토큰은 터미널 마법사에서만 입력 — AI 채팅창 금지</span></div>
       </div>
     </div>
   </div>
@@ -420,11 +427,18 @@
         </div>
       </div>
 
-      <div style="display:flex;align-items:flex-start;gap:16px;border:1px solid rgba(106,172,152,0.4);border-radius:8px;padding:16px 20px;background:rgba(106,172,152,0.03);">
+      <div style="display:flex;align-items:flex-start;gap:16px;border:2px solid rgba(106,172,152,0.4);border-radius:8px;padding:16px 20px;background:rgba(106,172,152,0.03);">
         <div style="font-size:22px;font-weight:700;color:#6aac98;flex-shrink:0;width:28px;text-align:right;">3</div>
-        <div>
-          <div style="font-size:15px;font-weight:600;color:#333;margin-bottom:4px;">OpenClaw 온보딩 <span style="font-size:12px;color:#999;font-weight:400;">← API 키 + 봇 토큰 설정</span></div>
-          <div style="font-family:monospace;font-size:13.5px;color:#6aac98;">openclaw onboard</div>
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:#333;margin-bottom:6px;">OpenClaw 온보딩 <span style="font-size:12px;color:#e8603c;font-weight:600;">← API 키 & 봇 토큰은 여기서만</span></div>
+          <div style="font-family:monospace;font-size:12.5px;color:#6aac98;line-height:2;">
+            openclaw onboard &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;font-size:11px;">← Echo 봇 토큰 입력</span><br>
+            openclaw onboard --agent aria &nbsp;&nbsp;<span style="color:#555;font-size:11px;">← Aria 봇 토큰 입력</span><br>
+            openclaw onboard --agent sam &nbsp;&nbsp;&nbsp;<span style="color:#555;font-size:11px;">← Sam 봇 토큰 입력</span><br>
+            openclaw onboard --agent min &nbsp;&nbsp;&nbsp;<span style="color:#555;font-size:11px;">← Min 봇 토큰 입력</span><br>
+            openclaw onboard --agent evan &nbsp;&nbsp;<span style="color:#555;font-size:11px;">← Evan 봇 토큰 입력</span>
+          </div>
+          <div style="margin-top:8px;font-size:12px;color:#888;">⚠ 토큰을 AI 채팅창에 붙여넣으면 외부 서버로 전송됨 — 반드시 터미널 마법사에서만 입력</div>
         </div>
       </div>
 
