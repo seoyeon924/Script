@@ -295,12 +295,20 @@
         <div style="color:#aaa;">❯ <span style="color:#6aac98;">Node</span> (권장)</div>
 
         <div style="margin-top:14px;color:#555;">── 추가 에이전트 봇 등록 ────────</div>
-        <div style="color:#aaa;font-size:11.5px;line-height:1.9;">
-          openclaw channels add \<br>
-          &nbsp;&nbsp;--channel telegram \<br>
-          &nbsp;&nbsp;--account aria \<br>
-          &nbsp;&nbsp;--token-file /tmp/aria_token.txt<br>
+        <div style="color:#888;font-size:10.5px;margin-bottom:4px;">macOS / Linux</div>
+        <div style="color:#aaa;font-size:11px;line-height:1.8;">
+          echo "Aria토큰" &gt; /tmp/t.txt<br>
+          openclaw channels add --channel telegram \<br>
+          &nbsp;&nbsp;--account aria --token-file /tmp/t.txt<br>
+          rm /tmp/t.txt<br>
           <span style="color:#555;"># sam / min / evan 동일하게 반복</span>
+        </div>
+        <div style="color:#888;font-size:10.5px;margin-top:8px;margin-bottom:4px;">Windows (PowerShell)</div>
+        <div style="color:#aaa;font-size:11px;line-height:1.8;">
+          "Aria토큰" | Out-File "$env:TEMP\t.txt"<br>
+          openclaw channels add --channel telegram \<br>
+          &nbsp;&nbsp;--account aria --token-file "$env:TEMP\t.txt"<br>
+          Remove-Item "$env:TEMP\t.txt"
         </div>
       </div>
     </div>
@@ -334,14 +342,20 @@
       </div>
 
       <div style="border:2px solid rgba(106,172,152,0.4);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.04);">
-        <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:3px;">추가 에이전트 (Aria · Sam · Min · Evan)</div>
-        <div style="font-size:12px;color:#333;line-height:1.8;font-family:monospace;">
-          openclaw channels add \<br>
-          &nbsp;&nbsp;--channel telegram \<br>
-          &nbsp;&nbsp;--account aria \<br>
-          &nbsp;&nbsp;--token-file /tmp/aria_token.txt
+        <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:6px;">추가 에이전트 (Aria · Sam · Min · Evan)</div>
+        <div style="font-size:10px;color:#999;font-weight:600;margin-bottom:2px;">macOS / Linux</div>
+        <div style="font-size:11.5px;color:#333;line-height:1.7;font-family:monospace;margin-bottom:8px;">
+          echo "토큰" &gt; /tmp/t.txt<br>
+          openclaw channels add --channel telegram --account aria --token-file /tmp/t.txt<br>
+          rm /tmp/t.txt
         </div>
-        <div style="margin-top:6px;font-size:11px;color:#888;">--token-file 사용 → 토큰이 shell 히스토리에 안 남음</div>
+        <div style="font-size:10px;color:#999;font-weight:600;margin-bottom:2px;">Windows (PowerShell)</div>
+        <div style="font-size:11.5px;color:#333;line-height:1.7;font-family:monospace;">
+          "토큰" | Out-File "$env:TEMP\t.txt"<br>
+          openclaw channels add --channel telegram --account aria --token-file "$env:TEMP\t.txt"<br>
+          Remove-Item "$env:TEMP\t.txt"
+        </div>
+        <div style="margin-top:8px;font-size:11px;color:#888;">--token-file → 토큰이 shell 히스토리에 안 남음 · sam / min / evan 동일하게 반복</div>
       </div>
     </div>
   </div>

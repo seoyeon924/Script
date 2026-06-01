@@ -73,11 +73,19 @@ openclaw onboard
 ```
 
 ```bash
-# 2. 나머지 4명 — token-file 사용 (shell 히스토리에 토큰 안 남음)
+# 2. 나머지 4명 — macOS / Linux
 echo "Aria봇토큰" > /tmp/t.txt && openclaw channels add --channel telegram --account aria --token-file /tmp/t.txt && rm /tmp/t.txt
 echo "Sam봇토큰"  > /tmp/t.txt && openclaw channels add --channel telegram --account sam  --token-file /tmp/t.txt && rm /tmp/t.txt
 echo "Min봇토큰"  > /tmp/t.txt && openclaw channels add --channel telegram --account min  --token-file /tmp/t.txt && rm /tmp/t.txt
 echo "Evan봇토큰" > /tmp/t.txt && openclaw channels add --channel telegram --account evan --token-file /tmp/t.txt && rm /tmp/t.txt
+```
+
+```powershell
+# 2. 나머지 4명 — Windows (PowerShell)
+"Aria봇토큰"  | Out-File -FilePath "$env:TEMP\t.txt" -Encoding utf8 -NoNewline; openclaw channels add --channel telegram --account aria --token-file "$env:TEMP\t.txt"; Remove-Item "$env:TEMP\t.txt"
+"Sam봇토큰"   | Out-File -FilePath "$env:TEMP\t.txt" -Encoding utf8 -NoNewline; openclaw channels add --channel telegram --account sam  --token-file "$env:TEMP\t.txt"; Remove-Item "$env:TEMP\t.txt"
+"Min봇토큰"   | Out-File -FilePath "$env:TEMP\t.txt" -Encoding utf8 -NoNewline; openclaw channels add --channel telegram --account min  --token-file "$env:TEMP\t.txt"; Remove-Item "$env:TEMP\t.txt"
+"Evan봇토큰"  | Out-File -FilePath "$env:TEMP\t.txt" -Encoding utf8 -NoNewline; openclaw channels add --channel telegram --account evan --token-file "$env:TEMP\t.txt"; Remove-Item "$env:TEMP\t.txt"
 ```
 
 완료 확인:
@@ -180,8 +188,14 @@ API 키랑 봇 토큰은 AI 채팅창에 절대 넣으면 안 돼요. Anthropic 
 Echo 설정이 끝나면 나머지 4명도 같은 방식으로 등록해요.
 
 ```bash
-# token-file 방식 — 토큰이 shell 히스토리에 안 남음
+# macOS / Linux — token-file 방식 (토큰이 shell 히스토리에 안 남음)
 echo "Aria봇토큰" > /tmp/t.txt && openclaw channels add --channel telegram --account aria --token-file /tmp/t.txt && rm /tmp/t.txt
+# sam / min / evan 동일하게 반복
+```
+
+```powershell
+# Windows (PowerShell)
+"Aria봇토큰" | Out-File -FilePath "$env:TEMP\t.txt" -Encoding utf8 -NoNewline; openclaw channels add --channel telegram --account aria --token-file "$env:TEMP\t.txt"; Remove-Item "$env:TEMP\t.txt"
 # sam / min / evan 동일하게 반복
 ```
 
