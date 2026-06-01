@@ -10,6 +10,10 @@ status: ✅ 대본완성
 
 # P04-CH01-01 Interactive Data Art 기획
 
+> **촬영 전 준비**
+> - `P04-CH01-slides.html` 브라우저에 열어두기
+> - 슬라이드 s1에 커서 올려두기
+
 ---
 
 ## s1 — 타이틀
@@ -90,11 +94,11 @@ Three.js + WebGL로 만든 거고, 이민 데이터 아크가 지구 위에서 �
 레퍼런스는 두 곳에서 찾아요.
 
 **Awwwards**예요.
-awwwards.com에서 Explore → Data Visualization 필터로 찾으면 돼요.
+`awwwards.com`에서 Explore → Data Visualization 필터로 찾으면 돼요.
 인터랙션 패턴이랑 레이아웃 구조를 참고하기 좋아요.
 
 **Information is Beautiful Awards**예요.
-informationisbeautifulawards.com에서 연도별 수상작을 볼 수 있어요.
+`informationisbeautifulawards.com`에서 연도별 수상작을 볼 수 있어요.
 데이터 인코딩 방식이랑 주제 선택에서 참고가 많이 돼요.
 
 레퍼런스를 5개 이상 모으고 시작하는 게 좋아요.

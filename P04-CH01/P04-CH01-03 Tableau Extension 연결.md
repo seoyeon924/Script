@@ -10,11 +10,13 @@ status: ✅ 대본완성
 
 # P04-CH01-03 Tableau Extension 연결
 
+> **촬영 전 준비**
+> - [ ] 슬라이드 s14에 커서
+> - [ ] (선택) Tableau Desktop 열어두기 + `avengers-practice/avengers_network_data.csv` 준비
+
 ---
 
 ## s14 — CLIP 03 섹션 브레이크
-
-**[화면: 슬라이드]**
 
 이번 클립에서는 두 가지를 배워요.
 

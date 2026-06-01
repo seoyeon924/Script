@@ -10,11 +10,14 @@ status: ✅ 대본완성
 
 # P04-CH01-04 Three.js 3D Globe 시각화
 
+> **촬영 전 준비**
+> - [ ] `globe-complete/index.html` 브라우저 탭에 미리 열어두기
+> - [ ] Claude Code에 `globe-practice/` 폴더 열어두기
+> - [ ] `globe-practice/CLAUDE.md` 열어둬서 프롬프트 복붙할 준비
+
 ---
 
 ## s17 — CLIP 04 섹션 브레이크
-
-**[화면: 슬라이드]**
 
 드디어 이번 챕터에서 가장 복잡한 클립이에요.
 
@@ -199,6 +202,68 @@ glow 효과 더 강하게, 별 3배 크게
 `Country of Asylum ISO`는 **아크 도착지**예요. 난민이 향하는 국가예요.
 
 `Refugees`는 **아크 굵기**예요. 난민 수에 비례해요.
+
+---
+
+## ▶ 화면 전환 — 완성본 시연
+
+**[화면: 브라우저 → globe-complete/index.html]**
+
+드래그하면 지구가 돌아요.
+아크들이 난민 이동 경로를 나타내고 있고, 국가를 클릭하면 해당 국가 관련 경로만 필터링됩니다.
+이게 Three.js 하나로 만들어진 거예요.
+
+> 시연: 드래그 회전 → 국가 클릭 필터 → 완성본 확인
+
+---
+
+## ▶ 화면 전환 — Claude Code 실습
+
+**[화면: Claude Code → globe-practice/ 폴더]**
+
+`globe-practice/` 폴더예요.
+`CLAUDE.md` 파일에 단계별 프롬프트가 있어요. Step 1부터 실행할게요.
+
+### Step 1 — 지구본 뼈대
+
+```
+Three.js r128 + GSAP 3.12.2로 3D 지구본 만들어줘.
+텍스처: https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_atmos_2048.jpg
+SphereGeometry(1, 64, 64), WebGLRenderer, PerspectiveCamera.
+마우스 드래그로 회전 가능하게. index.html 하나로.
+```
+
+> 결과 확인: `index.html` 브라우저로 열기 → 지구본 드래그 회전 되면 OK
+>
+> "Three.js 코드가 길게 나와도 괜찮아요. 이해 안 해도 됩니다. 프롬프트로 수정하면 되니까요."
+
+### Step 2 — 아크 데이터 연결
+
+```
+unhcr_data.csv 로드해서 아크 추가해줘.
+Origin ISO → Asylum ISO 방향으로 CatmullRomCurve3 곡선 아크.
+Refugees 컬럼 값에 비례해서 아크 굵기 조정.
+```
+
+> 결과 확인: 지구 위에 아크 그려지는지 확인
+>
+> 데이터가 35,000행이라 렌더링 느리면: "데이터 상위 500행만 쓰게 바꿔줘"
+
+### Step 3 — 디자인 토큰 적용
+
+```
+아래 디자인 토큰으로 스타일 통일해줘.
+배경: radial-gradient(#0d1a2d 0%, #0a0a12 60%, #000 100%)
+강조색: #00CCFF
+아크: rgba(0,204,255,0.7) → rgba(255,100,100,0.7)
+glow: rgba(0,204,255,0.15)
+GLSL 파티클 셰이더로 별 추가. 지구 대기 glow 레이어 추가.
+아크는 흐르는 대시 애니메이션으로.
+```
+
+> 결과 확인: 색상 테마 + 별 + 아크 애니메이션 확인
+>
+> 완성본과 비교 "거의 비슷하게 나왔죠?"
 
 ---
 
