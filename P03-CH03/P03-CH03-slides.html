@@ -295,11 +295,13 @@
         <div style="color:#aaa;">❯ <span style="color:#6aac98;">Node</span> (권장)</div>
 
         <div style="margin-top:14px;color:#555;">── 추가 에이전트 봇 등록 ────────</div>
-        <div style="color:#666;font-size:11.5px;margin-top:2px;">$ openclaw onboard --agent aria</div>
-        <div style="color:#aaa;font-size:11.5px;">&nbsp; Bot token: <span style="color:#e8c87a;">Aria 토큰</span> ← 붙여넣기</div>
-        <div style="color:#666;font-size:11.5px;">$ openclaw onboard --agent sam</div>
-        <div style="color:#666;font-size:11.5px;">$ openclaw onboard --agent min</div>
-        <div style="color:#666;font-size:11.5px;">$ openclaw onboard --agent evan</div>
+        <div style="color:#aaa;font-size:11.5px;line-height:1.9;">
+          openclaw channels add \<br>
+          &nbsp;&nbsp;--channel telegram \<br>
+          &nbsp;&nbsp;--account aria \<br>
+          &nbsp;&nbsp;--token-file /tmp/aria_token.txt<br>
+          <span style="color:#555;"># sam / min / evan 동일하게 반복</span>
+        </div>
       </div>
     </div>
     <!-- Right: 요약 -->
@@ -333,7 +335,13 @@
 
       <div style="border:2px solid rgba(106,172,152,0.4);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.04);">
         <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:3px;">추가 에이전트 (Aria · Sam · Min · Evan)</div>
-        <div style="font-size:13px;color:#333;line-height:1.7;"><code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:11px;">openclaw onboard --agent aria</code> 로 각각 토큰 등록<br><span style="color:#888;font-size:12px;">토큰은 터미널 마법사에서만 입력 — AI 채팅창 금지</span></div>
+        <div style="font-size:12px;color:#333;line-height:1.8;font-family:monospace;">
+          openclaw channels add \<br>
+          &nbsp;&nbsp;--channel telegram \<br>
+          &nbsp;&nbsp;--account aria \<br>
+          &nbsp;&nbsp;--token-file /tmp/aria_token.txt
+        </div>
+        <div style="margin-top:6px;font-size:11px;color:#888;">--token-file 사용 → 토큰이 shell 히스토리에 안 남음</div>
       </div>
     </div>
   </div>
@@ -431,14 +439,12 @@
         <div style="font-size:22px;font-weight:700;color:#6aac98;flex-shrink:0;width:28px;text-align:right;">3</div>
         <div style="flex:1;">
           <div style="font-size:15px;font-weight:600;color:#333;margin-bottom:6px;">OpenClaw 온보딩 <span style="font-size:12px;color:#e8603c;font-weight:600;">← API 키 & 봇 토큰은 여기서만</span></div>
-          <div style="font-family:monospace;font-size:12.5px;color:#6aac98;line-height:2;">
-            openclaw onboard &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;font-size:11px;">← Echo 봇 토큰 입력</span><br>
-            openclaw onboard --agent aria &nbsp;&nbsp;<span style="color:#555;font-size:11px;">← Aria 봇 토큰 입력</span><br>
-            openclaw onboard --agent sam &nbsp;&nbsp;&nbsp;<span style="color:#555;font-size:11px;">← Sam 봇 토큰 입력</span><br>
-            openclaw onboard --agent min &nbsp;&nbsp;&nbsp;<span style="color:#555;font-size:11px;">← Min 봇 토큰 입력</span><br>
-            openclaw onboard --agent evan &nbsp;&nbsp;<span style="color:#555;font-size:11px;">← Evan 봇 토큰 입력</span>
+          <div style="font-family:monospace;font-size:11.5px;color:#6aac98;line-height:2.1;">
+            openclaw onboard<span style="color:#555;font-size:11px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Echo</span><br>
+            openclaw channels add --channel telegram --account aria --token-file /tmp/t.txt<br>
+            <span style="color:#555;font-size:11px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← aria / sam / min / evan 반복</span>
           </div>
-          <div style="margin-top:8px;font-size:12px;color:#888;">⚠ 토큰을 AI 채팅창에 붙여넣으면 외부 서버로 전송됨 — 반드시 터미널 마법사에서만 입력</div>
+          <div style="margin-top:8px;font-size:12px;color:#888;">⚠ --token-file 사용 → 토큰이 shell 히스토리에 안 남음 · AI 채팅창 입력 절대 금지</div>
         </div>
       </div>
 

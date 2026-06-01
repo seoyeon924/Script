@@ -73,11 +73,11 @@ openclaw onboard
 ```
 
 ```bash
-# 2. 나머지 4명 — 각각 한 번씩
-openclaw onboard --agent aria   # Aria 봇 토큰 입력
-openclaw onboard --agent sam    # Sam 봇 토큰 입력
-openclaw onboard --agent min    # Min 봇 토큰 입력
-openclaw onboard --agent evan   # Evan 봇 토큰 입력
+# 2. 나머지 4명 — token-file 사용 (shell 히스토리에 토큰 안 남음)
+echo "Aria봇토큰" > /tmp/t.txt && openclaw channels add --channel telegram --account aria --token-file /tmp/t.txt && rm /tmp/t.txt
+echo "Sam봇토큰"  > /tmp/t.txt && openclaw channels add --channel telegram --account sam  --token-file /tmp/t.txt && rm /tmp/t.txt
+echo "Min봇토큰"  > /tmp/t.txt && openclaw channels add --channel telegram --account min  --token-file /tmp/t.txt && rm /tmp/t.txt
+echo "Evan봇토큰" > /tmp/t.txt && openclaw channels add --channel telegram --account evan --token-file /tmp/t.txt && rm /tmp/t.txt
 ```
 
 완료 확인:
@@ -180,13 +180,12 @@ API 키랑 봇 토큰은 AI 채팅창에 절대 넣으면 안 돼요. Anthropic 
 Echo 설정이 끝나면 나머지 4명도 같은 방식으로 등록해요.
 
 ```bash
-openclaw onboard --agent aria
-openclaw onboard --agent sam
-openclaw onboard --agent min
-openclaw onboard --agent evan
+# token-file 방식 — 토큰이 shell 히스토리에 안 남음
+echo "Aria봇토큰" > /tmp/t.txt && openclaw channels add --channel telegram --account aria --token-file /tmp/t.txt && rm /tmp/t.txt
+# sam / min / evan 동일하게 반복
 ```
 
-각각 실행하면 해당 에이전트 봇 토큰만 물어봐요. BotFather에서 만든 토큰을 붙여넣으면 끝이에요.
+`--token-file`에 임시 파일을 쓰고 바로 삭제해요. 토큰이 `~/.zsh_history`에 남지 않아요.
 
 ---
 
