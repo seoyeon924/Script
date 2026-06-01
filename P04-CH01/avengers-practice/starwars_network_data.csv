@@ -1,0 +1,96 @@
+Source,Target,Strength,Type,Source_Group,Source_Importance,Target_Group,Target_Importance
+Chewbacca,Han,77,ally,Rebels,145,Rebels,170
+Han,Leia,69,romantic,Rebels,170,Rebels,99
+C-3PO,R2-D2,55,ally,Droids,151,Droids,171
+C-3PO,Han,54,ally,Droids,151,Rebels,170
+C-3PO,Leia,49,ally,Droids,151,Rebels,99
+Chewbacca,Leia,48,ally,Rebels,145,Rebels,99
+Darth Vader,Obi-Wan,47,enemy,Empire,190,Jedi Order,148
+Han,Luke,43,ally,Rebels,170,Rebels,161
+Darth Vader,Padme,41,ally,Empire,190,Republic,75
+C-3PO,Chewbacca,39,ally,Droids,151,Rebels,145
+Luke,R2-D2,34,ally,Rebels,161,Droids,171
+Darth Vader,R2-D2,32,ally,Empire,190,Droids,171
+Chewbacca,Luke,32,ally,Rebels,145,Rebels,161
+C-3PO,Luke,29,ally,Droids,151,Rebels,161
+Finn,Rey,29,ally,Resistance,64,Resistance,57
+Obi-Wan,R2-D2,28,ally,Jedi Order,148,Droids,171
+Obi-Wan,Qui-Gon,26,ally,Jedi Order,148,Jedi Order,62
+Leia,Luke,26,ally,Rebels,99,Rebels,161
+Padme,R2-D2,24,ally,Republic,75,Droids,171
+Leia,R2-D2,23,ally,Rebels,99,Droids,171
+Finn,Han,23,ally,Resistance,64,Rebels,170
+Darth Vader,Qui-Gon,22,enemy,Empire,190,Jedi Order,62
+Jar Jar,Qui-Gon,22,ally,Naboo,42,Jedi Order,62
+Luke,Obi-Wan,22,ally,Rebels,161,Jedi Order,148
+Darth Vader,Emperor,21,ally,Empire,190,Empire,52
+Chewbacca,Lando,20,ally,Rebels,145,Rebels,42
+Chewbacca,Finn,20,ally,Rebels,145,Resistance,64
+Obi-Wan,Yoda,20,ally,Jedi Order,148,Jedi Order,46
+Han,R2-D2,18,ally,Rebels,170,Droids,171
+Chewbacca,R2-D2,17,ally,Rebels,145,Droids,171
+BB-8,Rey,17,ally,Droids,40,Resistance,57
+Han,Rey,17,ally,Rebels,170,Resistance,57
+Padme,Qui-Gon,16,ally,Republic,75,Jedi Order,62
+Mace Windu,Yoda,16,ally,Jedi Order,23,Jedi Order,46
+BB-8,Finn,15,ally,Droids,40,Resistance,64
+Jar Jar,Obi-Wan,15,ally,Naboo,42,Jedi Order,148
+Qui-Gon,R2-D2,13,ally,Jedi Order,62,Droids,171
+Chewbacca,Rey,13,ally,Rebels,145,Resistance,57
+Darth Vader,Jar Jar,12,ally,Empire,190,Naboo,42
+C-3PO,Padme,12,ally,Droids,151,Republic,75
+Lando,Leia,12,ally,Rebels,42,Rebels,99
+Han,Lando,12,ally,Rebels,170,Rebels,42
+C-3PO,Darth Vader,11,ally,Droids,151,Empire,190
+Jar Jar,Padme,10,ally,Naboo,42,Republic,75
+Han,Obi-Wan,10,ally,Rebels,170,Jedi Order,148
+Darth Vader,Mace Windu,9,enemy,Empire,190,Jedi Order,23
+Darth Vader,Yoda,9,enemy,Empire,190,Jedi Order,46
+BB-8,Han,9,ally,Droids,40,Rebels,170
+C-3PO,Obi-Wan,9,ally,Droids,151,Jedi Order,148
+Mace Windu,Obi-Wan,9,ally,Jedi Order,23,Jedi Order,148
+Darth Vader,Luke,8,enemy,Empire,190,Rebels,161
+BB-8,Poe,8,ally,Droids,40,Resistance,31
+Bail Organa,Yoda,8,ally,Republic,24,Jedi Order,46
+Bail Organa,Obi-Wan,8,ally,Republic,24,Jedi Order,148
+C-3PO,Lando,8,ally,Droids,151,Rebels,42
+Darth Vader,Tarkin,7,ally,Empire,190,Empire,13
+Chewbacca,Obi-Wan,6,ally,Rebels,145,Jedi Order,148
+Bail Organa,Emperor,6,ally,Republic,24,Empire,52
+Luke,Yoda,6,ally,Rebels,161,Jedi Order,46
+Lando,R2-D2,5,ally,Rebels,42,Droids,171
+Emperor,Obi-Wan,5,enemy,Empire,52,Jedi Order,148
+Bail Organa,Padme,5,ally,Republic,24,Republic,75
+Admiral Ackbar,Lando,5,ally,Rebels,13,Rebels,42
+General Hux,Kylo Ren,5,ally,First Order,15,First Order,23
+Darth Vader,Lando,4,enemy,Empire,190,Rebels,42
+Kylo Ren,Rey,4,enemy,First Order,23,Resistance,57
+Chewbacca,Kylo Ren,3,ally,Rebels,145,First Order,23
+BB-8,Leia,3,ally,Droids,40,Rebels,99
+BB-8,C-3PO,3,ally,Droids,40,Droids,151
+Darth Maul,Emperor,3,enemy,Jedi Order,6,Empire,52
+Count Dooku,Padme,3,ally,Sith,10,Republic,75
+Count Dooku,Obi-Wan,3,enemy,Sith,10,Jedi Order,148
+Bail Organa,C-3PO,3,ally,Republic,24,Droids,151
+Luke,Red Leader,3,ally,Rebels,161,Rebels,34
+Emperor,Luke,3,enemy,Empire,52,Rebels,161
+Captain Phasma,Finn,3,enemy,First Order,7,Resistance,64
+Finn,Leia,3,ally,Resistance,64,Rebels,99
+Leia,Poe,3,ally,Rebels,99,Resistance,31
+Han,Kylo Ren,3,ally,Rebels,170,First Order,23
+Jango Fett,Boba Fett,3,ally,Bounty Hunters,6,Bounty Hunters,11
+Chewbacca,Darth Vader,2,enemy,Rebels,145,Empire,190
+Darth Vader,Leia,2,enemy,Empire,190,Rebels,99
+Darth Vader,Han,2,enemy,Empire,190,Rebels,170
+Boba Fett,Chewbacca,2,ally,Bounty Hunters,11,Rebels,145
+Count Dooku,Yoda,2,enemy,Sith,10,Jedi Order,46
+Count Dooku,Emperor,2,ally,Sith,10,Empire,52
+C-3PO,Emperor,2,ally,Droids,151,Empire,52
+Boba Fett,Lando,2,ally,Bounty Hunters,11,Rebels,42
+Admiral Ackbar,Han,2,ally,Rebels,13,Rebels,170
+Admiral Ackbar,Leia,2,ally,Rebels,13,Rebels,99
+Kylo Ren,Poe,2,enemy,First Order,23,Resistance,31
+Han,Poe,2,ally,Rebels,170,Resistance,31
+Finn,Kylo Ren,2,enemy,Resistance,64,First Order,23
+Count Dooku,Mace Windu,2,enemy,Sith,10,Jedi Order,23
+General Grievous,Obi-Wan,2,enemy,Sith,13,Jedi Order,148
