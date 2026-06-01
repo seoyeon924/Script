@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Avengers Network — Tableau Extension</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://extensionsdk.azureedge.net/1.10/tableau.extensions.1.latest.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#000; color:#ddd; font-family:'Arial',sans-serif; overflow:hidden; width:100vw; height:100vh; }
+  svg { position:absolute; inset:0; }
+  #status { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#888; font-size:14px; }
+</style>
+</head>
+<body>
+<div id="status">Tableau Extension 로딩 중...</div>
+<svg id="chart"></svg>
+
+<script>
+// ─── Tableau Extension 초기화 ───────────────────────────────────
+tableau.extensions.initializeAsync().then(() => {
+  document.getElementById('status').textContent = '';
+  const worksheet = tableau.extensions.dashboardContent.dashboard.worksheets[0];
+  loadData(worksheet);
+
+  // 필드값 변경 시 자동 갱신
+  worksheet.addEventListener(tableau.TableauEventType.FilterChanged, () => loadData(worksheet));
+  worksheet.addEventListener(tableau.TableauEventType.MarkSelectionChanged, () => loadData(worksheet));
+}).catch(err => {
+  // Tableau 밖에서 열 경우 — CSV로 직접 렌더링 (개발/테스트용)
+  document.getElementById('status').textContent = '';
+  d3.csv('../avengers_network_data.csv').then(renderNetwork);
+});
+
+// ─── Tableau 데이터 → 네트워크 변환 ────────────────────────────
+function loadData(worksheet) {
+  worksheet.getSummaryDataAsync().then(dataTable => {
+    const columns = dataTable.columns.map(c => c.fieldName);
+    const sourceIdx  = columns.findIndex(c => c.toLowerCase().includes('source'));
+    const targetIdx  = columns.findIndex(c => c.toLowerCase().includes('target'));
+    const strengthIdx = columns.findIndex(c => c.toLowerCase().includes('strength'));
+    const typeIdx    = columns.findIndex(c => c.toLowerCase().includes('type'));
+
+    const rows = dataTable.data.map(row => ({
+      Source:   row[sourceIdx]?.formattedValue ?? '',
+      Target:   row[targetIdx]?.formattedValue ?? '',
+      Strength: parseFloat(row[strengthIdx]?.value ?? 1),
+      Type:     row[typeIdx]?.formattedValue ?? 'ally',
+    })).filter(r => r.Source && r.Target);
+
+    renderNetwork(rows);
+  });
+}
+
+// ─── D3.js 네트워크 렌더링 ──────────────────────────────────────
+function renderNetwork(data) {
+  const W = window.innerWidth, H = window.innerHeight;
+  d3.select('#chart').selectAll('*').remove();
+
+  const svg = d3.select('#chart').attr('width', W).attr('height', H);
+
+  // 노드 / 링크 구성
+  const nodeSet = new Set();
+  data.forEach(d => { nodeSet.add(d.Source); nodeSet.add(d.Target); });
+  const nodes = [...nodeSet].map(id => ({ id }));
+  const links = data.map(d => ({ source: d.Source, target: d.Target, strength: +d.Strength, type: d.Type }));
+
+  const color = { ally: '#4fc3f7', enemy: '#ef5350', romantic: '#f06292' };
+  const strengthScale = d3.scaleLinear().domain([1, d3.max(links, d => d.strength)]).range([1, 6]);
+
+  // Force Simulation
+  const sim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links).id(d => d.id).distance(120))
+    .force('charge', d3.forceManyBody().strength(-300))
+    .force('center', d3.forceCenter(W / 2, H / 2));
+
+  const link = svg.append('g').selectAll('line').data(links).join('line')
+    .attr('stroke', d => color[d.type] ?? '#aaa')
+    .attr('stroke-width', d => strengthScale(d.strength))
+    .attr('stroke-opacity', 0.6);
+
+  const node = svg.append('g').selectAll('circle').data(nodes).join('circle')
+    .attr('r', 8).attr('fill', '#e8603c').attr('stroke', '#fff').attr('stroke-width', 1.5)
+    .call(d3.drag()
+      .on('start', (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
+      .on('end', (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+  const label = svg.append('g').selectAll('text').data(nodes).join('text')
+    .text(d => d.id).attr('font-size', 11).attr('fill', '#ccc')
+    .attr('text-anchor', 'middle').attr('dy', 20);
+
+  sim.on('tick', () => {
+    link.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+    node.attr('cx', d => d.x).attr('cy', d => d.y);
+    label.attr('x', d => d.x).attr('y', d => d.y);
+  });
+}
+
+window.addEventListener('resize', () => {
+  const worksheet = tableau.extensions.dashboardContent?.dashboard.worksheets[0];
+  if (worksheet) loadData(worksheet);
+});
+</script>
+</body>
+</html>

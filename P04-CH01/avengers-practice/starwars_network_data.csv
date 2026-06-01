@@ -7,7 +7,7 @@ C-3PO,Leia,49,ally,Droids,151,Rebels,99
 Chewbacca,Leia,48,ally,Rebels,145,Rebels,99
 Darth Vader,Obi-Wan,47,enemy,Empire,190,Jedi Order,148
 Han,Luke,43,ally,Rebels,170,Rebels,161
-Darth Vader,Padme,41,ally,Empire,190,Republic,75
+Darth Vader,Padme,41,romantic,Empire,190,Republic,75
 C-3PO,Chewbacca,39,ally,Droids,151,Rebels,145
 Luke,R2-D2,34,ally,Rebels,161,Droids,171
 Darth Vader,R2-D2,32,ally,Empire,190,Droids,171

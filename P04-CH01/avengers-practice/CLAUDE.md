@@ -2,6 +2,7 @@
 
 데이터 파일: `avengers_network_data.csv` (80행)
 컬럼: Source, Target, Strength, Type, Source_Group, Source_Importance, Target_Group, Target_Importance
+※ Source_Image / Target_Image 컬럼은 존재하지만 값이 비어 있음 — 이미지 기능은 완성본(avengers-complete)에만 포함
 완성 예시: https://avengers-network.netlify.app
 
 ---
@@ -42,6 +43,7 @@ D3 Force Simulation으로 노드 배치. index.html 하나로.
 
 ```
 Tableau Extensions API 추가해줘.
+API 스크립트: https://extensionsdk.azureedge.net/1.10/tableau.extensions.1.latest.js
 Tableau 워크시트에서 Source/Target 필드 받아서 해당 캐릭터 관계만 필터링.
-manifest 파일(.trex)도 만들어줘.
+manifest 파일(.trex)도 만들어줘. source-location URL은 http://localhost:8080으로.
 ```

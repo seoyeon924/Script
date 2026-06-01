@@ -1,6 +1,7 @@
 # 3D Globe 실습
 
 데이터 파일: `unhcr_data.csv` (UNHCR 난민 데이터, 35,472행)
+※ 컬럼명에 공백 포함 — 코드에서 반드시 `data["Country of Origin ISO"]` 형태로 접근할 것 (Origin ISO 아님)
 완성 예시: https://github.com/seoyeon924/globe
 
 ---

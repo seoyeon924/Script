@@ -96,7 +96,7 @@ Tableau Desktop을 열고 → Connect → Text file 순서로 들어가요.
 
 Marks 카드에서 Mark 타입 드롭다운을 열어요.
 
-**Add Extension** 을 선택하고 → **Access Local Extensions** 클릭합니다.
+**Extension** 을 선택합니다. 그러면 팝업이 열리는데, **Access Local Extensions** 를 클릭합니다.
 
 `avengers-network.trex` 파일을 선택하면 끝이에요.
 
@@ -143,65 +143,59 @@ Netlify에 배포된 URL이 `manifest.trex`에 이미 등록되어 있기 때문
 
 슬라이드에서 설명한 걸 실제로 연결해보도록 하겠습니다.
 
----
+그런데 데이터는 어벤져스가 아니라 **스타워즈**로 해볼 거예요.
 
-### 1단계 — 데이터 연결
-
-Tableau Desktop을 열면 왼쪽에 Connect 패널이 있습니다.
-**Text file**을 클릭합니다.
-
-`avengers-practice/avengers_network_data.csv` 파일을 선택합니다.
-
-> 확인: Source, Target, Strength, Type 컬럼이 보이면 됩니다.
+아까 만든 `.trex` 파일은 그대로 씁니다. 데이터만 바꾸는 거예요.
+`Source`, `Target`, `Strength` 컬럼만 있으면 어떤 데이터든 된다고 했는데, 지금 바로 확인해보겠습니다.
 
 ---
 
-### 2단계 — 워크시트로 이동
+### 1단계 — 스타워즈 데이터 연결
+
+Tableau Desktop → Connect → **Text file**을 클릭합니다.
+
+`avengers-practice/starwars_network_data.csv` 파일을 선택합니다.
+
+> 확인: Source, Target, Strength, Type, Source_Group 컬럼이 보이면 됩니다.
+> 어벤져스 데이터와 핵심 컬럼(Source, Target, Strength, Type)이 동일해요. Extension이 이 4개만 읽기 때문에 그대로 동작합니다.
+
+---
+
+### 2단계 — Extension 불러오기
 
 Sheet 1로 이동합니다.
-왼쪽 Data 패널에 컬럼들이 올라와 있어요.
 
-Marks 카드를 봐주세요.
-Mark 타입 드롭다운을 클릭합니다. 기본값은 Automatic인데요.
+Marks 카드 → Mark 타입 드롭다운 → **Extension** 선택합니다.
 
-맨 아래 **Add Extension**을 선택합니다.
+팝업에서 **Access Local Extensions** → `avengers-complete/tableau-extension/avengers-network.trex` 파일을 선택합니다.
 
-> 확인: "Add Extension" 항목이 안 보이면 Tableau 버전 확인 — 2021.3 이상이어야 합니다.
+Allow를 클릭하면 Extension이 로드됩니다.
 
----
-
-### 3단계 — .trex 파일 불러오기
-
-**Access Local Extensions**를 클릭합니다.
-
-`avengers-complete/tableau-extension/avengers-network.trex` 파일을 선택합니다.
-
-Allow 버튼을 클릭하면 Extension이 로드됩니다.
-
-> 확인: 워크시트 안에 네트워크 그래프 영역이 생기면 OK
+> 어벤져스용으로 만든 .trex 파일을 그대로 씁니다. 파일을 새로 만들 필요가 없어요.
 
 ---
 
-### 4단계 — 필드 매핑
+### 3단계 — 필드 매핑
 
-Marks 카드에 인코딩 슬롯이 생겼습니다.
+Marks 카드 인코딩 슬롯에 스타워즈 데이터 필드를 연결합니다.
 
-- **source** 슬롯에 → `Source` 필드 드래그
-- **target** 슬롯에 → `Target` 필드 드래그
-- **strength** 슬롯에 → `Strength` 필드 드래그
-- **type** 슬롯에 → `Type` 필드 드래그 (선택)
+- **source** → `Source` 드래그
+- **target** → `Target` 드래그
+- **strength** → `Strength` 드래그
+- **type** → `Type` 드래그
 
-> 확인: 필드를 드롭하면 네트워크 그래프가 바로 업데이트됩니다.
+> 확인: 필드를 드롭하는 순간 스타워즈 캐릭터 네트워크가 그려집니다.
 
 ---
 
 ### 완성 확인
 
-어벤져스 네트워크 차트가 Tableau 워크시트 안에 들어와 있습니다.
+루크 스카이워커, 다스 베이더, 한 솔로, 레아 공주가 네트워크로 연결돼 있습니다.
 
-Tableau 필터를 추가하면 워크시트 필터와 네트워크 그래프가 연동됩니다.
-예를 들어 `Source_Group` 필터를 넣으면 특정 파벌만 골라볼 수 있어요.
+어벤져스랑 완전히 다른 데이터인데, Extension은 그대로예요.
 
-이게 Tableau Extension의 핵심입니다. D3.js로 만든 커스텀 시각화를 Tableau 생태계 안에 그대로 가져올 수 있는 거예요.
+`Source_Group` 필터를 추가해볼게요. Rebels·Empire·Jedi·Sith·Bounty Hunters 파벌별로 필터링이 됩니다.
+
+이게 재사용의 힘입니다. **`.trex` 파일 하나로 데이터만 바꿔서 전혀 다른 네트워크 시각화**를 만들 수 있어요.
 
 다음 클립에서는 **Three.js로 3D Globe 시각화**를 만들어보도록 하겠습니다.

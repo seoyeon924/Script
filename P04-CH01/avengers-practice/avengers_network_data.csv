@@ -1,4 +1,4 @@
-﻿Source,Target,Strength,Type,Source_Group,Source_Importance,Source_Time,Source_Image,Target_Group,Target_Importance,Target_Time,Target_Image
+Source,Target,Strength,Type,Source_Group,Source_Importance,Source_Time,Source_Image,Target_Group,Target_Importance,Target_Time,Target_Image
 thor,rocket,8,ally,Asgardians,8,14:30,,Guardians,5,6:00,
 thor,groot,7,ally,Asgardians,8,14:30,,Guardians,3,3:15,
 rocket,groot,10,ally,Guardians,5,6:00,,Guardians,3,3:15,
