@@ -72,21 +72,19 @@ openclaw onboard
 ? Daemon:     ❯ Node
 ```
 
-```bash
-# 2. 나머지 4명 — macOS / Linux
-echo "Aria봇토큰" > /tmp/t.txt && openclaw channels add --channel telegram --account aria --token-file /tmp/t.txt && rm /tmp/t.txt
-echo "Sam봇토큰"  > /tmp/t.txt && openclaw channels add --channel telegram --account sam  --token-file /tmp/t.txt && rm /tmp/t.txt
-echo "Min봇토큰"  > /tmp/t.txt && openclaw channels add --channel telegram --account min  --token-file /tmp/t.txt && rm /tmp/t.txt
-echo "Evan봇토큰" > /tmp/t.txt && openclaw channels add --channel telegram --account evan --token-file /tmp/t.txt && rm /tmp/t.txt
+나머지 4명은 `~/.openclaw/openclaw.json` 직접 편집 (macOS · Windows 동일):
+
+```json
+"accounts": {
+  "default": { "botToken": "Echo토큰",  "dmPolicy": "pairing" },
+  "aria":    { "botToken": "Aria토큰",  "dmPolicy": "pairing" },
+  "sam":     { "botToken": "Sam토큰",   "dmPolicy": "pairing" },
+  "min":     { "botToken": "Min토큰",   "dmPolicy": "pairing" },
+  "evan":    { "botToken": "Evan토큰",  "dmPolicy": "pairing" }
+}
 ```
 
-```powershell
-# 2. 나머지 4명 — Windows (PowerShell)
-"Aria봇토큰"  | Out-File -FilePath "$env:TEMP\t.txt" -Encoding utf8 -NoNewline; openclaw channels add --channel telegram --account aria --token-file "$env:TEMP\t.txt"; Remove-Item "$env:TEMP\t.txt"
-"Sam봇토큰"   | Out-File -FilePath "$env:TEMP\t.txt" -Encoding utf8 -NoNewline; openclaw channels add --channel telegram --account sam  --token-file "$env:TEMP\t.txt"; Remove-Item "$env:TEMP\t.txt"
-"Min봇토큰"   | Out-File -FilePath "$env:TEMP\t.txt" -Encoding utf8 -NoNewline; openclaw channels add --channel telegram --account min  --token-file "$env:TEMP\t.txt"; Remove-Item "$env:TEMP\t.txt"
-"Evan봇토큰"  | Out-File -FilePath "$env:TEMP\t.txt" -Encoding utf8 -NoNewline; openclaw channels add --channel telegram --account evan --token-file "$env:TEMP\t.txt"; Remove-Item "$env:TEMP\t.txt"
-```
+⚠ JSON 파일에 토큰 직접 입력 — AI 채팅창에 붙여넣기 절대 금지
 
 완료 확인:
 ```bash
@@ -185,21 +183,19 @@ API 키랑 봇 토큰은 AI 채팅창에 절대 넣으면 안 돼요. Anthropic 
 
 **Daemon** — Node 선택.
 
-Echo 설정이 끝나면 나머지 4명도 같은 방식으로 등록해요.
+Echo 설정이 끝나면 나머지 4명은 `~/.openclaw/openclaw.json` 파일을 직접 열어서 `channels.telegram.accounts` 안에 추가해요. macOS·Windows 동일해요.
 
-```bash
-# macOS / Linux — token-file 방식 (토큰이 shell 히스토리에 안 남음)
-echo "Aria봇토큰" > /tmp/t.txt && openclaw channels add --channel telegram --account aria --token-file /tmp/t.txt && rm /tmp/t.txt
-# sam / min / evan 동일하게 반복
+```json
+"accounts": {
+  "default": { "botToken": "Echo토큰",  "dmPolicy": "pairing" },
+  "aria":    { "botToken": "Aria토큰",  "dmPolicy": "pairing" },
+  "sam":     { "botToken": "Sam토큰",   "dmPolicy": "pairing" },
+  "min":     { "botToken": "Min토큰",   "dmPolicy": "pairing" },
+  "evan":    { "botToken": "Evan토큰",  "dmPolicy": "pairing" }
+}
 ```
 
-```powershell
-# Windows (PowerShell)
-"Aria봇토큰" | Out-File -FilePath "$env:TEMP\t.txt" -Encoding utf8 -NoNewline; openclaw channels add --channel telegram --account aria --token-file "$env:TEMP\t.txt"; Remove-Item "$env:TEMP\t.txt"
-# sam / min / evan 동일하게 반복
-```
-
-`--token-file`에 임시 파일을 쓰고 바로 삭제해요. 토큰이 `~/.zsh_history`에 남지 않아요.
+토큰은 JSON 파일에 직접 입력해요. AI 채팅창에 붙여넣으면 Anthropic 서버로 전송되니까 절대 넣으면 안 돼요.
 
 ---
 
