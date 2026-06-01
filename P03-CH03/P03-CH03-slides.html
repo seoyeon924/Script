@@ -266,6 +266,189 @@
 </div>
 
 
+<!-- ════ s26 | openclaw onboard 단계별 가이드 ════ -->
+<div class="slide" id="s26">
+  <div class="tb"><span class="tb-cap">openclaw onboard — 단계별 선택</span><span class="tb-num">5-1</span></div>
+  <div class="body" style="gap:0;">
+    <div style="width:52%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+      <div style="padding:16px 28px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">터미널에서 실행</div>
+      <div style="flex:1;background:#111;padding:20px 24px;font-family:monospace;font-size:13.5px;line-height:1.85;color:#ccc;overflow:hidden;">
+        <div style="color:#666;margin-bottom:8px;">$ openclaw onboard</div>
+
+        <div style="color:#666;margin-top:10px;">── Step 0. Mode ──────────────────</div>
+        <div style="color:#aaa;">❯ <span style="color:#6aac98;">QuickStart</span> &nbsp;&nbsp;<span style="color:#555;">← 선택</span></div>
+        <div style="color:#555;">&nbsp; Advanced</div>
+
+        <div style="color:#666;margin-top:10px;">── Step 1. Auth ──────────────────</div>
+        <div style="color:#555;">&nbsp; Anthropic Claude CLI</div>
+        <div style="color:#aaa;">❯ <span style="color:#6aac98;">Anthropic API key</span> <span style="color:#555;">← 선택</span></div>
+        <div style="color:#555;">&nbsp; OpenAI / xAI / 기타…</div>
+        <div style="color:#aaa;">&nbsp; API key: <span style="color:#e8c87a;">sk-ant-api03-...</span> &nbsp;<span style="color:#555;">← 붙여넣기</span></div>
+
+        <div style="color:#666;margin-top:10px;">── Step 2. Workspace ─────────────</div>
+        <div style="color:#aaa;">&nbsp; Path [~/.openclaw/workspace]: <span style="color:#6aac98;">Enter</span> <span style="color:#555;">← 기본값</span></div>
+
+        <div style="color:#666;margin-top:10px;">── Step 3. Gateway ───────────────</div>
+        <div style="color:#aaa;">&nbsp; Port [18789]: <span style="color:#6aac98;">Enter</span></div>
+        <div style="color:#aaa;">&nbsp; Auth mode: <span style="color:#6aac98;">Token</span> → Enter</div>
+
+        <div style="color:#666;margin-top:10px;">── Step 4. Channels ──────────────</div>
+        <div style="color:#aaa;">❯ <span style="color:#6aac98;">[✓] Telegram</span> &nbsp;&nbsp;<span style="color:#555;">← 선택</span></div>
+        <div style="color:#aaa;">&nbsp; Bot token: <span style="color:#e8c87a;">1234567890:AAF...</span> <span style="color:#555;">← 붙여넣기</span></div>
+        <div style="color:#aaa;">&nbsp; DM policy: <span style="color:#6aac98;">pairing</span> → Enter</div>
+
+        <div style="color:#666;margin-top:10px;">── Step 5. Daemon ────────────────</div>
+        <div style="color:#aaa;">❯ <span style="color:#6aac98;">Node</span> (권장) &nbsp;&nbsp;<span style="color:#555;">← 선택</span></div>
+      </div>
+    </div>
+    <div style="flex:1;padding:24px 32px;display:flex;flex-direction:column;gap:10px;align-items:flex-start;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">각 단계 요약</div>
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;">
+        <div style="font-size:12px;color:#6aac98;font-weight:600;margin-bottom:4px;">STEP 0 — Mode</div>
+        <div style="font-size:16px;color:#333;"><span style="background:#f0f0f0;padding:2px 8px;border-radius:4px;font-family:monospace;font-size:14px;">QuickStart</span> 선택. 기본값 자동 적용</div>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;">
+        <div style="font-size:12px;color:#6aac98;font-weight:600;margin-bottom:4px;">STEP 1 — Auth</div>
+        <div style="font-size:16px;color:#333;"><span style="background:#f0f0f0;padding:2px 8px;border-radius:4px;font-family:monospace;font-size:14px;">Anthropic API key</span> → 콘솔에서 발급한 키 붙여넣기</div>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;">
+        <div style="font-size:12px;color:#999;font-weight:600;margin-bottom:4px;">STEP 2, 3 — Workspace / Gateway</div>
+        <div style="font-size:16px;color:#333;">전부 Enter. 기본값 그대로</div>
+      </div>
+
+      <div style="border:1px solid rgba(232,96,60,0.35);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;background:rgba(232,96,60,0.03);">
+        <div style="font-size:12px;color:#e8603c;font-weight:600;margin-bottom:4px;">STEP 4 — Channels ← 중요</div>
+        <div style="font-size:16px;color:#333;line-height:1.6;">Telegram 체크 → <span style="color:#e8603c;font-weight:600;">BotFather 토큰</span> 붙여넣기<br>DM policy: <span style="background:#f0f0f0;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px;">pairing</span> 그대로 Enter</div>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;">
+        <div style="font-size:12px;color:#999;font-weight:600;margin-bottom:4px;">STEP 5 — Daemon</div>
+        <div style="font-size:16px;color:#333;"><span style="background:#f0f0f0;padding:2px 8px;border-radius:4px;font-family:monospace;font-size:14px;">Node</span> 선택 (권장)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s27 | 비용 절감 — Codex 연결 ════ -->
+<div class="slide" id="s27">
+  <div class="tb"><span class="tb-cap">비용 고려 — Codex 연결하기</span><span class="tb-num">5-2</span></div>
+  <div class="body" style="gap:0;">
+    <div style="width:50%;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:flex-start;padding:28px 36px;gap:14px;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:2px;">API 비용 비교</div>
+
+      <div style="border:1px solid rgba(232,96,60,0.35);border-radius:8px;padding:18px 20px;width:100%;box-sizing:border-box;background:rgba(232,96,60,0.03);">
+        <div style="font-size:12px;color:#e8603c;font-weight:600;margin-bottom:6px;">Claude Code 추가 사용량</div>
+        <div style="font-size:16px;color:#333;line-height:1.65;">구독 월정액 + 초과분 API 단가 청구<br>파이프라인 1회 ≈ <strong>$1~1.5</strong></div>
+        <div style="font-size:13px;color:#999;margin-top:6px;">자주 돌릴수록 비용 누적</div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:8px;color:#ccc;font-size:20px;align-self:center;">↕</div>
+
+      <div style="border:1px solid rgba(106,172,152,0.4);border-radius:8px;padding:18px 20px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.04);">
+        <div style="font-size:12px;color:#6aac98;font-weight:600;margin-bottom:6px;">OpenAI Codex CLI 연결</div>
+        <div style="font-size:16px;color:#333;line-height:1.65;">OpenClaw onboard에서 <strong>OpenAI API key</strong> 선택<br>GPT-4o-mini 기준 파이프라인 1회 ≈ <strong>$0.1~0.3</strong></div>
+        <div style="font-size:13px;color:#999;margin-top:6px;">요즘 비용 절감으로 많이 선택</div>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:14px 18px;width:100%;box-sizing:border-box;">
+        <div style="font-size:13px;color:#555;line-height:1.7;">Claude 품질이 필요한 작업은 Anthropic<br>반복 실행 · 크론 자동화는 Codex로 분리해도 됨</div>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:28px 36px;display:flex;flex-direction:column;gap:14px;align-items:flex-start;">
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:2px;">Codex 연결 방법</div>
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;">
+        <div style="font-size:12px;color:#6aac98;font-weight:600;margin-bottom:8px;">STEP 1 — Codex 설치</div>
+        <div style="background:#111;border-radius:6px;padding:12px 16px;font-family:monospace;font-size:13px;color:#ccc;line-height:1.8;">
+          <div style="color:#666;"># npm으로 설치</div>
+          <div><span style="color:#6aac98;">npm install -g @openai/codex</span></div>
+        </div>
+        <div style="margin-top:8px;font-size:13px;color:#888;">다운로드: <span style="font-family:monospace;color:#555;">github.com/openai/codex</span></div>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;">
+        <div style="font-size:12px;color:#6aac98;font-weight:600;margin-bottom:8px;">STEP 2 — OpenAI API 키 발급</div>
+        <div style="font-size:15px;color:#333;line-height:1.65;">
+          <span style="font-family:monospace;color:#555;">platform.openai.com</span> → API Keys → Create<br>
+          <span style="font-size:13px;color:#999;">GPT-4o-mini 권장 (속도 빠름 · 비용 저렴)</span>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(232,96,60,0.25);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;background:rgba(232,96,60,0.02);">
+        <div style="font-size:12px;color:#e8603c;font-weight:600;margin-bottom:8px;">STEP 3 — openclaw onboard에서 선택</div>
+        <div style="background:#111;border-radius:6px;padding:12px 16px;font-family:monospace;font-size:13px;color:#ccc;line-height:1.9;">
+          <div style="color:#666;">── Step 1. Auth ──────────────</div>
+          <div style="color:#555;">&nbsp; Anthropic Claude CLI</div>
+          <div style="color:#555;">&nbsp; Anthropic API key</div>
+          <div><span style="color:#aaa;">❯ </span><span style="color:#6aac98;">OpenAI API key</span> <span style="color:#555;">← 선택</span></div>
+          <div style="color:#aaa;">&nbsp; API key: <span style="color:#e8c87a;">sk-proj-...</span></div>
+          <div style="color:#aaa;">&nbsp; Model: <span style="color:#6aac98;">gpt-4o-mini</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s28 | 수강생 셋업 가이드 ════ -->
+<div class="slide" id="s28">
+  <div class="tb"><span class="tb-cap">수강생 셋업 — 따라하기</span><span class="tb-num">5-3</span></div>
+  <div class="body" style="flex-direction:column;padding:28px 52px;gap:16px;align-items:flex-start;justify-content:center;">
+    <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">레포 클론 후 명령어 2개로 완료</div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;width:100%;">
+
+      <div style="display:flex;align-items:flex-start;gap:16px;border:1px solid var(--border);border-radius:8px;padding:16px 20px;">
+        <div style="font-size:22px;font-weight:700;color:#ddd;flex-shrink:0;width:28px;text-align:right;">1</div>
+        <div>
+          <div style="font-size:15px;font-weight:600;color:#333;margin-bottom:4px;">레포 클론</div>
+          <div style="font-family:monospace;font-size:13.5px;color:#6aac98;">git clone [강의 자료 링크]<br>cd openclaw-pipeline-kit</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:16px;border:1px solid rgba(106,172,152,0.4);border-radius:8px;padding:16px 20px;background:rgba(106,172,152,0.03);">
+        <div style="font-size:22px;font-weight:700;color:#6aac98;flex-shrink:0;width:28px;text-align:right;">2</div>
+        <div>
+          <div style="font-size:15px;font-weight:600;color:#333;margin-bottom:4px;">셋업 스크립트 실행 <span style="font-size:12px;color:#6aac98;font-weight:400;">← AGENTS.md 자동 복사</span></div>
+          <div style="font-family:monospace;font-size:13.5px;color:#6aac98;">bash setup.sh</div>
+          <div style="font-size:13px;color:#999;margin-top:4px;">workspace-echo / aria / sam / min / evan 폴더 자동 생성</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:16px;border:1px solid rgba(106,172,152,0.4);border-radius:8px;padding:16px 20px;background:rgba(106,172,152,0.03);">
+        <div style="font-size:22px;font-weight:700;color:#6aac98;flex-shrink:0;width:28px;text-align:right;">3</div>
+        <div>
+          <div style="font-size:15px;font-weight:600;color:#333;margin-bottom:4px;">OpenClaw 온보딩 <span style="font-size:12px;color:#999;font-weight:400;">← API 키 + 봇 토큰 설정</span></div>
+          <div style="font-family:monospace;font-size:13.5px;color:#6aac98;">openclaw onboard</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:16px;border:1px solid var(--border);border-radius:8px;padding:16px 20px;">
+        <div style="font-size:22px;font-weight:700;color:#ddd;flex-shrink:0;width:28px;text-align:right;">4</div>
+        <div>
+          <div style="font-size:15px;font-weight:600;color:#333;margin-bottom:4px;">데이터 파일 넣기</div>
+          <div style="font-family:monospace;font-size:13.5px;color:#555;">runs/latest/input/ 에 CSV 파일 복사</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:16px;border:1px solid rgba(232,200,122,0.4);border-radius:8px;padding:16px 20px;background:rgba(232,200,122,0.04);">
+        <div style="font-size:22px;font-weight:700;color:#c8a048;flex-shrink:0;width:28px;text-align:right;">5</div>
+        <div>
+          <div style="font-size:15px;font-weight:600;color:#333;margin-bottom:4px;">텔레그램 Echo 봇에 전송</div>
+          <div style="font-family:monospace;font-size:13.5px;color:#c8a048;">"파이프라인 실행해줘. input/ 에 파일 있어."</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 <!-- ════ s6 | 조감도 — CLIP 02 HL ════ -->
 <div class="slide" id="s6">
   <div class="tb"><span class="tb-cap">챕터 구성</span><span class="tb-num">—</span></div>
@@ -548,21 +731,11 @@
             git commit &amp; push 해줘.
           </div>
         </div>
-        <div style="margin-top:auto;padding:10px 14px;background:#0a0c10;border-radius:5px;font-size:10px;font-family:monospace;color:#444;line-height:1.8;align-self:flex-end;max-width:260px;">
-          <span style="color:#333;"># jobs.json 참고</span><br>
-          "kind": "cron", "expr": "0 9 * * 1"<br>
-          "kind": "every", "everyMs": 7200000
-        </div>
       </div>
     </div>
     <!-- Right: 샘플 크론 목록 -->
     <div style="flex:1;padding:36px 40px;display:flex;flex-direction:column;gap:14px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:2px;">크론 표현식 읽는 법</div>
-      <div style="font-family:monospace;font-size:13px;background:#0A0C10;border-radius:6px;padding:12px 16px;color:rgba(255,255,255,0.8);line-height:2.1;margin-bottom:6px;">
-        <span style="color:#e8c87a;">0</span> &nbsp;<span style="color:#818cf8;">9</span> &nbsp;<span style="color:#555;">*</span> &nbsp;<span style="color:#555;">*</span> &nbsp;<span style="color:#35c995;">1</span><br>
-        <span style="color:#e8c87a;font-size:11px;">분</span> &nbsp;&nbsp;<span style="color:#818cf8;font-size:11px;">시</span> &nbsp;&nbsp;<span style="color:#555;font-size:11px;">일</span> &nbsp;&nbsp;<span style="color:#555;font-size:11px;">월</span> &nbsp;&nbsp;<span style="color:#35c995;font-size:11px;">요일(1=월)</span>
-      </div>
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">크론 잡 구성 예시</div>
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">자동화 예시 — 시간만 정하면 됨</div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--border);border-radius:6px;">
           <span class="agent-badge badge-echo" style="font-size:11px;">Echo</span>
@@ -615,11 +788,7 @@
           <span style="color:#35c995;">/run-pipeline</span> 실행하고<br>
           완료 후 결과물 목록 알려줘.
         </div>
-        <div style="font-size:14px;color:#777;line-height:1.7;">사람이 직접 보내는 것과 완전히 같은 형식.<br>크론이 이 메시지를 정해진 시간에 자동으로 전송해.</div>
-        <div style="padding:10px 14px;background:#0a0c10;border-radius:5px;font-size:10px;font-family:monospace;color:#444;line-height:1.8;align-self:flex-end;">
-          <span style="color:#333;"># jobs.json 참고</span><br>
-          "expr": "0 9 * * 1", "channel": "telegram"
-        </div>
+        <div style="font-size:14px;color:#777;line-height:1.7;">사람이 직접 보내는 것과 완전히 같은 형식.<br>크론이 정해진 시간에 자동 전송.</div>
       </div>
     </div>
     <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:20px;">
@@ -664,11 +833,7 @@
             <span style="color:#555;font-size:13px;">── 생성 완료 2025-05-19 09:14 ──</span>
           </div>
         </div>
-        <div style="font-size:14px;color:#777;line-height:1.7;">크론이 실행되고 작업이 완료되면<br>텔레그램으로 이런 메시지가 옴.</div>
-        <div style="padding:10px 14px;background:#0a0c10;border-radius:5px;font-size:10px;font-family:monospace;color:#444;line-height:1.8;align-self:flex-end;">
-          <span style="color:#333;"># jobs.json 참고</span><br>
-          "delivery": &#123;"mode":"announce","channel":"telegram"&#125;
-        </div>
+        <div style="font-size:14px;color:#777;line-height:1.7;">작업 완료 시 텔레그램으로 자동 전송.</div>
       </div>
     </div>
     <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:18px;">
@@ -690,6 +855,69 @@
       <div style="padding:14px 20px;background:rgba(106,172,152,0.06);border-radius:6px;font-size:15px;color:#333;line-height:1.8;text-align:center;border-left:3px solid #35c995;">
         작업은 에이전트가. 결과는 텔레그램으로 수신.<br>
         <span style="color:#888;font-size:14px;">확인만 하면 됨 — 직접 실행할 필요 없음</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s25 | 에이전트 팀 협업 — 역할 분담 자동화 ════ -->
+<div class="slide" id="s25">
+  <div class="tb"><span class="tb-cap">에이전트 팀 협업 — 역할 나눠서 일하기</span><span class="tb-num">25</span></div>
+  <div class="body">
+    <!-- Left: 영상 -->
+    <div style="width:52%;border-right:1px solid var(--border);display:flex;flex-direction:column;background:#0A0C10;">
+      <video
+        src="../../fastcampus-assets/videos/21_5-1_.MOV"
+        style="width:100%;height:100%;object-fit:contain;"
+        controls
+        preload="metadata"
+      ></video>
+    </div>
+    <!-- Right: 설명 -->
+    <div style="flex:1;display:flex;flex-direction:column;padding:28px 36px;gap:16px;overflow:hidden;">
+      <div>
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:6px;">Echo에게 이렇게 요청</div>
+        <div style="font-size:19px;font-weight:700;color:#1C1A18;line-height:1.35;">팀 전체가 순서대로 처리하도록<br>AGENTS.md에 설정</div>
+      </div>
+      <!-- 프롬프트 -->
+      <div style="background:#0A0C10;border-radius:8px;padding:18px 22px;font-family:'Menlo','Monaco',monospace;font-size:13px;color:rgba(255,255,255,0.82);line-height:2;">
+        <div style="color:#555;font-size:11px;margin-bottom:8px;">Echo 텔레그램 DM</div>
+        <div>분석 작업 들어오면 이 순서로 처리해줘.</div>
+        <div style="margin-top:6px;">
+          <span style="color:#818cf8;">1.</span> 네가 먼저 EDA + 문제 정의<br>
+          <span style="color:#34d399;">2.</span> Min 호출 → 지표 설계 + 대시보드 피드백<br>
+          <span style="color:#fb923c;">3.</span> Evan 호출 → 대시보드 구현 + 마무리
+        </div>
+        <div style="margin-top:10px;color:#35c995;">이 순서를 AGENTS.md에 기본 규칙으로 써줘.</div>
+      </div>
+      <!-- 역할 요약 (컴팩트) -->
+      <div style="display:flex;align-items:center;gap:6px;">
+        <div style="flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:6px;text-align:center;">
+          <span class="agent-badge badge-echo" style="margin-bottom:4px;display:inline-flex;">Echo</span>
+          <div style="font-size:12px;color:#555;line-height:1.5;margin-top:4px;">분석 · 문제 정의</div>
+        </div>
+        <div style="color:#CCC;font-size:13px;flex-shrink:0;">→</div>
+        <div style="flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:6px;text-align:center;">
+          <span class="agent-badge badge-min" style="margin-bottom:4px;display:inline-flex;">Min</span>
+          <div style="font-size:12px;color:#555;line-height:1.5;margin-top:4px;">지표 설계 · 피드백</div>
+        </div>
+        <div style="color:#CCC;font-size:13px;flex-shrink:0;">→</div>
+        <div style="flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:6px;text-align:center;">
+          <span class="agent-badge badge-evan" style="margin-bottom:4px;display:inline-flex;">Evan</span>
+          <div style="font-size:12px;color:#555;line-height:1.5;margin-top:4px;">대시보드 구현</div>
+        </div>
+      </div>
+      <!-- 장단점 + 토큰 -->
+      <div style="display:flex;gap:10px;margin-top:auto;">
+        <div style="flex:1;padding:10px 14px;border:1px solid rgba(106,172,152,0.35);border-radius:6px;background:rgba(106,172,152,0.04);">
+          <div style="font-size:11px;font-weight:700;color:#6aac98;letter-spacing:0.08em;margin-bottom:5px;">장점</div>
+          <div style="font-size:12px;color:#444;line-height:1.65;">역할별 전문화 · 메모리 독립<br>모델 별도 지정 가능</div>
+        </div>
+        <div style="flex:1;padding:10px 14px;border:1px solid rgba(232,96,60,0.25);border-radius:6px;background:rgba(232,96,60,0.03);">
+          <div style="font-size:11px;font-weight:700;color:#E8603C;letter-spacing:0.08em;margin-bottom:5px;">주의</div>
+          <div style="font-size:12px;color:#444;line-height:1.65;">토큰 2–3배<br>Min · Evan은 Haiku로 절감 가능</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1206,12 +1434,12 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const TOTAL = 24;
-  const ORDER = [1,2,3,4,5, 6,7,24,8,9,22,21,10, 11,12,13,23,14,15, 16,17,18,19,20];
+  const TOTAL = 25;
+  const ORDER = [1,2,3,4,5,26,27,28, 6,7,24,8,9,22,21,10, 11,12,13,23,14,15,25, 16,17,18,19,20];
   const CLIP_MAP = {
-    1:0,2:0,3:0,4:0,5:0,
+    1:0,2:0,3:0,4:0,5:0,26:0,27:0,28:0,
     6:1,7:1,24:1,8:1,9:1,22:1,21:1,10:1,
-    11:2,12:2,13:2,23:2,14:2,15:2,
+    11:2,12:2,13:2,23:2,14:2,15:2,25:2,
     16:3,17:3,18:3,19:3,20:3
   };
   const CLIP_LABELS = ['OpenClaw 소개 & 연결','에이전트 만들기','크론 자동화 파이프라인 연동','Manager Dashboard'];
