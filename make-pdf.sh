@@ -1,73 +1,55 @@
-#!/bin/bash
-# 챕터별 슬라이드 HTML → PDF 변환
+#!/usr/bin/env python3
+# 챕터별 슬라이드 HTML → PDF 변환 (Playwright 방식)
+# 실행: python3 make-pdf.sh  또는  bash make-pdf.sh
 
-CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-OUTPUT="/Users/sy/Projects/Script/output/pdf"
-SCRIPT_DIR="/Users/sy/Projects/Script"
+import os, sys, io
+from playwright.sync_api import sync_playwright
+from PIL import Image
 
-mkdir -p "$OUTPUT"
+OUTPUT = os.path.join(os.path.dirname(__file__), "output/pdf")
+BASE   = os.path.dirname(os.path.abspath(__file__))
+os.makedirs(OUTPUT, exist_ok=True)
 
-PRINT_CSS='
-<style id="print-override">
-@media print {
-  body { margin: 0; background: #F2F2EF; }
-  .deck {
-    position: relative !important;
-    transform: none !important;
-    width: 1280px !important;
-    height: auto !important;
-    top: auto !important;
-    left: auto !important;
-  }
-  .slide {
-    display: flex !important;
-    position: relative !important;
-    inset: auto !important;
-    width: 1280px !important;
-    height: 800px !important;
-    page-break-after: always !important;
-    break-after: page !important;
-  }
-  .slide:last-child { page-break-after: avoid !important; break-after: avoid !important; }
-  .nav, .progress, .clip-dots { display: none !important; }
-}
-</style>'
+FILES = [
+    ("P01-CH01/P01-CH01-slides.html", "P0-CH1-데이터시각화기초관점잡기"),
+    ("P01-CH02/P01-CH02-slides.html", "P0-CH2-바이브코딩환경세팅"),
+    ("P02-CH01/P02-CH01-slides.html", "P1-CH1-ClaudeCode첫걸음"),
+    ("P02-CH02/P02-CH02-slides.html", "P1-CH2-MCP_Skills도구확장"),
+    ("P02-CH03/P02-CH03-slides.html", "P1-CH3-데이터분석협업구조"),
+    ("P03-CH01/P03-CH01-slides.html", "P2-CH1-데이터분석파이프라인"),
+    ("P03-CH02/P03-CH02-slides.html", "P2-CH2-실데이터투입실행"),
+]
 
-convert_to_pdf() {
-  local html_file="$1"
-  local pdf_name="$2"
-  local tmp_file="/tmp/print_$(basename $html_file)"
+print("=== 챕터별 PDF 생성 (Playwright) ===\n")
 
-  # print CSS 주입
-  sed "s|</head>|${PRINT_CSS}</head>|" "$html_file" > "$tmp_file"
+with sync_playwright() as p:
+    browser = p.chromium.launch()
 
-  "$CHROME" \
-    --headless \
-    --disable-gpu \
-    --print-to-pdf="$OUTPUT/$pdf_name.pdf" \
-    --print-to-pdf-no-header \
-    --no-margins \
-    --paper-size=custom \
-    --paper-width=13.33 \
-    --paper-height=8.33 \
-    "file://$tmp_file" 2>/dev/null
+    for rel_path, pdf_name in FILES:
+        html_path = os.path.join(BASE, rel_path)
+        page = browser.new_page(viewport={"width": 1280, "height": 800})
+        page.goto(f"file://{html_path}")
+        page.wait_for_load_state("networkidle")
 
-  rm -f "$tmp_file"
-  echo "✓ $pdf_name.pdf"
-}
+        total = page.evaluate(
+            "typeof TOTAL !== 'undefined' ? TOTAL : document.querySelectorAll('.slide').length"
+        )
 
-echo "=== 챕터별 PDF 생성 ==="
-echo ""
-echo "Part 0 — 왜 AI 데이터 시각화인가"
-convert_to_pdf "$SCRIPT_DIR/P01-CH01/P01-CH01-slides.html" "P0-CH1-데이터시각화기초관점잡기"
-convert_to_pdf "$SCRIPT_DIR/P01-CH02/P01-CH02-slides.html" "P0-CH2-바이브코딩환경세팅"
+        screenshots = []
+        for i in range(total):
+            page.evaluate(f"show({i})")
+            page.wait_for_timeout(80)
+            screenshots.append(page.screenshot(full_page=False))
 
-echo ""
-echo "Part 1 — Claude Code 핵심 빠르게 익히기"
-convert_to_pdf "$SCRIPT_DIR/P02-CH01/P02-CH01-slides.html" "P1-CH1-ClaudeCode첫걸음"
-convert_to_pdf "$SCRIPT_DIR/P02-CH02/P02-CH02-slides.html" "P1-CH2-MCP_Skills도구확장"
-convert_to_pdf "$SCRIPT_DIR/P02-CH03/P02-CH03-slides.html" "P1-CH3-데이터분석협업구조"
+        page.close()
 
-echo ""
-echo "=== 완료 ==="
-ls -lh "$OUTPUT"/*.pdf
+        images = [Image.open(io.BytesIO(s)).convert("RGB") for s in screenshots]
+        out_path = os.path.join(OUTPUT, f"{pdf_name}.pdf")
+        images[0].save(out_path, save_all=True, append_images=images[1:], resolution=96)
+
+        size = os.path.getsize(out_path)
+        print(f"✓ {pdf_name}.pdf  —  {size//1024}K, {len(images)}페이지")
+
+    browser.close()
+
+print("\n=== 완료 ===")
