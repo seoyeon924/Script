@@ -924,6 +924,106 @@
 </div>
 
 
+<!-- ════ s29 | 파이프라인 실전 실행 — CSV → 텔레그램 → 결과 ════ -->
+<div class="slide" id="s29">
+  <div class="tb"><span class="tb-cap">실전 실행 — CSV 넣고 텔레그램으로 시작하기</span><span class="tb-num">29</span></div>
+  <div class="body" style="flex-direction:column;padding:32px 56px;gap:20px;align-items:stretch;">
+
+    <!-- 5명 에이전트 배지 -->
+    <div style="display:flex;align-items:center;gap:8px;justify-content:center;">
+      <div style="padding:5px 14px;border-radius:999px;background:rgba(129,140,248,0.12);border:1px solid rgba(129,140,248,0.3);font-size:12px;font-weight:700;color:#818cf8;">Echo</div>
+      <div style="color:#CCC;font-size:13px;">→</div>
+      <div style="padding:5px 14px;border-radius:999px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.28);font-size:12px;font-weight:700;color:#34d399;">Aria</div>
+      <div style="color:#CCC;font-size:13px;">→</div>
+      <div style="padding:5px 14px;border-radius:999px;background:rgba(251,146,60,0.1);border:1px solid rgba(251,146,60,0.28);font-size:12px;font-weight:700;color:#fb923c;">Sam</div>
+      <div style="color:#CCC;font-size:13px;">→</div>
+      <div style="padding:5px 14px;border-radius:999px;background:rgba(244,114,182,0.1);border:1px solid rgba(244,114,182,0.28);font-size:12px;font-weight:700;color:#f472b6;">Min</div>
+      <div style="color:#CCC;font-size:13px;">→</div>
+      <div style="padding:5px 14px;border-radius:999px;background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.28);font-size:12px;font-weight:700;color:#60a5fa;">Evan</div>
+    </div>
+
+    <!-- 5단계 플로우 -->
+    <div style="display:flex;gap:10px;align-items:stretch;">
+
+      <!-- STEP 1 -->
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:18px 16px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:10px;font-weight:700;color:#34d399;letter-spacing:0.1em;">STEP 1</div>
+        <div style="font-size:15px;font-weight:700;color:#1C1A18;">CSV 파일 넣기</div>
+        <div style="background:#0A0C10;border-radius:6px;padding:10px 14px;font-family:monospace;font-size:12px;color:rgba(255,255,255,0.75);line-height:1.8;">
+          runs/latest/<span style="color:#34d399;">input</span>/
+          <br><span style="color:#8dc8b4;">└ sales_data.csv</span>
+        </div>
+        <div style="font-size:12px;color:#666;line-height:1.6;">어떤 CSV든 가능.<br>파일명 그대로 넣으면 됨.</div>
+      </div>
+
+      <div style="display:flex;align-items:center;color:#CCC;font-size:20px;flex-shrink:0;">→</div>
+
+      <!-- STEP 2 -->
+      <div style="flex:1;border:2px solid rgba(53,201,149,0.4);border-radius:8px;padding:18px 16px;display:flex;flex-direction:column;gap:8px;background:rgba(53,201,149,0.03);">
+        <div style="font-size:10px;font-weight:700;color:#35c995;letter-spacing:0.1em;">STEP 2</div>
+        <div style="font-size:15px;font-weight:700;color:#1C1A18;">텔레그램 전송</div>
+        <div style="background:#0A0C10;border-radius:6px;padding:10px 14px;font-family:monospace;font-size:12px;color:rgba(255,255,255,0.82);line-height:1.9;">
+          <span style="color:#555;font-size:11px;">→ Echo 봇 DM</span><br>
+          runs/latest/input/ 에<br>CSV 있어.<br>
+          <span style="color:#35c995;">파이프라인 실행해줘.</span>
+        </div>
+        <div style="font-size:12px;color:#666;">이게 전부. 나머지는 에이전트가.</div>
+      </div>
+
+      <div style="display:flex;align-items:center;color:#CCC;font-size:20px;flex-shrink:0;">→</div>
+
+      <!-- STEP 3 -->
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:18px 16px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:10px;font-weight:700;color:#818cf8;letter-spacing:0.1em;">STEP 3</div>
+        <div style="font-size:15px;font-weight:700;color:#1C1A18;">5명이 순서대로</div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div style="font-size:11px;color:#555;font-family:monospace;line-height:1.9;">
+            <span style="color:#34d399;">Aria</span> → 01_dataset_profile.md<br>
+            <span style="color:#34d399;">Aria</span> → 02_eda_report.md<br>
+            <span style="color:#fb923c;">Sam</span>  → 03_problem_definition.md<br>
+            <span style="color:#fb923c;">Sam</span>  → 04_kpi_summary.md<br>
+            <span style="color:#f472b6;">Min</span>  → 05_analysis_report.md<br>
+            <span style="color:#60a5fa;">Evan</span> → 06_dashboard.html<br>
+            <span style="color:#60a5fa;">Evan</span> → 07_executive_report.md
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;color:#CCC;font-size:20px;flex-shrink:0;">→</div>
+
+      <!-- STEP 4 -->
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:18px 16px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:10px;font-weight:700;color:#60a5fa;letter-spacing:0.1em;">STEP 4</div>
+        <div style="font-size:15px;font-weight:700;color:#1C1A18;">모니터링</div>
+        <div style="font-size:12px;color:#555;line-height:1.7;">브라우저에서<br><code style="background:#f0f0f0;padding:1px 5px;border-radius:3px;font-size:11px;">activity-monitor.html</code><br>열어두면 10초마다 자동 갱신.</div>
+        <div style="margin-top:auto;padding:6px 10px;background:rgba(106,172,152,0.08);border-radius:5px;font-size:11px;color:#444;text-align:center;">완료 스테이지 ✓ 실시간 확인</div>
+      </div>
+
+      <div style="display:flex;align-items:center;color:#CCC;font-size:20px;flex-shrink:0;">→</div>
+
+      <!-- STEP 5 -->
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:18px 16px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:10px;font-weight:700;color:#f472b6;letter-spacing:0.1em;">STEP 5</div>
+        <div style="font-size:15px;font-weight:700;color:#1C1A18;">결과 수신</div>
+        <div style="background:#0A0C10;border-radius:6px;padding:10px 14px;font-size:12px;color:rgba(255,255,255,0.8);line-height:1.9;">
+          ✅ 파이프라인 완료<br>
+          <span style="color:#8dc8b4;font-size:11px;">06_dashboard.html<br>07_executive_report.md</span><br>
+          <span style="color:#555;font-size:11px;">── 생성 완료 ──</span>
+        </div>
+        <div style="font-size:12px;color:#666;">텔레그램으로 자동 전송.</div>
+      </div>
+
+    </div>
+
+    <!-- 하단 강조 -->
+    <div style="padding:12px 24px;background:rgba(53,201,149,0.06);border-radius:6px;font-size:14px;color:#333;text-align:center;border-left:3px solid #35c995;">
+      CSV 넣고 메시지 하나 보내면 — 보고서까지 자동 완성
+    </div>
+
+  </div>
+</div>
+
+
 <!-- ════ s16 | 조감도 — CLIP 04 HL ════ -->
 <div class="slide" id="s16">
   <div class="tb"><span class="tb-cap">챕터 구성</span><span class="tb-num">—</span></div>
@@ -1435,11 +1535,11 @@
 
 <script>
   const TOTAL = 25;
-  const ORDER = [1,2,3,4,5,26,27,28, 6,7,24,8,9,22,21,10, 11,12,13,23,14,15,25, 16,17,18,19,20];
+  const ORDER = [1,2,3,4,5,26,27,28, 6,7,24,8,9,22,21,10, 11,12,13,23,14,15,25,29, 16,17,18,19,20];
   const CLIP_MAP = {
     1:0,2:0,3:0,4:0,5:0,26:0,27:0,28:0,
     6:1,7:1,24:1,8:1,9:1,22:1,21:1,10:1,
-    11:2,12:2,13:2,23:2,14:2,15:2,25:2,
+    11:2,12:2,13:2,23:2,14:2,15:2,25:2,29:2,
     16:3,17:3,18:3,19:3,20:3
   };
   const CLIP_LABELS = ['OpenClaw 소개 & 연결','에이전트 만들기','크론 자동화 파이프라인 연동','Manager Dashboard'];
