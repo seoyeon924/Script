@@ -12,7 +12,9 @@ status: ✅ 대본완성
 
 > **촬영 전 준비**
 > - [ ] 슬라이드 s14에 커서
-> - [ ] (선택) Tableau Desktop 열어두기 + `avengers-practice/avengers_network_data.csv` 준비
+> - [ ] Tableau Desktop 열어두기
+> - [ ] `avengers-practice/avengers_network_data.csv` 파일 위치 확인
+> - [ ] `avengers-complete/tableau-extension/avengers-network.trex` 파일 위치 확인
 
 ---
 
@@ -132,3 +134,74 @@ Netlify에 배포된 URL이 `manifest.trex`에 이미 등록되어 있기 때문
 다음 클립에서는 **Three.js로 3D Globe 시각화**를 만들어볼게요.
 
 완전히 다른 차원의 인터랙티브 시각화입니다.
+
+---
+
+## ▶ 화면 전환 — Tableau Desktop 실습
+
+**[화면: Tableau Desktop]**
+
+슬라이드에서 설명한 걸 실제로 연결해보도록 하겠습니다.
+
+---
+
+### 1단계 — 데이터 연결
+
+Tableau Desktop을 열면 왼쪽에 Connect 패널이 있습니다.
+**Text file**을 클릭합니다.
+
+`avengers-practice/avengers_network_data.csv` 파일을 선택합니다.
+
+> 확인: Source, Target, Strength, Type 컬럼이 보이면 됩니다.
+
+---
+
+### 2단계 — 워크시트로 이동
+
+Sheet 1로 이동합니다.
+왼쪽 Data 패널에 컬럼들이 올라와 있어요.
+
+Marks 카드를 봐주세요.
+Mark 타입 드롭다운을 클릭합니다. 기본값은 Automatic인데요.
+
+맨 아래 **Add Extension**을 선택합니다.
+
+> 확인: "Add Extension" 항목이 안 보이면 Tableau 버전 확인 — 2021.3 이상이어야 합니다.
+
+---
+
+### 3단계 — .trex 파일 불러오기
+
+**Access Local Extensions**를 클릭합니다.
+
+`avengers-complete/tableau-extension/avengers-network.trex` 파일을 선택합니다.
+
+Allow 버튼을 클릭하면 Extension이 로드됩니다.
+
+> 확인: 워크시트 안에 네트워크 그래프 영역이 생기면 OK
+
+---
+
+### 4단계 — 필드 매핑
+
+Marks 카드에 인코딩 슬롯이 생겼습니다.
+
+- **source** 슬롯에 → `Source` 필드 드래그
+- **target** 슬롯에 → `Target` 필드 드래그
+- **strength** 슬롯에 → `Strength` 필드 드래그
+- **type** 슬롯에 → `Type` 필드 드래그 (선택)
+
+> 확인: 필드를 드롭하면 네트워크 그래프가 바로 업데이트됩니다.
+
+---
+
+### 완성 확인
+
+어벤져스 네트워크 차트가 Tableau 워크시트 안에 들어와 있습니다.
+
+Tableau 필터를 추가하면 워크시트 필터와 네트워크 그래프가 연동됩니다.
+예를 들어 `Source_Group` 필터를 넣으면 특정 파벌만 골라볼 수 있어요.
+
+이게 Tableau Extension의 핵심입니다. D3.js로 만든 커스텀 시각화를 Tableau 생태계 안에 그대로 가져올 수 있는 거예요.
+
+다음 클립에서는 **Three.js로 3D Globe 시각화**를 만들어보도록 하겠습니다.
