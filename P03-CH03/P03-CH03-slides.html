@@ -296,12 +296,9 @@
 
         <div style="margin-top:14px;color:#555;">── 추가 에이전트 봇 등록 ────────</div>
         <div style="color:#aaa;font-size:11px;line-height:1.8;">
-          <span style="color:#666;"># ~/.openclaw/openclaw.json 열기</span><br>
-          <span style="color:#666;"># channels.telegram.accounts 에 추가:</span><br>
-          <span style="color:#e8c87a;">"aria"</span>: { <span style="color:#e8c87a;">"botToken"</span>: <span style="color:#6aac98;">"Aria토큰"</span>, <span style="color:#e8c87a;">"dmPolicy"</span>: <span style="color:#6aac98;">"pairing"</span> },<br>
-          <span style="color:#e8c87a;">"sam"</span>:  { <span style="color:#e8c87a;">"botToken"</span>: <span style="color:#6aac98;">"Sam토큰"</span>,  <span style="color:#e8c87a;">"dmPolicy"</span>: <span style="color:#6aac98;">"pairing"</span> },<br>
-          <span style="color:#e8c87a;">"min"</span>:  { <span style="color:#e8c87a;">"botToken"</span>: <span style="color:#6aac98;">"Min토큰"</span>,  <span style="color:#e8c87a;">"dmPolicy"</span>: <span style="color:#6aac98;">"pairing"</span> },<br>
-          <span style="color:#e8c87a;">"evan"</span>: { <span style="color:#e8c87a;">"botToken"</span>: <span style="color:#6aac98;">"Evan토큰"</span>, <span style="color:#e8c87a;">"dmPolicy"</span>: <span style="color:#6aac98;">"pairing"</span> }
+          <span style="color:#555;"># macOS · Windows 동일</span><br>
+          node add-tokens.js<br>
+          <span style="color:#555;"># 토큰 5개 순서대로 입력 (입력값 안 보임)</span>
         </div>
       </div>
     </div>
@@ -336,14 +333,8 @@
 
       <div style="border:2px solid rgba(106,172,152,0.4);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.04);">
         <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:6px;">추가 에이전트 (Aria · Sam · Min · Evan)</div>
-        <div style="font-size:11px;color:#666;margin-bottom:4px;">~/.openclaw/openclaw.json → channels.telegram.accounts 에 추가</div>
-        <div style="font-size:11.5px;color:#333;line-height:1.8;font-family:monospace;">
-          "aria": { "botToken": "Aria토큰", "dmPolicy": "pairing" },<br>
-          "sam":  { "botToken": "Sam토큰",  "dmPolicy": "pairing" },<br>
-          "min":  { "botToken": "Min토큰",  "dmPolicy": "pairing" },<br>
-          "evan": { "botToken": "Evan토큰", "dmPolicy": "pairing" }
-        </div>
-        <div style="margin-top:8px;font-size:11px;color:#888;">macOS · Windows 동일 — JSON 파일 직접 편집 (AI 채팅창 입력 절대 금지)</div>
+        <div style="font-size:12px;color:#333;line-height:1.8;font-family:monospace;">node add-tokens.js</div>
+        <div style="margin-top:6px;font-size:11px;color:#888;">macOS · Windows 동일 · 입력값 안 보임 · 히스토리에 안 남음</div>
       </div>
     </div>
   </div>
@@ -443,18 +434,9 @@
           <div style="font-size:15px;font-weight:600;color:#333;margin-bottom:6px;">OpenClaw 온보딩 <span style="font-size:12px;color:#e8603c;font-weight:600;">← API 키 & 봇 토큰은 여기서만</span></div>
           <div style="font-family:monospace;font-size:11.5px;color:#6aac98;line-height:2.1;">
             openclaw onboard<span style="color:#555;font-size:11px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Echo 토큰 입력</span><br>
+            node add-tokens.js<span style="color:#555;font-size:11px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← 나머지 4명</span>
           </div>
-          <div style="font-size:12px;color:#555;margin-top:4px;margin-bottom:4px;">나머지 4명 → <code style="background:#f0f0f0;padding:1px 5px;border-radius:3px;font-size:11px;">~/.openclaw/openclaw.json</code> 직접 편집</div>
-          <div style="font-family:monospace;font-size:11px;color:#888;line-height:1.8;background:#f7f7f7;padding:8px 10px;border-radius:4px;">
-            "accounts": {<br>
-            &nbsp;&nbsp;"default": { "botToken": "Echo토큰" },<br>
-            &nbsp;&nbsp;"aria": { "botToken": "Aria토큰", "dmPolicy": "pairing" },<br>
-            &nbsp;&nbsp;"sam":  { "botToken": "Sam토큰",  "dmPolicy": "pairing" },<br>
-            &nbsp;&nbsp;"min":  { "botToken": "Min토큰",  "dmPolicy": "pairing" },<br>
-            &nbsp;&nbsp;"evan": { "botToken": "Evan토큰", "dmPolicy": "pairing" }<br>
-            }
-          </div>
-          <div style="margin-top:8px;font-size:12px;color:#888;">⚠ macOS · Windows 동일 · AI 채팅창 입력 절대 금지</div>
+          <div style="margin-top:8px;font-size:12px;color:#888;">⚠ macOS · Windows 동일 · 입력값 안 보임 · AI 채팅창 입력 절대 금지</div>
         </div>
       </div>
 

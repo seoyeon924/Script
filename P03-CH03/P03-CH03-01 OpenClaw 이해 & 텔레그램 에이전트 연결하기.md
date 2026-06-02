@@ -72,19 +72,13 @@ openclaw onboard
 ? Daemon:     ❯ Node
 ```
 
-나머지 4명은 `~/.openclaw/openclaw.json` 직접 편집 (macOS · Windows 동일):
+나머지 4명은 `add-tokens.js` 스크립트로 등록 (macOS · Windows 동일):
 
-```json
-"accounts": {
-  "default": { "botToken": "Echo토큰",  "dmPolicy": "pairing" },
-  "aria":    { "botToken": "Aria토큰",  "dmPolicy": "pairing" },
-  "sam":     { "botToken": "Sam토큰",   "dmPolicy": "pairing" },
-  "min":     { "botToken": "Min토큰",   "dmPolicy": "pairing" },
-  "evan":    { "botToken": "Evan토큰",  "dmPolicy": "pairing" }
-}
+```bash
+node add-tokens.js
 ```
 
-⚠ JSON 파일에 토큰 직접 입력 — AI 채팅창에 붙여넣기 절대 금지
+토큰 5개 순서대로 입력하면 끝. 입력값 안 보임, 히스토리에 안 남음.
 
 완료 확인:
 ```bash
@@ -183,19 +177,13 @@ API 키랑 봇 토큰은 AI 채팅창에 절대 넣으면 안 돼요. Anthropic 
 
 **Daemon** — Node 선택.
 
-Echo 설정이 끝나면 나머지 4명은 `~/.openclaw/openclaw.json` 파일을 직접 열어서 `channels.telegram.accounts` 안에 추가해요. macOS·Windows 동일해요.
+Echo 설정이 끝나면 나머지 4명은 `add-tokens.js` 스크립트로 등록해요. macOS · Windows 동일해요.
 
-```json
-"accounts": {
-  "default": { "botToken": "Echo토큰",  "dmPolicy": "pairing" },
-  "aria":    { "botToken": "Aria토큰",  "dmPolicy": "pairing" },
-  "sam":     { "botToken": "Sam토큰",   "dmPolicy": "pairing" },
-  "min":     { "botToken": "Min토큰",   "dmPolicy": "pairing" },
-  "evan":    { "botToken": "Evan토큰",  "dmPolicy": "pairing" }
-}
+```bash
+node add-tokens.js
 ```
 
-토큰은 JSON 파일에 직접 입력해요. AI 채팅창에 붙여넣으면 Anthropic 서버로 전송되니까 절대 넣으면 안 돼요.
+실행하면 토큰 5개를 순서대로 입력받아요. 입력값은 화면에 안 보이고 히스토리에도 안 남아요. AI 채팅창에 붙여넣지 않으니까 가장 안전해요.
 
 ---
 
