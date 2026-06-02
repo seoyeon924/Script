@@ -114,7 +114,8 @@ bash setup.sh
 # ✓ sam  → ~/.openclaw/workspace-sam/AGENTS.md
 # ✓ min  → ~/.openclaw/workspace-min/AGENTS.md
 # ✓ evan → ~/.openclaw/workspace-evan/AGENTS.md
-openclaw onboard
+openclaw onboard      # Echo 토큰 입력
+node add-tokens.js    # 나머지 4명 토큰 입력
 ```
 
 ---

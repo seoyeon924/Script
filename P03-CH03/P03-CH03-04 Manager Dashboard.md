@@ -58,7 +58,7 @@ Manager Dashboard예요. Dashboard, Gallery, CronJobs 세 뷰로 구성돼 있�
 
 Dashboard 뷰에서 에이전트 상태를 카드로 확인해요.
 
-Echo는 메인 에이전트로 대시보드·보고서 크론을 담당해요. active 상태면 정상이에요. Min은 데이터 수집 전담, Evan은 특정 도메인 프로젝트 전담이에요.
+Echo는 메인 에이전트로 파이프라인 전체를 지휘해요. active 상태면 정상이에요. Min은 비즈니스 분석 전담, Evan은 대시보드·보고서 전담이에요.
 
 `openclaw status` 결과를 실시간으로 조회하는 거예요.
 
