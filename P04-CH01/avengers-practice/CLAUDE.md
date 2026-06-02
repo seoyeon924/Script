@@ -5,6 +5,12 @@
 ※ Source_Image / Target_Image 컬럼은 존재하지만 값이 비어 있음 — 이미지 기능은 완성본(avengers-complete)에만 포함
 완성 예시: https://avengers-network.netlify.app
 
+> ⚠️ **반드시 로컬 서버로 실행** — `file://`로 열면 CSV 로딩이 차단되어 데이터가 표시되지 않음
+> ```
+> python3 -m http.server 8080
+> ```
+> 실행 후 http://localhost:8080 으로 접속
+
 ---
 
 ## Step 1 — 기초 네트워크

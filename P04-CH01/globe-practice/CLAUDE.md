@@ -4,6 +4,12 @@
 ※ 컬럼명에 공백 포함 — 코드에서 반드시 `data["Country of Origin ISO"]` 형태로 접근할 것 (Origin ISO 아님)
 완성 예시: https://github.com/seoyeon924/globe
 
+> ⚠️ **반드시 로컬 서버로 실행** — `file://`로 열면 CSV 로딩이 차단되어 아크가 표시되지 않음
+> ```
+> python3 -m http.server 8080
+> ```
+> 실행 후 http://localhost:8080 으로 접속
+
 ---
 
 ## Step 1 — 지구본 뼈대
