@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avengers Character Network</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #04040a;
+      font-family: 'Cinzel', serif;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #bg-img {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: url('background.jpg') center center / cover no-repeat;
+    }
+
+    /* Dark overlay for readability */
+    #bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: rgba(2, 3, 8, 0.55);
+    }
+
+    #starfield {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      opacity: 0.45;
+    }
+
+    #graph-container {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+    }
+
+    svg { width: 100%; height: 100%; }
+
+    /* ── Node styles ── */
+    .node-outer-ring { fill: none; }
+    .node-inner-ring { fill: none; }
+
+    .node-label {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      pointer-events: none;
+      dominant-baseline: central;
+    }
+    .node-initial {
+      font-family: 'Cinzel', serif;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+      font-weight: 600;
+    }
+
+    /* ── UI ── */
+    .ui {
+      position: fixed;
+      z-index: 10;
+      font-family: 'Cinzel', serif;
+    }
+
+    /* Header */
+    #hdr {
+      top: 20px; left: 22px;
+      z-index: 10;
+    }
+    #hdr .logo {
+      height: 44px;
+      display: block;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 0 8px rgba(0,0,0,0.8));
+    }
+    #hdr .t1 {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .22em;
+      color: rgba(255,255,255,.85);
+      text-transform: uppercase;
+      text-shadow: 0 1px 4px rgba(0,0,0,.8);
+    }
+    #hdr .t2 {
+      font-size: 8px;
+      letter-spacing: .32em;
+      color: rgba(255,255,255,.4);
+      margin-top: 5px;
+      text-transform: uppercase;
+    }
+
+    /* Right panel */
+    #rpanel {
+      top: 22px; right: 22px;
+      width: 130px;
+      z-index: 10;
+    }
+    .sec-lbl {
+      font-size: 7.5px;
+      letter-spacing: .3em;
+      color: rgba(255,255,255,.25);
+      text-transform: uppercase;
+      text-align: right;
+      margin-bottom: 7px;
+    }
+    .fbtn {
+      display: block;
+      width: 100%;
+      text-align: right;
+      background: none;
+      border: none;
+      border-right: 2px solid transparent;
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px;
+      letter-spacing: .18em;
+      color: rgba(255,255,255,.35);
+      text-transform: uppercase;
+      padding: 4px 8px 4px 0;
+      cursor: pointer;
+      transition: color .18s, border-color .18s;
+    }
+    .fbtn:hover  { color: rgba(255,255,255,.75); }
+    .fbtn.active {
+      color: #fff;
+      border-right-color: rgba(255,255,255,.5);
+    }
+    .sep {
+      height: 1px;
+      background: rgba(255,255,255,.08);
+      margin: 11px 0;
+    }
+
+    /* Connections panel */
+    #cpanel {
+      bottom: 26px; right: 22px;
+      width: 255px;
+      background: rgba(4,4,10,.75);
+      border: 1px solid rgba(255,255,255,.07);
+      padding: 14px;
+      display: none;
+      backdrop-filter: blur(6px);
+    }
+    .cp-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+    .cp-hdr .lbl {
+      font-size: 7.5px;
+      letter-spacing: .28em;
+      color: rgba(255,255,255,.3);
+      text-transform: uppercase;
+    }
+    .cp-hdr .cnt {
+      font-size: 11px;
+      color: rgba(255,255,255,.6);
+    }
+    .ci {
+      display: flex;
+      align-items: flex-start;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      gap: 9px;
+    }
+    .ci:last-child { border-bottom: none; }
+    .ci-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+    .ci-name {
+      font-size: 9px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.75);
+    }
+    .ci-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 3px;
+    }
+    .ci-bar {
+      height: 2px;
+      border-radius: 1px;
+      opacity: .5;
+    }
+    .ci-type {
+      font-size: 7.5px;
+      letter-spacing: .1em;
+      color: rgba(255,255,255,.3);
+      text-transform: uppercase;
+    }
+    .ci-time {
+      font-size: 7.5px;
+      color: rgba(255,255,255,.22);
+      margin-left: auto;
+    }
+
+    /* Selected node info card */
+    #info-card {
+      position: fixed;
+      z-index: 10;
+      pointer-events: none;
+      display: none;
+      padding: 14px 18px;
+      background: rgba(4,4,10,.72);
+      border: 1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(8px);
+      min-width: 180px;
+    }
+    #info-card .ic-name {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      color: rgba(255,255,255,.92);
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+    #info-card .ic-group {
+      font-size: 8px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      margin-top: 6px;
+      font-weight: 400;
+    }
+    #info-card .ic-conns {
+      font-size: 8px;
+      letter-spacing: .24em;
+      color: rgba(255,255,255,.3);
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="bg-img"></div>
+<div id="bg-overlay"></div>
+<canvas id="starfield"></canvas>
+<div id="graph-container"><svg id="graph"></svg></div>
+
+<!-- Header -->
+<div class="ui" id="hdr">
+  <img src="avengers-logo2.png" alt="Avengers" class="logo">
+  <div class="t1">Character Network</div>
+  <div class="t2">by Seoyeon Jun</div>
+</div>
+
+<!-- Right panel -->
+<div class="ui" id="rpanel">
+  <div class="sec-lbl">Relations</div>
+  <button class="fbtn active" data-ft="rel" data-fv="all">All</button>
+  <button class="fbtn" data-ft="rel" data-fv="ally">Alliance</button>
+  <button class="fbtn" data-ft="rel" data-fv="enemy">Conflict</button>
+  <button class="fbtn" data-ft="rel" data-fv="romantic">Romance</button>
+  <button class="fbtn" data-ft="rel" data-fv="family">Family</button>
+  <div class="sep"></div>
+  <div class="sec-lbl">Groups</div>
+  <button class="fbtn active" data-ft="grp" data-fv="all">All</button>
+  <button class="fbtn" data-ft="grp" data-fv="Avengers">Avengers</button>
+  <button class="fbtn" data-ft="grp" data-fv="Guardians">Guardians</button>
+  <button class="fbtn" data-ft="grp" data-fv="Asgardians">Asgardians</button>
+  <button class="fbtn" data-ft="grp" data-fv="Wakanda">Wakanda</button>
+  <button class="fbtn" data-ft="grp" data-fv="Mystic Arts">Mystic Arts</button>
+  <button class="fbtn" data-ft="grp" data-fv="Black Order">Black Order</button>
+  <button class="fbtn" data-ft="grp" data-fv="Villain">Villain</button>
+  <button class="fbtn" data-ft="grp" data-fv="Supporting">Supporting</button>
+</div>
+
+<!-- Info card (click) -->
+<div class="ui" id="info-card">
+  <div class="ic-name" id="ic-name"></div>
+  <div class="ic-group" id="ic-group"></div>
+  <div class="ic-conns" id="ic-conns"></div>
+</div>
+
+<!-- Connections panel -->
+<div class="ui" id="cpanel">
+  <div class="cp-hdr">
+    <span class="lbl">Connections</span>
+    <span class="cnt" id="conn-cnt">0</span>
+  </div>
+  <div id="conn-list"></div>
+</div>
+
+<script>
+// ── STAR FIELD ──────────────────────────────────────────
+(function () {
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  const STAR_COUNT = 320;
+  const stars = Array.from({ length: STAR_COUNT }, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.6 + 0.2,
+    a: Math.random() * 0.75 + 0.1,
+    phase: Math.random() * Math.PI * 2,
+    speed: (Math.random() * 0.015 + 0.004) * (Math.random() < 0.5 ? 1 : -1),
+  }));
+  // A few bright sparkle stars
+  const sparkles = Array.from({ length: 6 }, () => ({
+    x: Math.random(), y: Math.random(),
+    size: Math.random() * 8 + 5,
+    a: Math.random() * 0.5 + 0.3,
+    phase: Math.random() * Math.PI * 2,
+    speed: 0.008,
+  }));
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function drawSparkle(x, y, size, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = 'rgba(220,230,255,1)';
+    ctx.lineWidth = 0.8;
+    // Cross
+    ctx.beginPath();
+    ctx.moveTo(x - size, y); ctx.lineTo(x + size, y);
+    ctx.moveTo(x, y - size); ctx.lineTo(x, y + size);
+    // Diagonal (shorter)
+    const d = size * 0.45;
+    ctx.moveTo(x - d, y - d); ctx.lineTo(x + d, y + d);
+    ctx.moveTo(x + d, y - d); ctx.lineTo(x - d, y + d);
+    ctx.stroke();
+    // Center dot
+    ctx.beginPath();
+    ctx.arc(x, y, 1.2, 0, Math.PI * 2);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Regular stars
+    stars.forEach(s => {
+      s.phase += s.speed;
+      const alpha = s.a * (0.65 + 0.35 * Math.sin(s.phase));
+      if (s.r > 1.1) {
+        const g = ctx.createRadialGradient(s.x*W, s.y*H, 0, s.x*W, s.y*H, s.r*5);
+        g.addColorStop(0, `rgba(200,215,255,${alpha * 0.35})`);
+        g.addColorStop(1, 'transparent');
+        ctx.beginPath();
+        ctx.arc(s.x*W, s.y*H, s.r*5, 0, Math.PI*2);
+        ctx.fillStyle = g;
+        ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.arc(s.x*W, s.y*H, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+      ctx.fill();
+    });
+
+    // Sparkle stars
+    sparkles.forEach(s => {
+      s.phase += s.speed;
+      const alpha = s.a * (0.6 + 0.4 * Math.sin(s.phase));
+      drawSparkle(s.x*W, s.y*H, s.size, alpha);
+    });
+
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  frame();
+})();
+
+// ── NETWORK GRAPH (CIRCULAR LAYOUT) ────────────────────
+const W  = window.innerWidth, H = window.innerHeight;
+const CX = W / 2, CY = H / 2;
+const CIRCLE_R = Math.min(W, H) * 0.37;
+const NODE_R   = 18;   // 모든 노드 동일 크기
+const SEL_R    = 30;   // 선택된 노드
+const TARGET   = Math.PI; // 9시 방향 (π)
+
+const svg = d3.select('#graph').attr('viewBox', [0, 0, W, H]);
+const g   = svg.append('g');
+
+const zoomBehavior = d3.zoom().scaleExtent([0.2, 4])
+  .on('zoom', e => g.attr('transform', e.transform));
+svg.call(zoomBehavior);
+
+const defs = svg.append('defs');
+
+// Glow filter
+const glowF = defs.append('filter').attr('id', 'glow')
+  .attr('x','-50%').attr('y','-50%').attr('width','200%').attr('height','200%');
+glowF.append('feGaussianBlur').attr('in','SourceGraphic').attr('stdDeviation','4').attr('result','blur');
+const fm = glowF.append('feMerge');
+fm.append('feMergeNode').attr('in','blur');
+fm.append('feMergeNode').attr('in','SourceGraphic');
+
+// Colors
+const GC = {
+  'Avengers':    '#4e8cff',
+  'Asgardians':  '#e8c040',
+  'Guardians':   '#6dc442',
+  'Wakanda':     '#a060d0',
+  'Villain':     '#e84040',
+  'Mystic Arts': '#38c4c0',
+  'Black Order': '#d07040',
+  'Supporting':  '#7878a0',
+};
+const LC = {
+  ally:     'rgba(160,190,255,0.30)',
+  enemy:    'rgba(255,70,70,0.45)',
+  romantic: 'rgba(255,90,175,0.45)',
+  family:   'rgba(220,175,55,0.45)',
+};
+const TYPE_LABEL = { ally: 'Alliance', enemy: 'Conflict', romantic: 'Romance', family: 'Family' };
+
+// Character portrait URLs
+const FACE = {
+  thanos:           'https://www.fxguide.com/wp-content/uploads/2019/05/thanos3.jpg',
+  gamora:           'https://upload.wikimedia.org/wikipedia/en/5/54/Zoe_Saldana_as_Gamora.jpeg',
+  iron_man:         'https://upload.wikimedia.org/wikipedia/en/f/f2/Robert_Downey_Jr._as_Tony_Stark_in_Avengers_Infinity_War.jpg',
+  thor:             'https://upload.wikimedia.org/wikipedia/en/3/3c/Chris_Hemsworth_as_Thor.jpg',
+  doctor_strange:   'https://upload.wikimedia.org/wikipedia/en/1/18/Benedict_Cumberbatch_as_Doctor_Strange.jpeg',
+  star_lord:        'https://upload.wikimedia.org/wikipedia/en/b/b2/Chris_Pratt_as_Peter_Quill.jpeg',
+  vision:           'https://upload.wikimedia.org/wikipedia/en/f/fc/Paul_Bettany_as_Vision.jpg',
+  scarlet_witch:    'https://upload.wikimedia.org/wikipedia/en/d/d9/Elizabeth_Olsen_as_Wanda_Maximoff.jpg',
+  hulk:             'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Mark_Ruffalo_at_the_Toronto_premiere_of_The_Avengers_%28cropped%29.jpg/250px-Mark_Ruffalo_at_the_Toronto_premiere_of_The_Avengers_%28cropped%29.jpg',
+  spider_man:       'https://upload.wikimedia.org/wikipedia/en/0/0f/Tom_Holland_as_Spider-Man.jpg',
+  captain_america:  'https://upload.wikimedia.org/wikipedia/en/6/6b/Chris_Evans_as_Steve_Rogers_Captain_America.jpg',
+  rocket:           'https://upload.wikimedia.org/wikipedia/en/f/fc/Rocket_Raccoon_singing_in_a_spaceship%2C_from_Guardians_of_the_Galaxy_Vol_3%2C_2023.png',
+  black_widow:      'https://upload.wikimedia.org/wikipedia/en/f/f6/Scarlett_Johansson_as_Black_Widow.jpg',
+  drax:             'https://upload.wikimedia.org/wikipedia/en/3/3d/Dave_Bautista_as_Drax.jpg',
+  mantis:           'https://static.wikia.nocookie.net/heroes-and-villain/images/d/d5/Profile_-_Mantis.png/revision/latest?cb=20200422010329',
+  ebony_maw:        'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/4/4a/Ebony_Maw_Infobox.jpg/revision/latest?cb=20210524210224',
+  proxima_midnight: 'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/7e/Proxima_Midnight_Infobox.jpg/revision/latest?cb=20210525191820',
+  cull_obsidian:    'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/f/f5/Cull_Obsidian.JPG/revision/latest?cb=20210525191742',
+  corvus_glaive:    'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/0/0f/Corvus_Glaive_Infobox.png/revision/latest?cb=20180604193419',
+  black_panther:    'https://upload.wikimedia.org/wikipedia/en/1/1a/Chadwick_Boseman_as_T%27Challa.jpg',
+  groot:            'https://static.wikia.nocookie.net/marvelmovies/images/4/4c/GOTG_Groot_Poster.jpg/revision/latest?cb=20160512212218',
+  nebula:           'https://upload.wikimedia.org/wikipedia/en/0/0c/Karen_Gillan_as_Nebula.png',
+  okoye:            'https://static.wikia.nocookie.net/disney/images/6/6f/Okoye_-_Profile.png/revision/latest?cb=20230224222454',
+  loki:             'https://static0.srcdn.com/wordpress/wp-content/uploads/2022/06/Tom-Hiddleston-as-Loki.jpg',
+  war_machine:      'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/77/WarMachine-EndgameProfile.jpg/revision/latest?cb=20231025163822',
+  eitri:            'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/ac/Eitri.png/revision/latest?cb=20220205165648',
+  wong:             'https://upload.wikimedia.org/wikipedia/en/d/d7/Benedict_Wong_as_Wong.jpg',
+  falcon:           'https://static.wikia.nocookie.net/ultimatepopculture/images/d/d6/Falcon_MCU.png/revision/latest?cb=20201230161754',
+  winter_soldier:   'https://upload.wikimedia.org/wikipedia/en/4/4b/Sebastian_Stan_as_Bucky_Barnes.jpg',
+  pepper_potts:     'https://upload.wikimedia.org/wikipedia/en/9/92/Gwyneth_Paltrow_as_Pepper_Potts.jpg',
+  red_skull:        'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/6/6d/Red_Skull_Infobox.png/revision/latest?cb=20190808103105',
+  shuri:            'https://upload.wikimedia.org/wikipedia/en/5/5b/Letitia_Wright_as_Shuri_in_Black_Panther_Wakanda_Forever_poster.jpg',
+  mbaku:            'https://static.wikia.nocookie.net/heroes-and-villain/images/5/59/MCU_Man-Ape.jpg/revision/latest?cb=20181127195837',
+  nick_fury:        'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/e4/Nick_Fury_Profile.png/revision/latest?cb=20240802141551',
+  maria_hill:       'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/f/f4/Maria_Hill_Infobox.jpg/revision/latest?cb=20250203210426',
+  heimdall:         'https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/ea/Heimdall_Infobox.jpg/revision/latest?cb=20250203022212',
+  collector:        'https://upload.wikimedia.org/wikipedia/en/thumb/5/54/Benicio_del_Toro_as_the_Collector.jpg/250px-Benicio_del_Toro_as_the_Collector.jpg',
+  ned_leeds:        'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Jacob_Batalon_%2828035642754%29_%28cropped%29.jpg/250px-Jacob_Batalon_%2828035642754%29_%28cropped%29.jpg',
+};
+
+let activeRel = 'all', activeGrp = 'all';
+let selectedId = null;
+let currentRot = 0;
+let spinning = false;
+let lastSlId = null;   // spotlight에 현재 표시된 노드 ID
+
+d3.csv('avengers_network_data.csv').then(rows => {
+  // ── 노드/링크 빌드 ────────────────────────────────────
+  const nm = new Map();
+  rows.forEach(d => {
+    if (!nm.has(d.Source)) nm.set(d.Source, { id: d.Source, group: d.Source_Group, importance: +d.Source_Importance });
+    if (!nm.has(d.Target)) nm.set(d.Target, { id: d.Target, group: d.Target_Group, importance: +d.Target_Importance });
+  });
+
+  // 그룹 순서대로 정렬 → 원 위에서 팀별로 모임
+  const GROUP_ORDER = ['Avengers','Guardians','Asgardians','Wakanda','Mystic Arts','Black Order','Villain','Supporting'];
+  const nodes = Array.from(nm.values()).sort((a, b) => {
+    const ga = GROUP_ORDER.indexOf(a.group), gb = GROUP_ORDER.indexOf(b.group);
+    return ga !== gb ? ga - gb : b.importance - a.importance;
+  });
+  const links = rows.map(d => ({
+    source: d.Source, target: d.Target,
+    strength: +d.Strength, type: d.Type,
+    sTime: d.Source_Time, tTime: d.Target_Time,
+  }));
+
+  const nodeById = new Map(nodes.map(d => [d.id, d]));
+  const N = nodes.length;
+
+  // 기준 각도 배치 (12시부터 균등 분배)
+  nodes.forEach((d, i) => {
+    d.baseAngle = d.originalAngle = -Math.PI / 2 + (2 * Math.PI * i / N);
+  });
+
+  // clipPath — 노드마다 하나 (반지름 업데이트 가능)
+  nodes.forEach(d => {
+    defs.append('clipPath').attr('id', `clip-${d.id}`)
+      .append('circle').attr('r', NODE_R);
+  });
+
+  // ── 현재 회전 적용된 노드 좌표 ───────────────────────
+  function npos(dOrId) {
+    const d = typeof dOrId === 'string' ? nodeById.get(dOrId) : dOrId;
+    if (!d) return { x: CX, y: CY, a: 0 };
+    const a = d.baseAngle + currentRot;
+    return { x: CX + CIRCLE_R * Math.cos(a), y: CY + CIRCLE_R * Math.sin(a), a };
+  }
+
+  // ── 궤도 원 가이드 ───────────────────────────────────
+  g.append('circle')
+    .attr('cx', CX).attr('cy', CY).attr('r', CIRCLE_R)
+    .attr('fill', 'none')
+    .attr('stroke', 'rgba(255,255,255,0.07)')
+    .attr('stroke-width', 1);
+
+  // 관계 타입별 선 두께 & 불투명도
+  const LINK_W = { ally: 0.7, enemy: 2.2, romantic: 1.1, family: 1.6 };
+  const LINK_O = { ally: 0.18, enemy: 0.28, romantic: 0.22, family: 0.24 };
+
+  // 베지어 곡선 경로 (중심 방향으로 구부러짐)
+  function linkPath(srcId, tgtId) {
+    const s = nodeById.get(typeof srcId === 'object' ? srcId.id : srcId);
+    const t = nodeById.get(typeof tgtId === 'object' ? tgtId.id : tgtId);
+    if (!s || !t) return 'M 0 0';
+    const { x: sx, y: sy } = npos(s);
+    const { x: ex, y: ey } = npos(t);
+    const f = 0.32;  // 중심 방향 곡률
+    const cp1x = sx + (CX - sx) * f, cp1y = sy + (CY - sy) * f;
+    const cp2x = ex + (CX - ex) * f, cp2y = ey + (CY - ey) * f;
+    return `M ${sx} ${sy} C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${ex} ${ey}`;
+  }
+
+  // ── 엣지 (곡선 path) ────────────────────────────────
+  const linkSel = g.append('g')
+    .selectAll('path').data(links).join('path')
+    .attr('fill', 'none')
+    .attr('stroke', d => `rgba(255,255,255,${LINK_O[d.type] || 0.18})`)
+    .attr('stroke-width', d => Math.max(0.5, (LINK_W[d.type] || 0.8) * (0.6 + d.strength * 0.04)));
+
+  // ── 노드 ────────────────────────────────────────────
+  const nodeSel = g.append('g')
+    .selectAll('g').data(nodes).join('g')
+    .style('cursor', 'pointer')
+    .on('click', (e, d) => { e.stopPropagation(); onNodeClick(d); });
+
+  // 외부 글로우 (색상 없음, 흰색 미광만)
+  nodeSel.append('circle').attr('class', 'node-outer-ring')
+    .attr('r', NODE_R + 5)
+    .attr('stroke', 'rgba(255,255,255,0.10)')
+    .attr('stroke-width', 1).attr('opacity', 1).attr('fill', 'none')
+    .attr('filter', 'url(#glow)');
+
+  // 내부 링 (흰색 미광)
+  nodeSel.append('circle').attr('class', 'node-inner-ring')
+    .attr('r', NODE_R + 1)
+    .attr('stroke', 'rgba(255,255,255,0.18)')
+    .attr('stroke-width', 0.8).attr('opacity', 1).attr('fill', 'none');
+
+  // 배경 원 (테두리 없음)
+  nodeSel.append('circle').attr('class', 'node-bg')
+    .attr('r', NODE_R)
+    .attr('fill', d => d3.color(GC[d.group] || '#888').darker(1.4).toString())
+    .attr('stroke', 'none');
+
+  // 프로필 이미지
+  nodeSel.append('image')
+    .attr('href', d => FACE[d.id] || '')
+    .attr('x', -NODE_R).attr('y', -NODE_R)
+    .attr('width', NODE_R * 2).attr('height', NODE_R * 2)
+    .attr('clip-path', d => `url(#clip-${d.id})`)
+    .attr('preserveAspectRatio', 'xMidYMin slice');
+
+  // 레이블
+  nodeSel.append('text').attr('class', 'node-label')
+    .attr('font-size', 9)
+    .attr('fill', 'rgba(255,255,255,0.65)')
+    .text(d => d.id.replace(/_/g,' ').toUpperCase());
+
+  // ── 9시 고정 Spotlight (노드 위 최상단 레이어) ────────
+  const SL_R = SEL_R;
+  defs.append('clipPath').attr('id', 'sl-clip')
+    .append('circle').attr('r', SL_R);
+
+  const slG = g.append('g')
+    .attr('transform', `translate(${CX - CIRCLE_R},${CY})`)
+    .style('display', 'none')
+    .style('pointer-events', 'none');
+
+  // 외부 글로우
+  slG.append('circle')
+    .attr('r', SL_R + 12)
+    .attr('fill', 'none')
+    .attr('stroke', 'rgba(255,255,255,0.25)')
+    .attr('stroke-width', 2)
+    .attr('filter', 'url(#glow)');
+
+  // 컬러 링 (두껍게)
+  slG.append('circle').attr('class', 'sl-ring')
+    .attr('r', SL_R + 3).attr('fill', 'none').attr('stroke-width', 3);
+
+  // 배경 (solid dark)
+  slG.append('circle').attr('class', 'sl-bg').attr('r', SL_R)
+    .attr('fill', '#0a0a14');
+
+  // 이미지
+  slG.append('image').attr('class', 'sl-img')
+    .attr('x', -SL_R).attr('y', -SL_R)
+    .attr('width', SL_R*2).attr('height', SL_R*2)
+    .attr('clip-path', 'url(#sl-clip)')
+    .attr('preserveAspectRatio', 'xMidYMin slice');
+
+  // 이니셜 폴백
+
+  function showSpotlight(d) {
+    if (!d || d.id === lastSlId) return;
+    lastSlId = d.id;
+    const color = GC[d.group] || '#888';
+    slG.style('display', 'block');
+    slG.select('.sl-bg').attr('fill', d3.color(color).darker(1.6).toString());
+    slG.select('.sl-ring').attr('stroke', color);
+    slG.select('.sl-img').attr('href', FACE[d.id] || '');
+  }
+
+  function hideSpotlight() {
+    slG.style('display', 'none');
+    lastSlId = null;
+  }
+
+  // ── 9시 방향에 가장 가까운 노드 반환 ───────────────────
+  function getNodeAt9() {
+    let minDist = Infinity, closest = null;
+    nodes.forEach(d => {
+      const a = d.baseAngle + currentRot;
+      const diff = ((a - TARGET) % (2*Math.PI) + 3*Math.PI) % (2*Math.PI) - Math.PI;
+      if (Math.abs(diff) < minDist) { minDist = Math.abs(diff); closest = d; }
+    });
+    return closest;
+  }
+
+  // ── 위치 전체 갱신 ───────────────────────────────────
+  function updateAll() {
+    nodeSel.attr('transform', d => {
+      const p = npos(d);
+      return `translate(${p.x},${p.y})`;
+    });
+
+    linkSel.attr('d', l => linkPath(l.source, l.target));
+
+    // 레이블: 항상 바깥 방향으로 radial 배치
+    nodeSel.select('.node-label').each(function(d) {
+      const p   = npos(d);
+      const cos = Math.cos(p.a), sin = Math.sin(p.a);
+      const r   = NODE_R + 10;
+      d3.select(this)
+        .attr('x', cos * r)
+        .attr('y', sin * r)
+        .attr('text-anchor', cos > 0.25 ? 'start' : cos < -0.25 ? 'end' : 'middle')
+        .attr('dominant-baseline', sin > 0.3 ? 'hanging' : sin < -0.3 ? 'auto' : 'central');
+    });
+
+    // ── 스핀 중: spotlight 이미지 교체 (촤르르 효과) ─────
+    if (spinning) showSpotlight(getNodeAt9());
+  }
+
+  // ── 빙그르르 회전 애니메이션 ─────────────────────────
+  function spinTo(d) {
+    if (spinning) return;
+    spinning = true;
+
+    // 현재 노드 각도 → 9시(π) 방향으로 최단 경로 회전
+    const nodeAngle = d.baseAngle + currentRot;
+    let delta = TARGET - nodeAngle;
+    // [-π, π] 정규화
+    delta = ((delta % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
+
+    const startRot = currentRot;
+    const endRot   = currentRot + delta;
+    const DURATION = 950;
+    const ease     = d3.easeCubicInOut;
+
+    const timer = d3.timer(elapsed => {
+      const t = Math.min(elapsed / DURATION, 1);
+      currentRot = startRot + (endRot - startRot) * ease(t);
+      updateAll();
+      if (t >= 1) {
+        currentRot = endRot;
+        spinning = false;
+        lastSlId = null;
+        // 스핀 완료 — spotlight 고정 후 연결선 뻗어나가기
+        const finalNode = nodeById.get(selectedId);
+        if (finalNode) showSpotlight(finalNode);
+        updateAll();
+        shootLines(selectedId);
+        timer.stop();
+      }
+    });
+  }
+
+  // ── 연결선 뻗어나가기 ────────────────────────────────
+  function shootLines(id) {
+    const src = nodeById.get(id);
+    if (!src) return;
+    const { x: sx, y: sy } = npos(src);
+
+    // 관계 타입별 뻗어나간 후 밝기
+    const BRIGHT_O = { ally: 0.75, enemy: 0.95, romantic: 0.80, family: 0.85 };
+
+    linkSel
+      .filter(l => sid(l) === id || tid(l) === id)
+      .each(function(l) {
+        const isSource = sid(l) === id;
+        const other = nodeById.get(isSource ? tid(l) : sid(l));
+        if (!other) return;
+        const { x: ox, y: oy } = npos(other);
+        const el = d3.select(this);
+        const f = 0.32;
+
+        // 선택 노드에서 출발하는 베지어 곡선
+        const cp1x = sx+(CX-sx)*f, cp1y = sy+(CY-sy)*f;
+        const cp2x = ox+(CX-ox)*f, cp2y = oy+(CY-oy)*f;
+        const pathD = `M ${sx} ${sy} C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${ox} ${oy}`;
+
+        const opacity = BRIGHT_O[l.type] || 0.75;
+        const sw = Math.max(0.8, (LINK_W[l.type] || 0.8) * (0.6 + l.strength * 0.04));
+
+        el.attr('d', pathD)
+          .style('opacity', 1)
+          .attr('stroke', `rgba(255,255,255,${opacity})`)
+          .attr('stroke-width', sw);
+
+        const totalLen = el.node().getTotalLength();
+        el.attr('stroke-dasharray', totalLen)
+          .attr('stroke-dashoffset', totalLen)
+          .transition()
+          .duration(650)
+          .ease(d3.easeQuadOut)
+          .attr('stroke-dashoffset', 0)
+          .on('end', function() {
+            d3.select(this)
+              .attr('stroke-dasharray', null)
+              .attr('stroke-dashoffset', null);
+          });
+      });
+
+    // 비연결 선 — 거의 투명
+    linkSel
+      .filter(l => sid(l) !== id && tid(l) !== id)
+      .style('opacity', 0.03)
+      .attr('stroke', 'rgba(255,255,255,0.15)');
+  }
+
+  // ── 클릭 ─────────────────────────────────────────────
+  function onNodeClick(d) {
+    selectedId = d.id;
+    const connLinks = links.filter(l => sid(l) === d.id || tid(l) === d.id);
+
+    // 선택 안 된 노드는 너무 투명하지 않게, 선은 스핀 완료 후 뻗어나감
+    nodeSel.style('opacity', 0.30);
+    linkSel.style('opacity', 0);
+
+    // spotlight 즉시 표시 (선택 캐릭터 미리 보여주기)
+    lastSlId = null;
+    showSpotlight(d);
+
+    // 정보 카드
+    const card = document.getElementById('info-card');
+    const color = GC[d.group] || '#888';
+    document.getElementById('ic-name').textContent  = d.id.replace(/_/g,' ');
+    document.getElementById('ic-group').textContent = d.group;
+    document.getElementById('ic-group').style.color = color;
+    document.getElementById('ic-conns').textContent = connLinks.length + ' Connections';
+    const cardW = 185;
+    card.style.display    = 'block';
+    card.style.width      = cardW + 'px';
+    card.style.textAlign  = 'right';
+    card.style.left       = Math.max(8, (CX - CIRCLE_R) - SL_R - 18 - cardW) + 'px';
+    card.style.top        = (CY - 50) + 'px';
+
+    // 연결 패널
+    document.getElementById('cpanel').style.display = 'block';
+    document.getElementById('conn-cnt').textContent = connLinks.length;
+    const sorted = [...connLinks].sort((a, b) => b.strength - a.strength);
+    document.getElementById('conn-list').innerHTML = sorted.map(l => {
+      const otherId = sid(l) === d.id ? tid(l) : sid(l);
+      const other   = nodes.find(n => n.id === otherId);
+      const c       = GC[other?.group] || '#888';
+      const time    = sid(l) === d.id ? l.tTime : l.sTime;
+      return `<div class="ci">
+        <div class="ci-dot" style="background:${c}"></div>
+        <div style="flex:1;min-width:0">
+          <div class="ci-name">${otherId.replace(/_/g,' ')}</div>
+          <div class="ci-meta">
+            <div class="ci-bar" style="width:${l.strength*9}px;background:${c}"></div>
+            <span class="ci-type">${TYPE_LABEL[l.type]||l.type}</span>
+            <span class="ci-time">${time}</span>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    // 9시 방향으로 회전
+    spinTo(d);
+  }
+
+  // ── 배경 클릭: 초기화 ────────────────────────────────
+  svg.on('click', () => {
+    selectedId = null;
+    nodeSel.style('opacity', 1);
+    linkSel
+      .style('opacity', null)
+      .attr('stroke', d => `rgba(255,255,255,${LINK_O[d.type] || 0.18})`)
+      .attr('stroke-width', d => Math.max(0.5, (LINK_W[d.type] || 0.8) * (0.6 + d.strength * 0.04)))
+      .attr('stroke-dasharray', null)
+      .attr('stroke-dashoffset', null);
+    hideSpotlight();
+    document.getElementById('cpanel').style.display    = 'none';
+    document.getElementById('info-card').style.display = 'none';
+  });
+
+  // ── 필터 버튼 ────────────────────────────────────────
+  document.querySelectorAll('.fbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ft = btn.dataset.ft, fv = btn.dataset.fv;
+      document.querySelectorAll(`.fbtn[data-ft="${ft}"]`).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (ft === 'rel') activeRel = fv;
+      if (ft === 'grp') activeGrp = fv;
+      applyFilters();
+    });
+  });
+
+  function applyFilters() {
+    const isAllRel = activeRel === 'all', isAllGrp = activeGrp === 'all';
+
+    // 필터 변경 시 선택/스핀 상태 초기화
+    selectedId = null; currentRot = 0; spinning = false; lastSlId = null;
+    hideSpotlight();
+    linkSel.style('opacity', null)
+      .attr('stroke', d => `rgba(255,255,255,${LINK_O[d.type] || 0.18})`)
+      .attr('stroke-width', d => Math.max(0.5, (LINK_W[d.type]||0.8)*(0.6+d.strength*0.04)))
+      .attr('stroke-dasharray', null).attr('stroke-dashoffset', null);
+    nodeSel.style('opacity', 1).style('pointer-events', 'all');
+    document.getElementById('cpanel').style.display    = 'none';
+    document.getElementById('info-card').style.display = 'none';
+
+    let vis;
+    if (isAllRel && isAllGrp) {
+      vis = new Set(nodes.map(d => d.id));
+    } else if (!isAllGrp && isAllRel) {
+      vis = new Set(nodes.filter(d => d.group === activeGrp).map(d => d.id));
+    } else if (isAllGrp && !isAllRel) {
+      vis = new Set();
+      links.forEach(l => { if (l.type === activeRel) { vis.add(sid(l)); vis.add(tid(l)); } });
+    } else {
+      const gs = new Set(nodes.filter(d => d.group === activeGrp).map(d => d.id));
+      vis = new Set();
+      links.forEach(l => {
+        if (l.type === activeRel && gs.has(sid(l)) && gs.has(tid(l))) { vis.add(sid(l)); vis.add(tid(l)); }
+      });
+    }
+
+    // ── 보이는 노드만으로 360도 원 재구성 ────────────────
+    if (isAllRel && isAllGrp) {
+      nodes.forEach(d => { d.baseAngle = d.originalAngle; });
+    } else {
+      const visNodes = nodes.filter(d => vis.has(d.id));
+      const M = visNodes.length;
+      visNodes.forEach((d, i) => {
+        d.baseAngle = -Math.PI / 2 + (2 * Math.PI * i / M);
+      });
+    }
+
+    nodeSel
+      .style('opacity', d => vis.has(d.id) ? 1 : 0)
+      .style('pointer-events', d => vis.has(d.id) ? 'all' : 'none');
+    linkSel.style('opacity', l =>
+      ((isAllRel || l.type === activeRel) && vis.has(sid(l)) && vis.has(tid(l))) ? null : 0
+    );
+
+    updateAll();
+  }
+
+  // ── 헬퍼 ──────────────────────────────────────────────
+  function sid(l) { return typeof l.source === 'object' ? l.source.id : l.source; }
+  function tid(l) { return typeof l.target === 'object' ? l.target.id : l.target; }
+
+  // ── 초기 렌더 ─────────────────────────────────────────
+  updateAll();
+});
+</script>
+</body>
+</html>

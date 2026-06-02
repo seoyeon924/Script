@@ -29,7 +29,7 @@
 
   .tb { height: 48px; min-height: 48px; padding: 0 52px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); flex-shrink: 0; }
   .tb-cap { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
-  .tb-num { font-size: 13px; color: var(--dim); letter-spacing: 0.08em; }
+  .tb-num { display: none; }
 
   .body { flex: 1; display: flex; min-height: 0; }
 
@@ -259,53 +259,60 @@
 <!-- ════ s6 | 어벤져스 네트워크 — 실제 기획 흐름 ════ -->
 <div class="slide" id="s6">
   <div class="tb"><span class="tb-cap">어벤져스 네트워크 — 실제 기획 흐름</span><span class="tb-num">6</span></div>
-  <div class="body" style="flex-direction:column;">
+  <div class="body" style="flex-direction:row;padding:0;gap:0;">
 
-    <!-- Top: headline -->
-    <div style="padding:36px 52px 28px;border-bottom:1px solid var(--border);flex-shrink:0;">
-      <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:10px;">Clip 02 — 코딩 전 기획 단계</div>
-      <div style="font-size:34px;font-weight:600;color:#1C1A18;line-height:1.2;letter-spacing:-0.02em;">어벤져스 네트워크 시각화<br>제작 과정</div>
+    <!-- Left: title + video -->
+    <div style="width:42%;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+      <div style="padding:32px 32px 24px;border-bottom:1px solid var(--border);flex-shrink:0;">
+        <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">Clip 02 — 코딩 전 기획 단계</div>
+        <div style="font-size:28px;font-weight:600;color:#1C1A18;line-height:1.2;letter-spacing:-0.02em;"><span style="font-size:14px;font-weight:400;color:#999;display:block;margin-bottom:4px;">예)</span>어벤져스 네트워크 시각화<br>실제 제작 과정</div>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:20px 24px;">
+        <video src="../../../Documents/Wind%20%26%20Words.mp4" muted playsinline preload="metadata" style="width:100%;border-radius:8px;border:1px solid var(--border);"></video>
+      </div>
     </div>
 
-    <!-- Bottom: 5-step flow cards -->
-    <div style="flex:1;display:flex;align-items:center;padding:20px 36px;gap:8px;">
+    <!-- Right: 5-step flow (vertical) -->
+    <div style="flex:1;display:flex;flex-direction:column;padding:20px 24px;gap:7px;justify-content:center;">
 
-      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:20px 18px;display:flex;flex-direction:column;gap:10px;align-self:stretch;justify-content:center;">
-        <div style="font-size:11px;font-family:monospace;color:#E8603C;">01</div>
-        <div style="font-size:16px;font-weight:600;color:#1C1A18;">레퍼런스 이미지 수집</div>
-        <div style="font-size:12px;color:#777;line-height:1.7;">원하는 시각화 스크린샷을<br>이미지로 다수 수집<br><span style="color:#AAA;">Awwwards · Observable HQ</span></div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:14px 18px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;flex-shrink:0;margin-top:2px;">01</div>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#1C1A18;margin-bottom:4px;">레퍼런스 이미지 수집</div>
+          <div style="font-size:12px;color:#777;line-height:1.6;">원하는 시각화 스크린샷을 다수 수집 <span style="color:#AAA;">— Awwwards · Observable HQ</span></div>
+        </div>
       </div>
 
-      <div style="color:#CCC;font-size:13px;flex-shrink:0;">→</div>
-
-      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:20px 18px;display:flex;flex-direction:column;gap:10px;align-self:stretch;justify-content:center;">
-        <div style="font-size:11px;font-family:monospace;color:#E8603C;">02</div>
-        <div style="font-size:16px;font-weight:600;color:#1C1A18;">Gemini / GPT에 구조 분석</div>
-        <div style="font-size:12px;color:#777;line-height:1.7;">이미지를 주고 물어봄<br>"이거 어떻게 구현해?<br>어떤 프롬프트 써야 해?"</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:14px 18px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;flex-shrink:0;margin-top:2px;">02</div>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#1C1A18;margin-bottom:6px;">Gemini / GPT에 구조 분석</div>
+          <div style="font-size:11.5px;font-family:monospace;background:#F4F3F1;padding:8px 12px;border-radius:4px;color:#444;line-height:1.7;">"이 데이터 아트의 시각적 요소(색상, 레이아웃, 인터랙션)를 분석하고, Claude에게 코딩을 시킬 수 있는 완벽한 프롬프트를 작성해 줘"</div>
+        </div>
       </div>
 
-      <div style="color:#CCC;font-size:13px;flex-shrink:0;">→</div>
-
-      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:20px 18px;display:flex;flex-direction:column;gap:10px;align-self:stretch;justify-content:center;">
-        <div style="font-size:11px;font-family:monospace;color:#E8603C;">03</div>
-        <div style="font-size:16px;font-weight:600;color:#1C1A18;">Firecrawl로 데이터 수집</div>
-        <div style="font-size:12px;color:#777;line-height:1.7;">어벤져스 캐릭터 관계<br>공동 출연·관계 유형<br>크롤링으로 확보</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:14px 18px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;flex-shrink:0;margin-top:2px;">03</div>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#1C1A18;margin-bottom:4px;">Firecrawl로 데이터 수집</div>
+          <div style="font-size:12px;color:#777;line-height:1.6;">어벤져스 캐릭터 관계·공동 출연·관계 유형 크롤링으로 확보</div>
+        </div>
       </div>
 
-      <div style="color:#CCC;font-size:13px;flex-shrink:0;">→</div>
-
-      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:20px 18px;display:flex;flex-direction:column;gap:10px;align-self:stretch;justify-content:center;">
-        <div style="font-size:11px;font-family:monospace;color:#E8603C;">04</div>
-        <div style="font-size:16px;font-weight:600;color:#1C1A18;">디자인 토큰 정의</div>
-        <div style="font-size:12px;color:#777;line-height:1.7;">색상·폰트·효과를<br>텍스트로 한 번 정의<br>→ 이후 이미지 없이 수정</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:14px 18px;display:flex;align-items:flex-start;gap:14px;">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;flex-shrink:0;margin-top:2px;">04</div>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#1C1A18;margin-bottom:4px;">디자인 토큰 정의</div>
+          <div style="font-size:12px;color:#777;line-height:1.6;">색상·폰트·효과를 텍스트로 한 번 정의 → 이후 이미지 없이 수정</div>
+        </div>
       </div>
 
-      <div style="color:#CCC;font-size:13px;flex-shrink:0;">→</div>
-
-      <div style="flex:1;border:1px solid rgba(232,96,60,0.35);border-radius:8px;padding:20px 18px;display:flex;flex-direction:column;gap:10px;align-self:stretch;justify-content:center;background:rgba(232,96,60,0.03);">
-        <div style="font-size:11px;font-family:monospace;color:#E8603C;">05</div>
-        <div style="font-size:16px;font-weight:600;color:#E8603C;">Claude Code에 전달</div>
-        <div style="font-size:12px;color:#777;line-height:1.7;">이미지 + Gemini 답변<br>+ 데이터 + 토큰<br>→ 구현 프롬프트 시작</div>
+      <div style="border:1px solid rgba(232,96,60,0.35);border-radius:8px;padding:14px 18px;display:flex;align-items:flex-start;gap:14px;background:rgba(232,96,60,0.03);">
+        <div style="font-size:11px;font-family:monospace;color:#E8603C;flex-shrink:0;margin-top:2px;">05</div>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#E8603C;margin-bottom:4px;">Claude Code에 전달</div>
+          <div style="font-size:12px;color:#777;line-height:1.6;">이미지 + Gemini 답변 + 데이터 + 토큰 → 구현 프롬프트 시작</div>
+        </div>
       </div>
 
     </div>
@@ -520,56 +527,85 @@
 <!-- ════ s11 | 구현 방법론 ════ -->
 <div class="slide" id="s11">
   <div class="tb"><span class="tb-cap">구현 방법론</span><span class="tb-num">11</span></div>
-  <div class="body" style="flex-direction:column;padding:44px 60px;gap:28px;">
+  <div class="body" style="flex-direction:column;padding:28px 52px;gap:0;">
     <!-- Track A -->
-    <div style="flex:1;display:flex;flex-direction:column;gap:14px;">
-      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#E8603C;">방법 A — 코드 레퍼런스</div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#E8603C;">방법 A — 코드 레퍼런스</div>
       <div style="display:flex;gap:0;align-items:stretch;">
-        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:18px 22px;">
-          <div style="font-size:13px;color:#999;margin-bottom:6px;">Step 1</div>
-          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">레퍼런스 탐색</div>
-          <div style="font-size:14px;color:#666;line-height:1.7;">Observable HQ<br>D3 Gallery · Codepen</div>
+        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:14px 18px;">
+          <div style="font-size:12px;color:#999;margin-bottom:4px;">Step 1</div>
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">레퍼런스 탐색</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">Observable HQ<br>D3 Gallery · Codepen</div>
         </div>
-        <div style="display:flex;align-items:center;padding:0 14px;color:#CCCCCC;font-size:20px;flex-shrink:0;">→</div>
-        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:18px 22px;">
-          <div style="font-size:13px;color:#999;margin-bottom:6px;">Step 2</div>
-          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">개발자도구 코드 복붙</div>
-          <div style="font-size:14px;color:#666;line-height:1.7;">Chrome DevTools<br>Sources 탭 → 전체 복사</div>
+        <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:18px;flex-shrink:0;">→</div>
+        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:14px 18px;">
+          <div style="font-size:12px;color:#999;margin-bottom:4px;">Step 2</div>
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">개발자도구 코드 복붙</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">Chrome DevTools<br>Sources 탭 → 전체 복사</div>
         </div>
-        <div style="display:flex;align-items:center;padding:0 14px;color:#CCCCCC;font-size:20px;flex-shrink:0;">→</div>
-        <div style="flex:1;border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:18px 22px;background:rgba(232,96,60,0.03);">
-          <div style="font-size:13px;color:#999;margin-bottom:6px;">Step 3</div>
-          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">Claude Code 요청</div>
-          <div style="font-size:14px;color:#666;line-height:1.7;">"이 코드 기반으로<br>우리 데이터에 맞게 만들어줘"</div>
+        <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:18px;flex-shrink:0;">→</div>
+        <div style="flex:1;border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:14px 18px;background:rgba(232,96,60,0.03);">
+          <div style="font-size:12px;color:#999;margin-bottom:4px;">Step 3</div>
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">Claude Code 요청</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">"이 코드 기반으로<br>우리 데이터에 맞게 만들어줘"</div>
         </div>
       </div>
     </div>
-    <!-- Divider -->
-    <div style="display:flex;align-items:center;gap:16px;">
+    <!-- Divider A/B -->
+    <div style="display:flex;align-items:center;gap:16px;padding:10px 0;">
       <div style="flex:1;height:1px;background:var(--border);"></div>
-      <div style="font-size:14px;color:#BBBBBB;letter-spacing:0.08em;">또는</div>
+      <div style="font-size:13px;color:#BBBBBB;letter-spacing:0.08em;">또는</div>
       <div style="flex:1;height:1px;background:var(--border);"></div>
     </div>
     <!-- Track B -->
-    <div style="flex:1;display:flex;flex-direction:column;gap:14px;">
-      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#4A7AB5;">방법 B — Gemini 해석</div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#4A7AB5;">방법 B — Gemini 해석</div>
       <div style="display:flex;gap:0;align-items:stretch;">
-        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:18px 22px;">
-          <div style="font-size:13px;color:#999;margin-bottom:6px;">Step 1</div>
-          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">영상·이미지 수집</div>
-          <div style="font-size:14px;color:#666;line-height:1.7;">원하는 시각화<br>스크린샷 또는 영상</div>
+        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:14px 18px;">
+          <div style="font-size:12px;color:#999;margin-bottom:4px;">Step 1</div>
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">영상·이미지 수집</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">원하는 시각화<br>스크린샷 또는 영상</div>
         </div>
-        <div style="display:flex;align-items:center;padding:0 14px;color:#CCCCCC;font-size:20px;flex-shrink:0;">→</div>
-        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:18px 22px;">
-          <div style="font-size:13px;color:#999;margin-bottom:6px;">Step 2</div>
-          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">Gemini로 구조 파악</div>
-          <div style="font-size:14px;color:#666;line-height:1.7;">"이 시각화 어떻게<br>구현됐어? 기술 스택은?"</div>
+        <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:18px;flex-shrink:0;">→</div>
+        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:14px 18px;">
+          <div style="font-size:12px;color:#999;margin-bottom:4px;">Step 2</div>
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">Gemini로 구조 파악</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">"이 시각화 어떻게<br>구현됐어? 기술 스택은?"</div>
         </div>
-        <div style="display:flex;align-items:center;padding:0 14px;color:#CCCCCC;font-size:20px;flex-shrink:0;">→</div>
-        <div style="flex:1;border:1px solid rgba(74,122,181,0.3);border-radius:6px;padding:18px 22px;background:rgba(74,122,181,0.03);">
-          <div style="font-size:13px;color:#999;margin-bottom:6px;">Step 3</div>
-          <div style="font-size:17px;font-weight:600;color:#1C1A18;margin-bottom:6px;">Claude Code 프롬프트</div>
-          <div style="font-size:14px;color:#666;line-height:1.7;">Gemini 답변을 프롬프트에<br>그대로 붙여넣기</div>
+        <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:18px;flex-shrink:0;">→</div>
+        <div style="flex:1;border:1px solid rgba(74,122,181,0.3);border-radius:6px;padding:14px 18px;background:rgba(74,122,181,0.03);">
+          <div style="font-size:12px;color:#999;margin-bottom:4px;">Step 3</div>
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">Claude Code 프롬프트</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">Gemini 답변을 프롬프트에<br>그대로 붙여넣기</div>
+        </div>
+      </div>
+    </div>
+    <!-- Divider B/C -->
+    <div style="display:flex;align-items:center;gap:16px;padding:10px 0;">
+      <div style="flex:1;height:1px;background:var(--border);"></div>
+      <div style="font-size:13px;color:#BBBBBB;letter-spacing:0.08em;">또는</div>
+      <div style="flex:1;height:1px;background:var(--border);"></div>
+    </div>
+    <!-- Track C -->
+    <div style="flex:1;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#2A9D8F;">방법 C — 방향성 먼저</div>
+      <div style="display:flex;gap:0;align-items:stretch;">
+        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:14px 18px;">
+          <div style="font-size:12px;color:#999;margin-bottom:4px;">Step 1</div>
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">작품 방향성 정의</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">레퍼런스 없이 내가 원하는<br>분위기·감성·경험을 글로 정의</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:18px;flex-shrink:0;">→</div>
+        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:14px 18px;">
+          <div style="font-size:12px;color:#999;margin-bottom:4px;">Step 2</div>
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">디자인 토큰 먼저 확정</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">색상·폰트·효과를 텍스트로<br>정의 → 이후 이미지 없이 수정</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:0 12px;color:#CCCCCC;font-size:18px;flex-shrink:0;">→</div>
+        <div style="flex:1;border:1px solid rgba(42,157,143,0.3);border-radius:6px;padding:14px 18px;background:rgba(42,157,143,0.03);">
+          <div style="font-size:12px;color:#999;margin-bottom:4px;">Step 3</div>
+          <div style="font-size:15px;font-weight:600;color:#1C1A18;margin-bottom:4px;">뼈대부터 단계별 확장</div>
+          <div style="font-size:13px;color:#666;line-height:1.6;">토큰 기반으로 구조 → 디자인<br>→ 인터랙션 순서로 쌓아가기</div>
         </div>
       </div>
     </div>
@@ -1187,7 +1223,7 @@ arc-dest:   rgba(255, 100, 100, 0.7)</div>
 
 <script>
   const TOTAL = 24;
-  const ORDER = [1,2,3,4,5,22,23,6,7,8,9,10,11,12,13,14,15,16,17,18,19,24,20,21];
+  const ORDER = [1,2,3,4,5,22,23,11,6,7,8,9,10,12,13,14,15,16,17,18,19,24,20,21];
   const CLIP_MAP = {
     1:0, 2:0,
     3:0, 4:0, 5:0, 22:0, 23:0, 6:0, 7:0,
