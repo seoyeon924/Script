@@ -182,7 +182,7 @@
     <div style="width:42%;border-right:1px solid var(--border);padding:52px 52px;display:flex;flex-direction:column;justify-content:center;gap:28px;">
       <div>
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
-          <img src="../../fastcampus-assets/images/openclaw-logo.jpg" style="width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;">
+          <div style="width:44px;height:44px;border-radius:8px;background:#35c995;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:white;letter-spacing:-0.02em;">OC</div>
           <div class="eyebrow" style="margin-bottom:0;">AI 에이전트 플랫폼</div>
         </div>
         <div style="font-size:52px;font-weight:600;line-height:1.2;letter-spacing:-0.025em;color:var(--text);">OpenClaw</div>
@@ -203,10 +203,17 @@
         </div>
       </div>
     </div>
-    <div style="flex:1;background:#0a0c10;overflow:hidden;">
-      <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
-        <source src="../../fastcampus-assets/videos/21_5-1_.MOV" type="video/mp4">
-      </video>
+    <div style="flex:1;background:#0a0c10;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:48px 40px;">
+      <div style="font-family:monospace;font-size:14px;line-height:2.2;color:#ccc;width:100%;max-width:340px;">
+        <div style="color:#555;margin-bottom:10px;">$ openclaw status</div>
+        <div><span style="color:#35c995;">✓</span> gateway  running  :18789</div>
+        <div><span style="color:#35c995;">✓</span> agent    Echo     <span style="color:#818cf8;">active</span></div>
+        <div><span style="color:#35c995;">✓</span> agent    Min      <span style="color:#34d399;">active</span></div>
+        <div><span style="color:#35c995;">✓</span> agent    Evan     <span style="color:#fb923c;">active</span></div>
+        <div style="margin-top:20px;color:#555;">$ openclaw cron list</div>
+        <div style="color:#818cf8;margin-top:6px;">weekly-dashboard-run  Mon 9am  ✓</div>
+        <div style="color:#34d399;">daily-data-summary    8am      ✓</div>
+      </div>
     </div>
   </div>
 </div>
@@ -218,39 +225,27 @@
   <div class="body">
     <div style="width:52%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
       <div style="padding:28px 40px 20px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">연결 방법 — openclaw onboard</div>
-      <div class="code-wrap" style="flex:1;font-size:14.5px;line-height:2;">
-        <div style="color:#555;"># 1. 초기 온보딩 마법사 (채널·모델·워크스페이스)</div>
+      <div class="code-wrap" style="flex:1;font-size:15px;line-height:2.2;">
+        <div style="color:#555;"># 처음 한 번만 — API 키 · 봇 토큰 연결</div>
         <div><span class="code-green">openclaw onboard</span></div>
         <br>
-        <div style="color:#555;"># 2. 채널·API 키 설정 변경</div>
-        <div><span class="code-green">openclaw configure</span></div>
-        <br>
-        <div style="color:#555;"># 3. 게이트웨이 실행 (백그라운드 서비스)</div>
-        <div><span class="code-green">openclaw gateway</span></div>
-        <br>
-        <div style="color:#555;"># 4. 웹 대시보드 열기</div>
-        <div><span class="code-green">openclaw dashboard</span></div>
-        <br>
-        <div style="color:#555;"># 5. 상태 확인</div>
+        <div style="color:#555;"># 연결 후 상태 확인</div>
         <div><span class="code-green">openclaw status</span></div>
         <br>
-        <div style="color:#555;"># 설정 파일: ~/.openclaw/auth-profiles.json</div>
+        <div style="color:#35c995;">✓ gateway  running  :18789</div>
+        <div style="color:#35c995;">✓ agent    Echo     active</div>
       </div>
     </div>
     <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:20px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">연결 후 생기는 것들</div>
-      <div style="display:flex;flex-direction:column;gap:14px;">
-        <div style="padding:18px 20px;border:1px solid var(--border);border-radius:6px;">
-          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:6px;">~/.openclaw/ 폴더</div>
-          <div style="font-family:monospace;font-size:14px;color:#555;line-height:2;">openclaw.json &nbsp;&nbsp; ← 전체 설정<br>agents/main/ &nbsp;&nbsp;&nbsp; ← 에이전트별 메모리<br>cron/jobs.json &nbsp; ← 크론 스케줄<br>memory/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ← SQLite 메모리</div>
+      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">연결 후 생기는 것</div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="padding:20px 24px;border:1px solid var(--border);border-radius:6px;">
+          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:8px;">~/.openclaw/ 폴더</div>
+          <div style="font-family:monospace;font-size:14px;color:#555;line-height:2.1;">openclaw.json &nbsp;&nbsp; ← 전체 설정<br>agents/main/ &nbsp;&nbsp;&nbsp; ← Echo 메모리<br>workspace/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ← AGENTS.md</div>
         </div>
-        <div style="padding:18px 20px;border:1px solid var(--border);border-radius:6px;">
-          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:6px;">에이전트가 Claude Code를 실행</div>
-          <div style="font-size:17px;color:#333;line-height:1.65;">OpenClaw가 백그라운드에서 Claude Code 세션 관리. 사람 없어도 크론이 에이전트를 깨움</div>
-        </div>
-        <div style="padding:18px 20px;border:1px solid #e8c87a;border-radius:6px;background:rgba(232,200,122,0.04);">
-          <div style="font-size:13px;color:#c8a048;font-weight:600;margin-bottom:6px;">Claude API 키 필요</div>
-          <div style="font-size:17px;color:#333;line-height:1.65;">Claude Code 구독과 별개. Anthropic 콘솔에서 API 키 발급 필요</div>
+        <div style="padding:20px 24px;border:1px solid #e8c87a;border-radius:6px;background:rgba(232,200,122,0.04);">
+          <div style="font-size:13px;color:#c8a048;font-weight:600;margin-bottom:8px;">Claude API 키 필요</div>
+          <div style="font-size:17px;color:#333;line-height:1.7;">Claude.ai 구독과 별개.<br>Anthropic 콘솔에서 API 키 발급.</div>
         </div>
       </div>
     </div>
@@ -283,15 +278,6 @@
         <div style="color:#aaa;">&nbsp; Bot token: <span style="color:#e8c87a;">Echo 토큰</span> <span style="color:#555;">← 붙여넣기</span></div>
         <div style="color:#aaa;">&nbsp; DM policy: <span style="color:#6aac98;">pairing</span> → Enter</div>
 
-        <div style="color:#666;margin-top:8px;">── Step 5. Daemon ────────────</div>
-        <div style="color:#aaa;">❯ <span style="color:#6aac98;">Node</span> (권장)</div>
-
-        <div style="margin-top:14px;color:#555;">── 추가 에이전트 봇 등록 ────────</div>
-        <div style="color:#aaa;font-size:11px;line-height:1.8;">
-          <span style="color:#555;"># macOS · Windows 동일</span><br>
-          node add-tokens.js<br>
-          <span style="color:#555;"># 토큰 5개 순서대로 입력 (입력값 안 보임)</span>
-        </div>
       </div>
     </div>
     <!-- Right: 요약 -->
@@ -318,15 +304,49 @@
         <div style="font-size:14px;color:#333;line-height:1.6;">Telegram 체크 → <strong>Echo 봇 토큰</strong> 붙여넣기<br><code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:12px;">pairing</code> 그대로 Enter</div>
       </div>
 
-      <div style="border:1px solid var(--border);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;">
-        <div style="font-size:11px;color:#999;font-weight:700;margin-bottom:3px;">STEP 5 — Daemon</div>
-        <div style="font-size:14px;color:#333;"><code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">Node</code> 선택</div>
+      <div style="border:1px solid rgba(232,96,60,0.25);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(232,96,60,0.02);">
+        <div style="font-size:11px;color:#e8603c;font-weight:700;margin-bottom:3px;">보안 — 절대 금지</div>
+        <div style="font-size:13px;color:#333;line-height:1.65;">API 키·봇 토큰을 AI 채팅창에 붙여넣기 금지<br><span style="color:#888;font-size:12px;">Anthropic 서버로 전송됨 · 터미널 마법사에서만 입력</span></div>
       </div>
+    </div>
+  </div>
+</div>
 
-      <div style="border:2px solid rgba(106,172,152,0.4);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.04);">
-        <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:6px;">추가 에이전트 (Aria · Sam · Min · Evan)</div>
-        <div style="font-size:12px;color:#333;line-height:1.8;font-family:monospace;">node add-tokens.js</div>
-        <div style="margin-top:6px;font-size:11px;color:#888;">macOS · Windows 동일 · 입력값 안 보임 · 히스토리에 안 남음</div>
+
+<!-- ════ s30 | onboard 완료 & Daemon 설정 ════ -->
+<div class="slide" id="s30">
+  <div class="tb"><span class="tb-cap">openclaw onboard — Step 5 & 완료 확인</span><span class="tb-num">5-2</span></div>
+  <div class="body" style="gap:0;">
+    <div style="width:48%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+      <div style="padding:12px 24px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">마지막 단계 & 완료 확인</div>
+      <div style="flex:1;background:#111;padding:22px 26px;font-family:monospace;font-size:13.5px;line-height:2;color:#ccc;overflow:hidden;">
+        <div style="color:#666;">── Step 5. Daemon ────────────</div>
+        <div style="color:#aaa;">❯ <span style="color:#6aac98;">Node</span> <span style="color:#555;">(권장)</span></div>
+        <br>
+        <div style="color:#35c995;">✓ OpenClaw 설정 완료</div>
+        <br>
+        <div style="color:#666;"># 완료 후 상태 확인</div>
+        <div style="color:#aaa;">$ <span style="color:#6aac98;">openclaw status</span></div>
+        <div style="color:#35c995;">✓ gateway  running  :18789</div>
+        <div style="color:#35c995;">✓ agent    Echo     active</div>
+        <br>
+        <div style="color:#666;"># 텔레그램 연결 확인</div>
+        <div style="color:#aaa;">Echo 봇 → "안녕" → 답장 ✓</div>
+      </div>
+    </div>
+    <div style="flex:1;padding:22px 28px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
+      <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#999;margin-bottom:2px;">연결 완료 후 구조</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:15px 18px;width:100%;box-sizing:border-box;">
+        <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:6px;">~/.openclaw/</div>
+        <div style="font-family:monospace;font-size:13px;color:#555;line-height:2.1;">openclaw.json &nbsp; ← 전체 설정<br>agents/main/ &nbsp;&nbsp; ← Echo 메모리<br>workspace/ &nbsp;&nbsp;&nbsp;&nbsp; ← AGENTS.md</div>
+      </div>
+      <div style="border:2px solid rgba(106,172,152,0.4);border-radius:8px;padding:15px 18px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.03);">
+        <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:6px;">텔레그램 봇은 Echo 하나만</div>
+        <div style="font-size:14px;color:#333;line-height:1.7;">서브 에이전트(Min·Evan)는<br>별도 봇 없이 Echo가 내부 호출</div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:15px 18px;width:100%;box-sizing:border-box;">
+        <div style="font-size:11px;color:#999;font-weight:700;margin-bottom:6px;">다음 단계</div>
+        <div style="font-size:14px;color:#333;line-height:1.7;">파이프라인 실행 + 크론 자동화<br><span style="color:#6aac98;font-family:monospace;font-size:13px;">openclaw cron add</span></div>
       </div>
     </div>
   </div>
@@ -416,7 +436,7 @@
         <div>
           <div style="font-size:15px;font-weight:600;color:#333;margin-bottom:4px;">셋업 스크립트 실행 <span style="font-size:12px;color:#6aac98;font-weight:400;">← AGENTS.md 자동 복사</span></div>
           <div style="font-family:monospace;font-size:13.5px;color:#6aac98;">bash setup.sh</div>
-          <div style="font-size:13px;color:#999;margin-top:4px;">workspace-echo / aria / sam / min / evan 폴더 자동 생성</div>
+          <div style="font-size:13px;color:#999;margin-top:4px;">workspace / workspace-min / workspace-evan 폴더 자동 생성</div>
         </div>
       </div>
 
@@ -424,11 +444,10 @@
         <div style="font-size:22px;font-weight:700;color:#6aac98;flex-shrink:0;width:28px;text-align:right;">3</div>
         <div style="flex:1;">
           <div style="font-size:15px;font-weight:600;color:#333;margin-bottom:6px;">OpenClaw 온보딩 <span style="font-size:12px;color:#e8603c;font-weight:600;">← API 키 & 봇 토큰은 여기서만</span></div>
-          <div style="font-family:monospace;font-size:11.5px;color:#6aac98;line-height:2.1;">
-            openclaw onboard<span style="color:#555;font-size:11px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Echo 토큰 입력</span><br>
-            node add-tokens.js<span style="color:#555;font-size:11px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← 나머지 4명</span>
+          <div style="font-family:monospace;font-size:13px;color:#6aac98;line-height:2.1;">
+            openclaw onboard<span style="color:#555;font-size:11px;">&nbsp;&nbsp;← Echo 봇 토큰 입력 (터미널 마법사)</span>
           </div>
-          <div style="margin-top:8px;font-size:12px;color:#888;">⚠ macOS · Windows 동일 · 입력값 안 보임 · AI 채팅창 입력 절대 금지</div>
+          <div style="margin-top:8px;font-size:12px;color:#888;">⚠ API 키·봇 토큰 → 터미널 마법사에서만 · AI 채팅창 절대 금지</div>
         </div>
       </div>
 
@@ -1118,10 +1137,26 @@
         </div>
       </div>
     </div>
-    <div style="flex:1;background:#0a0c10;overflow:hidden;">
-      <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
-        <source src="../../fastcampus-assets/videos/23_5-3_.mov" type="video/mp4">
-      </video>
+    <div style="flex:1;background:#0a0c10;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:40px;">
+      <div style="font-family:monospace;font-size:13px;line-height:2.1;color:#ccc;width:100%;max-width:340px;">
+        <div style="font-size:12px;color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">Agent Manager — Dashboard</div>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid #2a2a2a;border-radius:6px;margin-bottom:8px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#818cf8;"></div>
+          <div style="flex:1;color:#ddd;font-size:13px;">Echo (main)</div>
+          <div style="color:#35c995;font-size:12px;">active</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid #2a2a2a;border-radius:6px;margin-bottom:8px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#34d399;"></div>
+          <div style="flex:1;color:#ddd;font-size:13px;">Min</div>
+          <div style="color:#35c995;font-size:12px;">active</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid #2a2a2a;border-radius:6px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#fb923c;"></div>
+          <div style="flex:1;color:#ddd;font-size:13px;">Evan</div>
+          <div style="color:#888;font-size:12px;">standby</div>
+        </div>
+        <div style="margin-top:20px;color:#555;font-size:11px;">openclaw status · 실시간 조회</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1542,10 +1577,10 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const TOTAL = 25;
-  const ORDER = [1,2,3,4,5,26,28, 8,21,13,23,14,15,29, 17,18,19,20];
+  const TOTAL = ORDER.length;
+  const ORDER = [1,2,3,4,5,26,30,28, 8,21,13,23,14,15,29, 17,18,19,20];
   const CLIP_MAP = {
-    1:0,2:0,3:0,4:0,5:0,26:0,28:0,
+    1:0,2:0,3:0,4:0,5:0,26:0,30:0,28:0,
     8:1,21:1,13:1,23:1,14:1,15:1,29:1,
     17:2,18:2,19:2,20:2
   };
