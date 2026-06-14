@@ -21,7 +21,7 @@ status: ✅ 대본완성
 ```bash
 # 매주 월요일 오전 9시
 openclaw cron add \
-  --schedule "0 9 * * 1" \
+  --cron "0 9 * * 1" \
   --message "~/Projects/openclaw-pipeline-kit/runs/latest/input/ 에 있는 CSV 파일로 /run-pipeline 을 실행하세요. 완료 후 생성된 파일 목록을 알려주세요." \
   --agent main
 
@@ -52,7 +52,7 @@ openclaw cron list
 
 로그 확인:
 ```bash
-openclaw logs --agent main --follow
+openclaw logs --follow
 ```
 
 ---
@@ -122,7 +122,7 @@ AGENTS.md 파일에 각자 역할이 정의돼 있어요. Echo가 이 파일을 
 
 `--every`는 간단한 주기예요. `1d`면 매일, `2h`면 2시간마다예요.
 
-`--schedule`은 cron 표현식이에요. `0 9 * * 1`이면 매주 월요일 오전 9시예요. 시간을 정확하게 지정하고 싶을 때 써요.
+`--cron`은 cron 표현식이에요. `0 9 * * 1`이면 매주 월요일 오전 9시예요. 시간을 정확하게 지정하고 싶을 때 써요.
 
 크론이 에이전트에게 보내는 건 `message` 필드예요. 사람이 직접 보내는 것과 완전히 같은 형식이에요.
 
@@ -172,7 +172,7 @@ openclaw-pipeline-kit을 OpenClaw 크론에 연결하는 거예요.
 
 실제로 어떻게 돌아가는지 흐름을 정리할게요.
 
-에이전트가 세 명이에요. Echo가 팀장이고 Min이랑 Evan이 서브 에이전트로 협업해요.
+에이전트가 다섯 명이에요. Echo가 팀장이고 Aria, Sam, Min, Evan이 순서대로 파이프라인 스테이지를 담당해요.
 
 CSV 파일을 `runs/latest/input/` 폴더에 넣어요. 어떤 CSV든 상관없어요.
 
