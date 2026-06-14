@@ -613,6 +613,55 @@
 </div>
 
 
+<!-- ════ s25 | 디자인 토큰 ════ -->
+<div class="slide" id="s25">
+  <div class="tb"><span class="tb-cap">디자인 토큰 — 일관성의 비밀</span><span class="tb-num">25</span></div>
+  <div class="body" style="padding:0;gap:0;">
+
+    <!-- Left: Without tokens -->
+    <div style="flex:1;border-right:1px solid var(--border);padding:32px 36px;display:flex;flex-direction:column;gap:16px;background:rgba(239,125,134,0.025);">
+      <div style="flex-shrink:0;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(196,100,90,0.7);font-family:monospace;margin-bottom:5px;">토큰 없이 작업할 때</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;">AI가 매번 다시 추측</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;flex:1;">
+        <div style="background:#F4F3F1;border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.8;color:#444;">
+          <span style="color:#E8603C;font-weight:600;">"엣지 색 바꿔줘"</span><br>
+          → ally 엣지: <code style="font-size:12px;">#00c8ff</code><br>
+          → 다음 수정: <code style="font-size:12px;">#22AAFF</code><br>
+          → 그 다음: <code style="font-size:12px;">rgba(0,200,255,0.8)</code>
+        </div>
+        <div style="padding:12px 16px;background:rgba(196,100,90,0.06);border:1px solid rgba(196,100,90,0.18);border-radius:8px;font-size:13px;color:#555;line-height:1.65;">
+          수정할 때마다 색이 조금씩 달라짐<br>대화가 길어질수록 이전 결정을 잊음
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: With tokens -->
+    <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;gap:16px;background:rgba(42,157,143,0.025);">
+      <div style="flex-shrink:0;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(42,157,143,0.8);font-family:monospace;margin-bottom:5px;">디자인 토큰 먼저 정의하면</div>
+        <div style="font-size:20px;font-weight:700;color:#1C1A18;">AI가 정답지를 읽고 작업</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;flex:1;">
+        <div style="background:#F4F3F1;border-radius:8px;padding:14px 16px;font-family:monospace;font-size:12.5px;line-height:1.9;color:#333;">
+          <span style="color:#999;font-size:11px;">/* 프롬프트에 한 번만 정의 */</span><br>
+          --c-ally:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:#00c8ff;font-weight:600;">#00c8ff</span><br>
+          --c-enemy:&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:#ff2020;font-weight:600;">#ff2020</span><br>
+          --c-romantic:&nbsp; <span style="color:#c040ff;font-weight:600;">#c040ff</span><br>
+          --c-family:&nbsp;&nbsp;&nbsp; <span style="color:#c0c8d0;font-weight:600;">#c0c8d0</span><br>
+          --node-size:&nbsp;&nbsp; <span style="color:#2A9D8F;font-weight:600;">0.038vh</span>
+        </div>
+        <div style="padding:12px 16px;background:rgba(42,157,143,0.07);border:1px solid rgba(42,157,143,0.22);border-radius:8px;font-size:13px;color:#555;line-height:1.65;">
+          "ally 색 바꿔줘" → <code style="font-size:12px;">--c-ally</code> 하나만 수정<br>모든 엣지에 즉시 반영 — 놓치는 곳 없음
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 <!-- ════ s12 | 어벤져스 네트워크 제작 흐름 ════ -->
 <div class="slide" id="s12">
   <div class="tb"><span class="tb-cap">어벤져스 네트워크 — 기획에서 완성까지</span><span class="tb-num">12</span></div>
@@ -1222,8 +1271,8 @@ arc-dest:   rgba(255, 100, 100, 0.7)</div>
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const TOTAL = 24;
-  const ORDER = [1,2,3,4,5,22,23,11,6,7,8,9,10,12,13,14,15,16,17,18,19,24,20,21];
+  const TOTAL = 25;
+  const ORDER = [1,2,3,4,5,22,23,11,25,6,7,8,9,10,12,13,14,15,16,17,18,19,24,20,21];
   const CLIP_MAP = {
     1:0, 2:0,
     3:0, 4:0, 5:0, 22:0, 23:0, 6:0, 7:0,
