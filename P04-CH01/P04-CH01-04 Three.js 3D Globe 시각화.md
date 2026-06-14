@@ -243,8 +243,9 @@ SphereGeometry(1, 64, 64), WebGLRenderer, PerspectiveCamera.
 
 ```
 unhcr_data.csv 로드해서 아크 추가해줘.
-Origin ISO → Asylum ISO 방향으로 CatmullRomCurve3 곡선 아크.
-Refugees 컬럼 값에 비례해서 아크 굵기 조정.
+Origin ISO → Asylum ISO 방향으로 CubicBezierCurve3 곡선 아크.
+높이: dist * 0.0065 비례 동적 계산. Refugees 컬럼 값에 비례해서 아크 굵기 조정.
+출발 빨강(0xff3333) → 도착 시안(0x00E5FF) 그라디언트.
 ```
 
 > 결과 확인: 지구 위에 아크 그려지는지 확인
