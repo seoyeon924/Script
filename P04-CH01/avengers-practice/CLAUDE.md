@@ -1,8 +1,9 @@
 # Avengers Network Graph 실습
 
 데이터 파일: `avengers_network_data.csv` (80행)
-컬럼: Source, Target, Strength, Type, Source_Group, Source_Importance, Target_Group, Target_Importance
-※ Source/Target 값은 코드에서 snake_case ID로 변환 — `"Iron Man"` → `"iron_man"` (toLowerCase + 공백→언더스코어)
+컬럼: Source, Target, Strength, Type, Source_Group, Source_Importance, Target_Group, Target_Importance, **Source_Image**, Target_Image
+※ Source_Image / Target_Image 컬럼에 위키피디아·wikia 얼굴 이미지 URL 포함 (39개 캐릭터 전체)
+※ Source/Target 값은 이미 snake_case ID — `thor`, `iron_man`, `star_lord` 형태로 저장됨
 완성 예시: https://avengers-network.netlify.app
 
 > ⚠️ **반드시 로컬 서버로 실행** — `file://`로 열면 CSV 로딩이 차단되어 데이터가 표시되지 않음
@@ -82,48 +83,8 @@ index.html 하나로. W=window.innerWidth, H=window.innerHeight.
 ```
 얼굴 이미지 및 클릭 스핀 인터랙션 추가.
 
-faceImages 객체 (key = Step 1의 snake_case ID):
-const faceImages = {
-  "thanos":           "https://www.fxguide.com/wp-content/uploads/2019/05/thanos3.jpg",
-  "gamora":           "https://upload.wikimedia.org/wikipedia/en/5/54/Zoe_Saldana_as_Gamora.jpeg",
-  "iron_man":         "https://upload.wikimedia.org/wikipedia/en/4/47/Robert_Downey_Jr_as_Tony_Stark.jpg",
-  "thor":             "https://upload.wikimedia.org/wikipedia/en/3/3c/Chris_Hemsworth_as_Thor.jpg",
-  "doctor_strange":   "https://upload.wikimedia.org/wikipedia/en/1/18/Benedict_Cumberbatch_as_Doctor_Strange.jpeg",
-  "star_lord":        "https://upload.wikimedia.org/wikipedia/en/b/b2/Chris_Pratt_as_Peter_Quill.jpeg",
-  "vision":           "https://upload.wikimedia.org/wikipedia/en/f/fc/Paul_Bettany_as_Vision.jpg",
-  "scarlet_witch":    "https://upload.wikimedia.org/wikipedia/en/d/d9/Elizabeth_Olsen_as_Wanda_Maximoff.jpg",
-  "hulk":             "https://upload.wikimedia.org/wikipedia/en/7/7b/Mark_Ruffalo_as_Bruce_Banner.jpg",
-  "spider_man":       "https://upload.wikimedia.org/wikipedia/en/0/0f/Tom_Holland_as_Spider-Man.jpg",
-  "captain_america":  "https://upload.wikimedia.org/wikipedia/en/6/6b/Chris_Evans_as_Steve_Rogers_Captain_America.jpg",
-  "rocket":           "https://upload.wikimedia.org/wikipedia/en/f/fc/Rocket_Raccoon_singing_in_a_spaceship%2C_from_Guardians_of_the_Galaxy_Vol_3%2C_2023.png",
-  "black_widow":      "https://upload.wikimedia.org/wikipedia/en/f/f6/Scarlett_Johansson_as_Black_Widow.jpg",
-  "drax":             "https://upload.wikimedia.org/wikipedia/en/3/3d/Dave_Bautista_as_Drax.jpg",
-  "mantis":           "https://static.wikia.nocookie.net/heroes-and-villain/images/d/d5/Profile_-_Mantis.png/revision/latest?cb=20200422010329",
-  "ebony_maw":        "https://upload.wikimedia.org/wikipedia/en/9/9d/Ebony_Maw.jpg",
-  "proxima_midnight": "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/7e/Proxima_Midnight_Infobox.jpg/revision/latest?cb=20210525191820",
-  "cull_obsidian":    "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/f/f5/Cull_Obsidian.JPG/revision/latest?cb=20210525191742",
-  "corvus_glaive":    "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/0/0f/Corvus_Glaive_Infobox.png/revision/latest?cb=20180604193419",
-  "black_panther":    "https://upload.wikimedia.org/wikipedia/en/1/1a/Chadwick_Boseman_as_T%27Challa.jpg",
-  "groot":            "https://static.wikia.nocookie.net/marvelmovies/images/4/4c/GOTG_Groot_Poster.jpg/revision/latest?cb=20160512212218",
-  "nebula":           "https://upload.wikimedia.org/wikipedia/en/0/0c/Karen_Gillan_as_Nebula.png",
-  "okoye":            "https://static.wikia.nocookie.net/disney/images/6/6f/Okoye_-_Profile.png/revision/latest?cb=20230224222454",
-  "loki":             "https://static0.srcdn.com/wordpress/wp-content/uploads/2022/06/Tom-Hiddleston-as-Loki.jpg",
-  "war_machine":      "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/77/WarMachine-EndgameProfile.jpg/revision/latest?cb=20231025163822",
-  "eitri":            "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/ac/Eitri.png/revision/latest?cb=20220205165648",
-  "wong":             "https://upload.wikimedia.org/wikipedia/en/d/d7/Benedict_Wong_as_Wong.jpg",
-  "falcon":           "https://static.wikia.nocookie.net/ultimatepopculture/images/d/d6/Falcon_MCU.png/revision/latest?cb=20201230161754",
-  "winter_soldier":   "https://upload.wikimedia.org/wikipedia/en/4/4b/Sebastian_Stan_as_Bucky_Barnes.jpg",
-  "pepper_potts":     "https://upload.wikimedia.org/wikipedia/en/9/92/Gwyneth_Paltrow_as_Pepper_Potts.jpg",
-  "red_skull":        "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/6/6d/Red_Skull_Infobox.png/revision/latest?cb=20190808103105",
-  "shuri":            "https://upload.wikimedia.org/wikipedia/en/5/5b/Letitia_Wright_as_Shuri_in_Black_Panther_Wakanda_Forever_poster.jpg",
-  "mbaku":            "https://static.wikia.nocookie.net/heroes-and-villain/images/5/59/MCU_Man-Ape.jpg/revision/latest?cb=20181127195837",
-  "thaddeus_ross":    "https://static.wikia.nocookie.net/characters-in-fiction/images/f/f2/Thaddeus_Ross_%28Earth-199999%29_from_Captain_America-_Civil_War_001.jpg/revision/latest?cb=20200414221123",
-  "nick_fury":        "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/e4/Nick_Fury_Profile.png/revision/latest?cb=20240802141551",
-  "maria_hill":       "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/f/f4/Maria_Hill_Infobox.jpg/revision/latest?cb=20250203210426",
-  "heimdall":         "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/ea/Heimdall_Infobox.jpg/revision/latest?cb=20250203022212",
-  "collector":        "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/df/CollectorGotgTextlessPoster.jpg/revision/latest?cb=20231022154628",
-  "ned_leeds":        "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/e8/Ned_Leeds_Infobox.jpg/revision/latest?cb=20211217044601"
-};
+얼굴 이미지 데이터: avengers_network_data.csv의 Source_Image 컬럼에서 로드.
+CSV 로드 후 각 노드 ID(Source 컬럼)를 key로, Source_Image URL을 value로 faceImages 객체 구성.
 const facePositions = { "spider_man": "top center", "star_lord": "top center" };
 
 노드에 얼굴 이미지 적용:

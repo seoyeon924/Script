@@ -750,6 +750,62 @@
 </div>
 
 
+<!-- ════ s27 | 데이터 수집 방법 ════ -->
+<div class="slide" id="s27">
+  <div class="tb"><span class="tb-cap">데이터 수집 — 어떻게 만들었나</span><span class="tb-num">27</span></div>
+  <div class="body" style="flex-direction:row;">
+
+    <!-- Left: title + kit file info -->
+    <div style="width:42%;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;padding:40px 36px;gap:20px;justify-content:center;">
+      <div>
+        <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:10px;">데이터 수집 과정</div>
+        <div style="font-size:32px;font-weight:700;color:#1C1A18;line-height:1.2;letter-spacing:-0.03em;">직접 수집했어요<br><span style="color:#E8603C;">실습엔 키트 파일 사용</span></div>
+      </div>
+      <div style="font-size:14px;color:#666;line-height:1.8;">강의에서 보여주는 프롬프트로<br>직접 수집하면 똑같이 만들 수 있어요.<br>실습에서는 아래 파일 그대로 씁니다.</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;background:#FAFAF8;">
+        <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#AAA;margin-bottom:8px;">실습 키트 포함 파일</div>
+        <div style="font-family:monospace;font-size:14px;color:#E8603C;font-weight:600;margin-bottom:8px;">avengers_network_data.csv</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">
+          <span style="font-size:11.5px;font-family:monospace;background:#F0EEF0;padding:2px 8px;border-radius:3px;color:#555;">Source</span>
+          <span style="font-size:11.5px;font-family:monospace;background:#F0EEF0;padding:2px 8px;border-radius:3px;color:#555;">Target</span>
+          <span style="font-size:11.5px;font-family:monospace;background:#F0EEF0;padding:2px 8px;border-radius:3px;color:#555;">Strength</span>
+          <span style="font-size:11.5px;font-family:monospace;background:#F0EEF0;padding:2px 8px;border-radius:3px;color:#555;">Type</span>
+          <span style="font-size:11.5px;font-family:monospace;background:#F0EEF0;padding:2px 8px;border-radius:3px;color:#555;">Source_Group</span>
+          <span style="font-size:11.5px;font-family:monospace;background:#F0EEF0;padding:2px 8px;border-radius:3px;color:#555;">Source_Importance</span>
+          <span style="font-size:11.5px;font-family:monospace;background:rgba(232,96,60,0.08);padding:2px 8px;border-radius:3px;color:#E8603C;font-weight:600;">Source_Image ★</span>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:#888;">80개 관계 · 39개 캐릭터 얼굴 이미지 URL 포함</div>
+      </div>
+    </div>
+
+    <!-- Right: actual prompts used -->
+    <div style="flex:1;display:flex;flex-direction:column;padding:28px 32px;gap:16px;justify-content:center;">
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:20px 24px;display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px;">
+          <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#E8603C;">관계성 데이터</span>
+          <span style="font-size:11px;color:#BBB;">— Firecrawl</span>
+        </div>
+        <div style="font-size:13px;font-family:monospace;background:#F4F3F1;padding:14px 18px;border-radius:6px;color:#333;line-height:1.85;">어벤져스 인피니티워 캐릭터 관계 데이터를<br>Firecrawl로 수집해줘.<br>Source, Target, Strength(1~10),<br>Type(ally/enemy/romantic/family),<br>Source_Group, Source_Importance 컬럼 CSV로.</div>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:20px 24px;display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px;">
+          <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#E8603C;">얼굴 이미지 URL</span>
+          <span style="font-size:11px;color:#BBB;">— 위키피디아</span>
+        </div>
+        <div style="font-size:13px;font-family:monospace;background:#F4F3F1;padding:14px 18px;border-radius:6px;color:#333;line-height:1.85;">위키피디아에서 각 캐릭터 공식 프로필<br>이미지 URL을 수집해줘.<br>Source_Image 컬럼에 추가.<br>(없는 캐릭터는 wikia.nocookie.net 사용)</div>
+      </div>
+
+      <div style="font-size:12.5px;color:#999;line-height:1.7;padding:0 4px;">
+        💡 실습에서 이 과정은 생략 — <span style="color:#1C1A18;font-weight:500;">avengers_network_data.csv</span>에 이미 수집 완료된 데이터가 들어있어요.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 <!-- ════ s12 | 어벤져스 네트워크 제작 흐름 ════ -->
 <div class="slide" id="s12">
   <div class="tb"><span class="tb-cap">어벤져스 네트워크 — 기획에서 완성까지</span><span class="tb-num">12</span></div>
@@ -1359,8 +1415,8 @@ arc-dest:   rgba(255, 100, 100, 0.7)</div>
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const TOTAL = 26;
-  const ORDER = [1,2,3,4,5,22,23,11,25,26,6,7,8,9,10,12,13,14,15,16,17,18,19,24,20,21];
+  const TOTAL = 27;
+  const ORDER = [1,2,3,4,5,22,23,11,25,26,6,7,8,9,10,27,12,13,14,15,16,17,18,19,24,20,21];
   const CLIP_MAP = {
     1:0, 2:0,
     3:0, 4:0, 5:0, 22:0, 23:0, 6:0, 7:0,
