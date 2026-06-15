@@ -29,8 +29,9 @@ D3.js v7으로 어벤져스 캐릭터 네트워크 만들어줘.
 calculateLayout(selId) 함수:
 - padding = Math.min(W,H)*0.16
 - R = (H/2) - padding (landscape 기준)
-- cx = Math.max(W*0.2 + R, padding+R)
+- cx = Math.max(W*0.2 + R, padding+R), cy = H/2
 - 선택 노드를 기준으로 나머지 노드를 상대 인덱스(relIdx)로 배치
+  (relIdx = (nodeIdx - selIdx + N) % N, selIdx는 전역 nodeOrder 배열 기준)
 - angle = Math.PI + relIdx * slotAngle (slotAngle = 2π/N)
 - 선택되지 않은 연결 노드: 반지름 안쪽에 큐빅 베지어 곡선 엣지
 
