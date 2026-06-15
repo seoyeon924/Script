@@ -4,7 +4,7 @@ time: 12분
 part: Part 03
 chapter: CH03
 clip: 01
-slides: s1,s2,s3,s4,s5,s26,s28
+slides: s1,s2,s3,s4,s5,s26,s30,s28
 status: ✅ 대본완성
 ---
 
@@ -21,13 +21,17 @@ status: ✅ 대본완성
 | `runs/latest/input/` 안에 샘플 CSV 파일 준비 | ☐ |
 | `activity-monitor.html` 브라우저 탭 미리 열기 (`python3 -m http.server 9001`) | ☐ |
 | `~/.openclaw/openclaw.json` 에 Echo 에이전트 설정 확인 | ☐ |
+| **파이프라인 1회 미리 실행 → s15용 텔레그램 결과 화면 캡처 저장** | ☐ |
+| **Node.js 18+ 설치 확인 (`node --version`)** | ☐ |
+| **Rust 설치 확인 (`rustc --version`) → CLIP 03 Tauri 빌드 필요** | ☐ |
+| **`manager/PROMPT.md` 파일 존재 확인** | ☐ |
 
 **사전 촬영 권장:** onboard 마법사는 미리 한 번 해두고, 촬영 때는 완료된 상태에서 `openclaw status`로 보여주거나 녹화본으로 대체.
 
 ---
 
 ## 🎬 CLIP 01 촬영 가이드
-**슬라이드 순서:** s1 → s2 → s3 → s4 → s5 → s26 → s28
+**슬라이드 순서:** s1 → s2 → s3 → s4 → s5 → s26 → s30 → s28
 
 #### s1~s4 — 슬라이드만
 
@@ -62,6 +66,13 @@ openclaw onboard
 ? Channels:   ◉ Telegram
 ? Bot token:  [Echo 봇 토큰]  ← BotFather에서 복사한 것
 ? DM policy:  pairing → Enter
+```
+
+---
+
+#### s30 — Daemon 선택 + 완료 확인 `[데모 — 터미널]`
+
+```
 ? Daemon:     ❯ Node
 ```
 
@@ -70,6 +81,8 @@ openclaw onboard
 openclaw status
 # agents: active / gateway: running on :18789
 ```
+
+텔레그램 Echo 봇에 "안녕" 전송 → 답장 오면 연결 완료.
 
 ---
 
@@ -145,6 +158,22 @@ API 키랑 봇 토큰은 AI 채팅창에 절대 넣으면 안 돼요. Anthropic 
 **Daemon** — Node 선택.
 
 텔레그램 봇은 Echo 하나만 만들면 돼요. 나머지 서브 에이전트는 Echo가 내부적으로 호출해요.
+
+---
+
+## s30 — Daemon 선택 & 연결 완료
+
+**[화면: 터미널]**
+
+마지막 단계예요. Daemon은 Node 선택하면 돼요.
+
+완료되면 `openclaw status`로 확인해요. gateway running이랑 agent Echo active가 뜨면 됩니다.
+
+텔레그램 Echo 봇에 "안녕"이라고 보내보세요. 에이전트가 답장하면 연결이 완료된 거예요.
+
+텔레그램 봇은 Echo 하나만 만들면 돼요. 서브 에이전트 Min이랑 Evan은 별도 봇 없이 Echo가 내부적으로 호출해요.
+
+다음 슬라이드에서는 수강생 셋업 전체 흐름을 정리할게요.
 
 ---
 
