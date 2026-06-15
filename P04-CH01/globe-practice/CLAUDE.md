@@ -60,7 +60,8 @@ GLSL 파티클 셰이더로 별 추가. 지구 대기 glow 레이어 추가.
 2. 상단에 국가명 검색 필터 UI 추가.
    input#countrySearch (placeholder: "Search country...") + div#searchDropdown.
    데이터 로드 완료 후 flowsByOrigin에서 상위 30개 출발국을 countryList 배열로 구성.
-   국가명은 COUNTRY_COORDS 객체에서 ISO3 코드로 lookup (없으면 ISO 코드 그대로 표시).
+   국가명: CSV의 "Country of Origin ISO" → "Country of Origin" 매핑으로 isoToName 객체 생성.
+   isoToName[iso] 값으로 국가명 lookup (없으면 ISO 코드 그대로 표시).
    
    setupCountrySearch():
    - input focus/input 이벤트 → showSearchResults(query) 호출

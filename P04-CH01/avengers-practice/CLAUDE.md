@@ -20,8 +20,6 @@
 D3.js v7으로 어벤져스 캐릭터 네트워크 만들어줘.
 데이터: avengers_network_data.csv
 
-노드 ID: Source/Target 컬럼 값을 toLowerCase() + 공백→언더스코어로 변환. 예: "Iron Man" → "iron_man"
-
 레이아웃: Force Simulation 사용하지 말 것.
 모든 노드를 원 위에 고정 배치 (fixed circular layout).
 그룹 정렬 순서: Avengers → Guardians → Asgardians → Wakanda → Mystic Arts → Black Order → Villain → Supporting
