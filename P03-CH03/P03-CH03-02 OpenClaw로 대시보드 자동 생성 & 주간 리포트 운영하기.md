@@ -172,7 +172,7 @@ openclaw-pipeline-kit을 OpenClaw 크론에 연결하는 거예요.
 
 실제로 어떻게 돌아가는지 흐름을 정리할게요.
 
-에이전트가 다섯 명이에요. Echo가 팀장이고 Aria, Sam, Min, Evan이 순서대로 파이프라인 스테이지를 담당해요.
+Echo가 팀장이에요. Echo가 파이프라인 명령을 받으면 내부적으로 각 스테이지를 순서대로 실행해요.
 
 CSV 파일을 `runs/latest/input/` 폴더에 넣어요. 어떤 CSV든 상관없어요.
 

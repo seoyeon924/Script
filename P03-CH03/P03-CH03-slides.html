@@ -100,7 +100,7 @@
 
 <!-- ════ s1 | 챕터 표지 ════ -->
 <div class="slide active" id="s1">
-  <div class="body" style="flex-direction:column;padding:64px 80px 72px;">
+  <div class="body" style="flex-direction:column;justify-content:center;padding:64px 80px 72px;">
     <div>
       <div style="font-size:16px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(0,0,0,0.55);margin-bottom:20px;font-family:'Poppins',sans-serif;">P03 · CH03 · OpenClaw 업무 자동화</div>
       <div style="font-size:50px;font-weight:600;color:#1C1A18;line-height:1.25;letter-spacing:-0.02em;font-family:'Poppins',sans-serif;">OpenClaw<br>업무 자동화</div>
@@ -193,7 +193,7 @@
           <div style="font-size:13px;font-weight:700;color:#818cf8;letter-spacing:0.08em;width:72px;">에이전트</div>
           <div style="font-size:17px;color:#333;">독립 컨텍스트 · 역할 분리</div>
         </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid var(--border);border-radius:6px;">
+        <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid var(--border);border-radius:6px;background:rgba(106,172,152,0.05);">
           <div style="font-size:13px;font-weight:700;color:#e8c87a;letter-spacing:0.08em;width:72px;">크론</div>
           <div style="font-size:17px;color:#333;">시간 기반 자동 실행</div>
         </div>
@@ -276,7 +276,7 @@
         <div style="font-size:15px;color:#333;line-height:1.8;">에이전트·채널·클라이언트를 하나로 연결하는 <strong>중앙 라우팅 서비스</strong>. 항상 켜져 있어야 크론·텔레그램이 작동함.</div>
       </div>
       <!-- Agent 설명 -->
-      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;gap:8px;">
+      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;gap:8px;background:rgba(106,172,152,0.05);">
         <div style="display:flex;align-items:center;gap:8px;">
           <span style="font-size:18px;line-height:1;">🦞</span>
           <div style="font-size:12px;color:#818cf8;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Agent — Echo (main)</div>
@@ -325,28 +325,28 @@
       <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#999;margin-bottom:2px;">단계 요약</div>
 
       <div style="border:1px solid var(--border);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;">
-        <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:3px;">STEP 0 — Mode</div>
-        <div style="font-size:14px;color:#333;"><code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">QuickStart</code> 선택</div>
+        <div style="font-size:13px;color:#6aac98;font-weight:700;margin-bottom:3px;">STEP 0 — Mode</div>
+        <div style="font-size:16px;color:#333;"><code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">QuickStart</code> 선택</div>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.05);">
+        <div style="font-size:13px;color:#6aac98;font-weight:700;margin-bottom:3px;">STEP 1 — Auth</div>
+        <div style="font-size:16px;color:#333;"><code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">Anthropic API key</code> → 키 붙여넣기</div>
       </div>
 
       <div style="border:1px solid var(--border);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;">
-        <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:3px;">STEP 1 — Auth</div>
-        <div style="font-size:14px;color:#333;"><code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">Anthropic API key</code> → 키 붙여넣기</div>
-      </div>
-
-      <div style="border:1px solid var(--border);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;">
-        <div style="font-size:11px;color:#999;font-weight:700;margin-bottom:3px;">STEP 2, 3 — Workspace / Gateway</div>
-        <div style="font-size:14px;color:#333;">전부 Enter — 기본값 그대로</div>
+        <div style="font-size:13px;color:#999;font-weight:700;margin-bottom:3px;">STEP 2, 3 — Workspace / Gateway</div>
+        <div style="font-size:16px;color:#333;">전부 Enter — 기본값 그대로</div>
       </div>
 
       <div style="border:2px solid rgba(232,96,60,0.35);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(232,96,60,0.03);">
-        <div style="font-size:11px;color:#e8603c;font-weight:700;margin-bottom:3px;">STEP 4 — Channels ← 중요</div>
-        <div style="font-size:14px;color:#333;line-height:1.6;">Telegram 체크 → <strong>Echo 봇 토큰</strong> 붙여넣기<br><code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:12px;">pairing</code> 그대로 Enter</div>
+        <div style="font-size:13px;color:#e8603c;font-weight:700;margin-bottom:3px;">STEP 4 — Channels ← 중요</div>
+        <div style="font-size:16px;color:#333;line-height:1.6;">Telegram 체크 → <strong>Echo 봇 토큰</strong> 붙여넣기<br><code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:12px;">pairing</code> 그대로 Enter</div>
       </div>
 
       <div style="border:1px solid rgba(232,96,60,0.25);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(232,96,60,0.02);">
-        <div style="font-size:11px;color:#e8603c;font-weight:700;margin-bottom:3px;">보안 — 절대 금지</div>
-        <div style="font-size:13px;color:#333;line-height:1.65;">API 키·봇 토큰을 AI 채팅창에 붙여넣기 금지<br><span style="color:#888;font-size:12px;">Anthropic 서버로 전송됨 · 터미널 마법사에서만 입력</span></div>
+        <div style="font-size:13px;color:#e8603c;font-weight:700;margin-bottom:3px;">보안 — 절대 금지</div>
+        <div style="font-size:15px;color:#333;line-height:1.65;">API 키·봇 토큰을 AI 채팅창에 붙여넣기 금지<br><span style="color:#888;font-size:13px;">Anthropic 서버로 전송됨 · 터미널 마법사에서만 입력</span></div>
       </div>
     </div>
   </div>
@@ -377,16 +377,16 @@
     <div style="flex:1;padding:22px 28px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
       <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#999;margin-bottom:2px;">연결 완료 후 구조</div>
       <div style="border:1px solid var(--border);border-radius:8px;padding:15px 18px;width:100%;box-sizing:border-box;">
-        <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:6px;">~/.openclaw/</div>
+        <div style="font-size:13px;color:#6aac98;font-weight:700;margin-bottom:6px;">~/.openclaw/</div>
         <div style="font-family:monospace;font-size:13px;color:#555;line-height:2.1;">openclaw.json &nbsp; ← 전체 설정<br>agents/main/ &nbsp;&nbsp; ← Echo 메모리<br>workspace/ &nbsp;&nbsp;&nbsp;&nbsp; ← AGENTS.md</div>
       </div>
       <div style="border:2px solid rgba(106,172,152,0.4);border-radius:8px;padding:15px 18px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.03);">
-        <div style="font-size:11px;color:#6aac98;font-weight:700;margin-bottom:6px;">텔레그램 봇은 Echo 하나만</div>
-        <div style="font-size:14px;color:#333;line-height:1.7;">서브 에이전트(Min·Evan)는<br>별도 봇 없이 Echo가 내부 호출</div>
+        <div style="font-size:13px;color:#6aac98;font-weight:700;margin-bottom:6px;">텔레그램 봇은 Echo 하나만</div>
+        <div style="font-size:16px;color:#333;line-height:1.7;">서브 에이전트(Min·Evan)는<br>별도 봇 없이 Echo가 내부 호출</div>
       </div>
       <div style="border:1px solid var(--border);border-radius:8px;padding:15px 18px;width:100%;box-sizing:border-box;">
-        <div style="font-size:11px;color:#999;font-weight:700;margin-bottom:6px;">다음 단계</div>
-        <div style="font-size:14px;color:#333;line-height:1.7;">파이프라인 실행 + 크론 자동화<br><span style="color:#6aac98;font-family:monospace;font-size:13px;">openclaw cron add</span></div>
+        <div style="font-size:13px;color:#999;font-weight:700;margin-bottom:6px;">다음 단계</div>
+        <div style="font-size:16px;color:#333;line-height:1.7;">파이프라인 실행 + 크론 자동화<br><span style="color:#6aac98;font-family:monospace;font-size:13px;">openclaw cron add</span></div>
       </div>
     </div>
   </div>
@@ -431,7 +431,7 @@
         <div style="margin-top:8px;font-size:13px;color:#888;">다운로드: <span style="font-family:monospace;color:#555;">github.com/openai/codex</span></div>
       </div>
 
-      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;">
+      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.05);">
         <div style="font-size:12px;color:#6aac98;font-weight:600;margin-bottom:8px;">STEP 2 — OpenAI API 키 발급</div>
         <div style="font-size:15px;color:#333;line-height:1.65;">
           <span style="font-family:monospace;color:#555;">platform.openai.com</span> → API Keys → Create<br>
@@ -571,7 +571,7 @@
 <!-- ════ s8 | 에이전트 3종 구조 ════ -->
 <div class="slide" id="s8">
   <div class="tb"><span class="tb-cap">내 에이전트 구성 예시 — Echo · Min · Evan</span><span class="tb-num">8</span></div>
-  <div class="body" style="flex-direction:column;">
+  <div class="body" style="flex-direction:column;justify-content:center;">
     <div style="padding:14px 40px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
       <span style="font-size:14px;color:#555;line-height:1.6;">에이전트 수는 정해진 게 없음. 역할별로 나눈 내 예시 기준 — 1개로 시작해도 충분.</span>
       <span style="font-size:11px;font-family:monospace;color:#6aac98;white-space:nowrap;margin-left:20px;">내 예시 기준</span>
@@ -685,7 +685,7 @@
 <!-- ════ s10 | 치트시트 Clip 02 ════ -->
 <div class="slide" id="s10">
   <div class="tb"><span class="tb-cap">에이전트 만들기 — 실제 순서</span><span class="tb-num">10</span></div>
-  <div class="body" style="flex-direction:column;padding:36px 64px;gap:20px;">
+  <div class="body" style="flex-direction:column;justify-content:center;padding:36px 64px;gap:20px;">
     <div style="display:flex;gap:0;flex:1;align-items:stretch;">
       <div style="flex:1;padding:28px 32px;border:1px solid var(--border);border-radius:6px 0 0 6px;display:flex;flex-direction:column;gap:12px;position:relative;">
         <div style="font-size:10px;font-weight:700;color:#888;letter-spacing:0.12em;text-transform:uppercase;background:#f5f5f5;padding:3px 8px;border-radius:3px;align-self:flex-start;">처음 한 번만</div>
@@ -808,7 +808,7 @@
           </div>
           <div style="font-size:12px;font-family:monospace;color:#6aac98;">cron Mon</div>
         </div>
-        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--border);border-radius:6px;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--border);border-radius:6px;background:rgba(106,172,152,0.05);">
           <span class="agent-badge badge-echo" style="font-size:11px;">Echo</span>
           <div style="flex:1;">
             <div style="font-size:15px;font-weight:600;color:#1C1A18;font-family:monospace;">daily-data-summary</div>
@@ -824,7 +824,7 @@
           </div>
           <div style="font-size:12px;font-family:monospace;color:#6aac98;">every 4h</div>
         </div>
-        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--border);border-radius:6px;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--border);border-radius:6px;background:rgba(106,172,152,0.05);">
           <span class="agent-badge badge-min" style="font-size:11px;">Min</span>
           <div style="flex:1;">
             <div style="font-size:15px;font-weight:600;color:#1C1A18;font-family:monospace;">data-feed-update</div>
@@ -861,7 +861,7 @@
           <div style="width:28px;height:28px;border-radius:50%;background:#E8603C;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0;">1</div>
           <div style="font-size:17px;color:#333;">크론 스케줄 도달 → OpenClaw가 Echo(main) 깨움</div>
         </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;border:1px solid var(--border);border-radius:6px;">
+        <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;border:1px solid var(--border);border-radius:6px;background:rgba(106,172,152,0.05);">
           <div style="width:28px;height:28px;border-radius:50%;background:#E8603C;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0;">2</div>
           <div style="font-size:17px;color:#333;">Echo가 프롬프트 수신 → <span style="font-family:monospace;color:#6aac98;">/run-pipeline</span> 실행</div>
         </div>
@@ -869,7 +869,7 @@
           <div style="width:28px;height:28px;border-radius:50%;background:#E8603C;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0;">3</div>
           <div style="font-size:17px;color:#333;">7단계 파이프라인 자동 실행 → 대시보드 + 보고서 생성</div>
         </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;border:1px solid var(--border);border-radius:6px;">
+        <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;border:1px solid var(--border);border-radius:6px;background:rgba(106,172,152,0.05);">
           <div style="width:28px;height:28px;border-radius:50%;background:#E8603C;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0;">4</div>
           <div style="font-size:17px;color:#333;">완료 후 결과물 목록 Telegram으로 자동 전송</div>
         </div>
@@ -906,7 +906,7 @@
           <div style="font-size:22px;color:#6aac98;font-weight:700;flex-shrink:0;">①</div>
           <div style="font-size:16px;color:#333;line-height:1.65;">크론 시간 되면 OpenClaw가 에이전트를 깨워서 메시지 전달</div>
         </div>
-        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
+        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;background:rgba(106,172,152,0.05);">
           <div style="font-size:22px;color:#6aac98;font-weight:700;flex-shrink:0;">②</div>
           <div style="font-size:16px;color:#333;line-height:1.65;">에이전트가 작업 완료하면 텔레그램으로 결과 자동 전송</div>
         </div>
@@ -990,7 +990,7 @@
 <!-- ════ s29 | 파이프라인 실전 실행 — CSV → 텔레그램 → 결과 ════ -->
 <div class="slide" id="s29">
   <div class="tb"><span class="tb-cap">실전 실행 — CSV 넣고 텔레그램으로 시작하기</span><span class="tb-num">29</span></div>
-  <div class="body" style="flex-direction:column;padding:32px 56px;gap:20px;align-items:stretch;">
+  <div class="body" style="flex-direction:column;justify-content:center;padding:32px 56px;gap:20px;align-items:stretch;">
 
     <!-- 5명 에이전트 배지 -->
     <div style="display:flex;align-items:center;gap:8px;justify-content:center;">
@@ -1159,7 +1159,7 @@
           </div>
           <div style="font-size:13px;color:#6aac98;font-family:monospace;">active</div>
         </div>
-        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:14px;">
+        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:14px;background:rgba(106,172,152,0.05);">
           <div style="width:10px;height:10px;border-radius:50%;background:#34d399;flex-shrink:0;"></div>
           <div style="flex:1;">
             <div style="font-size:16px;font-weight:600;">Min</div>
@@ -1205,7 +1205,7 @@
           </div>
           <span class="agent-badge badge-echo" style="font-size:11px;">Echo</span>
         </div>
-        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:12px;">
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:12px;background:rgba(106,172,152,0.05);">
           <div style="width:52px;height:36px;background:#FFF7F0;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#E8603C;">RPT</div>
           <div style="flex:1;">
             <div style="font-size:15px;font-weight:600;">Weekly Report</div>
@@ -1230,7 +1230,7 @@
           <div style="font-size:14px;color:#6aac98;font-weight:600;margin-bottom:6px;">썸네일</div>
           <div style="font-size:17px;color:#333;line-height:1.65;">프로젝트를 한눈에 식별하는 SVG 미니 대시보드 이미지</div>
         </div>
-        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;">
+        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;background:rgba(106,172,152,0.05);">
           <div style="font-size:14px;color:#6aac98;font-weight:600;margin-bottom:6px;">담당 에이전트 태그</div>
           <div style="font-size:17px;color:#333;line-height:1.65;">Echo / Min / Evan 중 누가 이 프로젝트를 관리하는지 표시</div>
         </div>
@@ -1238,7 +1238,7 @@
           <div style="font-size:14px;color:#6aac98;font-weight:600;margin-bottom:6px;">rulePaths — 프로젝트 규칙 파일</div>
           <div style="font-size:17px;color:#333;line-height:1.65;">카드 클릭 시 프로젝트 CLAUDE.md를 패널로 열어 에이전트 규칙 확인</div>
         </div>
-        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;">
+        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;background:rgba(106,172,152,0.05);">
           <div style="font-size:14px;color:#6aac98;font-weight:600;margin-bottom:6px;">상태 — active / building / paused</div>
           <div style="font-size:17px;color:#333;line-height:1.65;">프로젝트 현재 진행 상태를 색상 배지로 표시</div>
         </div>
@@ -1265,7 +1265,7 @@
           <span class="agent-badge badge-echo" style="font-size:10px;">Echo</span>
           <div style="font-size:12px;color:#888;">Mon 9am</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:6px;">
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:6px;background:rgba(106,172,152,0.05);">
           <div style="width:8px;height:8px;border-radius:50%;background:#35c995;flex-shrink:0;"></div>
           <div style="flex:1;font-size:14px;color:#333;font-family:monospace;">daily-data-summary</div>
           <span class="agent-badge badge-echo" style="font-size:10px;">Echo</span>
@@ -1295,7 +1295,7 @@
           </div>
           <div style="font-size:16px;color:#333;">마지막 실행 성공</div>
         </div>
-        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;">
+        <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;background:rgba(106,172,152,0.05);">
           <div style="display:flex;align-items:center;gap:6px;width:100px;flex-shrink:0;">
             <div style="width:8px;height:8px;border-radius:50%;background:#ef7d86;"></div>
             <div style="font-size:13px;color:#ef7d86;font-weight:600;">error</div>
@@ -1490,7 +1490,7 @@
             <div style="font-size:15px;color:#555;line-height:1.6;">에이전트가 어디를 봐야 할지 명확히. 상대경로는 실패 가능성 있음</div>
           </div>
         </div>
-        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;">
+        <div style="padding:16px 20px;border:1px solid var(--border);border-radius:6px;display:flex;gap:14px;align-items:flex-start;background:rgba(106,172,152,0.05);">
           <div style="font-size:24px;flex-shrink:0;line-height:1.1;color:var(--p01);font-weight:700;">②</div>
           <div>
             <div style="font-size:14px;font-weight:600;color:#1C1A18;margin-bottom:4px;">완료 조건을 명시</div>
@@ -1547,7 +1547,7 @@
           <div style="font-size:13px;font-family:monospace;color:#818cf8;flex:1;">sy_echo_agent_bot</div>
           <div style="font-size:11px;color:#666;font-family:monospace;">7812···:AAF···</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:6px;">
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:6px;background:rgba(106,172,152,0.05);">
           <span class="agent-badge badge-min" style="font-size:11px;width:42px;text-align:center;">Min</span>
           <div style="font-size:13px;font-family:monospace;color:#555;">→</div>
           <div style="font-size:13px;font-family:monospace;color:#35c995;flex:1;">sy_min_agent_bot</div>
