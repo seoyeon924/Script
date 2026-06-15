@@ -236,17 +236,35 @@
         <div style="color:#35c995;">✓ agent    Echo     active</div>
       </div>
     </div>
-    <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;gap:20px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">연결 후 생기는 것</div>
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <div style="padding:20px 24px;border:1px solid var(--border);border-radius:6px;">
-          <div style="font-size:13px;color:#6aac98;font-weight:600;margin-bottom:8px;">~/.openclaw/ 폴더</div>
-          <div style="font-family:monospace;font-size:14px;color:#555;line-height:2.1;">openclaw.json &nbsp;&nbsp; ← 전체 설정<br>agents/main/ &nbsp;&nbsp;&nbsp; ← Echo 메모리<br>workspace/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ← AGENTS.md</div>
+    <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;gap:14px;">
+      <!-- 로고 헤더 -->
+      <div style="display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--border);">
+        <img src="assets/openclaw-logo.jpg" style="width:42px;height:42px;border-radius:8px;object-fit:cover;flex-shrink:0;">
+        <div>
+          <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">docs.openclaw.ai</div>
+          <div style="font-size:16px;font-weight:600;color:#1C1A18;">Gateway · Agent란?</div>
         </div>
-        <div style="padding:20px 24px;border:1px solid #e8c87a;border-radius:6px;background:rgba(232,200,122,0.04);">
-          <div style="font-size:13px;color:#c8a048;font-weight:600;margin-bottom:8px;">Claude API 키 필요</div>
-          <div style="font-size:17px;color:#333;line-height:1.7;">Claude.ai 구독과 별개.<br>Anthropic 콘솔에서 API 키 발급.</div>
+      </div>
+      <!-- Gateway 설명 -->
+      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:18px;line-height:1;">🦞</span>
+          <div style="font-size:12px;color:#6aac98;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Gateway — 포트 18789</div>
         </div>
+        <div style="font-size:15px;color:#333;line-height:1.8;">에이전트·채널·클라이언트를 하나로 연결하는 <strong>중앙 라우팅 서비스</strong>. 항상 켜져 있어야 크론·텔레그램이 작동함.</div>
+      </div>
+      <!-- Agent 설명 -->
+      <div style="padding:18px 22px;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:18px;line-height:1;">🦞</span>
+          <div style="font-size:12px;color:#818cf8;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Agent — Echo (main)</div>
+        </div>
+        <div style="font-size:15px;color:#333;line-height:1.8;">Gateway 안에서 실행되는 AI 프로세스. 자신만의 workspace 폴더 보유. SOUL.md로 성격·역할을 정의함.</div>
+      </div>
+      <!-- API 키 -->
+      <div style="padding:14px 20px;border:1px solid rgba(232,200,122,0.4);border-radius:8px;background:rgba(232,200,122,0.04);">
+        <div style="font-size:13px;color:#c8a048;font-weight:600;margin-bottom:4px;">Claude API 키 필요</div>
+        <div style="font-size:14px;color:#555;line-height:1.7;">Claude.ai 구독과 별개 — Anthropic 콘솔에서 발급</div>
       </div>
     </div>
   </div>
