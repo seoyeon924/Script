@@ -179,55 +179,55 @@
 <div class="slide" id="s4">
   <div class="tb"><span class="tb-cap">OpenClaw — AI 에이전트 플랫폼</span><span class="tb-num">4</span></div>
   <div class="body">
-    <div style="width:42%;border-right:1px solid var(--border);padding:52px 52px;display:flex;flex-direction:column;justify-content:center;gap:28px;">
+    <!-- 좌측 -->
+    <div style="width:42%;border-right:1px solid var(--border);padding:44px 52px;display:flex;flex-direction:column;justify-content:center;gap:26px;">
       <div>
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
-          <div style="width:44px;height:44px;border-radius:8px;background:#35c995;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:white;letter-spacing:-0.02em;">OC</div>
-          <div class="eyebrow" style="margin-bottom:0;">AI 에이전트 플랫폼</div>
+        <!-- 아이콘 + 제목 같이 -->
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+          <img src="assets/openclaw-logo.jpg" style="width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+          <div style="font-size:46px;font-weight:600;line-height:1;letter-spacing:-0.025em;color:var(--text);">OpenClaw</div>
         </div>
-        <div style="font-size:52px;font-weight:600;line-height:1.2;letter-spacing:-0.025em;color:var(--text);">OpenClaw</div>
-        <div style="font-size:22px;color:#555;margin-top:16px;line-height:1.7;">Claude Code 에이전트 관리·스케줄링·모니터링 플랫폼</div>
+        <div style="font-size:20px;color:#555;line-height:1.65;padding-left:2px;">Claude Code 에이전트<br>관리 · 스케줄링 · 모니터링 플랫폼</div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:12px;">
-        <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid var(--border);border-radius:6px;">
-          <div style="font-size:13px;font-weight:700;color:#818cf8;letter-spacing:0.08em;width:72px;">에이전트</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid var(--border);border-radius:6px;background:#fff;">
+          <div style="font-size:13px;font-weight:700;color:#818cf8;letter-spacing:0.08em;width:64px;">에이전트</div>
           <div style="font-size:17px;color:#333;">독립 컨텍스트 · 역할 분리</div>
         </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid var(--border);border-radius:6px;background:rgba(106,172,152,0.05);">
-          <div style="font-size:13px;font-weight:700;color:#e8c87a;letter-spacing:0.08em;width:72px;">크론</div>
+        <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid var(--border);border-radius:6px;background:#fff;">
+          <div style="font-size:13px;font-weight:700;color:#e8c87a;letter-spacing:0.08em;width:64px;">크론</div>
           <div style="font-size:17px;color:#333;">시간 기반 자동 실행</div>
         </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid var(--border);border-radius:6px;">
-          <div style="font-size:13px;font-weight:700;color:#6aac98;letter-spacing:0.08em;width:72px;">갤러리</div>
+        <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid var(--border);border-radius:6px;background:#fff;">
+          <div style="font-size:13px;font-weight:700;color:#6aac98;letter-spacing:0.08em;width:64px;">갤러리</div>
           <div style="font-size:17px;color:#333;">프로젝트 히스토리 전체 기록</div>
         </div>
       </div>
     </div>
-    <div style="flex:1;padding:40px 44px;display:flex;flex-direction:column;justify-content:center;gap:18px;">
-      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#999;margin-bottom:4px;">Claude Code만 쓸 때 vs OpenClaw 추가했을 때</div>
+
+    <!-- 우측 -->
+    <div style="flex:1;padding:44px 48px;display:flex;flex-direction:column;justify-content:center;gap:16px;">
+      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#999;">Claude Code만 vs OpenClaw 추가</div>
 
       <!-- Before -->
-      <div style="border:1px solid var(--border);border-radius:8px;padding:18px 22px;display:flex;flex-direction:column;gap:10px;">
+      <div style="border:1px solid var(--border);border-radius:8px;padding:20px 24px;background:#fff;display:flex;flex-direction:column;gap:10px;">
         <div style="font-size:11px;font-weight:700;color:#999;letter-spacing:0.1em;text-transform:uppercase;">Before — Claude Code만</div>
-        <div style="display:flex;flex-direction:column;gap:7px;">
-          <div style="font-size:15px;color:#555;">터미널 열고 <code style="font-size:13px;background:#f3f3f3;padding:1px 6px;border-radius:3px;">claude</code> 수동 실행</div>
-          <div style="font-size:15px;color:#555;">세션 끊기면 <strong style="color:#333;">컨텍스트 초기화</strong> — 기억 없음</div>
-          <div style="font-size:15px;color:#555;">결과 확인도 직접 터미널에서</div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <div style="font-size:17px;color:#555;">터미널 열고 <code style="font-size:14px;background:#f0f0ee;padding:1px 7px;border-radius:3px;">claude</code> 수동 실행</div>
+          <div style="font-size:17px;color:#555;">세션 끊기면 <strong style="color:#222;">컨텍스트 초기화</strong> — 기억 없음</div>
+          <div style="font-size:17px;color:#555;">결과 확인도 직접 터미널에서</div>
         </div>
       </div>
 
-      <div style="text-align:center;font-size:22px;color:#CCC;line-height:1;">↓</div>
+      <div style="text-align:center;font-size:20px;color:#bbb;line-height:1;">↓</div>
 
       <!-- After -->
-      <div style="border:2px solid rgba(53,201,149,0.4);border-radius:8px;padding:18px 22px;background:rgba(53,201,149,0.03);display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <img src="assets/openclaw-logo.jpg" style="width:28px;height:28px;border-radius:5px;object-fit:cover;flex-shrink:0;">
-          <div style="font-size:11px;font-weight:700;color:#35c995;letter-spacing:0.1em;text-transform:uppercase;">After — OpenClaw 추가</div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:7px;">
-          <div style="font-size:15px;color:#333;">🔄 세션 닫아도 에이전트 <strong>24시간 상시 실행</strong></div>
-          <div style="font-size:15px;color:#333;">🧠 대화 맥락·기억이 <strong>끊기지 않음</strong> — SOUL 영구 보존</div>
-          <div style="font-size:15px;color:#333;">📲 텔레그램으로 <strong>스마트폰에서 언제든 제어</strong></div>
+      <div style="border:2px solid rgba(53,201,149,0.45);border-radius:8px;padding:20px 24px;background:rgba(53,201,149,0.06);display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:11px;font-weight:700;color:#2aab80;letter-spacing:0.1em;text-transform:uppercase;">After — OpenClaw 추가</div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <div style="font-size:17px;color:#1C1A18;">🔄 세션 닫아도 에이전트 <strong>24시간 상시 실행</strong></div>
+          <div style="font-size:17px;color:#1C1A18;">🧠 대화 맥락·기억이 <strong>끊기지 않음</strong> — SOUL 영구 보존</div>
+          <div style="font-size:17px;color:#1C1A18;">📲 텔레그램으로 <strong>스마트폰에서 언제든 제어</strong></div>
         </div>
       </div>
     </div>
