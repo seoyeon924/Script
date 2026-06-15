@@ -48,12 +48,33 @@ GLSL 파티클 셰이더로 별 추가. 지구 대기 glow 레이어 추가.
 
 ---
 
-## Step 4 — 인터랙션
+## Step 4 — 인트로 오버레이 + 검색 필터
 
 ```
-상단에 국가명 검색 필터 UI 추가.
-입력하면 해당 국가 관련 아크만 표시.
-클릭 시 인트로 오버레이 닫히게.
+1. 인트로 오버레이 추가 (div#intro-overlay, 전체 화면 덮개).
+   내용: 제목 "Migration Atlas", 부제목 "An interactive visualization of global displacement journeys",
+   설명 "Explore how forced migration flows reshape our world.",
+   버튼 "Click to start" (id=introStartButton).
+   버튼 클릭 또는 화면 클릭 시 오버레이 숨김(opacity:0, visibility:hidden).
+
+2. 상단에 국가명 검색 필터 UI 추가.
+   input#countrySearch (placeholder: "Search country...") + div#searchDropdown.
+   데이터 로드 완료 후 flowsByOrigin에서 상위 30개 출발국을 countryList 배열로 구성.
+   국가명은 COUNTRY_COORDS 객체에서 ISO3 코드로 lookup (없으면 ISO 코드 그대로 표시).
+   
+   setupCountrySearch():
+   - input focus/input 이벤트 → showSearchResults(query) 호출
+   - blur 이벤트 → 200ms 후 dropdown 닫기
+   - Enter → 첫 번째 결과 선택, Escape → dropdown 닫기
+   
+   showSearchResults(query):
+   - countryList에서 query 포함 항목 필터링
+   - dropdown에 .search-item div 목록 렌더링
+   - 클릭 시 countrySearch.value = 국가명, filterArcsByCountry(iso) 호출
+   
+   filterArcsByCountry(iso):
+   - iso='all' → 모든 arc mesh visible=true
+   - iso 지정 → mesh.userData.iso === iso.toUpperCase()인 것만 visible=true, 나머지 false
 ```
 
 ---
