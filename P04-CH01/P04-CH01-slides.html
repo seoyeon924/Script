@@ -876,11 +876,16 @@
     <!-- Left: reuse prompt -->
     <div style="flex:1;border-right:1px solid var(--border);padding:36px 40px;display:flex;flex-direction:column;gap:18px;">
       <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">재사용 프롬프트</div>
-      <div class="code-wrap" style="flex:1;font-size:13.5px;line-height:1.9;">
-        <div style="color:#555;margin-bottom:6px;"># Step 1 — Extension 전환 요청</div>
-        <div style="color:#6aac98;">이 네트워크 차트를</div>
-        <div style="color:#6aac98;">Tableau Extension으로 만들고 싶어.</div>
-        <div style="color:#6aac98;">.trex 파일 만들어줘.</div>
+      <div class="code-wrap" style="flex:1;font-size:13px;line-height:1.85;">
+        <div style="color:#555;margin-bottom:6px;"># Step 1 — Extension 전환</div>
+        <div style="color:#6aac98;">Tableau Extensions API 추가해줘.</div>
+        <div style="color:#6aac98;">API 스크립트:</div>
+        <div style="color:#e8c87a;word-break:break-all;">https://extensionsdk.azureedge.net/</div>
+        <div style="color:#e8c87a;">1.10/tableau.extensions.1.latest.js</div>
+        <div style="color:#6aac98;">Tableau 워크시트에서 Source/Target 필드</div>
+        <div style="color:#6aac98;">받아서 해당 캐릭터 관계만 필터링.</div>
+        <div style="color:#6aac98;">manifest 파일(.trex)도 만들어줘.</div>
+        <div style="color:#6aac98;">source-location URL은 http://localhost:8080.</div>
         <br>
         <div style="color:#555;margin-bottom:6px;"># Step 2 — 다른 데이터 재사용</div>
         <div>전혀 다른 데이터로도 쓸 수 있게</div>
