@@ -171,7 +171,7 @@ API 키랑 봇 토큰은 AI 채팅창에 절대 넣으면 안 돼요. Anthropic 
 
 텔레그램 Echo 봇에 "안녕"이라고 보내보세요. 에이전트가 답장하면 연결이 완료된 거예요.
 
-텔레그램 봇은 Echo 하나만 만들면 돼요. 서브 에이전트 Min이랑 Evan은 별도 봇 없이 Echo가 내부적으로 호출해요.
+텔레그램 봇은 Echo 하나만 만들면 돼요. 서브 에이전트 Aria·Sam·Min·Evan은 별도 봇 없이 Echo가 내부적으로 호출해요.
 
 다음 슬라이드에서는 수강생 셋업 전체 흐름을 정리할게요.
 
@@ -183,7 +183,7 @@ API 키랑 봇 토큰은 AI 채팅창에 절대 넣으면 안 돼요. Anthropic 
 
 실습 시작 전에 레포 클론하고 명령어 두 개만 실행하면 돼요.
 
-`bash setup.sh` 한 번이면 Echo, Min, Evan 워크스페이스 폴더가 자동으로 생성되고 AGENTS.md가 복사돼요.
+`bash setup.sh` 한 번이면 Echo·Aria·Sam·Min·Evan 다섯 개 워크스페이스 폴더가 자동으로 생성되고 AGENTS.md가 복사돼요.
 
 이후 `openclaw onboard`로 Echo 봇 토큰만 입력하면 끝이에요. 서브 에이전트는 별도 봇 없이 Echo가 내부적으로 호출해요.
 

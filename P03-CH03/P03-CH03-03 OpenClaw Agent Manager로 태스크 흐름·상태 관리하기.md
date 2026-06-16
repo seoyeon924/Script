@@ -1,15 +1,15 @@
 ---
-tags: #P03 #CH03 #OpenClaw #AgentManager #Tauri #ClaudeCode
-time: 10분
+tags: #P03 #CH03 #OpenClaw #AgentManager #Tauri #ClaudeCode #디자인토큰
+time: 12분
 part: Part 03
 chapter: CH03
 clip: 03
-slides: s17,s18,s19,s20
+slides: s17,s18,s19,s20,s31
 status: ✅ 대본완성
 ---
 
 ## 🎬 CLIP 03 촬영 가이드
-**슬라이드 순서:** s17 → s18 → s19 → s20
+**슬라이드 순서:** s17 → s18 → s19 → s20 → s31
 
 #### s17 — 섹션 브레이크 슬라이드만
 
@@ -69,7 +69,7 @@ ok(초록) / error(빨강) / paused(회색) 상태 보여주기.
 
 완료되면 `npm install && npm run tauri dev`로 앱을 실행해요.
 
-Dashboard 탭에서 에이전트 세 명 상태를 카드로 볼 수 있어요. `openclaw status` 결과를 실시간으로 가져와서 토큰 사용량까지 보여줘요.
+Dashboard 탭에서 에이전트 다섯 명 상태를 카드로 볼 수 있어요. `openclaw status` 결과를 실시간으로 가져와서 토큰 사용량까지 보여줘요.
 
 파일 탐색, HEARTBEAT 편집, 세션 히스토리, 메시지 전송까지 에이전트별로 확인할 수 있어요.
 
@@ -96,5 +96,25 @@ CronJobs 탭에서는 등록된 크론 잡 상태를 한눈에 볼 수 있어요
 `openclaw cron list` 결과를 자동으로 파싱해서 이름, 스케줄, 다음 실행 시간, 마지막 실행 시간, 상태를 보여줘요. ok는 초록, error는 빨강, paused는 회색이에요.
 
 Agent Manager 하나로 에이전트 상태, 결과물, 크론 잡을 전부 관리할 수 있어요.
+
+---
+
+## s31 — 디자인 토큰으로 대시보드 퀄리티 올리기
+
+**[화면: 슬라이드]**
+
+마지막으로 대시보드를 제대로 만드는 두 가지 방법을 정리할게요.
+
+**PATH A는 키트 그대로 실행**이에요. 레포 클론하고 `bash setup.sh` 하고 파이프라인 실행하면 5분 안에 완성된 대시보드가 나와요. 실습할 때는 이 방법으로 진행해요.
+
+**PATH B는 처음부터 만들기**예요. GitHub 링크 하나를 Claude Code 프롬프트에 붙여넣으면 돼요.
+
+링크는 `github.com/material-foundation/material-tokens`예요. Material Design 3 공식 디자인 토큰 레포예요. 이 링크를 Claude Code에 주면 CSS 변수 시스템을 자동으로 생성해줘요.
+
+프롬프트는 간단해요. "이 레포의 CSS 토큰 구조를 참고해서 대시보드에 적용해줘. `:root`에 MD3 시맨틱 컬러 변수 정의하고, 하드코딩된 색상을 전부 토큰으로 교체하고, 다크 모드도 추가해줘." 이게 전부예요.
+
+그러면 `--md-sys-color-primary`, `--md-sys-color-surface` 같은 변수들이 자동으로 생성돼요. 모든 색상이 토큰 하나로 관리되니까 나중에 브랜드 색상 바꿀 때 한 줄만 수정하면 전체가 바뀌어요.
+
+두 방법 모두 같은 결과가 나와요. 원리를 이해하면 내 브랜드에 맞게 커스텀할 수 있어요.
 
 이것으로 OpenClaw 업무 자동화 챕터가 끝났어요. 에이전트를 등록하고, 파이프라인이랑 크론을 연결하고, Agent Manager로 모니터링까지 완성됐어요.

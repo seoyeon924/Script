@@ -90,15 +90,17 @@ open ~/Projects/openclaw-pipeline-kit/runs/latest/outputs/06_dashboard.html
 
 ---
 
-## s8 — 에이전트 3종 구조
+## s8 — 에이전트 5종 구조
 
-이번 실습에서 쓸 에이전트는 세 명이에요.
+이번 실습에서 쓸 에이전트는 다섯 명이에요.
 
 Echo가 메인이에요. 크론 잡 대부분은 Echo가 받고, 파이프라인 실행이랑 결과 텔레그램 전송까지 담당해요.
 
-Min이랑 Evan은 서브 에이전트예요. 별도 봇 없이 Echo가 내부적으로 호출해서 협업해요. Min은 데이터 수집을, Evan은 특정 프로젝트 전담으로 일해요.
+Aria랑 Sam이 분석 서브 에이전트예요. Aria는 STEP 1-2를 담당해요. 데이터 프로파일링이랑 EDA 보고서를 만들어요. Sam은 STEP 3-4예요. 문제 정의랑 KPI 요약을 작성해요.
 
-AGENTS.md 파일에 각자 역할이 정의돼 있어요. Echo가 이 파일을 읽고 Min이랑 Evan한테 일을 나눠요.
+Min이랑 Evan도 서브 에이전트예요. Min은 데이터 수집 전담이고, Evan은 특정 프로젝트 대시보드 구현을 담당해요.
+
+AGENTS.md 파일에 각자 역할이 정의돼 있어요. Echo가 이 파일을 읽고 각 에이전트한테 일을 나눠요.
 
 ---
 
@@ -172,11 +174,11 @@ openclaw-pipeline-kit을 OpenClaw 크론에 연결하는 거예요.
 
 실제로 어떻게 돌아가는지 흐름을 정리할게요.
 
-Echo가 팀장이에요. Echo가 파이프라인 명령을 받으면 내부적으로 각 스테이지를 순서대로 실행해요.
-
 CSV 파일을 `runs/latest/input/` 폴더에 넣어요. 어떤 CSV든 상관없어요.
 
-텔레그램 Echo 봇에 "runs/latest/input/ 에 CSV 있어. 파이프라인 실행해줘." 보내면 돼요. 나머지는 에이전트가 알아서 해요.
+텔레그램 Echo 봇에 "runs/latest/input/ 에 CSV 있어. 파이프라인 실행해줘." 보내면 돼요.
+
+그러면 다섯 명이 순서대로 일을 나눠요. Aria가 데이터 프로파일링이랑 EDA 보고서를 만들고, Sam이 문제 정의랑 KPI 요약을 써요. Min이 분석 보고서를 완성하면, Evan이 대시보드랑 임원 보고서를 마무리해요.
 
 브라우저에서 `activity-monitor.html` 열어두면 10초마다 자동 갱신되면서 완료된 스테이지가 ✓로 바뀌어요.
 
