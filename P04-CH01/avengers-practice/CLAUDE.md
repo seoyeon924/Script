@@ -106,8 +106,8 @@ const facePositions = { "spider_man": "top center", "star_lord": "top center" };
   2. 스포트라이트 100ms fade out 후 remove
   3. 연결 엣지 dashoffset 애니메이션으로 뻗어나옴 (650ms, easeQuadOut)
   4. 엣지 opacity는 strength 기반 동적 계산:
-     - 선택 노드 연결 엣지: 0.5 + Math.pow(d.strength/10, 2) * 2 (선 굵기도 동일 공식)
-     - 비연결 엣지: opacity 0.03 (거의 투명)
+     - 선택 노드 연결 엣지: 0.6 + Math.pow(d.strength/10, 2) * 0.4 (선 굵기도 동일 공식)
+     - 비연결 엣지: 0.02 + Math.pow(d.strength/10, 3) * 0.12
      - 초기 상태(노드 미선택): 0.02 + Math.pow(d.strength/10, 3.5) * 5
 ```
 
