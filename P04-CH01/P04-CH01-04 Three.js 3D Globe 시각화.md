@@ -235,7 +235,9 @@ SphereGeometry(1, 64, 64), WebGLRenderer, PerspectiveCamera.
 마우스 드래그로 회전 가능하게. index.html 하나로.
 ```
 
-> 결과 확인: `index.html` 브라우저로 열기 → 지구본 드래그 회전 되면 OK
+> 결과 확인: `python3 -m http.server 8080` → http://localhost:8080 → 지구본 드래그 회전 되면 OK
+>
+> ⚠️ `file://`로 열면 Step 2에서 CSV 로딩이 차단되므로 반드시 로컬 서버로 실행할 것
 >
 > "Three.js 코드가 길게 나와도 괜찮아요. 이해 안 해도 됩니다. 프롬프트로 수정하면 되니까요."
 
@@ -243,14 +245,21 @@ SphereGeometry(1, 64, 64), WebGLRenderer, PerspectiveCamera.
 
 ```
 unhcr_data.csv 로드해서 아크 추가해줘.
-Origin ISO → Asylum ISO 방향으로 CubicBezierCurve3 곡선 아크.
-높이: dist * 0.0065 비례 동적 계산. Refugees 컬럼 값에 비례해서 아크 굵기 조정.
+컬럼: data["Country of Origin ISO"], data["Country of Asylum ISO"], data["Refugees"]
+(컬럼명에 공백 포함 — 반드시 대괄호 표기법으로 접근)
+
+"Country of Origin ISO" → "Country of Asylum ISO" 방향으로 CubicBezierCurve3 곡선 아크.
+높이: h = 1 + dist * 0.0065 (dist = 두 위경도 벡터 사이 각도, THREE.Vector3 기준).
+Refugees 수에 비례해서 아크 굵기 조정.
 출발 빨강(0xff3333) → 도착 시안(0x00E5FF) 그라디언트.
+
+데이터 로드 후 flowsByOrigin 객체 구성:
+flowsByOrigin[originISO] = [{originISO, asylumISO, refugees}, ...] 형태.
 ```
 
-> 결과 확인: 지구 위에 아크 그려지는지 확인
+> 결과 확인: 지구 위에 아크 그려지는지 확인 (데이터 35,472행)
 >
-> 데이터가 35,000행이라 렌더링 느리면: "데이터 상위 500행만 쓰게 바꿔줘"
+> 렌더링 느리면: "데이터 상위 500행만 쓰게 바꿔줘"
 
 ### Step 3 — 디자인 토큰 적용
 
@@ -267,6 +276,22 @@ GLSL 파티클 셰이더로 별 추가. 지구 대기 glow 레이어 추가.
 > 결과 확인: 색상 테마 + 별 + 아크 애니메이션 확인
 >
 > 완성본과 비교 "거의 비슷하게 나왔죠?"
+
+### Step 4 — 인트로 오버레이 + 검색 필터
+
+```
+1. 인트로 오버레이 추가 (div#intro-overlay, 전체 화면 덮개).
+   제목 "Migration Atlas", 부제목 "An interactive visualization of global displacement journeys",
+   버튼 "Click to start". 클릭 시 오버레이 숨김.
+
+2. 상단에 국가명 검색 필터 UI 추가.
+   input#countrySearch + div#searchDropdown.
+   flowsByOrigin에서 상위 30개 출발국으로 countryList 구성.
+   국가명: CSV의 "Country of Origin ISO" → "Country of Origin" 매핑으로 isoToName 생성.
+   filterArcsByCountry(iso): iso 지정 시 해당 출발국 아크만 visible=true, 나머지 false.
+```
+
+> 결과 확인: 인트로 오버레이 클릭 → 지구본 진입 → 검색창에 국가명 입력 → 아크 필터링 확인
 
 ---
 

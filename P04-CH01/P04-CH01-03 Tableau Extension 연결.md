@@ -14,6 +14,7 @@ status: ✅ 대본완성
 > - [ ] 슬라이드 s14에 커서
 > - [ ] Tableau Desktop 열어두기
 > - [ ] `avengers-practice/avengers_network_data.csv` 파일 위치 확인
+> - [ ] `avengers-practice/starwars_network_data.csv` 파일 위치 확인
 > - [ ] `avengers-complete/tableau-extension/avengers-network.trex` 파일 위치 확인
 
 ---
