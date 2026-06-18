@@ -138,8 +138,8 @@ letter-spacing: 0.2em
 glow: rgba(0, 204, 255, 0.15)
 
 /* 아크 색상 */
-arc-origin: rgba(0, 204, 255, 0.7)
-arc-dest:   rgba(255, 100, 100, 0.7)
+arc-origin: rgba(255, 51, 51, 0.7)
+arc-dest:   rgba(0, 229, 255, 0.7)
 ```
 
 배경 그라디언트, 강조색, 폰트, 발광 효과, 아크 색상이에요.
@@ -267,7 +267,7 @@ flowsByOrigin[originISO] = [{originISO, asylumISO, refugees}, ...] 형태.
 아래 디자인 토큰으로 스타일 통일해줘.
 배경: radial-gradient(#0d1a2d 0%, #0a0a12 60%, #000 100%)
 강조색: #00CCFF
-아크: rgba(0,204,255,0.7) → rgba(255,100,100,0.7)
+아크: rgba(255,51,51,0.7) → rgba(0,229,255,0.7)
 glow: rgba(0,204,255,0.15)
 GLSL 파티클 셰이더로 별 추가. 지구 대기 glow 레이어 추가.
 아크는 흐르는 대시 애니메이션으로.
