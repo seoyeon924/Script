@@ -872,47 +872,66 @@
 <!-- ════ s28 | 어벤져스 디자인 토큰 ════ -->
 <div class="slide" id="s28">
   <div class="tb"><span class="tb-cap">어벤져스 디자인 토큰</span><span class="tb-num">28</span></div>
-  <div style="padding:22px 52px 18px;border-bottom:1px solid var(--border);flex-shrink:0;">
-    <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">AVENGERS NETWORK — 디자인 전략</div>
-    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">Step 2 프롬프트에<br>디자인 토큰 넣기</div>
+  <div style="padding:20px 52px 16px;border-bottom:1px solid var(--border);flex-shrink:0;">
+    <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:6px;">AVENGERS NETWORK — Step 2</div>
+    <div style="font-size:28px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">CLAUDE.md Step 2를<br>그대로 복붙하면 됩니다</div>
   </div>
   <div class="body">
-    <div style="flex:1;border-right:1px solid var(--border);padding:24px 36px;display:flex;flex-direction:column;gap:14px;align-items:flex-start;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">AVENGERS NETWORK — 실제 디자인 토큰</div>
-      <div class="code-wrap" style="font-size:12px;line-height:1.9;width:100%;flex:1;">/* 배경 */
-bg: #0a0a0f
-
-/* 엣지 색상 (관계 유형별) */
-ally:     #00c8ff  /* 동맹 — 파란 빛 */
-enemy:    #ff2020  /* 적대 — 빨강 */
-romantic: #c040ff  /* 로맨스 — 보라 */
-family:   #c0c8d0  /* 가족 — 실버 */
-
-/* 폰트 */
-primary: 'Cinzel', serif
-body:    'Inter', sans-serif
-label-style: uppercase, letter-spacing 0.1em
-
-/* Glow 필터 */
-ally-glow:     stdDev=7, opacity=0.55
-enemy-glow:    stdDev=8, opacity=0.60
-romantic-glow: stdDev=7, opacity=0.55
-family-glow:   stdDev=6, opacity=0.50</div>
-    </div>
-    <div style="flex:1;padding:24px 36px;display:flex;flex-direction:column;gap:14px;">
-      <div style="font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">Step 2 프롬프트 구조</div>
-      <div style="border:1px solid rgba(232,96,60,0.35);border-radius:8px;padding:18px 20px;background:rgba(232,96,60,0.03);flex:1;display:flex;flex-direction:column;gap:10px;">
-        <div style="font-size:12px;color:#E8603C;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">✅ 토큰을 프롬프트에 포함</div>
-        <div style="font-size:13.5px;color:#333;line-height:1.8;">
-          <span style="color:#999;">1. OGL WebGL 갤럭시 배경</span><br>
-          <span style="color:#333;font-weight:500;">2. 엣지 색상 (Type 컬럼 기준)</span><br>
-          <span style="color:#E8603C;font-family:monospace;font-size:12.5px;">   ally: #00c8ff | enemy: #ff2020</span><br>
-          <span style="color:#E8603C;font-family:monospace;font-size:12.5px;">   romantic: #c040ff | family: #c0c8d0</span><br>
-          <span style="color:#333;font-weight:500;">3. 폰트: Cinzel + Inter</span><br>
-          <span style="color:#999;">4. 전체 배경: #0a0a0f</span>
+    <!-- Left: color swatches reference -->
+    <div style="flex:0 0 260px;border-right:1px solid var(--border);padding:22px 28px;display:flex;flex-direction:column;gap:10px;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);margin-bottom:2px;">토큰 — 관계 유형별 색상</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:18px;height:18px;border-radius:4px;background:#00c8ff;flex-shrink:0;"></div>
+          <span style="font-family:monospace;font-size:12.5px;color:#333;">ally</span>
+          <span style="font-family:monospace;font-size:12px;color:#888;margin-left:auto;">#00c8ff</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:18px;height:18px;border-radius:4px;background:#ff2020;flex-shrink:0;"></div>
+          <span style="font-family:monospace;font-size:12.5px;color:#333;">enemy</span>
+          <span style="font-family:monospace;font-size:12px;color:#888;margin-left:auto;">#ff2020</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:18px;height:18px;border-radius:4px;background:#c040ff;flex-shrink:0;"></div>
+          <span style="font-family:monospace;font-size:12.5px;color:#333;">romantic</span>
+          <span style="font-family:monospace;font-size:12px;color:#888;margin-left:auto;">#c040ff</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:18px;height:18px;border-radius:4px;background:#c0c8d0;border:1px solid #ddd;flex-shrink:0;"></div>
+          <span style="font-family:monospace;font-size:12.5px;color:#333;">family</span>
+          <span style="font-family:monospace;font-size:12px;color:#888;margin-left:auto;">#c0c8d0</span>
         </div>
       </div>
-      <div style="font-size:12.5px;color:#666;line-height:1.7;border:1px solid var(--border);border-radius:6px;padding:12px 16px;background:#F8F7F5;">이 토큰을 Step 2 프롬프트에 그대로 넣으면<br>이후 "glow 더 강하게", "배경 더 어둡게" 처럼<br>이미지 없이 텍스트만으로 일관성 유지</div>
+      <div style="border-top:1px solid var(--border);padding-top:10px;margin-top:4px;display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:18px;height:18px;border-radius:4px;background:#0a0a0f;flex-shrink:0;"></div>
+          <span style="font-family:monospace;font-size:12px;color:#555;">배경 #0a0a0f</span>
+        </div>
+        <div style="font-size:12px;color:#555;font-family:monospace;">폰트: Cinzel + Inter</div>
+      </div>
+      <div style="margin-top:auto;font-size:12px;color:#999;line-height:1.6;border:1px solid var(--border);border-radius:6px;padding:10px 12px;background:#F8F7F5;">이후 수정 시<br>"ally 색 더 밝게" 한 줄로 전체 반영</div>
+    </div>
+    <!-- Right: actual Step 2 prompt with tokens highlighted -->
+    <div style="flex:1;padding:22px 32px;display:flex;flex-direction:column;gap:12px;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">CLAUDE.md Step 2 — 실제 프롬프트 (토큰 값 포함)</div>
+      <div class="code-wrap" style="font-size:11.5px;line-height:1.85;flex:1;">1. OGL WebGL 갤럭시 배경 추가.
+   CDN: https://esm.sh/ogl@1.0.8 (type="module"로 로드)
+   별 4레이어, 마우스 반응, 자동 회전.
+   <span style="background:rgba(232,96,60,0.12);padding:1px 3px;border-radius:3px;color:#C04A1A;">배경 canvas: position:fixed, z-index:-1.</span>
+
+2. 엣지 색상 (Type 컬럼 기준):
+   <span style="background:rgba(232,96,60,0.12);padding:1px 3px;border-radius:3px;color:#C04A1A;">ally: #00c8ff  |  enemy: #ff2020</span>
+   <span style="background:rgba(232,96,60,0.12);padding:1px 3px;border-radius:3px;color:#C04A1A;">romantic: #c040ff  |  family: #c0c8d0</span>
+   SVG defs에 makeLineGlow 함수로 glow 필터 생성.
+
+3. 폰트: <span style="background:rgba(232,96,60,0.12);padding:1px 3px;border-radius:3px;color:#C04A1A;">Google Fonts Cinzel + Inter</span>.
+   캐릭터 이름 레이블: Cinzel, uppercase, letter-spacing 0.1em.
+
+4. <span style="background:rgba(232,96,60,0.12);padding:1px 3px;border-radius:3px;color:#C04A1A;">전체 배경: #0a0a0f</span>. 화면 가장자리 vignette.</div>
+      <div style="border:1px solid rgba(232,96,60,0.4);border-radius:8px;padding:12px 16px;background:rgba(232,96,60,0.04);display:flex;align-items:center;gap:12px;">
+        <span style="font-size:18px;">→</span>
+        <span style="font-size:13.5px;color:#C04A1A;font-weight:600;">주황색 하이라이트 = 디자인 토큰 값 &nbsp;·&nbsp; 이 프롬프트 전체를 그대로 Claude Code에 붙여넣기</span>
+      </div>
     </div>
   </div>
 </div>
