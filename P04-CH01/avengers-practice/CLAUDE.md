@@ -52,10 +52,9 @@ index.html 하나로. W=window.innerWidth, H=window.innerHeight.
    자동 회전(uRotationSpeed=0.05). 배경 canvas: position:fixed, top:0, left:0, z-index:-1.
    별은 순수 흰색. 배경은 검정(vec3(0.0)).
 
-2. 엣지 색상 (Type 컬럼 기준):
-   ally: #00c8ff  |  enemy: #ff2020  |  romantic: #c040ff  |  family: #c0c8d0
-
-   SVG defs에 makeLineGlow(id, color, stdDev, opacity) 함수로 glow 필터 생성:
+2. SVG defs에 makeLineGlow(id, color, stdDev, opacity) 함수로 glow 필터 정의.
+   (실제 엣지 stroke 색상은 #ffffff 흰색 단일 — 타입별 색상은 필터 defs만 정의하고 엣지에 직접 적용하지 않음)
+   makeLineGlow 파이프라인:
    feGaussianBlur(stdDev, result=blur1)
    → feFlood(color, opacity, result=color1)
    → feComposite(in=color1, in2=blur1, operator=in, result=glow1)
