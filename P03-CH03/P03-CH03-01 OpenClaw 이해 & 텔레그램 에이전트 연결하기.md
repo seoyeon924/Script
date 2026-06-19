@@ -4,7 +4,7 @@ time: 12분
 part: Part 03
 chapter: CH03
 clip: 01
-slides: s1,s2,s3,s4,s5,s26,s30,s28
+slides: s1,s2,s3,s4,s28,s33,s26,s30,s35
 status: ✅ 대본완성
 ---
 
@@ -31,20 +31,43 @@ status: ✅ 대본완성
 ---
 
 ## 🎬 CLIP 01 촬영 가이드
-**슬라이드 순서:** s1 → s2 → s3 → s4 → s5 → s26 → s30 → s28
+**슬라이드 순서:** s1 → s2 → s3 → s4 → s28 → s33 → s26 → s30 → s35
 
 #### s1~s4 — 슬라이드만
 
 ---
 
-#### s5 — Claude API 키 연결 `[데모 선택]`
+#### s28 — 수강생 셋업 진입점 `[데모 — 터미널 + Claude Code]`
 
-**열 것:** 터미널
+**열 것:** 터미널 + Claude Code (새 세션)
 
 ```bash
-openclaw status
-# → agents: active, gateway: running 확인
+# Step 1: zip 압축 해제
+mkdir -p ~/Projects && cd ~/Projects
+unzip ~/Downloads/openclaw-pipeline-kit.zip
+
+# Step 2: Claude Code로 열기
+cd ~/Projects/openclaw-pipeline-kit
+claude
 ```
+
+Claude Code 채팅창에 입력:
+```
+처음 세팅 시작해줘
+```
+
+→ Claude가 CLAUDE.md 읽고 설치 확인 → setup.sh 자동 실행 → onboard는 별도 터미널 안내
+
+> 촬영 팁: openclaw가 이미 설치된 상태에서 찍어도 됨. Claude가 "이미 설치됨" 확인하고 다음 단계로 안내하는 흐름 보여주기
+
+---
+
+#### s33 — 텔레그램 Echo 봇 생성 `[화면: 텔레그램 앱]`
+
+BotFather에서 봇 만드는 흐름 보여주기.
+@BotFather → /newbot → 이름 → 유저네임(_bot 필수) → 토큰 복사 보관.
+
+⚠ 토큰은 채팅창·AI 채팅창에 절대 붙여넣기 금지.
 
 ---
 
@@ -86,16 +109,45 @@ openclaw status
 
 ---
 
-#### s28 — 수강생 셋업 `[데모 — 터미널]`
+#### s35 — OpenClaw 대시보드 `[슬라이드만]`
 
+화면 전환 없이 슬라이드만 보여주며 한 줄 언급.
+
+---
+
+#### s28 — 수강생 셋업 `[데모 — 터미널 + Claude Code]`
+
+**열 것:** 터미널 + Claude Code (새 세션)
+
+**Step 1.** zip 압축 해제
 ```bash
-git clone https://github.com/seoyeon924/openclaw-pipeline-kit.git
-cd openclaw-pipeline-kit
-bash setup.sh
-openclaw onboard      # Echo 봇 토큰만 입력
+mkdir -p ~/Projects && cd ~/Projects
+unzip ~/Downloads/openclaw-pipeline-kit.zip
 ```
 
-텔레그램 Echo 봇에 메시지 전송 → 답장 확인으로 마무리.
+**Step 2.** Claude Code로 폴더 열기
+```bash
+cd ~/Projects/openclaw-pipeline-kit
+claude
+```
+Claude Code 채팅창에 입력:
+```
+처음 세팅 시작해줘
+```
+→ Claude가 CLAUDE.md 읽고 STEP 1 (설치 확인) → STEP 2 (setup.sh 실행) 순서로 안내 시작
+
+**Step 3.** openclaw onboard — 별도 터미널에서 직접 실행
+```bash
+openclaw onboard
+```
+⚠ Claude Code 채팅창에서 실행 금지 — API 키·봇 토큰이 Anthropic 서버로 전송됨
+
+**Step 4.** 완료 확인 → 텔레그램 Echo 봇에 파이프라인 실행 요청
+```
+runs/latest/input/ 에 CSV 있어. 파이프라인 실행해줘.
+```
+
+> 촬영 팁: onboard는 미리 해둔 상태에서 `openclaw status`로 완료 화면 보여주고 넘어가도 됨
 
 ---
 
@@ -109,7 +161,7 @@ OpenClaw 업무 자동화 챕터 시작이에요.
 
 ## s2 — 조감도
 
-Clip 01에서 OpenClaw 소개랑 연결을 해요. Clip 02에서 파이프라인 실행이랑 크론 자동화를 연결해요. Clip 03에서 Claude Code로 Agent Manager 앱을 직접 만들어요.
+Clip 01에서는 OpenClaw 소개랑 텔레그램 연결. Clip 02에서는 파이프라인 실행이랑 크론 자동화. Clip 03에서는 Claude Code로 Agent Manager 앱을 직접 만들어요.
 
 ---
 
@@ -131,11 +183,37 @@ Claude Code는 직접 고용한 직원이에요. 지시를 내리면 일합니�
 
 ---
 
-## s5 — Claude API 키 연결
+## s28 — 수강생 셋업 — 시작하기
 
-**[화면: 터미널]**
+**[화면: 터미널 → Claude Code]**
 
-OpenClaw를 처음 쓰려면 API 키 연결이 필요해요. `openclaw onboard`로 마법사를 실행하면 돼요. Anthropic API 키는 `platform.anthropic.com`에서 발급해요. Claude.ai 구독이랑 별개로 API 크레딧이 따로 필요해요.
+실습 준비 흐름을 정리할게요.
+
+강의자료 페이지에서 `openclaw-pipeline-kit.zip`을 다운받고 `~/Projects/` 안에 압축 해제해요. 에이전트 설정 파일이 이 경로를 기준으로 잡혀있어서 위치를 정확하게 지켜야 해요.
+
+그다음 터미널에서 `cd ~/Projects/openclaw-pipeline-kit` 이동한 다음 `claude`라고 입력해서 Claude Code를 열어요. 그리고 채팅창에 "처음 세팅 시작해줘"라고 입력하면, Claude가 폴더 안에 있는 `CLAUDE.md` 파일을 자동으로 읽고 STEP 1부터 단계별로 안내해줘요. 설치 확인이랑 `setup.sh` 실행까지 Claude가 직접 해줘요.
+
+여기서 딱 한 가지 — `openclaw onboard`는 반드시 Claude Code 채팅창이 아니라 별도 터미널에서 직접 실행해야 해요. API 키랑 텔레그램 봇 토큰을 AI 채팅창에 입력하면 Anthropic 서버로 전송됩니다. 터미널 마법사에서 입력해야 로컬에서만 처리돼요.
+
+그 전에 텔레그램 봇 토큰이 필요한데, 지금 바로 만들어볼게요.
+
+---
+
+## s33 — 텔레그램 Echo 봇 생성 — BotFather
+
+**[화면: 텔레그램 앱]**
+
+텔레그램 봇은 BotFather에서 만들어요.
+
+텔레그램 앱에서 @BotFather를 검색하고 채팅을 열어요. START를 누르고 `/newbot`을 입력하면 봇 이름을 물어봐요. "Echo Agent" 같은 이름 넣으면 돼요.
+
+다음으로 봇 유저네임을 입력해요. 반드시 `_bot`으로 끝나야 해요. `my_echo_agent_bot`처럼요.
+
+유저네임이 승인되면 BotFather가 봇 토큰을 발급해줘요. 이 토큰은 복사해서 안전한 곳에 보관하세요.
+
+중요한 거 하나 — 봇 토큰은 봇의 비밀번호예요. 채팅창, 노션, 슬랙 어디에도 붙여넣으면 안 돼요. AI 채팅창에 입력하면 Anthropic 서버로 전송돼요.
+
+봇은 Echo 하나만 만들면 돼요. Aria·Sam·Min·Evan은 서브에이전트로 Echo가 내부적으로 호출해요. 별도로 만들 필요 없어요.
 
 ---
 
@@ -171,22 +249,16 @@ API 키랑 봇 토큰은 AI 채팅창에 절대 넣으면 안 돼요. Anthropic 
 
 텔레그램 Echo 봇에 "안녕"이라고 보내보세요. 에이전트가 답장하면 연결이 완료된 거예요.
 
-텔레그램 봇은 Echo 하나만 만들면 돼요. 서브 에이전트 Aria·Sam·Min·Evan은 별도 봇 없이 Echo가 내부적으로 호출해요.
+봇은 Echo 하나만 만들면 돼요. 서브 에이전트 Aria·Sam·Min·Evan은 별도 봇 없이 Echo가 내부적으로 호출해요.
 
-다음 슬라이드에서는 수강생 셋업 전체 흐름을 정리할게요.
+다음 클립에서는 파이프라인을 실제로 실행해서 대시보드가 자동으로 만들어지는 과정을 보여드릴게요.
 
 ---
 
-## s28 — 수강생 셋업 — 따라하기
+## s35 — OpenClaw 대시보드 참고
 
-**[화면: 터미널]**
+참고로 OpenClaw 앱을 열면 이런 화면이 나와요.
 
-실습 시작 전에 레포 클론하고 명령어 두 개만 실행하면 돼요.
+터미널에서 한 설정을 여기서 GUI로 확인하거나, 나중에 모델이나 채널을 바꾸고 싶을 때 쓸 수 있어요.
 
-`bash setup.sh` 한 번이면 Echo·Aria·Sam·Min·Evan 다섯 개 워크스페이스 폴더가 자동으로 생성되고 AGENTS.md가 복사돼요.
-
-이후 `openclaw onboard`로 Echo 봇 토큰만 입력하면 끝이에요. 서브 에이전트는 별도 봇 없이 Echo가 내부적으로 호출해요.
-
-텔레그램 Echo 봇에 "안녕"이라고 보내보세요. 에이전트가 답장하면 연결 완료예요.
-
-다음 클립에서는 파이프라인 실행이랑 크론 자동화를 연결해요.
+지금 당장 안 열어도 되고, 파이프라인 실행하는 데도 필요 없어요.

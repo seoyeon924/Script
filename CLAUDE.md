@@ -151,3 +151,155 @@ status: ✅ 대본완성
 ## 섹션 구분
 
 섹션 사이는 `---` 구분선 사용
+
+---
+
+## 패스트캠퍼스 슬라이드 디자인 토큰 시스템
+
+P01~P05 전체 슬라이드에서 추출한 공통 디자인 기준. 새 슬라이드 작업 시 이 토큰만 참조하면 됨.
+
+### 슬라이드 기본 규격
+
+```
+크기: 1280 × 800px
+배경: #F2F2EF (밝은 베이지)
+폰트: Pretendard (기본) / Poppins (헤드라인, P02+) / Menlo·Monaco (코드)
+```
+
+### CSS 변수 (`:root`)
+
+```css
+:root {
+  --bg:     #F2F2EF;   /* 슬라이드 배경 */
+  --text:   #1C1A18;   /* 기본 텍스트 */
+  --sub:    #888;       /* 보조 텍스트 */
+  --dim:    #BBBBBB;   /* 흐린 텍스트 */
+  --border: #D8D5D0;   /* 테두리 */
+  --p01:    #E8603C;   /* 주요 강조색 (주황) */
+  --green:  #6aac98;   /* 보조 강조색 (틸/녹, P02-CH03+) */
+}
+```
+
+### 에이전트 색상 (P03-CH03 OpenClaw 전용)
+
+| 에이전트 | 색상 | 용도 |
+|---|---|---|
+| Echo (main) | `#818cf8` | 인디고 — 총괄 |
+| Aria | `#35c995` | 민트 — EDA |
+| Sam | `#e8c87a` | 앰버 — KPI |
+| Min | `#34d399` | 에메랄드 — 데이터 |
+| Evan | `#fb923c` | 오렌지 — 대시보드 |
+
+### 타이포그래피 스케일
+
+| 역할 | 크기 | Weight | 사용처 |
+|---|---|---|---|
+| `.sec-title` | 70px | 700 | 섹션 브레이크 제목 |
+| `.big-title` | 50px | 600 | 슬라이드 메인 제목 |
+| 패널 대제목 | 36–38px | 600 | 좌측 패널 히어로 |
+| 패널 소제목 | 20px | 600 | 패널 내 서브 타이틀 |
+| 본문 | 17px | 400 | 카드 본문 |
+| 보조 설명 | 15px | 400 | 부연 텍스트 |
+| `.eyebrow` / 레이블 | 13px | 400 | 상단 캡션 (`text-transform:uppercase; letter-spacing:0.14em`) |
+| 작은 라벨 | 11–12px | 600 | 배지, 태그 |
+| 코드 | 14–17px | 400 | 모노스페이스 |
+
+### 간격 시스템
+
+| 레벨 | 값 | 용도 |
+|---|---|---|
+| XS | 6–8px | 카드 내 항목 간격 |
+| S | 10–12px | 카드 간격 (tight) |
+| M | 14–16px | 카드 간격 (default) |
+| L | 18–20px | 섹션 내 그룹 간격 |
+| XL | 28–32px | 패널 padding (세로) |
+| 2XL | 36–40px | 패널 padding (가로) |
+| 3XL | 52px | P01 슬라이드 전체 padding |
+
+### 패널 레이아웃 규칙
+
+```
+두 패널 분할:
+  - 좌측: width: 38%~55% (내용에 따라) + border-right: 1px solid var(--border)
+  - 우측: flex: 1
+  
+패널 내부 padding:
+  - 우측 패널: padding: 32px 36px
+  - 인라인 (상단 헤더 있는 좌측): padding: 28px 36px
+  - 헤더 레이블 행: padding: 16px 40px; border-bottom: 1px solid var(--border)
+
+Toolbar (.tb):
+  - height: 48px; padding: 0 52px; border-bottom: 1px solid var(--border)
+```
+
+### 카드 컴포넌트 스타일
+
+```css
+/* 기본 카드 */
+border: 1px solid var(--border);
+border-radius: 6px;
+padding: 16px 20px;
+background: #fff;
+
+/* 강조 카드 (짝수 교차) */
+background: rgba(106,172,152,0.1);
+border: 1px solid var(--border);
+
+/* 경고/포인트 카드 */
+border-color: rgba(232,96,60,0.35);
+background: rgba(232,96,60,0.03);
+
+/* 코드 블록 (.code-wrap) */
+background: #0A0C10;
+border: 1px solid #1E2028;
+padding: 20px 26px;
+font-size: 17px; line-height: 1.85;
+color: rgba(255,255,255,0.5);
+```
+
+### 수직 정렬 규칙 (justify-content)
+
+패널 안 콘텐츠 배치 시 아래 규칙을 따름:
+
+| 상황 | 처리 |
+|---|---|
+| 레이블 + 카드 그룹 (2개 자식) | `justify-content:center; gap:16px` |
+| 히어로 타이틀 + 카드 목록 (2개 자식) | `justify-content:flex-start; gap:16px` (space-between 금지) |
+| 레이블 + 카드 + 하단 노트 (3개 자식) | `justify-content:space-between` 허용 (의도된 분포) |
+| 4개 이상 자식 | `justify-content:space-between` 허용 |
+
+**space-between을 2-child 패널에 쓰면 콘텐츠가 바닥으로 밀려남 — 금지.**
+
+### 섹션 브레이크 슬라이드 스타일
+
+```css
+/* 배경 */
+background: #F2F2EF;  /* P02+ 기준 */
+
+/* 구성 순서 */
+.sec-label  → 18px, uppercase, letter-spacing:0.16em, color:var(--p01)
+.sec-title  → 70px, font-weight:700 또는 300 (슬라이드별 의도 선택)
+.sec-sub    → 18–24px, color:var(--sub)
+```
+
+### 에이전트 배지 스타일 (OpenClaw 전용)
+
+```css
+.agent-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600;
+  padding: 4px 10px; border-radius: 4px;
+  font-family: 'Menlo', monospace;
+}
+.badge-echo { background: rgba(129,140,248,0.12); color: #818cf8; border: 1px solid rgba(129,140,248,0.3); }
+.badge-min  { background: rgba(52,211,153,0.12);  color: #34d399; border: 1px solid rgba(52,211,153,0.3); }
+.badge-evan { background: rgba(251,146,60,0.12);  color: #fb923c; border: 1px solid rgba(251,146,60,0.3); }
+```
+
+### 금지 패턴
+
+- `justify-content:space-between` — 2개 자식 패널에 절대 금지
+- `object-fit:cover` — 비디오에 금지 (잘림). 대신 `object-fit:contain`
+- `align-items:center` on flex column with overflow content — 잘림 발생
+- 하드코딩 색상 — `--p01`, `--green`, `--border`, `--text` 등 변수 사용
+- `핵심` 단어 — 슬라이드·스크립트 전체 금지, `주요`·`핵심적`으로 대체
