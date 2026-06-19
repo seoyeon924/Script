@@ -20,8 +20,16 @@ SphereGeometry(1, 64, 64), WebGLRenderer, PerspectiveCamera.
 
 ```
 unhcr_data.csv 로드해서 아크 추가해줘.
-Origin ISO → Asylum ISO 방향으로 CatmullRomCurve3 곡선 아크.
-Refugees 컬럼 값에 비례해서 아크 굵기 조정.
+컬럼: data["Country of Origin ISO"], data["Country of Asylum ISO"], data["Refugees"]
+(컬럼명에 공백 포함 — 반드시 대괄호 표기법으로 접근)
+
+"Country of Origin ISO" → "Country of Asylum ISO" 방향으로 CubicBezierCurve3 곡선 아크.
+높이: h = 1 + dist * 0.0065 (dist = 두 위경도 벡터 사이 각도, THREE.Vector3 기준).
+Refugees 수에 비례해서 아크 굵기 조정.
+출발 빨강(0xff3333) → 도착 시안(0x00E5FF) 그라디언트.
+
+데이터 로드 후 flowsByOrigin 객체 구성:
+flowsByOrigin[originISO] = [{originISO, asylumISO, refugees}, ...] 형태.
 ```
 
 ---
@@ -40,12 +48,34 @@ GLSL 파티클 셰이더로 별 추가. 지구 대기 glow 레이어 추가.
 
 ---
 
-## Step 4 — 인터랙션
+## Step 4 — 인트로 오버레이 + 검색 필터
 
 ```
-상단에 국가명 검색 필터 UI 추가.
-입력하면 해당 국가 관련 아크만 표시.
-클릭 시 인트로 오버레이 닫히게.
+1. 인트로 오버레이 추가 (div#intro-overlay, 전체 화면 덮개).
+   내용: 제목 "Migration Atlas", 부제목 "An interactive visualization of global displacement journeys",
+   설명 "Explore how forced migration flows reshape our world.",
+   버튼 "Click to start" (id=introStartButton).
+   버튼 클릭 또는 화면 클릭 시 오버레이 숨김(opacity:0, visibility:hidden).
+
+2. 상단에 국가명 검색 필터 UI 추가.
+   input#countrySearch (placeholder: "Search country...") + div#searchDropdown.
+   데이터 로드 완료 후 flowsByOrigin에서 상위 30개 출발국을 countryList 배열로 구성.
+   국가명: CSV의 "Country of Origin ISO" → "Country of Origin" 매핑으로 isoToName 객체 생성.
+   isoToName[iso] 값으로 국가명 lookup (없으면 ISO 코드 그대로 표시).
+   
+   setupCountrySearch():
+   - input focus/input 이벤트 → showSearchResults(query) 호출
+   - blur 이벤트 → 200ms 후 dropdown 닫기
+   - Enter → 첫 번째 결과 선택, Escape → dropdown 닫기
+   
+   showSearchResults(query):
+   - countryList에서 query 포함 항목 필터링
+   - dropdown에 .search-item div 목록 렌더링
+   - 클릭 시 countrySearch.value = 국가명, filterArcsByCountry(iso) 호출
+   
+   filterArcsByCountry(iso):
+   - iso='all' → 모든 arc mesh visible=true
+   - iso 지정 → mesh.userData.iso === iso.toUpperCase()인 것만 visible=true, 나머지 false
 ```
 
 ---
