@@ -792,22 +792,31 @@ Viz 확장(worksheet-extension)으로 만들어줘.
   <div class="tb"><span class="tb-cap">Tableau Extension 파일 구조</span><span class="tb-num">15</span></div>
   <div class="body">
     <!-- Left: file tree -->
-    <div style="width:46%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
-      <div style="padding:40px 44px 24px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">파일 구조</div>
-      <div style="flex:1;display:flex;align-items:center;">
-        <div style="padding:32px 44px;width:100%;">
-          <div style="background:#111417;border-radius:8px;padding:28px 32px;font-family:'Menlo','Monaco',monospace;font-size:15px;line-height:2.1;">
-            <div style="color:#6aac98;margin-bottom:6px;">avengers-complete/</div>
-            <div style="color:#888;">├── <span style="color:#e0ddd9;">index.html</span><span style="color:#555;font-size:13px;"> ← 브라우저 독립 실행</span></div>
-            <div style="color:#888;">├── <span style="color:#E8603C;">avengers-network.trex</span><span style="color:#555;font-size:12px;"> ← 완성본 (Netlify URL)</span></div>
+    <div style="width:48%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+      <div style="padding:28px 36px 20px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">파일 구조</div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px;padding:24px 36px;">
+        <!-- practice folder -->
+        <div>
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6aac98;margin-bottom:6px;">실습 폴더 (수강생 제공)</div>
+          <div style="background:#111417;border-radius:8px;padding:18px 22px;font-family:'Menlo','Monaco',monospace;font-size:13px;line-height:1.9;">
+            <div style="color:#6aac98;margin-bottom:4px;">avengers-practice/</div>
+            <div style="color:#888;">├── <span style="color:#e8c87a;">CLAUDE.md</span><span style="color:#555;font-size:11px;"> ← 실습 가이드</span></div>
+            <div style="color:#888;">├── <span style="color:#E8603C;">avengers-network.trex</span><span style="color:#555;font-size:11px;"> ← 완성본</span></div>
+            <div style="color:#888;">├── <span style="color:#e0ddd9;">avengers_network_data.csv</span></div>
+            <div style="color:#888;">└── <span style="color:#555;">images/ · background.jpg · …</span></div>
+          </div>
+        </div>
+        <!-- complete folder -->
+        <div>
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#E8603C;margin-bottom:6px;">완성본 폴더 (강의 데모)</div>
+          <div style="background:#111417;border-radius:8px;padding:18px 22px;font-family:'Menlo','Monaco',monospace;font-size:13px;line-height:1.9;">
+            <div style="color:#6aac98;margin-bottom:4px;">avengers-complete/</div>
+            <div style="color:#888;">├── <span style="color:#e0ddd9;">index.html</span><span style="color:#555;font-size:11px;"> ← 브라우저 독립 실행</span></div>
+            <div style="color:#888;">├── <span style="color:#E8603C;">avengers-network.trex</span><span style="color:#555;font-size:11px;"> ← Netlify URL</span></div>
             <div style="color:#888;">└── <span style="color:#6aac98;">tableau-extension/</span></div>
-            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">manifest.trex</span><span style="color:#555;font-size:12px;"> ← 메타데이터</span></div>
-            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">avengers-network.html</span></div>
-            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">avengers-network.js</span></div>
-            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">avengers-network.css</span></div>
-            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e8c87a;">avengers-network-data.js</span></div>
-            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">galaxy-background.js</span></div>
-            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;└── <span style="color:#555;">background.jpg</span></div>
+            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">manifest.trex</span><span style="color:#555;font-size:11px;"> ← 메타데이터</span></div>
+            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;├── <span style="color:#e0ddd9;">avengers-network.html / .js / .css</span></div>
+            <div style="color:#888;">&nbsp;&nbsp;&nbsp;&nbsp;└── <span style="color:#e8c87a;">avengers-network-data.js</span></div>
           </div>
         </div>
       </div>
