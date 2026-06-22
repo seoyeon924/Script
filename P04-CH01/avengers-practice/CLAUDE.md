@@ -166,6 +166,9 @@ Viz 확장(worksheet-extension)으로 만들어줘.
   똑같이 동작하게 폴백도 넣어줘.
 - 디자인은 검정 배경, D3.js Force 네트워크, 노드 드래그 가능.
 - manifest.trex의 source-location URL은 http://localhost:8080/tableau-extension/avengers-network.html 로.
+- manifest는 worksheet-extension. <default-settings>·<encodings> 래퍼는 쓰지 말고
+  <encoding>을 직접 나열하되, 각 encoding에 <display-name>·<role-spec>·<fields>를 넣어줘.
+  (빈 <encoding id="x"/>는 FD722608 파싱 에러 — 절대 금지)
 
 더 자세한 구현 스펙은 prompts.md Step 4를 참고하세요.
 ```

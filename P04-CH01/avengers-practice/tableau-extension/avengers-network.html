@@ -19,19 +19,18 @@
 <div id="hint"></div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
-<!-- Viz(워크시트) 확장 지원 라이브러리 (API 1.12+) -->
+<!-- Viz(워크시트) 확장 라이브러리 (API 1.12+) -->
 <script src="https://extensionsdk.azureedge.net/1.latest/tableau.extensions.1.latest.js"></script>
 <script>
 const svg = d3.select("#net");
 
 // ───── 초기화 (Viz 확장) ─────
-// 워크시트 안의 Viz 확장으로 동작. 마크 카드의 인코딩(source/target/strength/type)에
+// 워크시트 안의 Viz 확장으로 동작. 마크 카드 인코딩(source/target/strength/type)에
 // 끌어놓은 필드를 읽어 네트워크를 그리고, 데이터가 바뀌면 다시 그린다.
-// Tableau 밖(브라우저)에서 열면 CSV를 읽어 동일하게 동작 (폴백).
+// Tableau 밖(브라우저)에서 열면 ../avengers_network_data.csv를 읽어 동일 동작 (폴백).
 tableau.extensions.initializeAsync().then(() => {
   const worksheet = tableau.extensions.worksheetContent.worksheet;
   render();
-  // 필터/선택/필드 변경 등으로 요약 데이터가 바뀌면 다시 렌더
   worksheet.addEventListener(tableau.TableauEventType.SummaryDataChanged, render);
 }).catch(() => {
   d3.select("#hint").text("Tableau 외부 — CSV 폴백 모드");
@@ -42,13 +41,13 @@ tableau.extensions.initializeAsync().then(() => {
 async function render(){
   const worksheet = tableau.extensions.worksheetContent.worksheet;
 
-  // 1) 인코딩(선반) → 필드명 매핑 (사용자가 끌어놓은 필드)
+  // 1) 인코딩(선반) id → 끌어놓은 필드명 매핑
   const encMap = {};
   try {
     const spec = await worksheet.getVisualSpecificationAsync();
     (spec.marksSpecifications || []).forEach(ms =>
       (ms.encodings || []).forEach(e => { if (e.field) encMap[e.id] = e.field.name; }));
-  } catch (_) { /* 인코딩 정보 없으면 이름 매칭으로 폴백 */ }
+  } catch (_) {}
 
   // 2) 요약 데이터 읽기
   const reader = await worksheet.getSummaryDataReaderAsync();
@@ -61,15 +60,15 @@ async function render(){
     const n = c.fieldName.toLowerCase();
     return keys.some(k => n.includes(k));
   });
-  // 인코딩 우선 → 없으면 컬럼 이름으로 추정
+  // 인코딩 매핑 우선 → 없으면 컬럼 이름으로 추정
   const pick = (encId, ...keys) => {
     const i = encMap[encId] != null ? idxOfName(encMap[encId]) : -1;
     return i >= 0 ? i : byKeyword(...keys);
   };
-  const iS = pick("source", "source", "from", "출발");
-  const iT = pick("target", "target", "to", "도착");
-  const iW = pick("strength", "strength", "weight", "value", "굵기");
-  const iY = pick("type", "type", "relation", "관계");
+  const iS = pick("source", "source", "from");
+  const iT = pick("target", "target", "to");
+  const iW = pick("strength", "strength", "weight", "value");
+  const iY = pick("type", "type", "relation");
 
   const rows = dataTable.data.map(r => ({
     Source:   iS >= 0 ? r[iS].formattedValue : null,
@@ -78,9 +77,11 @@ async function render(){
     Type:     iY >= 0 ? r[iY].formattedValue : "ally"
   })).filter(r => r.Source && r.Target);
 
+  if (!rows.length) { d3.select("#hint").text("인코딩(source·target)에 필드를 끌어놓으세요"); }
   renderNetwork(rows);
 }
 
+// ───── 브라우저 폴백: CSV 직접 로드 ─────
 function loadFromCsv(){
   d3.csv("../avengers_network_data.csv").then(rows => renderNetwork(rows.map(r => ({
     Source: r.Source, Target: r.Target, Strength: parseFloat(r.Strength) || 1, Type: r.Type
@@ -91,7 +92,7 @@ function loadFromCsv(){
 function renderNetwork(data){
   const W = window.innerWidth, H = window.innerHeight;
   svg.attr("viewBox", [0, 0, W, H]).selectAll("*").remove();   // 매번 새로 그림
-  if (!data.length) { d3.select("#hint").text("인코딩(source·target)에 필드를 끌어놓으세요"); return; }
+  if (!data.length) return;
 
   const links = data.map(d => ({ source:d.Source, target:d.Target, strength:d.Strength, type:d.Type }));
   const nodeSet = new Map();

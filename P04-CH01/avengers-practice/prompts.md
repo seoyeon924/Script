@@ -246,33 +246,78 @@ window resize:
   if (tableau.extensions.worksheetContent) render() else loadFromCsv()
 
 ─── tableau-extension/manifest.trex ───
+
+⚠️ manifest 스키마 규칙 — 아래를 어기면 "구문 분석 오류(FD722608)"가 난다:
+  1. 최상위는 <worksheet-extension> (대시보드용 <dashboard-extension> 아님)
+  2. <default-settings>·<encodings> 래퍼는 존재하지 않음 → 절대 쓰지 말 것.
+     인코딩은 <worksheet-extension> 맨 끝에 <encoding>을 직접 나열.
+  3. 각 <encoding>은 비울 수 없음(<encoding id="x"/> 금지) →
+     반드시 <display-name> + <role-spec><role-type> + <fields max-count="1"/> 포함.
+     (measure 인코딩은 <data-spec><data-type>numeric</data-type> 추가)
+  4. <name resource-id="name"/>는 비워두고, 맨 아래 <resources>에서 실제 이름 정의.
+  5. min-api-version은 1.11 이상. source-location URL은 localhost:8080.
+
 <?xml version="1.0" encoding="utf-8"?>
 <manifest manifest-version="0.1" xmlns="http://www.tableau.com/xml/extension_manifest">
-  <worksheet-extension id="com.seoyeon924.avengers-network" extension-version="1.0.0">
+  <worksheet-extension id="com.seoyeon924.avengers-network-local" extension-version="1.0.0">
     <default-locale>ko_KR</default-locale>
-    <name resource-id="name">Avengers Network</name>
+    <name resource-id="name"/>
     <description>D3.js 기반 어벤져스 캐릭터 관계 네트워크 (워크시트 Viz 확장)</description>
     <author name="seoyeon924" email="tjdus92422@gmail.com" organization="fastcampus" website="https://avengers-network.netlify.app"/>
-    <min-api-version>1.12</min-api-version>
+    <min-api-version>1.11</min-api-version>
     <source-location>
       <url>http://localhost:8080/tableau-extension/avengers-network.html</url>
     </source-location>
+    <icon/>
     <permissions>
       <permission>full data</permission>
     </permissions>
-    <default-settings>
-      <encodings>
-        <encoding id="source" />
-        <encoding id="target" />
-        <encoding id="strength" />
-        <encoding id="type" />
-      </encodings>
-    </default-settings>
+
+    <encoding id="source">
+      <display-name>Source</display-name>
+      <role-spec><role-type>discrete-dimension</role-type></role-spec>
+      <fields max-count="1"/>
+      <tooltip>Source character in the relationship</tooltip>
+    </encoding>
+
+    <encoding id="target">
+      <display-name>Target</display-name>
+      <role-spec><role-type>discrete-dimension</role-type></role-spec>
+      <fields max-count="1"/>
+      <tooltip>Target character in the relationship</tooltip>
+    </encoding>
+
+    <encoding id="strength">
+      <display-name>Strength</display-name>
+      <data-spec><data-type>numeric</data-type></data-spec>
+      <role-spec>
+        <role-type>continuous-measure</role-type>
+        <role-type>discrete-measure</role-type>
+      </role-spec>
+      <fields max-count="1"/>
+      <tooltip>Relationship strength (1-10)</tooltip>
+    </encoding>
+
+    <encoding id="type">
+      <display-name>Type</display-name>
+      <role-spec><role-type>discrete-dimension</role-type></role-spec>
+      <fields max-count="1"/>
+      <tooltip>Relationship type (ally, enemy, family, romantic)</tooltip>
+    </encoding>
   </worksheet-extension>
+
+  <resources>
+    <resource id="name">
+      <text locale="ko_KR">Avengers Network</text>
+      <text locale="en_US">Avengers Network</text>
+    </resource>
+  </resources>
 </manifest>
 ```
 
 > **Tableau에서 불러오는 법**:
 > 워크시트 → 마크 카드 드롭다운 → "확장 프로그램 추가" → manifest.trex 선택
-> → 인코딩 선반(source / target / strength / type)에 해당 필드를 끌어놓으면 렌더됩니다.
-> ※ 대시보드 "확장 프로그램" 개체에 넣으면 에러납니다 — 반드시 워크시트 마크 카드에서 추가.
+> → 마크 카드에 생긴 인코딩 선반(Source / Target / Strength / Type)에 필드를 끌어놓으면 렌더됩니다.
+> ※ 대시보드 "확장 프로그램" 개체에 넣으면 에러납니다(93FB5DF9) — 반드시 워크시트 마크 카드에서 추가.
+> ※ 로컬 서버 필수: avengers-practice 폴더에서 `python3 -m http.server 8080` 실행 중이어야 함.
+>   (서버 없이 배포하려면 source-location을 https 호스팅 URL로 — 예: netlify)
