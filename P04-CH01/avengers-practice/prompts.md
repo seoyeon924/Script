@@ -239,6 +239,11 @@ tableau-extension/ 폴더 안에 파일을 만들어줘 (데이터·로직을 �
   - 즉 "그룹 인코딩 선반"은 만들지 않는다. 그룹은 노드별(source/target) 2개라 Detail이 맞음.
     (Relation Type만 인코딩 선반, Group은 Detail — 이 둘은 위치가 다를 뿐 둘 다 동작)
 
+─── 연결 수 표시 (⚠️ 영어로) ───
+  - 선택(중앙) 노드 아래에 연결 수를 표시할 때 반드시 영어 "N Connections" 형식 (예: "3 Connections").
+  - 한글 "연결 수" 절대 금지 (한국어 환경에서 자동으로 한글로 만들어지는 것 방지).
+  - 스타일: 작고 연하게 — 회색 rgba(255,255,255,0.45), 약 12px, 이름 바로 아래.
+
 ─── 첫 화면 가이드 (#empty-state) ───
   - Tableau에서 필드 없을 때 표시 (id="empty-state" + hidden 토글, showEmptyState로 제어)
   - 한글 카드형(A Source · B Target · C Strength · D Type, 필수/선택), 폰트 Pretendard
