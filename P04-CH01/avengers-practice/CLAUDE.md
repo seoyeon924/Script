@@ -150,105 +150,26 @@ shootLines():
 
 ## Step 4 — Tableau Extension 연결 (선택)
 
-> 아래 **두 버전 중 하나**를 선택해서 사용하세요.
-> - **자연어 버전** — 말로 설명하는 입문용. 결과는 비슷하게 동작.
-> - **참조 코드** (맨 아래) — 세부 수치까지 고정한 정밀 버전. 완성 예시를 정확히 재현.
-
-### 자연어 버전
+> 이 폴더에 있는 **`avengers-network.trex`** 파일은 완성된 Netlify 배포 버전이에요.
+> 직접 만들지 않고 이 파일을 Tableau에서 바로 불러오면 완성본이 그대로 동작합니다.
+> 아래 프롬프트는 직접 만들어보고 싶을 때 사용하세요.
 
 ```
 지금 만든 어벤져스 네트워크 그래프를 Tableau 워크시트 안에 넣는
-Viz(워크시트) 확장으로 만들어줘. (대시보드 확장 아님 — worksheet-extension)
+Viz 확장(worksheet-extension)으로 만들어줘.
 
 - tableau-extension/ 폴더를 새로 만들고, 그 안에 그래프 HTML 파일 하나랑
-  Tableau가 인식하는 확장 등록 파일(.trex, worksheet-extension)을 만들어줘.
-- 마크 카드 인코딩(source/target/strength/type)에 끌어놓은 필드를 읽게 해줘.
-- 데이터는 CSV가 아니라 Tableau 워크시트에서 가져오게 해줘.
-  컬럼 이름에서 source / target / strength / type 에 해당하는 걸 알아서 찾아서 쓰면 돼.
-- Tableau에서 필터를 바꾸거나 마크를 클릭하면, 그 선택된 데이터만으로
-  그래프가 자동으로 다시 그려지게 해줘.
-- Tableau 밖에서(그냥 브라우저에서) 열었을 때는 기존 CSV를 읽어서
-  똑같이 동작하도록 안전장치(폴백)도 넣어줘.
-- 디자인은 지금 그래프 느낌 그대로 — 검정 배경, D3 Force 네트워크, 드래그 가능.
+  Tableau 확장 등록 파일(manifest.trex)을 만들어줘.
+- 마크 카드 인코딩(source / target / strength / type)에 필드를 끌어놓으면
+  해당 데이터로 네트워크가 자동으로 그려지게 해줘.
+- Tableau 밖에서(그냥 브라우저에서) 열면 ../avengers_network_data.csv를 읽어서
+  똑같이 동작하게 폴백도 넣어줘.
+- 디자인은 검정 배경, D3.js Force 네트워크, 노드 드래그 가능.
+- manifest.trex의 source-location URL은 http://localhost:8080/tableau-extension/avengers-network.html 로.
 
-다 만들면 Tableau에 어떻게 올리는지(.trex 불러오는 법)도 간단히 알려줘.
+더 자세한 구현 스펙은 prompts.md Step 4를 참고하세요.
 ```
 
-### 참조 코드 
-
-```
-index.html과 별도로 tableau-extension/ 폴더를 새로 만들고
-그 안에 avengers-network.html 과 manifest.trex 두 파일을 생성해줘.
-
-─── tableau-extension/avengers-network.html ───
-- D3.js v7 + Tableau Extensions SDK (Viz 확장은 API 1.12+ 필요)
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://extensionsdk.azureedge.net/1.latest/tableau.extensions.1.latest.js"></script>
-- 배경 #000, SVG 전체 화면, overflow:hidden
-
-초기화 (Viz 확장):
-  tableau.extensions.initializeAsync()
-    → worksheet = tableau.extensions.worksheetContent.worksheet
-    → render()
-    → SummaryDataChanged 이벤트 → render 재호출
-  .catch → Tableau 밖 개발용: d3.csv('../avengers_network_data.csv').then(renderNetwork)
-
-render(worksheet):
-  getVisualSpecificationAsync()로 인코딩(source/target/strength/type)→필드명 매핑
-  getSummaryDataReaderAsync() → getAllPagesAsync() → releaseAsync()로 요약 데이터 읽기
-  인코딩 매핑 우선, 없으면 컬럼명 소문자 includes로 인덱스 추정
-  rows = dataTable.data.map → { Source, Target, Strength: parseFloat, Type }
-  .filter(r => r.Source && r.Target)
-  → renderNetwork(rows)
-
-renderNetwork(data):
-  W = window.innerWidth, H = window.innerHeight
-  svg 크기 W×H로 설정, 기존 요소 전부 제거 후 재렌더
-
-  노드: nodeSet으로 중복 제거, nodes/links 구성
-  링크 색상: ally → #4fc3f7, enemy → #ef5350, romantic → #f06292, 기타 → #aaa
-  선 굵기: d3.scaleLinear domain[1, max(strength)] range[1, 6]
-  선 opacity: 0.6
-
-  Force Simulation:
-    forceLink distance 120
-    forceManyBody strength -300
-    forceCenter(W/2, H/2)
-
-  노드: circle r=8, fill #e8603c, stroke #fff, stroke-width 1.5
-  드래그 가능 (alphaTarget 0.3 on start, 0 on end)
-  레이블: font-size 11, fill #ccc, text-anchor middle, dy 20
-
-window resize → loadData 재호출
-
-─── tableau-extension/manifest.trex (worksheet-extension) ───
-<?xml version="1.0" encoding="utf-8"?>
-<manifest manifest-version="0.1" xmlns="http://www.tableau.com/xml/extension_manifest">
-  <worksheet-extension id="com.seoyeon924.avengers-network" extension-version="1.0.0">
-    <default-locale>ko_KR</default-locale>
-    <name resource-id="name">Avengers Network</name>
-    <description>D3.js 기반 어벤져스 캐릭터 관계 네트워크 (워크시트 Viz 확장)</description>
-    <author name="seoyeon924" email="tjdus92422@gmail.com" organization="fastcampus" website="https://avengers-network.netlify.app"/>
-    <min-api-version>1.12</min-api-version>
-    <source-location>
-      <url>http://localhost:8080/tableau-extension/avengers-network.html</url>
-    </source-location>
-    <permissions>
-      <permission>full data</permission>
-    </permissions>
-    <!-- 마크 카드에 나타나는 인코딩 선반 -->
-    <default-settings>
-      <encodings>
-        <encoding id="source" />
-        <encoding id="target" />
-        <encoding id="strength" />
-        <encoding id="type" />
-      </encodings>
-    </default-settings>
-  </worksheet-extension>
-</manifest>
-```
-
-> 추가 방법(Viz 확장): 워크시트 → 마크 카드의 **드롭다운에서 "확장 프로그램 추가"** → manifest.trex 선택
-> → 인코딩 선반(source/target/strength/type)에 해당 필드를 끌어놓으면 렌더됨.
-> (※ 대시보드의 "확장 프로그램" 개체에 넣으면 "비주얼리제이션 확장이 아닙니다" 에러가 납니다.)
+> **Tableau에서 불러오는 법**: 워크시트 → 마크 카드 드롭다운 → "확장 프로그램 추가" → manifest.trex 선택
+> → 인코딩 선반(source / target / strength / type)에 필드를 끌어놓으면 렌더됩니다.
+> ※ 대시보드 "확장 프로그램" 개체에 넣으면 에러납니다 — 반드시 워크시트 마크 카드에서 추가하세요.
