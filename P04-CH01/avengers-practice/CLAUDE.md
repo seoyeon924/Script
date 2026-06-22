@@ -58,10 +58,12 @@ D3 Force Simulation으로 노드 배치.
 - 노드 내부 및 Spotlight 내부에 이니셜 텍스트(폴백 포함) 절대 표시하지 않음
 
 어벤져스 로고(avengers-logo2.png)를 좌측 상단 헤더에 <img>로 삽입.
+좌측에 색깔 범례(legend)는 표시하지 않음 — 로고만 둠.
 
 필터링 (우측 패널, RELATIONS / GROUPS):
 - 필터 선택 시 해당 노드+엣지만 남기고 나머지 opacity:0 + pointer-events:none
 - 전체(All) 선택 시 모든 노드 복원
+- 필터 전환 시 애니메이션 효과 — opacity/위치 변화를 트랜지션으로 부드럽게 (즉시 변경 금지)
 ```
 
 ---
@@ -113,9 +115,19 @@ D3 Force Simulation으로 노드 배치.
   3. Spotlight에 선택 노드 얼굴 즉시 표시
   4. currentRot을 d3.timer로 애니메이션(950ms, easeCubicInOut)하여 선택 노드가 π에 정확히 위치
   5. 스핀 중: getNodeAt9()로 매 프레임 9시 가장 가까운 노드를 찾아 Spotlight 이미지 교체 → "촤르르" 효과
-  6. 스핀 완료 후: shootLines() 실행
+  6. 스핀 완료 후: 선택 노드 주변 여백 확보(openGap) → shootLines() 실행
+
+선택 노드 주변 여백 (openGap):
+- 9시 Spotlight(SL_R)가 인접 노드를 가리면 안 됨 — 메인 노드 양옆으로 빈 공간을 둬야 함
+- 스핀 완료 후, 선택 노드는 π에 고정하고 나머지 visible 노드를 gap 바깥 호에 균등 재배치
+  → gap 각도 ≈ (SL_R + NODE_R + 여백) / CIRCLE_R, 양옆으로 확보
+  → others.forEach((d,i) => d.angle = π + GAP + (i+0.5) * (2π - 2·GAP) / others.length)
+- 재배치는 짧은 트랜지션(약 420ms, easeCubicOut)으로 부드럽게
 
 shootLines():
+- 선이 뻗는 방향: 선택된 중심 노드(9시 Spotlight)에서 **시작**해 상대 노드로 뻗어나가야 함
+  → 연결 엣지의 path를 항상 "선택 노드 → 상대 노드" 순서로 재구성 (선택 노드가 target이면 path를 반전)
+  → dashoffset이 length→0이 되면서 선택 노드 쪽에서 그어지기 시작
 - stroke-dasharray = length, stroke-dashoffset = length → 0 애니메이션(650ms, easeQuadOut)
 - 연결 엣지 밝기: ally 0.75 / enemy 0.95 / romantic 0.80 / family 0.85
 - 비연결 엣지: opacity 0.03
@@ -129,6 +141,7 @@ shootLines():
 - 필터 선택 시 visible 노드만으로 360° 원을 새로 구성(baseAngle 재계산)
   visNodes.forEach((d,i) => d.baseAngle = -π/2 + 2π*i/M)
 - 확대/축소 없이 같은 CIRCLE_R 반경으로 재배치
+- 재배치는 애니메이션으로 — 노드가 새 위치(각도)로 d3.timer/transition(약 600ms, easeCubicInOut)을 통해 부드럽게 이동, 엣지·노드 opacity도 트랜지션
 - 전체(All) 선택 시 originalAngle 복원
 - 필터 변경 시 currentRot=0, selectedId=null, Spotlight 숨김
 ```
