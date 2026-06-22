@@ -6,7 +6,7 @@
 
 데이터 파일: `avengers_network_data.csv` (80행)
 컬럼: Source, Target, Strength, Type, Source_Group, Source_Importance, Source_Time, Source_Image, Target_Group, Target_Importance, Target_Time, Target_Image
-> 프로필 사진은 `Source_Image`/`Target_Image` 컬럼의 경로를 사용 — `images/` 폴더에 JPG/PNG 파일로 제공
+> 프로필 사진은 `Source_Image`/`Target_Image` 컬럼에서 직접 읽음 — 모두 `images/` 폴더의 **로컬 파일**(외부 링크 의존 없음, 38개)
 완성 예시: https://avengers-network.netlify.app
 
 ### 폴더에 있는 에셋 (코드에서 이 파일명 그대로 참조)
@@ -16,6 +16,7 @@
 | `background.jpg` | 배경 이미지 (우주 배경) |
 | `avengers-logo2.png` | 좌측 상단 헤더 로고 (권장) |
 | `avengers-logo.png` | 로고 대체본 |
+| `images/` | 캐릭터 프로필 사진 38개 (CSV가 참조하는 로컬 파일, 외부 링크 의존 없음) |
 
 > ⚠️ **반드시 로컬 서버로 실행** — `file://`로 열면 CSV 로딩이 차단되어 데이터가 표시되지 않음
 > ```
