@@ -913,7 +913,7 @@ Viz 확장(worksheet-extension)으로 만들어줘.
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <div style="padding:14px 18px;border:1px solid rgba(106,172,152,0.35);border-radius:6px;background:rgba(106,172,152,0.04);">
-          <div style="font-size:12px;color:#6aac98;font-weight:600;letter-spacing:0.06em;margin-bottom:5px;">완성본 trex 사용 (권장)</div>
+          <div style="font-size:12px;color:#6aac98;font-weight:600;letter-spacing:0.06em;margin-bottom:5px;">완성본 trex 사용</div>
           <div style="font-size:13px;color:#555;line-height:1.65;">실습 폴더의 <span style="font-family:monospace;color:#E8603C;">avengers-network.trex</span> 바로 사용<br>로컬 서버 불필요 — Netlify URL이 이미 등록됨</div>
         </div>
         <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;">
@@ -931,6 +931,15 @@ Viz 확장(worksheet-extension)으로 만들어줘.
           <div style="margin-top:10px;padding:8px 12px;background:#F8F7F5;border-radius:4px;font-size:12px;color:#777;line-height:1.6;">
             <span style="font-family:monospace;">images/x.jpg</span> 같은 상대경로는 확장이 호스팅된 주소 기준으로 자동 해석 — 로컬이든 Netlify든 CSV는 그대로
           </div>
+        </div>
+        <div style="padding:14px 18px;border:1px solid rgba(232,96,60,0.3);border-radius:6px;background:rgba(232,96,60,0.02);">
+          <div style="font-size:12px;color:#E8603C;font-weight:600;letter-spacing:0.06em;margin-bottom:8px;">Tableau Public 게시 · 다른 사람과 공유</div>
+          <div style="display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:#555;line-height:1.6;">
+            <div><span style="font-family:monospace;color:#888;">①</span> <span style="font-family:monospace;">tableau-extension/ + images/</span> 폴더를 Netlify 등 HTTPS에 배포</div>
+            <div><span style="font-family:monospace;color:#888;">②</span> <span style="font-family:monospace;">manifest.trex</span>의 URL을 배포 주소로 교체</div>
+            <div><span style="font-family:monospace;color:#888;">③</span> Tableau에서 그 trex 파일로 다시 추가 → 게시</div>
+          </div>
+          <div style="margin-top:8px;font-size:12px;color:#999;line-height:1.5;">CSV의 <span style="font-family:monospace;">images/x.jpg</span>는 그대로 — 확장 호스팅 주소 기준으로 자동 해석</div>
         </div>
         <div style="padding:14px 18px;background:#F8F7F5;border-radius:6px;">
           <div style="font-size:12px;color:#888;margin-bottom:4px;">내 데이터에 적용</div>
