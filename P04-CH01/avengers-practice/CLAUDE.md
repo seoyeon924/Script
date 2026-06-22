@@ -57,7 +57,7 @@ D3 Force Simulation으로 노드 배치.
 
 ---
 
-### Step 3(1) — Force Network
+### Step 3(1) — Force Network (거미줄 네트워크 버전)
 
 ```
 위 공통 요소에 추가:
@@ -73,7 +73,7 @@ D3 Force Simulation으로 노드 배치.
 
 ---
 
-### Step 3(2) — 360° Chord Diagram
+### Step 3(2) — 360° Chord Diagram (원형 코드 다이어그램 버전)
 
 ```
 위 공통 요소에 추가:
