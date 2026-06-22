@@ -6,7 +6,7 @@
 
 데이터 파일: `avengers_network_data.csv` (80행)
 컬럼: Source, Target, Strength, Type, Source_Group, Source_Importance, Source_Time, Source_Image, Target_Group, Target_Importance, Target_Time, Target_Image
-> 프로필 사진은 `Source_Image`/`Target_Image` 컬럼의 **이미지 URL**에서 직접 읽음 (공개 URL — 로컬 `images/` 폴더 불필요)
+> 프로필 사진은 `Source_Image`/`Target_Image` 컬럼의 경로를 사용 — `images/` 폴더에 JPG/PNG 파일로 제공
 완성 예시: https://avengers-network.netlify.app
 
 ### 폴더에 있는 에셋 (코드에서 이 파일명 그대로 참조)
