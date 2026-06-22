@@ -93,6 +93,7 @@ GROUPS 그룹: All / Avengers / Asgardians / Guardians / Wakanda / Mystic Arts /
 
 클릭 정보 카드:
   클릭 시 position:fixed 카드에 이름(Cinzel bold 18px) + 그룹(그룹 컬러) + 연결 수 표시
+  (연결 수는 영어 "N Connections", 작고 연하게 — 한글 "연결 수" 금지)
   카드 위치: 클릭한 노드 좌표 기준 우측 16px, 상단 정렬
 
 필터링:
@@ -157,7 +158,9 @@ stroke-dasharray = totalLength, stroke-dashoffset: totalLength → 0 (650ms ease
 ── 정보 카드 ──
 left = (CX - CIRCLE_R) - SL_R - 18 - 185, top = CY - 50
 width: 185px, text-align: right
-이름(Cinzel bold 22px) + 그룹(그룹 컬러 14px) + "연결 수: N" (회색 13px)
+이름(Cinzel bold 22px) + 그룹(그룹 컬러 14px) + 연결 수
+  ⚠️ 연결 수는 반드시 영어로 "N Connections" 형식 (예: "3 Connections"). 한글 "연결 수" 금지.
+  스타일: 작고 연하게 — 회색(rgba(255,255,255,0.45)) 12px, 노드 이름 아래
 
 ── 필터링 ──
 visible 노드만으로 baseAngle 재계산
@@ -227,10 +230,19 @@ tableau-extension/ 폴더 안에 파일을 만들어줘 (데이터·로직을 �
      http(s)://·절대·data: → 그대로 / images/foo.jpg 상대경로 → ../로 해석(= 프로젝트 루트/images/)
      → 로컬 이미지 폴더를 쓰는 데이터도 표시됨 (로컬 서버 8080 필요)
 
+─── 필드 배치 (⚠️ 그룹은 인코딩이 아니라 Detail에 — 자주 헷갈림) ───
+  - 인코딩 선반(필수): Source / Target / Strength.  Type은 인코딩 또는 Detail 둘 다 가능.
+  - 세부 정보(Detail) 셸프: Source_Group / Target_Group(그룹 색), Source_Image / Target_Image(사진),
+    Source_Importance / Target_Importance(노드 크기), (필요시 Type).
+  - 코드는 워크시트 컬럼을 normalizeFieldName으로 "이름"으로 읽으므로,
+    Source_Group 등은 인코딩 선반이 없어도 Detail에 올리기만 하면 자동 반영됨.
+  - 즉 "그룹 인코딩 선반"은 만들지 않는다. 그룹은 노드별(source/target) 2개라 Detail이 맞음.
+    (Relation Type만 인코딩 선반, Group은 Detail — 이 둘은 위치가 다를 뿐 둘 다 동작)
+
 ─── 첫 화면 가이드 (#empty-state) ───
   - Tableau에서 필드 없을 때 표시 (id="empty-state" + hidden 토글, showEmptyState로 제어)
   - 한글 카드형(A Source · B Target · C Strength · D Type, 필수/선택), 폰트 Pretendard
-  - 이미지 URL을 어디(세부 정보 Detail)에 넣는지까지 안내
+  - 이미지 URL/그룹/중요도를 어디(세부 정보 Detail)에 넣는지까지 안내
 
 ⚠️ 까만 화면 / 오작동 원인 (피할 것):
   1) SDK를 폐지된 azureedge에서 로드 → tableauusercontent URL 사용

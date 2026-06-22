@@ -79,7 +79,7 @@ D3 Force Simulation으로 노드 배치.
 
 노드 드래그 가능하게.
 호버 시 연결된 캐릭터만 강조, 나머지 흐리게.
-클릭 시 캐릭터 이름 + 그룹 + 연결 수 표시.
+클릭 시 캐릭터 이름 + 그룹 + 연결 수 표시. (연결 수는 영어 "N Connections", 작고 연하게 — 한글 금지)
 
 필터링:
 - D3 zoom transform으로 visible 노드 영역에 fit (700ms 트랜지션)
@@ -138,6 +138,7 @@ shootLines():
 
 정보 카드 (#info-card):
 - 캐릭터 이름(대형) + 그룹(그룹 컬러) + 연결 수
+  ⚠️ 연결 수는 영어 "N Connections" (예: "3 Connections"), 작고 연하게(회색 12px) 이름 아래. 한글 "연결 수" 금지.
 - 위치: 9시 Spotlight 왼쪽 (left = (CX - CIRCLE_R) - SL_R - 18 - cardWidth, top = CY - 50)
 - text-align: right, width: 185px 고정
 
