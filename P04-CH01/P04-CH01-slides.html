@@ -917,8 +917,20 @@ Viz 확장(worksheet-extension)으로 만들어줘.
           <div style="font-size:13px;color:#555;line-height:1.65;">실습 폴더의 <span style="font-family:monospace;color:#E8603C;">avengers-network.trex</span> 바로 사용<br>로컬 서버 불필요 — Netlify URL이 이미 등록됨</div>
         </div>
         <div style="padding:14px 18px;border:1px solid var(--border);border-radius:6px;">
-          <div style="font-size:12px;color:#888;font-weight:600;letter-spacing:0.06em;margin-bottom:5px;">직접 만들 때</div>
-          <div style="font-size:13px;color:#555;line-height:1.65;">Claude Code로 <span style="font-family:monospace;">tableau-extension/</span> 생성<br>로컬: <span style="font-family:monospace;">python3 -m http.server 8080</span> 켜야 작동<br>공유하려면 Netlify 등에 배포 후 URL 교체</div>
+          <div style="font-size:12px;color:#888;font-weight:600;letter-spacing:0.06em;margin-bottom:8px;">직접 만들어서 공유할 때</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;gap:8px;align-items:baseline;">
+              <span style="font-size:11px;font-family:monospace;color:#E8603C;flex-shrink:0;">로컬</span>
+              <span style="font-size:12.5px;color:#555;line-height:1.5;"><span style="font-family:monospace;">python3 -m http.server 8080</span> 켜고 실행</span>
+            </div>
+            <div style="display:flex;gap:8px;align-items:baseline;">
+              <span style="font-size:11px;font-family:monospace;color:#6aac98;flex-shrink:0;">공유</span>
+              <span style="font-size:12.5px;color:#555;line-height:1.5;"><span style="font-family:monospace;">tableau-extension/ + images/</span> 폴더를 Netlify 등에 배포<br>→ manifest.trex의 URL만 배포 주소로 교체</span>
+            </div>
+          </div>
+          <div style="margin-top:10px;padding:8px 12px;background:#F8F7F5;border-radius:4px;font-size:12px;color:#777;line-height:1.6;">
+            <span style="font-family:monospace;">images/x.jpg</span> 같은 상대경로는 확장이 호스팅된 주소 기준으로 자동 해석 — 로컬이든 Netlify든 CSV는 그대로
+          </div>
         </div>
         <div style="padding:14px 18px;background:#F8F7F5;border-radius:6px;">
           <div style="font-size:12px;color:#888;margin-bottom:4px;">내 데이터에 적용</div>

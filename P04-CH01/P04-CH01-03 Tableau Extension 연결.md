@@ -128,7 +128,15 @@ Marks 카드에 인코딩 네 개를 연결하면 돼요.
 
 Claude Code가 생성하는 `manifest.trex`의 URL은 `http://localhost:8080`을 가리키기 때문에, `python3 -m http.server 8080`을 켜둔 상태에서만 작동합니다.
 
-다른 사람과 공유하거나 실제로 배포하려면, 만든 파일을 Netlify 같은 곳에 올리고 `manifest.trex` 안의 URL을 배포된 주소로 바꿔줘야 해요.
+다른 사람과 공유하거나 Tableau Public에 게시하려면, 두 가지를 해야 해요.
+
+첫 번째, `tableau-extension/` 폴더와 `images/` 폴더를 Netlify나 GitHub Pages 같은 공개 HTTPS 주소에 올립니다.
+
+두 번째, `manifest.trex` 안의 URL을 그 배포 주소로 바꿔요.
+
+그러면 끝이에요. 데이터 파일의 `images/x.jpg` 같은 경로는 손댈 필요가 없습니다.
+
+이 상대경로는 확장이 호스팅된 위치를 기준으로 자동으로 해석되거든요. 로컬에서는 localhost 주소로, Netlify에 올리면 Netlify 주소로 — CSV는 그대로 두면 알아서 따라가요.
 
 강의 실습에서는 완성본 `.trex`를 그대로 쓰는 게 가장 간편합니다.
 
