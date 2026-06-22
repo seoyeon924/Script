@@ -179,7 +179,8 @@ avengers-network.html 과 manifest.trex.
 
 라이브러리:
   <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://extensionsdk.azureedge.net/1.latest/tableau.extensions.1.latest.js"></script>
+  <script src="https://extensions.tableauusercontent.com/resources/tableau.extensions.1.latest.min.js"></script>
+  ※ 옛 CDN(extensionsdk.azureedge.net)은 폐지됨 — 위 tableauusercontent URL 사용
 
 스타일:
   html,body: margin:0, padding:0, width:100%, height:100%, background:#000, overflow:hidden
@@ -188,15 +189,18 @@ avengers-network.html 과 manifest.trex.
   .node circle: stroke:#fff, stroke-width:1.5px, cursor:pointer
   .node text: fill:#ccc, font-size:11px, text-anchor:middle, pointer-events:none
 
-초기화:
-  tableau.extensions.initializeAsync().then(() => {
-    worksheet = tableau.extensions.worksheetContent.worksheet
-    render()
-    worksheet.addEventListener(tableau.TableauEventType.SummaryDataChanged, render)
-  }).catch(() => {
-    // 폴백: 브라우저에서 직접 열 때
-    d3.csv('../avengers_network_data.csv').then(rows => renderNetwork(rows.map(...)))
-  })
+초기화 (⚠️ 반드시 tableau 존재 여부를 먼저 가드 — 브라우저에선 tableau가 undefined라
+        가드 없이 tableau.extensions.를 호출하면 "tableau is not defined"로 전체가 멈춰 까만 화면):
+  const inTableau = (typeof tableau !== "undefined" && tableau.extensions)
+  if (inTableau) {
+    tableau.extensions.initializeAsync().then(() => {
+      worksheet = tableau.extensions.worksheetContent.worksheet
+      render()
+      worksheet.addEventListener(tableau.TableauEventType.SummaryDataChanged, render)
+    }).catch(() => loadFromCsv())
+  } else {
+    loadFromCsv()   // 브라우저에서 직접 열 때: ../avengers_network_data.csv 로드
+  }
 
 render() 함수:
   1) getVisualSpecificationAsync() → encMap{ source/target/strength/type → 필드명 }
@@ -243,7 +247,7 @@ drag():
   end: alphaTarget(0), d.fx=null, d.fy=null
 
 window resize:
-  if (tableau.extensions.worksheetContent) render() else loadFromCsv()
+  if (inTableau && tableau.extensions.worksheetContent) render() else loadFromCsv()
 
 ─── tableau-extension/manifest.trex ───
 

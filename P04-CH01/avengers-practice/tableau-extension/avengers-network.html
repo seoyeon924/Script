@@ -19,23 +19,28 @@
 <div id="hint"></div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
-<!-- Viz(워크시트) 확장 라이브러리 (API 1.12+) -->
-<script src="https://extensionsdk.azureedge.net/1.latest/tableau.extensions.1.latest.js"></script>
+<!-- Tableau Extensions API (Viz 확장) -->
+<script src="https://extensions.tableauusercontent.com/resources/tableau.extensions.1.latest.min.js"></script>
 <script>
 const svg = d3.select("#net");
 
-// ───── 초기화 (Viz 확장) ─────
-// 워크시트 안의 Viz 확장으로 동작. 마크 카드 인코딩(source/target/strength/type)에
-// 끌어놓은 필드를 읽어 네트워크를 그리고, 데이터가 바뀌면 다시 그린다.
-// Tableau 밖(브라우저)에서 열면 ../avengers_network_data.csv를 읽어 동일 동작 (폴백).
-tableau.extensions.initializeAsync().then(() => {
-  const worksheet = tableau.extensions.worksheetContent.worksheet;
-  render();
-  worksheet.addEventListener(tableau.TableauEventType.SummaryDataChanged, render);
-}).catch(() => {
+// ───── 초기화 ─────
+// Tableau 안: 워크시트 인코딩(source/target/strength/type) 데이터로 그림.
+// Tableau 밖(브라우저): tableau가 없으므로 바로 ../avengers_network_data.csv 폴백.
+const inTableau = (typeof tableau !== "undefined" && tableau.extensions);
+if (inTableau) {
+  tableau.extensions.initializeAsync().then(() => {
+    const worksheet = tableau.extensions.worksheetContent.worksheet;
+    render();
+    worksheet.addEventListener(tableau.TableauEventType.SummaryDataChanged, render);
+  }).catch(() => {
+    d3.select("#hint").text("Tableau 초기화 실패 — CSV 폴백");
+    loadFromCsv();
+  });
+} else {
   d3.select("#hint").text("Tableau 외부 — CSV 폴백 모드");
   loadFromCsv();
-});
+}
 
 // ───── Tableau 워크시트에서 데이터 읽기 ─────
 async function render(){
@@ -132,7 +137,7 @@ function drag(sim){
 }
 
 window.addEventListener("resize", () => {
-  if (tableau.extensions.worksheetContent) render(); else loadFromCsv();
+  if (inTableau && tableau.extensions.worksheetContent) render(); else loadFromCsv();
 });
 </script>
 </body>
