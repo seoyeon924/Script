@@ -97,9 +97,9 @@ function parseNetworkData(rows) {
       };
     }
 
-    // Optional: image URLs from data
-    if (row.Source_Image && row.Source_Image.startsWith('http')) dynamicImages[src] = row.Source_Image;
-    if (row.Target_Image && row.Target_Image.startsWith('http')) dynamicImages[tgt] = row.Target_Image;
+    // Optional: image URLs from data (http URL은 그대로, images/.. 상대경로는 프로젝트 루트 기준 해석)
+    { const u = resolveImageUrl(row.Source_Image); if (u) dynamicImages[src] = u; }
+    { const u = resolveImageUrl(row.Target_Image); if (u) dynamicImages[tgt] = u; }
 
     linkList.push({ source: src, target: tgt, strength, type });
   });
@@ -213,6 +213,17 @@ function rebuildDerivedData() {
     if (ga !== gb) return ga - gb;
     return b.importance - a.importance;
   });
+}
+
+// 이미지 경로 해석: http(s)·절대·data URI는 그대로, 상대경로(images/..)는
+// 확장 폴더(tableau-extension/) 기준 한 단계 위(프로젝트 루트)로 해석 → localhost:8080/images/..
+function resolveImageUrl(u) {
+  if (!u || typeof u !== 'string') return null;
+  u = u.trim();
+  if (!u) return null;
+  if (/^(https?:\/\/|\/|data:)/i.test(u)) return u;        // 절대 URL은 그대로
+  try { return new URL('../' + u.replace(/^\.\//, ''), location.href).href; }
+  catch (_) { return '../' + u.replace(/^\.\//, ''); }
 }
 
 // Apply dynamic images and colors from parsed data

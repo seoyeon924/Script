@@ -1,5 +1,9 @@
 # Avengers Network Graph 실습
 
+> **이 파일(CLAUDE.md)** = Claude Code가 폴더를 열 때 자동으로 읽는 **길잡이**. 단계별 흐름 + 자연어 프롬프트(입문용).
+> **`prompts.md`** = 완성 예시를 수치·코드 구조까지 똑같이 재현하는 **정밀 프롬프트**(복붙용). 같은 4단계지만 더 상세.
+> → 그냥 따라 만들 땐 이 파일, 완성본을 정확히 재현할 땐 prompts.md.
+
 데이터 파일: `avengers_network_data.csv` (80행)
 컬럼: Source, Target, Strength, Type, Source_Group, Source_Importance, Target_Group, Target_Importance
 완성 예시: https://avengers-network.netlify.app

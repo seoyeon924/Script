@@ -186,10 +186,12 @@ tableau-extension/ 폴더 안에 파일을 만들어줘 (데이터·로직을 �
    별 파티클 배경(GLSL/WebGL), Cinzel 폰트, 360° Chord 원형 배치,
    프로필 사진(foreignObject + clipPath 원형 크롭), 9시 Spotlight 스핀,
    RELATIONS/GROUPS 필터 — index.html에 있는 것 전부 포함.
-2) 그래프 데이터는 워크시트가 아니라 코드에 내장한다:
-   NODES/LINKS/faceImages/group/importance 를 JS 상수로 박아넣음.
-   (Tableau 워크시트는 Source/Target/Strength/Type 정도만 주므로
-    사진·그룹·중요도를 못 받음 → 완성형을 재현하려면 데이터 내장이 필수)
+2) 데이터 출처 — 워크시트 우선, 내장은 폴백:
+   · Tableau 안: 워크시트에서 읽는다. 인코딩에 Source/Target/Strength/Type,
+     세부 정보(Detail)에 Source_Group/Source_Image/Source_Importance 등을 올리면 그대로 반영.
+     → 스타워즈 등 다른 데이터도 동작.
+   · 데이터 없을 때: 첫 화면 가이드(#empty-state) 표시.
+   · 브라우저 단독: 내장 데모 데이터(NODES/LINKS)로 표시 (폴백).
 
 ─── 라이브러리 ───
   <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -200,23 +202,41 @@ tableau-extension/ 폴더 안에 파일을 만들어줘 (데이터·로직을 �
   const inTableau = (typeof tableau !== "undefined" && tableau.extensions)
   if (inTableau) {
     tableau.extensions.initializeAsync().then(() => {
-      render()   // 내장 데이터로 완성형 렌더
-      // (선택) 워크시트와 연동하려면 FilterChanged / MarkSelectionChanged 이벤트로
-      //        선택·필터된 캐릭터만 강조 — 데이터 자체는 내장본 사용
+      const ws = tableau.extensions.worksheetContent.worksheet
+      ws.addEventListener(tableau.TableauEventType.SummaryDataChanged, render)  // 필드 변경 시 다시
+      render()
     }).catch(() => render())
   } else {
-    render()   // 브라우저에서 직접 열어도 내장 데이터로 동일하게 완성형 렌더
+    render()   // 브라우저 단독: 내장 데모로
   }
 
 ─── render() ───
-  - index.html과 동일한 완성형 네트워크를 내장 NODES/LINKS로 그린다.
-  - Tableau든 브라우저든 데이터가 내장이라 항상 완성형으로 보인다.
-  - (선택) inTableau일 때만 Tableau에서 선택/필터된 캐릭터를 강조하는 연동 추가.
+  - Tableau + 데이터 있음: getVisualSpecificationAsync()로 인코딩 매핑 +
+    getSummaryDataReaderAsync()로 행을 읽어 그린다 (Detail의 Source_Group/Source_Image/Source_Importance도 반영).
+  - Tableau + 데이터 없음: showEmptyState(true) — 첫 화면 가이드 표시.
+  - 브라우저 단독: 내장 NODES/LINKS 데모.
 
-⚠️ 까만 화면 3대 원인 (피할 것):
+─── 다른 데이터(스타워즈 등) 대응 — 반드시 지킬 것 ───
+  1) 선 굵기 정규화: 데이터의 strength 최대값(maxStrength)으로 나눠서 계산.
+     width ∝ Math.pow(s / maxStrength, n)   ← s/10 하드코딩 금지.
+     (Tableau가 합계(SUM)로 집계해 값이 10을 넘어도 선이 폭증하지 않게)
+  2) 이미지는 데이터에 이미지 URL이 있을 때만 표시:
+     faceImages = (이미지 있으면) 데이터이미지 : {}   ← 없을 때 내장 사진 강제 사용 금지
+     (어벤져스 사진이 다른 데이터에 잘못 뜨는 것 방지)
+  3) 이미지 경로 해석(resolveImageUrl):
+     http(s)://·절대·data: → 그대로 / images/foo.jpg 상대경로 → ../로 해석(= 프로젝트 루트/images/)
+     → 로컬 이미지 폴더를 쓰는 데이터도 표시됨 (로컬 서버 8080 필요)
+
+─── 첫 화면 가이드 (#empty-state) ───
+  - Tableau에서 필드 없을 때 표시 (id="empty-state" + hidden 토글, showEmptyState로 제어)
+  - 한글 카드형(A Source · B Target · C Strength · D Type, 필수/선택), 폰트 Pretendard
+  - 이미지 URL을 어디(세부 정보 Detail)에 넣는지까지 안내
+
+⚠️ 까만 화면 / 오작동 원인 (피할 것):
   1) SDK를 폐지된 azureedge에서 로드 → tableauusercontent URL 사용
   2) tableau 가드 없이 호출 → 브라우저에서 스크립트 정지
-  3) 데이터를 워크시트에서만 읽음 → 사진·그룹 없어 단순 그래프 → 반드시 데이터 내장
+  3) 굵기 s/10 하드코딩 → 다른 데이터에서 선 폭증 → maxStrength 정규화
+  4) 이미지를 startsWith('http')만 받음 → images/ 상대경로 안 뜸 → resolveImageUrl 사용
 
 ─── tableau-extension/manifest.trex ───
 
