@@ -151,8 +151,63 @@ shootLines():
 ## Step 4 — Tableau Extension 연결 (선택)
 
 ```
-Tableau Extensions API 추가해줘.
-API 스크립트: https://extensionsdk.azureedge.net/1.10/tableau.extensions.1.latest.js
-Tableau 워크시트에서 Source/Target 필드 받아서 해당 캐릭터 관계만 필터링.
-manifest 파일(.trex)도 만들어줘. source-location URL은 http://localhost:8080으로.
+index.html과 별도로 tableau-extension/ 폴더를 새로 만들고
+그 안에 avengers-network.html 과 manifest.trex 두 파일을 생성해줘.
+
+─── tableau-extension/avengers-network.html ───
+- D3.js v7 + Tableau Extensions SDK 1.10 사용
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://extensionsdk.azureedge.net/1.10/tableau.extensions.1.latest.js"></script>
+- 배경 #000, SVG 전체 화면, overflow:hidden
+
+초기화:
+  tableau.extensions.initializeAsync()
+    → worksheet = dashboard.worksheets[0]
+    → loadData(worksheet)
+    → FilterChanged / MarkSelectionChanged 이벤트 → loadData 재호출
+  .catch → Tableau 밖 개발용: d3.csv('../avengers_network_data.csv').then(renderNetwork)
+
+loadData(worksheet):
+  getSummaryDataAsync()로 컬럼명 소문자 includes 방식으로 source/target/strength/type 인덱스 찾기
+  rows = dataTable.data.map → { Source, Target, Strength: parseFloat, Type }
+  .filter(r => r.Source && r.Target)
+  → renderNetwork(rows)
+
+renderNetwork(data):
+  W = window.innerWidth, H = window.innerHeight
+  svg 크기 W×H로 설정, 기존 요소 전부 제거 후 재렌더
+
+  노드: nodeSet으로 중복 제거, nodes/links 구성
+  링크 색상: ally → #4fc3f7, enemy → #ef5350, romantic → #f06292, 기타 → #aaa
+  선 굵기: d3.scaleLinear domain[1, max(strength)] range[1, 6]
+  선 opacity: 0.6
+
+  Force Simulation:
+    forceLink distance 120
+    forceManyBody strength -300
+    forceCenter(W/2, H/2)
+
+  노드: circle r=8, fill #e8603c, stroke #fff, stroke-width 1.5
+  드래그 가능 (alphaTarget 0.3 on start, 0 on end)
+  레이블: font-size 11, fill #ccc, text-anchor middle, dy 20
+
+window resize → loadData 재호출
+
+─── tableau-extension/manifest.trex ───
+<?xml version="1.0" encoding="utf-8"?>
+<manifest manifest-version="0.1" xmlns="http://www.tableau.com/xml/extension_manifest">
+  <dashboard-extension id="com.seoyeon924.avengers-network" extension-version="1.0.0">
+    <default-locale>ko_KR</default-locale>
+    <name resource-id="name">Avengers Network</name>
+    <description resource-id="description">D3.js 기반 어벤져스 캐릭터 관계 네트워크 차트</description>
+    <author name="seoyeon924" email="tjdus92422@gmail.com" organization="fastcampus" website="https://avengers-network.netlify.app"/>
+    <min-api-version>1.1</min-api-version>
+    <source-location>
+      <url>https://avengers-network.netlify.app/tableau-extension/avengers-network.html</url>
+    </source-location>
+    <permissions>
+      <permission>full data</permission>
+    </permissions>
+  </dashboard-extension>
+</manifest>
 ```
