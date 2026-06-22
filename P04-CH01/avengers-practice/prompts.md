@@ -172,82 +172,51 @@ visible 노드만으로 baseAngle 재계산
 ## Step 4 — Tableau Extension (정밀 버전)
 
 ```
-tableau-extension/ 폴더 안에 두 파일을 만들어줘.
-avengers-network.html 과 manifest.trex.
+목표: 완성형 네트워크(index.html)를 "그대로" Tableau 워크시트 Viz 확장으로 만든다.
+      → 단순 Force 버전이 아니라, index.html의 풀 디자인이 Tableau 안에서도 똑같이 보이게.
 
-─── tableau-extension/avengers-network.html ───
+tableau-extension/ 폴더 안에 파일을 만들어줘 (데이터·로직을 분리하면 관리 쉬움):
+  - avengers-network.html        (껍데기 + 라이브러리 로드)
+  - avengers-network-data.js     (NODES / LINKS / faceImages / group / importance 전부 내장)
+  - avengers-network.js          (완성형 렌더 로직)
+  manifest.trex
 
-라이브러리:
+─── 핵심 방침 (완성본 netlify 구조와 동일) ───
+1) index.html의 디자인·로직을 그대로 가져온다:
+   별 파티클 배경(GLSL/WebGL), Cinzel 폰트, 360° Chord 원형 배치,
+   프로필 사진(foreignObject + clipPath 원형 크롭), 9시 Spotlight 스핀,
+   RELATIONS/GROUPS 필터 — index.html에 있는 것 전부 포함.
+2) 그래프 데이터는 워크시트가 아니라 코드에 내장한다:
+   NODES/LINKS/faceImages/group/importance 를 JS 상수로 박아넣음.
+   (Tableau 워크시트는 Source/Target/Strength/Type 정도만 주므로
+    사진·그룹·중요도를 못 받음 → 완성형을 재현하려면 데이터 내장이 필수)
+
+─── 라이브러리 ───
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://extensions.tableauusercontent.com/resources/tableau.extensions.1.latest.min.js"></script>
   ※ 옛 CDN(extensionsdk.azureedge.net)은 폐지됨 — 위 tableauusercontent URL 사용
 
-스타일:
-  html,body: margin:0, padding:0, width:100%, height:100%, background:#000, overflow:hidden
-  #net: display:block, width:100vw, height:100vh
-  .link: stroke-opacity:0.6
-  .node circle: stroke:#fff, stroke-width:1.5px, cursor:pointer
-  .node text: fill:#ccc, font-size:11px, text-anchor:middle, pointer-events:none
-
-초기화 (⚠️ 반드시 tableau 존재 여부를 먼저 가드 — 브라우저에선 tableau가 undefined라
-        가드 없이 tableau.extensions.를 호출하면 "tableau is not defined"로 전체가 멈춰 까만 화면):
+─── 초기화 (⚠️ tableau 존재 가드 필수 — 없으면 "tableau is not defined"로 까만 화면) ───
   const inTableau = (typeof tableau !== "undefined" && tableau.extensions)
   if (inTableau) {
     tableau.extensions.initializeAsync().then(() => {
-      worksheet = tableau.extensions.worksheetContent.worksheet
-      render()
-      worksheet.addEventListener(tableau.TableauEventType.SummaryDataChanged, render)
-    }).catch(() => loadFromCsv())
+      render()   // 내장 데이터로 완성형 렌더
+      // (선택) 워크시트와 연동하려면 FilterChanged / MarkSelectionChanged 이벤트로
+      //        선택·필터된 캐릭터만 강조 — 데이터 자체는 내장본 사용
+    }).catch(() => render())
   } else {
-    loadFromCsv()   // 브라우저에서 직접 열 때: ../avengers_network_data.csv 로드
+    render()   // 브라우저에서 직접 열어도 내장 데이터로 동일하게 완성형 렌더
   }
 
-render() 함수:
-  1) getVisualSpecificationAsync() → encMap{ source/target/strength/type → 필드명 }
-     (실패해도 계속 — try/catch)
-  2) getSummaryDataReaderAsync() → getAllPagesAsync() → releaseAsync()
-  3) 컬럼 인덱스 결정:
-     pick(encId, ...keywords):
-       encMap[encId] 있으면 fieldName으로 정확히 찾기
-       없으면 fieldName.toLowerCase().includes(keyword)로 추정
-     iS = pick("source", "source","from","출발")
-     iT = pick("target", "target","to","도착")
-     iW = pick("strength", "strength","weight","value","굵기")
-     iY = pick("type", "type","relation","관계")
-  4) rows = data.map(r => { Source, Target, Strength:parseFloat, Type }).filter(Source && Target)
-  5) renderNetwork(rows)
+─── render() ───
+  - index.html과 동일한 완성형 네트워크를 내장 NODES/LINKS로 그린다.
+  - Tableau든 브라우저든 데이터가 내장이라 항상 완성형으로 보인다.
+  - (선택) inTableau일 때만 Tableau에서 선택/필터된 캐릭터를 강조하는 연동 추가.
 
-renderNetwork(data):
-  W = window.innerWidth, H = window.innerHeight
-  svg.attr("viewBox",[0,0,W,H]).selectAll("*").remove()
-  data 없으면 힌트 텍스트 표시
-
-  links = data.map(d => { source, target, strength, type })
-  nodeSet = Map으로 중복 제거
-  nodes = Array.from(nodeSet.values())
-
-  linkColor: enemy→#ef5350 / romantic→#f06292 / ally→#4fc3f7 / 기타→#aaa
-  wScale = d3.scaleLinear().domain([1, max(strength)]).range([1,6])
-
-  sim = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(links).id(d=>d.id).distance(120))
-    .force("charge", d3.forceManyBody().strength(-300))
-    .force("center", d3.forceCenter(W/2,H/2))
-
-  link: <line class="link">, stroke=linkColor, stroke-width=wScale
-  node: <g class="node">, drag 적용
-    circle r=8, fill=#e8603c
-    text dy=20, text=id (언더스코어→공백)
-
-  sim.on("tick"): link x1/y1/x2/y2, node transform translate
-
-drag():
-  start: alphaTarget(0.3).restart(), d.fx=d.x, d.fy=d.y
-  drag: d.fx=e.x, d.fy=e.y
-  end: alphaTarget(0), d.fx=null, d.fy=null
-
-window resize:
-  if (inTableau && tableau.extensions.worksheetContent) render() else loadFromCsv()
+⚠️ 까만 화면 3대 원인 (피할 것):
+  1) SDK를 폐지된 azureedge에서 로드 → tableauusercontent URL 사용
+  2) tableau 가드 없이 호출 → 브라우저에서 스크립트 정지
+  3) 데이터를 워크시트에서만 읽음 → 사진·그룹 없어 단순 그래프 → 반드시 데이터 내장
 
 ─── tableau-extension/manifest.trex ───
 
@@ -321,7 +290,8 @@ window resize:
 
 > **Tableau에서 불러오는 법**:
 > 워크시트 → 마크 카드 드롭다운 → "확장 프로그램 추가" → manifest.trex 선택
-> → 마크 카드에 생긴 인코딩 선반(Source / Target / Strength / Type)에 필드를 끌어놓으면 렌더됩니다.
+> → 데이터가 코드에 내장돼 있어 **추가하자마자 완성형 그래프가 그려집니다** (필드 안 올려도 됨).
+>   (인코딩 선반 Source/Target/Strength/Type은 선택 — Tableau 데이터와 필터·강조 연동할 때만 사용)
 > ※ 대시보드 "확장 프로그램" 개체에 넣으면 에러납니다(93FB5DF9) — 반드시 워크시트 마크 카드에서 추가.
 > ※ 로컬 서버 필수: avengers-practice 폴더에서 `python3 -m http.server 8080` 실행 중이어야 함.
 >   (서버 없이 배포하려면 source-location을 https 호스팅 URL로 — 예: netlify)

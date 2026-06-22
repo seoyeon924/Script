@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avengers Network — 360° Chord</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  html, body {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    background: #000005; overflow: hidden;
+    font-family: 'Cinzel', serif; color: #e9e6d6;
+  }
+  #bg {
+    position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0;
+    background: #000005 url("background.jpg") center / cover no-repeat;
+  }
+  #stars { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; z-index: 1; }
+  #graph { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; z-index: 2; }
+
+  .node circle.ring { fill: none; stroke: rgba(255,255,255,0.18); stroke-width: 1.4px; }
+  .node circle.base { stroke: none; }
+  .node { cursor: pointer; }
+  .node text.label {
+    fill: #cfcab6; font-family: 'Cinzel', serif; font-weight: 600;
+    font-size: 9.5px; letter-spacing: 0.2px; pointer-events: none;
+    text-shadow: 0 1px 3px #000;
+  }
+  .link { fill: none; stroke: #ffffff; }
+  .orbit { fill: none; stroke: #ffffff; opacity: 0.07; }
+
+  /* 좌측 상단 로고 (범례 없음) */
+  #header { position: fixed; top: 18px; left: 22px; z-index: 3; }
+  #header img { height: 46px; display: block; filter: drop-shadow(0 2px 10px #000); }
+
+  /* 우측 필터 패널 */
+  #panel {
+    position: fixed; top: 22px; right: 22px; z-index: 3; width: 168px;
+    background: rgba(8,8,18,0.55); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px; padding: 16px; backdrop-filter: blur(6px);
+  }
+  #panel .sec-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #b9b4a0; margin: 14px 0 8px; }
+  #panel .sec-label:first-child { margin-top: 0; }
+  #panel .btns { display: flex; flex-wrap: wrap; gap: 6px; }
+  #panel button {
+    font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; color: #ddd9c8; cursor: pointer;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 20px; padding: 5px 11px; transition: all .2s ease;
+  }
+  #panel button:hover { background: rgba(255,255,255,0.14); }
+  #panel button.active { color: #0a0a12; font-weight: 700; background: var(--c,#fff); border-color: var(--c,#fff); box-shadow: 0 0 12px var(--c,#fff); }
+
+  /* 정보 카드 */
+  #info-card {
+    position: fixed; z-index: 3; width: 185px; text-align: right;
+    display: none; pointer-events: none; font-family: 'Cinzel', serif;
+  }
+  #info-card .ic-name { font-size: 26px; font-weight: 800; line-height: 1.05; color: #fff; text-shadow: 0 2px 10px #000; }
+  #info-card .ic-group { font-size: 14px; font-weight: 700; letter-spacing: 1px; margin-top: 6px; }
+  #info-card .ic-conn { font-size: 12px; font-weight: 600; color: #b9b4a0; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<div id="bg"></div>
+<canvas id="stars"></canvas>
+<svg id="graph"></svg>
+
+<div id="header">
+  <img src="avengers-logo2.png" alt="Avengers">
+</div>
+
+<div id="panel">
+  <div class="sec-label">RELATIONS</div>
+  <div class="btns" id="rel-btns"></div>
+  <div class="sec-label">GROUPS</div>
+  <div class="btns" id="grp-btns"></div>
+</div>
+
+<div id="info-card">
+  <div class="ic-name"></div>
+  <div class="ic-group"></div>
+  <div class="ic-conn"></div>
+</div>
+
+<!-- ============ GLSL 별 파티클 배경 ============ -->
+<script id="vert" type="x-shader/x-vertex">
+attribute vec2 a_pos; void main(){ gl_Position = vec4(a_pos,0.0,1.0); }
+</script>
+<script id="frag" type="x-shader/x-fragment">
+precision highp float; uniform vec2 u_res; uniform float u_time;
+float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
+float starLayer(vec2 uv,float density,float tw){
+  vec2 g=uv*density; vec2 id=floor(g); vec2 f=fract(g)-0.5;
+  float rnd=hash(id); if(rnd<0.55) return 0.0;
+  vec2 off=(vec2(hash(id+1.3),hash(id+7.7))-0.5)*0.7;
+  float d=length(f-off); float star=smoothstep(0.06,0.0,d);
+  float twinkle=0.55+0.45*sin(u_time*tw+rnd*30.0);
+  return star*twinkle*(0.4+rnd*0.6);
+}
+void main(){
+  vec2 uv=gl_FragCoord.xy/u_res.xy; uv.x*=u_res.x/u_res.y;
+  float s=0.0;
+  s+=starLayer(uv+vec2(0.0,u_time*0.003),60.0,1.5)*0.6;
+  s+=starLayer(uv+vec2(0.0,u_time*0.006),110.0,2.3)*0.8;
+  s+=starLayer(uv+vec2(0.0,u_time*0.010),200.0,3.1)*1.0;
+  // 배경 사진(background.jpg) 위에 오버레이 — 어두운 우주 베일 + 별빛
+  float neb=0.04+0.05*sin(uv.x*2.0+0.7)*cos(uv.y*2.4-0.3);
+  vec3 veil=mix(vec3(0.0,0.0,0.02),vec3(0.02,0.03,0.09),neb+0.5);
+  vec3 starCol=mix(vec3(0.8,0.88,1.0),vec3(1.0,0.96,0.85),hash(uv));
+  float sc=clamp(s,0.0,1.0);
+  vec3 col=mix(veil,starCol,sc);
+  float alpha=clamp(0.55+s,0.0,1.0);   // 사진을 어둡게 덮되, 별 위치는 더 불투명
+  gl_FragColor=vec4(col,alpha);
+}
+</script>
+<script>
+(function initStars(){
+  const canvas=document.getElementById('stars');
+  const gl=canvas.getContext('webgl',{alpha:true, premultipliedAlpha:false});
+  if(!gl){ return; }   // 실패해도 #bg 사진은 보임
+  gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+  gl.clearColor(0,0,0,0);
+  function compile(t,src){ const sh=gl.createShader(t); gl.shaderSource(sh,src); gl.compileShader(sh);
+    if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(sh)); return sh; }
+  const p=gl.createProgram();
+  gl.attachShader(p,compile(gl.VERTEX_SHADER,document.getElementById('vert').textContent));
+  gl.attachShader(p,compile(gl.FRAGMENT_SHADER,document.getElementById('frag').textContent));
+  gl.linkProgram(p); gl.useProgram(p);
+  const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const a=gl.getAttribLocation(p,'a_pos'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a,2,gl.FLOAT,false,0,0);
+  const uRes=gl.getUniformLocation(p,'u_res'),uTime=gl.getUniformLocation(p,'u_time');
+  function resize(){ const dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=innerWidth*dpr; canvas.height=innerHeight*dpr; gl.viewport(0,0,canvas.width,canvas.height); }
+  addEventListener('resize',resize); resize();
+  const s0=performance.now();
+  (function loop(){ gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform2f(uRes,canvas.width,canvas.height); gl.uniform1f(uTime,(performance.now()-s0)/1000);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4); requestAnimationFrame(loop); })();
+})();
+</script>
+
+<!-- ============ D3 360° Chord ============ -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+const TAU = Math.PI * 2;
+const svg = d3.select("#graph");
+const width = innerWidth, height = innerHeight;
+svg.attr("viewBox", [0, 0, width, height]);
+
+const CX = width / 2, CY = height / 2;
+const CIRCLE_R = Math.min(width, height) / 2 - 120;
+const NODE_R = 18;
+const SL_R = 54;          // Spotlight 반경
+const CURV = 0.32;        // 중심 방향 곡률
+const CARD_W = 185;
+const GAP = Math.min(0.5, (SL_R + NODE_R + 18) / CIRCLE_R);   // 선택 노드 양옆 여백 각도
+
+const GROUP_COLORS = {
+  "Avengers":"#4f9eff","Guardians":"#3ad29f","Asgardians":"#e8c87a","Wakanda":"#b07fff",
+  "Mystic Arts":"#ff8fd0","Black Order":"#ff5c5c","Villain":"#d6453a","Supporting":"#9fb3c8"
+};
+const GROUP_ORDER = ["Avengers","Guardians","Asgardians","Wakanda","Mystic Arts","Black Order","Villain","Supporting"];
+const colorOf = g => GROUP_COLORS[g] || "#9fb3c8";
+
+// 관계 타입별 두께 / 불투명도
+const EDGE_STYLE = {
+  ally:    { w:0.7, o:0.18, bright:0.75 },
+  enemy:   { w:2.2, o:0.28, bright:0.95 },
+  romantic:{ w:1.1, o:0.22, bright:0.80 },
+  family:  { w:1.6, o:0.24, bright:0.85 }
+};
+const REL_ORDER = ["ally","enemy","family","romantic"];
+
+let currentRot = 0, selectedId = null, spinTimer = null, gapTimer = null, filterTimer = null;
+let nodes, links, node, link, spot, spotImg, spotBase;
+let visibleNodes = [], degree = {};
+let relSel = "all", grpSel = "all";
+
+d3.csv("avengers_network_data.csv").then(rows => {
+  links = rows.map(r => ({ source:r.Source, target:r.Target, strength:+r.Strength, type:r.Type }));
+
+  // FACE — 캐릭터 이름 → 이미지 URL
+  const FACE = {};
+  rows.forEach(r => {
+    if (r.Source_Image && !FACE[r.Source]) FACE[r.Source] = r.Source_Image;
+    if (r.Target_Image && !FACE[r.Target]) FACE[r.Target] = r.Target_Image;
+  });
+
+  const nodeMap = new Map();
+  rows.forEach(r => {
+    if (!nodeMap.has(r.Source)) nodeMap.set(r.Source, { id:r.Source, group:r.Source_Group });
+    if (!nodeMap.has(r.Target)) nodeMap.set(r.Target, { id:r.Target, group:r.Target_Group });
+  });
+  nodes = Array.from(nodeMap.values());
+  nodes.forEach(n => n.image = FACE[n.id]);
+
+  // 링크의 source/target을 노드 객체로 연결 + 연결 수 집계
+  const byId = new Map(nodes.map(n => [n.id, n]));
+  links.forEach(l => {
+    l.source = byId.get(l.source); l.target = byId.get(l.target);
+    degree[l.source.id] = (degree[l.source.id]||0) + 1;
+    degree[l.target.id] = (degree[l.target.id]||0) + 1;
+  });
+
+  // 그룹 순서로 정렬 후 baseAngle 할당 (12시 기준 시계방향)
+  nodes.sort((a, b) => (GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group)) || d3.ascending(a.id, b.id));
+  const N = nodes.length;
+  nodes.forEach((d, i) => { d.baseAngle = -Math.PI/2 + TAU * i / N; d.originalAngle = d.baseAngle; });
+
+  // 원 궤도 가이드 라인
+  svg.append("circle").attr("class","orbit").attr("cx",CX).attr("cy",CY).attr("r",CIRCLE_R);
+
+  // clipPath (노드 원형 크롭)
+  const defs = svg.append("defs");
+  defs.selectAll("clipPath").data(nodes).join("clipPath")
+    .attr("id", d => "clip-"+d.id)
+    .append("circle").attr("r", NODE_R);
+
+  // 엣지 레이어
+  link = svg.append("g").attr("class","links").selectAll("path")
+    .data(links).join("path")
+      .attr("class","link")
+      .attr("stroke-width", d => EDGE_STYLE[d.type].w * (0.6 + d.strength * 0.04))
+      .attr("stroke-opacity", d => EDGE_STYLE[d.type].o);
+
+  // 노드 레이어
+  node = svg.append("g").attr("class","nodes").selectAll("g")
+    .data(nodes).join("g").attr("class","node")
+    .on("click", (e, d) => selectNode(d));
+
+  node.append("circle").attr("class","base").attr("r", NODE_R).attr("fill", d => colorOf(d.group));
+  node.append("image")
+    .attr("href", d => d.image).attr("xlink:href", d => d.image)
+    .attr("x", -NODE_R).attr("y", -NODE_R).attr("width", 2*NODE_R).attr("height", 2*NODE_R)
+    .attr("clip-path", d => `url(#clip-${d.id})`)
+    .attr("preserveAspectRatio", "xMidYMin slice")
+    .on("error", function(){ d3.select(this).remove(); });   // 폴백: 그룹색 원 (이니셜 없음)
+  node.append("circle").attr("class","ring").attr("r", NODE_R);
+  node.append("text").attr("class","label").text(d => d.id.replace(/_/g," ").toUpperCase());
+
+  // Spotlight 레이어 (z 최상단, pointer-events 없음)
+  defs.append("clipPath").attr("id","spot-clip").append("circle").attr("r", SL_R);
+  spot = svg.append("g").attr("id","spotlight").style("pointer-events","none").style("opacity",0)
+            .attr("transform", `translate(${CX - CIRCLE_R},${CY})`);
+  spot.append("circle").attr("r", SL_R+10).attr("fill","none")
+      .attr("stroke","rgba(255,255,255,0.25)").attr("stroke-width",1);
+  spotBase = spot.append("circle").attr("r", SL_R);
+  spotImg = spot.append("image")
+      .attr("x", -SL_R).attr("y", -SL_R).attr("width", 2*SL_R).attr("height", 2*SL_R)
+      .attr("clip-path","url(#spot-clip)").attr("preserveAspectRatio","xMidYMin slice")
+      .on("error", function(){ d3.select(this).style("display","none"); });
+  spot.append("circle").attr("r", SL_R).attr("fill","none")
+      .attr("stroke","rgba(255,255,255,0.9)").attr("stroke-width",2);
+
+  // 정보 카드 위치 (9시 Spotlight 왼쪽)
+  d3.select("#info-card")
+    .style("left", ((CX - CIRCLE_R) - SL_R - 18 - CARD_W) + "px")
+    .style("top",  (CY - 50) + "px");
+
+  visibleNodes = nodes.slice();
+  updateNodes(); updateEdges();
+  refreshPanel();
+});
+
+// ===== 위치 계산 =====
+// d._a = 노드의 실제 렌더 각도 (스핀/여백 애니메이션이 직접 갱신)
+function renderPositions(){
+  node.attr("transform", d => {
+    d.x = CX + CIRCLE_R*Math.cos(d._a); d.y = CY + CIRCLE_R*Math.sin(d._a);
+    return `translate(${d.x},${d.y})`;
+  });
+  node.select("text.label")
+    .attr("x", d => Math.cos(d._a) * (NODE_R + 7))
+    .attr("y", d => Math.sin(d._a) * (NODE_R + 7))
+    .attr("dominant-baseline","middle")
+    .attr("text-anchor", d => Math.cos(d._a) < -0.01 ? "end" : "start");
+}
+function updateNodes(){ nodes.forEach(d => d._a = d.baseAngle + currentRot); renderPositions(); }
+function edgePath(l){
+  const x0=l.source.x, y0=l.source.y, x3=l.target.x, y3=l.target.y;
+  const c1x=x0+(CX-x0)*CURV, c1y=y0+(CY-y0)*CURV;
+  const c2x=x3+(CX-x3)*CURV, c2y=y3+(CY-y3)*CURV;
+  return `M${x0},${y0} C${c1x},${c1y} ${c2x},${c2y} ${x3},${y3}`;
+}
+function updateEdges(){ link.attr("d", edgePath); }
+// 선택 노드(from)에서 시작하도록 방향을 맞춘 path
+function edgePathDirected(l, from){
+  const a = (l.source.id === from.id) ? l.source : l.target;
+  const b = (l.source.id === from.id) ? l.target : l.source;
+  const x0=a.x, y0=a.y, x3=b.x, y3=b.y;
+  const c1x=x0+(CX-x0)*CURV, c1y=y0+(CY-y0)*CURV;
+  const c2x=x3+(CX-x3)*CURV, c2y=y3+(CY-y3)*CURV;
+  return `M${x0},${y0} C${c1x},${c1y} ${c2x},${c2y} ${x3},${y3}`;
+}
+
+// ===== 클릭 → 9시 스핀 =====
+function selectNode(d){
+  selectedId = d.id;
+  // 1) 선택 외 노드 흐리게
+  node.style("opacity", n => visibleNodes.includes(n) ? (n.id===selectedId ? 1 : 0.30) : 0);
+  // 2) 모든 엣지 즉시 숨김
+  link.interrupt().attr("stroke-dasharray", null).attr("stroke-dashoffset", null).style("opacity", 0);
+  // 3) Spotlight 즉시 표시
+  setSpotlight(d);
+  showInfoCard(d);
+  // 4) currentRot 애니메이션 → 선택 노드를 π(9시)로
+  spinTo(d);
+}
+
+function spinTo(target){
+  const startRot = currentRot;
+  let delta = (Math.PI - target.baseAngle) - startRot;
+  while (delta <= -Math.PI) delta += TAU;
+  while (delta >   Math.PI) delta -= TAU;
+  const finalRot = startRot + delta;
+  // 현재 렌더 각도(여백이 열려 있을 수도 있음)에서 균등 회전 위치로 보간 → 점프 없음
+  const startA = new Map(nodes.map(d => [d.id, (d._a !== undefined ? d._a : d.baseAngle + currentRot)]));
+  const dur = 950;
+  if (spinTimer) spinTimer.stop();
+  if (gapTimer) gapTimer.stop();
+  spinTimer = d3.timer(elapsed => {
+    const t = Math.min(elapsed / dur, 1), e = d3.easeCubicInOut(t);
+    nodes.forEach(d => {
+      const s = startA.get(d.id), tg = d.baseAngle + finalRot;
+      let del = tg - s; while (del <= -Math.PI) del += TAU; while (del > Math.PI) del -= TAU;
+      d._a = s + del * e;
+    });
+    renderPositions();
+    const at9 = getNodeAt9();          // 5) 매 프레임 9시 노드로 이미지 교체 (촤르르)
+    if (at9) setSpotlight(at9);
+    if (t >= 1) { spinTimer.stop(); currentRot = finalRot;
+      nodes.forEach(d => d._a = d.baseAngle + currentRot); renderPositions();
+      setSpotlight(target); openGap(target); }   // 6) 여백 확보 → 선이 뻗어나감
+  });
+}
+
+// 선택 노드 양옆으로 빈 공간을 만들어 Spotlight가 인접 노드를 가리지 않게
+function openGap(sel){
+  const vis = visibleNodes;
+  if (vis.length <= 2) { shootLines(sel); return; }
+  const others = vis.filter(d => d.id !== sel.id)
+    .sort((a,b) => (((a._a-Math.PI)%TAU+TAU)%TAU) - (((b._a-Math.PI)%TAU+TAU)%TAU));
+  const free = TAU - 2*GAP;
+  const targets = new Map(); targets.set(sel.id, Math.PI);
+  others.forEach((d,i) => targets.set(d.id, Math.PI + GAP + (i+0.5) * free / others.length));
+  const startA = new Map(vis.map(d => [d.id, d._a]));
+  const dur = 420;
+  if (gapTimer) gapTimer.stop();
+  gapTimer = d3.timer(el => {
+    const t = Math.min(el / dur, 1), e = d3.easeCubicOut(t);
+    vis.forEach(d => {
+      const s = startA.get(d.id), tg = targets.get(d.id);
+      let del = tg - s; while (del <= -Math.PI) del += TAU; while (del > Math.PI) del -= TAU;
+      d._a = s + del * e;
+    });
+    renderPositions();
+    if (t >= 1) { gapTimer.stop(); shootLines(sel); }
+  });
+}
+
+function getNodeAt9(){
+  let best=null, bd=Infinity;
+  visibleNodes.forEach(d => {
+    let diff = Math.abs(((d._a - Math.PI) % TAU + TAU) % TAU - Math.PI);
+    if (diff < bd) { bd = diff; best = d; }
+  });
+  return best;
+}
+
+function setSpotlight(d){
+  spotBase.attr("fill", colorOf(d.group));
+  spotImg.style("display", null).attr("href", d.image||"").attr("xlink:href", d.image||"");
+  spot.style("opacity", 1);
+}
+
+function showInfoCard(d){
+  d3.select("#info-card").style("display","block");
+  d3.select("#info-card .ic-name").text(d.id.replace(/_/g," ").toUpperCase());
+  d3.select("#info-card .ic-group").style("color", colorOf(d.group)).text(d.group);
+  d3.select("#info-card .ic-conn").text((degree[d.id]||0) + " CONNECTIONS");
+}
+
+function shootLines(sel){
+  updateEdges();
+  link.each(function(l){
+    const connected = (l.source.id===sel.id || l.target.id===sel.id);
+    const path = d3.select(this);
+    if (connected){
+      path.attr("d", edgePathDirected(l, sel));   // 선택(중심) 노드에서 시작하도록 방향 지정
+      const len = this.getTotalLength();
+      path.attr("stroke-dasharray", len).attr("stroke-dashoffset", len)
+          .style("opacity", EDGE_STYLE[l.type].bright)
+        .transition().duration(650).ease(d3.easeQuadOut)
+          .attr("stroke-dashoffset", 0);
+    } else {
+      path.attr("stroke-dasharray", null).attr("stroke-dashoffset", null).style("opacity", 0.03);
+    }
+  });
+}
+
+// ===== 필터 =====
+function computeVisible(){
+  const nodeOk = n => grpSel==="all" || n.group===grpSel;
+  const linkOk = l => relSel==="all" || l.type===relSel;
+  const visLinks = links.filter(l => linkOk(l) && nodeOk(l.source) && nodeOk(l.target));
+  let visNodes;
+  if (relSel==="all" && grpSel==="all") visNodes = nodes.slice();
+  else if (grpSel!=="all")              visNodes = nodes.filter(nodeOk);
+  else { const s=new Set(); visLinks.forEach(l=>{s.add(l.source.id); s.add(l.target.id);}); visNodes = nodes.filter(n=>s.has(n.id)); }
+  return { visNodes, visLinks };
+}
+
+function applyFilter(){
+  // 필터 변경 시 초기화
+  currentRot = 0; selectedId = null;
+  if (spinTimer) spinTimer.stop();
+  if (gapTimer) gapTimer.stop();
+  spot.transition().duration(300).style("opacity", 0);
+  d3.select("#info-card").style("display","none");
+
+  const { visNodes, visLinks } = computeVisible();
+  visibleNodes = visNodes;
+  const visNodeSet = new Set(visNodes.map(n=>n.id));
+  const visLinkSet = new Set(visLinks);
+
+  // 보이는 노드만으로 360° 원 재구성 (baseAngle 재계산)
+  const all = (relSel==="all" && grpSel==="all");
+  if (all){
+    nodes.forEach(d => d.baseAngle = d.originalAngle);   // 전체 복원
+  } else {
+    const M = visNodes.length;
+    visNodes.forEach((d,i) => d.baseAngle = -Math.PI/2 + TAU * i / M);
+  }
+
+  // 위치 애니메이션 — 노드가 새 각도로 부드럽게 이동 (600ms, easeCubicInOut)
+  const startA = new Map(nodes.map(d => [d.id, (d._a !== undefined ? d._a : d.baseAngle)]));
+  const dur = 600;
+  if (filterTimer) filterTimer.stop();
+  filterTimer = d3.timer(el => {
+    const t = Math.min(el / dur, 1), e = d3.easeCubicInOut(t);
+    nodes.forEach(d => {
+      const s = startA.get(d.id), tg = d.baseAngle;   // currentRot = 0
+      let del = tg - s; while (del <= -Math.PI) del += TAU; while (del > Math.PI) del -= TAU;
+      d._a = s + del * e;
+    });
+    renderPositions(); updateEdges();
+    if (t >= 1) filterTimer.stop();
+  });
+
+  // opacity 트랜지션
+  node.style("pointer-events", n => visNodeSet.has(n.id) ? "all" : "none")
+      .transition().duration(dur).style("opacity", n => visNodeSet.has(n.id) ? 1 : 0);
+  link.interrupt().attr("stroke-dasharray", null).attr("stroke-dashoffset", null)
+      .style("pointer-events", "none")
+      .transition().duration(dur)
+      .style("opacity", l => visLinkSet.has(l) ? EDGE_STYLE[l.type].o : 0);
+}
+
+function refreshPanel(){
+  const present = Array.from(new Set(nodes.map(d=>d.group)))
+    .sort((a,b)=>GROUP_ORDER.indexOf(a)-GROUP_ORDER.indexOf(b));
+  buildBtns("#rel-btns", REL_ORDER, k => EDGE_STYLE[k] ? "#ffffff" : "#fff", k => k===relSel, k => relSel=k);
+  buildBtns("#grp-btns", present,   k => colorOf(k),                        k => k===grpSel, k => grpSel=k);
+}
+function buildBtns(containerId, items, getColor, isActive, onPick){
+  const data = [{key:"all",label:"ALL",color:"#ffffff"},
+                ...items.map(k=>({key:k,label:k.toUpperCase(),color:getColor(k)}))];
+  d3.select(containerId).selectAll("button").data(data).join("button")
+    .style("--c", d=>d.color).classed("active", d=>isActive(d.key)).text(d=>d.label)
+    .on("click",(e,d)=>{ onPick(d.key); refreshPanel(); applyFilter(); });
+}
+</script>
+</body>
+</html>
