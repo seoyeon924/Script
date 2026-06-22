@@ -4,6 +4,14 @@
 컬럼: Source, Target, Strength, Type, Source_Group, Source_Importance, Target_Group, Target_Importance
 완성 예시: https://avengers-network.netlify.app
 
+### 폴더에 있는 에셋 (코드에서 이 파일명 그대로 참조)
+
+| 파일 | 용도 |
+|---|---|
+| `background.jpg` | 배경 이미지 (우주 배경) |
+| `avengers-logo2.png` | 좌측 상단 헤더 로고 (권장) |
+| `avengers-logo.png` | 로고 대체본 |
+
 > ⚠️ **반드시 로컬 서버로 실행** — `file://`로 열면 CSV 로딩이 차단되어 데이터가 표시되지 않음
 > ```
 > python3 -m http.server 8080
@@ -25,7 +33,8 @@ D3 Force Simulation으로 노드 배치.
 ## Step 2 — 디자인
 
 ```
-배경: 우주 느낌 (검정 + GLSL 별 파티클)
+배경: 폴더의 background.jpg를 깔고 그 위에 우주 느낌(검정 + GLSL 별 파티클) 오버레이
+로고: 폴더의 avengers-logo2.png를 좌측 상단 헤더에 <img>로 삽입
 노드 색상: Source_Group별로 구분 (Asgardians, Guardians, Avengers, Wakanda, Villains)
 노드 크기: Source_Importance에 비례
 선 굵기: Strength에 비례
