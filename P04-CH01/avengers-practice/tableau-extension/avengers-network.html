@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avengers Network — Tableau Viz Extension</title>
+<style>
+  html, body { margin:0; padding:0; width:100%; height:100%; background:#000; overflow:hidden;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  #net { display:block; width:100vw; height:100vh; }
+  .link { stroke-opacity:0.6; }
+  .node circle { stroke:#fff; stroke-width:1.5px; cursor:pointer; }
+  .node text { fill:#ccc; font-size:11px; text-anchor:middle; pointer-events:none; }
+  #hint { position:fixed; bottom:10px; left:12px; color:#666; font-size:11px; }
+</style>
+</head>
+<body>
+<svg id="net"></svg>
+<div id="hint"></div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<!-- Viz(워크시트) 확장 지원 라이브러리 (API 1.12+) -->
+<script src="https://extensionsdk.azureedge.net/1.latest/tableau.extensions.1.latest.js"></script>
+<script>
+const svg = d3.select("#net");
+
+// ───── 초기화 (Viz 확장) ─────
+// 워크시트 안의 Viz 확장으로 동작. 마크 카드의 인코딩(source/target/strength/type)에
+// 끌어놓은 필드를 읽어 네트워크를 그리고, 데이터가 바뀌면 다시 그린다.
+// Tableau 밖(브라우저)에서 열면 CSV를 읽어 동일하게 동작 (폴백).
+tableau.extensions.initializeAsync().then(() => {
+  const worksheet = tableau.extensions.worksheetContent.worksheet;
+  render();
+  // 필터/선택/필드 변경 등으로 요약 데이터가 바뀌면 다시 렌더
+  worksheet.addEventListener(tableau.TableauEventType.SummaryDataChanged, render);
+}).catch(() => {
+  d3.select("#hint").text("Tableau 외부 — CSV 폴백 모드");
+  loadFromCsv();
+});
+
+// ───── Tableau 워크시트에서 데이터 읽기 ─────
+async function render(){
+  const worksheet = tableau.extensions.worksheetContent.worksheet;
+
+  // 1) 인코딩(선반) → 필드명 매핑 (사용자가 끌어놓은 필드)
+  const encMap = {};
+  try {
+    const spec = await worksheet.getVisualSpecificationAsync();
+    (spec.marksSpecifications || []).forEach(ms =>
+      (ms.encodings || []).forEach(e => { if (e.field) encMap[e.id] = e.field.name; }));
+  } catch (_) { /* 인코딩 정보 없으면 이름 매칭으로 폴백 */ }
+
+  // 2) 요약 데이터 읽기
+  const reader = await worksheet.getSummaryDataReaderAsync();
+  const dataTable = await reader.getAllPagesAsync();
+  await reader.releaseAsync();
+
+  const cols = dataTable.columns;
+  const idxOfName = name => cols.findIndex(c => c.fieldName === name);
+  const byKeyword = (...keys) => cols.findIndex(c => {
+    const n = c.fieldName.toLowerCase();
+    return keys.some(k => n.includes(k));
+  });
+  // 인코딩 우선 → 없으면 컬럼 이름으로 추정
+  const pick = (encId, ...keys) => {
+    const i = encMap[encId] != null ? idxOfName(encMap[encId]) : -1;
+    return i >= 0 ? i : byKeyword(...keys);
+  };
+  const iS = pick("source", "source", "from", "출발");
+  const iT = pick("target", "target", "to", "도착");
+  const iW = pick("strength", "strength", "weight", "value", "굵기");
+  const iY = pick("type", "type", "relation", "관계");
+
+  const rows = dataTable.data.map(r => ({
+    Source:   iS >= 0 ? r[iS].formattedValue : null,
+    Target:   iT >= 0 ? r[iT].formattedValue : null,
+    Strength: iW >= 0 ? (parseFloat(r[iW].value) || 1) : 1,
+    Type:     iY >= 0 ? r[iY].formattedValue : "ally"
+  })).filter(r => r.Source && r.Target);
+
+  renderNetwork(rows);
+}
+
+function loadFromCsv(){
+  d3.csv("../avengers_network_data.csv").then(rows => renderNetwork(rows.map(r => ({
+    Source: r.Source, Target: r.Target, Strength: parseFloat(r.Strength) || 1, Type: r.Type
+  }))));
+}
+
+// ───── 렌더링 (검정 배경 D3 Force 네트워크, 드래그) ─────
+function renderNetwork(data){
+  const W = window.innerWidth, H = window.innerHeight;
+  svg.attr("viewBox", [0, 0, W, H]).selectAll("*").remove();   // 매번 새로 그림
+  if (!data.length) { d3.select("#hint").text("인코딩(source·target)에 필드를 끌어놓으세요"); return; }
+
+  const links = data.map(d => ({ source:d.Source, target:d.Target, strength:d.Strength, type:d.Type }));
+  const nodeSet = new Map();
+  data.forEach(d => { nodeSet.set(d.Source, {id:d.Source}); nodeSet.set(d.Target, {id:d.Target}); });
+  const nodes = Array.from(nodeSet.values());
+
+  const linkColor = t => t==="enemy" ? "#ef5350" : t==="romantic" ? "#f06292" : t==="ally" ? "#4fc3f7" : "#aaa";
+  const wScale = d3.scaleLinear().domain([1, d3.max(links, d => d.strength) || 1]).range([1, 6]);
+
+  const sim = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.id).distance(120))
+    .force("charge", d3.forceManyBody().strength(-300))
+    .force("center", d3.forceCenter(W/2, H/2));
+
+  const link = svg.append("g").selectAll("line")
+    .data(links).join("line").attr("class","link")
+      .attr("stroke", d => linkColor(d.type))
+      .attr("stroke-width", d => wScale(d.strength));
+
+  const node = svg.append("g").selectAll("g")
+    .data(nodes).join("g").attr("class","node").call(drag(sim));
+  node.append("circle").attr("r", 8).attr("fill", "#e8603c");
+  node.append("text").attr("dy", 20).text(d => d.id.replace(/_/g," "));
+
+  sim.on("tick", () => {
+    link.attr("x1", d=>d.source.x).attr("y1", d=>d.source.y)
+        .attr("x2", d=>d.target.x).attr("y2", d=>d.target.y);
+    node.attr("transform", d => `translate(${d.x},${d.y})`);
+  });
+}
+
+function drag(sim){
+  return d3.drag()
+    .on("start", (e,d) => { if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
+    .on("drag",  (e,d) => { d.fx=e.x; d.fy=e.y; })
+    .on("end",   (e,d) => { if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; });
+}
+
+window.addEventListener("resize", () => {
+  if (tableau.extensions.worksheetContent) render(); else loadFromCsv();
+});
+</script>
+</body>
+</html>
