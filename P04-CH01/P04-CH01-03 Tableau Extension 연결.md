@@ -15,7 +15,7 @@ status: ✅ 대본완성
 > - [ ] Tableau Desktop 열어두기
 > - [ ] `avengers-practice/avengers_network_data.csv` 파일 위치 확인
 > - [ ] `avengers-practice/starwars_network_data.csv` 파일 위치 확인
-> - [ ] `avengers-complete/tableau-extension/avengers-network.trex` 파일 위치 확인
+> - [ ] `avengers-complete/avengers-network.trex` 파일 위치 확인
 
 ---
 
@@ -176,7 +176,7 @@ Sheet 1로 이동합니다.
 
 Marks 카드 → Mark 타입 드롭다운 → **Extension** 선택합니다.
 
-팝업에서 **Access Local Extensions** → `avengers-complete/tableau-extension/avengers-network.trex` 파일을 선택합니다.
+팝업에서 **Access Local Extensions** → `avengers-complete/avengers-network.trex` 파일을 선택합니다.
 
 Allow를 클릭하면 Extension이 로드됩니다.
 
