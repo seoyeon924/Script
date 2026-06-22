@@ -17,7 +17,7 @@
 ```
 D3.js v7으로 어벤져스 캐릭터 네트워크 그래프 만들어줘.
 데이터: avengers_network_data.csv (Source→Target, Strength=선 굵기)
-D3 Force Simulation으로 노드 배치. index.html 하나로.
+D3 Force Simulation으로 노드 배치.
 ```
 
 ---
