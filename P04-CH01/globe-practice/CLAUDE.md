@@ -1,94 +1,55 @@
 # 3D Globe 실습
 
-데이터 파일: `unhcr_data.csv` (UNHCR 난민 데이터, 35,472행)
-※ 컬럼명에 공백 포함 — 코드에서 반드시 `data["Country of Origin ISO"]` 형태로 접근할 것 (Origin ISO 아님)
-완성 예시: https://github.com/seoyeon924/globe
+**프로젝트**: UNHCR 난민 데이터를 3D 지구본 위에 이동 경로 아크로 시각화
+**완성 예시**: https://migrationtrack.netlify.app/
+**완성 코드**: https://github.com/seoyeon924/globe
 
-> ⚠️ **반드시 로컬 서버로 실행** — `file://`로 열면 CSV 로딩이 차단되어 아크가 표시되지 않음
+---
+
+## 파일 구성
+
+| 파일 | 설명 |
+|---|---|
+| `unhcr_data.csv` | UNHCR 난민 데이터 (35,472행, 2020–2025) |
+| `CLAUDE.md` | 프로젝트 개요·주의사항 (이 파일) |
+| `prompts.md` | 단계별 복붙 프롬프트 (정밀 버전) |
+
+---
+
+## 실행 주의사항
+
+> ⚠️ **반드시 로컬 서버로 실행** — `file://`로 열면 CSV fetch가 차단돼 아크가 아무것도 안 나옴
 > ```
 > python3 -m http.server 8080
 > ```
-> 실행 후 http://localhost:8080 으로 접속
+> → http://localhost:8080 으로 접속
 
 ---
 
-## Step 1 — 지구본 뼈대
+## CSV 컬럼 구조
 
 ```
-Three.js r128 + GSAP 3.12.2로 3D 지구본 만들어줘.
-텍스처: https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_atmos_2048.jpg
-SphereGeometry(1, 64, 64), WebGLRenderer, PerspectiveCamera.
-마우스 드래그로 회전 가능하게. index.html 하나로.
+fields[0] = Year
+fields[1] = Country of Asylum (국가명)
+fields[2] = Country of Origin (국가명)
+fields[3] = Country of Asylum ISO
+fields[4] = Country of Origin ISO
+fields[5] = Refugees
+fields[6] = Asylum-seekers
 ```
+
+> ⚠️ 컬럼명에 공백·따옴표 포함 → 이름으로 접근하지 말고 **인덱스(fields[3], fields[4]…)**로 접근할 것
 
 ---
 
-## Step 2 — 아크 데이터 연결
+## 단계 순서
 
-```
-unhcr_data.csv 로드해서 아크 추가해줘.
-컬럼: data["Country of Origin ISO"], data["Country of Asylum ISO"], data["Refugees"]
-(컬럼명에 공백 포함 — 반드시 대괄호 표기법으로 접근)
+| Step | 내용 |
+|---|---|
+| 1 | Three.js 지구본 뼈대 — 텍스처, 카메라, 드래그 회전 |
+| 2 | UNHCR CSV 로드 → 국가 간 이동 아크 |
+| 3 | 디자인 토큰·별 파티클·glow 레이어·아크 애니메이션 |
+| 4 | 인트로 오버레이 + 국가 검색 필터 |
+| 5 | 모바일 터치 지원 |
 
-"Country of Origin ISO" → "Country of Asylum ISO" 방향으로 CubicBezierCurve3 곡선 아크.
-높이: h = 1 + dist * 0.0065 (dist = 두 위경도 벡터 사이 각도, THREE.Vector3 기준).
-Refugees 수에 비례해서 아크 굵기 조정.
-출발 빨강(0xff3333) → 도착 시안(0x00E5FF) 그라디언트.
-
-데이터 로드 후 flowsByOrigin 객체 구성:
-flowsByOrigin[originISO] = [{originISO, asylumISO, refugees}, ...] 형태.
-```
-
----
-
-## Step 3 — 디자인 토큰 적용
-
-```
-아래 디자인 토큰으로 스타일 통일해줘.
-배경: radial-gradient(#0d1a2d 0%, #0a0a12 60%, #000 100%)
-강조색: #00CCFF
-아크: rgba(255,51,51,0.7) → rgba(0,229,255,0.7)
-glow: rgba(0,204,255,0.15)
-GLSL 파티클 셰이더로 별 추가. 지구 대기 glow 레이어 추가.
-아크는 흐르는 대시 애니메이션으로.
-```
-
----
-
-## Step 4 — 인트로 오버레이 + 검색 필터
-
-```
-1. 인트로 오버레이 추가 (div#intro-overlay, 전체 화면 덮개).
-   내용: 제목 "Migration Atlas", 부제목 "An interactive visualization of global displacement journeys",
-   설명 "Explore how forced migration flows reshape our world.",
-   버튼 "Click to start" (id=introStartButton).
-   버튼 클릭 또는 화면 클릭 시 오버레이 숨김(opacity:0, visibility:hidden).
-
-2. 상단에 국가명 검색 필터 UI 추가.
-   input#countrySearch (placeholder: "Search country...") + div#searchDropdown.
-   데이터 로드 완료 후 flowsByOrigin에서 상위 30개 출발국을 countryList 배열로 구성.
-   국가명: CSV의 "Country of Origin ISO" → "Country of Origin" 매핑으로 isoToName 객체 생성.
-   isoToName[iso] 값으로 국가명 lookup (없으면 ISO 코드 그대로 표시).
-   
-   setupCountrySearch():
-   - input focus/input 이벤트 → showSearchResults(query) 호출
-   - blur 이벤트 → 200ms 후 dropdown 닫기
-   - Enter → 첫 번째 결과 선택, Escape → dropdown 닫기
-   
-   showSearchResults(query):
-   - countryList에서 query 포함 항목 필터링
-   - dropdown에 .search-item div 목록 렌더링
-   - 클릭 시 countrySearch.value = 국가명, filterArcsByCountry(iso) 호출
-   
-   filterArcsByCountry(iso):
-   - iso='all' → 모든 arc mesh visible=true
-   - iso 지정 → mesh.userData.iso === iso.toUpperCase()인 것만 visible=true, 나머지 false
-```
-
----
-
-## Step 5 — 모바일
-
-```
-터치 드래그 회전 지원 추가. canvas 반응형으로.
-```
+단계별 상세 프롬프트는 **`prompts.md`** 참고.
