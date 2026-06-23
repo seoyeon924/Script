@@ -342,47 +342,144 @@ border:1px solid rgba(0,204,255,0.3), clip-path 모서리 깎인 패널 스타�
 
 ---
 
-4. 오른쪽 데이터 패널 (#data-panel):
-position:fixed, top:50%, right:20px, transform:translateY(-50%)
-width:240px, padding:12px 14px
-border:1px solid rgba(0,204,255,0.25), background:rgba(0,0,0,0.85)
-font-family:Michroma, font-size:8px, text-transform:uppercase
+4. 오른쪽 데이터 패널 (#data-panel) — CSS 포함:
 
-패널 구성 (위에서 아래 순서):
+HTML 구조:
+<div id="data-panel">
+  <!-- KPI 카드 -->
+  <div class="data-section">
+    <div class="data-title" id="kpi-title">GLOBAL KPI</div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-num" id="kpi-outflow">—</div><div class="kpi-label" id="kpi-outflow-label">OUTFLOW</div></div>
+      <div class="kpi-card"><div class="kpi-num cyan" id="kpi-inflow">—</div><div class="kpi-label" id="kpi-inflow-label">INFLOW</div></div>
+    </div>
+  </div>
+  <!-- 국가 필터 검색 -->
+  <div class="data-section">
+    <div class="data-title">COUNTRY FILTER</div>
+    <div class="search-container">
+      <input type="text" class="hud-search" id="countrySearch" placeholder="Search country..." autocomplete="off">
+      <div class="search-dropdown" id="searchDropdown"></div>
+    </div>
+    <!-- select는 반드시 display:none 으로 숨김 (JS 연동용으로만 존재) -->
+    <select class="hud-select" id="countryFilter" style="display:none"></select>
+  </div>
+  <!-- OUTFLOW 바 차트 -->
+  <div class="data-section">
+    <div class="data-title">OUTFLOW (EMIGRATION)</div>
+    <div class="bar-chart" id="outflowChart"></div>
+  </div>
+  <!-- INFLOW 바 차트 -->
+  <div class="data-section" id="inflow-section">
+    <div class="data-title" id="inflow-title">INFLOW (IMMIGRATION)</div>
+    <div class="bar-chart" id="inflowChart"></div>
+  </div>
+  <div style="font-size:7px;color:#00CCFF;opacity:0.4;text-align:right;margin-top:8px">SOURCE: UNHCR MID-2024</div>
+</div>
 
-[A] KPI 카드 2개 (.kpi-grid):
-  <div id="kpi-outflow">숫자</div> OUTFLOW — red (#FF1313)
-  <div id="kpi-inflow">숫자</div>  INFLOW  — cyan (#00E5FF)
-  → loadUNHCRData 완료 후 실제 CSV 집계값으로 채움
+CSS (반드시 이 스타일 그대로 적용):
+#data-panel {
+  position:fixed; top:50%; right:20px;
+  transform:translateY(-50%);
+  width:240px; padding:12px 14px;
+  font-family:'Michroma',sans-serif;
+  font-size:8px; text-transform:uppercase; letter-spacing:0.3px;
+  border:1px solid rgba(0,204,255,0.25);
+  background:rgba(0,0,0,0.85);
+}
+#data-panel::before {
+  content:''; position:absolute; top:0; right:0;
+  width:12px; height:12px;
+  border-top:1px solid #00CCFF; border-right:1px solid #00CCFF;
+}
+#data-panel::after {
+  content:''; position:absolute; bottom:0; left:0;
+  width:12px; height:12px;
+  border-bottom:1px solid #00CCFF; border-left:1px solid #00CCFF;
+}
+.data-section { margin-bottom:12px }
+.data-title { color:#00CCFF; font-size:8px; opacity:0.6; margin-bottom:6px; letter-spacing:1px }
+.data-title::before { content:'[ ' }
+.data-title::after  { content:' ]' }
 
-[B] 국가 검색 (.search-container):
-  input#countrySearch (.hud-search): placeholder="Search country..."
-  div#searchDropdown (.search-dropdown): 드롭다운, 최대 150px 높이
+/* KPI 카드 */
+.kpi-grid { display:flex; gap:8px; margin-bottom:10px }
+.kpi-card { flex:1; padding:6px; background:rgba(0,204,255,0.05); border:1px solid rgba(0,204,255,0.15); text-align:center }
+.kpi-num  { color:#FF1313; font-size:14px; font-weight:bold }
+.kpi-num.cyan { color:#00E5FF }
+.kpi-label { color:#00CCFF; font-size:7px; opacity:0.6; margin-top:2px }
 
-  setupCountrySearch():
-  - countryList = [{iso:'all', name:'ALL REGIONS'}, ...topOrigins 30개]
-  - input.value = 'ALL REGIONS' (초기값)
-  - focus → 전체 선택 + showSearchResults('')
-  - input → showSearchResults(this.value)
-  - blur → 200ms 후 dropdown.classList.remove('active')
-  - keydown Enter → 첫 번째 항목 클릭
-  - keydown Escape → dropdown 닫기
+/* 국가 검색 인풋 — 다크 사이파이 스타일, 브라우저 기본 select 아님 */
+.search-container { position:relative }
+.hud-search {
+  width:100%; padding:6px 8px;
+  background:#0a1a20; color:#00CCFF;
+  border:1px solid rgba(0,204,255,0.3);
+  font-family:'Michroma',sans-serif;
+  font-size:8px; text-transform:uppercase;
+  outline:none;
+}
+.hud-search:focus { border-color:#00CCFF }
+.hud-search::placeholder { color:rgba(0,204,255,0.4) }
+/* 드롭다운 — focus 시 active 클래스 추가로 표시 */
+.search-dropdown {
+  display:none; position:absolute;
+  top:100%; left:0; right:0;
+  max-height:150px; overflow-y:auto;
+  background:#0a1a20;
+  border:1px solid rgba(0,204,255,0.3);
+  border-top:none; z-index:100;
+}
+.search-dropdown.active { display:block }
+.search-item {
+  padding:6px 8px; font-size:8px;
+  color:#00CCFF; cursor:pointer; text-transform:uppercase;
+}
+.search-item:hover { background:rgba(0,204,255,0.15); color:#fff }
 
-  showSearchResults(query):
-  - countryList 필터 (name.toLowerCase().indexOf(q) !== -1)
-  - .search-item div 목록 렌더
-  - 클릭 시 filterCountry(item.iso)
+/* 바 차트 행 */
+.bar-row {
+  display:flex; align-items:center;
+  margin:6px 0; font-size:9px; padding:6px 8px;
+  background:rgba(0,0,0,0.3);
+  border-left:2px solid transparent;
+  cursor:pointer; transition:all 0.4s ease;
+}
+.bar-row:hover { background:rgba(0,204,255,0.08); border-left-color:#00CCFF }
+.bar-rank  { width:18px; color:rgba(255,255,255,0.25); font-size:10px; font-weight:bold }
+.bar-label { width:65px; color:#fff; opacity:0.9; white-space:nowrap; overflow:hidden; font-weight:500; font-size:8px }
+.bar-track { flex:1; height:6px; background:rgba(255,255,255,0.1); margin:0 10px; border-radius:3px; overflow:hidden }
+.bar-fill  { height:100%; position:absolute; left:0; top:0; border-radius:3px; transition:width 0.5s ease }
+.bar-track { position:relative }
+.bar-fill.outflow { background:#FF4444 }
+.bar-fill.inflow  { background:#00E5FF }
+.bar-value { width:40px; text-align:right; font-family:'Michroma',sans-serif; font-size:11px; letter-spacing:0.5px; color:#fff }
+.bar-row.outflow-row .bar-value { color:#FF6666 }
+.bar-row.inflow-row  .bar-value { color:#00E5FF }
 
-[C] OUTFLOW 바 차트 (클릭가능):
-  CSV 집계 후 상위 5개 outflow 국가 동적 생성
-  각 .bar-row.outflow-row: onclick="filterCountry('iso_lowercase')"
-  구성: .bar-rank | .bar-label | .bar-track>.bar-fill.outflow | .bar-value
-  .bar-fill.outflow: background:#FF4444
-  .bar-fill.inflow:  background:#00E5FF
+setupCountrySearch():
+- countryList = [{iso:'all', name:'ALL REGIONS'}, ...topOrigins 30개]
+- input.value = 'ALL REGIONS'  ← 초기값 (클릭 전에는 이 텍스트가 보임)
+- focus → this.select() + showSearchResults('')
+- input → showSearchResults(this.value)
+- blur → setTimeout 200ms → dropdown.classList.remove('active')
+- keydown Enter → dropdown 첫 번째 .search-item 클릭
+- keydown Escape → dropdown 닫기, input.blur()
 
-[D] INFLOW 바 차트:
-  기본: 상위 5개 inflow 목적지 (INFLOW (IMMIGRATION))
-  국가 선택 시: 해당 출발지의 목적지 상위 5개로 교체 (DESTINATIONS FROM XXX)
+showSearchResults(query):
+- filtered = countryList.filter(c => c.name.toLowerCase().indexOf(q) !== -1)
+- dropdown.innerHTML = filtered.map(.search-item HTML)
+- .search-item 클릭: input.value = item.textContent; filterCountry(item.dataset.iso)
+- dropdown.classList.add('active')
+
+updateBarCharts() — CSV 로드 후 동적 생성:
+outflowChart: top5 outflow, bar-row.outflow-row, onclick="filterCountry('iso_소문자')"
+inflowChart:  top5 inflow,  bar-row.inflow-row (클릭 없음)
+  형식: '<div class="bar-row outflow-row" onclick="filterCountry(\'afg\')">' +
+        '<div class="bar-rank">1</div>' +
+        '<div class="bar-label">AFGHANI</div>' +
+        '<div class="bar-track"><div class="bar-fill outflow" style="width:95%"></div></div>' +
+        '<div class="bar-value">5.2M</div></div>'
 
 SOURCE: UNHCR MID-2024 (우측 하단, 7px)
 
