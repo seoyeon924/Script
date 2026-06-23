@@ -4,7 +4,7 @@ time: 10분
 part: Part 04
 chapter: CH01
 clip: 03
-slides: s14,s15,s16
+slides: s14,s15,s16,s28,s13
 status: ✅ 대본완성
 ---
 
@@ -149,6 +149,44 @@ Claude Code가 생성하는 `manifest.trex`의 URL은 `http://localhost:8080`을
 구조를 바꿀 필요 없이 CSV만 교체하면 됩니다.
 
 ---
+
+## s28 — 필드 할당 — 인코딩 매핑
+
+**[화면: 슬라이드]**
+
+필드를 실제로 연결하는 방법을 정리해볼게요.
+
+테이블 왼쪽 **Encoding** 열이 Marks 카드의 인코딩 슬롯 이름이고, **Mark Card** 열이 거기에 끌어다 놓을 필드입니다.
+
+**source** 슬롯에 Source, **target** 슬롯에 Target — 이 두 개는 필수예요. Dimension으로 설정합니다.
+
+**strength** 슬롯에 Strength는 Measure로 연결해요.
+
+**type**은 선택 사항이에요. 연결하면 관계 유형별로 색상이 구분됩니다.
+
+**source_image**와 **target_image**는 Detail로 끌어다 놓으면 돼요. 프로필 사진이 노드에 표시됩니다. 이 두 개도 선택 사항입니다.
+
+오른쪽 화면이 실제 Marks 카드 모습이에요. 슬롯마다 필드가 연결된 걸 확인할 수 있습니다.
+
+---
+
+## s13 — 구조 재사용 — 스타워즈 데이터로 Tableau 실행
+
+**[화면: 슬라이드]**
+
+이제 재사용 가능성을 보여드릴게요.
+
+왼쪽 프롬프트를 볼게요.
+
+지금 보이는 게 worksheet-extension을 만드는 프롬프트예요.
+
+`tableau-extension/` 폴더를 만들고, Marks 카드 인코딩 — **source / target / strength / type** — 에 필드를 끌어놓으면 데이터로 네트워크가 자동으로 그려지는 구조입니다.
+
+브라우저에서 그냥 열면 `../avengers_network_data.csv`를 읽어서 폴백으로 동작하고, Tableau 안에서는 Marks 카드 데이터를 받아서 렌더링해요.
+
+오른쪽 영상을 보면, 스타워즈 CSV를 Tableau에 연결하고 Marks 카드에 필드를 매핑하면 같은 차트가 그대로 나옵니다.
+
+`.trex` 파일 하나로 어벤져스, 스타워즈, 채널 데이터 — 어떤 네트워크 데이터든 재사용할 수 있어요.
 
 직접 확인해보도록 하겠습니다.
 
