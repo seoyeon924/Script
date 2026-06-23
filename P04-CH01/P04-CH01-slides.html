@@ -1045,48 +1045,69 @@ Viz 확장(worksheet-extension)으로 만들어줘.
 </div>
 
 
-<!-- ════ s20 | Globe 반복 제작 ════ -->
+<!-- ════ s20 | Globe 시각화 구조 ════ -->
 <div class="slide" id="s20">
-  <div class="tb"><span class="tb-cap">3D Globe — 실제 제작 흐름</span><span class="tb-num">20</span></div>
-  <div style="padding:22px 52px 18px;border-bottom:1px solid var(--border);flex-shrink:0;">
-    <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">3D GLOBE 제작 흐름</div>
-    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">한 번에 나오지 않아요,<br>토큰 기반으로 단계별 반복하기</div>
+  <div class="tb"><span class="tb-cap">3D Globe — 시각화 구조</span><span class="tb-num">20</span></div>
+  <div style="padding:20px 52px 16px;border-bottom:1px solid var(--border);flex-shrink:0;">
+    <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">3D GLOBE 구조</div>
+    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">렌더링 레이어 + 데이터 흐름</div>
   </div>
   <div class="body">
-    <div style="flex:1;border-right:1px solid var(--border);padding:24px 36px;display:flex;flex-direction:column;gap:12px;">
-      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">실제 반복 프롬프트 — 수십 번</div>
-      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;gap:8px;">
-        <div style="font-size:11px;font-family:monospace;color:#E8603C;">Phase 1 — 기초 구현</div>
-        <div style="font-family:monospace;font-size:12.5px;background:#F8F7F5;padding:10px 14px;border-radius:4px;color:#444;line-height:1.75;">unhcr_data.csv로 3D Globe 아크 시각화.<br>Origin ISO → Asylum ISO 방향 아크,<br>Refugees 수 = 아크 굵기.<br>Three.js r128 + GSAP 사용.</div>
+    <!-- Left: rendering layers -->
+    <div style="flex:1;border-right:1px solid var(--border);padding:22px 36px;display:flex;flex-direction:column;gap:10px;">
+      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">렌더링 레이어 — 뒤에서 앞으로</div>
+      <div style="border:1px solid #1E2028;border-radius:6px;padding:12px 18px;background:#0A0C10;display:flex;align-items:center;gap:14px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:radial-gradient(circle,#334 60%,#000);flex-shrink:0;"></div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.85);">GLSL 별 파티클</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;">ShaderMaterial · 3,000개 · 구 반경 800–1200</div>
+        </div>
       </div>
-      <div style="border:1px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;gap:8px;">
-        <div style="font-size:11px;font-family:monospace;color:#E8603C;">Phase 2 — 시각 고도화 (여러 번 반복)</div>
-        <div style="font-family:monospace;font-size:12.5px;background:#F8F7F5;padding:10px 14px;border-radius:4px;color:#444;line-height:1.75;">glow 효과 더 강하게, 별 3배 크게<br>→ arcs를 흐르는 대시 애니메이션으로<br>→ 배경 더 어둡게, 우주 느낌으로</div>
+      <div style="border:1px solid #1E2028;border-radius:6px;padding:12px 18px;background:#0A0C10;display:flex;align-items:center;gap:14px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:radial-gradient(circle,#2a4a7a,#0d1a2d);flex-shrink:0;"></div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.85);">지구 구체</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;">SphereGeometry(65, 48, 48) · 텍스처 2레이어</div>
+        </div>
       </div>
-      <div style="border:1px solid rgba(232,96,60,0.3);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;gap:8px;background:rgba(232,96,60,0.02);">
-        <div style="font-size:11px;font-family:monospace;color:#E8603C;">Phase 3 — 기능 추가</div>
-        <div style="font-family:monospace;font-size:12.5px;background:#F8F7F5;padding:10px 14px;border-radius:4px;color:#444;line-height:1.75;">국가 검색 필터 추가해줘<br>→ 클릭 시 인트로 오버레이 만들어줘<br>→ 모바일 터치도 지원하게</div>
+      <div style="border:1px solid #1E2028;border-radius:6px;padding:12px 18px;background:#0A0C10;display:flex;align-items:center;gap:14px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:radial-gradient(circle,rgba(0,204,255,0.3),transparent);border:1px solid rgba(0,204,255,0.2);flex-shrink:0;"></div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.85);">대기권 glow</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;">반투명 구체 3개 · 1.06× / 1.15× / 1.25×</div>
+        </div>
+      </div>
+      <div style="border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:12px 18px;background:#0A0C10;display:flex;align-items:center;gap:14px;">
+        <div style="width:28px;height:4px;border-radius:2px;background:linear-gradient(to right,#ff3333,#00e5ff);flex-shrink:0;"></div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.85);">이동 경로 아크</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;">CubicBezierCurve3 → LineSegments · 빨강→하늘색</div>
+        </div>
       </div>
     </div>
-    <div style="flex:1;padding:24px 36px;display:flex;flex-direction:column;gap:14px;">
-      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">수정할 때 — 개발자도구 활용</div>
-      <div style="border:1px solid var(--border);border-radius:8px;padding:18px 20px;display:flex;flex-direction:column;gap:10px;">
-        <div style="font-size:14px;font-weight:600;color:#1C1A18;margin-bottom:2px;">Elements 탭으로 수정 포인트 찾기</div>
-        <div style="font-size:13px;color:#666;line-height:1.75;">① Elements 탭 → 바꾸고 싶은 요소 클릭<br>② 색상·크기·opacity 속성 값 확인<br>③ Claude Code에 "이 요소의 [속성]을 [값]으로"</div>
-      </div>
-      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">UNHCR 데이터 구조</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 16px;display:flex;gap:12px;align-items:center;">
-          <span style="font-family:monospace;font-size:11.5px;color:#e8c87a;flex-shrink:0;">Country of Origin ISO</span>
-          <span style="font-size:12px;color:#666;">아크 출발지 — 난민이 떠나는 국가</span>
+    <!-- Right: data flow -->
+    <div style="flex:1;padding:22px 36px;display:flex;flex-direction:column;gap:10px;">
+      <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">데이터 흐름 — CSV → 아크</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:12px 18px;">
+          <div style="font-size:11px;color:#888;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">원본 데이터</div>
+          <div style="font-size:14px;font-weight:600;color:#1C1A18;">unhcr_data.csv</div>
+          <div style="font-size:12px;color:#777;margin-top:3px;">35,472행 · 2020–2025 · 190개국</div>
         </div>
-        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 16px;display:flex;gap:12px;align-items:center;">
-          <span style="font-family:monospace;font-size:11.5px;color:#8dc8b4;flex-shrink:0;">Country of Asylum ISO</span>
-          <span style="font-size:12px;color:#666;">아크 도착지 — 난민이 향하는 국가</span>
+        <div style="text-align:center;color:#CCC;font-size:13px;">↓</div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:12px 18px;">
+          <div style="font-size:11px;color:#888;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">파싱 · 집계</div>
+          <div style="font-family:monospace;font-size:13px;color:#444;line-height:1.7;">연도 필터(2025) → total &lt; 100 제외<br>flowsByOrigin[ISO] = <span style="color:#E8603C;">{total, destinations}</span></div>
         </div>
-        <div style="border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:11px 16px;display:flex;gap:12px;align-items:center;background:rgba(232,96,60,0.02);">
-          <span style="font-family:monospace;font-size:11.5px;color:#E8603C;flex-shrink:0;">Refugees</span>
-          <span style="font-size:12px;color:#666;">아크 굵기 — 난민 수에 비례</span>
+        <div style="text-align:center;color:#CCC;font-size:13px;">↓</div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:12px 18px;">
+          <div style="font-size:11px;color:#888;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">좌표 변환</div>
+          <div style="font-family:monospace;font-size:13px;color:#444;line-height:1.7;">ISO → 위경도<span style="color:#888;font-size:11px;">(COUNTRY_COORDS)</span><br>→ latLngToVec3 → 3D 좌표</div>
+        </div>
+        <div style="text-align:center;color:#CCC;font-size:13px;">↓</div>
+        <div style="border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:12px 18px;background:rgba(232,96,60,0.02);">
+          <div style="font-size:11px;color:#E8603C;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">아크 렌더링</div>
+          <div style="font-family:monospace;font-size:13px;color:#444;line-height:1.7;">start → ctrl1 → ctrl2 → end<br>CubicBezierCurve3 · 난민 수 = 굵기</div>
         </div>
       </div>
     </div>
@@ -1168,7 +1189,7 @@ Viz 확장(worksheet-extension)으로 만들어줘.
   <div class="tb"><span class="tb-cap">CH01 정리</span><span class="tb-num">21</span></div>
   <div style="padding:22px 52px 18px;border-bottom:1px solid var(--border);flex-shrink:0;">
     <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#999;margin-bottom:8px;">이번 챕터 요약</div>
-    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">4개 클립으로 완성하는<br>인터랙티브 데이터 아트</div>
+    <div style="font-size:30px;font-weight:600;color:#1C1A18;letter-spacing:-0.02em;">인터랙티브 데이터 아트</div>
   </div>
   <div class="body" style="flex-direction:column;padding:20px 44px 28px;gap:14px;">
     <div style="display:flex;gap:20px;flex:1;">
