@@ -9,7 +9,7 @@ status: 📝 초안
 ---
 
 > **[실습 준비물 — 촬영 전 체크]**
-> - 키트 폴더 `dashboard-kits/03-pm` 준비 — `CLAUDE.md` · `.claude/skills/build-dashboard/` · `templates/reference.html` · `data/product_metrics.csv` · `output/`
+> - 키트 폴더 `dashboard-kits/03-pm` 준비 — `CLAUDE.md` · `.claude/skills/build-dashboard/` · `templates/reference.html` · `data/user_events.csv` · `output/`
 > - 터미널에서 해당 폴더로 이동해 `claude` 실행 가능 상태 (Claude Code 로그인 확인)
 > - **백업**: 미리 한 번 `/build-dashboard`를 돌려 `output/pm_dashboard.html` 생성본 확보 (라이브 실패 대비)
 > - 브라우저에 완성본 탭 + IDE에 폴더 트리 띄워두기
@@ -20,7 +20,7 @@ status: 📝 초안
 > claude                    # Claude Code 실행
 > /build-dashboard          # 명령어 한 줄 → output/pm_dashboard.html 생성
 > ```
-> 내 데이터로 바꾸기: `data/product_metrics.csv`를 교체하고 다시 `/build-dashboard`
+> 내 데이터로 바꾸기: `data/user_events.csv`를 교체하고 다시 `/build-dashboard`
 
 ## s8 — Clip 02 섹션 브레이크
 
@@ -52,7 +52,7 @@ status: 📝 초안
 
 이게 Clip 1에서 그린 기획안 그대로예요. 지표 위계 트리, 코호트 리텐션, 세그먼트, 그리고 이탈 원인까지요.
 
-위에 숫자도 보시면, 증감 비율 0.82, 재결제율 71.4%, 좌절률 41.3%. 이렇게 실제 값이 채워져 있죠.
+위에 숫자도 보시면, 증감 비율 2.91, 재결제율 62.5%, 좌절률 27.2%. 이렇게 실제 값이 채워져 있죠.
 
 여기서 한 가지가 중요해요. 나중에 데이터가 바뀌면요. **수치만 갱신**되고, 구조랑 디자인은 그대로 고정이에요. 매번 새로 그릴 필요가 없는 거죠.
 
@@ -72,7 +72,7 @@ status: 📝 초안
 
 그 아래 `.claude/skills` 폴더에 **build-dashboard 스킬 하나**가 있어요. 이게 데이터를 읽고 분석해서 대시보드를 만드는 작업 절차예요. 이 스킬이 그대로 명령어가 됩니다.
 
-**templates/reference.html**이 품질 기준이에요. 우리가 따라갈 레퍼런스죠. 그리고 **data** 폴더에 product_metrics.csv. 이 CSV 하나로 시작합니다. 결과물은 output 폴더에 생성돼요.
+**templates/reference.html**이 품질 기준이에요. 우리가 따라갈 레퍼런스죠. 그리고 **data** 폴더에 user_events.csv. 이 CSV 하나로 시작합니다. 결과물은 output 폴더에 생성돼요.
 
 **[화면: 우측 터미널 실습 예시]**
 
@@ -86,7 +86,7 @@ status: 📝 초안
 
 방금 그 `/build-dashboard`, 사실 구조가 정해져 있어요. 이 네 가지를 자연어로 말해주는 거고, 그게 스킬 안에 미리 담겨 있는 거예요. 외울 필요 없고 구조만 기억하시면 됩니다.
 
-**1번, 무슨 데이터로.** "data/product_metrics.csv로" 이렇게요.
+**1번, 무슨 데이터로.** "data/user_events.csv로" 이렇게요.
 
 **2번, 무슨 기준으로.** "CLAUDE.md 규칙을 따라" 이렇게 말해줍니다.
 
