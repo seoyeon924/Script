@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P05 Intro — 데이터 분석 & 시각화</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--bg:#F2F2EF;--text:#1C1A18;--sub:#888;--dim:#BBBBBB;--border:#D8D5D0;--p01:#E8603C;--green:#6aac98;--blue:#4A7AB5;--dark:#2B2A28;}
+  html,body{background:var(--bg);color:var(--text);font-family:'Pretendard',-apple-system,sans-serif;width:100vw;height:100vh;overflow:hidden;}
+  .deck{width:1280px;height:800px;transform-origin:top left;position:fixed;top:0;left:0;}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--bg);}
+  .slide.active{display:flex;}
+  .tb{height:48px;min-height:48px;padding:0 52px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0;}
+  .tb-cap{font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);}
+  .pad{flex:1;display:flex;flex-direction:column;padding:40px 64px;min-height:0;}
+  .nav{position:fixed;bottom:24px;right:40px;display:flex;align-items:center;gap:12px;z-index:100;}
+  .nav-ctr{font-size:11px;color:#666;letter-spacing:0.08em;}
+  .nav-btn{background:none;border:none;color:var(--sub);cursor:pointer;font-size:18px;padding:4px;}
+  .nav-btn:hover{color:var(--text);}
+  .progress{position:fixed;bottom:0;left:0;height:2px;background:var(--p01);transition:width .3s;z-index:100;}
+  .eyebrow{font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:var(--sub);margin-bottom:18px;}
+  .big-title{font-size:44px;font-weight:600;line-height:1.2;letter-spacing:-0.02em;color:var(--text);}
+  .lead{font-size:18px;color:#333;line-height:1.7;margin-top:12px;}
+  .card{border:1px solid var(--border);border-radius:6px;padding:16px 20px;background:#fff;}
+  .card-hi{border-color:rgba(232,96,60,0.35);background:rgba(232,96,60,0.03);}
+  .pill{display:inline-flex;align-items:center;justify-content:center;background:var(--dark);color:#fff;font-weight:700;border-radius:30px;font-size:15px;flex-shrink:0;}
+  .tag{display:inline-block;font-size:12px;font-family:'Menlo',monospace;padding:3px 9px;border-radius:3px;border:1px solid var(--border);color:var(--sub);}
+  .tag-org{border-color:#E8603C;color:#E8603C;background:rgba(232,96,60,0.06);}
+  .tag-blu{border-color:#4A7AB5;color:#4A7AB5;background:rgba(74,122,181,0.06);}
+  .tag-grn{border-color:#6aac98;color:#6aac98;background:rgba(106,172,152,0.06);}
+  .arrow{color:#C9C6C0;font-size:24px;flex-shrink:0;align-self:center;}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- s1 표지 -->
+<div class="slide active" id="s1">
+  <div class="pad" style="justify-content:center;">
+    <div class="eyebrow" style="font-family:'Poppins';">P05 · Intro</div>
+    <div style="font-size:48px;font-weight:600;font-family:'Poppins';line-height:1.2;letter-spacing:-0.02em;">데이터 분석 &amp; 시각화<br>시작하기 전에</div>
+    <div class="lead" style="max-width:780px;">프롬프트로 데이터를 분석하고 대시보드를 만들기 전에 — 시각화의 목적·대상·지표·차트·인사이트·주의를 먼저 정리한다. 이후 챕터에서 도메인별로 적용한다.</div>
+    <div style="display:flex;gap:9px;margin-top:24px;flex-wrap:wrap;">
+      <span class="tag tag-org">시각화의 목적</span>
+      <span class="tag">3W · Who·Why·What</span>
+      <span class="tag tag-blu">좋은 지표</span>
+      <span class="tag tag-grn">차트 · 인사이트</span>
+      <span class="tag">분석 주의</span>
+    </div>
+  </div>
+</div>
+
+<!-- s2 시각화로 설득하기 -->
+<div class="slide" id="s2">
+  <div class="tb"><span class="tb-cap">시각화 설계 · 목적</span><span></span></div>
+  <div class="pad">
+    <div class="big-title">시각화로 설득하기</div>
+    <div class="lead">일단 그래프부터 그리지 않는다 — 목적에서 출발</div>
+    <div style="display:flex;align-items:stretch;gap:14px;margin-top:24px;">
+      <div class="card" style="flex:1;display:flex;flex-direction:column;gap:6px;padding:20px 22px;">
+        <div class="tag tag-org" style="width:fit-content;">1 · 메시지</div>
+        <div style="font-size:17px;font-weight:700;">무엇을 말할 것인가</div>
+        <div style="font-size:13.5px;color:#555;line-height:1.6;">전달하려는 결론에서 출발</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column;gap:6px;padding:20px 22px;">
+        <div class="tag tag-blu" style="width:fit-content;">2 · 비교·평가</div>
+        <div style="font-size:17px;font-weight:700;">시각화로 비교</div>
+        <div style="font-size:13.5px;color:#555;line-height:1.6;">메시지를 비교 가능한 그림으로</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column;gap:6px;padding:20px 22px;">
+        <div class="tag tag-grn" style="width:fit-content;">3 · 액션</div>
+        <div style="font-size:17px;font-weight:700;">행동을 유도</div>
+        <div style="font-size:13.5px;color:#555;line-height:1.6;">의사결정·액션으로 연결</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:14px;margin-top:22px;">
+      <div class="card" style="flex:1;padding:14px 20px;border-color:rgba(214,69,69,.35);background:rgba(214,69,69,.03);"><b style="color:#c23b3b;">✕ 그래프부터</b><div style="font-size:13.5px;color:#555;margin-top:3px;line-height:1.55;">일단 그려보고 인사이트를 찾으면 논리적이지 못한 결론이 나온다</div></div>
+      <div class="card" style="flex:1;padding:14px 20px;border-color:rgba(106,172,152,.4);background:rgba(106,172,152,.05);"><b style="color:#3f8a6f;">✓ 목적부터</b><div style="font-size:13.5px;color:#555;margin-top:3px;line-height:1.55;">분석 목적을 정한 뒤 그에 맞는 그래프를 그린다</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- s3 5W -->
+<div class="slide" id="s3">
+  <div class="tb"><span class="tb-cap">시각화 설계 · 목적</span><span></span></div>
+  <div class="pad">
+    <div class="big-title">시각화의 시작은 목적 — 3W</div>
+    <div class="lead">그래프를 그리기 전에 세 가지를 정한다</div>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-top:20px;flex:1;min-height:0;">
+      <div class="card" style="display:flex;align-items:center;gap:20px;padding:13px 22px;flex:1;"><span class="pill" style="width:120px;padding:8px 0;">Who</span><div style="font-size:16px;">이걸 보는 사람은 <b>누구</b>인가?</div></div>
+      <div class="card" style="display:flex;align-items:center;gap:20px;padding:13px 22px;flex:1;"><span class="pill" style="width:120px;padding:8px 0;">Why</span><div style="font-size:16px;">그 사람들이 이걸 <b>왜</b> 봐야 하는가?</div></div>
+      <div class="card" style="display:flex;align-items:center;gap:20px;padding:13px 22px;flex:1;"><span class="pill" style="width:120px;padding:8px 0;">What</span><div style="font-size:16px;">이를 위해 <b>무슨 지표</b>가 필요한가?</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- s4 Who 두 종류 대시보드 -->
+<div class="slide" id="s4">
+  <div class="tb"><span class="tb-cap">시각화 설계 · Who</span><span></span></div>
+  <div class="pad">
+    <div class="big-title" style="font-size:40px;">Who — 누가 보는가</div>
+    <div class="lead" style="font-size:17px;">보는 사람에 따라 대시보드의 목적·지표가 갈린다</div>
+    <div style="display:flex;gap:18px;margin-top:18px;flex:1;min-height:0;">
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+        <div style="text-align:center;"><span class="pill" style="padding:10px 24px;">관리자용 모니터링 · Top-Down</span></div>
+        <div class="card" style="flex:1;padding:18px 22px;display:flex;flex-direction:column;gap:11px;justify-content:center;">
+          <div style="font-size:15px;"><b style="color:var(--blue);">목적</b> · 비즈니스 현황 파악 (큰 그림 의사결정)</div>
+          <div style="font-size:15px;"><b style="color:var(--blue);">지표</b> · KPI 위주 (매출 · 수익 · 비용)</div>
+          <div style="font-size:15px;"><b style="color:var(--blue);">예시</b> · 매출 목표 달성률(%)</div>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+        <div style="text-align:center;"><span class="pill" style="padding:10px 24px;">실무자용 액셔너블 · Bottom-Up</span></div>
+        <div class="card" style="flex:1;padding:18px 22px;display:flex;flex-direction:column;gap:11px;justify-content:center;">
+          <div style="font-size:15px;"><b style="color:var(--green);">목적</b> · 원인 분석 · 액션 도출 (제품 개선)</div>
+          <div style="font-size:15px;"><b style="color:var(--green);">지표</b> · KPI Drill-down (상품 · 유저별)</div>
+          <div style="font-size:15px;"><b style="color:var(--green);">예시</b> · 브랜드/아이템별 매출 증감율(%)</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:14px;color:#555;text-align:center;"><b>Top-Down과 Bottom-Up 모두 필요</b> — 회사 전체 관점 &amp; 개별 고객·제품 관점</div>
+  </div>
+</div>
+
+<!-- s5 Why ISCE -->
+<div class="slide" id="s5">
+  <div class="tb"><span class="tb-cap">시각화 설계 · Why</span><span></span></div>
+  <div class="pad">
+    <div class="big-title">Why — ISCE로 점검</div>
+    <div class="lead">조직에 의미 있는 시각화인지 4가지로 확인</div>
+    <div style="display:flex;flex-direction:column;gap:11px;margin-top:20px;flex:1;min-height:0;">
+      <div class="card" style="display:flex;align-items:center;gap:22px;padding:13px 22px;flex:1;"><span class="pill" style="width:160px;padding:9px 0;">Importance</span><div style="font-size:15.5px;">비즈니스 어떤 측면에서 얼마나 중요한가 <span style="color:var(--sub);font-size:13px;">· 획득 · 리텐션 · 수익화</span></div></div>
+      <div class="card" style="display:flex;align-items:center;gap:22px;padding:13px 22px;flex:1;"><span class="pill" style="width:160px;padding:9px 0;">Situation</span><div style="font-size:15.5px;">지금 팀의 상황·우선순위에 맞는가</div></div>
+      <div class="card" style="display:flex;align-items:center;gap:22px;padding:13px 22px;flex:1;"><span class="pill" style="width:160px;padding:9px 0;">Cost</span><div style="font-size:15.5px;">비용과 시간이 얼마나 드는가</div></div>
+      <div class="card" style="display:flex;align-items:center;gap:22px;padding:13px 22px;flex:1;"><span class="pill" style="width:160px;padding:9px 0;">Effect</span><div style="font-size:15.5px;">언제 어떤 효과가 얼마나 예상되는가</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- s6 What 시각화하기 좋은 지표 3종 -->
+<div class="slide" id="s6">
+  <div class="tb"><span class="tb-cap">시각화 설계 · What</span><span></span></div>
+  <div class="pad">
+    <div class="big-title">What — 시각화하기 좋은 지표</div>
+    <div class="lead">대시보드에 넣기 좋은 지표의 3가지 특징</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px;flex:1;min-height:0;">
+      <div class="card" style="display:flex;gap:18px;padding:15px 24px;align-items:flex-start;flex:1;">
+        <div style="font-size:24px;font-weight:700;color:var(--p01);font-family:'Poppins';width:34px;flex-shrink:0;">①</div>
+        <div style="flex:1;"><div style="font-size:16.5px;font-weight:700;margin-bottom:4px;">상대적인 지표 <span style="color:var(--sub);font-size:13.5px;font-weight:400;">— 비교가 가능해야</span></div>
+          <div style="font-size:14px;color:#444;line-height:1.65;">시간(전일·주·월·년 대비)·그룹(카테고리·브랜드 평균 대비) 변화율. 비교돼야 인사이트가 나온다.<br><span style="color:var(--sub);">예시 · 전주 대비 결제 전환율, 전월 대비 수익 증감율, 전년 동일 프로모션 대비 매출 증감율</span></div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:18px;padding:15px 24px;align-items:flex-start;flex:1;">
+        <div style="font-size:24px;font-weight:700;color:var(--blue);font-family:'Poppins';width:34px;flex-shrink:0;">②</div>
+        <div style="flex:1;"><div style="font-size:16.5px;font-weight:700;margin-bottom:4px;">비율 지표 <span style="color:var(--sub);font-size:13.5px;font-weight:400;">— 참여도를 나타내야</span></div>
+          <div style="font-size:14px;color:#444;line-height:1.65;">사용자 참여도를 나타내 학습·액션이 가능. 프로덕트의 실질 현황을 반영한다.<br><span style="color:var(--sub);">예시 · 고객 재방문율, 활성 사용자 비율, 유료 구독 전환율, 장바구니 전환율</span></div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:18px;padding:15px 24px;align-items:flex-start;flex:1;">
+        <div style="font-size:24px;font-weight:700;color:var(--green);font-family:'Poppins';width:34px;flex-shrink:0;">③</div>
+        <div style="flex:1;"><div style="font-size:16.5px;font-weight:700;margin-bottom:4px;">선행 지표 <span style="color:var(--sub);font-size:13.5px;font-weight:400;">— 액션이 가능해야</span></div>
+          <div style="font-size:14px;color:#444;line-height:1.65;">후행지표(매출·수익)에 앞서는 지표. 개선 방법이 명확해 실제 액션에 반영하기 쉽다.<br><span style="color:var(--sub);">예시 · 유료 구독 배너 클릭 전환율, 광고 소재별 클릭 전환율, 회원가입 배너 클릭 전환율</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s7 프롬프트로 만드는 흐름 (Notion) -->
+<div class="slide" id="s7">
+  <div class="tb"><span class="tb-cap">시각화 설계 · 프롬프트 흐름</span><span></span></div>
+  <div class="pad">
+    <div class="big-title" style="font-size:40px;">프롬프트로 만드는 흐름</div>
+    <div class="lead" style="font-size:17px;">전처리부터 대시보드 구현까지, 각 단계를 자연어 프롬프트로</div>
+    <div style="display:flex;align-items:stretch;gap:10px;margin-top:20px;flex:1;min-height:0;">
+      <div class="card" style="flex:1;display:flex;flex-direction:column;gap:7px;padding:16px 16px;justify-content:center;">
+        <div class="tag tag-org" style="width:fit-content;">1 데이터 준비</div>
+        <ul style="margin:0;padding-left:16px;font-size:13px;line-height:1.6;color:#444;"><li>전처리(결측·이상치·날짜)</li><li>기술통계 · EDA</li></ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column;gap:7px;padding:16px 16px;justify-content:center;">
+        <div class="tag tag-org" style="width:fit-content;">2 분석 기획</div>
+        <ul style="margin:0;padding-left:16px;font-size:13px;line-height:1.6;color:#444;"><li>문제 정의·예상 요인(MECE)</li><li>지표 설정(선행지표)</li></ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column;gap:7px;padding:16px 16px;justify-content:center;">
+        <div class="tag tag-blu" style="width:fit-content;">3 시각화 설계</div>
+        <ul style="margin:0;padding-left:16px;font-size:13px;line-height:1.6;color:#444;"><li>차트 유형(General→Specific)</li><li>색상(의미 있는 메인·서브)</li></ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column;gap:7px;padding:16px 16px;justify-content:center;">
+        <div class="tag tag-grn" style="width:fit-content;">4 스토리텔링</div>
+        <ul style="margin:0;padding-left:16px;font-size:13px;line-height:1.6;color:#444;"><li>와이어프레임</li><li>레이아웃·필터·UX</li></ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column;gap:7px;padding:16px 16px;justify-content:center;">
+        <div class="tag" style="width:fit-content;">5 구현</div>
+        <ul style="margin:0;padding-left:16px;font-size:13px;line-height:1.6;color:#444;"><li>디자인 시안</li><li>태블로·코드 대시보드</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s8 좋은 지표의 조건 -->
+<div class="slide" id="s8">
+  <div class="tb"><span class="tb-cap">공통 이론 · 지표 원칙</span><span></span></div>
+  <div class="pad">
+    <div class="big-title">좋은 지표의 조건</div>
+    <div class="lead">시각화하기 좋은 지표를 고른 뒤, 지표 자체의 품질도 점검</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:22px;">
+      <div class="card" style="display:flex;gap:18px;align-items:flex-start;padding:16px 22px;">
+        <div style="width:172px;flex-shrink:0;font-size:16px;font-weight:700;color:var(--p01);">신뢰도 + 타당도</div>
+        <div style="flex:1;font-size:15px;color:#333;line-height:1.65;">반복해도 같은 값(신뢰도) + 재려는 걸 정확히 잰다(타당도)</div>
+      </div>
+      <div class="card" style="display:flex;gap:18px;align-items:flex-start;padding:16px 22px;">
+        <div style="width:172px;flex-shrink:0;font-size:16px;font-weight:700;color:var(--blue);">북극성 = 선행지표</div>
+        <div style="flex:1;font-size:15px;color:#333;line-height:1.65;">고객 가치에 연결된 선행지표 — 가입수·매출 같은 후행·허영 지표는 제외</div>
+      </div>
+      <div class="card" style="display:flex;gap:18px;align-items:flex-start;padding:16px 22px;">
+        <div style="width:172px;flex-shrink:0;font-size:16px;font-weight:700;color:var(--green);">단일 정의(SSOT)</div>
+        <div style="flex:1;font-size:15px;color:#333;line-height:1.65;">지표를 한 곳에 정의 — 대시보드마다 값이 다르면 그건 블랙박스</div>
+      </div>
+      <div class="card" style="display:flex;gap:18px;align-items:flex-start;padding:16px 22px;">
+        <div style="width:172px;flex-shrink:0;font-size:16px;font-weight:700;color:#555;">% 와 %p 구분</div>
+        <div style="flex:1;font-size:15px;color:#333;line-height:1.65;">8.7%→25.4%는 16.7%p 상승이지 191% 상승이 아님</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s9 차트 선택 기준 -->
+<div class="slide" id="s9">
+  <div class="tb"><span class="tb-cap">공통 이론 · 시각화</span><span></span></div>
+  <div class="pad">
+    <div class="big-title">차트 선택 기준</div>
+    <div class="lead">분석 의도로 고르고, 사람의 인지 정확도로 거르기</div>
+    <div style="display:flex;gap:18px;margin-top:24px;flex:1;align-items:stretch;">
+      <div class="card" style="flex:1;display:flex;flex-direction:column;gap:12px;padding:20px 24px;">
+        <div class="tag tag-org" style="width:fit-content;">분석 의도 → 차트</div>
+        <ul style="margin:0;padding-left:18px;font-size:15.5px;line-height:2;color:#333;">
+          <li><b>비교</b> · 누가 더 큰가 — 정렬 막대</li>
+          <li><b>추세</b> · 어떻게 변했나 — 선</li>
+          <li><b>상관</b> · 둘이 관련 있나 — 산점도</li>
+          <li><b>부분-전체</b> · 구성 비율 — 누적 막대·도넛</li>
+        </ul>
+      </div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column;gap:13px;padding:20px 24px;">
+        <div class="tag tag-blu" style="width:fit-content;">사람이 정확히 읽는 순서</div>
+        <div style="font-size:18px;font-weight:700;letter-spacing:-.01em;margin-top:2px;">위치 → 길이 → 각도 → 면적 → 색</div>
+        <div style="font-size:12px;color:var(--sub);letter-spacing:.04em;">정확 ——————→ 부정확</div>
+        <div style="font-size:14.5px;color:#444;line-height:1.7;margin-top:2px;">각도·면적은 부정확하게 읽힘 — 그래서 <b>파이보다 막대</b>, 비교는 길이로.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s10 인사이트 도출 ① -->
+<div class="slide" id="s10">
+  <div class="tb"><span class="tb-cap">공통 이론 · 인사이트 ①</span><span></span></div>
+  <div class="pad">
+    <div class="big-title" style="font-size:42px;">인사이트 도출 ① — 분석으로 좁혀가기</div>
+    <div class="lead" style="font-size:18px;">수집된 값은 정보, 분석을 거쳐야 인사이트</div>
+    <div style="display:flex;flex-direction:column;gap:13px;margin-top:20px;">
+      <div class="card" style="padding:16px 24px;">
+        <div style="font-size:17px;font-weight:700;margin-bottom:7px;">인사이트는 "이해를 바꾸는 발견"</div>
+        <ul style="margin:0;padding-left:19px;font-size:14.5px;line-height:1.85;color:#444;">
+          <li>단순 집계·보고는 정보 — 가정이나 의사결정을 바꿀 때 인사이트</li>
+          <li>대시보드는 정보를 보여주고, 인사이트는 그 위에서 사람이 만든다</li>
+        </ul>
+      </div>
+      <div class="card card-hi" style="padding:16px 24px;">
+        <div style="font-size:17px;font-weight:700;margin-bottom:7px;">드릴다운으로 성과의 출처를 좁힌다</div>
+        <ul style="margin:0;padding-left:19px;font-size:14.5px;line-height:1.85;color:#444;">
+          <li><b>전체 → 세그먼트 → 카테고리 → 채널</b>로 한 단계씩 분해</li>
+          <li>평균 뒤에 숨은 편차를 연다 — 같은 카테고리도 채널 따라 성과가 갈림</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:16px 24px;">
+        <div style="font-size:17px;font-weight:700;margin-bottom:7px;">분류 표기가 일관돼야 쪼갤 수 있다</div>
+        <ul style="margin:0;padding-left:19px;font-size:14.5px;line-height:1.85;color:#444;">
+          <li>채널·카테고리·기간처럼 나누는 기준을 미리 정해 똑같이 기록</li>
+          <li>같은 걸 'Email'·'이메일'로 다르게 적으면 한 묶음으로 안 잡혀 드릴다운 불가</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s11 인사이트 도출 ② -->
+<div class="slide" id="s11">
+  <div class="tb"><span class="tb-cap">공통 이론 · 인사이트 ②</span><span></span></div>
+  <div class="pad">
+    <div class="big-title" style="font-size:42px;">인사이트 도출 ② — 발견 · 의미 · 액션</div>
+    <div class="lead" style="font-size:18px;">관찰과 해석을 분리하고, 액션까지 적는다</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px;">
+      <div class="card" style="display:flex;gap:18px;align-items:flex-start;padding:15px 24px;">
+        <div class="tag tag-org" style="flex-shrink:0;margin-top:3px;">발견</div>
+        <ul style="flex:1;margin:0;padding-left:19px;font-size:14.5px;line-height:1.8;color:#444;">
+          <li>데이터에서 보이는 것을 해석 없이 그대로 기록 (수치·패턴만)</li>
+          <li>관찰에 의견을 섞으면 추측이 근거처럼 보임</li>
+        </ul>
+      </div>
+      <div class="card" style="display:flex;gap:18px;align-items:flex-start;padding:15px 24px;">
+        <div class="tag tag-blu" style="flex-shrink:0;margin-top:3px;">의미</div>
+        <ul style="flex:1;margin:0;padding-left:19px;font-size:14.5px;line-height:1.8;color:#444;">
+          <li>왜 중요한지 · 비즈니스 임팩트를 규모로 환산</li>
+          <li>발견과 해석을 분리해야 의사결정이 근거를 가짐</li>
+        </ul>
+      </div>
+      <div class="card" style="display:flex;gap:18px;align-items:flex-start;padding:15px 24px;">
+        <div class="tag tag-grn" style="flex-shrink:0;margin-top:3px;">액션</div>
+        <ul style="flex:1;margin:0;padding-left:19px;font-size:14.5px;line-height:1.8;color:#444;">
+          <li>무엇을 · 누가 · 언제까지 + 우선순위(P1·P2·P3)</li>
+          <li>차트 제목도 주제가 아니라 결론으로 ("이메일이 매출의 절반")</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s12 분석 시 주의할 점 5가지 -->
+<div class="slide" id="s12">
+  <div class="tb"><span class="tb-cap">공통 이론 · 분석 주의</span><span></span></div>
+  <div class="pad">
+    <div class="big-title" style="font-size:42px;">분석 시 주의할 점 — 5가지</div>
+    <div class="lead" style="font-size:17px;">자동 생성된 수치를 그대로 결론으로 쓰기 전에</div>
+    <div style="display:flex;flex-direction:column;gap:9px;margin-top:16px;flex:1;min-height:0;">
+      <div class="card" style="padding:11px 22px;flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-size:15.5px;font-weight:700;color:var(--p01);margin-bottom:4px;">1. 전후 비교 ≠ 인과</div>
+        <ul style="margin:0;padding-left:18px;font-size:13.5px;line-height:1.5;color:#444;display:flex;gap:10px 26px;flex-wrap:wrap;"><li>계절성·동시 진행 활동·외부 요인이 섞임</li><li>통제집단을 둔 A/B 실험으로 효과 분리</li></ul>
+      </div>
+      <div class="card" style="padding:11px 22px;flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-size:15.5px;font-weight:700;color:var(--blue);margin-bottom:4px;">2. 유의하다 ≠ 효과가 크다</div>
+        <ul style="margin:0;padding-left:18px;font-size:13.5px;line-height:1.5;color:#444;display:flex;gap:10px 26px;flex-wrap:wrap;"><li>큰 표본은 사소한 차이도 유의하게 나옴</li><li>효과크기·신뢰구간·표본을 함께 확인</li><li>‘유의하지 않음’이 ‘효과 없음’은 아님</li></ul>
+      </div>
+      <div class="card" style="padding:11px 22px;flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-size:15.5px;font-weight:700;color:var(--green);margin-bottom:4px;">3. 엿보기(peeking)·다중 비교</div>
+        <ul style="margin:0;padding-left:18px;font-size:13.5px;line-height:1.5;color:#444;display:flex;gap:10px 26px;flex-wrap:wrap;"><li>조기 종료·여러 지표 동시 비교는 위양성</li><li>표본을 미리 정하고 다중비교 보정</li></ul>
+      </div>
+      <div class="card" style="padding:11px 22px;flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-size:15.5px;font-weight:700;color:#9a6cae;margin-bottom:4px;">4. 상관 ≠ 인과 (교란변수)</div>
+        <ul style="margin:0;padding-left:18px;font-size:13.5px;line-height:1.5;color:#444;display:flex;gap:10px 26px;flex-wrap:wrap;"><li>숨은 제3의 변수가 둘 다 끌어올릴 수 있음</li><li>광고비↔매출도 잘 팔리는 카테고리 효과일 수 있음</li></ul>
+      </div>
+      <div class="card" style="padding:11px 22px;flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-size:15.5px;font-weight:700;color:#c08a2d;margin-bottom:4px;">5. 평균의 함정 · % vs %p</div>
+        <ul style="margin:0;padding-left:18px;font-size:13.5px;line-height:1.5;color:#444;display:flex;gap:10px 26px;flex-wrap:wrap;"><li>평균은 분산·이상치를 은폐(심슨의 역설)</li><li>8.7%→25.4%는 16.7%p 상승이지 191% 아님</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s13 비교를 통한 인사이트 (PDF How) -->
+<div class="slide" id="s13">
+  <div class="tb"><span class="tb-cap">공통 이론 · 인사이트</span><span></span></div>
+  <div class="pad">
+    <div class="big-title" style="font-size:42px;">비교를 통한 인사이트</div>
+    <div class="lead" style="font-size:18px;">시각화의 기본은 "비교" — 비교해야 지표의 좋고 나쁨을 해석한다</div>
+    <div style="display:flex;gap:20px;margin-top:18px;flex:1;min-height:0;align-items:stretch;">
+      <div style="flex:1.15;display:flex;flex-direction:column;gap:13px;">
+        <div class="card" style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:16px 24px;">
+          <div style="font-size:16.5px;font-weight:700;margin-bottom:6px;">① 비율로 바꿔서 보기</div>
+          <div style="font-size:14px;color:#444;line-height:1.7;">범주 간 값의 스케일 차이가 크면 절대값으로는 좋고 나쁨을 판단하기 어렵다. 비율(전년 대비 증감율 등)로 바꾸면 규모가 작은 범주의 성장도 드러난다.<br><span style="color:var(--sub);">예 · 절대 매출은 작은 Labels가 전년 대비 <b style="color:var(--blue);">+37%</b>로 최고 성장</span></div>
+        </div>
+        <div class="card" style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:16px 24px;">
+          <div style="font-size:16.5px;font-weight:700;margin-bottom:6px;">② 전체·유사 카테고리와 비교</div>
+          <div style="font-size:14px;color:#444;line-height:1.7;">전체 평균과 비교하고, 단가·성격이 비슷한 다른 카테고리·브랜드끼리 묶어 비교해 평가한다.<br><span style="color:var(--sub);">예 · 전체 카테고리 평균 증감율 대비, 유사 브랜드 대비</span></div>
+        </div>
+      </div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column;padding:14px 16px;">
+        <div style="font-size:12.5px;color:var(--sub);text-align:center;margin-bottom:2px;">절대값 순위 → 증감율 순위</div>
+        <svg viewBox="0 0 340 210" style="width:100%;height:100%;flex:1;">
+          <text x="68" y="14" font-size="11" fill="#888" text-anchor="middle">절대값</text>
+          <text x="280" y="14" font-size="11" fill="#888" text-anchor="middle">증감율 %</text>
+          <line x1="68" y1="22" x2="68" y2="196" stroke="#E4E1DB" stroke-width="1"/>
+          <line x1="280" y1="22" x2="280" y2="196" stroke="#E4E1DB" stroke-width="1"/>
+          <polyline points="68,38 280,150" stroke="#CBC8C2" stroke-width="2" fill="none"/>
+          <polyline points="68,72 280,118" stroke="#CBC8C2" stroke-width="2" fill="none"/>
+          <polyline points="68,106 280,88" stroke="#CBC8C2" stroke-width="2" fill="none"/>
+          <polyline points="68,140 280,58" stroke="#CBC8C2" stroke-width="2" fill="none"/>
+          <polyline points="68,182 280,32" stroke="#4A7AB5" stroke-width="3" fill="none"/>
+          <circle cx="280" cy="32" r="11" fill="none" stroke="#4A7AB5" stroke-width="2.5"/>
+          <text x="60" y="41" font-size="9" fill="#9a978f" text-anchor="end">Furnish</text>
+          <text x="60" y="75" font-size="9" fill="#9a978f" text-anchor="end">Paper</text>
+          <text x="60" y="109" font-size="9" fill="#9a978f" text-anchor="end">Supplies</text>
+          <text x="60" y="143" font-size="9" fill="#9a978f" text-anchor="end">Art</text>
+          <text x="60" y="185" font-size="10" fill="#4A7AB5" text-anchor="end" font-weight="700">Labels</text>
+          <text x="280" y="60" font-size="10" fill="#4A7AB5" text-anchor="middle" font-weight="700">Labels +37%</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s14 Metric Hierarchy (PDF Actionable) -->
+<div class="slide" id="s14">
+  <div class="tb"><span class="tb-cap">공통 이론 · 인사이트</span><span></span></div>
+  <div class="pad">
+    <div class="big-title" style="font-size:38px;">Actionable한 지표 — Metric Hierarchy</div>
+    <div class="lead" style="font-size:16.5px;">High-level 지표만 보면 높낮음의 "이유"를 모른다 — 영향을 주는 Input 지표까지 파고들기</div>
+    <div style="display:flex;flex-direction:column;margin-top:20px;flex:1;min-height:0;justify-content:center;gap:0;">
+      <div style="display:flex;align-items:center;gap:20px;background:rgba(91,181,166,.12);border:1.5px solid #5BB5A6;border-radius:9px;padding:15px 24px;">
+        <div style="width:190px;font-size:17px;font-weight:700;color:#3f8a7a;flex-shrink:0;">Outcome Metrics</div>
+        <div style="font-size:14.5px;color:#444;line-height:1.55;">결과 지표 · 획득 · 리텐션 · 수익화 <span style="color:#888;">(매출, CLV)</span></div>
+      </div>
+      <div style="text-align:center;color:#bbb;font-size:15px;padding:5px 0;">↑ <span style="font-size:11px;color:#999;">영향</span></div>
+      <div style="display:flex;align-items:center;gap:20px;background:rgba(232,200,122,.16);border:1.5px solid #E0B84A;border-radius:9px;padding:15px 24px;">
+        <div style="width:190px;font-size:17px;font-weight:700;color:#b8901f;flex-shrink:0;">Driver Metrics</div>
+        <div style="font-size:14.5px;color:#444;line-height:1.55;">선행 지표 · Outcome에 영향을 주는 지표 <span style="color:#888;">(결제 페이지 전환율)</span></div>
+      </div>
+      <div style="text-align:center;color:#bbb;font-size:15px;padding:5px 0;">↑ <span style="font-size:11px;color:#999;">영향</span></div>
+      <div style="display:flex;align-items:center;gap:20px;background:rgba(232,160,124,.16);border:1.5px solid #E08A5C;border-radius:9px;padding:15px 24px;">
+        <div style="width:190px;font-size:17px;font-weight:700;color:#c2673f;flex-shrink:0;">Actionable Metrics</div>
+        <div style="font-size:14.5px;color:#444;line-height:1.55;">실행 지표 · Driver에 영향, 가장 바꾸기 쉬움 <span style="color:#888;">(CTR)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s15 대시보드 와이어프레임 설계 (Notion 9) -->
+<div class="slide" id="s15">
+  <div class="tb"><span class="tb-cap">시각화 설계 · 와이어프레임</span><span></span></div>
+  <div class="pad">
+    <div class="big-title" style="font-size:40px;">대시보드 와이어프레임 설계</div>
+    <div class="lead" style="font-size:16.5px;">차트를 배치하기 전에 화면 흐름부터 — 상단 고수준에서 하단 상세로</div>
+    <div style="display:flex;gap:24px;margin-top:18px;flex:1;min-height:0;">
+      <div style="flex:1.2;display:flex;flex-direction:column;gap:8px;">
+        <div style="flex:0 0 32px;background:var(--dark);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;">제목</div>
+        <div style="flex:0 0 30px;background:var(--dark);color:#cfcdc8;border-radius:6px;display:flex;align-items:center;gap:8px;padding:0 14px;font-size:11.5px;"><b style="color:#fff;">필터</b> 시간 · 카테고리 · 지역</div>
+        <div style="flex:0 0 48px;display:flex;gap:8px;">
+          <div style="flex:1;background:var(--dark);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">KPI</div>
+          <div style="flex:1;background:var(--dark);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">KPI</div>
+          <div style="flex:1;background:var(--dark);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">KPI</div>
+          <div style="flex:1;background:var(--dark);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">KPI</div>
+        </div>
+        <div style="flex:1;display:flex;gap:8px;min-height:0;">
+          <div style="flex:1.4;background:var(--dark);color:#E8a08c;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;">추세 차트</div>
+          <div style="flex:1;background:var(--dark);color:#E8a08c;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;">비교 차트</div>
+        </div>
+        <div style="flex:0 0 38px;background:var(--dark);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;">데이터 테이블</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+        <div class="card" style="padding:13px 18px;"><div style="font-size:14.5px;font-weight:700;margin-bottom:3px;">General → Specific</div><div style="font-size:13px;color:#555;line-height:1.55;">상단 고수준 KPI → 하단 상세 차트·표 (역피라미드)</div></div>
+        <div class="card" style="padding:13px 18px;"><div style="font-size:14.5px;font-weight:700;margin-bottom:3px;">필터</div><div style="font-size:13px;color:#555;line-height:1.55;">시간·카테고리·지역으로 데이터를 세분화</div></div>
+        <div class="card" style="padding:13px 18px;"><div style="font-size:14.5px;font-weight:700;margin-bottom:3px;">색상</div><div style="font-size:13px;color:#555;line-height:1.55;">의미 있는 메인·서브 — 긍정/부정을 일관되게</div></div>
+        <div class="card" style="padding:13px 18px;"><div style="font-size:14.5px;font-weight:700;margin-bottom:3px;">제목·UX</div><div style="font-size:13px;color:#555;line-height:1.55;">제목은 토픽이 아니라 결론으로, 탐색 동선을 직관적으로</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+<div class="nav"><span class="nav-ctr" id="ctr">1 / 12</span><button class="nav-btn" id="prev">←</button><button class="nav-btn" id="next">→</button></div>
+<div class="progress" id="prog"></div>
+<script>
+  const ORDER=[1,2,7,3,4,5,6,8,13,14,9,15];const TOTAL=ORDER.length;let cur=0;
+  function show(i){document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));document.getElementById('s'+ORDER[i]).classList.add('active');document.getElementById('ctr').textContent=(i+1)+' / '+TOTAL;document.getElementById('prog').style.width=((i+1)/TOTAL*100)+'%';}
+  document.getElementById('next').onclick=()=>{if(cur<TOTAL-1)show(++cur);};
+  document.getElementById('prev').onclick=()=>{if(cur>0)show(--cur);};
+  document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(cur<TOTAL-1)show(++cur);}if(e.key==='ArrowLeft'){e.preventDefault();if(cur>0)show(--cur);}});
+  function scale(){const s=Math.min(window.innerWidth/1280,window.innerHeight/800);const d=document.getElementById('deck');d.style.transform='scale('+s+')';d.style.left=((window.innerWidth-1280*s)/2)+'px';d.style.top=((window.innerHeight-800*s)/2)+'px';}
+  window.addEventListener('resize',scale);scale();show(0);
+</script>
+</body>
+</html>
