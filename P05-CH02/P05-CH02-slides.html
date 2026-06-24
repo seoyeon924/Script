@@ -147,7 +147,7 @@
         <ul style="margin:0;padding-left:17px;font-size:13.5px;line-height:1.65;color:#333;">
           <li><b>지표</b> · 전환율 차(%p), 상대 uplift, p-value, 95% CI</li>
           <li><b>의사결정</b> · 통계 유의 + 효과 충분 시 채택 / 둘 중 하나라도 미달 시 보류</li>
-          <li><b>실무</b> · MDE · 검정력 사전 설정 후 표본 확보</li>
+          <li><b>차트</b> · 누적 전환율 차이 + CI 밴드 · Forest Plot · 의사결정 테이블</li>
         </ul>
       </div>
       <div class="card" style="flex:1;display:flex;flex-direction:column;gap:11px;padding:18px 20px;">
@@ -156,9 +156,9 @@
           <div style="font-size:18px;font-weight:600;margin-top:5px;line-height:1.3;">효과가 균일한가</div>
         </div>
         <ul style="margin:0;padding-left:17px;font-size:13.5px;line-height:1.65;color:#333;">
-          <li><b>지표</b> · 세그먼트별 uplift · 표본 크기</li>
+          <li><b>지표</b> · 세그먼트별 uplift · 통계적 신뢰도 · 표본 크기</li>
           <li><b>의사결정</b> · 특정 세그먼트만 효과 시 부분 배포 / 상충 시 보류</li>
-          <li><b>실무</b> · 사후 분할 주의 — 사전 정의 세그먼트만 신뢰</li>
+          <li><b>차트</b> · 세그먼트 산점도 (X=uplift · Y=신뢰도 · 원 크기=표본수)</li>
         </ul>
       </div>
       <div class="card" style="flex:1;display:flex;flex-direction:column;gap:11px;padding:18px 20px;">
@@ -167,9 +167,9 @@
           <div style="font-size:18px;font-weight:600;margin-top:5px;line-height:1.3;">배포할까</div>
         </div>
         <ul style="margin:0;padding-left:17px;font-size:13.5px;line-height:1.65;color:#333;">
-          <li><b>지표</b> · 효과크기 × 가드레일 지표 동시</li>
-          <li><b>의사결정</b> · 효과 크고 가드레일 통과 = 배포 / 가드레일 악화 = 보류</li>
-          <li><b>실무</b> · 효과와 가드레일을 한 화면에서 동시 점검</li>
+          <li><b>지표</b> · 효과크기 × Guardrail 통과 여부 동시</li>
+          <li><b>의사결정</b> · 효과 크고 Guardrail 통과 = 배포 / Guardrail 악화 = 보류</li>
+          <li><b>차트</b> · 실험 품질 경고 + 의사결정 테이블 (Decision 열)</li>
         </ul>
       </div>
     </div>
@@ -191,32 +191,32 @@
         </div>
         <div style="display:flex;align-items:center;color:#CCC;">→</div>
         <div class="card card-hi" style="flex:1;padding:13px 18px;display:flex;flex-direction:column;justify-content:center;">
-          <div style="font-size:15px;font-weight:600;">비율 z-검정 + 신뢰구간</div>
-          <div style="font-size:13px;color:#666;margin-top:3px;">우연 범위 넘는 차이만 인정</div>
+          <div style="font-size:15px;font-weight:600;">누적 전환율 차이 + CI 밴드 · Forest Plot</div>
+          <div style="font-size:13px;color:#666;margin-top:3px;">CI가 0선과 겹치지 않는 차이만 인정</div>
         </div>
       </div>
       <div style="display:flex;gap:10px;align-items:stretch;">
         <div class="card" style="flex:1.35;padding:13px 18px;">
           <div style="font-size:12px;font-weight:700;color:var(--blue);font-family:'Menlo',monospace;">문제 B · 세그먼트</div>
           <div style="font-size:15.5px;font-weight:600;margin-top:3px;line-height:1.45;">전체 효과 속 세그먼트 상충 — 균일성 점검</div>
-          <div style="font-size:12.5px;color:var(--sub);margin-top:5px;font-family:'Menlo',monospace;">측정 · 세그먼트별 uplift, 표본 크기</div>
+          <div style="font-size:12.5px;color:var(--sub);margin-top:5px;font-family:'Menlo',monospace;">측정 · 세그먼트별 uplift, 신뢰도, 표본 크기</div>
         </div>
         <div style="display:flex;align-items:center;color:#CCC;">→</div>
         <div class="card card-hi" style="flex:1;padding:13px 18px;display:flex;flex-direction:column;justify-content:center;">
-          <div style="font-size:15px;font-weight:600;">세그먼트 비교</div>
-          <div style="font-size:13px;color:#666;margin-top:3px;">사후 분할 주의 · 사전 정의만</div>
+          <div style="font-size:15px;font-weight:600;">세그먼트 분석 산점도</div>
+          <div style="font-size:13px;color:#666;margin-top:3px;">신뢰도 × 효과 × 표본 동시 비교</div>
         </div>
       </div>
       <div style="display:flex;gap:10px;align-items:stretch;">
         <div class="card" style="flex:1.35;padding:13px 18px;">
           <div style="font-size:12px;font-weight:700;color:var(--green);font-family:'Menlo',monospace;">문제 C · 의사결정</div>
-          <div style="font-size:15.5px;font-weight:600;margin-top:3px;line-height:1.45;">배포 여부 — 가드레일 동시 점검</div>
-          <div style="font-size:12.5px;color:var(--sub);margin-top:5px;font-family:'Menlo',monospace;">측정 · 효과크기, 가드레일 지표</div>
+          <div style="font-size:15.5px;font-weight:600;margin-top:3px;line-height:1.45;">배포 여부 — Guardrail 동시 점검</div>
+          <div style="font-size:12.5px;color:var(--sub);margin-top:5px;font-family:'Menlo',monospace;">측정 · 효과크기, Guardrail 통과 여부</div>
         </div>
         <div style="display:flex;align-items:center;color:#CCC;">→</div>
         <div class="card card-hi" style="flex:1;padding:13px 18px;display:flex;flex-direction:column;justify-content:center;">
-          <div style="font-size:15px;font-weight:600;">의사결정 규칙</div>
-          <div style="font-size:13px;color:#666;margin-top:3px;">효과 × 가드레일 동시 충족</div>
+          <div style="font-size:15px;font-weight:600;">실험 품질 경고 + 의사결정 테이블</div>
+          <div style="font-size:13px;color:#666;margin-top:3px;">Decision 열로 Ship / Hold 판정</div>
         </div>
       </div>
     </div>
