@@ -105,29 +105,48 @@
 <div class="slide" id="s4">
   <div class="tb"><span class="tb-cap">기획 · 입력 데이터</span><span></span></div>
   <div class="pad">
-    <div class="big-title">채용 데이터 구조</div>
-    <div class="lead">채용 데이터는 보통 부서 × 단계 단위로 쌓인다는 점에서 출발하기</div>
-    <table style="width:100%;border-collapse:collapse;margin-top:22px;">
-      <thead>
-        <tr style="border-bottom:2px solid var(--text);">
-          <th style="text-align:left;padding:9px 10px;font-size:14px;font-weight:700;">department<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">채용 부서</div></th>
-          <th style="text-align:left;padding:9px 10px;font-size:14px;font-weight:700;">stage<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">채용 단계</div></th>
-          <th style="text-align:right;padding:9px 10px;font-size:14px;font-weight:700;">candidates<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">진입 인원</div></th>
-          <th style="text-align:right;padding:9px 10px;font-size:14px;font-weight:700;">passed<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">통과 인원</div></th>
-          <th style="text-align:right;padding:9px 10px;font-size:14px;font-weight:700;">avg_days<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">단계 소요일</div></th>
-          <th style="text-align:right;padding:9px 10px;font-size:14px;font-weight:700;">offer_sent<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">오퍼 발송</div></th>
-          <th style="text-align:right;padding:9px 10px;font-size:14px;font-weight:700;">offer_accepted<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">오퍼 수락</div></th>
-        </tr>
-      </thead>
-      <tbody style="font-family:'Menlo','Monaco',monospace;">
-        <tr style="border-bottom:1px solid var(--border);"><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">지원</td><td style="text-align:right;padding:11px 10px;font-size:13px;">520</td><td style="text-align:right;padding:11px 10px;font-size:13px;">156</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td></tr>
-        <tr style="border-bottom:1px solid var(--border);"><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">서류</td><td style="text-align:right;padding:11px 10px;font-size:13px;">156</td><td style="text-align:right;padding:11px 10px;font-size:13px;">98</td><td style="text-align:right;padding:11px 10px;font-size:13px;">3</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td></tr>
-        <tr style="border-bottom:1px solid var(--border);"><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">1차면접</td><td style="text-align:right;padding:11px 10px;font-size:13px;">98</td><td style="text-align:right;padding:11px 10px;font-size:13px;">54</td><td style="text-align:right;padding:11px 10px;font-size:13px;">7</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td></tr>
-        <tr style="border-bottom:1px solid var(--border);"><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">2차면접</td><td style="text-align:right;padding:11px 10px;font-size:13px;">54</td><td style="text-align:right;padding:11px 10px;font-size:13px;">21</td><td style="text-align:right;padding:11px 10px;font-size:13px;">12</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td></tr>
-        <tr><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">오퍼</td><td style="text-align:right;padding:11px 10px;font-size:13px;">21</td><td style="text-align:right;padding:11px 10px;font-size:13px;">18</td><td style="text-align:right;padding:11px 10px;font-size:13px;">5</td><td style="text-align:right;padding:11px 10px;font-size:13px;">21</td><td style="text-align:right;padding:11px 10px;font-size:13px;">18</td></tr>
-      </tbody>
-    </table>
-    <div class="card card-hi" style="margin-top:18px;font-size:15px;color:#555;line-height:1.6;">원본은 부서 × 단계별 <b>진입·통과 인원 · 소요일 · 오퍼 수치</b>뿐 — 단계 통과율 · 전체 전환율 · time-to-hire · 오퍼 수락률은 전부 여기서 파생</div>
+    <div class="big-title" style="font-size:42px;">HR 데이터 — 채용 + 직원 (2개 소스)</div>
+    <div class="lead">채용 퍼널(ATS)과 직원 단위(HRIS), 두 데이터를 합쳐서 본다</div>
+    <div style="display:flex;gap:26px;margin-top:20px;">
+      <div style="flex:1;">
+        <div style="display:inline-block;font-size:12px;font-family:'Menlo',monospace;color:#E8603C;border:1px solid #E8603C;background:rgba(232,96,60,0.06);border-radius:4px;padding:3px 9px;margin-bottom:10px;">recruiting.csv · 채용 퍼널</div>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead><tr style="border-bottom:2px solid var(--text);">
+            <th style="text-align:left;padding:7px 8px;font-size:12.5px;font-weight:700;">department</th>
+            <th style="text-align:left;padding:7px 8px;font-size:12.5px;font-weight:700;">stage</th>
+            <th style="text-align:right;padding:7px 8px;font-size:12.5px;font-weight:700;">candidates</th>
+            <th style="text-align:right;padding:7px 8px;font-size:12.5px;font-weight:700;">passed</th>
+          </tr></thead>
+          <tbody style="font-family:'Menlo','Monaco',monospace;font-size:12.5px;">
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 8px;">개발</td><td style="padding:9px 8px;color:#666;">지원</td><td style="text-align:right;padding:9px 8px;">520</td><td style="text-align:right;padding:9px 8px;">156</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 8px;">개발</td><td style="padding:9px 8px;color:#666;">서류</td><td style="text-align:right;padding:9px 8px;">156</td><td style="text-align:right;padding:9px 8px;">98</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 8px;">개발</td><td style="padding:9px 8px;color:#666;">1차면접</td><td style="text-align:right;padding:9px 8px;">98</td><td style="text-align:right;padding:9px 8px;">54</td></tr>
+            <tr><td style="padding:9px 8px;">개발</td><td style="padding:9px 8px;color:#666;">오퍼</td><td style="text-align:right;padding:9px 8px;">21</td><td style="text-align:right;padding:9px 8px;">18</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:12px;color:#888;margin-top:8px;line-height:1.5;">→ 퍼널·전환율·time-to-hire·오퍼 수락률</div>
+      </div>
+      <div style="flex:1.15;">
+        <div style="display:inline-block;font-size:12px;font-family:'Menlo',monospace;color:#4A7AB5;border:1px solid #4A7AB5;background:rgba(74,122,181,0.06);border-radius:4px;padding:3px 9px;margin-bottom:10px;">employees.csv · 직원 단위</div>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead><tr style="border-bottom:2px solid var(--text);">
+            <th style="text-align:left;padding:7px 8px;font-size:12.5px;font-weight:700;">employee_id</th>
+            <th style="text-align:left;padding:7px 8px;font-size:12.5px;font-weight:700;">dept</th>
+            <th style="text-align:left;padding:7px 8px;font-size:12.5px;font-weight:700;">perf</th>
+            <th style="text-align:left;padding:7px 8px;font-size:12.5px;font-weight:700;">status</th>
+            <th style="text-align:right;padding:7px 8px;font-size:12.5px;font-weight:700;">risk_score</th>
+          </tr></thead>
+          <tbody style="font-family:'Menlo','Monaco',monospace;font-size:12.5px;">
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 8px;color:#666;">E1001</td><td style="padding:9px 8px;">영업</td><td style="padding:9px 8px;">C</td><td style="padding:9px 8px;">재직</td><td style="text-align:right;padding:9px 8px;color:#ef7d86;font-weight:700;">82</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 8px;color:#666;">E1002</td><td style="padding:9px 8px;">PM</td><td style="padding:9px 8px;">B</td><td style="padding:9px 8px;">재직</td><td style="text-align:right;padding:9px 8px;color:#ef7d86;font-weight:700;">74</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 8px;color:#666;">E1187</td><td style="padding:9px 8px;">개발</td><td style="padding:9px 8px;">A</td><td style="padding:9px 8px;">재직</td><td style="text-align:right;padding:9px 8px;">29</td></tr>
+            <tr><td style="padding:9px 8px;color:#666;">E1295</td><td style="padding:9px 8px;">영업</td><td style="padding:9px 8px;">C</td><td style="padding:9px 8px;color:#888;">퇴사·자발</td><td style="text-align:right;padding:9px 8px;">—</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:12px;color:#888;margin-top:8px;line-height:1.5;">→ 재직 인원·자발적 이직률·성과 분포·이탈 위험(risk≥70)</div>
+      </div>
+    </div>
+    <div class="card card-hi" style="margin-top:18px;font-size:14.5px;color:#555;line-height:1.6;">채용 퍼널은 <b>recruiting.csv</b>(부서×단계)에서, 이직률·성과·이탈 위험은 <b>employees.csv</b>(직원 단위)에서 파생 — 두 소스를 합쳐야 채용부터 리텐션까지 한 화면에서 본다</div>
   </div>
 </div>
 
