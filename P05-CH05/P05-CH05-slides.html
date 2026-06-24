@@ -73,7 +73,7 @@
       <div class="card" style="flex:1;height:200px;display:flex;flex-direction:column;justify-content:space-between;">
         <div style="font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--p01);">Clip 01</div>
         <div style="font-size:21px;font-weight:600;color:#1C1A18;line-height:1.4;">기획안</div>
-        <div style="font-size:14px;color:#666;line-height:1.7;">채용 퍼널 · 단계별 전환율<br>부서·소스 비교 설계</div>
+        <div style="font-size:14px;color:#666;line-height:1.7;">채용 퍼널 · 단계별 전환율<br>부서별 비교 · 이탈 위험 설계</div>
       </div>
       <div style="color:#CCC;font-size:22px;flex-shrink:0;">→</div>
       <div class="card" style="flex:1;height:200px;display:flex;flex-direction:column;justify-content:space-between;">
@@ -114,19 +114,20 @@
           <th style="text-align:left;padding:9px 10px;font-size:14px;font-weight:700;">stage<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">채용 단계</div></th>
           <th style="text-align:right;padding:9px 10px;font-size:14px;font-weight:700;">candidates<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">진입 인원</div></th>
           <th style="text-align:right;padding:9px 10px;font-size:14px;font-weight:700;">passed<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">통과 인원</div></th>
-          <th style="text-align:left;padding:9px 10px;font-size:14px;font-weight:700;">source<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">유입 소스</div></th>
           <th style="text-align:right;padding:9px 10px;font-size:14px;font-weight:700;">avg_days<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">단계 소요일</div></th>
+          <th style="text-align:right;padding:9px 10px;font-size:14px;font-weight:700;">offer_sent<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">오퍼 발송</div></th>
+          <th style="text-align:right;padding:9px 10px;font-size:14px;font-weight:700;">offer_accepted<div style="font-size:11px;font-weight:400;color:var(--sub);margin-top:2px;">오퍼 수락</div></th>
         </tr>
       </thead>
       <tbody style="font-family:'Menlo','Monaco',monospace;">
-        <tr style="border-bottom:1px solid var(--border);"><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">지원</td><td style="text-align:right;padding:11px 10px;font-size:13px;">520</td><td style="text-align:right;padding:11px 10px;font-size:13px;">156</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">잡포털</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td></tr>
-        <tr style="border-bottom:1px solid var(--border);"><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">서류</td><td style="text-align:right;padding:11px 10px;font-size:13px;">156</td><td style="text-align:right;padding:11px 10px;font-size:13px;">98</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">잡포털</td><td style="text-align:right;padding:11px 10px;font-size:13px;">3</td></tr>
-        <tr style="border-bottom:1px solid var(--border);"><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">1차면접</td><td style="text-align:right;padding:11px 10px;font-size:13px;">98</td><td style="text-align:right;padding:11px 10px;font-size:13px;">54</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">잡포털</td><td style="text-align:right;padding:11px 10px;font-size:13px;">7</td></tr>
-        <tr style="border-bottom:1px solid var(--border);"><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">2차면접</td><td style="text-align:right;padding:11px 10px;font-size:13px;">54</td><td style="text-align:right;padding:11px 10px;font-size:13px;">21</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">잡포털</td><td style="text-align:right;padding:11px 10px;font-size:13px;">12</td></tr>
-        <tr><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">오퍼</td><td style="text-align:right;padding:11px 10px;font-size:13px;">21</td><td style="text-align:right;padding:11px 10px;font-size:13px;">18</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">잡포털</td><td style="text-align:right;padding:11px 10px;font-size:13px;">5</td></tr>
+        <tr style="border-bottom:1px solid var(--border);"><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">지원</td><td style="text-align:right;padding:11px 10px;font-size:13px;">520</td><td style="text-align:right;padding:11px 10px;font-size:13px;">156</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td></tr>
+        <tr style="border-bottom:1px solid var(--border);"><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">서류</td><td style="text-align:right;padding:11px 10px;font-size:13px;">156</td><td style="text-align:right;padding:11px 10px;font-size:13px;">98</td><td style="text-align:right;padding:11px 10px;font-size:13px;">3</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td></tr>
+        <tr style="border-bottom:1px solid var(--border);"><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">1차면접</td><td style="text-align:right;padding:11px 10px;font-size:13px;">98</td><td style="text-align:right;padding:11px 10px;font-size:13px;">54</td><td style="text-align:right;padding:11px 10px;font-size:13px;">7</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td></tr>
+        <tr style="border-bottom:1px solid var(--border);"><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">2차면접</td><td style="text-align:right;padding:11px 10px;font-size:13px;">54</td><td style="text-align:right;padding:11px 10px;font-size:13px;">21</td><td style="text-align:right;padding:11px 10px;font-size:13px;">12</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td><td style="text-align:right;padding:11px 10px;font-size:13px;">0</td></tr>
+        <tr><td style="text-align:left;padding:11px 10px;font-size:14px;font-family:'Pretendard';font-weight:600;">개발</td><td style="text-align:left;padding:11px 10px;font-size:13px;color:#666;">오퍼</td><td style="text-align:right;padding:11px 10px;font-size:13px;">21</td><td style="text-align:right;padding:11px 10px;font-size:13px;">18</td><td style="text-align:right;padding:11px 10px;font-size:13px;">5</td><td style="text-align:right;padding:11px 10px;font-size:13px;">21</td><td style="text-align:right;padding:11px 10px;font-size:13px;">18</td></tr>
       </tbody>
     </table>
-    <div class="card card-hi" style="margin-top:18px;font-size:15px;color:#555;line-height:1.6;">원본은 단계별 <b>진입·통과 인원</b>뿐 — 단계별 통과율 · 전환율 · time-to-hire는 전부 여기서 파생</div>
+    <div class="card card-hi" style="margin-top:18px;font-size:15px;color:#555;line-height:1.6;">원본은 부서 × 단계별 <b>진입·통과 인원 · 소요일 · 오퍼 수치</b>뿐 — 단계 통과율 · 전체 전환율 · time-to-hire · 오퍼 수락률은 전부 여기서 파생</div>
   </div>
 </div>
 
@@ -288,7 +289,7 @@
   <div class="body" style="align-items:center;">
     <div style="flex:1;padding:32px 40px;display:flex;flex-direction:column;justify-content:center;">
       <div class="big-title" style="font-size:38px;">완성 대시보드</div>
-      <div class="lead" style="font-size:18px;">Clip 1 기획안의 구성 그대로 — 채용 퍼널 · 부서·소스 비교 · 단계별 리드타임</div>
+      <div class="lead" style="font-size:18px;">Clip 1 기획안의 구성 그대로 — 채용 퍼널 · 부서별 소요일·이직률 · 이탈 위험 탐지</div>
       <div style="margin-top:18px;display:flex;flex-direction:column;gap:8px;">
         <div class="tag tag-org" style="width:fit-content;">전체 전환율 2.5% · time-to-hire 25.6일 · 오퍼 수락률 74.6%</div>
         <div style="font-size:14px;color:#777;line-height:1.7;">EDA → 지표 계산 → 레퍼런스 참조 → 렌더 — 데이터만 바뀌고 구조는 고정</div>
@@ -483,8 +484,8 @@ KPI 색 = <span class="c-hi">검정 고정</span>
       </div>
       <div class="card" style="padding:14px 22px;background:#fff;border-color:var(--border);">
         <div style="font-size:12px;font-weight:700;color:#6b7280;font-family:'Menlo',monospace;letter-spacing:.03em;">P2</div>
-        <div style="font-size:15.5px;font-weight:700;margin-top:3px;">소스별 품질 비교 후 채널 조정</div>
-        <div style="font-size:13.5px;color:#444;line-height:1.6;margin-top:4px;">유입 경로별 전환·입사·근속을 비교해 저품질 소스 정리.</div>
+        <div style="font-size:15.5px;font-weight:700;margin-top:3px;">고위험 이탈 인원 12명 즉시 1:1 개입</div>
+        <div style="font-size:13.5px;color:#444;line-height:1.6;margin-top:4px;">이직 위험도 70%+ 인원부터 매니저 면담 — 영업팀 집중분 우선.</div>
       </div>
       <div class="card" style="padding:14px 22px;background:#fff;border-color:var(--border);">
         <div style="font-size:12px;font-weight:700;color:#6b7280;font-family:'Menlo',monospace;letter-spacing:.03em;">P2</div>
@@ -517,7 +518,7 @@ KPI 색 = <span class="c-hi">검정 고정</span>
       </div>
       <div class="card" style="padding:12px 22px;flex:1;display:flex;flex-direction:column;justify-content:center;">
         <div style="font-size:15.5px;font-weight:700;color:var(--text);margin-bottom:3px;">3. 전환율 단독의 한계</div>
-        <div style="font-size:13.5px;color:#444;line-height:1.6;">전환율만 보면 입사 후 성과·근속이 빠진다. 소스별 지원자 품질 차이도 전환율 하나로는 평가할 수 없다.</div>
+        <div style="font-size:13.5px;color:#444;line-height:1.6;">전환율만 보면 입사 후 성과·근속이 빠진다. 채용 품질은 입사자 성과·이탈 위험까지 함께 봐야 한다.</div>
       </div>
       <div class="card" style="padding:12px 22px;flex:1;display:flex;flex-direction:column;justify-content:center;">
         <div style="font-size:15.5px;font-weight:700;color:var(--text);margin-bottom:3px;">4. time-to-hire 과소 추정</div>
