@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P06-CH01 — AI 포트폴리오 블로그 만들기</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg:     #F2F2EF;
+    --text:   #1C1A18;
+    --sub:    #4a4a4a;
+    --dim:    #777;
+    --border: #D8D5D0;
+    --p01:    #E8603C;
+    --green:  #6aac98;
+    --notion: #191919;
+    --notion-accent: #37352f;
+  }
+
+  html, body { background: var(--bg); color: var(--text); font-family: 'Pretendard', -apple-system, sans-serif; width: 100vw; height: 100vh; overflow: hidden; }
+
+  .deck { width: 1280px; height: 800px; transform-origin: top left; position: fixed; top: 0; left: 0; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; background: var(--bg); }
+  .slide.active { display: flex; }
+
+  .tb { height: 48px; min-height: 48px; padding: 0 52px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .tb-cap { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
+
+  .body { flex: 1; display: flex; min-height: 0; }
+
+  .nav { position: fixed; bottom: 24px; right: 40px; display: flex; align-items: center; gap: 12px; z-index: 100; }
+  .nav-ctr { font-size: 11px; color: #666; letter-spacing: 0.08em; }
+  .nav-btn { background: none; border: none; color: var(--sub); cursor: pointer; font-size: 18px; padding: 4px; transition: color 0.15s; }
+  .nav-btn:hover { color: var(--text); }
+  .progress { position: fixed; bottom: 0; left: 0; height: 2px; background: var(--p01); transition: width 0.3s; z-index: 100; }
+
+  .clip-dots { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 100; }
+  .clip-dot { width: 6px; height: 6px; border-radius: 50%; background: #CCCCCC; transition: background 0.2s; }
+  .clip-dot.active { background: var(--p01); }
+
+  .sec-break { background: var(--bg); flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .sec-label { font-size: 18px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(0,0,0,0.45); margin-bottom: 24px; }
+  .sec-title { font-size: 64px; font-weight: 600; line-height: 1.2; color: var(--text); font-family: 'Poppins', sans-serif; }
+  .sec-sub { font-size: 20px; color: rgba(0,0,0,0.55); margin-top: 28px; line-height: 1.9; }
+
+  .eyebrow { font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sub); margin-bottom: 14px; }
+  .big-title { font-size: 46px; font-weight: 600; line-height: 1.25; letter-spacing: -0.02em; color: var(--text); }
+
+  .code-wrap { background: #0A0C10; padding: 18px 22px; font-family: 'Menlo', 'Monaco', monospace; font-size: 13px; line-height: 1.9; color: rgba(255,255,255,0.75); border-radius: 4px; }
+  .code-hi { color: rgba(255,255,255,0.95); }
+  .code-comment { color: rgba(255,255,255,0.38); }
+  .code-accent { color: #8dc8b4; }
+  .code-orange { color: #E8603C; }
+  .code-yellow { color: #e8c87a; }
+
+  /* 스크린샷 플레이스홀더 */
+  .screenshot-placeholder {
+    border: 1.5px dashed var(--border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.5);
+    color: #AAA;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+  }
+  .screenshot-placeholder span { font-size: 22px; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+
+<!-- ════ s1 | 챕터 커버 ════ -->
+<div class="slide active" id="s1">
+  <div class="body" style="flex-direction:column;padding:64px 80px 72px;">
+    <div>
+      <div style="font-size:14px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:18px;font-family:'Poppins',sans-serif;">P06 · CH01 · AI Portfolio Blog</div>
+      <div style="font-size:50px;font-weight:600;color:#1C1A18;line-height:1.2;letter-spacing:-0.02em;font-family:'Poppins',sans-serif;">AI로 만드는<br>포트폴리오 블로그</div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:16px;">
+      <div style="width:260px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.3);">Clip 01</div>
+        <div style="font-size:16px;color:#1C1A18;line-height:1.6;">Stitch로<br>블로그 디자인 기획</div>
+      </div>
+      <div style="width:260px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.3);">Clip 02</div>
+        <div style="font-size:16px;color:#1C1A18;line-height:1.6;">Claude Code +<br>Notion으로 빌드</div>
+      </div>
+      <div style="width:260px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
+        <div style="font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.3);">Clip 03</div>
+        <div style="font-size:16px;color:#1C1A18;line-height:1.6;">최종 완성 &<br>Netlify 배포</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s2 | 전체 워크플로우 ════ -->
+<div class="slide" id="s2">
+  <div class="tb"><span class="tb-cap">P06-CH01 · 전체 흐름</span></div>
+  <div class="body" style="padding:40px 52px;flex-direction:column;gap:28px;align-items:flex-start;justify-content:center;">
+    <div class="eyebrow">이 챕터에서 만드는 것</div>
+    <div class="big-title">디자인 → 코드 → 콘텐츠 → 배포</div>
+
+    <div style="width:100%;display:flex;align-items:stretch;gap:0;margin-top:8px;">
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px 0 0 8px;padding:24px 22px;display:flex;flex-direction:column;gap:10px;background:#fff;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--p01);">Step 1</div>
+        <div style="font-size:17px;font-weight:600;color:var(--text);">Stitch</div>
+        <div style="font-size:14px;color:#666;line-height:1.7;">프롬프트로 블로그 UI 디자인 시안 생성</div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 10px;color:#CCCCCC;font-size:18px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:0;padding:24px 22px;display:flex;flex-direction:column;gap:10px;background:#fff;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--p01);">Step 2</div>
+        <div style="font-size:17px;font-weight:600;color:var(--text);">Claude Code</div>
+        <div style="font-size:14px;color:#666;line-height:1.7;">Stitch 시안 기반으로 React 블로그 생성</div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 10px;color:#CCCCCC;font-size:18px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:0;padding:24px 22px;display:flex;flex-direction:column;gap:10px;background:rgba(106,172,152,0.06);border-color:rgba(106,172,152,0.35);">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--green);">Step 3</div>
+        <div style="font-size:17px;font-weight:600;color:var(--text);">Notion</div>
+        <div style="font-size:14px;color:#666;line-height:1.7;">데이터베이스를 CMS로 — 글 쓰면 사이트에 자동 반영</div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 10px;color:#CCCCCC;font-size:18px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:0 8px 8px 0;padding:24px 22px;display:flex;flex-direction:column;gap:10px;background:#fff;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#666;">Step 4</div>
+        <div style="font-size:17px;font-weight:600;color:var(--text);">Netlify</div>
+        <div style="font-size:14px;color:#666;line-height:1.7;">GitHub 푸시 → 자동 빌드 & 배포</div>
+      </div>
+
+    </div>
+
+    <div style="width:100%;display:flex;gap:12px;margin-top:4px;">
+      <div style="border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:12px 18px;background:rgba(232,96,60,0.03);font-size:13px;color:#888;line-height:1.7;">
+        완성 결과물: <span style="font-family:monospace;color:var(--p01);">syblog924.netlify.app</span> — React + Vite + Notion API + Netlify
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s3 | CLIP 1 섹션 브레이크 ════ -->
+<div class="slide" id="s3">
+  <div class="sec-break">
+    <div class="sec-label">Clip 01</div>
+    <div class="sec-title">Stitch로 포트폴리오<br>블로그 디자인 기획하기</div>
+    <div class="sec-sub">텍스트 프롬프트 한 줄 → 완성형 UI 레이아웃</div>
+  </div>
+</div>
+
+
+<!-- ════ s4 | Stitch 소개 ════ -->
+<div class="slide" id="s4">
+  <div class="tb"><span class="tb-cap">Clip 01 · Stitch</span></div>
+  <div class="body" style="min-height:0;">
+
+    <div style="width:42%;border-right:1px solid var(--border);padding:36px 40px;display:flex;flex-direction:column;justify-content:center;gap:20px;">
+      <div class="eyebrow">Google AI Design Tool</div>
+      <div style="font-size:38px;font-weight:600;line-height:1.25;letter-spacing:-0.02em;">디자인을<br>프롬프트로</div>
+      <div style="font-size:16px;color:#555;line-height:1.85;">Figma 없이, 코드 없이.<br>텍스트 설명만으로 UI 레이아웃을 생성하는<br>Google의 AI 디자인 도구.</div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:12px 16px;display:flex;align-items:center;gap:10px;background:#fff;">
+          <div style="font-size:18px;">✏️</div>
+          <div style="font-size:14px;color:#444;">원하는 UI를 자연어로 설명</div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:12px 16px;display:flex;align-items:center;gap:10px;background:#fff;">
+          <div style="font-size:18px;">🎨</div>
+          <div style="font-size:14px;color:#444;">레이아웃·컴포넌트 자동 생성</div>
+        </div>
+        <div style="border:1px solid rgba(232,96,60,0.35);border-radius:6px;padding:12px 16px;display:flex;align-items:center;gap:10px;background:rgba(232,96,60,0.03);">
+          <div style="font-size:18px;">→</div>
+          <div style="font-size:14px;color:#444;">이 시안을 Claude Code로 넘겨 실제 코드로 변환</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;gap:12px;justify-content:center;">
+      <div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#AAA;margin-bottom:4px;">Stitch — 대시보드 UI 생성 화면</div>
+      <img src="assets/02-stitch-main.png" style="flex:1;width:100%;object-fit:contain;border-radius:6px;border:1px solid var(--border);min-height:0;" alt="Stitch 화면">
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s5 | Stitch 프롬프트 작성 ════ -->
+<div class="slide" id="s5">
+  <div class="tb"><span class="tb-cap">Clip 01 · Stitch 프롬프트</span></div>
+  <div class="body" style="min-height:0;">
+
+    <div style="width:46%;border-right:1px solid var(--border);padding:32px 36px;display:flex;flex-direction:column;gap:16px;align-items:flex-start;justify-content:flex-start;">
+      <div class="eyebrow">프롬프트 작성 팁</div>
+      <div style="font-size:26px;font-weight:600;line-height:1.3;">레이아웃 · 섹션 · 스타일을<br>구체적으로 지정하기</div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:4px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 14px;font-size:13px;color:#555;line-height:1.7;background:#fff;">
+          <span style="font-weight:600;color:var(--text);">어떤 사이트인지</span> — "데이터 시각화 포트폴리오 블로그"
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 14px;font-size:13px;color:#555;line-height:1.7;background:#fff;">
+          <span style="font-weight:600;color:var(--text);">섹션 구성</span> — Hero, 프로젝트 갤러리, 기술 스택, 연락처
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 14px;font-size:13px;color:#555;line-height:1.7;background:#fff;">
+          <span style="font-weight:600;color:var(--text);">디자인 스타일</span> — "Notion-style brutalist", "minimal", 색상 팔레트
+        </div>
+        <div style="border:1px solid rgba(106,172,152,0.35);border-radius:6px;padding:11px 14px;font-size:13px;color:#555;line-height:1.7;background:rgba(106,172,152,0.04);">
+          <span style="font-weight:600;color:var(--green);">참고 레퍼런스 이미지 첨부</span> → 결과물 품질 대폭 향상
+        </div>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:28px 32px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;justify-content:flex-start;">
+      <div class="eyebrow">실제 사용 프롬프트</div>
+      <div class="code-wrap" style="width:100%;font-size:12px;line-height:1.85;">
+<span class="code-hi">A professional data portfolio blog website.</span>
+
+<span class="code-comment">// Style</span>
+<span class="code-accent">Notion-style brutalist layout</span>
+Minimal design, large typography, clean spacing
+
+<span class="code-comment">// Sections</span>
+<span class="code-yellow">Hero</span>    — name, tagline, tech stack badges
+<span class="code-yellow">Blog</span>    — article cards with category tags
+<span class="code-yellow">Works</span>   — portfolio project grid
+<span class="code-yellow">About</span>  — profile + contact
+
+<span class="code-comment">// Color palette</span>
+Light beige background <span class="code-accent">#F2F2EF</span>
+Dark text <span class="code-accent">#1C1A18</span>, accent orange <span class="code-accent">#E8603C</span>
+
+Responsive layout, mobile-first
+      </div>
+      <div style="font-size:12px;color:#AAA;margin-top:2px;">→ 생성된 시안을 스크린샷으로 저장해 Claude Code에게 전달</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s6 | Stitch 결과물 → 다음 단계 ════ -->
+<div class="slide" id="s6">
+  <div class="tb"><span class="tb-cap">Clip 01 · Stitch 결과물</span></div>
+  <div class="body" style="min-height:0;">
+
+    <div style="flex:1;padding:28px 36px;display:flex;flex-direction:column;gap:12px;">
+      <div class="eyebrow">Stitch 출력 결과</div>
+      <img src="assets/02-stitch-main.png" style="flex:1;width:100%;object-fit:contain;border-radius:6px;border:1px solid var(--border);min-height:0;" alt="Stitch 결과물">
+    </div>
+
+    <div style="width:36%;border-left:1px solid var(--border);padding:36px 32px;display:flex;flex-direction:column;gap:14px;justify-content:center;">
+      <div class="eyebrow">Stitch가 만들어주는 것</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:14px 16px;background:#fff;">
+          <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;">레이아웃 구조</div>
+          <div style="font-size:12px;color:#666;line-height:1.7;">섹션 배치, 그리드 시스템, 컴포넌트 위치</div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:14px 16px;background:#fff;">
+          <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;">UI 컴포넌트</div>
+          <div style="font-size:12px;color:#666;line-height:1.7;">카드, 내비게이션, 버튼, 태그 스타일</div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:14px 16px;background:#fff;">
+          <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;">컬러 팔레트</div>
+          <div style="font-size:12px;color:#666;line-height:1.7;">배경색, 텍스트색, 강조색 제안</div>
+        </div>
+        <div style="border:1px solid rgba(232,96,60,0.35);border-radius:6px;padding:14px 16px;background:rgba(232,96,60,0.03);">
+          <div style="font-size:14px;font-weight:600;color:var(--p01);margin-bottom:4px;">다음 단계</div>
+          <div style="font-size:12px;color:#666;line-height:1.7;">이 시안 스크린샷 → Claude Code에 붙여넣기</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s7 | CLIP 2 섹션 브레이크 ════ -->
+<div class="slide" id="s7">
+  <div class="sec-break">
+    <div class="sec-label">Clip 02</div>
+    <div class="sec-title">Claude Code + Notion으로<br>포트폴리오 페이지 빌드하기</div>
+    <div class="sec-sub">코드 생성 → 콘텐츠 연동 → 자동화</div>
+  </div>
+</div>
+
+
+<!-- ════ s8 | Antigravity — 로고·이미지 제작 ════ -->
+<div class="slide" id="s8">
+  <div class="tb"><span class="tb-cap">Clip 02 · Antigravity</span></div>
+  <div class="body" style="min-height:0;">
+
+    <div style="width:42%;border-right:1px solid var(--border);padding:36px 40px;display:flex;flex-direction:column;justify-content:center;gap:18px;">
+      <div class="eyebrow">AI 이미지 생성 — 로고·OG 이미지</div>
+      <div style="font-size:34px;font-weight:600;line-height:1.3;letter-spacing:-0.02em;">Antigravity로<br>블로그 비주얼 제작</div>
+      <div style="font-size:15px;color:#555;line-height:1.85;">프로필 이미지, 로고, OG 이미지(소셜 공유 썸네일) 등<br>블로그에 필요한 비주얼을 AI로 제작.</div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 16px;font-size:13px;color:#555;background:#fff;">
+          🖼 &nbsp;블로그 로고 / 파비콘
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 16px;font-size:13px;color:#555;background:#fff;">
+          📷 &nbsp;프로필 사진 스타일링
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 16px;font-size:13px;color:#555;background:#fff;">
+          🃏 &nbsp;OG 이미지 (SNS 공유 썸네일)
+        </div>
+        <div style="font-size:12px;color:#AAA;margin-top:2px;">*실제 블로그 코드 빌드는 Claude Code로 진행</div>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;gap:12px;justify-content:center;">
+      <div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#AAA;margin-bottom:4px;">Antigravity — 메인화면</div>
+      <div class="screenshot-placeholder" style="flex:1;">
+        <span>🖼</span>
+        <div style="text-align:center;">Antigravity 메인화면 캡쳐</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s9 | Claude Code 블로그 초기 생성 ════ -->
+<div class="slide" id="s9">
+  <div class="tb"><span class="tb-cap">Clip 02 · Claude Code — 블로그 초기 생성</span></div>
+  <div class="body" style="min-height:0;">
+
+    <div style="width:44%;border-right:1px solid var(--border);padding:32px 36px;display:flex;flex-direction:column;gap:16px;justify-content:flex-start;">
+      <div class="eyebrow">Claude Code 프롬프트</div>
+      <div style="font-size:26px;font-weight:600;line-height:1.3;">Stitch 시안을 건네고<br>React 블로그 생성 요청</div>
+
+      <div class="code-wrap" style="font-size:11.5px;line-height:1.9;margin-top:4px;">
+<span class="code-hi">포트폴리오 블로그 웹사이트를 만들어줘.</span>
+
+<span class="code-comment">// 디자인 레퍼런스 (첨부)</span>
+<span class="code-accent">[Stitch 시안 스크린샷]</span>
+
+<span class="code-comment">// 기술 스택</span>
+React + Vite + TypeScript
+Tailwind CSS (CDN)
+
+<span class="code-comment">// 페이지 구성</span>
+<span class="code-yellow">Home</span>  — 히어로 + 피처드 포스트
+<span class="code-yellow">Blog</span>  — 카테고리 필터 + 카드 그리드
+<span class="code-yellow">Works</span> — 포트폴리오 갤러리
+<span class="code-yellow">About</span> — 프로필 + 기술 스택
+
+<span class="code-comment">// 스타일</span>
+Notion-style brutalist, light beige <span class="code-accent">#F2F2EF</span>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:32px 32px;display:flex;flex-direction:column;gap:14px;justify-content:flex-start;">
+      <div class="eyebrow">생성되는 구조</div>
+      <div class="code-wrap" style="font-size:12px;line-height:2.0;">
+<span class="code-comment">blog/</span>
+<span class="code-accent">├── src/</span>
+<span class="code-hi">│   ├── App.tsx</span>            <span class="code-comment">← 라우팅 + 다크모드</span>
+<span class="code-hi">│   ├── components/</span>
+<span class="code-yellow">│   │   ├── HomeView.tsx</span>
+<span class="code-yellow">│   │   ├── BlogView.tsx</span>
+<span class="code-yellow">│   │   ├── BlogDetailView.tsx</span>
+<span class="code-yellow">│   │   ├── WorksView.tsx</span>
+<span class="code-yellow">│   │   └── Sidebar.tsx</span>
+<span class="code-hi">│   └── api/</span>
+<span class="code-accent">│       └── blogApi.ts</span>      <span class="code-comment">← Notion 데이터 fetch</span>
+<span class="code-hi">├── scripts/</span>
+<span class="code-orange">│   └── sync-notion-blog.cjs</span> <span class="code-comment">← 핵심 동기화 스크립트</span>
+<span class="code-hi">└── vite.config.ts</span>
+      </div>
+      <div style="border:1px solid rgba(106,172,152,0.35);border-radius:6px;padding:12px 16px;background:rgba(106,172,152,0.04);font-size:12px;color:#555;line-height:1.7;">
+        실제 레포: <span style="font-family:monospace;color:var(--green);">github.com/seoyeon924/blog</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s10 | Notion — CMS 슬라이드 ════ -->
+<div class="slide" id="s10">
+  <div class="tb"><span class="tb-cap">Clip 02 · Notion을 CMS로 쓰기</span></div>
+  <div class="body" style="min-height:0;">
+
+    <!-- 왼쪽: Notion 소개 + 홈페이지 -->
+    <div style="width:48%;border-right:1px solid var(--border);padding:32px 36px;display:flex;flex-direction:column;gap:14px;">
+      <div class="eyebrow">Notion = 내 블로그의 CMS</div>
+      <div style="font-size:30px;font-weight:600;line-height:1.3;letter-spacing:-0.01em;">글을 Notion에 쓰면<br>사이트에 자동 반영</div>
+
+      <!-- Notion 데이터베이스 화면 -->
+      <img src="assets/05-notion-database.png" style="flex:1;width:100%;object-fit:contain;border-radius:6px;border:1px solid var(--border);min-height:0;" alt="Notion DB">
+
+      <div style="font-size:13px;color:#888;line-height:1.7;border-top:1px solid var(--border);padding-top:12px;">
+        Notion API + <span style="font-family:monospace;color:var(--p01);">@notionhq/client</span> 패키지로 연동
+      </div>
+    </div>
+
+    <!-- 오른쪽: 데이터베이스 구조 -->
+    <div style="flex:1;padding:28px 32px;display:flex;flex-direction:column;gap:14px;justify-content:flex-start;">
+      <div class="eyebrow">Notion 데이터베이스 구조</div>
+
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <!-- 테이블 헤더 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#AAA;padding:0 14px;">
+          <div>속성 이름</div><div>타입</div>
+        </div>
+        <!-- 속성들 -->
+        <div style="border:1px solid var(--border);border-radius:6px;background:#fff;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;"><span style="font-weight:500;color:var(--text);">Title</span><span style="color:#888;">Title</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;"><span style="font-weight:500;color:var(--text);">Category</span><span style="color:#888;">Select</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;"><span style="font-weight:500;color:var(--text);">Description</span><span style="color:#888;">Text</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;"><span style="font-weight:500;color:var(--text);">Cover Image</span><span style="color:#888;">Files & media</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;"><span style="font-weight:500;color:var(--text);">Reading Time</span><span style="color:#888;">Number</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;"><span style="font-weight:500;color:var(--text);">Featured</span><span style="color:#888;">Checkbox</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;padding:10px 14px;font-size:13px;"><span style="font-weight:500;color:var(--green);">Status</span><span style="color:var(--green);">Draft / Published</span></div>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:12px 16px;background:rgba(232,96,60,0.03);font-size:13px;color:#666;line-height:1.75;">
+        <span style="font-weight:600;color:var(--p01);">Status = Published</span>인 글만 사이트에 노출 —<br>Draft는 숨김 상태로 유지
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s11 | Notion API 연동 방법 ════ -->
+<div class="slide" id="s11">
+  <div class="tb"><span class="tb-cap">Clip 02 · Notion API 연동</span></div>
+  <div class="body" style="min-height:0;">
+
+    <div style="width:42%;border-right:1px solid var(--border);padding:32px 36px;display:flex;flex-direction:column;gap:16px;justify-content:flex-start;">
+      <div class="eyebrow">연동 3단계</div>
+      <div style="font-size:28px;font-weight:600;line-height:1.3;">Notion API 키를 받아<br>Claude Code에게 연결 요청</div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:13px 16px;background:#fff;display:flex;gap:12px;align-items:flex-start;">
+          <div style="font-size:11px;font-weight:700;color:var(--p01);letter-spacing:0.1em;padding-top:1px;flex-shrink:0;">01</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:3px;">Notion Integration 생성</div>
+            <div style="font-size:12px;color:#777;line-height:1.6;">notion.so/my-integrations → 새 통합 → API 토큰 복사</div>
+          </div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:13px 16px;background:#fff;display:flex;gap:12px;align-items:flex-start;">
+          <div style="font-size:11px;font-weight:700;color:var(--p01);letter-spacing:0.1em;padding-top:1px;flex-shrink:0;">02</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:3px;">데이터베이스에 통합 연결</div>
+            <div style="font-size:12px;color:#777;line-height:1.6;">데이터베이스 페이지 → … → 연결 → 통합 선택</div>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(106,172,152,0.35);border-radius:6px;padding:13px 16px;background:rgba(106,172,152,0.04);display:flex;gap:12px;align-items:flex-start;">
+          <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:0.1em;padding-top:1px;flex-shrink:0;">03</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:3px;color:var(--green);">Claude Code에 연동 요청</div>
+            <div style="font-size:12px;color:#777;line-height:1.6;">"이 사이트를 내 Notion DB에 연결해줘" + DB 링크 전달</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:28px 32px;display:flex;flex-direction:column;gap:14px;justify-content:flex-start;">
+      <div class="eyebrow">Claude Code 프롬프트</div>
+      <div class="code-wrap" style="font-size:11.5px;line-height:1.9;">
+<span class="code-hi">이 사이트를 Notion 데이터베이스에 연결해줘.</span>
+
+DB 링크: <span class="code-accent">notion.so/…/데이터베이스ID</span>
+
+Notion에 있는 블로그 포스트를 가져와서
+카드 형태로 표시해줘.
+
+각 카드에:
+<span class="code-yellow">- 커버 이미지</span>
+<span class="code-yellow">- 제목</span>
+<span class="code-yellow">- 카테고리 뱃지</span>
+<span class="code-yellow">- 설명 (2줄)</span>
+
+Status = Published인 글만 노출.
+내용이 바뀌면 자동으로 반영돼야 해.
+      </div>
+
+      <div style="display:flex;gap:8px;flex:1;min-height:0;">
+        <img src="assets/06-notion-api-steps.png" style="flex:1;object-fit:contain;border-radius:6px;border:1px solid var(--border);min-height:0;min-width:0;" alt="Notion Integrations">
+        <img src="assets/07-notion-integration.png" style="flex:1;object-fit:contain;border-radius:6px;border:1px solid var(--border);min-height:0;min-width:0;" alt="Notion 연결 설정">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s12 | CLIP 3 섹션 브레이크 ════ -->
+<div class="slide" id="s12">
+  <div class="sec-break">
+    <div class="sec-label">Clip 03</div>
+    <div class="sec-title">포트폴리오 최종 완성<br>&amp; 배포하기</div>
+    <div class="sec-sub">GitHub → Netlify 자동 배포 + 완성 결과물 확인</div>
+  </div>
+</div>
+
+
+<!-- ════ s13 | 자동화 워크플로우 ════ -->
+<div class="slide" id="s13">
+  <div class="tb"><span class="tb-cap">Clip 03 · 자동화 배포 워크플로우</span></div>
+  <div class="body" style="padding:36px 52px;flex-direction:column;gap:24px;align-items:flex-start;justify-content:center;">
+
+    <div class="eyebrow">한 번 설정하면, 이후엔 Notion만 관리</div>
+    <div class="big-title" style="font-size:36px;">글 쓰기 → 동기화 → 배포 자동화</div>
+
+    <!-- 플로우 다이어그램 -->
+    <div style="width:100%;display:flex;align-items:stretch;gap:0;margin-top:8px;">
+
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px 0 0 8px;padding:20px 18px;background:#fff;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:20px;">✍️</div>
+        <div style="font-size:14px;font-weight:600;">Notion에서 글 작성</div>
+        <div style="font-size:12px;color:#888;line-height:1.6;">Draft 작성 → Status를 Published로 변경</div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 10px;color:#CCC;font-size:18px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid var(--border);padding:20px 18px;background:#fff;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:14px;font-weight:600;font-family:monospace;color:var(--p01);">npm run sync</div>
+        <div style="font-size:12px;color:#888;line-height:1.6;">Notion API → JSON 변환, 이미지 로컬 저장</div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 10px;color:#CCC;font-size:18px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid var(--border);padding:20px 18px;background:#fff;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:14px;font-weight:600;font-family:monospace;color:var(--p01);">npm run build</div>
+        <div style="font-size:12px;color:#888;line-height:1.6;">Vite 빌드 + HTML 프리렌더링 (SEO 대응)</div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 10px;color:#CCC;font-size:18px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid var(--border);padding:20px 18px;background:#fff;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:14px;font-weight:600;font-family:monospace;color:#555;">git push</div>
+        <div style="font-size:12px;color:#888;line-height:1.6;">GitHub main 브랜치에 푸시</div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 10px;color:#CCC;font-size:18px;flex-shrink:0;">→</div>
+
+      <div style="flex:1;border:1px solid rgba(106,172,152,0.4);border-radius:0 8px 8px 0;padding:20px 18px;background:rgba(106,172,152,0.06);display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:20px;">🚀</div>
+        <div style="font-size:14px;font-weight:600;color:var(--green);">Netlify 자동 배포</div>
+        <div style="font-size:12px;color:#888;line-height:1.6;">푸시 감지 → 빌드 → 공개 URL 업데이트</div>
+      </div>
+
+    </div>
+
+    <!-- 환경변수 설정 안내 -->
+    <div style="width:100%;border:1px solid var(--border);border-radius:6px;padding:16px 20px;background:#fff;display:flex;gap:24px;align-items:center;">
+      <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;">Netlify 환경변수 설정 필수</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <div style="font-family:monospace;font-size:12px;background:rgba(232,96,60,0.08);border:1px solid rgba(232,96,60,0.2);color:var(--p01);padding:4px 10px;border-radius:4px;">NOTION_API_KEY</div>
+        <div style="font-family:monospace;font-size:12px;background:rgba(232,96,60,0.08);border:1px solid rgba(232,96,60,0.2);color:var(--p01);padding:4px 10px;border-radius:4px;">NOTION_DATABASE_ID</div>
+      </div>
+      <div style="font-size:12px;color:#AAA;">Site settings → Environment variables에 추가</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s14 | Netlify 배포 설정 ════ -->
+<div class="slide" id="s14">
+  <div class="tb"><span class="tb-cap">Clip 03 · Netlify 배포</span></div>
+  <div class="body" style="min-height:0;">
+
+    <div style="width:44%;border-right:1px solid var(--border);padding:32px 36px;display:flex;flex-direction:column;gap:14px;justify-content:flex-start;">
+      <div class="eyebrow">배포 3단계</div>
+      <div style="font-size:28px;font-weight:600;line-height:1.3;">GitHub 연결 → 환경변수 → 배포 완료</div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:13px 16px;background:#fff;display:flex;gap:12px;align-items:flex-start;">
+          <div style="font-size:11px;font-weight:700;color:var(--p01);letter-spacing:0.1em;padding-top:2px;flex-shrink:0;">01</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:3px;">GitHub 레포 연결</div>
+            <div style="font-size:12px;color:#777;line-height:1.6;">netlify.com → Add new site → Import from Git</div>
+          </div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:13px 16px;background:#fff;display:flex;gap:12px;align-items:flex-start;">
+          <div style="font-size:11px;font-weight:700;color:var(--p01);letter-spacing:0.1em;padding-top:2px;flex-shrink:0;">02</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:3px;">빌드 명령어 설정</div>
+            <div style="font-size:12px;color:#777;line-height:1.6;">Build: <span style="font-family:monospace;color:var(--p01);">npm run build</span> / Publish: <span style="font-family:monospace;color:var(--p01);">dist</span></div>
+          </div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:13px 16px;background:#fff;display:flex;gap:12px;align-items:flex-start;">
+          <div style="font-size:11px;font-weight:700;color:var(--p01);letter-spacing:0.1em;padding-top:2px;flex-shrink:0;">03</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:3px;">환경변수 추가</div>
+            <div style="font-size:12px;color:#777;line-height:1.6;">Site settings → Environment → <br>NOTION_API_KEY, NOTION_DATABASE_ID</div>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(106,172,152,0.35);border-radius:6px;padding:13px 16px;background:rgba(106,172,152,0.04);display:flex;gap:12px;align-items:center;">
+          <div style="font-size:18px;flex-shrink:0;">🚀</div>
+          <div style="font-size:13px;font-weight:600;color:var(--green);">배포 완료 — 공개 URL 생성</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex:1;padding:28px 32px;display:flex;flex-direction:column;gap:14px;justify-content:flex-start;">
+      <div class="eyebrow">netlify.toml 캐싱 전략</div>
+      <div class="code-wrap" style="font-size:12px;line-height:1.9;">
+<span class="code-comment"># netlify.toml</span>
+[[<span class="code-hi">headers</span>]]
+  for = "<span class="code-accent">/</span>"
+  [headers.values]
+    Cache-Control = "<span class="code-yellow">no-cache</span>"     <span class="code-comment">← HTML 항상 최신</span>
+
+[[headers]]
+  for = "<span class="code-accent">/assets/*</span>"
+  [headers.values]
+    Cache-Control = "<span class="code-yellow">max-age=31536000</span>" <span class="code-comment">← JS/CSS 1년</span>
+
+[[headers]]
+  for = "<span class="code-accent">/images/*</span>"
+  [headers.values]
+    Cache-Control = "<span class="code-yellow">max-age=604800</span>"  <span class="code-comment">← 이미지 1주</span>
+
+[[headers]]
+  for = "<span class="code-accent">/*.json</span>"
+  [headers.values]
+    Cache-Control = "<span class="code-yellow">no-cache</span>"     <span class="code-comment">← 데이터 항상 최신</span>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:6px;padding:12px 16px;background:#fff;font-size:12px;color:#666;line-height:1.7;">
+        Claude Code에게 "netlify.toml에 캐싱 전략 추가해줘"라고 하면 자동 생성
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s15 | 완성 결과물 ════ -->
+<div class="slide" id="s15">
+  <div class="tb"><span class="tb-cap">Clip 03 · 완성 결과물</span></div>
+  <div class="body" style="min-height:0;">
+
+    <div style="flex:1;padding:28px 36px;display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div class="eyebrow">완성 결과물</div>
+        <div style="font-family:monospace;font-size:13px;color:var(--green);border:1px solid rgba(106,172,152,0.3);padding:4px 12px;border-radius:4px;">syblog924.netlify.app</div>
+      </div>
+      <div style="flex:1;display:flex;gap:8px;min-height:0;">
+        <img src="assets/01-overview.png" style="flex:1;object-fit:contain;border-radius:6px;border:1px solid var(--border);min-height:0;min-width:0;" alt="블로그 홈">
+        <img src="assets/04-blog-design-ref.png" style="flex:1;object-fit:contain;border-radius:6px;border:1px solid var(--border);min-height:0;min-width:0;" alt="블로그 Works">
+      </div>
+    </div>
+
+    <div style="width:32%;border-left:1px solid var(--border);padding:32px 28px;display:flex;flex-direction:column;gap:12px;justify-content:center;">
+      <div class="eyebrow">완성 체크리스트</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 14px;background:#fff;display:flex;gap:10px;align-items:center;">
+          <div style="color:var(--green);font-weight:700;flex-shrink:0;">✓</div>
+          <div style="font-size:13px;">Stitch 디자인 시안 기반 UI</div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 14px;background:#fff;display:flex;gap:10px;align-items:center;">
+          <div style="color:var(--green);font-weight:700;flex-shrink:0;">✓</div>
+          <div style="font-size:13px;">Notion에서 콘텐츠 관리</div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 14px;background:#fff;display:flex;gap:10px;align-items:center;">
+          <div style="color:var(--green);font-weight:700;flex-shrink:0;">✓</div>
+          <div style="font-size:13px;">자동 동기화 + Netlify 배포</div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 14px;background:#fff;display:flex;gap:10px;align-items:center;">
+          <div style="color:var(--green);font-weight:700;flex-shrink:0;">✓</div>
+          <div style="font-size:13px;">SEO 메타태그 + 프리렌더링</div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:11px 14px;background:#fff;display:flex;gap:10px;align-items:center;">
+          <div style="color:var(--green);font-weight:700;flex-shrink:0;">✓</div>
+          <div style="font-size:13px;">다크모드 지원</div>
+        </div>
+        <div style="border:1px solid rgba(232,96,60,0.35);border-radius:6px;padding:11px 14px;background:rgba(232,96,60,0.03);display:flex;gap:10px;align-items:center;">
+          <div style="color:var(--p01);font-weight:700;flex-shrink:0;">→</div>
+          <div style="font-size:13px;color:var(--p01);">취업·이직 포트폴리오로 공개</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s16 | 마무리 슬라이드 ════ -->
+<div class="slide" id="s16">
+  <div class="body" style="flex-direction:column;padding:64px 80px 72px;justify-content:space-between;">
+
+    <div>
+      <div style="font-size:14px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:20px;font-family:'Poppins',sans-serif;">P06 · CH01 · 완성</div>
+      <div style="font-size:42px;font-weight:600;line-height:1.3;letter-spacing:-0.02em;">AI 툴을 조합해서<br>포트폴리오 블로그 완성하기</div>
+    </div>
+
+    <div style="display:flex;gap:16px;">
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:24px;background:#fff;">
+        <div style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--p01);margin-bottom:10px;">Clip 01</div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:8px;">Stitch</div>
+        <div style="font-size:13px;color:#777;line-height:1.7;">텍스트 프롬프트 → UI 디자인 시안 자동 생성</div>
+      </div>
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:24px;background:#fff;">
+        <div style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--p01);margin-bottom:10px;">Clip 02</div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:8px;">Claude Code + Notion</div>
+        <div style="font-size:13px;color:#777;line-height:1.7;">React 블로그 빌드 + Notion API로 CMS 연동</div>
+      </div>
+      <div style="flex:1;border:1px solid var(--border);border-radius:8px;padding:24px;background:#fff;">
+        <div style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--p01);margin-bottom:10px;">Clip 03</div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:8px;">Netlify 배포</div>
+        <div style="font-size:13px;color:#777;line-height:1.7;">GitHub → Netlify 자동화 + SEO 최적화</div>
+      </div>
+      <div style="flex:1;border:1px solid rgba(106,172,152,0.35);border-radius:8px;padding:24px;background:rgba(106,172,152,0.04);">
+        <div style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">결과물</div>
+        <div style="font-size:15px;font-weight:600;margin-bottom:8px;font-family:monospace;color:var(--green);">syblog924.netlify.app</div>
+        <div style="font-size:13px;color:#777;line-height:1.7;">완성된 포트폴리오 블로그 공개</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+</div><!-- /deck -->
+
+<!-- Navigation -->
+<div class="nav">
+  <span class="nav-ctr" id="ctr">1 / 16</span>
+  <button class="nav-btn" id="prev">←</button>
+  <button class="nav-btn" id="next">→</button>
+</div>
+<div class="progress" id="prog"></div>
+<div class="clip-dots" id="dots"></div>
+
+<script>
+  const TOTAL = 16;
+  const ORDER = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+  const CLIP_MAP = {
+    1:0, 2:0,
+    3:0, 4:0, 5:0, 6:0,
+    7:1, 8:1, 9:1, 10:1, 11:1,
+    12:2, 13:2, 14:2, 15:2, 16:2
+  };
+  const CLIP_LABELS = ['Stitch로 블로그 디자인 기획', 'Claude Code + Notion 빌드', '최종 완성 & 배포'];
+  const CLIPS = 3;
+
+  let cur = 0;
+
+  function show(idx) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    const slideId = ORDER[idx];
+    document.getElementById('s' + slideId).classList.add('active');
+    document.getElementById('ctr').textContent = (idx + 1) + ' / ' + TOTAL;
+    document.getElementById('prog').style.width = ((idx + 1) / TOTAL * 100) + '%';
+    const dots = document.querySelectorAll('.clip-dot');
+    dots.forEach((d, i) => d.classList.toggle('active', i === CLIP_MAP[slideId]));
+  }
+
+  document.getElementById('next').onclick = () => { if (cur < TOTAL - 1) show(++cur); };
+  document.getElementById('prev').onclick = () => { if (cur > 0) show(--cur); };
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); if (cur < TOTAL - 1) show(++cur); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); if (cur > 0) show(--cur); }
+  });
+
+  const dotsEl = document.getElementById('dots');
+  for (let i = 0; i < CLIPS; i++) {
+    const d = document.createElement('div');
+    d.className = 'clip-dot' + (i === 0 ? ' active' : '');
+    dotsEl.appendChild(d);
+  }
+
+  function scale() {
+    const s = Math.min(window.innerWidth / 1280, window.innerHeight / 800);
+    document.getElementById('deck').style.transform = 'scale(' + s + ')';
+    document.getElementById('deck').style.left = ((window.innerWidth - 1280 * s) / 2) + 'px';
+    document.getElementById('deck').style.top = ((window.innerHeight - 800 * s) / 2) + 'px';
+  }
+  window.addEventListener('resize', scale);
+  scale();
+  show(0);
+</script>
+</body>
+</html>
