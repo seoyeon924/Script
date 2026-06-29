@@ -9,7 +9,7 @@ status: 📝 초안
 ---
 
 > **[실습 준비물 — 촬영 전 체크]**
-> - 키트 폴더 `dashboard-kits/05-hr` 준비 — `CLAUDE.md` · `.claude/skills/build-dashboard/` · `templates/reference.html` · `data/recruiting.csv` · `output/`
+> - 키트 폴더 `dashboard-kits/05-hr` 준비 — `CLAUDE.md` · `.claude/skills/build-dashboard/` · `templates/reference.html` · `data/recruiting.csv`(채용)·`data/employees.csv`(직원) · `output/`
 > - 터미널에서 해당 폴더로 이동해 `claude` 실행 가능 상태 (Claude Code 로그인 확인)
 > - **백업**: 미리 한 번 `/build-dashboard`를 돌려 `output/hr_dashboard.html` 생성본 확보 (라이브 실패 대비)
 > - 브라우저에 완성본 탭 + IDE에 폴더 트리 띄워두기
@@ -20,7 +20,7 @@ status: 📝 초안
 > claude                     # Claude Code 실행
 > /build-dashboard           # 명령어 한 줄 → output/hr_dashboard.html 생성
 > ```
-> 내 데이터로 바꾸기: `data/recruiting.csv`를 교체하고 다시 `/build-dashboard`
+> 내 데이터로 바꾸기: `data/recruiting.csv`(채용)·`employees.csv`(직원)를 교체하고 다시 `/build-dashboard`
 
 ## s8 — CLIP 02 섹션 브레이크
 
