@@ -120,7 +120,7 @@ Tableau Public에 올린 대시보드 몇 개, GitHub 레포지토리에 올린 
 
 ---
 
-**[화면 시연]** 🔗 [https://www.youtube.com/watch?v=Q43pPgw5ZpI](https://www.youtube.com/watch?v=Q43pPgw5ZpI)
+🔗 **참고 링크 →** [https://www.youtube.com/watch?v=Q43pPgw5ZpI](https://www.youtube.com/watch?v=Q43pPgw5ZpI)
 
 이 영상부터 보겠습니다. 제목이 "비전공자였던 내가 대기업 데이터 분석가로 취업할 수 있었던 이유"입니다.
 
@@ -137,7 +137,7 @@ Tableau Public에 올린 대시보드 몇 개, GitHub 레포지토리에 올린 
 
 ---
 
-**[화면 시연]** 🔗 [https://velog.io/@lucia/의료-분야-데이터-사이언티스트-취업-후기](https://velog.io/@lucia/의료-분야-데이터-사이언티스트-취업-후기)
+🔗 **참고 링크 →** [https://velog.io/@lucia/의료-분야-데이터-사이언티스트-취업-후기](https://velog.io/@lucia/의료-분야-데이터-사이언티스트-취업-후기)
 
 다음은 Velog 취업 후기입니다. 정치외교학과 출신 분이 AI·의료 분야 데이터 사이언티스트로 커리어를 전환한 이야기에요.
 
@@ -149,7 +149,7 @@ Velog를 보면, 좌측에 "시리즈"라는 게 있는데요. 이 분은 자신
 
 ---
 
-**[화면 시연]** 🔗 [https://github.com/suy379/Portfolio_sy](https://github.com/suy379/Portfolio_sy)
+🔗 **참고 링크 →** [https://github.com/suy379/Portfolio_sy](https://github.com/suy379/Portfolio_sy)
 
 마지막으로 GitHub에 올라온 포트폴리오 사례입니다. 데이터 분석가를 준비 중인 분의 포트폴리오 레포인데요.
 
@@ -203,7 +203,7 @@ Stitch를 처음 접하시는 분들을 위해, 다른 사람들이 어떻게 �
 
 ---
 
-**[화면 시연]** 🔗 [https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-ai-ui-design/](https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-ai-ui-design/)
+🔗 **참고 링크 →** [https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-ai-ui-design/](https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-ai-ui-design/)
 
 구글 공식 블로그에 Stitch 소개 글이 올라와 있어요. 제목이 "Introducing 'vibe design' with Stitch"입니다.
 
@@ -215,7 +215,7 @@ Stitch를 처음 접하시는 분들을 위해, 다른 사람들이 어떻게 �
 
 ---
 
-**[화면 시연]** 🔗 [https://www.youtube.com/watch?v=COWMtnKjolM](https://www.youtube.com/watch?v=COWMtnKjolM)
+🔗 **참고 링크 →** [https://www.youtube.com/watch?v=COWMtnKjolM](https://www.youtube.com/watch?v=COWMtnKjolM)
 
 이 유튜브 영상은 초보자용 Stitch 튜토리얼입니다. 자동차 딜러십 앱 UI를 만드는 과정인데요.
 
@@ -227,7 +227,7 @@ Stitch를 처음 접하시는 분들을 위해, 다른 사람들이 어떻게 �
 
 ---
 
-**[화면 시연]** 🔗 [https://www.youtube.com/watch?v=gOmw6gH2b28](https://www.youtube.com/watch?v=gOmw6gH2b28)
+🔗 **참고 링크 →** [https://www.youtube.com/watch?v=gOmw6gH2b28](https://www.youtube.com/watch?v=gOmw6gH2b28)
 
 이건 조금 더 전문적인 튜토리얼 영상이에요. 몇 분만에 모바일 앱 UI를 만드는 전체 과정을 보여주는데요.
 
@@ -237,7 +237,7 @@ Stitch를 처음 접하시는 분들을 위해, 다른 사람들이 어떻게 �
 
 ---
 
-**[화면 시연]** 🔗 [https://medium.com/google-cloud/how-i-overhauled-my-app-ui-in-minutes-with-stitch-and-ai-studio-524b965c3d45](https://medium.com/google-cloud/how-i-overhauled-my-app-ui-in-minutes-with-stitch-and-ai-studio-524b965c3d45)
+🔗 **참고 링크 →** [https://medium.com/google-cloud/how-i-overhauled-my-app-ui-in-minutes-with-stitch-and-ai-studio-524b965c3d45](https://medium.com/google-cloud/how-i-overhauled-my-app-ui-in-minutes-with-stitch-and-ai-studio-524b965c3d45)
 
 마지막으로 이 Medium 글인데요. 실제로 프로덕션 앱의 UI를 Stitch로 개선한 경험담입니다.
 
@@ -320,7 +320,7 @@ Stitch를 처음 접하시는 분들을 위해, 다른 사람들이 어떻게 �
 
 자, 이제 직접 Stitch를 열어보겠습니다.
 
-**[화면 시연]** 🔗 [https://stitch.withgoogle.com/](https://stitch.withgoogle.com/)
+🔗 **참고 링크 →** [https://stitch.withgoogle.com/](https://stitch.withgoogle.com/)
 
 지금 보시는 게 Stitch 메인 화면이에요. Google 계정으로 로그인하면 바로 쓸 수 있습니다. 별도 설치 없고, 브라우저에서 바로 됩니다.
 

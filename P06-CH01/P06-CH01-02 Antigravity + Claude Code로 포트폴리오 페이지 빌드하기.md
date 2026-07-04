@@ -46,7 +46,7 @@ status: ✅ 대본완성
 
 ---
 
-**[화면 시연]** 🔗 [https://zapier.com/blog/vibe-coding-examples/](https://zapier.com/blog/vibe-coding-examples/)
+🔗 **참고 링크 →** [https://zapier.com/blog/vibe-coding-examples/](https://zapier.com/blog/vibe-coding-examples/)
 
 Zapier 블로그에 올라온 글인데요. 제목이 "Vibe coding examples: Real projects from non-developers"입니다. 비개발자들이 실제로 바이브코딩으로 만든 프로젝트 사례 모음이에요.
 
@@ -58,7 +58,7 @@ Zapier 블로그에 올라온 글인데요. 제목이 "Vibe coding examples: Rea
 
 ---
 
-**[화면 시연]** 🔗 [https://observerlife.tistory.com/298](https://observerlife.tistory.com/298)
+🔗 **참고 링크 →** [https://observerlife.tistory.com/298](https://observerlife.tistory.com/298)
 
 이건 한국어 블로그 글인데요. "비개발자 30분 완성 실전 가이드"라는 제목으로, v0, Lovable, Bolt, Cursor 같은 도구들로 포트폴리오 만드는 방법을 정리한 글이에요.
 
@@ -68,7 +68,7 @@ Zapier 블로그에 올라온 글인데요. 제목이 "Vibe coding examples: Rea
 
 ---
 
-**[화면 시연]** 🔗 [https://www.youtube.com/watch?v=DGA8BCOkpXU](https://www.youtube.com/watch?v=DGA8BCOkpXU)
+🔗 **참고 링크 →** [https://www.youtube.com/watch?v=DGA8BCOkpXU](https://www.youtube.com/watch?v=DGA8BCOkpXU)
 
 마지막으로 유튜브 영상인데요. "바이브코딩 바이블 입문: 나만의 포트폴리오 사이트 만들기"입니다.
 
@@ -280,7 +280,7 @@ Notion을 CMS로 쓰는 게 어떤 건지, 먼저 완성된 사례들을 보고 
 
 ---
 
-**[화면 시연]** 🔗 [https://super.so/](https://super.so/)
+🔗 **참고 링크 →** [https://super.so/](https://super.so/)
 
 Super.so는 Notion을 웹사이트로 바꿔주는 서비스입니다. 코드 없이 Notion 페이지를 그냥 퍼블리시하면 웹사이트가 되는 방식이에요.
 
@@ -290,7 +290,7 @@ Super.so는 Notion을 웹사이트로 바꿔주는 서비스입니다. 코드 �
 
 ---
 
-**[화면 시연]** 🔗 [https://notionpresso.com/ko/tutorial](https://notionpresso.com/ko/tutorial)
+🔗 **참고 링크 →** [https://notionpresso.com/ko/tutorial](https://notionpresso.com/ko/tutorial)
 
 국내 오픈소스 프로젝트인데요. Notion을 블로그 CMS로 연결하는 방법을 단계별로 설명한 튜토리얼입니다.
 
@@ -298,7 +298,7 @@ Super.so는 Notion을 웹사이트로 바꿔주는 서비스입니다. 코드 �
 
 ---
 
-**[화면 시연]** 🔗 [https://www.johnwook.com/posts/notion-nextjs-blog](https://www.johnwook.com/posts/notion-nextjs-blog)
+🔗 **참고 링크 →** [https://www.johnwook.com/posts/notion-nextjs-blog](https://www.johnwook.com/posts/notion-nextjs-blog)
 
 한국 개발자가 Notion + Next.js로 블로그 만든 경험 글이에요. 읽어보시면 우리가 Claude Code로 짜는 코드가 대략 어떤 구조인지 미리 감을 잡을 수 있어요.
 
