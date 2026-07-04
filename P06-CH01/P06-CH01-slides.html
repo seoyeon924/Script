@@ -258,6 +258,76 @@
 </div>
 
 
+<!-- ════ s6b | Stitch 프롬프트 키워드 사전 ════ -->
+<div class="slide" id="s6b">
+  <div class="tb"><span class="tb-cap">P06 · CH01 — Clip 01 · Stitch 프롬프트 키워드</span></div>
+  <div class="body" style="flex-direction:column;padding:32px 52px 36px;gap:28px;justify-content:center;">
+    <div>
+      <div class="eyebrow">Stitch 프롬프트 키워드 사전</div>
+      <div style="font-size:26px;font-weight:600;letter-spacing:-0.01em;font-family:'Poppins',sans-serif;">카테고리마다 하나씩 골라, 조합하기</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
+      <!-- Mood -->
+      <div style="border:1px solid var(--border);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:11px;font-weight:600;color:var(--p01);letter-spacing:0.1em;text-transform:uppercase;">Mood — 분위기</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="tag tag-o">minimal</span>
+          <span class="tag tag-o">clean</span>
+          <span class="tag tag-o">editorial</span>
+          <span class="tag tag-o">sophisticated</span>
+          <span class="tag tag-o">professional</span>
+          <span class="tag tag-o">playful</span>
+        </div>
+      </div>
+      <!-- Layout -->
+      <div style="border:1px solid var(--border);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:11px;">
+        <div style="font-size:11px;font-weight:600;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;">Layout — 구조</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="tag tag-g">grid-based</span>
+          <span class="tag tag-g">sidebar nav</span>
+          <span class="tag tag-g">card layout</span>
+          <span class="tag tag-g">full-width hero</span>
+          <span class="tag tag-g">masonry grid</span>
+        </div>
+      </div>
+      <!-- Color -->
+      <div style="border:1px solid var(--border);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:11px;">
+        <div style="font-size:11px;font-weight:600;color:var(--blue);letter-spacing:0.1em;text-transform:uppercase;">Color — 색상</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="tag tag-b">monochrome</span>
+          <span class="tag tag-b">earthy tones</span>
+          <span class="tag tag-b">muted colors</span>
+          <span class="tag tag-b">high contrast</span>
+        </div>
+      </div>
+      <!-- Typography -->
+      <div style="border:1px solid var(--border);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:11px;">
+        <div style="font-size:11px;font-weight:600;color:var(--sub);letter-spacing:0.1em;text-transform:uppercase;">Typography — 폰트</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="tag">sans-serif</span>
+          <span class="tag">serif accent</span>
+          <span class="tag">large headline</span>
+          <span class="tag">tight letter-spacing</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-wrap" style="font-size:13px;line-height:1.8;">
+<span class="cm">-- 조합 예시 --</span>
+<span class="hi">Editorial and clean</span> portfolio for a data analyst.
+<span class="hi">Sidebar navigation</span> with <span class="hi">card-based grid</span> layout.
+<span class="hi">Monochrome</span> palette with a single terracotta accent color.
+<span class="hi">Sans-serif</span> typography, large bold headline for hero section.
+    </div>
+
+    <div style="border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:10px 16px;background:rgba(232,96,60,0.03);font-size:12.5px;color:var(--sub);">
+      <span style="color:var(--p01);font-weight:600;">주의 —</span> 카테고리마다 하나씩만. 상충되는 형용사를 한꺼번에 넣으면 결과가 뒤섞입니다.
+    </div>
+  </div>
+</div>
+
+
 <!-- ════ s7 | CLIP 02 섹션 브레이크 ════ -->
 <div class="slide" id="s7">
   <div class="sec-break">
@@ -564,13 +634,13 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const TOTAL = 15;
-  const ORDER = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+  const ORDER = ['s1','s2','s3','s4','s5','s6','s6b','s7','s8','s9','s10','s11','s12','s13','s14','s15'];
+  const TOTAL = ORDER.length;
   const CLIP_MAP = {
-    1:0,
-    2:0, 3:0, 4:0, 5:0, 6:0,
-    7:1, 8:1, 9:1, 10:1, 11:1,
-    12:2, 13:2, 14:2, 15:2
+    s1:0,
+    s2:0, s3:0, s4:0, s5:0, s6:0, s6b:0,
+    s7:1, s8:1, s9:1, s10:1, s11:1,
+    s12:2, s13:2, s14:2, s15:2
   };
   const CLIPS = 3;
   let cur = 0;
@@ -578,7 +648,7 @@
   function show(idx) {
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
     const sid = ORDER[idx];
-    document.getElementById('s' + sid).classList.add('active');
+    document.getElementById(sid).classList.add('active');
     document.getElementById('ctr').textContent = (idx + 1) + ' / ' + TOTAL;
     document.getElementById('prog').style.width = ((idx + 1) / TOTAL * 100) + '%';
     document.querySelectorAll('.clip-dot').forEach((d, i) => d.classList.toggle('active', i === CLIP_MAP[sid]));

@@ -4,7 +4,7 @@ time: 50분
 part: Part 06
 chapter: CH01
 clip: 01
-slides: s1,s2,s3,s4,s5,s6
+slides: s1,s2,s3,s4,s5,s6,s6b
 status: ✅ 대본완성
 ---
 
@@ -412,13 +412,89 @@ Annotate 활용 예시들을 보여드릴게요.
 
 ---
 
-한 가지 더 팁을 드리고 마무리할게요.
+## s6b — Stitch 프롬프트 키워드 사전
 
-Stitch 프롬프트를 쓸 때 디자이너들이 많이 쓰는 형용사들이 있어요.
+**[화면: Mood / Layout / Color / Typography 키워드 카드 + 조합 예시]**
 
-`minimal`, `clean`, `sophisticated`, `editorial`, `brutalist`, `playful`, `professional`, `dark`, `airy` 같은 단어들인데요. 영어로 넣으셔도 됩니다. Stitch가 이런 디자인 키워드를 잘 이해하거든요.
+한 가지 더 팁을 드리고 마무리할게요. Stitch 프롬프트를 쓸 때 도움이 되는 키워드들을 카테고리별로 정리해서 알려드릴게요. 이걸 사전처럼 옆에 두고 프롬프트 쓰실 때 골라 쓰시면 됩니다.
 
-예를 들어 "editorial and minimal, data visualization portfolio" 이런 식으로 넣으시면, 잡지스러운 느낌의 미니멀한 시안이 나옵니다. 분위기 형용사를 영어로 쓰고, 세부 설명은 한국어로 써도 괜찮아요.
+---
+
+**분위기 (Mood) 키워드**
+
+전체적인 톤을 잡을 때 씁니다.
+
+- `minimal` — 요소를 최소화한, 여백이 많은
+- `clean` — 정돈되고 깔끔한
+- `editorial` — 잡지 지면 같은, 타이포그래피 중심의
+- `sophisticated` — 세련되고 고급스러운
+- `professional` — 격식 있고 신뢰감 있는
+- `playful` — 경쾌하고 재미있는
+- `warm` — 따뜻하고 친근한
+- `bold` — 과감하고 임팩트 있는
+
+데이터 분석가 포트폴리오라면 `editorial`, `clean`, `professional` 조합이 무난합니다. 너무 `playful`하게 가면 전문성이 떨어져 보일 수 있어요.
+
+---
+
+**레이아웃 (Layout) 키워드**
+
+구조를 지정할 때 씁니다.
+
+- `grid-based` — 격자형 배치
+- `asymmetric` — 비대칭 배치, 좀 더 개성 있는 느낌
+- `card layout` — 카드 형태로 나열
+- `sidebar navigation` — 좌측 고정 사이드바
+- `full-width hero` — 상단 전체 너비를 차지하는 히어로 영역
+- `masonry grid` — 핀터레스트 같은 벽돌쌓기 형태 그리드
+
+우리 실습 키트가 `sidebar navigation` + `card layout` 구조인데요. 이 단어들을 프롬프트에 넣으면 Stitch가 비슷한 구조를 만들어줍니다.
+
+---
+
+**색상 (Color) 키워드**
+
+색 방향을 지정할 때 씁니다. 색상 이름 자체를 쓰는 것보다, 이렇게 톤을 지정하면 더 일관된 결과가 나와요.
+
+- `monochrome` — 무채색 위주, 포인트 컬러 하나만
+- `earthy tones` — 베이지, 브라운 계열의 차분한 색
+- `pastel` — 부드러운 파스텔톤
+- `high contrast` — 명도 대비가 강한
+- `muted colors` — 채도를 낮춘 차분한 색
+
+예를 들어 "monochrome with a single coral accent" 라고 하면, 전체는 무채색이고 포인트만 코랄색인 시안이 나옵니다.
+
+---
+
+**타이포그래피 (Typography) 키워드**
+
+- `sans-serif` — 고딕 계열, 깔끔한 느낌
+- `serif accent` — 제목에만 세리프체를 써서 포인트 주기
+- `large headline` — 큰 타이틀 텍스트
+- `tight letter spacing` — 자간이 좁은, 현대적인 느낌
+
+---
+
+이 네 가지 카테고리 — 분위기, 레이아웃, 색상, 타이포그래피 — 를 조합하면 프롬프트가 훨씬 구체적으로 나옵니다. 다시 한번 조합 예시를 보여드릴게요.
+
+```
+Editorial and clean portfolio for a data analyst.
+Sidebar navigation with card-based grid layout.
+Monochrome palette with a single terracotta accent color.
+Sans-serif typography, large bold headline for hero section.
+```
+
+이렇게 네 문장으로 각 카테고리를 하나씩 채우면, 방향이 뚜렷한 결과가 나옵니다.
+
+---
+
+프롬프트를 영어로 쓰는 이유를 궁금해하실 수 있는데요. Stitch가 Google 모델 기반이라 영어 디자인 키워드에 대한 이해도가 좀 더 높은 편입니다. 다만 세부적인 내용 — "Works 카드 4개", "블로그 카테고리 3개" 같은 구조 설명 — 은 한국어로 쓰셔도 잘 이해합니다. 분위기 키워드는 영어, 구조 설명은 한국어. 이 조합을 추천드려요.
+
+---
+
+한 가지 더, 자주 하는 실수를 짚고 갈게요.
+
+프롬프트에 형용사를 너무 많이 넣으면 오히려 결과가 뒤죽박죽됩니다. "minimal하면서 bold하고 playful하지만 sophisticated한" 이런 식으로 상충되는 단어를 한꺼번에 넣으면 Stitch도 헷갈려해요. 카테고리마다 하나씩만 고르는 게 좋습니다. 분위기 하나, 레이아웃 하나, 색상 방향 하나. 이렇게요.
 
 ---
 
