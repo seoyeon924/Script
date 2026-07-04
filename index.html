@@ -2059,8 +2059,8 @@ function loadClip(id, el) {
     document.getElementById('img-area').innerHTML = '';
   }
 
-  // 마크다운 로드
-  fetch(clip.file)
+  // 마크다운 로드 (캐시버스터 — 항상 최신본 로드)
+  fetch(clip.file + '?v=' + Date.now(), { cache: 'no-store' })
     .then(r => r.ok ? r.text() : '# 파일을 찾을 수 없습니다')
     .then(md => {
       // 1. frontmatter 제거
