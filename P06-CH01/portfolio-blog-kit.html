@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Blog Kit — 수강생 실습용</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Courier+Prime:wght@400;700&display=swap');
+
+  /* ─── RESET ─── */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --bg: #f8f7f4;
+    --border: #0a0a0a;
+    --border-light: #e0ddd8;
+    --sub: #6b6b6b;
+    --accent: #1a1a1a;
+
+    /* category colors — 수강생이 원하는 색으로 교체 */
+    --cat-1: #ffd166;
+    --cat-2: #06d6a0;
+    --cat-3: #118ab2;
+    --cat-4: #ef476f;
+    --cat-5: #8338ec;
+    --cat-6: #fb8500;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--black);
+    min-height: 100vh;
+    display: flex;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: 280px;
+    min-width: 280px;
+    border-right: 2px solid var(--border);
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+  }
+
+  .profile-section {
+    padding: 36px 28px 28px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .avatar-wrap {
+    width: 72px; height: 72px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    background: #e8e4df;
+    margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: var(--sub);
+    letter-spacing: 0.06em;
+    overflow: hidden;
+  }
+  .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+  .profile-name {
+    font-size: 18px; font-weight: 800;
+    line-height: 1.2; margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+
+  .profile-location {
+    font-size: 12px; color: var(--sub);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  .profile-tags {
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  .profile-tag {
+    font-size: 12px; color: var(--sub);
+    display: flex; align-items: flex-start; gap: 6px;
+    line-height: 1.4;
+  }
+  .profile-tag::before { content: '—'; color: #ccc; flex-shrink: 0; margin-top: 1px; }
+
+  .nav-section {
+    padding: 24px 28px;
+    flex: 1;
+  }
+
+  .nav-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sub); margin-bottom: 12px;
+  }
+
+  .nav-menu { list-style: none; }
+  .nav-menu li {
+    border-top: 1px solid var(--border-light);
+  }
+  .nav-menu li:last-child { border-bottom: 1px solid var(--border-light); }
+  .nav-menu a, .nav-menu button {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%;
+    padding: 13px 0;
+    font-size: 14px; font-weight: 600;
+    color: var(--black);
+    text-decoration: none;
+    background: none; border: none; cursor: pointer;
+    transition: color 0.15s;
+    font-family: inherit;
+  }
+  .nav-menu a:hover, .nav-menu button:hover { color: #666; }
+  .nav-menu a.active, .nav-menu button.active {
+    color: var(--black);
+  }
+  .nav-arrow { font-size: 12px; color: #bbb; }
+
+  .sidebar-footer {
+    padding: 20px 28px;
+    border-top: 1px solid var(--border-light);
+    font-size: 11px; color: #aaa;
+    font-family: 'Courier Prime', monospace;
+  }
+
+  /* ─── MAIN ─── */
+  .main {
+    margin-left: 280px;
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  /* ─── VIEW TOGGLE ─── */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ════════════════════════
+     HOME VIEW
+  ════════════════════════ */
+  .home-hero {
+    padding: 64px 64px 48px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--sub); margin-bottom: 24px;
+    font-family: 'Courier Prime', monospace;
+  }
+
+  .hero-title {
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    max-width: 640px;
+  }
+
+  .hero-desc {
+    font-size: 16px; color: var(--sub);
+    line-height: 1.8; max-width: 520px;
+    margin-bottom: 32px;
+  }
+
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px;
+    background: var(--black); color: var(--white);
+    font-size: 13px; font-weight: 700;
+    border: 2px solid var(--border);
+    cursor: pointer; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .hero-cta:hover { background: #333; }
+
+  /* Works preview */
+  .section-block {
+    padding: 48px 64px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .section-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .section-num {
+    font-size: 11px; font-weight: 700;
+    font-family: 'Courier Prime', monospace;
+    color: var(--sub); margin-right: 12px;
+  }
+  .section-title {
+    font-size: 22px; font-weight: 800;
+    letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-sub {
+    font-size: 12px; font-weight: 500; color: var(--sub);
+    font-family: 'Courier Prime', monospace;
+  }
+  .section-link {
+    font-size: 13px; font-weight: 600;
+    color: var(--sub); text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+    cursor: pointer; background: none; border: none; font-family: inherit;
+  }
+  .section-link:hover { color: var(--black); }
+
+  /* Works grid */
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 2px solid var(--border);
+  }
+
+  .work-card {
+    border-right: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+    text-decoration: none; color: inherit;
+  }
+  .work-card:last-child { border-right: none; }
+  .work-card:hover { background: #f0ede8; }
+
+  .work-thumb {
+    width: 100%; aspect-ratio: 4/3;
+    background: #e8e4df;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #bbb; font-family: 'Courier Prime', monospace;
+    overflow: hidden;
+  }
+  .work-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  .work-info { padding: 16px; }
+  .work-category {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--sub); margin-bottom: 6px;
+  }
+  .work-title {
+    font-size: 13px; font-weight: 700;
+    line-height: 1.4;
+  }
+
+  /* Blog preview */
+  .blog-preview-list {
+    display: flex; flex-direction: column; gap: 0;
+    border: 2px solid var(--border);
+  }
+
+  .post-preview-row {
+    display: grid; grid-template-columns: 200px 1fr auto;
+    align-items: center; gap: 0;
+    border-bottom: 1px solid var(--border-light);
+    cursor: pointer; text-decoration: none; color: inherit;
+    transition: background 0.1s;
+  }
+  .post-preview-row:last-child { border-bottom: none; }
+  .post-preview-row:hover { background: #f4f1ec; }
+
+  .post-row-tag {
+    padding: 20px 24px;
+    border-right: 1px solid var(--border-light);
+  }
+  .post-row-info { padding: 20px 28px; }
+  .post-row-meta {
+    padding: 20px 24px;
+    font-size: 11px; color: var(--sub); white-space: nowrap;
+    text-align: right;
+    font-family: 'Courier Prime', monospace;
+  }
+
+  .post-row-title {
+    font-size: 15px; font-weight: 700;
+    line-height: 1.4; margin-bottom: 6px;
+  }
+  .post-row-desc {
+    font-size: 13px; color: var(--sub);
+    line-height: 1.6; display: -webkit-box;
+    -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  /* ════════════════════════
+     BLOG VIEW
+  ════════════════════════ */
+  .blog-header {
+    padding: 48px 64px 36px;
+    border-bottom: 2px solid var(--border);
+    display: flex; align-items: flex-end; justify-content: space-between;
+  }
+
+  .blog-title {
+    font-size: 36px; font-weight: 900;
+    letter-spacing: -0.03em;
+  }
+  .blog-count {
+    font-size: 13px; color: var(--sub);
+    font-family: 'Courier Prime', monospace;
+  }
+
+  /* Category filter */
+  .cat-filter {
+    padding: 0 64px;
+    border-bottom: 2px solid var(--border);
+    display: flex; gap: 0; overflow-x: auto;
+  }
+  .cat-btn {
+    padding: 16px 20px;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    background: none; border: none; border-right: 1px solid var(--border-light);
+    cursor: pointer; color: var(--sub); white-space: nowrap;
+    font-family: inherit; transition: all 0.15s;
+  }
+  .cat-btn:first-child { padding-left: 0; }
+  .cat-btn:hover { color: var(--black); }
+  .cat-btn.active { color: var(--black); border-bottom: 3px solid var(--black); }
+
+  /* Blog grid */
+  .blog-grid {
+    padding: 48px 64px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .blog-card {
+    border: 2px solid var(--border);
+    background: var(--white);
+    cursor: pointer; text-decoration: none; color: inherit;
+    display: flex; flex-direction: column;
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .blog-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--border);
+  }
+
+  .card-thumb {
+    width: 100%; aspect-ratio: 16/9;
+    background: #e8e4df;
+    border-bottom: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #bbb; font-family: 'Courier Prime', monospace;
+    overflow: hidden;
+  }
+  .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  .card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+  .cat-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1.5px solid currentColor;
+    align-self: flex-start;
+  }
+
+  .card-title {
+    font-size: 15px; font-weight: 800;
+    line-height: 1.4; letter-spacing: -0.01em;
+  }
+
+  .card-desc {
+    font-size: 13px; color: var(--sub);
+    line-height: 1.6; flex: 1;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 20px;
+    border-top: 1px solid var(--border-light);
+    font-size: 11px; color: var(--sub);
+    font-family: 'Courier Prime', monospace;
+  }
+
+  /* ─── CATEGORY COLORS ─── */
+  .cat-c1 { color: #b38600; border-color: #b38600; }
+  .cat-c2 { color: #047857; border-color: #047857; }
+  .cat-c3 { color: #0369a1; border-color: #0369a1; }
+  .cat-c4 { color: #b91c1c; border-color: #b91c1c; }
+  .cat-c5 { color: #6d28d9; border-color: #6d28d9; }
+  .cat-c6 { color: #c2410c; border-color: #c2410c; }
+
+  /* ─── PLACEHOLDER STYLE ─── */
+  .ph { color: #ccc; font-style: italic; }
+  .ph-block {
+    background: repeating-linear-gradient(
+      -45deg, #f0ede8, #f0ede8 4px, #e8e4df 4px, #e8e4df 8px
+    );
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #ccc; }
+</style>
+</head>
+<body>
+
+<!-- ════════════ SIDEBAR ════════════ -->
+<aside class="sidebar">
+  <div class="profile-section">
+    <div class="avatar-wrap">
+      <!--
+        사진 넣으려면:
+        <img src="your-photo.jpg" alt="profile">
+        대신 아래 텍스트 삭제
+      -->
+      PHOTO
+    </div>
+
+    <!-- ✏️ 이름 수정 -->
+    <div class="profile-name">Your Name</div>
+
+    <!-- ✏️ 지역 수정 -->
+    <div class="profile-location">📍 Korea / Seoul</div>
+
+    <!-- ✏️ 소개 항목 수정 (원하는 만큼 추가/삭제) -->
+    <div class="profile-tags">
+      <div class="profile-tag">Data Analyst</div>
+      <div class="profile-tag">Tableau Practitioner</div>
+      <div class="profile-tag">AI Dashboard Builder</div>
+    </div>
+  </div>
+
+  <nav class="nav-section">
+    <div class="nav-label">// Menu_Index</div>
+    <ul class="nav-menu">
+      <li>
+        <button class="active" onclick="showView('home')">
+          Home <span class="nav-arrow">→</span>
+        </button>
+      </li>
+      <li>
+        <button onclick="showView('blog')">
+          Blog <span class="nav-arrow">→</span>
+        </button>
+      </li>
+      <li><a href="#">Works <span class="nav-arrow">→</span></a></li>
+      <li><a href="#">About <span class="nav-arrow">→</span></a></li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    // DATA_VIZ_PORTFOLIO<br>
+    © 2025 Your Name
+  </div>
+</aside>
+
+<!-- ════════════ MAIN ════════════ -->
+<main class="main">
+
+  <!-- ───────── HOME VIEW ───────── -->
+  <div class="view active" id="view-home">
+
+    <!-- Hero -->
+    <section class="home-hero">
+      <div class="hero-eyebrow">// DATA_VISUALIZATION_HUB</div>
+      <!-- ✏️ 메인 타이틀 수정 -->
+      <h1 class="hero-title">Visualizing<br>Intelligence</h1>
+      <!-- ✏️ 소개 문구 수정 -->
+      <p class="hero-desc">
+        Writing about data analytics in practice.<br>
+        Dashboard design, AI-powered workflows, and automation<br>
+        that turns data into decisions.
+      </p>
+      <button class="hero-cta" onclick="showView('blog')">Read Blog →</button>
+    </section>
+
+    <!-- Works Preview -->
+    <section class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="section-num">01.</span>
+          Featured Dashboards
+          <span class="section-sub">Works</span>
+        </div>
+        <button class="section-link">View All →→</button>
+      </div>
+
+      <div class="works-grid">
+        <!-- ✏️ 대시보드 썸네일 4개 — img src 를 실제 이미지 경로로 교체 -->
+        <a href="#" class="work-card">
+          <div class="work-thumb ph-block">썸네일</div>
+          <div class="work-info">
+            <div class="work-category">Marketing</div>
+            <div class="work-title">Campaign Performance Dashboard</div>
+          </div>
+        </a>
+        <a href="#" class="work-card">
+          <div class="work-thumb ph-block">썸네일</div>
+          <div class="work-info">
+            <div class="work-category">Product</div>
+            <div class="work-title">Retention & LTV Analysis</div>
+          </div>
+        </a>
+        <a href="#" class="work-card">
+          <div class="work-thumb ph-block">썸네일</div>
+          <div class="work-info">
+            <div class="work-category">A/B Test</div>
+            <div class="work-title">Experiment Results Dashboard</div>
+          </div>
+        </a>
+        <a href="#" class="work-card">
+          <div class="work-thumb ph-block">썸네일</div>
+          <div class="work-info">
+            <div class="work-category">HR</div>
+            <div class="work-title">People Analytics Dashboard</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Blog Preview -->
+    <section class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="section-num">02.</span>
+          Latest Insights
+          <span class="section-sub">Blog</span>
+        </div>
+        <button class="section-link" onclick="showView('blog')">View All →→</button>
+      </div>
+
+      <div class="blog-preview-list">
+        <!-- ✏️ 블로그 포스트 3개 — Notion에서 자동으로 채워짐 -->
+        <a href="#" class="post-preview-row">
+          <div class="post-row-tag">
+            <span class="cat-badge cat-c3">Dashboard Design</span>
+          </div>
+          <div class="post-row-info">
+            <div class="post-row-title">Mastering Dashboard Design: From Good to Unmissable Data Visualizations</div>
+            <div class="post-row-desc">The difference between a dashboard people use and one people ignore.</div>
+          </div>
+          <div class="post-row-meta">8 min<br>2025.06</div>
+        </a>
+        <a href="#" class="post-preview-row">
+          <div class="post-row-tag">
+            <span class="cat-badge cat-c2">AI & BI</span>
+          </div>
+          <div class="post-row-info">
+            <div class="post-row-title">Building a KPI Dashboard: Step-by-Step Guide</div>
+            <div class="post-row-desc">How to evaluate key metrics and identify which segments drive change.</div>
+          </div>
+          <div class="post-row-meta">6 min<br>2025.05</div>
+        </a>
+        <a href="#" class="post-preview-row">
+          <div class="post-row-tag">
+            <span class="cat-badge cat-c5">Community</span>
+          </div>
+          <div class="post-row-info">
+            <div class="post-row-title">Building Sustainable BI Mentorship: Lessons from 100+ Students</div>
+            <div class="post-row-desc">Education as community building — what I learned from teaching data.</div>
+          </div>
+          <div class="post-row-meta">5 min<br>2025.04</div>
+        </a>
+      </div>
+    </section>
+
+  </div><!-- /home -->
+
+
+  <!-- ───────── BLOG VIEW ───────── -->
+  <div class="view" id="view-blog">
+
+    <div class="blog-header">
+      <div>
+        <h1 class="blog-title">Blog</h1>
+        <!-- ✏️ 포스트 수는 Notion DB 연결 후 자동으로 -->
+        <div class="blog-count">// 12 articles</div>
+      </div>
+    </div>
+
+    <!-- Category Filter -->
+    <!-- ✏️ 카테고리는 Notion DB 속성에서 정의한 Select 값과 맞추기 -->
+    <div class="cat-filter">
+      <button class="cat-btn active" onclick="filterCat(this, 'all')">All</button>
+      <button class="cat-btn" onclick="filterCat(this, 'Dashboard Design')">Dashboard Design</button>
+      <button class="cat-btn" onclick="filterCat(this, 'AI & BI')">AI &amp; BI</button>
+      <button class="cat-btn" onclick="filterCat(this, 'Tableau Tips')">Tableau Tips</button>
+      <button class="cat-btn" onclick="filterCat(this, 'Chart Types')">Chart Types</button>
+      <button class="cat-btn" onclick="filterCat(this, 'Community')">Community</button>
+    </div>
+
+    <!-- Blog Grid -->
+    <!-- ✏️ 아래 카드들은 Notion API로 자동 생성됨 — 직접 수정 불필요 -->
+    <div class="blog-grid" id="blog-grid">
+
+      <a href="#" class="blog-card" data-cat="Dashboard Design">
+        <div class="card-thumb ph-block">커버 이미지</div>
+        <div class="card-body">
+          <span class="cat-badge cat-c3">Dashboard Design</span>
+          <div class="card-title">Mastering Dashboard Design: From Good to Unmissable</div>
+          <div class="card-desc">The design principles that separate dashboards people actually use from dashboards that collect dust.</div>
+        </div>
+        <div class="card-footer">
+          <span>8 min read</span>
+          <span>2025.06.15</span>
+        </div>
+      </a>
+
+      <a href="#" class="blog-card" data-cat="AI & BI">
+        <div class="card-thumb ph-block">커버 이미지</div>
+        <div class="card-body">
+          <span class="cat-badge cat-c2">AI &amp; BI</span>
+          <div class="card-title">Claude Code로 대시보드 자동화하기</div>
+          <div class="card-desc">Claude Code와 Notion MCP를 연결해서 콘텐츠 업데이트를 완전 자동화한 방법.</div>
+        </div>
+        <div class="card-footer">
+          <span>6 min read</span>
+          <span>2025.05.28</span>
+        </div>
+      </a>
+
+      <a href="#" class="blog-card" data-cat="Tableau Tips">
+        <div class="card-thumb ph-block">커버 이미지</div>
+        <div class="card-body">
+          <span class="cat-badge cat-c1">Tableau Tips</span>
+          <div class="card-title">LOD 표현식 완전 정복 — FIXED vs INCLUDE vs EXCLUDE</div>
+          <div class="card-desc">언제 어떤 LOD를 쓰는지, 실무 예시 5가지로 정리했습니다.</div>
+        </div>
+        <div class="card-footer">
+          <span>10 min read</span>
+          <span>2025.05.10</span>
+        </div>
+      </a>
+
+      <a href="#" class="blog-card" data-cat="Dashboard Design">
+        <div class="card-thumb ph-block">커버 이미지</div>
+        <div class="card-body">
+          <span class="cat-badge cat-c3">Dashboard Design</span>
+          <div class="card-title">Building a KPI Dashboard: Step-by-Step Guide</div>
+          <div class="card-desc">Key metrics, segment analysis, and regional breakdowns — built from scratch.</div>
+        </div>
+        <div class="card-footer">
+          <span>7 min read</span>
+          <span>2025.04.22</span>
+        </div>
+      </a>
+
+      <a href="#" class="blog-card" data-cat="Chart Types">
+        <div class="card-thumb ph-block">커버 이미지</div>
+        <div class="card-body">
+          <span class="cat-badge cat-c4">Chart Types</span>
+          <div class="card-title">언제 막대 차트 말고 다른 걸 써야 하나요?</div>
+          <div class="card-desc">비교·추세·분포·관계 — 목적에 따른 차트 선택 가이드.</div>
+        </div>
+        <div class="card-footer">
+          <span>5 min read</span>
+          <span>2025.04.05</span>
+        </div>
+      </a>
+
+      <a href="#" class="blog-card" data-cat="Community">
+        <div class="card-thumb ph-block">커버 이미지</div>
+        <div class="card-body">
+          <span class="cat-badge cat-c5">Community</span>
+          <div class="card-title">Building Sustainable BI Mentorship: 100+ Students</div>
+          <div class="card-desc">Education as community building — what I learned from teaching data analytics.</div>
+        </div>
+        <div class="card-footer">
+          <span>5 min read</span>
+          <span>2025.03.18</span>
+        </div>
+      </a>
+
+    </div>
+  </div><!-- /blog -->
+
+</main>
+
+<script>
+  function showView(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    document.querySelectorAll('.nav-menu button').forEach(b => {
+      b.classList.toggle('active', b.textContent.trim().toLowerCase().startsWith(name));
+    });
+    window.scrollTo(0, 0);
+  }
+
+  function filterCat(btn, cat) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#blog-grid .blog-card').forEach(card => {
+      const match = cat === 'all' || card.dataset.cat === cat;
+      card.style.display = match ? 'flex' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
