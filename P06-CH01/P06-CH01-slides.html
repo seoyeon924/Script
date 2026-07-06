@@ -339,6 +339,57 @@
 
 
 <!-- ════ s8 | kit.html 구조 ════ -->
+<div class="slide" id="s7b">
+  <div class="tb"><span class="tb-cap">P06 · CH01 — Clip 02 · Stitch 결과물 이어가기</span></div>
+  <div class="body" style="flex-direction:column;padding:32px 52px 36px;gap:22px;justify-content:center;">
+    <div>
+      <div class="eyebrow">Stitch 다음 단계</div>
+      <div style="font-size:26px;font-weight:600;letter-spacing:-0.01em;font-family:'Poppins',sans-serif;">시안 나온 다음, 이어서 개발하는 두 가지 경로</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <!-- 경로 A: AI Studio 경유 -->
+      <div style="border:1px solid var(--border);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:9px;">
+        <div style="font-size:11px;font-weight:700;color:var(--p01);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:2px;">경로 A — AI Studio 경유 (심화)</div>
+
+        <div style="border:1px solid var(--border);border-radius:6px;padding:9px 12px;background:#fff;font-size:12.5px;">Stitch → <strong>1-Click Export to AI Studio</strong></div>
+        <div style="text-align:center;color:#CCC;font-size:12px;">↓</div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:9px 12px;background:#fff;font-size:12.5px;">AI Studio <strong>Build 모드</strong>에서 추가 개발 (기능·로직)</div>
+        <div style="text-align:center;color:#CCC;font-size:12px;">↓</div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:9px 12px;background:#fff;font-size:12.5px;">GitHub 연동(OAuth)으로 레포에 <strong>push</strong></div>
+        <div style="text-align:center;color:#CCC;font-size:12px;">↓</div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:9px 12px;background:#fff;font-size:12.5px;">로컬에 <strong>clone / pull</strong></div>
+        <div style="text-align:center;color:#CCC;font-size:12px;">↓</div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:9px 12px;background:#fff;font-size:12.5px;">Claude Code로 이어서 개발</div>
+
+        <div style="border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:8px 12px;background:rgba(232,96,60,0.03);font-size:11.5px;color:var(--sub);margin-top:4px;">
+          <span style="color:var(--p01);font-weight:600;">주의 —</span> GitHub 연동은 push 전용, pull(원격 변경 반영)은 미지원. API 키·시크릿은 자동으로 제외됨.
+        </div>
+      </div>
+
+      <!-- 경로 B: kit.html 직접 사용 -->
+      <div style="border:1px solid rgba(106,172,152,0.4);border-radius:8px;padding:20px;background:rgba(106,172,152,0.04);display:flex;flex-direction:column;gap:9px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+          <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;">경로 B — kit.html 직접 사용</div>
+          <span class="tag tag-g" style="font-size:10px;padding:2px 7px;">이 강의 방식</span>
+        </div>
+
+        <div style="border:1px solid var(--border);border-radius:6px;padding:9px 12px;background:#fff;font-size:12.5px;">Stitch 시안을 <strong>레퍼런스</strong>로만 참고</div>
+        <div style="text-align:center;color:#CCC;font-size:12px;">↓</div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:9px 12px;background:#fff;font-size:12.5px;"><code style="background:#eee;padding:1px 5px;border-radius:3px;">portfolio-blog-kit.html</code> 그대로 시작</div>
+        <div style="text-align:center;color:#CCC;font-size:12px;">↓</div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:9px 12px;background:#fff;font-size:12.5px;">Claude Code로 바로 커스터마이징</div>
+
+        <div style="flex:1;"></div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:11.5px;color:var(--sub);margin-top:4px;">
+          설치·연동 없이 바로 시작. 이번 클립은 이 경로로 진행합니다.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="slide" id="s8">
   <div class="tb"><span class="tb-cap">P06 · CH01 — Clip 02 · Claude Code 빌드</span></div>
   <div class="body">
@@ -634,12 +685,12 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const ORDER = ['s1','s2','s3','s4','s5','s6','s6b','s7','s8','s9','s10','s11','s12','s13','s14','s15'];
+  const ORDER = ['s1','s2','s3','s4','s5','s6','s6b','s7','s7b','s8','s9','s10','s11','s12','s13','s14','s15'];
   const TOTAL = ORDER.length;
   const CLIP_MAP = {
     s1:0,
     s2:0, s3:0, s4:0, s5:0, s6:0, s6b:0,
-    s7:1, s8:1, s9:1, s10:1, s11:1,
+    s7:1, s7b:1, s8:1, s9:1, s10:1, s11:1,
     s12:2, s13:2, s14:2, s15:2
   };
   const CLIPS = 3;
