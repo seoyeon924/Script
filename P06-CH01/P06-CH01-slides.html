@@ -617,7 +617,7 @@
       <div style="display:flex;flex-direction:column;gap:10px;">
         <div style="border:1px solid var(--border);border-radius:6px;padding:14px 18px;background:#fff;display:flex;gap:12px;align-items:flex-start;">
           <span style="font-size:11px;font-weight:700;color:var(--p01);min-width:48px;flex-shrink:0;">STEP 1</span>
-          <div><div style="font-size:13px;font-weight:700;margin-bottom:3px;">GitHub에 레포 생성 & push</div><div style="font-size:12px;color:var(--sub);font-family:monospace;">git init → git push origin main</div></div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:3px;">GitHub에 레포 생성 & push</div><div style="font-size:12px;color:var(--sub);">gh CLI 로그인 (최초 1회) → Claude Code 프롬프트로 push</div></div>
         </div>
         <div style="border:1px solid var(--border);border-radius:6px;padding:14px 18px;background:#fff;display:flex;gap:12px;align-items:flex-start;">
           <span style="font-size:11px;font-weight:700;color:var(--p01);min-width:48px;flex-shrink:0;">STEP 2</span>
@@ -631,7 +631,7 @@
     </div>
     <div style="flex:1;padding:40px;display:flex;flex-direction:column;gap:14px;justify-content:center;">
       <div style="font-size:12px;font-weight:600;color:var(--sub);letter-spacing:0.1em;text-transform:uppercase;">Netlify 빌드 설정 (netlify.toml)</div>
-      <div style="font-size:11px;color:var(--sub);margin-bottom:2px;">📄 프로젝트 루트에 <code style="background:#e8e5e0;padding:1px 5px;border-radius:3px;">netlify.toml</code> 파일 생성</div>
+      <div style="font-size:11px;color:var(--sub);margin-bottom:2px;">📄 Claude Code 프롬프트로 <code style="background:#e8e5e0;padding:1px 5px;border-radius:3px;">netlify.toml</code> 생성</div>
       <div class="code-wrap" style="font-size:12.5px;line-height:1.85;">
 <span class="cm"># netlify.toml — 프로젝트 루트에 이 파일 만들기</span>
 [build]
