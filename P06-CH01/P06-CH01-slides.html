@@ -599,9 +599,43 @@
       </div>
     </div>
     <div class="code-wrap" style="width:100%;font-size:13px;line-height:1.85;">
-<span class="cm"># 새 포스트 올릴 때마다 이 두 줄만 실행</span>
-<span class="hi">npm run sync</span>   <span class="cm"># Notion 데이터 동기화</span>
-<span class="hi">git add . && git commit -m "update posts" && git push</span>
+<span class="cm">-- Claude Code 프롬프트 (새 글 올릴 때마다) --</span>
+<span class="hi">Notion에 새로 쓴 글 동기화하고,</span>
+<span class="hi">GitHub에 커밋해서 push까지 해줘.</span>
+
+<span class="cm"># 직접 입력하고 싶다면 이 두 줄</span>
+<span class="ac">npm run sync</span> && <span class="ac">git add . && git commit -m "update posts" && git push</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s13b | 자주 나오는 질문 ════ -->
+<div class="slide" id="s13b">
+  <div class="tb"><span class="tb-cap">P06 · CH01 — Clip 03 · 콘텐츠 업데이트 Q&A</span></div>
+  <div class="body" style="flex-direction:column;padding:32px 52px 36px;gap:22px;justify-content:center;">
+    <div>
+      <div class="eyebrow">자주 나오는 질문</div>
+      <div style="font-size:26px;font-weight:600;letter-spacing:-0.01em;font-family:'Poppins',sans-serif;">콘텐츠 업데이트, 미리 답해두기</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div style="border:1px solid var(--border);border-radius:8px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:13px;font-weight:700;color:var(--p01);">Q. 포스트를 한꺼번에 여러 개 써도 되나요?</div>
+        <div style="font-size:13px;color:var(--sub);line-height:1.7;">네. sync는 Published 체크된 포스트 전부를 한 번에 가져옵니다. 여러 개 미리 써두고 한꺼번에 반영해도 됩니다.</div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:13px;font-weight:700;color:var(--p01);">Q. 이미지 용량이 크면 어떻게 되나요?</div>
+        <div style="font-size:13px;color:var(--sub);line-height:1.7;">업로드한 원본 그대로 다운로드됩니다. 로딩 속도를 위해 업로드 전 2MB 이하로 압축하는 걸 추천합니다.</div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:13px;font-weight:700;color:var(--green);">Q. sync 자동화는 안 되나요?</div>
+        <div style="font-size:13px;color:var(--sub);line-height:1.7;">됩니다. GitHub Actions로 스케줄을 걸면 터미널을 아예 안 열어도 매일 자동 반영됩니다. Claude Code한테 요청하면 만들어줍니다.</div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:13px;font-weight:700;color:var(--green);">Q. 글을 수정하거나 삭제하고 싶으면요?</div>
+        <div style="font-size:13px;color:var(--sub);line-height:1.7;">Notion에서 수정 후 다시 sync·push. 삭제하려면 Published 체크를 해제하거나 행을 지우고 sync하면 됩니다.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -617,7 +651,11 @@
       <div style="display:flex;flex-direction:column;gap:10px;">
         <div style="border:1px solid var(--border);border-radius:6px;padding:14px 18px;background:#fff;display:flex;gap:12px;align-items:flex-start;">
           <span style="font-size:11px;font-weight:700;color:var(--p01);min-width:48px;flex-shrink:0;">STEP 1</span>
-          <div><div style="font-size:13px;font-weight:700;margin-bottom:3px;">GitHub에 레포 생성 & push</div><div style="font-size:12px;color:var(--sub);">gh CLI 로그인 (최초 1회) → Claude Code 프롬프트로 push</div></div>
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:3px;">GitHub CLI 설치 (최초 1회)</div>
+            <div style="font-size:11.5px;color:var(--sub);font-family:monospace;margin-top:2px;line-height:1.6;">brew install gh<br>gh auth login</div>
+            <div style="font-size:12px;color:var(--sub);margin-top:5px;">이후로는 Claude Code 프롬프트로 레포 생성 & push</div>
+          </div>
         </div>
         <div style="border:1px solid var(--border);border-radius:6px;padding:14px 18px;background:#fff;display:flex;gap:12px;align-items:flex-start;">
           <span style="font-size:11px;font-weight:700;color:var(--p01);min-width:48px;flex-shrink:0;">STEP 2</span>
@@ -674,6 +712,96 @@
 </div>
 
 
+<!-- ════ s15b | 해외 디자인 레퍼런스 ════ -->
+<div class="slide" id="s15b">
+  <div class="tb"><span class="tb-cap">P06 · CH01 — Clip 03 · 앞으로 참고할 레퍼런스</span></div>
+  <div class="body" style="flex-direction:column;padding:32px 52px 36px;gap:20px;justify-content:center;">
+    <div>
+      <div class="eyebrow">앞으로 채워나갈 때 참고하기</div>
+      <div style="font-size:26px;font-weight:600;letter-spacing:-0.01em;font-family:'Poppins',sans-serif;">해외 디자인 · 데이터 시각화 레퍼런스</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="border:1px solid var(--border);border-radius:6px;padding:12px 18px;background:#fff;display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;">Awwwards — Portfolio · Data Visualization 카테고리</div>
+          <div style="font-size:12px;color:var(--sub);">전 세계 수상작 아카이브. 레이아웃·타이포그래피 감각 익히기</div>
+        </div>
+        <div style="font-family:monospace;font-size:11px;color:#aaa;flex-shrink:0;">awwwards.com/websites/portfolio</div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:6px;padding:12px 18px;background:#fff;display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;">Awwwards — Minimalistic Portfolio (수상작)</div>
+          <div style="font-size:12px;color:var(--sub);">폰트 1개·색상 3개만으로 만든 절제된 개인 포트폴리오</div>
+        </div>
+        <div style="font-family:monospace;font-size:11px;color:#aaa;flex-shrink:0;">awwwards.com/sites/minimalistic-portfolio</div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:6px;padding:12px 18px;background:#fff;display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;">Awwwards — Data Science Portfolio (수상작)</div>
+          <div style="font-size:12px;color:var(--sub);">데이터 사이언스 프로젝트 전용 포트폴리오, 우리와 동일 목적</div>
+        </div>
+        <div style="font-family:monospace;font-size:11px;color:#aaa;flex-shrink:0;">awwwards.com/sites/data-science-portfolio</div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:6px;padding:12px 18px;background:#fff;display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;">Visual Cinnamon — Nadieh Bremer</div>
+          <div style="font-size:12px;color:var(--sub);">NYT·Google 등과 협업한 데이터 시각화 디자이너의 포트폴리오</div>
+        </div>
+        <div style="font-family:monospace;font-size:11px;color:#aaa;flex-shrink:0;">visualcinnamon.com/portfolio</div>
+      </div>
+      <div style="border:1px solid rgba(106,172,152,0.35);border-radius:6px;padding:12px 18px;background:rgba(106,172,152,0.04);display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;color:var(--green);">Nightingale — 데이터 시각화 학회 아티클 2편</div>
+          <div style="font-size:12px;color:var(--sub);">커리어를 시각화로 표현한 사례 · 실무자 포트폴리오 갤러리 모음</div>
+        </div>
+        <div style="font-family:monospace;font-size:11px;color:#aaa;flex-shrink:0;">nightingaledvs.com</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s15c | 한국 데이터 분석가 포트폴리오 사례 ════ -->
+<div class="slide" id="s15c">
+  <div class="tb"><span class="tb-cap">P06 · CH01 — Clip 03 · 앞으로 참고할 레퍼런스</span></div>
+  <div class="body" style="flex-direction:column;padding:32px 52px 36px;gap:20px;justify-content:center;">
+    <div>
+      <div class="eyebrow">한국 데이터 분석가 포트폴리오 사례</div>
+      <div style="font-size:26px;font-weight:600;letter-spacing:-0.01em;font-family:'Poppins',sans-serif;">해외 사례만 보고 있었다면,<br>한국에도 이미 있는 사례들</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="border:1px solid var(--border);border-radius:8px;padding:18px 20px;display:flex;align-items:center;gap:18px;">
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:700;">이보민 — 데이터 분석가 개인 포트폴리오</div>
+          <div style="font-size:12.5px;color:var(--sub);line-height:1.7;margin-top:4px;">데이터리안·잡플래닛 출신, SQL·GA4·로그 설계 경력을 Oopy(노션 기반)로 정리</div>
+        </div>
+        <div style="font-family:monospace;font-size:11.5px;color:#aaa;flex-shrink:0;">lbm.oopy.io</div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:18px 20px;display:flex;align-items:center;gap:18px;">
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:700;">윤진호 — 데이터 분석가 재취업 후기</div>
+          <div style="font-size:12.5px;color:var(--sub);line-height:1.7;margin-top:4px;">비전공자 7년차, 23곳 지원 끝에 합격까지의 과정을 Velog에 기록</div>
+        </div>
+        <div style="font-family:monospace;font-size:11.5px;color:#aaa;flex-shrink:0;">velog.io/@zeeno0412</div>
+      </div>
+      <div style="border:1px solid rgba(106,172,152,0.35);border-radius:8px;padding:18px 20px;background:rgba(106,172,152,0.04);display:flex;align-items:center;gap:18px;">
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:700;color:var(--green);">Seoul Tableau User Group</div>
+          <div style="font-size:12.5px;color:var(--sub);line-height:1.7;margin-top:4px;">한국 Tableau 사용자 공식 커뮤니티. 블로그 글로 발표·네트워킹까지 이어가기</div>
+        </div>
+        <div style="font-family:monospace;font-size:11.5px;color:#aaa;flex-shrink:0;">usergroups.tableau.com</div>
+      </div>
+    </div>
+
+    <div style="border:1px solid rgba(232,96,60,0.3);border-radius:6px;padding:10px 16px;background:rgba(232,96,60,0.03);font-size:12.5px;color:var(--sub);">
+      <span style="color:var(--p01);font-weight:600;">참고 —</span> 오늘 만든 블로그도 커뮤니티에 공유하면서 계속 다듬어가면 됩니다.
+    </div>
+  </div>
+</div>
+
+
 </div><!-- /deck -->
 
 <div class="nav">
@@ -685,13 +813,13 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const ORDER = ['s1','s2','s3','s4','s5','s6','s6b','s7','s7b','s8','s9','s10','s11','s12','s13','s14','s15'];
+  const ORDER = ['s1','s2','s3','s4','s5','s6','s6b','s7','s7b','s8','s9','s10','s11','s12','s13','s13b','s14','s15','s15b','s15c'];
   const TOTAL = ORDER.length;
   const CLIP_MAP = {
     s1:0,
     s2:0, s3:0, s4:0, s5:0, s6:0, s6b:0,
     s7:1, s7b:1, s8:1, s9:1, s10:1, s11:1,
-    s12:2, s13:2, s14:2, s15:2
+    s12:2, s13:2, s13b:2, s14:2, s15:2, s15b:2, s15c:2
   };
   const CLIPS = 3;
   let cur = 0;
