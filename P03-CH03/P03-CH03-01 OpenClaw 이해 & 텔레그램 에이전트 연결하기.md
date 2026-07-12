@@ -19,31 +19,26 @@ status: ✅ 대본완성
 
 ---
 
-## ⚠️ 촬영용 클린 환경 만들기 (필독)
+## ⚠️ 촬영용 클린 환경 — 세팅 완료됨, 여기서부터 시작
 
-**문제:** 이 컴퓨터는 이미 OpenClaw 설정이 완료된 상태라, `openclaw onboard`를 그냥 다시 실행하면 수강생이 못 보는 화면이 나옴 — "Existing config detected → Config handling" 질문, "Telegram already configured. Keep it?" 등. 수강생 화면과 달라짐.
+**왜 필요한가:** 이 컴퓨터는 이미 OpenClaw 설정이 끝난 상태라, 그냥 `openclaw onboard`를 다시 실행하면 수강생이 못 보는 화면("Existing config detected" 등)이 나옴. 그래서 **새 컴퓨터처럼 동작하는 촬영용 샌드박스**를 미리 만들어뒀음.
 
-**해결: 촬영 전용 macOS 사용자 계정에서 찍기 (권장)**
+**준비된 것:** 홈 폴더(`/Users/sy`)의 **`openclaw-demo`** 폴더 — 더블클릭 스크립트 3개 + README.txt. 기존 설정은 절대 안 건드림.
 
-1. 시스템 설정 → 사용자 및 그룹 → **"demo" 계정 추가** (표준 계정)
-2. 본 계정 터미널에서 게이트웨이 잠깐 중지 (포트 18789 충돌 방지):
-   ```bash
-   openclaw gateway stop
-   ```
-3. demo 계정으로 로그인 전환 (Cmd+화면 우상단 빠른 전환)
-   - demo 계정은 `~/.openclaw`가 없는 완전 새 상태 → 수강생 화면과 100% 동일
-   - `openclaw`·`claude` 명령어는 그대로 사용 가능 (시스템 공용 설치)
-4. **onboard 촬영용 준비물** (demo 계정에서):
-   - BotFather에서 **촬영용 임시 봇 1개** 새로 생성 (기존 봇 토큰 재사용 금지 — 실봇이 demo 게이트웨이에 뺏김)
-   - `claude setup-token`은 녹화 전에 한 번 실행해서 로그인 완료해두기 (녹화 중엔 토큰 발급 장면만)
-5. 촬영 순서: BotFather 임시 봇 생성 → `openclaw onboard` (완전 새 설치 화면) → DM 페어링 코드 → `openclaw pairing approve` → 답장 확인
-6. **촬영 후 정리:**
-   - demo 계정에서 `openclaw gateway stop`
-   - BotFather에서 임시 봇 `/deletebot` 삭제
-   - 본 계정 복귀 후 `openclaw gateway start` → `openclaw status`로 Agents: 5 확인
-   - demo 계정은 다음 촬영을 위해 남겨두거나 삭제
+**촬영 당일, 이 순서대로만 하면 됨:**
 
-> **CLIP 02·03 데모는 본 계정에서 촬영** — 이미 세팅된 5-agent 파이프라인을 그대로 쓰면 됨. 클린 환경이 필요한 건 CLIP 01의 세팅 장면뿐.
+1. **텔레그램에서 촬영용 임시 봇 1개 만들기** (직접 해야 하는 유일한 준비)
+   - @BotFather → `/newbot` → 이름·유저네임 아무거나 → 토큰 메모장에 복사
+   - ⚠️ 기존 Echo~Evan 봇 토큰 재사용 금지 (실봇 연결이 데모에 뺏김)
+2. Finder → 홈 폴더 → `openclaw-demo` → **`1_촬영시작.command` 더블클릭**
+   - 본 계정 게이트웨이가 잠깐 내려가고, `[DEMO]` 표시된 검은 창이 열림
+   - 이 창 안은 완전 새 컴퓨터 상태 — 수강생 화면과 100% 동일
+3. `[DEMO]` 창에서 녹화 시작 **전에** 한 번: `claude setup-token` (브라우저 로그인)
+4. **녹화 시작** → `[DEMO]` 창에서 대본대로: `openclaw onboard` → 임시 봇 토큰 입력 → 페어링 코드 → `openclaw pairing approve telegram <코드>` → 답장 확인
+5. CLIP 01 촬영 끝 → **`2_촬영종료.command` 더블클릭** → "Agents: 5" 뜨면 본 계정 복구 완료
+6. 챕터 촬영 전부 끝난 뒤: **`3_샌드박스삭제.command` 더블클릭** + BotFather에서 임시 봇 `/deletebot`
+
+> **CLIP 02·03 데모는 본 계정에서 촬영** (2번 스크립트 실행한 상태 그대로) — 이미 세팅된 5-agent 파이프라인을 쓰면 됨. 막히면 `openclaw-demo/README.txt` 참고.
 
 > **촬영 전략:** 화면으로 보여줄 건 BotFather 토큰 생성 → onboard 마법사 진행 → DM 페어링 3가지뿐. 세팅 완료 후 바로 시연으로 넘어감.
 
