@@ -11,103 +11,7 @@ status: ✅ 대본완성
 ## 🎬 CLIP 02 촬영 가이드
 **슬라이드 순서:** s8 → s21 → s13 → s23 → s39 → s14 → s15 → s37 → s29 → s31
 
-> **촬영 환경:** 이 클립은 **본 계정**(이미 세팅된 5-agent 환경)에서 촬영. CLIP 01 촬영에 demo 계정을 썼다면, 본 계정 복귀 후 `openclaw gateway start` → `openclaw status`로 **Agents: 5 · gateway running** 확인하고 시작. 텔레그램 그룹에 5개 봇 전부 들어있는지, 페어링 살아있는지 (Echo DM "안녕" 테스트) 먼저 확인.
-
-#### s8, s21, s13 — 슬라이드만
-
----
-
-#### s23 — 크론 message 프롬프트 `[데모 — 터미널]`
-
-복붙용:
-```bash
-# 매주 월요일 오전 9시
-openclaw cron add \
-  --cron "0 9 * * 1" \
-  --message "그룹 ID는 -XXXXXXXXXX야. 단톡방에서 Aria 불러서 파이프라인 시작해줘. CSV는 ~/Projects/openclaw-pipeline-kit/runs/latest/input/ 에 있어. 완료 후 생성된 파일 목록을 알려줘." \
-  --agent main
-
-# 매일 오전 8시
-openclaw cron add \
-  --every 1d \
-  --message "~/Projects/openclaw-pipeline-kit/runs/latest/input/ 최신 파일 분석해서 지표 3개와 전일 대비 변화 요약해줘." \
-  --agent main
-```
-
-등록 확인:
-```bash
-openclaw cron list
-```
-
----
-
-#### s14 — /run-pipeline 실행 `[데모 — 텔레그램 + 터미널]`
-
-**열 것:** 텔레그램 Echo 봇 DM + 터미널
-
-텔레그램 복붙:
-```
-그룹 ID는 -XXXXXXXXXX야.
-단톡방에서 Aria 불러서 파이프라인 시작해줘.
-CSV는 ~/Projects/openclaw-pipeline-kit/runs/latest/input/ 에 있어.
-완료되면 생성된 파일 목록 알려줘.
-```
-
-로그 확인:
-```bash
-openclaw logs --follow
-```
-
----
-
-#### s15 — 결과 수신 `[텔레그램 화면 보여주기]`
-
-파이프라인 완료 후 텔레그램으로 자동 수신되는 메시지 보여주기.
-미리 돌려둔 결과 화면 캡처 또는 녹화본 사용 권장.
-
----
-
-#### s37 — AGENTS.md 5종 역할 세팅 `[슬라이드만]`
-
-슬라이드만 보여주며 한 줄 언급.
-> "각 에이전트의 AGENTS.md에 이런 식으로 역할이 정의돼 있어요. 이걸 직접 수정하면 에이전트 성격이랑 작업 방식을 커스텀할 수 있어요."
-
----
-
-#### s29 — 파이프라인 전체 실행 라이브 데모 `[주요 데모]`
-
-**열 것:** 터미널 + 텔레그램 + 브라우저(activity-monitor)
-
-**Step 1.** CSV 확인
-```bash
-ls ~/Projects/openclaw-pipeline-kit/runs/latest/input/
-```
-
-**Step 2.** 텔레그램 Echo 봇에 전송 (복붙):
-```
-그룹 ID는 -XXXXXXXXXX야.
-단톡방에서 Aria 불러서 파이프라인 시작해줘.
-CSV는 ~/Projects/openclaw-pipeline-kit/runs/latest/input/ 에 있어.
-완료되면 생성된 파일 목록 알려줘.
-```
-
-**Step 3.** activity-monitor 열기 — 10초마다 자동 갱신, 스테이지 ✓ 확인
-```bash
-cd ~/Projects/openclaw-pipeline-kit && python3 -m http.server 9001
-# 브라우저: localhost:9001/activity-monitor.html
-```
-
-**Step 4.** 완료 후 결과 확인
-```bash
-ls ~/Projects/openclaw-pipeline-kit/runs/latest/outputs/
-open ~/Projects/openclaw-pipeline-kit/runs/latest/outputs/06_dashboard.html
-```
-
----
-
-#### s31 — 디자인 토큰 `[슬라이드만]`
-
-대시보드 열어본 직후 슬라이드로 마무리. 프롬프트 복붙 시연은 선택.
+> **촬영 환경:** 이 클립은 **본 계정**(이미 세팅된 5-agent 환경)에서 촬영. CLIP 01 촬영 뒤 `2_촬영종료.command`를 실행했다면 이미 복구된 상태 — `openclaw status`로 **Agents: 5 · gateway running** 확인하고 시작. 텔레그램 그룹에 5개 봇 전부 들어있는지, 페어링 살아있는지 (Echo DM "안녕" 테스트) 먼저 확인.
 
 ---
 
@@ -136,6 +40,8 @@ open ~/Projects/openclaw-pipeline-kit/runs/latest/outputs/06_dashboard.html
 ---
 
 ## s8 — 에이전트 5종 구조 (12분)
+
+> **🎬 촬영** — 슬라이드만
 
 **[화면: s8 슬라이드]**
 
@@ -258,6 +164,8 @@ Echo가 파이프라인을 시작할 때 이 파일을 먼저 읽어요. "Aria�
 
 ## s21 — 크론 메시지가 대시보드를 만드는 방법 (5분)
 
+> **🎬 촬영** — 슬라이드만
+
 **[화면: s21 슬라이드]**
 
 자, 에이전트 구조를 봤으니까 이제 **언제, 어떻게 실행되는지** 흐름을 봅시다.
@@ -295,6 +203,8 @@ Echo가 메시지를 받아서 파이프라인 실행
 ---
 
 ## s13 — 크론 스케줄 종류 (5분)
+
+> **🎬 촬영** — 슬라이드만
 
 **[화면: s13 슬라이드]**
 
@@ -357,6 +267,30 @@ cron 표현식이라는 걸 씁니다. 처음 보면 좀 낯설 수 있는데, �
 ---
 
 ## s23 — 크론 message — 바로 쓸 수 있는 프롬프트 (5분)
+
+> **🎬 촬영** `[데모 — 터미널]`
+
+복붙용:
+```bash
+# 매주 월요일 오전 9시
+openclaw cron add \
+  --cron "0 9 * * 1" \
+  --message "그룹 ID는 -XXXXXXXXXX야. 단톡방에서 Aria 불러서 파이프라인 시작해줘. CSV는 ~/Projects/openclaw-pipeline-kit/runs/latest/input/ 에 있어. 완료 후 생성된 파일 목록을 알려줘." \
+  --agent main
+
+# 매일 오전 8시
+openclaw cron add \
+  --every 1d \
+  --message "~/Projects/openclaw-pipeline-kit/runs/latest/input/ 최신 파일 분석해서 지표 3개와 전일 대비 변화 요약해줘." \
+  --agent main
+```
+
+등록 확인:
+```bash
+openclaw cron list
+```
+
+---
 
 **[화면: 터미널]**
 
@@ -547,6 +481,25 @@ s39 슬라이드의 지피터스 사례(유튜브 600개 요약)는 클립 후�
 
 ## s14 — /run-pipeline 자동 실행 연동 (6분)
 
+> **🎬 촬영** `[데모 — 텔레그램 + 터미널]`
+
+**열 것:** 텔레그램 Echo 봇 DM + 터미널
+
+텔레그램 복붙:
+```
+그룹 ID는 -XXXXXXXXXX야.
+단톡방에서 Aria 불러서 파이프라인 시작해줘.
+CSV는 ~/Projects/openclaw-pipeline-kit/runs/latest/input/ 에 있어.
+완료되면 생성된 파일 목록 알려줘.
+```
+
+로그 확인:
+```bash
+openclaw logs --follow
+```
+
+---
+
 **[화면: 텔레그램 + 터미널]**
 
 자, 크론 설정이 됐으니까 이제 실제로 파이프라인이 어떻게 실행되는지 보겠습니다.
@@ -658,6 +611,13 @@ Evan이 대시보드 HTML이랑 임원 보고서를 만들면, Echo가 결과 �
 
 ## s15 — 텔레그램 결과 전송 & delivery (6분)
 
+> **🎬 촬영** `[텔레그램 화면 보여주기]`
+
+파이프라인 완료 후 텔레그램으로 자동 수신되는 메시지 보여주기.
+미리 돌려둔 결과 화면 캡처 또는 녹화본 사용 권장.
+
+---
+
 **[화면: 텔레그램]**
 
 파이프라인이 완료됐습니다. 텔레그램으로 결과가 왔는지 확인해볼게요.
@@ -709,6 +669,13 @@ outputs/ 폴더에서 확인하실 수 있습니다.
 
 ## s37 — AGENTS.md 5종 역할 세팅 (2분)
 
+> **🎬 촬영** `[슬라이드만]`
+
+슬라이드만 보여주며 한 줄 언급.
+> "각 에이전트의 AGENTS.md에 이런 식으로 역할이 정의돼 있어요. 이걸 직접 수정하면 에이전트 성격이랑 작업 방식을 커스텀할 수 있어요."
+
+---
+
 **[화면: s37 슬라이드]**
 
 각 에이전트의 AGENTS.md에 이런 식으로 역할이 정의돼 있어요. 이걸 직접 수정하면 에이전트 성격이랑 작업 방식을 커스텀할 수 있어요.
@@ -720,6 +687,37 @@ outputs/ 폴더에서 확인하실 수 있습니다.
 ---
 
 ## s29 — 실전 실행 — CSV 넣고 텔레그램으로 시작하기 (20분)
+
+> **🎬 촬영** `[주요 데모]`
+
+**열 것:** 터미널 + 텔레그램 + 브라우저(activity-monitor)
+
+**Step 1.** CSV 확인
+```bash
+ls ~/Projects/openclaw-pipeline-kit/runs/latest/input/
+```
+
+**Step 2.** 텔레그램 Echo 봇에 전송 (복붙):
+```
+그룹 ID는 -XXXXXXXXXX야.
+단톡방에서 Aria 불러서 파이프라인 시작해줘.
+CSV는 ~/Projects/openclaw-pipeline-kit/runs/latest/input/ 에 있어.
+완료되면 생성된 파일 목록 알려줘.
+```
+
+**Step 3.** activity-monitor 열기 — 10초마다 자동 갱신, 스테이지 ✓ 확인
+```bash
+cd ~/Projects/openclaw-pipeline-kit && python3 -m http.server 9001
+# 브라우저: localhost:9001/activity-monitor.html
+```
+
+**Step 4.** 완료 후 결과 확인
+```bash
+ls ~/Projects/openclaw-pipeline-kit/runs/latest/outputs/
+open ~/Projects/openclaw-pipeline-kit/runs/latest/outputs/06_dashboard.html
+```
+
+---
 
 **[화면: 터미널 → 텔레그램 → 브라우저]**
 
@@ -1009,6 +1007,12 @@ CSV 하나 넣고 메시지 한 줄 보내면 이 7개가 자동으로 만들어
 ---
 
 ## s31 — 디자인 토큰으로 대시보드 퀄리티 올리기
+
+> **🎬 촬영** `[슬라이드만]`
+
+대시보드 열어본 직후 슬라이드로 마무리. 프롬프트 복붙 시연은 선택.
+
+---
 
 **[화면: 슬라이드]**
 

@@ -11,51 +11,14 @@ status: ✅ 대본완성
 ## 🎬 CLIP 03 촬영 가이드
 
 > **촬영 환경:** 본 계정에서 촬영. Agent Manager 빌드 데모를 처음 상태부터 보여주려면 `manager/` 안의 생성된 앱 파일(src/, package.json 등)만 지우고 PROMPT.md·README.md·src-tauri/만 남긴 뒤 시작 — OpenClaw 설정과는 무관해서 안전함.
+
 **슬라이드 순서:** s17 → s18 → s19 → s20 → s40
-
-#### s17 — 섹션 브레이크 슬라이드만
-
----
-
-#### s18 — Agent Manager 빌드 데모 `[화면 녹화 — 터미널 → 앱]`
-
-**열 것:** 터미널 + Agent Manager 앱
-
-**Step 1.** manager/ 폴더 이동 + Claude Code 실행
-```bash
-cd ~/Projects/openclaw-pipeline-kit/manager
-claude
-```
-
-**Step 2.** PROMPT.md 내용 전체 붙여넣기
-```
-# PROMPT.md 파일을 열고 내용 전체 복사 → Claude Code에 붙여넣기
-```
-
-**Step 3.** Claude Code가 앱 생성 완료 후 실행
-```bash
-npm install && npm run tauri dev
-```
-
-앱이 열리면 Dashboard → Gallery → CronJobs 순서로 보여주기.
-
----
-
-#### s19 — Gallery 뷰 데모 `[앱 화면]`
-
-Gallery 탭 클릭 → runs/ 폴더 결과 파일 카드 그리드 표시.
-카드 클릭 → 파일 내용 모달 미리보기.
-
----
-
-#### s20 — CronJobs 뷰 데모 + 마무리 `[앱 화면]`
-
-CronJobs 탭 클릭 → `openclaw cron list` 파싱 결과 표시.
-ok(초록) / error(빨강) / paused(회색) 상태 보여주기.
 
 ---
 
 ## s17 — Agent Manager 빌드
+
+> **🎬 촬영** — 슬라이드만
 
 지금까지 클립 01에서 OpenClaw와 에이전트 구조를 살펴봤고, 클립 02에서는 파이프라인과 크론 자동화를 직접 실행해봤습니다.
 
@@ -80,6 +43,30 @@ Echo가 뭐 하고 있는지, Min이 오류 났는지, 크론 잡이 제대로 �
 ---
 
 ## s18 — Dashboard 뷰
+
+> **🎬 촬영** `[화면 녹화 — 터미널 → 앱]`
+
+**열 것:** 터미널 + Agent Manager 앱
+
+**Step 1.** manager/ 폴더 이동 + Claude Code 실행
+```bash
+cd ~/Projects/openclaw-pipeline-kit/manager
+claude
+```
+
+**Step 2.** PROMPT.md 내용 전체 붙여넣기
+```
+# PROMPT.md 파일을 열고 내용 전체 복사 → Claude Code에 붙여넣기
+```
+
+**Step 3.** Claude Code가 앱 생성 완료 후 실행
+```bash
+npm install && npm run tauri dev
+```
+
+앱이 열리면 Dashboard → Gallery → CronJobs 순서로 보여주기.
+
+---
 
 **[화면: 터미널 → 앱]**
 
@@ -279,6 +266,13 @@ npm install && npm run tauri dev
 
 ## s19 — Gallery 뷰
 
+> **🎬 촬영** `[앱 화면]`
+
+Gallery 탭 클릭 → runs/ 폴더 결과 파일 카드 그리드 표시.
+카드 클릭 → 파일 내용 모달 미리보기.
+
+---
+
 **[화면: 앱]**
 
 사이드바에서 Gallery를 클릭합니다.
@@ -312,6 +306,13 @@ Gallery 뷰에서 수강생 여러분이 직접 해볼 수 있는 것이 있어�
 ---
 
 ## s20 — CronJobs 뷰
+
+> **🎬 촬영** `[앱 화면]`
+
+CronJobs 탭 클릭 → `openclaw cron list` 파싱 결과 표시.
+ok(초록) / error(빨강) / paused(회색) 상태 보여주기.
+
+---
 
 **[화면: 앱]**
 
