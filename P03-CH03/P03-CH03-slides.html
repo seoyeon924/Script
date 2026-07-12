@@ -48,7 +48,7 @@
     border-bottom: 1px solid var(--border); flex-shrink: 0;
   }
   .tb-cap { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
-  .tb-num { font-size: 13px; color: var(--dim); letter-spacing: 0.08em; }
+  .tb-num { display: none; }
 
   .body { flex: 1; display: flex; min-height: 0; }
 
@@ -120,15 +120,11 @@
       </div>
       <div style="width:200px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
         <div style="font-size:15px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 02</div>
-        <div style="font-size:17px;color:var(--text);line-height:1.55;">에이전트 설정<br>& agentDir</div>
+        <div style="font-size:17px;color:var(--text);line-height:1.55;">파이프라인 실행<br>& 크론 자동화</div>
       </div>
       <div style="width:200px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
         <div style="font-size:15px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 03</div>
-        <div style="font-size:17px;color:var(--text);line-height:1.55;">크론 자동화<br>파이프라인 연동</div>
-      </div>
-      <div style="width:200px;height:200px;border:1px solid rgba(0,0,0,0.1);padding:24px;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,0.38);">
-        <div style="font-size:15px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,0,0,0.35);">Clip 04</div>
-        <div style="font-size:17px;color:var(--text);line-height:1.55;">Manager<br>Dashboard</div>
+        <div style="font-size:17px;color:var(--text);line-height:1.55;">Agent Manager<br>빌드</div>
       </div>
     </div>
   </div>
@@ -287,8 +283,8 @@
       </div>
       <!-- API 키 -->
       <div style="padding:14px 20px;border:1px solid rgba(232,200,122,0.4);border-radius:8px;background:rgba(232,200,122,0.04);">
-        <div style="font-size:13px;color:#c8a048;font-weight:600;margin-bottom:4px;">Claude API 키 필요</div>
-        <div style="font-size:14px;color:#555;line-height:1.7;">Claude.ai 구독과 별개 — Anthropic 콘솔에서 발급</div>
+        <div style="font-size:13px;color:#c8a048;font-weight:600;margin-bottom:4px;">Anthropic 인증 필요</div>
+        <div style="font-size:14px;color:#555;line-height:1.7;"><span style="font-family:monospace;font-size:12px;">claude setup-token</span>으로 발급 — Claude 구독 크레딧 사용</div>
       </div>
     </div>
   </div>
@@ -301,24 +297,32 @@
   <div class="body" style="gap:0;">
     <!-- Left: 터미널 -->
     <div style="width:48%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
-      <div style="padding:12px 24px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">터미널에서 실행 — API 키 & 봇 토큰은 여기서만</div>
+      <div style="padding:12px 24px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">터미널에서 실행 — 봇 토큰은 여기서만</div>
       <div style="flex:1;background:#111;padding:18px 22px;font-family:monospace;font-size:15px;line-height:1.9;color:#ccc;overflow:hidden;">
         <div style="color:#666;margin-bottom:6px;">$ openclaw onboard</div>
 
-        <div style="color:#666;margin-top:8px;">── Step 0. Mode ──────────────</div>
+        <div style="color:#666;margin-top:6px;">── Step 0. Security ──────────</div>
+        <div style="color:#aaa;">❯ <span style="color:var(--green);">Yes</span> <span style="color:#555;">← 경고 읽고 동의</span></div>
+
+        <div style="color:#666;margin-top:6px;">── Step 1. Setup mode ────────</div>
         <div style="color:#aaa;">❯ <span style="color:var(--green);">QuickStart</span> <span style="color:#555;">← 선택</span></div>
 
-        <div style="color:#666;margin-top:8px;">── Step 1. Auth ──────────────</div>
-        <div style="color:#aaa;">❯ <span style="color:var(--green);">Anthropic API key</span> <span style="color:#555;">← 선택</span></div>
-        <div style="color:#aaa;">&nbsp; API key: <span style="color:var(--sam);">sk-ant-api03-...</span> <span style="color:#555;">← 붙여넣기</span></div>
+        <div style="color:#666;margin-top:6px;">── Step 2. Model/auth ────────</div>
+        <div style="color:#aaa;">❯ <span style="color:var(--green);">Anthropic</span> <span style="color:#555;">← 선택</span></div>
+        <div style="color:#aaa;">&nbsp; Auth: <span style="color:var(--green);">setup-token</span></div>
+        <div style="color:#aaa;">&nbsp; <span style="color:#888;">$ claude setup-token</span> <span style="color:#555;">← 새 터미널</span></div>
+        <div style="color:#aaa;">&nbsp; Paste: <span style="color:var(--sam);">sk-ant-oat01-…</span> <span style="color:#555;">← 붙여넣기</span></div>
 
-        <div style="color:#666;margin-top:8px;">── Step 2, 3. Workspace / Gateway ─</div>
+        <div style="color:#666;margin-top:6px;">── Step 3. Default model ─────</div>
         <div style="color:#aaa;">&nbsp; <span style="color:var(--green);">Enter</span> <span style="color:#555;">← 기본값 그대로</span></div>
 
-        <div style="color:#666;margin-top:8px;">── Step 4. Channels ──────────</div>
-        <div style="color:#aaa;">❯ <span style="color:var(--green);">[✓] Telegram</span></div>
-        <div style="color:#aaa;">&nbsp; Bot token: <span style="color:var(--sam);">Echo 토큰</span> <span style="color:#555;">← 붙여넣기</span></div>
+        <div style="color:#666;margin-top:6px;">── Step 4. Channels ──────────</div>
+        <div style="color:#aaa;">❯ <span style="color:var(--green);">Telegram (Bot API)</span></div>
+        <div style="color:#aaa;">&nbsp; Bot token: <span style="color:var(--sam);">Echo 봇 토큰</span> <span style="color:#555;">← 붙여넣기</span></div>
         <div style="color:#aaa;">&nbsp; DM policy: <span style="color:var(--green);">pairing</span> → Enter</div>
+
+        <div style="color:#666;margin-top:6px;">── Step 5, 6. Web search / Daemon ─</div>
+        <div style="color:#aaa;">&nbsp; <span style="color:var(--green);">Skip</span> → <span style="color:var(--green);">Node</span> <span style="color:#555;">← 순서대로</span></div>
 
       </div>
     </div>
@@ -326,30 +330,30 @@
     <div style="flex:1;padding:20px 26px;display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
       <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--hint);margin-bottom:2px;">단계 요약</div>
 
-      <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;">
-        <div style="font-size:13px;color:var(--green);font-weight:700;margin-bottom:3px;">STEP 0 — Mode</div>
-        <div style="font-size:16px;color:#333;"><code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">QuickStart</code> 선택</div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 18px;width:100%;box-sizing:border-box;">
+        <div style="font-size:13px;color:var(--green);font-weight:700;margin-bottom:3px;">STEP 0, 1 — Security · Mode</div>
+        <div style="font-size:15px;color:#333;">보안 경고 동의 → <code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">QuickStart</code> 선택</div>
       </div>
 
-      <div style="border:1px solid var(--border);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.1);">
-        <div style="font-size:13px;color:var(--green);font-weight:700;margin-bottom:3px;">STEP 1 — Auth</div>
-        <div style="font-size:16px;color:#333;"><code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">Anthropic API key</code> → 키 붙여넣기</div>
-        <div style="font-size:12px;color:#888;margin-top:6px;">platform.anthropic.com 발급 · Claude.ai 구독과 별개 · API 크레딧 필요</div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:12px 18px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.1);">
+        <div style="font-size:13px;color:var(--green);font-weight:700;margin-bottom:3px;">STEP 2 — Model/auth ← 중요</div>
+        <div style="font-size:15px;color:#333;line-height:1.6;"><code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">Anthropic</code> → <code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;font-size:12px;">setup-token</code> 선택<br>새 터미널에서 <code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:12px;">claude setup-token</code> 실행 → 결과 붙여넣기</div>
+        <div style="font-size:12px;color:#888;margin-top:5px;">Claude 구독 크레딧 사용 · 사용 크레딧 미리 활성화 필요</div>
       </div>
 
-      <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;">
-        <div style="font-size:13px;color:var(--hint);font-weight:700;margin-bottom:3px;">STEP 2, 3 — Workspace / Gateway</div>
-        <div style="font-size:16px;color:#333;">전부 Enter — 기본값 그대로</div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 18px;width:100%;box-sizing:border-box;">
+        <div style="font-size:13px;color:var(--hint);font-weight:700;margin-bottom:3px;">STEP 3, 5, 6 — 나머지 항목</div>
+        <div style="font-size:15px;color:#333;">Default model <code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:12px;">Enter</code> · Web search <code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:12px;">Skip</code> · Daemon <code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:12px;">Node</code></div>
       </div>
 
-      <div style="border:2px solid rgba(232,96,60,0.35);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(232,96,60,0.03);">
+      <div style="border:2px solid rgba(232,96,60,0.35);border-radius:8px;padding:12px 18px;width:100%;box-sizing:border-box;background:rgba(232,96,60,0.03);">
         <div style="font-size:13px;color:var(--p01);font-weight:700;margin-bottom:3px;">STEP 4 — Channels ← 중요</div>
-        <div style="font-size:16px;color:#333;line-height:1.6;">Telegram 체크 → <strong>Echo 봇 토큰</strong> 붙여넣기<br><code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:12px;">pairing</code> 그대로 Enter</div>
+        <div style="font-size:15px;color:#333;line-height:1.6;">Telegram 선택 → <strong>Echo 봇 토큰</strong> 붙여넣기<br><code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:12px;">pairing</code> 그대로 Enter</div>
       </div>
 
-      <div style="border:1px solid rgba(232,96,60,0.25);border-radius:8px;padding:13px 18px;width:100%;box-sizing:border-box;background:rgba(232,96,60,0.02);">
+      <div style="border:1px solid rgba(232,96,60,0.25);border-radius:8px;padding:12px 18px;width:100%;box-sizing:border-box;background:rgba(232,96,60,0.02);">
         <div style="font-size:13px;color:var(--p01);font-weight:700;margin-bottom:3px;">보안 — 절대 금지</div>
-        <div style="font-size:15px;color:#333;line-height:1.65;">API 키·봇 토큰을 AI 채팅창에 붙여넣기 금지<br><span style="color:#888;font-size:13px;">Anthropic 서버로 전송됨 · 터미널 마법사에서만 입력</span></div>
+        <div style="font-size:14px;color:#333;line-height:1.6;">봇 토큰·setup-token을 AI 채팅창에 붙여넣기 금지<br><span style="color:#888;font-size:12px;">터미널 마법사에서만 입력</span></div>
       </div>
     </div>
   </div>
@@ -363,7 +367,7 @@
     <div style="width:48%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
       <div style="padding:12px 24px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);">마지막 단계 & 완료 확인</div>
       <div style="flex:1;background:#111;padding:22px 26px;font-family:monospace;font-size:15px;line-height:2;color:#ccc;overflow:hidden;">
-        <div style="color:#666;">── Step 5. Daemon ────────────</div>
+        <div style="color:#666;">── Step 6. Daemon ────────────</div>
         <div style="color:#aaa;">❯ <span style="color:var(--green);">Node</span> <span style="color:#555;">(권장)</span></div>
         <br>
         <div style="color:var(--aria);">✓ OpenClaw 설정 완료</div>
@@ -384,8 +388,8 @@
         <div style="font-family:monospace;font-size:13px;color:#555;line-height:2.1;">openclaw.json &nbsp; ← 전체 설정<br>agents/main/ &nbsp;&nbsp; ← Echo 메모리<br>workspace/ &nbsp;&nbsp;&nbsp;&nbsp; ← AGENTS.md</div>
       </div>
       <div style="border:2px solid rgba(106,172,152,0.4);border-radius:8px;padding:15px 18px;width:100%;box-sizing:border-box;background:rgba(106,172,152,0.03);">
-        <div style="font-size:13px;color:var(--green);font-weight:700;margin-bottom:6px;">텔레그램 봇은 Echo 하나만</div>
-        <div style="font-size:16px;color:#333;line-height:1.7;">서브 에이전트(Aria·Sam·Min·Evan)는<br>별도 봇 없이 Echo가 내부 호출</div>
+        <div style="font-size:13px;color:var(--green);font-weight:700;margin-bottom:6px;">나머지 4개 에이전트 토큰 등록</div>
+        <div style="font-size:16px;color:#333;line-height:1.7;">새 터미널에서 <span style="font-family:monospace;font-size:13px;">node add-tokens.js</span> 실행<br><span style="font-size:13px;color:var(--sub);">토큰은 채팅창 입력 금지 — 터미널에서만</span></div>
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:15px 18px;width:100%;box-sizing:border-box;">
         <div style="font-size:13px;color:var(--hint);font-weight:700;margin-bottom:6px;">다음 단계</div>
@@ -398,27 +402,108 @@
 
 <!-- ════ s35 | OpenClaw 대시보드 — 참고용 ════ -->
 <div class="slide" id="s35">
-  <div class="tb"><span class="tb-cap">OpenClaw 대시보드 — 참고</span><span class="tb-num">5-3</span></div>
+  <div class="tb"><span class="tb-cap">OpenClaw Control → Quick Settings</span><span class="tb-num">5-3</span></div>
   <div class="body" style="gap:0;">
     <div style="flex:1;display:flex;flex-direction:column;gap:0;">
       <!-- 상단: 설명 -->
-      <div style="padding:18px 32px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;">
-        <div style="background:rgba(106,172,152,0.08);border:1px solid rgba(106,172,152,0.25);border-radius:6px;padding:8px 14px;font-size:13px;color:#444;line-height:1.6;">
-          세팅은 터미널 하나로 끝났어요. 대시보드 앱은 <strong>나중에 설정을 확인하거나 조정할 때</strong> 쓰는 화면이에요. 지금 당장 안 열어도 돼요.
-        </div>
+      <div style="padding:10px 32px 10px;border-bottom:1px solid var(--border);">
+        <div style="font-size:13px;color:#888;">브라우저에서 <span style="font-family:monospace;color:var(--green);">localhost:18789</span> 접속 — 모델·채널·게이트웨이 설정을 GUI로 확인 · 변경 가능</div>
       </div>
       <!-- 중앙: 스크린샷 -->
-      <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:20px 48px;">
-        <div style="width:100%;max-width:680px;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
-          <img src="../openclaw-pipeline-kit/assets/openclaw-settings.png" style="width:100%;display:block;" alt="OpenClaw 대시보드 Quick Settings">
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:12px 48px;min-height:0;">
+        <div style="max-width:1020px;max-height:100%;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
+          <img src="../../openclaw-pipeline-kit/assets/openclaw-settings.png" style="width:100%;max-height:560px;object-fit:contain;display:block;" alt="OpenClaw 대시보드 Quick Settings">
         </div>
       </div>
-      <!-- 하단: 라벨 -->
-      <div style="padding:12px 32px 16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:20px;">
-        <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--hint);">OpenClaw Control → Quick Settings</div>
-        <div style="font-size:13px;color:#888;">모델·채널·게이트웨이 설정을 GUI로 확인 · 변경 가능</div>
+      <!-- 하단: 설명 캡션 -->
+      <div style="display:flex;gap:10px;padding:0 48px 16px;">
+        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:10px 14px;background:#fff;">
+          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px;">Model</div>
+          <div style="font-size:12px;color:#888;line-height:1.5;">에이전트가 쓰는 모델을 드롭다운으로 변경</div>
+        </div>
+        <div style="flex:1;border:1px solid var(--border);border-radius:6px;padding:10px 14px;background:#fff;">
+          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px;">Channels</div>
+          <div style="font-size:12px;color:#888;line-height:1.5;">텔레그램 등 채널 연결 상태 확인 · 토글</div>
+        </div>
+        <div style="flex:1;border:1px solid rgba(106,172,152,0.4);border-radius:6px;padding:10px 14px;background:rgba(106,172,152,0.05);">
+          <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:2px;">참고용</div>
+          <div style="font-size:12px;color:#888;line-height:1.5;">파이프라인 실행에는 필요 없음 — 터미널 설정 확인용</div>
+        </div>
       </div>
     </div>
+  </div>
+</div>
+
+
+<!-- ════ s36 | OpenClaw + Telegram 실제 활용 가치 ════ -->
+<div class="slide" id="s36">
+  <div class="tb"><span class="tb-cap">Claude Code 단독 vs OpenClaw + Telegram</span><span class="tb-num">5-4</span></div>
+  <div class="body" style="gap:0;">
+
+    <!-- Left: Claude Code 한계 -->
+    <div style="width:42%;border-right:1px solid var(--border);padding:28px 32px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);margin-bottom:4px;">Claude Code 단독</div>
+
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:#fafafa;border:1px solid var(--border);border-radius:6px;">
+        <span style="color:#ccc;font-size:15px;flex-shrink:0;margin-top:1px;">✕</span>
+        <div style="font-size:14px;color:#555;line-height:1.6;">터미널 앞에 있어야만 실행 가능</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:#fafafa;border:1px solid var(--border);border-radius:6px;">
+        <span style="color:#ccc;font-size:15px;flex-shrink:0;margin-top:1px;">✕</span>
+        <div style="font-size:14px;color:#555;line-height:1.6;">세션 닫으면 컨텍스트 리셋</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:#fafafa;border:1px solid var(--border);border-radius:6px;">
+        <span style="color:#ccc;font-size:15px;flex-shrink:0;margin-top:1px;">✕</span>
+        <div style="font-size:14px;color:#555;line-height:1.6;">결과 나올 때까지 대기해야</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:#fafafa;border:1px solid var(--border);border-radius:6px;">
+        <span style="color:#ccc;font-size:15px;flex-shrink:0;margin-top:1px;">✕</span>
+        <div style="font-size:14px;color:#555;line-height:1.6;">자동 실행·알림 없음</div>
+      </div>
+    </div>
+
+    <!-- Right: OpenClaw 장점 -->
+    <div style="flex:1;padding:28px 32px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:4px;">OpenClaw + Telegram</div>
+
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:rgba(106,172,152,0.05);border:1px solid rgba(106,172,152,0.25);border-radius:6px;">
+        <span style="color:var(--green);font-size:14px;flex-shrink:0;margin-top:1px;">✓</span>
+        <div>
+          <div style="font-size:14px;color:var(--text);font-weight:600;">어디서든 원격 지시</div>
+          <div style="font-size:12px;color:#888;margin-top:2px;">출퇴근 중 텔레그램으로 작업 지시 → PC 없어도 됨</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:rgba(106,172,152,0.05);border:1px solid rgba(106,172,152,0.25);border-radius:6px;">
+        <span style="color:var(--green);font-size:14px;flex-shrink:0;margin-top:1px;">✓</span>
+        <div>
+          <div style="font-size:14px;color:var(--text);font-weight:600;">대화 기록이 영구 축적</div>
+          <div style="font-size:12px;color:#888;margin-top:2px;">채팅방에 모든 맥락이 남음 → 나를 누구보다 잘 아는 에이전트</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:rgba(106,172,152,0.05);border:1px solid rgba(106,172,152,0.25);border-radius:6px;">
+        <span style="color:var(--green);font-size:14px;flex-shrink:0;margin-top:1px;">✓</span>
+        <div>
+          <div style="font-size:14px;color:var(--text);font-weight:600;">24시간 상시 실행 + 크론 자동화</div>
+          <div style="font-size:12px;color:#888;margin-top:2px;">세션 닫아도 게이트웨이가 계속 돌아감</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:rgba(106,172,152,0.05);border:1px solid rgba(106,172,152,0.25);border-radius:6px;">
+        <span style="color:var(--green);font-size:14px;flex-shrink:0;margin-top:1px;">✓</span>
+        <div>
+          <div style="font-size:14px;color:var(--text);font-weight:600;">역할별 에이전트 팀 구성</div>
+          <div style="font-size:12px;color:#888;margin-top:2px;">오케스트레이터·BI 엔지니어·애널리스트·대시보드 엔지니어 — 각자 성격·역할 커스텀</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:rgba(232,96,60,0.04);border:1px solid rgba(232,96,60,0.2);border-radius:6px;margin-top:2px;">
+        <span style="color:var(--p01);font-size:12px;flex-shrink:0;margin-top:2px;font-weight:700;">참고</span>
+        <div style="font-size:12px;color:#888;line-height:1.6;">단톡방 5-agent 협업은 이런 활용의 예시.<br>실제 비용 효율은 단일 에이전트 + 크론이 더 높음.</div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -541,7 +626,7 @@
       <div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--border);">
         <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--hint);margin-bottom:8px;">준비물</div>
         <div style="font-size:13px;color:#666;line-height:2;">
-          Anthropic API 키 &nbsp;<span style="color:#bbb;font-size:12px;">platform.anthropic.com · 크레딧 별도</span><br>
+          Claude.ai 구독 &nbsp;<span style="color:#bbb;font-size:12px;">사용 크레딧 활성화 필요</span><br>
           텔레그램 계정
         </div>
       </div>
@@ -567,12 +652,12 @@
         </div>
       </div>
 
-      <!-- 경고: 왼쪽 선만 강조 -->
-      <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 18px;background:#fff;border:1px solid var(--border);border-left:3px solid var(--p01);border-radius:6px;">
+      <!-- 경고: 보안 강조 -->
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 18px;background:rgba(232,96,60,0.06);border:1px solid rgba(232,96,60,0.25);border-radius:6px;">
         <span style="font-size:12px;color:var(--p01);font-weight:700;flex-shrink:0;margin-top:2px;">!</span>
         <div>
-          <div style="font-size:14px;font-weight:600;color:var(--text);">openclaw onboard — 별도 터미널에서 직접</div>
-          <div style="font-size:12px;color:#bbb;margin-top:2px;">API 키·봇 토큰은 채팅창 입력 금지</div>
+          <div style="font-size:14px;font-weight:600;color:var(--p01);">openclaw onboard — 별도 터미널에서 직접</div>
+          <div style="font-size:12px;color:rgba(232,96,60,0.7);margin-top:2px;">봇 토큰은 채팅창 입력 금지 — 터미널에서만</div>
         </div>
       </div>
 
@@ -584,11 +669,11 @@
         </div>
       </div>
 
-      <div style="display:flex;align-items:center;gap:14px;padding:12px 18px;background:rgba(106,172,152,0.05);border:1px solid rgba(106,172,152,0.25);border-radius:6px;">
-        <span style="font-size:12px;color:var(--green);font-weight:700;flex-shrink:0;">→</span>
-        <div>
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 18px;background:rgba(106,172,152,0.05);border:1px solid rgba(106,172,152,0.25);border-radius:6px;">
+        <span style="font-size:12px;color:var(--green);font-weight:700;flex-shrink:0;margin-top:2px;">→</span>
+        <div style="min-width:0;">
           <div style="font-size:14px;font-weight:600;color:var(--text);">파이프라인 실행</div>
-          <div style="font-size:12px;color:#bbb;margin-top:2px;">텔레그램 Echo 봇에 한 줄 → 대시보드 자동 완성</div>
+          <div style="font-family:monospace;font-size:11px;color:var(--green);margin-top:5px;background:rgba(0,0,0,0.04);padding:5px 10px;border-radius:4px;line-height:1.7;">runs/latest/input/ 에 CSV 있어. 파이프라인 실행해줘.</div>
         </div>
       </div>
 
@@ -656,93 +741,88 @@
 <!-- ════ s8 | 에이전트 5종 구조 ════ -->
 <div class="slide" id="s8">
   <div class="tb"><span class="tb-cap">파이프라인 에이전트 — 5종 역할 분담</span><span class="tb-num">8</span></div>
-  <div class="body" style="flex-direction:column;justify-content:flex-start;">
-    <div style="display:flex;flex:1;">
+  <div class="body" style="flex-direction:column;justify-content:center;padding:28px 52px;gap:0;align-items:stretch;">
 
-    <!-- Echo -->
-    <div style="flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column;background:#fff;">
-      <div style="padding:20px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;">
-        <div style="width:8px;height:8px;border-radius:50%;background:var(--echo);flex-shrink:0;"></div>
-        <div style="font-size:20px;font-weight:700;color:var(--text);">Echo</div>
+    <!-- Echo — 오케스트레이터 (상단 전체) -->
+    <div style="border:2px solid rgba(129,140,248,0.4);border-radius:10px;background:rgba(129,140,248,0.04);padding:18px 28px;display:flex;align-items:center;gap:24px;margin-bottom:0;">
+      <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--echo);"></div>
+        <div style="font-size:22px;font-weight:700;color:var(--echo);">Echo</div>
       </div>
-      <div style="padding:18px 22px;flex:1;display:flex;flex-direction:column;gap:12px;">
-        <div style="font-size:13px;color:#555;line-height:1.7;padding-bottom:12px;border-bottom:1px solid var(--border);">총괄 오케스트레이터.<br>텔레그램 수신 및 파이프라인 지휘.</div>
-        <div style="display:flex;flex-direction:column;gap:7px;font-size:13px;color:#666;">
-          <div>텔레그램 메시지 수신</div>
-          <div>에이전트 순차 위임</div>
-          <div>완료 후 결과 전송</div>
-        </div>
-        <div style="margin-top:auto;font-family:monospace;font-size:11px;color:var(--hint);">~/.openclaw/workspace/</div>
+      <div style="width:1px;height:36px;background:rgba(129,140,248,0.2);flex-shrink:0;"></div>
+      <div style="font-size:13px;color:#555;line-height:1.7;flex:1;">총괄 오케스트레이터 — 텔레그램 수신·에이전트 순차 위임·완료 보고</div>
+      <div style="display:flex;gap:8px;flex-shrink:0;">
+        <div style="font-size:11px;padding:4px 10px;border-radius:4px;background:rgba(129,140,248,0.1);color:var(--echo);font-family:monospace;">원격 지시 수신</div>
+        <div style="font-size:11px;padding:4px 10px;border-radius:4px;background:rgba(129,140,248,0.1);color:var(--echo);font-family:monospace;">파이프라인 지휘</div>
+        <div style="font-size:11px;padding:4px 10px;border-radius:4px;background:rgba(129,140,248,0.1);color:var(--echo);font-family:monospace;">결과 전송</div>
       </div>
     </div>
 
-    <!-- Aria -->
-    <div style="flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column;background:#fff;">
-      <div style="padding:20px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;">
-        <div style="width:8px;height:8px;border-radius:50%;background:var(--aria);flex-shrink:0;"></div>
-        <div style="font-size:20px;font-weight:700;color:var(--text);">Aria</div>
-      </div>
-      <div style="padding:18px 22px;flex:1;display:flex;flex-direction:column;gap:12px;">
-        <div style="font-size:13px;color:#555;line-height:1.7;padding-bottom:12px;border-bottom:1px solid var(--border);">데이터 분석가.<br>STEP 1–2 담당.</div>
-        <div style="display:flex;flex-direction:column;gap:7px;font-size:13px;color:#666;">
-          <div>데이터셋 프로파일링</div>
-          <div>EDA 분석</div>
-          <div style="font-family:monospace;font-size:12px;color:#aaa;">01·02 파일 저장</div>
-        </div>
-        <div style="margin-top:auto;font-family:monospace;font-size:11px;color:var(--hint);">workspace-aria/</div>
-      </div>
+    <!-- 연결선 -->
+    <div style="display:flex;justify-content:center;align-items:center;height:20px;position:relative;">
+      <div style="width:1px;height:100%;background:var(--border);"></div>
+      <!-- 가로선 (전체 너비) -->
+      <div style="position:absolute;top:50%;left:12.5%;right:12.5%;height:1px;background:var(--border);"></div>
     </div>
 
-    <!-- Sam -->
-    <div style="flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column;background:#fff;">
-      <div style="padding:20px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;">
-        <div style="width:8px;height:8px;border-radius:50%;background:var(--sam);flex-shrink:0;"></div>
-        <div style="font-size:20px;font-weight:700;color:var(--text);">Sam</div>
-      </div>
-      <div style="padding:18px 22px;flex:1;display:flex;flex-direction:column;gap:12px;">
-        <div style="font-size:13px;color:#555;line-height:1.7;padding-bottom:12px;border-bottom:1px solid var(--border);">상품 분석가.<br>STEP 3–4 담당.</div>
-        <div style="display:flex;flex-direction:column;gap:7px;font-size:13px;color:#666;">
-          <div>비즈니스 문제 정의</div>
-          <div>KPI 설계</div>
-          <div style="font-family:monospace;font-size:12px;color:#aaa;">03·04 파일 저장</div>
-        </div>
-        <div style="margin-top:auto;font-family:monospace;font-size:11px;color:var(--hint);">workspace-sam/</div>
-      </div>
-    </div>
+    <!-- 4 Sub-agents (하단) -->
+    <div style="display:flex;gap:10px;align-items:stretch;">
 
-    <!-- Min -->
-    <div style="flex:1;border-right:1px solid var(--border);display:flex;flex-direction:column;background:#fff;">
-      <div style="padding:20px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;">
-        <div style="width:8px;height:8px;border-radius:50%;background:var(--min);flex-shrink:0;"></div>
-        <div style="font-size:20px;font-weight:700;color:var(--text);">Min</div>
-      </div>
-      <div style="padding:18px 22px;flex:1;display:flex;flex-direction:column;gap:12px;">
-        <div style="font-size:13px;color:#555;line-height:1.7;padding-bottom:12px;border-bottom:1px solid var(--border);">비즈니스 분석가.<br>STEP 5 담당.</div>
-        <div style="display:flex;flex-direction:column;gap:7px;font-size:13px;color:#666;">
-          <div>인사이트 도출</div>
-          <div>원인 분석</div>
-          <div style="font-family:monospace;font-size:12px;color:#aaa;">05 파일 저장</div>
+      <!-- Aria -->
+      <div style="flex:1;background:#fff;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;">
+        <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--aria);flex-shrink:0;"></div>
+          <div style="font-size:17px;font-weight:700;color:var(--text);">Aria</div>
+          <div style="margin-left:auto;font-size:10px;color:var(--aria);font-weight:600;letter-spacing:0.06em;">BI ENGINEER</div>
         </div>
-        <div style="margin-top:auto;font-family:monospace;font-size:11px;color:var(--hint);">workspace-min/</div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:12px;color:#555;line-height:1.6;padding-bottom:8px;border-bottom:1px solid var(--border);">데이터 수집·탐색·<br>품질 검증</div>
+          <div style="font-size:11px;color:#888;line-height:1.8;">데이터셋 프로파일링<br>EDA 분석</div>
+          <div style="font-family:monospace;font-size:10px;color:#ccc;margin-top:4px;">01·02 파일</div>
+        </div>
       </div>
-    </div>
 
-    <!-- Evan -->
-    <div style="flex:1;display:flex;flex-direction:column;background:#fff;">
-      <div style="padding:20px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;">
-        <div style="width:8px;height:8px;border-radius:50%;background:var(--evan);flex-shrink:0;"></div>
-        <div style="font-size:20px;font-weight:700;color:var(--text);">Evan</div>
-      </div>
-      <div style="padding:18px 22px;flex:1;display:flex;flex-direction:column;gap:12px;">
-        <div style="font-size:13px;color:#555;line-height:1.7;padding-bottom:12px;border-bottom:1px solid var(--border);">BI 팀장.<br>STEP 6–7 담당.</div>
-        <div style="display:flex;flex-direction:column;gap:7px;font-size:13px;color:#666;">
-          <div>대시보드 생성</div>
-          <div>임원 보고서 작성</div>
-          <div style="font-family:monospace;font-size:12px;color:#aaa;">06·07 파일 저장</div>
+      <!-- Sam -->
+      <div style="flex:1;background:#fff;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;">
+        <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--sam);flex-shrink:0;"></div>
+          <div style="font-size:17px;font-weight:700;color:var(--text);">Sam</div>
+          <div style="margin-left:auto;font-size:10px;color:var(--sam);font-weight:600;letter-spacing:0.06em;">PRODUCT ANALYST</div>
         </div>
-        <div style="margin-top:auto;font-family:monospace;font-size:11px;color:var(--hint);">workspace-evan/</div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:12px;color:#555;line-height:1.6;padding-bottom:8px;border-bottom:1px solid var(--border);">문제 정의·<br>KPI 설계</div>
+          <div style="font-size:11px;color:#888;line-height:1.8;">비즈니스 가설 수립<br>지표 계산식 정의</div>
+          <div style="font-family:monospace;font-size:10px;color:#ccc;margin-top:4px;">03·04 파일</div>
+        </div>
       </div>
-    </div>
+
+      <!-- Min -->
+      <div style="flex:1;background:#fff;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;">
+        <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--min);flex-shrink:0;"></div>
+          <div style="font-size:17px;font-weight:700;color:var(--text);">Min</div>
+          <div style="margin-left:auto;font-size:10px;color:var(--min);font-weight:600;letter-spacing:0.06em;">DATA ANALYST</div>
+        </div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:12px;color:#555;line-height:1.6;padding-bottom:8px;border-bottom:1px solid var(--border);">심층 분석·<br>인사이트 도출</div>
+          <div style="font-size:11px;color:#888;line-height:1.8;">세그먼트 분해<br>통계 검정</div>
+          <div style="font-family:monospace;font-size:10px;color:#ccc;margin-top:4px;">05 파일</div>
+        </div>
+      </div>
+
+      <!-- Evan -->
+      <div style="flex:1;background:#fff;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;">
+        <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--evan);flex-shrink:0;"></div>
+          <div style="font-size:17px;font-weight:700;color:var(--text);">Evan</div>
+          <div style="margin-left:auto;font-size:10px;color:var(--evan);font-weight:600;letter-spacing:0.06em;">DASHBOARD ENG</div>
+        </div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:12px;color:#555;line-height:1.6;padding-bottom:8px;border-bottom:1px solid var(--border);">시각화·<br>임원 보고</div>
+          <div style="font-size:11px;color:#888;line-height:1.8;">인터랙티브 대시보드<br>Executive Summary</div>
+          <div style="font-family:monospace;font-size:10px;color:#ccc;margin-top:4px;">06·07 파일</div>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -892,22 +972,18 @@
     <div style="width:54%;border-right:1px solid var(--border);display:flex;flex-direction:column;">
       <div style="padding:16px 40px;font-size:13px;letter-spacing:0.08em;color:var(--sub);border-bottom:1px solid var(--border);">크론이 에이전트에게 자동으로 보내는 메시지 (message 필드)</div>
       <div style="padding:28px 36px;flex:1;display:flex;flex-direction:column;gap:18px;">
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="font-size:12px;font-weight:700;color:var(--echo);letter-spacing:0.1em;text-transform:uppercase;">매주 월요일 오전 9시 — 주간 대시보드</div>
-          <div style="background:var(--bg-code);border-radius:6px;padding:16px 20px;font-family:monospace;font-size:14px;color:rgba(255,255,255,0.85);line-height:1.9;">
-            파일 경로:<br>
-            <span style="color:#8dc8b4;">~/Projects/openclaw-pipeline-kit/runs/latest/input/sample_sales.csv</span><br>
-            <span style="color:var(--aria);">/run-pipeline</span> 실행하고<br>
-            완료 후 파일 목록 알려줘.
-          </div>
+        <div style="background:var(--bg-code);border-radius:6px;padding:16px 20px;font-family:monospace;font-size:14px;color:rgba(255,255,255,0.85);line-height:1.9;">
+          <div style="color:#555;font-size:12px;margin-bottom:8px;"># 매주 월요일 오전 9시 · 크론 자동 트리거</div>
+          파일 경로:<br>
+          <span style="color:#8dc8b4;">~/Projects/openclaw-pipeline-kit/runs/latest/input/광고효율_데이터.csv</span><br>
+          <span style="color:var(--aria);">/run-pipeline</span> 실행하고<br>
+          완료 후 파일 목록 알려줘.
         </div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="font-size:12px;font-weight:700;color:var(--min);letter-spacing:0.1em;text-transform:uppercase;">매 2시간마다 — 데이터 수집</div>
-          <div style="background:var(--bg-code);border-radius:6px;padding:16px 20px;font-family:monospace;font-size:14px;color:rgba(255,255,255,0.85);line-height:1.9;">
-            외부 데이터 수집해서<br>
-            <span style="color:#8dc8b4;">runs/latest/input/</span> 에 저장하고<br>
-            git commit &amp; push 해줘.
-          </div>
+        <div style="background:var(--bg-code);border-radius:6px;padding:16px 20px;font-family:monospace;font-size:14px;color:rgba(255,255,255,0.85);line-height:1.9;">
+          <div style="color:#555;font-size:12px;margin-bottom:8px;"># 매 2시간마다 · 크론 자동 트리거</div>
+          외부 데이터 수집해서<br>
+          <span style="color:#8dc8b4;">runs/latest/input/</span> 에 저장하고<br>
+          git commit &amp; push 해줘.
         </div>
       </div>
     </div>
@@ -961,8 +1037,9 @@
       <div style="padding:16px 40px;font-size:13px;letter-spacing:0.08em;color:var(--sub);border-bottom:1px solid var(--border);">크론이 Echo에게 매주 월요일 오전 9시에 보내는 메시지</div>
       <div style="padding:28px 36px;flex:1;display:flex;flex-direction:column;gap:20px;">
         <div style="background:var(--bg-code);border-radius:8px;padding:22px 26px;font-family:monospace;font-size:17px;color:rgba(255,255,255,0.88);line-height:2.1;flex:1;">
+          <div style="color:#555;font-size:13px;margin-bottom:10px;"># 매주 월요일 오전 9시 · 크론 자동 트리거</div>
           파일 경로:<br>
-          <span style="color:#8dc8b4;">~/Projects/openclaw-pipeline-kit/<br>runs/latest/input/sample_sales.csv</span><br><br>
+          <span style="color:#8dc8b4;">~/Projects/openclaw-pipeline-kit/<br>runs/latest/input/광고효율_데이터.csv</span><br><br>
           <span style="color:var(--aria);">/run-pipeline</span> 실행하고<br>
           완료 후 결과물 목록 알려줘.
         </div>
@@ -1102,6 +1179,118 @@
 </div>
 
 
+<!-- ════ s38 | 썰 타임 — 실사용 사례 투어 (CLIP 01) ════ -->
+<div class="slide" id="s38">
+  <div class="tb"><span class="tb-cap">다른 사람들은 어떻게 쓰나 — 실사용 사례</span><span class="tb-num">—</span></div>
+  <div class="body" style="gap:0;">
+    <div style="flex:1;display:flex;flex-direction:column;padding:24px 40px;gap:14px;justify-content:center;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">Real-world Cases</div>
+      <div style="font-size:34px;font-weight:600;color:var(--text);line-height:1.3;">다른 사례 보기</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:14px 18px;background:#fff;">
+          <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">공식 쇼케이스</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">메일 확인 · 리마인더 · GitHub 이슈 · 북마크 정리까지 어시스턴트 하나로</div>
+          <a href="https://openclaw.ai/showcase/" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--green);margin-top:6px;text-decoration:underline;">openclaw.ai/showcase</a>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:14px 18px;background:#fff;">
+          <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">한 달 실사용 후기</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">텔레그램에 "이번 달 DAU 알려줘" 한 줄로 지표 확인</div>
+          <a href="https://contents.premium.naver.com/codetree/funcoding/contents/260221224243937sj" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--green);margin-top:6px;text-decoration:underline;">contents.premium.naver.com/codetree/funcoding</a>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:14px 18px;background:#fff;">
+          <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">홈서버 24/7 운영기</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">주식 리포트 생성 · 뉴스 모니터링을 크론으로 자동화</div>
+          <a href="https://medium.com/@dndb3599/openclaw%EB%A5%BC-%EB%9C%AF%EC%96%B4%EB%B3%B4%EA%B3%A0-%ED%99%88%EC%84%9C%EB%B2%84%EC%97%90-24-7-ai-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8%EB%A5%BC-%EC%98%AC%EB%A6%B0-%EC%9D%B4%EC%95%BC%EA%B8%B0-1ba281919e23" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--green);margin-top:6px;text-decoration:underline;">medium.com/@dndb3599 — 홈서버 24/7 이야기</a>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:14px 18px;background:#fff;">
+          <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">모델 갈아타기 후기</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">대화 맥락은 유지한 채 rate limit 걸리면 모델만 전환</div>
+          <a href="https://brunch.co.kr/@sungdairi/27" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--green);margin-top:6px;text-decoration:underline;">brunch.co.kr/@sungdairi/27</a>
+        </div>
+      </div>
+      <div style="border:1px solid rgba(232,96,60,0.35);border-radius:6px;padding:14px 18px;background:rgba(232,96,60,0.03);">
+        <div style="font-size:15px;font-weight:600;color:var(--p01);margin-bottom:4px;">⚠ 반면교사 — 노출된 인스턴스 4만 개</div>
+        <div style="font-size:13px;color:#555;line-height:1.6;">설정 실수로 API 키·토큰이 인터넷에 그대로 노출 — 도구 문제가 아니라 토큰 관리 문제</div>
+        <a href="https://www.infosecurity-magazine.com/news/researchers-40000-exposed-openclaw/" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--p01);margin-top:6px;text-decoration:underline;">infosecurity-magazine.com/news/researchers-40000-exposed-openclaw</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s39 | 썰 타임 — 크론·파이프라인 사례 (CLIP 02) ════ -->
+<div class="slide" id="s39">
+  <div class="tb"><span class="tb-cap">다른 사람들의 크론 · 파이프라인 활용</span><span class="tb-num">—</span></div>
+  <div class="body" style="gap:0;">
+    <div style="flex:1;display:flex;flex-direction:column;padding:24px 40px;gap:14px;justify-content:center;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">Automation Cases</div>
+      <div style="font-size:34px;font-weight:600;color:var(--text);line-height:1.3;">크론 자동화 사례 보기</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:14px 18px;background:#fff;">
+          <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">추천 크론 잡 7가지</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">아침 브리핑 · 하루 마감 리포트 — 전부 자동으로</div>
+          <a href="https://www.youtube.com/watch?v=fB4QCn8A_Qs" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--green);margin-top:6px;text-decoration:underline;">youtube.com/watch?v=fB4QCn8A_Qs</a>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:14px 18px;background:#fff;">
+          <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">매일 유튜브 트렌드 분석 봇</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">조회수 1천 이상 롱폼만 골라 매일 자동 리포트</div>
+          <a href="https://www.threads.com/@malda220611/post/DWGhZ3IEQ3g" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--green);margin-top:6px;text-decoration:underline;">threads.com/@malda220611/post/DWGhZ3IEQ3g</a>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:14px 18px;background:#fff;">
+          <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">AI 팀 5명 채용</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">코드 작성 · 리뷰 · 테스트 · 보안 · UX — 역할 분담 팀 구축</div>
+          <a href="https://www.instagram.com/reel/DUni7nPEugS/" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--green);margin-top:6px;text-decoration:underline;">instagram.com/reel/DUni7nPEugS</a>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:14px 18px;background:#fff;">
+          <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">숏폼 자동 발행 파이프라인</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">영상 다운로드 → 바이럴 구간 컷 → 숏폼 자동 발행</div>
+          <a href="https://www.threads.com/@jokerburg.builder/post/DWyxkMaE88C" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--green);margin-top:6px;text-decoration:underline;">threads.com/@jokerburg.builder/post/DWyxkMaE88C</a>
+        </div>
+      </div>
+      <div style="border:1px solid rgba(106,172,152,0.4);border-radius:6px;padding:14px 18px;background:rgba(106,172,152,0.05);">
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">유튜브 600개 영상 요약 자동화 — 지피터스</div>
+        <div style="font-size:13px;color:#555;line-height:1.6;">600개를 AI한테 직접 시키지 않고, 자동화 코드를 만들게 하기 — 에이전트는 반복 노동자가 아니라 자동화 설계자</div>
+        <a href="https://www.gpters.org/nocode/post/automated-review-600-youtube-n4cStrVRdfwmlrX" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--green);margin-top:6px;text-decoration:underline;">gpters.org/nocode/post/automated-review-600-youtube</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ s40 | 썰 타임 — 계속 배우는 곳 (CLIP 03) ════ -->
+<div class="slide" id="s40">
+  <div class="tb"><span class="tb-cap">챕터 이후 — 학습 리소스</span><span class="tb-num">—</span></div>
+  <div class="body" style="gap:0;">
+    <div style="flex:1;display:flex;flex-direction:column;padding:28px 40px;gap:16px;justify-content:center;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);">Keep Learning</div>
+      <div style="font-size:34px;font-weight:600;color:var(--text);line-height:1.3;">다양한 OpenClaw 학습 리소스</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;">
+        <div style="border:1px solid var(--border);border-radius:6px;padding:16px 20px;background:#fff;">
+          <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">공식 문서</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">크론 · 채널 연결 · 스킬 — 이번 챕터 내용의 상세 옵션 전부</div>
+          <a href="https://docs.openclaw.ai" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--green);margin-top:6px;text-decoration:underline;">docs.openclaw.ai</a>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:16px 20px;background:#fff;">
+          <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">공식 쇼케이스</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">새 활용 사례 계속 업데이트 — 아이디어가 고갈되면 여기부터</div>
+          <a href="https://openclaw.ai/showcase/" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--green);margin-top:6px;text-decoration:underline;">openclaw.ai/showcase</a>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:16px 20px;background:#fff;">
+          <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">한국어 라이브 코딩</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">『오픈 클로 with GPT, 제미나이, 클로드』 저자의 실습 라이브</div>
+          <a href="https://www.youtube.com/watch?v=eaCQ7JO__28" target="_blank" style="display:block;font-family:monospace;font-size:11px;color:var(--green);margin-top:6px;text-decoration:underline;">youtube.com/watch?v=eaCQ7JO__28</a>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:6px;padding:16px 20px;background:#fff;">
+          <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">커뮤니티</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">막히면 검색부터 — 여러분이 겪는 문제는 대부분 누가 이미 겪었음</div>
+          <div style="margin-top:6px;"><a href="https://www.reddit.com/r/openclaw/" target="_blank" style="font-family:monospace;font-size:11px;color:var(--green);text-decoration:underline;">reddit.com/r/openclaw</a><span style="font-size:11px;color:var(--dim);"> · </span><a href="https://www.gpters.org" target="_blank" style="font-family:monospace;font-size:11px;color:var(--green);text-decoration:underline;">gpters.org</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- ════ s29 | 파이프라인 실전 실행 — CSV → 텔레그램 → 결과 ════ -->
 <div class="slide" id="s29">
   <div class="tb"><span class="tb-cap">실전 실행 — CSV 넣고 텔레그램으로 시작하기</span><span class="tb-num">29</span></div>
@@ -1111,13 +1300,13 @@
     <div style="display:flex;align-items:center;gap:8px;justify-content:center;">
       <div style="padding:5px 14px;border-radius:999px;background:rgba(129,140,248,0.12);border:1px solid rgba(129,140,248,0.3);font-size:12px;font-weight:700;color:var(--echo);">Echo</div>
       <div style="color:#CCC;font-size:13px;">→</div>
-      <div style="padding:5px 14px;border-radius:999px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.28);font-size:12px;font-weight:700;color:var(--min);">Aria</div>
+      <div style="padding:5px 14px;border-radius:999px;background:rgba(53,201,149,0.1);border:1px solid rgba(53,201,149,0.28);font-size:12px;font-weight:700;color:var(--aria);">Aria</div>
       <div style="color:#CCC;font-size:13px;">→</div>
-      <div style="padding:5px 14px;border-radius:999px;background:rgba(251,146,60,0.1);border:1px solid rgba(251,146,60,0.28);font-size:12px;font-weight:700;color:var(--evan);">Sam</div>
+      <div style="padding:5px 14px;border-radius:999px;background:rgba(232,200,122,0.12);border:1px solid rgba(232,200,122,0.35);font-size:12px;font-weight:700;color:var(--sam);">Sam</div>
       <div style="color:#CCC;font-size:13px;">→</div>
-      <div style="padding:5px 14px;border-radius:999px;background:rgba(244,114,182,0.1);border:1px solid rgba(244,114,182,0.28);font-size:12px;font-weight:700;color:#f472b6;">Min</div>
+      <div style="padding:5px 14px;border-radius:999px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.28);font-size:12px;font-weight:700;color:var(--min);">Min</div>
       <div style="color:#CCC;font-size:13px;">→</div>
-      <div style="padding:5px 14px;border-radius:999px;background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.28);font-size:12px;font-weight:700;color:#60a5fa;">Evan</div>
+      <div style="padding:5px 14px;border-radius:999px;background:rgba(251,146,60,0.1);border:1px solid rgba(251,146,60,0.28);font-size:12px;font-weight:700;color:var(--evan);">Evan</div>
     </div>
 
     <!-- 5단계 플로우 -->
@@ -1129,7 +1318,7 @@
         <div style="font-size:15px;font-weight:700;color:var(--text);">CSV 파일 넣기</div>
         <div style="background:var(--bg-code);border-radius:6px;padding:10px 14px;font-family:monospace;font-size:12px;color:rgba(255,255,255,0.75);line-height:1.8;">
           runs/latest/<span style="color:var(--min);">input</span>/
-          <br><span style="color:#8dc8b4;">└ sample_sales.csv</span>
+          <br><span style="color:#8dc8b4;">└ 광고효율_데이터.csv</span>
         </div>
         <div style="font-size:12px;color:#666;line-height:1.6;">어떤 CSV든 가능.<br>파일명 그대로 넣으면 됨.</div>
       </div>
@@ -1139,13 +1328,15 @@
       <!-- STEP 2 -->
       <div style="flex:1;border:2px solid rgba(53,201,149,0.4);border-radius:8px;padding:18px 16px;display:flex;flex-direction:column;gap:8px;background:rgba(53,201,149,0.03);">
         <div style="font-size:10px;font-weight:700;color:var(--aria);letter-spacing:0.1em;">STEP 2</div>
-        <div style="font-size:15px;font-weight:700;color:var(--text);">텔레그램 전송</div>
-        <div style="background:var(--bg-code);border-radius:6px;padding:10px 14px;font-family:monospace;font-size:12px;color:rgba(255,255,255,0.82);line-height:1.9;">
-          <span style="color:#555;font-size:11px;">→ Echo 봇 DM</span><br>
-          runs/latest/input/ 에<br>CSV 있어.<br>
-          <span style="color:var(--aria);">파이프라인 실행해줘.</span>
+        <div style="font-size:15px;font-weight:700;color:var(--text);">Echo DM에서 시작</div>
+        <div style="background:var(--bg-code);border-radius:6px;padding:10px 14px;font-family:monospace;font-size:11px;color:rgba(255,255,255,0.82);line-height:2;">
+          <span style="color:#555;font-size:10px;">→ Echo 봇 DM에 입력</span><br>
+          그룹 ID는<br><span style="color:var(--aria);">-XXXXXXXXXX</span>야.<br>
+          단톡방에서 Aria 불러서<br>
+          <span style="color:var(--aria);">파이프라인 시작해줘.</span><br>
+          <span style="color:#666;font-size:10px;">CSV는 runs/latest/input/</span>
         </div>
-        <div style="font-size:12px;color:#666;">이게 전부. 나머지는 에이전트가.</div>
+        <div style="font-size:11px;color:#888;line-height:1.6;">그룹 ID: web.telegram.org<br>→ 단톡방 → 주소창 끝 숫자에 - 붙이기</div>
       </div>
 
       <div style="display:flex;align-items:center;color:#CCC;font-size:20px;flex-shrink:0;">→</div>
@@ -1156,15 +1347,16 @@
         <div style="font-size:15px;font-weight:700;color:var(--text);">5명이 순서대로</div>
         <div style="display:flex;flex-direction:column;gap:4px;">
           <div style="font-size:11px;color:#555;font-family:monospace;line-height:1.9;">
-            <span style="color:var(--min);">Aria</span> → 01_dataset_profile.md<br>
-            <span style="color:var(--min);">Aria</span> → 02_eda_report.md<br>
-            <span style="color:var(--evan);">Sam</span>  → 03_problem_definition.md<br>
-            <span style="color:var(--evan);">Sam</span>  → 04_kpi_summary.md<br>
-            <span style="color:#f472b6;">Min</span>  → 05_analysis_report.md<br>
-            <span style="color:#60a5fa;">Evan</span> → 06_dashboard.html<br>
-            <span style="color:#60a5fa;">Evan</span> → 07_executive_report.md
+            <span style="color:var(--aria);">Aria</span> → 01_dataset_profile.md<br>
+            <span style="color:var(--aria);">Aria</span> → 02_eda_report.md<br>
+            <span style="color:var(--sam);">Sam</span>  → 03_problem_definition.md<br>
+            <span style="color:var(--sam);">Sam</span>  → 04_kpi_summary.md<br>
+            <span style="color:var(--min);">Min</span>  → 05_analysis_report.md<br>
+            <span style="color:var(--evan);">Evan</span> → 06_dashboard.html<br>
+            <span style="color:var(--evan);">Evan</span> → 07_executive_report.md
           </div>
         </div>
+        <div style="font-size:10px;color:#aaa;border-top:1px solid var(--border);padding-top:6px;margin-top:2px;line-height:1.7;">세션 timeout 시 Echo가 CLI로<br>각 봇 계정 대신 직접 발송</div>
       </div>
 
       <div style="display:flex;align-items:center;color:#CCC;font-size:20px;flex-shrink:0;">→</div>
@@ -1196,6 +1388,241 @@
     <!-- 하단 강조 -->
     <div style="padding:12px 24px;background:rgba(53,201,149,0.06);border-radius:6px;font-size:14px;color:#333;text-align:center;">
       CSV 넣고 메시지 하나 보내면 — 보고서까지 자동 완성
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════ s37 | 에이전트 역할 커스텀 ════ -->
+<div class="slide" id="s37">
+  <div class="tb"><span class="tb-cap">AGENTS.md — 5 에이전트 역할 세팅</span><span class="tb-num">6-1</span></div>
+  <div class="body" style="gap:6px;padding:10px 14px;align-items:stretch;">
+
+    <!-- Echo -->
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;background:#0A0C10;border:1px solid rgba(129,140,248,0.35);border-radius:7px;overflow:hidden;">
+      <div style="padding:7px 11px;border-bottom:1px solid #1E2028;display:flex;align-items:center;gap:6px;flex-shrink:0;">
+        <div style="width:6px;height:6px;border-radius:50%;background:#818cf8;flex-shrink:0;"></div>
+        <div style="font-size:11px;font-weight:700;color:#818cf8;font-family:monospace;">Echo</div>
+        <div style="margin-left:auto;font-size:8px;color:#555;letter-spacing:0.06em;">ORCHESTRATOR</div>
+      </div>
+      <div style="padding:6px 11px 2px;flex-shrink:0;border-bottom:1px solid #15171d;">
+        <svg viewBox="0 0 120 36" style="width:100%;height:32px;display:block;">
+          <line x1="60" y1="18" x2="18" y2="8" stroke="#818cf8" stroke-width="1" opacity="0.5"/>
+          <line x1="60" y1="18" x2="18" y2="28" stroke="#818cf8" stroke-width="1" opacity="0.5"/>
+          <line x1="60" y1="18" x2="102" y2="8" stroke="#818cf8" stroke-width="1" opacity="0.5"/>
+          <line x1="60" y1="18" x2="102" y2="28" stroke="#818cf8" stroke-width="1" opacity="0.5"/>
+          <circle cx="60" cy="18" r="6.5" fill="rgba(129,140,248,0.15)" stroke="#818cf8" stroke-width="1.4"/>
+          <circle cx="18" cy="8" r="3.5" fill="none" stroke="#818cf8" stroke-width="1.1" opacity="0.8"/>
+          <circle cx="18" cy="28" r="3.5" fill="none" stroke="#818cf8" stroke-width="1.1" opacity="0.8"/>
+          <circle cx="102" cy="8" r="3.5" fill="none" stroke="#818cf8" stroke-width="1.1" opacity="0.8"/>
+          <circle cx="102" cy="28" r="3.5" fill="none" stroke="#818cf8" stroke-width="1.1" opacity="0.8"/>
+        </svg>
+      </div>
+      <div style="padding:9px 11px;font-family:monospace;font-size:9.5px;color:rgba(255,255,255,0.6);line-height:1.65;overflow:hidden;flex:1;">
+        나는 파이프라인 전체를 지휘하는 오케스트레이터야.<br>
+        요청을 받으면 적합한 에이전트에게 분배하고, 진행 상황을 추적한다.<br>
+        <br>
+        <span style="color:#818cf8;">## 역할</span><br>
+        - 사용자 요청 파악 → 에이전트별 태스크 분배<br>
+        - 파이프라인 전체 진행 상황 모니터링<br>
+        - 에이전트 간 컨텍스트 전달 및 핸드오프 관리<br>
+        - 최종 결과 요약 및 사용자 보고<br>
+        <br>
+        <span style="color:#818cf8;">## 작업 방식</span><br>
+        1. 요청 받으면 → 목적·데이터·기한 파악<br>
+        2. 파이프라인 단계 계획 수립 후 실행 시작<br>
+        3. 각 에이전트 완료 시 다음 에이전트로 컨텍스트 넘김<br>
+        4. 이상 발생 시 → 해당 단계 재시도 or 사용자에게 즉시 보고<br>
+        <br>
+        <span style="color:#818cf8;">## 자동 실행</span><br>
+        - 크론 실행 시 → 결과 요약 + 이상 여부 한 줄 보고<br>
+        - 에이전트 timeout 60초 → fallback(CLI message send)으로 자동 전환<br>
+        - 파이프라인 완료 시 outputs/ 폴더 결과 목록 정리 후 전송<br>
+        <br>
+        <span style="color:#818cf8;">## 말투</span><br>
+        명확·간결. 단계별로 지금 뭐 하는지 실시간 보고.<br>
+        불확실한 건 넘기지 않고 사용자에게 확인 요청.
+      </div>
+    </div>
+
+    <!-- Aria -->
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;background:#0A0C10;border:1px solid rgba(53,201,149,0.3);border-radius:7px;overflow:hidden;">
+      <div style="padding:7px 11px;border-bottom:1px solid #1E2028;display:flex;align-items:center;gap:6px;flex-shrink:0;">
+        <div style="width:6px;height:6px;border-radius:50%;background:#35c995;flex-shrink:0;"></div>
+        <div style="font-size:11px;font-weight:700;color:#35c995;font-family:monospace;">Aria</div>
+        <div style="margin-left:auto;font-size:8px;color:#555;letter-spacing:0.06em;">BI ENGINEER</div>
+      </div>
+      <div style="padding:6px 11px 2px;flex-shrink:0;border-bottom:1px solid #15171d;">
+        <svg viewBox="0 0 120 36" style="width:100%;height:32px;display:block;">
+          <rect x="26" y="20" width="9" height="11" rx="1" fill="rgba(53,201,149,0.15)" stroke="#35c995" stroke-width="1.1"/>
+          <rect x="40" y="13" width="9" height="18" rx="1" fill="rgba(53,201,149,0.15)" stroke="#35c995" stroke-width="1.1"/>
+          <rect x="54" y="6" width="9" height="25" rx="1" fill="rgba(53,201,149,0.15)" stroke="#35c995" stroke-width="1.1"/>
+          <circle cx="86" cy="13" r="7" fill="none" stroke="#35c995" stroke-width="1.4"/>
+          <line x1="91" y1="19" x2="98" y2="27" stroke="#35c995" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div style="padding:9px 11px;font-family:monospace;font-size:9.5px;color:rgba(255,255,255,0.6);line-height:1.65;overflow:hidden;flex:1;">
+        나는 데이터 수집·탐색·품질 검증 전담 BI 엔지니어야.<br>
+        데이터를 처음 만지는 단계에서 가장 중요한 판단을 내린다.<br>
+        <br>
+        <span style="color:#35c995;">## 역할</span><br>
+        - CSV/DB 데이터 수집 및 구조 파악<br>
+        - 결측치·이상치·중복값 탐지 및 처리<br>
+        - 컬럼 분포·상관관계 탐색적 분석(EDA)<br>
+        - 데이터 품질 리포트 작성<br>
+        <br>
+        <span style="color:#35c995;">## 기술 스택 기준</span><br>
+        Python(pandas, numpy), SQL, matplotlib/seaborn<br>
+        분석 코드는 재현 가능하게 작성. 랜덤 시드 고정 필수.<br>
+        <br>
+        <span style="color:#35c995;">## 작업 방식</span><br>
+        1. 파일 수신 → shape, dtypes, 결측치 비율 먼저 확인<br>
+        2. 이상치 기준 명시 후 처리 방법 결정 (제거 vs 대체)<br>
+        3. 주요 변수 분포 시각화 + 상관행렬 산출<br>
+        4. 다음 에이전트(Sam)에게 넘길 주요 발견사항 정리<br>
+        <br>
+        <span style="color:#35c995;">## 출력물</span><br>
+        - 01_dataset_profile.md (스키마, 기초통계, 데이터 품질 이슈)<br>
+        - 02_eda_report.md (분포, 상관관계, 인사이트 후보)<br>
+        <br>
+        <span style="color:#35c995;">## 말투</span><br>
+        기술적·수치 우선. 발견한 이슈는 심각도(🔴🟡🟢) 표기.<br>
+        추측은 "가설:" 접두어 붙여서 구분.
+      </div>
+    </div>
+
+    <!-- Sam -->
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;background:#0A0C10;border:1px solid rgba(232,200,122,0.3);border-radius:7px;overflow:hidden;">
+      <div style="padding:7px 11px;border-bottom:1px solid #1E2028;display:flex;align-items:center;gap:6px;flex-shrink:0;">
+        <div style="width:6px;height:6px;border-radius:50%;background:#e8c87a;flex-shrink:0;"></div>
+        <div style="font-size:11px;font-weight:700;color:#e8c87a;font-family:monospace;">Sam</div>
+        <div style="margin-left:auto;font-size:8px;color:#555;letter-spacing:0.06em;">PRODUCT ANALYST</div>
+      </div>
+      <div style="padding:6px 11px 2px;flex-shrink:0;border-bottom:1px solid #15171d;">
+        <svg viewBox="0 0 120 36" style="width:100%;height:32px;display:block;">
+          <circle cx="48" cy="18" r="12" fill="none" stroke="#e8c87a" stroke-width="1.2" opacity="0.6"/>
+          <circle cx="48" cy="18" r="7" fill="none" stroke="#e8c87a" stroke-width="1.2" opacity="0.8"/>
+          <circle cx="48" cy="18" r="2.5" fill="#e8c87a"/>
+          <line x1="88" y1="8" x2="54" y2="16" stroke="#e8c87a" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M 54 16 L 61 12 L 60 19 Z" fill="#e8c87a"/>
+        </svg>
+      </div>
+      <div style="padding:9px 11px;font-family:monospace;font-size:9.5px;color:rgba(255,255,255,0.6);line-height:1.65;overflow:hidden;flex:1;">
+        나는 비즈니스 문제를 측정 가능한 지표로 변환하는 프로덕트 애널리스트야.<br>
+        데이터에서 "무엇을 측정해야 하는가"를 먼저 정의한다.<br>
+        <br>
+        <span style="color:#e8c87a;">## 역할</span><br>
+        - Aria의 EDA 결과를 비즈니스 맥락으로 해석<br>
+        - 주요 문제 정의 및 가설 수립<br>
+        - North Star Metric + Supporting KPI 설계<br>
+        - 지표 계산식·분모·제외 조건 문서화<br>
+        <br>
+        <span style="color:#e8c87a;">## 작업 방식</span><br>
+        1. EDA 리포트 검토 → 비즈니스 질문 3개 이하로 압축<br>
+        2. 각 질문에 대한 지표 설계 (What / How to measure / Why)<br>
+        3. 지표 간 우선순위 정의 (Tier 1 / Tier 2)<br>
+        4. 계산 가능 여부 데이터 기준으로 검증 후 확정<br>
+        <br>
+        <span style="color:#e8c87a;">## 출력물</span><br>
+        - 03_problem_definition.md (문제 정의, 가설, 분석 방향)<br>
+        - 04_kpi_summary.md (지표 정의서: 이름·계산식·분모·제외조건·갱신주기)<br>
+        <br>
+        <span style="color:#e8c87a;">## 말투</span><br>
+        비즈니스 언어 우선. 수식은 명확하게. 모호한 지표 정의는 거절하고 재정의 요청.<br>
+        "이걸 왜 측정하는가"를 항상 한 줄로 명시.
+      </div>
+    </div>
+
+    <!-- Min -->
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;background:#0A0C10;border:1px solid rgba(52,211,153,0.3);border-radius:7px;overflow:hidden;">
+      <div style="padding:7px 11px;border-bottom:1px solid #1E2028;display:flex;align-items:center;gap:6px;flex-shrink:0;">
+        <div style="width:6px;height:6px;border-radius:50%;background:#34d399;flex-shrink:0;"></div>
+        <div style="font-size:11px;font-weight:700;color:#34d399;font-family:monospace;">Min</div>
+        <div style="margin-left:auto;font-size:8px;color:#555;letter-spacing:0.06em;">DATA ANALYST</div>
+      </div>
+      <div style="padding:6px 11px 2px;flex-shrink:0;border-bottom:1px solid #15171d;">
+        <svg viewBox="0 0 120 36" style="width:100%;height:32px;display:block;">
+          <polyline points="18,28 38,18 56,23 76,9 100,14" fill="none" stroke="#34d399" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="38" cy="18" r="2" fill="#34d399"/>
+          <circle cx="56" cy="23" r="2" fill="#34d399"/>
+          <circle cx="76" cy="9" r="7" fill="rgba(52,211,153,0.12)" stroke="#34d399" stroke-width="1.4"/>
+          <line x1="81" y1="15" x2="88" y2="23" stroke="#34d399" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div style="padding:9px 11px;font-family:monospace;font-size:9.5px;color:rgba(255,255,255,0.6);line-height:1.65;overflow:hidden;flex:1;">
+        나는 정의된 지표를 기반으로 실제 분석을 수행하는 데이터 애널리스트야.<br>
+        숫자 뒤에 있는 이유를 찾는다.<br>
+        <br>
+        <span style="color:#34d399;">## 역할</span><br>
+        - Sam이 정의한 KPI 실제 계산 및 검증<br>
+        - 트렌드·세그먼트별 분해 분석<br>
+        - 가설 검정 및 통계적 유의미성 확인<br>
+        - 액션 가능한 인사이트 도출<br>
+        <br>
+        <span style="color:#34d399;">## 기술 스택 기준</span><br>
+        Python(pandas, scipy, statsmodels), SQL<br>
+        통계 검정 사용 시 방법론 명시 필수 (t-test, chi-square 등).<br>
+        <br>
+        <span style="color:#34d399;">## 작업 방식</span><br>
+        1. KPI 정의서 확인 → 계산 로직 코드로 구현<br>
+        2. 전체 → 세그먼트별(기간/채널/지역 등) 순서로 드릴다운<br>
+        3. 유의미한 차이 발견 시 → 통계 검정으로 확인<br>
+        4. 인사이트는 "현상 → 원인 가설 → 권고 액션" 형식으로 정리<br>
+        <br>
+        <span style="color:#34d399;">## 출력물</span><br>
+        - 05_analysis_report.md (KPI 결과, 세그먼트 분석, 인사이트, 권고사항)<br>
+        <br>
+        <span style="color:#34d399;">## 말투</span><br>
+        분석적·중립적. 인과관계와 상관관계 명확히 구분.<br>
+        "유의미하다" 쓰려면 p-value 수치 같이 명시.
+      </div>
+    </div>
+
+    <!-- Evan -->
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;background:#0A0C10;border:1px solid rgba(251,146,60,0.3);border-radius:7px;overflow:hidden;">
+      <div style="padding:7px 11px;border-bottom:1px solid #1E2028;display:flex;align-items:center;gap:6px;flex-shrink:0;">
+        <div style="width:6px;height:6px;border-radius:50%;background:#fb923c;flex-shrink:0;"></div>
+        <div style="font-size:11px;font-weight:700;color:#fb923c;font-family:monospace;">Evan</div>
+        <div style="margin-left:auto;font-size:8px;color:#555;letter-spacing:0.06em;">DASHBOARD ENG</div>
+      </div>
+      <div style="padding:6px 11px 2px;flex-shrink:0;border-bottom:1px solid #15171d;">
+        <svg viewBox="0 0 120 36" style="width:100%;height:32px;display:block;">
+          <rect x="30" y="4" width="60" height="28" rx="2.5" fill="none" stroke="#fb923c" stroke-width="1.3"/>
+          <rect x="34" y="8" width="24" height="9" rx="1.5" fill="rgba(251,146,60,0.18)" stroke="#fb923c" stroke-width="0.9"/>
+          <rect x="62" y="8" width="24" height="9" rx="1.5" fill="rgba(251,146,60,0.18)" stroke="#fb923c" stroke-width="0.9"/>
+          <rect x="34" y="20" width="52" height="8" rx="1.5" fill="rgba(251,146,60,0.1)" stroke="#fb923c" stroke-width="0.9"/>
+        </svg>
+      </div>
+      <div style="padding:9px 11px;font-family:monospace;font-size:9.5px;color:rgba(255,255,255,0.6);line-height:1.65;overflow:hidden;flex:1;">
+        나는 분석 결과를 시각화하고 의사결정자가 읽을 보고서를 만드는 대시보드 엔지니어야.<br>
+        데이터를 보는 사람이 5초 안에 중요한 내용을 파악할 수 있어야 한다.<br>
+        <br>
+        <span style="color:#fb923c;">## 역할</span><br>
+        - 분석 리포트 기반 인터랙티브 대시보드 제작<br>
+        - 임원 보고용 Executive Summary 작성<br>
+        - 차트 유형 선택 및 시각 디자인<br>
+        - 비기술직 독자를 위한 언어 변환<br>
+        <br>
+        <span style="color:#fb923c;">## 기술 스택 기준</span><br>
+        HTML/CSS/JavaScript(Chart.js or Plotly), Markdown<br>
+        대시보드는 단독 실행 가능한 .html 파일로 제출.<br>
+        외부 CDN 의존 최소화.<br>
+        <br>
+        <span style="color:#fb923c;">## 작업 방식</span><br>
+        1. 분석 리포트 전체 검토 → 주요 메시지 3개 이하로 압축<br>
+        2. 각 메시지에 가장 적합한 차트 타입 선택 (이유 명시)<br>
+        3. 대시보드 레이아웃 설계 → 구현<br>
+        4. 임원 보고서: 배경·발견·권고·다음 액션 순서로 1페이지 요약<br>
+        <br>
+        <span style="color:#fb923c;">## 출력물</span><br>
+        - 06_dashboard.html (인터랙티브 대시보드, 필터 포함)<br>
+        - 07_executive_report.md (배경·발견·권고·Next Action)<br>
+        <br>
+        <span style="color:#fb923c;">## 말투</span><br>
+        비기술직 독자 기준. 전문용어 쓰면 바로 옆에 설명 병기.<br>
+        "데이터가 보여주는 것"과 "우리가 해야 할 것"을 항상 분리.
+      </div>
     </div>
 
   </div>
@@ -1245,8 +1672,8 @@
 <!-- ════ s17 | CLIP 04 섹션 브레이크 ════ -->
 <div class="slide" id="s17">
   <div class="sec-break">
-    <div class="sec-label">Clip 04</div>
-    <div class="sec-title">Manager<br>Dashboard</div>
+    <div class="sec-label">Clip 03</div>
+    <div class="sec-title">Agent<br>Manager</div>
     <div class="sec-sub">
       openclaw-manager — 에이전트 활동 한 화면에서 확인.<br>
       Dashboard · Gallery · CronJobs 세 뷰로 구성.
@@ -1257,7 +1684,7 @@
 
 <!-- ════ s18 | Manager Dashboard — Dashboard 뷰 ════ -->
 <div class="slide" id="s18">
-  <div class="tb"><span class="tb-cap">Manager Dashboard — Dashboard 뷰</span><span class="tb-num">18</span></div>
+  <div class="tb"><span class="tb-cap">Agent Manager — Dashboard 뷰</span><span class="tb-num">18</span></div>
   <div class="body">
     <div style="width:44%;border-right:1px solid var(--border);padding:32px 36px;display:flex;flex-direction:column;gap:16px;">
       <div>
@@ -1319,7 +1746,7 @@
 
 <!-- ════ s19 | Gallery 뷰 ════ -->
 <div class="slide" id="s19">
-  <div class="tb"><span class="tb-cap">Manager Dashboard — Gallery 뷰</span><span class="tb-num">19</span></div>
+  <div class="tb"><span class="tb-cap">Agent Manager — Gallery 뷰</span><span class="tb-num">19</span></div>
   <div class="body">
     <div style="width:44%;border-right:1px solid var(--border);padding:32px 36px;display:flex;flex-direction:column;gap:16px;">
       <div>
@@ -1381,7 +1808,7 @@
 
 <!-- ════ s20 | CronJobs 뷰 ════ -->
 <div class="slide" id="s20">
-  <div class="tb"><span class="tb-cap">Manager Dashboard — CronJobs 뷰</span><span class="tb-num">20</span></div>
+  <div class="tb"><span class="tb-cap">Agent Manager — CronJobs 뷰</span><span class="tb-num">20</span></div>
   <div class="body">
     <div style="width:44%;border-right:1px solid var(--border);padding:32px 36px;display:flex;flex-direction:column;gap:16px;">
       <div>
@@ -1445,7 +1872,7 @@
         <div style="font-size:14px;color:var(--green);font-weight:600;">Next / Last 컬럼</div>
         <div style="font-size:17px;color:#333;line-height:1.65;">다음 실행 예정 시간과 마지막 실행 시간 함께 표시. 크론 실제 동작 여부 한눈에 확인</div>
       </div>
-      <div style="padding:14px 20px;background:rgba(106,172,152,0.06);border-radius:6px;font-size:16px;color:#555;line-height:1.7;text-align:center;">에이전트가 자는 동안 일한 결과물 전체 —<br>Manager Dashboard 하나로 확인</div>
+      <div style="padding:14px 20px;background:rgba(106,172,152,0.06);border-radius:6px;font-size:16px;color:#555;line-height:1.7;text-align:center;">에이전트가 자는 동안 일한 결과물 전체를<br>Agent Manager 하나로 확인 가능!</div>
     </div>
   </div>
 </div>
@@ -1463,7 +1890,7 @@
         <div style="font-size:11px;letter-spacing:0.1em;color:#555;text-transform:uppercase;">payload.message (크론이 에이전트에게 보내는 것)</div>
         <div style="font-size:17px;color:rgba(255,255,255,0.88);line-height:2.1;font-family:'Menlo','Monaco',monospace;">
           파일 경로:<br>
-          <span style="color:#8dc8b4;">~/Projects/openclaw-pipeline-kit/runs/<br>latest/input/sample_sales.csv</span><br><br>
+          <span style="color:#8dc8b4;">~/Projects/openclaw-pipeline-kit/runs/<br>latest/input/광고효율_데이터.csv</span><br><br>
           <span style="color:var(--aria);">/run-pipeline</span> 을 실행하세요.<br>
           완료 후 생성된 파일 목록을<br>알려주세요.
         </div>
@@ -1475,40 +1902,43 @@
         <div class="eyebrow">에이전트별 SOUL.md</div>
         <div style="font-size:20px;font-weight:600;color:var(--text);line-height:1.3;">대화로 자동 생성 — 직접 파일 편집 불필요</div>
       </div>
-      <!-- Echo card -->
+      <!-- 예시 A -->
       <div style="background:var(--bg-code);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;gap:6px;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="font-size:13px;font-weight:700;color:var(--echo);letter-spacing:0.04em;">Echo</span>
-          <span style="font-size:11px;color:#555;">~/.openclaw/workspace/SOUL.md</span>
+          <span style="font-size:10px;font-weight:600;color:#666;letter-spacing:0.1em;text-transform:uppercase;background:rgba(255,255,255,0.06);padding:2px 7px;border-radius:3px;">예시</span>
+          <span style="font-size:13px;font-weight:700;color:var(--echo);letter-spacing:0.04em;">에이전트 A</span>
+          <span style="font-size:11px;color:#555;">~/.openclaw/workspace-a/SOUL.md</span>
         </div>
         <div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.9;font-family:'Menlo','Monaco',monospace;">
-          <span style="color:var(--echo);">나는 Echo. 메인 에이전트.</span><br>
+          <span style="color:var(--echo);">나는 A. 메인 에이전트.</span><br>
           <span style="color:var(--sam);">## 성격</span> 분석가. 팩트 중심.<br>
           <span style="color:var(--sam);">## 역할</span> 주요 프로젝트 총괄, /run-pipeline 실행<br>
           <span style="color:var(--sam);">## 원칙</span> 칭찬보다 팩트 먼저
         </div>
       </div>
-      <!-- Min card -->
+      <!-- 예시 B -->
       <div style="background:var(--bg-code);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;gap:6px;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="font-size:13px;font-weight:700;color:var(--aria);letter-spacing:0.04em;">Min</span>
-          <span style="font-size:11px;color:#555;">~/.openclaw/workspace-min/SOUL.md</span>
+          <span style="font-size:10px;font-weight:600;color:#666;letter-spacing:0.1em;text-transform:uppercase;background:rgba(255,255,255,0.06);padding:2px 7px;border-radius:3px;">예시</span>
+          <span style="font-size:13px;font-weight:700;color:var(--aria);letter-spacing:0.04em;">에이전트 B</span>
+          <span style="font-size:11px;color:#555;">~/.openclaw/workspace-b/SOUL.md</span>
         </div>
         <div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.9;font-family:'Menlo','Monaco',monospace;">
-          <span style="color:var(--aria);">나는 Min. 마케터 에이전트.</span><br>
+          <span style="color:var(--aria);">나는 B. 마케터 에이전트.</span><br>
           <span style="color:var(--sam);">## 성격</span> 트렌디한 마케터. 콘텐츠 각도가 먼저 보임.<br>
           <span style="color:var(--sam);">## 역할</span> 강의 콘텐츠 기획, PPT 디자인, SNS 포스팅<br>
           <span style="color:var(--sam);">## 원칙</span> 빠르게 초안 → 피드백 → 개선
         </div>
       </div>
-      <!-- Evan card -->
+      <!-- 예시 C -->
       <div style="background:var(--bg-code);border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;gap:6px;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <span style="font-size:13px;font-weight:700;color:#efb05d;letter-spacing:0.04em;">Evan</span>
-          <span style="font-size:11px;color:#555;">~/.openclaw/workspace-evan/SOUL.md</span>
+          <span style="font-size:10px;font-weight:600;color:#666;letter-spacing:0.1em;text-transform:uppercase;background:rgba(255,255,255,0.06);padding:2px 7px;border-radius:3px;">예시</span>
+          <span style="font-size:13px;font-weight:700;color:#efb05d;letter-spacing:0.04em;">에이전트 C</span>
+          <span style="font-size:11px;color:#555;">~/.openclaw/workspace-c/SOUL.md</span>
         </div>
         <div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.9;font-family:'Menlo','Monaco',monospace;">
-          <span style="color:#efb05d;">나는 Evan. 세 번째 에이전트.</span><br>
+          <span style="color:#efb05d;">나는 C. 세 번째 에이전트.</span><br>
           <span style="color:var(--sam);">## 성격</span> 직설적인 친구. 솔직하게 2-3문장으로.<br>
           <span style="color:var(--sam);">## 역할</span> 웹앱 빌더. 아이디어 → 빠른 구현<br>
           <span style="color:var(--sam);">## 원칙</span> 필요한 말, 빠르게 만들고 보여줌
@@ -1588,7 +2018,7 @@
         <div style="padding:10px 16px;background:rgba(129,140,248,0.08);font-size:12px;color:var(--echo);font-weight:600;letter-spacing:0.06em;">주간 대시보드 자동 생성</div>
         <div style="background:var(--bg-code);padding:18px 22px;font-family:monospace;font-size:14px;color:rgba(255,255,255,0.85);line-height:1.9;">
           파일 경로:<br>
-          <span style="color:#8dc8b4;">~/Projects/openclaw-pipeline-kit/runs/<br>latest/input/sample_sales.csv</span><br>
+          <span style="color:#8dc8b4;">~/Projects/openclaw-pipeline-kit/runs/<br>latest/input/광고효율_데이터.csv</span><br>
           <span style="color:var(--aria);">/run-pipeline</span> 을 실행하세요.<br>
           완료 후 생성된 파일 목록을 알려주세요.
         </div>
@@ -1719,14 +2149,6 @@
 </div>
 
 
-</div><!-- /deck -->
-
-<!-- Navigation -->
-<div class="nav">
-  <span class="nav-ctr" id="ctr">1 / 20</span>
-  <button class="nav-btn" id="prev">←</button>
-  <button class="nav-btn" id="next">→</button>
-</div>
 <!-- ════ s31 | 디자인 토큰 — 대시보드를 코드로 정의하기 ════ -->
 <div class="slide" id="s31">
   <div class="tb"><span class="tb-cap">디자인 토큰 — 대시보드 퀄리티를 코드로 정의하기</span><span class="tb-num">31</span></div>
@@ -1735,7 +2157,7 @@
     <!-- LEFT -->
     <div style="width:46%;border-right:1px solid var(--border);padding:28px 36px;display:flex;flex-direction:column;gap:16px;justify-content:center;">
       <div>
-        <div class="eyebrow">STEP 6 — Evan 대시보드</div>
+        <div class="eyebrow">Evan 대시보드 업그레이드</div>
         <div style="font-size:34px;font-weight:600;line-height:1.3;letter-spacing:-0.02em;color:var(--text);">디자인 토큰으로<br>대시보드 개선하기</div>
       </div>
 
@@ -1777,17 +2199,6 @@
         </div>
       </div>
 
-      <div style="font-size:11px;letter-spacing:0.1em;color:var(--hint);text-transform:uppercase;opacity:0.6;">생성 결과 예시</div>
-      <div style="background:#1a1b1e;border-radius:8px;padding:14px 20px;font-family:'Menlo','Monaco',monospace;font-size:12px;line-height:1.85;opacity:0.45;">
-        <span style="color:#888;">:root</span> <span style="color:#555;">{</span><br>
-        &nbsp;&nbsp;<span style="color:#666;">--md-sys-color-primary</span><span style="color:#444;">:</span> <span style="color:#777;">#E8603C</span><span style="color:#444;">;</span><br>
-        &nbsp;&nbsp;<span style="color:#666;">--md-sys-color-surface</span><span style="color:#444;">:</span> <span style="color:#777;">#FFFBFE</span><span style="color:#444;">;</span><br>
-        &nbsp;&nbsp;<span style="color:#666;">--md-sys-color-on-surface</span><span style="color:#444;">:</span> <span style="color:#777;">#1A202C</span><span style="color:#444;">;</span><br>
-        &nbsp;&nbsp;<span style="color:#666;">--md-sys-shape-corner-medium</span><span style="color:#444;">:</span> <span style="color:#777;">12px</span><span style="color:#444;">;</span><br>
-        &nbsp;&nbsp;<span style="color:#666;">--md-sys-typescale-body-medium</span><span style="color:#444;">:</span> <span style="color:#777;">14px</span><span style="color:#444;">;</span><br>
-        &nbsp;&nbsp;<span style="color:#444;">/* + elevation · motion · dark mode ... */</span><br>
-        <span style="color:#555;">}</span>
-      </div>
     </div>
 
   </div>
@@ -1858,81 +2269,110 @@
 
 <!-- ════ s33 | 텔레그램 Echo 봇 생성 (BotFather) ════ -->
 <div class="slide" id="s33">
-  <div class="tb"><span class="tb-cap">텔레그램 Echo 봇 생성 — BotFather</span><span class="tb-num">5-1</span></div>
+  <div class="tb"><span class="tb-cap">텔레그램 봇 5개 만들기 — BotFather</span><span class="tb-num">5-1</span></div>
   <div class="body" style="gap:0;">
-    <!-- Left: 단계별 흐름 -->
-    <div style="width:50%;border-right:1px solid var(--border);padding:28px 36px;display:flex;flex-direction:column;">
-      <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--hint);margin-bottom:14px;">BotFather 단계별 순서</div>
-      <div style="display:flex;flex-direction:column;gap:12px;">
-        <div style="display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:#fff;border:1px solid var(--border);border-radius:8px;">
-          <div style="width:22px;height:22px;border-radius:50%;background:rgba(106,172,152,0.15);border:1px solid rgba(106,172,152,0.4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--green);flex-shrink:0;">1</div>
-          <div style="font-size:14px;color:#333;line-height:1.6;">텔레그램 앱 → 검색창에 <strong>@BotFather</strong> 검색 → 채팅 열기 → <strong>START</strong></div>
+    <!-- Left: 봇 5개 목록 -->
+    <div style="width:50%;border-right:1px solid var(--border);padding:32px 36px;display:flex;flex-direction:column;justify-content:center;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--hint);margin-bottom:14px;">BotFather에서 5번 반복</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;background:#fff;border:1px solid var(--border);border-radius:6px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#818cf8;flex-shrink:0;"></div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);flex:1;">Echo</div>
+          <div style="font-family:monospace;font-size:11px;color:#bbb;">my_echo_bot</div>
         </div>
-        <div style="display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:#fff;border:1px solid var(--border);border-radius:8px;">
-          <div style="width:22px;height:22px;border-radius:50%;background:rgba(106,172,152,0.15);border:1px solid rgba(106,172,152,0.4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--green);flex-shrink:0;">2</div>
-          <div style="font-size:14px;color:#333;line-height:1.6;"><code style="background:#f0f0f0;padding:1px 7px;border-radius:4px;">/newbot</code> 입력 → 전송</div>
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;background:#fff;border:1px solid var(--border);border-radius:6px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#35c995;flex-shrink:0;"></div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);flex:1;">Aria</div>
+          <div style="font-family:monospace;font-size:11px;color:#bbb;">my_aria_bot</div>
         </div>
-        <div style="display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:#fff;border:1px solid var(--border);border-radius:8px;">
-          <div style="width:22px;height:22px;border-radius:50%;background:rgba(106,172,152,0.15);border:1px solid rgba(106,172,152,0.4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--green);flex-shrink:0;">3</div>
-          <div style="font-size:14px;color:#333;line-height:1.6;"><strong>봇 표시 이름</strong> 입력 (예: <code style="background:#f0f0f0;padding:1px 6px;border-radius:4px;">Echo Agent</code>) → 전송</div>
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;background:#fff;border:1px solid var(--border);border-radius:6px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#e8c87a;flex-shrink:0;"></div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);flex:1;">Sam</div>
+          <div style="font-family:monospace;font-size:11px;color:#bbb;">my_sam_bot</div>
         </div>
-        <div style="display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border:2px solid rgba(106,172,152,0.35);border-radius:8px;background:rgba(106,172,152,0.04);">
-          <div style="width:22px;height:22px;border-radius:50%;background:rgba(106,172,152,0.2);border:1px solid rgba(106,172,152,0.5);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--green);flex-shrink:0;">4</div>
-          <div style="font-size:14px;color:#333;line-height:1.6;"><strong>봇 유저네임</strong> 입력 → 반드시 <code style="background:#e8f8f4;padding:1px 7px;border-radius:4px;color:var(--green);">_bot</code> 으로 끝나야 함<br><span style="font-size:12px;color:#888;">예: my_echo_agent_bot</span></div>
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;background:#fff;border:1px solid var(--border);border-radius:6px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#34d399;flex-shrink:0;"></div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);flex:1;">Min</div>
+          <div style="font-family:monospace;font-size:11px;color:#bbb;">my_min_bot</div>
         </div>
-        <div style="display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border:2px solid rgba(232,200,122,0.45);border-radius:8px;background:rgba(232,200,122,0.04);">
-          <div style="width:22px;height:22px;border-radius:50%;background:rgba(232,200,122,0.2);border:1px solid rgba(232,200,122,0.5);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#c8a048;flex-shrink:0;">5</div>
-          <div>
-            <div style="font-size:14px;color:#333;line-height:1.5;">BotFather가 <strong>봇 토큰</strong> 발급 → 복사 보관</div>
-            <div style="background:var(--bg-code);border-radius:5px;padding:6px 12px;margin-top:6px;font-family:monospace;font-size:12px;color:var(--sam);">123456789:ABC-DEFGHijklmno...</div>
-          </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;background:#fff;border:1px solid var(--border);border-radius:6px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#fb923c;flex-shrink:0;"></div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);flex:1;">Evan</div>
+          <div style="font-family:monospace;font-size:11px;color:#bbb;">my_evan_bot</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 16px;background:#f8f8f8;border:1px solid var(--border);border-radius:6px;margin-top:4px;">
+          <div style="font-size:12px;color:#888;line-height:1.6;font-family:monospace;">@BotFather → /newbot → 이름 → 유저네임(_bot) → 토큰 복사<br><span style="color:#bbb;">× 5회 반복</span></div>
         </div>
       </div>
     </div>
 
-    <!-- Right: 주의사항 + 구조 안내 -->
-    <div style="flex:1;padding:28px 36px;display:flex;flex-direction:column;gap:14px;">
-      <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--hint);">알아두기</div>
-      <div style="border:2px solid rgba(232,96,60,0.35);border-radius:8px;padding:16px 20px;background:rgba(232,96,60,0.025);">
-        <div style="font-size:12px;color:var(--p01);font-weight:700;margin-bottom:6px;">보안 — 토큰 절대 공유 금지</div>
-        <div style="font-size:14px;color:#444;line-height:1.7;">봇 토큰 = 봇의 비밀번호.<br>채팅창·노션·슬랙 등에 붙여넣기 금지.<br><span style="color:#888;font-size:12.5px;">AI 채팅창에 입력 시 Anthropic 서버로 전송됨.</span></div>
-      </div>
-      <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px 20px;">
-        <div style="font-size:12px;color:var(--green);font-weight:700;margin-bottom:8px;">봇 구조 — Echo 봇 1개만 만들면 됨</div>
-        <div style="display:flex;flex-direction:column;gap:6px;">
-          <div style="display:flex;align-items:center;gap:8px;font-size:13.5px;">
-            <span style="font-size:16px;">🦞</span>
-            <span style="font-weight:600;color:#333;">Echo</span>
-            <span style="color:var(--hint);font-size:12px;">← 텔레그램 봇 연결 · 토큰 필요</span>
-          </div>
-          <div style="margin-left:28px;display:flex;flex-direction:column;gap:4px;font-size:13px;color:#888;">
-            <div>↳ Aria · Sam · Min · Evan</div>
-            <div style="font-size:12px;color:#bbb;">← 서브에이전트 · 별도 봇 없음 · Echo가 내부 호출</div>
-          </div>
+    <!-- Right: 그룹 설정 + 주의사항 -->
+    <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;gap:7px;justify-content:center;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--hint);margin-bottom:8px;">그룹 채팅 설정</div>
+
+      <div style="display:flex;align-items:center;gap:14px;padding:12px 18px;background:#fff;border:1px solid var(--border);border-radius:6px;">
+        <span style="font-size:12px;color:var(--green);font-weight:700;flex-shrink:0;">1</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);">텔레그램 그룹 생성</div>
+          <div style="font-size:12px;color:#bbb;margin-top:2px;">새 그룹 → 5개 봇 전부 초대 → 그룹명 설정</div>
         </div>
       </div>
-      <div style="border:1px solid var(--border);border-radius:8px;padding:14px 18px;background:#fff;">
-        <div style="font-size:12px;color:var(--hint);font-weight:700;margin-bottom:6px;">페어링 — DM 수신 허용</div>
-        <div style="font-size:13.5px;color:#444;line-height:1.7;">onboard 완료 후 봇에 아무 메시지 전송 → 자동 페어링. 이후 봇 DM으로 명령 가능.</div>
+
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 18px;background:#fff;border:1px solid var(--border);border-radius:6px;">
+        <span style="font-size:12px;color:var(--green);font-weight:700;flex-shrink:0;margin-top:2px;">2</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);">그룹 ID 확인</div>
+          <div style="font-size:12px;color:#888;margin-top:3px;line-height:1.7;">web.telegram.org → 단톡방 클릭<br>주소창 끝 숫자 = 그룹 ID<br><span style="font-family:monospace;color:var(--green);">앞에 - 붙여서 메모</span> <span style="color:#bbb;">(예: -XXXXXXXXXX)</span></div>
+        </div>
       </div>
-      <div style="padding:11px 16px;background:rgba(53,201,149,0.05);border-radius:6px;font-size:13px;color:#555;line-height:1.6;">
-        토큰은 다음 슬라이드 <code style="background:#f0f0f0;padding:1px 6px;border-radius:3px;font-size:11px;">openclaw onboard</code> Step 4에서 입력
+
+      <div style="display:flex;align-items:center;gap:14px;padding:12px 18px;background:#fff;border:1px solid var(--border);border-radius:6px;">
+        <span style="font-size:12px;color:var(--green);font-weight:700;flex-shrink:0;">3</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);">onboard 1회 + add-tokens.js</div>
+          <div style="font-size:12px;color:#bbb;margin-top:2px;">Echo는 onboard로, 나머지 4개는 add-tokens.js로 등록</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 18px;background:rgba(232,96,60,0.06);border:1px solid rgba(232,96,60,0.25);border-radius:6px;">
+        <span style="font-size:12px;color:var(--p01);font-weight:700;flex-shrink:0;margin-top:2px;">!</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--p01);">토큰 절대 공유 금지</div>
+          <div style="font-size:12px;color:rgba(232,96,60,0.7);margin-top:2px;">AI 채팅창에 입력 시 서버로 전송됨 — 터미널에서만 입력</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 18px;background:rgba(106,172,152,0.05);border:1px solid rgba(106,172,152,0.25);border-radius:6px;">
+        <span style="font-size:12px;color:var(--green);font-weight:700;flex-shrink:0;margin-top:2px;">→</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);">Echo DM에서 파이프라인 시작</div>
+          <div style="font-family:monospace;font-size:11px;color:var(--green);margin-top:5px;background:rgba(0,0,0,0.04);padding:5px 10px;border-radius:4px;line-height:1.8;">그룹 ID는 -XXXXXXXXXX야.<br>단톡방에서 Aria 불러서 파이프라인 시작해줘.<br>CSV는 runs/latest/input/ 에 있어.</div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 
+</div><!-- /deck -->
+
+<!-- Navigation -->
+<div class="nav">
+  <span class="nav-ctr" id="ctr">1 / 20</span>
+  <button class="nav-btn" id="prev">←</button>
+  <button class="nav-btn" id="next">→</button>
+</div>
+
 <div class="progress" id="prog"></div>
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const ORDER = [1,2,3,4,28,33,26,30,35, 8,21,13,23,14,15,29, 17,18,19,20,31];
+  const ORDER = [1,2,3,4,38,28,33,26,30,35,36, 8,21,13,23,39,14,15,37,29,31, 17,18,19,20,40];
   const TOTAL = ORDER.length;
   const CLIP_MAP = {
-    1:0,2:0,3:0,4:0,32:0,5:0,33:0,26:0,30:0,28:0,35:0,
-    8:1,21:1,13:1,23:1,14:1,15:1,29:1,
-    17:2,18:2,19:2,20:2,31:2
+    1:0,2:0,3:0,4:0,38:0,32:0,5:0,33:0,26:0,30:0,28:0,35:0,36:0,
+    8:1,21:1,13:1,23:1,39:1,14:1,15:1,29:1,37:1,31:1,
+    17:2,18:2,19:2,20:2,40:2
   };
   const CLIP_LABELS = ['OpenClaw 소개 & 연결','대시보드 자동생성 & 주간 리포트','Agent Manager 빌드'];
   const CLIPS = 3;
