@@ -2327,11 +2327,16 @@
         </div>
       </div>
 
-      <div style="display:flex;align-items:center;gap:14px;padding:12px 18px;background:#fff;border:1px solid var(--border);border-radius:6px;">
-        <span style="font-size:12px;color:var(--green);font-weight:700;flex-shrink:0;">3</span>
-        <div>
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 18px;background:#fff;border:1px solid var(--border);border-radius:6px;">
+        <span style="font-size:12px;color:var(--green);font-weight:700;flex-shrink:0;margin-top:2px;">3</span>
+        <div style="flex:1;min-width:0;">
           <div style="font-size:14px;font-weight:600;color:var(--text);">onboard 1회 + add-tokens.js</div>
           <div style="font-size:12px;color:#bbb;margin-top:2px;">Echo는 onboard로, 나머지 4개는 add-tokens.js로 등록</div>
+          <div style="margin-top:7px;background:var(--bg-code);border-radius:5px;padding:8px 12px;font-family:monospace;font-size:11px;line-height:1.9;color:rgba(255,255,255,0.75);">
+            <span style="color:#666;">$</span> openclaw onboard <span style="color:#555;">← Echo 등록</span><br>
+            <span style="color:#666;">$</span> node add-tokens.js <span style="color:#555;">← 나머지 4개 등록</span><br>
+            <span style="color:#666;">$</span> openclaw gateway restart <span style="color:#555;">← 적용</span>
+          </div>
         </div>
       </div>
 
