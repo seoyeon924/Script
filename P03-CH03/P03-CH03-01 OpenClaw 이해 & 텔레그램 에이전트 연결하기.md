@@ -38,7 +38,9 @@ status: ✅ 대본완성
 
 3. **s33 — BotFather에서 봇 생성 라이브**: @BotFather → `/newbot` → 이름·유저네임 입력 → 토큰 발급 화면 (토큰 블러)
    - 촬영용 새 봇이니까 이름 자유. ⚠️ 기존 Echo~Evan 봇 토큰을 입력하는 건 금지 (실봇 연결이 데모에 뺏김)
-4. **s26 — onboard 라이브**: `[DEMO]` 창에서 `openclaw onboard` → Security → QuickStart → Anthropic → `claude setup-token` 실행·붙여넣기 → Telegram → 방금 만든 봇 토큰 입력 → Web search Skip → Daemon Node
+4. **s26 — onboard 라이브**: ⚠️ **반드시 [DEMO]라고 떠 있는 그 창에서** `openclaw onboard`
+   - 새 터미널을 열면 본 계정 설정에 붙어버림 (기존 대화 기록이 나오면 잘못 실행된 것 — Ctrl+C로 나가서 [DEMO] 창에서 다시)
+   - 이후: `openclaw onboard` → Security → QuickStart → Anthropic → `claude setup-token` 실행·붙여넣기 → Telegram → 방금 만든 봇 토큰 입력 → Web search Skip → Daemon Node → 마지막 "Hatch in TUI" 질문은 아무거나 선택 후 Ctrl+C로 빠져나오기 (새 설치라 빈 화면)
 5. **s30 — 페어링 라이브**: 새 봇 DM에 메시지 → 페어링 코드 수신 → `openclaw pairing approve telegram <코드>` → 다시 DM → 답장 확인
 
 **촬영 후:**
@@ -506,6 +508,8 @@ Telegram을 선택합니다.
 그 뒤에 Web search 설정을 물어보면 Skip 하면 돼요. 파이프라인 실습에는 필요 없어요. 나중에 필요해지면 `openclaw configure`로 언제든 추가할 수 있어요.
 
 혹시 버전에 따라 여기서 소개 안 한 질문이 나올 수 있어요. 그럴 땐 기본값 그대로 Enter 치면 됩니다.
+
+설정이 다 끝나면 마지막으로 "How do you want to hatch your bot?"이라고 물어봐요. 에이전트랑 어디서 대화를 시작할지 고르는 거예요. Hatch in TUI를 선택하면 터미널 안에서 바로 채팅창이 열려요. 우리는 텔레그램으로 대화할 거니까, 열리면 Ctrl+C로 빠져나와도 됩니다.
 
 한 가지 더요. 예전에 이 컴퓨터에서 OpenClaw를 설정한 적이 있다면 "Existing config detected"라면서 기존 설정을 쓸지 물어봐요. 처음 설치하는 분들은 이 질문이 안 나와요. 나온다면 Use existing values 선택하면 됩니다. 키트 가이드 FAQ에도 정리해뒀어요.
 
