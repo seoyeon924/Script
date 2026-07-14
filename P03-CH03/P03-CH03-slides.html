@@ -730,10 +730,10 @@
 <div class="slide" id="s7">
   <div class="sec-break">
     <div class="sec-label">Clip 02</div>
-    <div class="sec-title">에이전트<br>만들기</div>
+    <div class="sec-title">파이프라인<br>자동화</div>
     <div class="sec-sub">
-      BotFather로 봇 만들고, 대화 한 마디로 SOUL.md 생성.<br>
-      에이전트 만드는 과정, 생각보다 단순한 구조.
+      5-agent 파이프라인으로 대시보드 자동 생성.<br>
+      크론으로 주간 리포트까지 자동 운영.
     </div>
   </div>
 </div>
@@ -2373,11 +2373,11 @@
 <div class="clip-dots" id="dots"></div>
 
 <script>
-  const ORDER = [1,2,3,4,38,28,33,26,30,35,36, 8,21,13,23,14,15,37,29,31,39, 17,18,19,20,40];
+  const ORDER = [1,2,3,4,38,28,33,26,30,35,36, 7,8,21,13,23,14,15,37,29,31,39, 17,18,19,20,40];
   const TOTAL = ORDER.length;
   const CLIP_MAP = {
     1:0,2:0,3:0,4:0,38:0,32:0,5:0,33:0,26:0,30:0,28:0,35:0,36:0,
-    8:1,21:1,13:1,23:1,39:1,14:1,15:1,29:1,37:1,31:1,
+    7:1,8:1,21:1,13:1,23:1,39:1,14:1,15:1,29:1,37:1,31:1,
     17:2,18:2,19:2,20:2,40:2
   };
   const CLIP_LABELS = ['OpenClaw 소개 & 연결','대시보드 자동생성 & 주간 리포트','Agent Manager 빌드'];
