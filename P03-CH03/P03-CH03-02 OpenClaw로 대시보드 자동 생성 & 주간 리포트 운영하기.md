@@ -478,7 +478,7 @@ openclaw cron list
 --message "input 폴더에 있는 CSV로 파이프라인 실행해줘."
 
 # 좋은 예
---message "~/Projects/openclaw-pipeline-kit/runs/latest/input/ 에 있는 CSV 파일로 /run-pipeline 을 실행하세요."
+--message "~/Projects/openclaw-pipeline-kit/runs/latest/input/ 에 있는 CSV 파일로 파이프라인 실행 을 실행하세요."
 ```
 
 왜냐하면 크론은 특정 작업 디렉토리를 전제하지 않아요. 상대경로를 쓰면 어느 위치에서 실행되느냐에 따라 파일을 못 찾을 수 있습니다. 절대경로는 어디서 실행돼도 항상 같은 파일을 가리켜요.
@@ -506,12 +506,12 @@ openclaw cron list
 **세 번째, 슬래시 명령어를 직접 넣으세요.**
 
 ```bash
---message "... /run-pipeline 을 실행하세요."
+--message "... 파이프라인 실행 을 실행하세요."
 ```
 
-`/run-pipeline`처럼 Echo가 알아듣는 시작 문구를 프롬프트 안에 직접 넣어주세요. Echo의 AGENTS.md에 파이프라인 실행 순서가 정의돼 있어서, 시작 지시만 명확하면 나머지는 알아서 진행해요.
+"파이프라인 실행해줘"처럼 Echo가 알아듣는 자연어 시작 문구를 넣어주세요. 슬래시 명령어가 아니라 자연어예요. Echo의 AGENTS.md에 파이프라인 실행 순서가 정의돼 있어서, 시작 지시만 명확하면 나머지는 알아서 진행해요.
 
-이게 왜 좋냐면, 메시지에서 해석의 여지를 줄여주기 때문이에요. "데이터 분석 좀 해줘"라고 하면 Echo가 어떤 분석을 원하는지 판단해야 해요. `/run-pipeline`이라고 하면 판단할 게 없어요. AGENTS.md에 정의된 그 절차를 그대로 실행하면 됩니다. 자연어의 유연함이 필요 없는 자리에서는 정해진 문구가 안전해요.
+이게 왜 좋냐면, 메시지에서 해석의 여지를 줄여주기 때문이에요. "데이터 분석 좀 해줘"라고 하면 Echo가 어떤 분석을 원하는지 판단해야 해요. `파이프라인 실행`이라고 하면 판단할 게 없어요. AGENTS.md에 정의된 그 절차를 그대로 실행하면 됩니다. 자연어의 유연함이 필요 없는 자리에서는 정해진 문구가 안전해요.
 
 ---
 
@@ -572,7 +572,7 @@ openclaw cron add \
 ```bash
 openclaw cron add \
   --cron "0 9 * * 1" \
-  --message "~/data/marketing/weekly/ 최신 CSV로 /run-pipeline 실행. 채널별 ROAS·전환율·예산 소진율 포함한 대시보드 만들어줘. 완료 후 파일 목록 알려줘." \
+  --message "~/data/marketing/weekly/ 최신 CSV로 파이프라인 실행해줘. 채널별 ROAS·전환율·예산 소진율 포함한 대시보드 만들어줘. 완료 후 파일 목록 알려줘." \
   --agent main
 ```
 
@@ -583,7 +583,7 @@ openclaw cron add \
 ```bash
 openclaw cron add \
   --cron "0 8 1 * *" \
-  --message "~/data/finance/monthly/ 최신 CSV로 /run-pipeline 실행. 매출·영업이익·비용 구조 분석 포함한 임원 보고서 만들어줘. 완료 후 파일 목록 알려줘." \
+  --message "~/data/finance/monthly/ 최신 CSV로 파이프라인 실행해줘. 매출·영업이익·비용 구조 분석 포함한 임원 보고서 만들어줘. 완료 후 파일 목록 알려줘." \
   --agent main
 ```
 
@@ -594,7 +594,7 @@ openclaw cron add \
 ```bash
 openclaw cron add \
   --cron "0 9 * * 1#1" \
-  --message "~/data/hr/monthly/ 최신 CSV로 /run-pipeline 실행. 부서별 인원·이탈률·채용 현황 분석해줘. 완료 후 파일 목록 알려줘." \
+  --message "~/data/hr/monthly/ 최신 CSV로 파이프라인 실행해줘. 부서별 인원·이탈률·채용 현황 분석해줘. 완료 후 파일 목록 알려줘." \
   --agent main
 ```
 
@@ -605,7 +605,7 @@ openclaw cron add \
 ```bash
 openclaw cron add \
   --cron "0 8 * * 1-5" \
-  --message "~/data/sales/daily/ 최신 CSV로 /run-pipeline 실행. 지역별·담당자별 목표 달성률 분석. 완료 후 파일 목록 알려줘." \
+  --message "~/data/sales/daily/ 최신 CSV로 파이프라인 실행해줘. 지역별·담당자별 목표 달성률 분석. 완료 후 파일 목록 알려줘." \
   --agent main
 ```
 
@@ -616,18 +616,18 @@ openclaw cron add \
 ```bash
 openclaw cron add \
   --cron "0 9 * * 1" \
-  --message "~/data/business/weekly/ 최신 CSV로 /run-pipeline 실행. 트래픽·전환·수익 주간 요약 만들어줘. 완료 후 파일 목록 알려줘." \
+  --message "~/data/business/weekly/ 최신 CSV로 파이프라인 실행해줘. 트래픽·전환·수익 주간 요약 만들어줘. 완료 후 파일 목록 알려줘." \
   --agent main
 ```
 
 ---
 
-공통점이 보이시나요? 절대경로, `/run-pipeline`, 완료 조건. 이 세 가지가 항상 들어가 있어요. 이 패턴을 그대로 쓰시면서 파일 경로랑 분석 요구사항만 바꾸시면 됩니다.
+공통점이 보이시나요? 절대경로, 파이프라인 실행 요청, 완료 조건. 이 세 가지가 항상 들어가 있어요. 이 패턴을 그대로 쓰시면서 파일 경로랑 분석 요구사항만 바꾸시면 됩니다.
 
 다섯 시나리오를 나란히 놓고 보면 바뀐 건 세 군데뿐이에요. 스케줄 표현식, 데이터 폴더 경로, 그리고 분석 요구사항 문장. 나머지 뼈대는 전부 동일합니다. 그러니까 여러분이 새 크론을 만들 때 할 일은 이 세 칸을 채우는 거예요. 우리 팀 데이터는 언제 나오는가, 어디에 두는가, 뭘 보고 싶은가. 이 세 질문에 답하면 크론 한 줄이 완성됩니다.
 
 
-## s14 — /run-pipeline 자동 실행 연동 (6분)
+## s14 — 파이프라인 자동 실행 연동 (6분)
 
 > **🎬 촬영** `[데모 — 텔레그램 + 터미널]`
 
@@ -693,11 +693,11 @@ openclaw logs --follow
 
 ```
 [Echo] Received message: "~/Projects/openclaw-pipeline-kit/..."
-[Echo] Parsing intent: /run-pipeline
+[Echo] Parsing intent: 파이프라인 실행
 [Echo] Reading AGENTS.md...
 ```
 
-세 줄을 하나씩 볼게요. `Received message`는 텔레그램 메시지가 Echo한테 도착했다는 뜻이에요. 여러분이 보낸 그 문장이 따옴표 안에 그대로 보입니다. `Parsing intent: /run-pipeline`은 Echo가 메시지에서 "파이프라인을 시작하라"는 의도를 읽어냈다는 뜻이에요. `Reading AGENTS.md...`는 s8에서 설명한 그 파일, 그러니까 진행 규칙을 읽는 중이라는 뜻입니다. 이 세 줄이 보이면 접수가 정상적으로 된 거예요. 반대로 메시지를 보냈는데 `Received message`부터 안 뜨면, 메시지가 Echo까지 도달하지 못한 겁니다. 그땐 페어링 상태부터 확인하면 돼요.
+세 줄을 하나씩 볼게요. `Received message`는 텔레그램 메시지가 Echo한테 도착했다는 뜻이에요. 여러분이 보낸 그 문장이 따옴표 안에 그대로 보입니다. `Parsing intent: 파이프라인 실행`은 Echo가 메시지에서 "파이프라인을 시작하라"는 의도를 읽어냈다는 뜻이에요. `Reading AGENTS.md...`는 s8에서 설명한 그 파일, 그러니까 진행 규칙을 읽는 중이라는 뜻입니다. 이 세 줄이 보이면 접수가 정상적으로 된 거예요. 반대로 메시지를 보냈는데 `Received message`부터 안 뜨면, 메시지가 Echo까지 도달하지 못한 겁니다. 그땐 페어링 상태부터 확인하면 돼요.
 
 그 다음엔 Aria가 시작됩니다.
 

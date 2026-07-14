@@ -149,7 +149,7 @@
         <div style="font-size:11px;letter-spacing:0.12em;color:var(--hint);text-transform:uppercase;">CLIP 02</div>
         <div style="font-size:20px;font-weight:700;color:var(--text);text-align:center;">대시보드 자동생성<br>& 주간 리포트</div>
         <div style="width:32px;height:2px;background:var(--border);"></div>
-        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">파이프라인 실행<br>/run-pipeline · 크론 자동화</div>
+        <div style="font-size:13px;color:#666;text-align:center;line-height:1.8;">파이프라인 실행<br>자연어 요청 · 크론 자동화</div>
         <div style="margin-top:auto;font-family:monospace;font-size:12px;color:var(--green);">openclaw cron add</div>
       </div>
       <div class="ov-arrow dim">→</div>
@@ -846,7 +846,7 @@
         <br>
         <div style="color:var(--sam);">## 역할</div>
         <div>- 주요 프로젝트 총괄</div>
-        <div>- <span class="code-green">/run-pipeline</span> 으로 파이프라인 실행</div>
+        <div>- <span class="code-green">"파이프라인 실행해줘"</span> 자연어로 실행</div>
         <div>- 크론 결과를 텔레그램으로 전송</div>
         <br>
         <div style="color:var(--sam);">## 핵심 원칙</div>
@@ -936,7 +936,7 @@
         <div style="font-size:11px;letter-spacing:0.12em;color:var(--green);text-transform:uppercase;font-weight:700;">CLIP 03</div>
         <div style="font-size:20px;font-weight:700;color:var(--text);text-align:center;">크론 자동화<br>파이프라인 연동</div>
         <div style="width:32px;height:2px;background:var(--green);"></div>
-        <div style="font-size:13px;color:#444;text-align:center;line-height:1.8;">every / cron 스케줄<br>/run-pipeline 자동실행</div>
+        <div style="font-size:13px;color:#444;text-align:center;line-height:1.8;">every / cron 스케줄<br>파이프라인 실행 자동실행</div>
         <div style="margin-top:auto;font-family:monospace;font-size:12px;color:var(--green);">cron/jobs.json</div>
       </div>
       <div class="ov-arrow dim">→</div>
@@ -947,7 +947,7 @@
         <div style="margin-top:auto;font-family:monospace;font-size:12px;color:var(--green);">openclaw-manager</div>
       </div>
     </div>
-    <div style="margin-top:36px;font-size:16px;color:#555;text-align:center;">크론 스케줄 설정 → /run-pipeline 자동 실행 → Telegram 결과 전송</div>
+    <div style="margin-top:36px;font-size:16px;color:#555;text-align:center;">크론 스케줄 설정 → 파이프라인 자동 실행 → Telegram 결과 전송</div>
   </div>
 </div>
 
@@ -959,7 +959,7 @@
     <div class="sec-title">크론 자동화<br>파이프라인 연동</div>
     <div class="sec-sub">
       스케줄 설정 → 에이전트가 자는 동안 자동 실행.<br>
-      /run-pipeline을 크론으로 연결하면 완전 자동화.
+      파이프라인 실행을 크론으로 연결하면 완전 자동화.
     </div>
   </div>
 </div>
@@ -977,7 +977,7 @@
           <div style="color:#555;font-size:12px;margin-bottom:8px;"># 매주 월요일 오전 9시 · 크론 자동 트리거</div>
           파일 경로:<br>
           <span style="color:#8dc8b4;">~/Projects/openclaw-pipeline-kit/runs/latest/input/광고효율_데이터.csv</span><br>
-          <span style="color:var(--aria);">/run-pipeline</span> 실행하고<br>
+          <span style="color:var(--aria);">파이프라인 실행</span> 요청<br>
           완료 후 파일 목록 알려줘.
         </div>
         <div style="background:var(--bg-code);border-radius:6px;padding:16px 20px;font-family:monospace;font-size:14px;color:rgba(255,255,255,0.85);line-height:1.9;">
@@ -996,7 +996,7 @@
           <span class="agent-badge badge-echo" style="font-size:11px;">Echo</span>
           <div style="flex:1;">
             <div style="font-size:15px;font-weight:600;color:var(--text);font-family:monospace;">weekly-dashboard-run</div>
-            <div style="font-size:13px;color:#888;">매주 월 오전 9시 — /run-pipeline 자동 실행</div>
+            <div style="font-size:13px;color:#888;">매주 월 오전 9시 — 파이프라인 자동 실행</div>
           </div>
           <div style="font-size:12px;font-family:monospace;color:var(--green);">cron Mon</div>
         </div>
@@ -1030,7 +1030,7 @@
 </div>
 
 
-<!-- ════ s14 | /run-pipeline 자동 실행 연동 ════ -->
+<!-- ════ s14 | 파이프라인 자동 실행 연동 ════ -->
 <div class="slide" id="s14">
   <div class="tb"><span class="tb-cap">openclaw-pipeline-kit + OpenClaw 연동</span><span class="tb-num">14</span></div>
   <div class="body">
@@ -1041,7 +1041,7 @@
           <div style="color:#555;font-size:13px;margin-bottom:10px;"># 매주 월요일 오전 9시 · 크론 자동 트리거</div>
           파일 경로:<br>
           <span style="color:#8dc8b4;">~/Projects/openclaw-pipeline-kit/<br>runs/latest/input/광고효율_데이터.csv</span><br><br>
-          <span style="color:var(--aria);">/run-pipeline</span> 실행하고<br>
+          <span style="color:var(--aria);">파이프라인 실행</span> 요청<br>
           완료 후 결과물 목록 알려줘.
         </div>
         <div style="font-size:14px;color:#777;line-height:1.7;">사람이 직접 보내는 것과 완전히 같은 형식.<br>크론이 정해진 시간에 자동 전송.</div>
@@ -1056,7 +1056,7 @@
         </div>
         <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;border:1px solid var(--border);border-radius:6px;background:rgba(106,172,152,0.1);">
           <div style="width:28px;height:28px;border-radius:50%;background:var(--p01);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0;">2</div>
-          <div style="font-size:17px;color:#333;">Echo가 프롬프트 수신 → <span style="font-family:monospace;color:var(--green);">/run-pipeline</span> 실행</div>
+          <div style="font-size:17px;color:#333;">Echo가 프롬프트 수신 → <span style="font-family:monospace;color:var(--green);">파이프라인 실행</span></div>
         </div>
         <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:#fff;border:1px solid var(--border);border-radius:6px;">
           <div style="width:28px;height:28px;border-radius:50%;background:var(--p01);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0;">3</div>
@@ -1892,7 +1892,7 @@
         <div style="font-size:17px;color:rgba(255,255,255,0.88);line-height:2.1;font-family:'Menlo','Monaco',monospace;">
           파일 경로:<br>
           <span style="color:#8dc8b4;">~/Projects/openclaw-pipeline-kit/runs/<br>latest/input/광고효율_데이터.csv</span><br><br>
-          <span style="color:var(--aria);">/run-pipeline</span> 을 실행하세요.<br>
+          <span style="color:var(--aria);">파이프라인을 실행해줘</span>.<br>
           완료 후 생성된 파일 목록을<br>알려주세요.
         </div>
       </div>
@@ -1913,7 +1913,7 @@
         <div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.9;font-family:'Menlo','Monaco',monospace;">
           <span style="color:var(--echo);">나는 A. 메인 에이전트.</span><br>
           <span style="color:var(--sam);">## 성격</span> 분석가. 팩트 중심.<br>
-          <span style="color:var(--sam);">## 역할</span> 주요 프로젝트 총괄, /run-pipeline 실행<br>
+          <span style="color:var(--sam);">## 역할</span> 주요 프로젝트 총괄, 파이프라인 실행<br>
           <span style="color:var(--sam);">## 원칙</span> 칭찬보다 팩트 먼저
         </div>
       </div>
@@ -1997,7 +1997,7 @@
         <br>
         <div style="color:var(--sam);">## 역할</div>
         <div>- 메인 에이전트 — 주요 프로젝트 총괄</div>
-        <div>- <span class="code-green">/run-pipeline</span> 으로 파이프라인 실행</div>
+        <div>- <span class="code-green">"파이프라인 실행해줘"</span> 자연어로 실행</div>
         <div>- 개발·배포·코딩 작업 담당</div>
         <br>
         <div style="color:var(--sam);">## 원칙</div>
@@ -2020,7 +2020,7 @@
         <div style="background:var(--bg-code);padding:18px 22px;font-family:monospace;font-size:14px;color:rgba(255,255,255,0.85);line-height:1.9;">
           파일 경로:<br>
           <span style="color:#8dc8b4;">~/Projects/openclaw-pipeline-kit/runs/<br>latest/input/광고효율_데이터.csv</span><br>
-          <span style="color:var(--aria);">/run-pipeline</span> 을 실행하세요.<br>
+          <span style="color:var(--aria);">파이프라인을 실행해줘</span>.<br>
           완료 후 생성된 파일 목록을 알려주세요.
         </div>
       </div>
@@ -2062,7 +2062,7 @@
           <div style="font-size:24px;flex-shrink:0;line-height:1.1;color:var(--p01);font-weight:700;">③</div>
           <div>
             <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;">슬래시 명령어 직접 사용</div>
-            <div style="font-size:15px;color:#555;line-height:1.6;"><span style="font-family:monospace;color:var(--green);">/run-pipeline</span> 같은 skill 명령어를 프롬프트 안에 직접 넣으면 됨</div>
+            <div style="font-size:15px;color:#555;line-height:1.6;"><span style="font-family:monospace;color:var(--green);">파이프라인 실행</span> 같은 skill 명령어를 프롬프트 안에 직접 넣으면 됨</div>
           </div>
         </div>
       </div>
