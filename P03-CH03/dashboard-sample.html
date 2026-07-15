@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>광고 성과 분석 대시보드 — OpenClaw Generated</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  color-scheme: light;
+  --kt-black: #131415;
+  --kt-white: #ffffff;
+  --kt-gray-25:  #f8f9fa;
+  --kt-gray-50:  #f3f4f6;
+  --kt-gray-75:  #eeeff2;
+  --kt-gray-100: #e9eaee;
+  --kt-gray-150: #d5d8dd;
+  --kt-gray-200: #c7cad1;
+  --kt-gray-300: #adb1b9;
+  --kt-gray-400: #8b8f97;
+  --kt-gray-500: #6f737b;
+  --kt-gray-550: #61646b;
+  --kt-gray-600: #55585d;
+  --kt-gray-650: #4a4c50;
+  --kt-gray-700: #3d3f43;
+  --kt-gray-750: #313235;
+  --kt-gray-800: #232425;
+  --kt-gray-850: #1e1f20;
+  --kt-gray-900: #191a1b;
+  --kt-red-100: #fce9e9;
+  --kt-red-150: #fadbdc;
+  --kt-red-300: #ec797d;
+  --kt-red-400: #e54d53;
+  --kt-red-500: #e0282f;
+  --kt-red-600: #bb1b21;
+  --kt-red-700: #8a1418;
+  --kt-teal-100: #e1f5f5;
+  --kt-teal-150: #cdeeee;
+  --kt-teal-200: #a9e5e1;
+  --kt-teal-300: #4cc8c3;
+  --kt-teal-400: #00a39b;
+  --kt-teal-500: #007f7f;
+  --kt-teal-600: #005e66;
+  --kt-teal-700: #00484e;
+  --kt-teal-800: #002629;
+  --kt-blue-100: #d9f2ff;
+  --kt-blue-200: #80d4ff;
+  --kt-blue-300: #50b6fe;
+  --kt-blue-400: #148aff;
+  --kt-blue-500: #005ccc;
+  --kt-blue-700: #003676;
+  --kt-green-100: #e5f5e1;
+  --kt-green-150: #d0edc9;
+  --kt-green-300: #3ab21f;
+  --kt-green-400: #1c9900;
+  --kt-green-500: #167a00;
+  --kt-green-700: #0c4200;
+  --kt-yellow-100: #fff3e5;
+  --kt-yellow-150: #ffe8d1;
+  --kt-yellow-200: #ffb870;
+  --kt-yellow-300: #fe9d38;
+  --kt-yellow-400: #e57300;
+  --kt-yellow-500: #b85c00;
+  --kt-purple-100: #efebff;
+  --kt-purple-300: #af99ff;
+  --kt-purple-400: #8666ff;
+  --kt-purple-500: #6941ff;
+  --kt-black-5:  rgba(19,20,21,.05);
+  --kt-black-10: rgba(19,20,21,.10);
+  --kt-black-15: rgba(19,20,21,.15);
+  --kt-black-20: rgba(19,20,21,.20);
+  --kt-white-10: rgba(255,255,255,.10);
+  --kt-white-20: rgba(255,255,255,.20);
+  --kt-white-60: rgba(255,255,255,.60);
+  --kt-white-95: rgba(255,255,255,.95);
+  --md-sys-color-primary:              var(--kt-teal-400);
+  --md-sys-color-on-primary:           var(--kt-white);
+  --md-sys-color-primary-container:    var(--kt-teal-100);
+  --md-sys-color-on-primary-container: var(--kt-teal-800);
+  --md-sys-color-secondary:            var(--kt-green-400);
+  --md-sys-color-on-secondary:         var(--kt-white);
+  --md-sys-color-secondary-container:  var(--kt-green-100);
+  --md-sys-color-error:                var(--kt-red-400);
+  --md-sys-color-on-error:             var(--kt-white);
+  --md-sys-color-error-container:      var(--kt-red-100);
+  --md-sys-color-background:           var(--kt-gray-25);
+  --md-sys-color-on-background:        var(--kt-black);
+  --md-sys-color-surface:              var(--kt-white);
+  --md-sys-color-on-surface:           var(--kt-black);
+  --md-sys-color-surface-variant:      var(--kt-gray-50);
+  --md-sys-color-on-surface-variant:   var(--kt-gray-500);
+  --md-sys-color-outline:              var(--kt-gray-150);
+  --md-sys-color-outline-variant:      var(--kt-gray-75);
+
+  /* KT Dashboard semantic tokens */
+  --c-bg:          var(--kt-gray-25);
+  --c-surface:     var(--kt-white);
+  --c-surface-alt: var(--kt-gray-50);
+  --c-border:      var(--kt-gray-150);
+  --c-border-sub:  var(--kt-gray-75);
+  --c-text:        var(--kt-black);
+  --c-text-sub:    var(--kt-gray-700);
+  --c-text-dim:    var(--kt-gray-500);
+  --c-text-muted:  var(--kt-gray-400);
+  --c-accent:      var(--kt-teal-400);
+  --c-positive:    var(--kt-green-500);
+  --c-negative:    var(--kt-red-500);
+  --c-hover:       var(--kt-gray-25);
+  --acc-rgb: 0,163,155;
+  --pos-rgb: 22,122,0;
+  --neg-rgb: 224,40,47;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--c-bg);color:var(--c-text);height:100vh;overflow:hidden;display:flex;}
+
+/* ── SIDEBAR ── */
+.sb{width:200px;min-width:200px;background:var(--c-surface);border-right:1px solid var(--c-border);display:flex;flex-direction:column;height:100vh;overflow-y:auto;flex-shrink:0;}
+.sb-logo{padding:20px 20px 14px;border-bottom:1px solid var(--c-border-sub);}
+.sb-brand{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
+.sb-icon{width:28px;height:28px;background:var(--c-accent);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.sb-name{font-size:13px;font-weight:700;color:var(--c-text);letter-spacing:-.01em;}
+.sb-sub{font-size:10px;color:var(--c-text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:.03em;margin-top:2px;}
+.sb-filter{padding:12px 20px;border-bottom:1px solid var(--c-border-sub);}
+.sb-filter-label{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--c-text-muted);margin-bottom:6px;}
+.sb-select{width:100%;padding:5px 8px;border:1px solid var(--c-border);background:var(--c-surface);font-size:11px;color:var(--c-text-sub);font-family:'Pretendard',sans-serif;cursor:pointer;}
+.sb-select:focus{outline:1px solid var(--c-accent);}
+.sb-nav{flex:1;padding:8px 0;}
+.nav-item{display:flex;align-items:center;gap:8px;padding:9px 20px;font-size:13px;color:var(--c-text-dim);cursor:pointer;transition:all .12s;user-select:none;}
+.nav-item:hover{color:var(--c-text);background:var(--c-hover);}
+.nav-item.active{color:var(--c-accent);background:rgba(0,163,155,.06);font-weight:600;}
+.sb-nav-dot{width:6px;height:6px;border-radius:50%;border:1.5px solid currentColor;flex-shrink:0;opacity:.5;}
+.nav-item.active .sb-nav-dot{background:var(--c-accent);border-color:var(--c-accent);opacity:1;}
+.sb-foot{padding:14px 20px;border-top:1px solid var(--c-border-sub);}
+.sb-meta{font-size:9.5px;color:var(--c-text-muted);line-height:1.9;font-family:'JetBrains Mono',monospace;}
+
+/* ── MAIN ── */
+.main{flex:1;overflow-y:auto;background:var(--c-bg);}
+.panel{display:none;}.panel.active{display:block;}
+
+/* ── PAGE HEADER ── */
+.page-hdr{background:var(--c-surface);border-bottom:1px solid var(--c-border);padding:18px 32px 14px;display:flex;align-items:flex-start;justify-content:space-between;}
+.page-hdr-left{}
+.page-title{font-size:22px;font-weight:600;color:var(--c-text);letter-spacing:-.02em;line-height:1.2;}
+.page-subtitle{font-size:12px;color:var(--c-text-dim);margin-top:3px;}
+.page-hdr-right{text-align:right;flex-shrink:0;}
+.page-refresh{font-size:11px;color:var(--c-text-muted);font-family:'JetBrains Mono',monospace;line-height:1.7;}
+
+/* ── PAGE BODY ── */
+.page-body{padding:20px 32px;}
+
+/* ── ALERT ROW (3-col, above KPI) ── */
+.alert-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;background:var(--c-surface);border:1px solid var(--c-border);margin-bottom:20px;overflow:hidden;}
+.alert-card{padding:16px 20px;border-right:1px solid var(--c-border);}
+.alert-card:last-child{border-right:none;}
+.alert-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--c-text-dim);margin-bottom:6px;}
+.alert-value{font-size:28px;font-weight:700;color:var(--c-text);line-height:1;font-family:'JetBrains Mono',monospace;letter-spacing:-.5px;}
+.alert-sub{font-size:11px;color:var(--c-text-muted);margin-top:4px;}
+
+/* ── KPI ROW ── */
+.kpi-row{display:flex;gap:0;background:var(--c-surface);border:1px solid var(--c-border);margin-bottom:20px;overflow:hidden;}
+.kpi-card{flex:1;padding:18px 24px;border-right:1px solid var(--c-border);cursor:pointer;transition:background .12s;}
+.kpi-card:last-child{border-right:none;}
+.kpi-card:hover{background:var(--c-hover);}
+.kpi-card.kpi-main{flex:1.4;background:var(--kt-gray-50);}
+.kpi-label{font-size:12px;color:var(--c-text-dim);margin-bottom:6px;}
+.kpi-value{font-size:26px;font-weight:700;color:var(--c-text);letter-spacing:-.5px;line-height:1;font-family:'JetBrains Mono',monospace;}
+.kpi-delta{font-size:13px;margin-top:5px;}
+.kpi-spark{height:26px;margin-top:8px;}
+.pos{color:var(--c-positive);}
+.neg{color:var(--c-negative);}
+.dim{color:var(--c-text-dim);}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{display:flex;align-items:center;gap:16px;margin:24px 0 16px;}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--c-border);}
+.section-divider-text{font-size:14px;font-weight:700;color:var(--c-text-sub);white-space:nowrap;}
+
+/* ── CHART GRID ── */
+.chart-grid{display:grid;gap:10px;margin-bottom:12px;align-items:start;}
+.chart-grid.col-2{grid-template-columns:1fr 1fr;}
+.chart-grid.col-3{grid-template-columns:1fr 1fr 1fr;}
+.chart-grid.col-4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.chart-grid.col-1-2{grid-template-columns:1.1fr 2fr;}
+
+/* ── CHART CARD ── */
+.chart-card{background:var(--c-surface);border:1px solid var(--c-border);padding:18px 20px;display:flex;flex-direction:column;}
+.chart-title{font-size:13px;font-weight:600;color:var(--c-text);}
+.chart-subtitle{font-size:11px;color:var(--c-text-dim);margin-top:2px;margin-bottom:12px;line-height:1.5;}
+.chart-wrap{position:relative;}
+.chart-wrap.h160{height:160px;}
+.chart-wrap.h200{height:200px;}
+.chart-wrap.h220{height:220px;}
+.chart-wrap.h240{height:240px;}
+.chart-wrap.h280{height:280px;}
+
+/* ── CHART INSIGHT STRIP ── */
+.chart-insight{border-left:2px solid var(--c-accent);background:var(--kt-gray-25);padding:5px 9px;font-size:11px;line-height:1.5;margin:2px 0 10px;color:var(--c-text-sub);}
+.chart-insight strong{color:var(--c-text);}
+
+/* ── DATA TABLE ── */
+.data-table{width:100%;border-collapse:collapse;font-size:12px;}
+.data-table th{background:var(--kt-gray-50);text-transform:uppercase;font-size:11px;letter-spacing:.04em;font-weight:700;padding:8px 12px;border-bottom:1px solid var(--c-border);text-align:left;color:var(--c-text-dim);}
+.data-table td{padding:9px 12px;border-bottom:1px solid var(--kt-gray-75);vertical-align:middle;}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr:hover td{background:var(--c-hover);}
+.data-table tr.row-active td{background:rgba(0,163,155,.05);}
+.data-table tr.clickable{cursor:pointer;}
+
+/* ── CHANNEL BADGES ── */
+.ch{display:inline-flex;align-items:center;padding:2px 7px;font-size:10.5px;font-weight:600;}
+.ch-naver_search,.ch-naver{background:rgba(0,163,155,.1);color:var(--kt-teal-600);}
+.ch-meta,.ch-google,.ch-kakao,.ch-youtube{background:var(--kt-gray-75);color:var(--kt-gray-650);}
+
+/* ── ROAS MINI BAR ── */
+.rbar-w{display:flex;align-items:center;gap:7px;}
+.rbar{height:4px;transition:width .3s;}
+.rbar.hi{background:var(--kt-teal-400);}
+.rbar.lo{background:var(--kt-gray-200);}
+.rbar.mid{background:var(--kt-gray-300);}
+.rbar-v{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;min-width:38px;color:var(--c-text-sub);}
+
+/* ── NEXT QUESTION BUTTON ── */
+.next-q{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--c-surface);border:1px solid var(--c-border);cursor:pointer;transition:all .12s;margin-top:12px;}
+.next-q:hover{background:var(--c-hover);border-color:var(--kt-gray-300);}
+.nq-lbl{font-size:9px;font-weight:700;color:var(--c-accent);text-transform:uppercase;letter-spacing:.09em;font-family:'JetBrains Mono',monospace;white-space:nowrap;}
+.nq-txt{font-size:12.5px;font-weight:600;color:var(--c-text);}
+.nq-arr{margin-left:auto;color:var(--c-accent);font-size:15px;flex-shrink:0;}
+
+/* ── CHANNEL PROFILE CARD ── */
+.ch-profile-card{display:none;background:var(--c-surface);border:1px solid var(--c-border);border-top:2px solid var(--c-accent);padding:18px 20px;margin-top:-14px;margin-bottom:16px;}
+.ch-profile-card.visible{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:18px;}
+.ch-profile-name{font-size:14px;font-weight:700;color:var(--c-accent);margin-bottom:14px;grid-column:1/-1;}
+.ch-profile-section-title{font-size:11px;font-weight:700;color:var(--c-text-dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+.ch-seg-item{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--c-border-sub);font-size:11.5px;}
+.ch-seg-item:last-child{border-bottom:none;}
+.ch-seg-label{color:var(--c-text-dim);}
+.ch-seg-value{font-weight:700;color:var(--c-text);font-family:'JetBrains Mono',monospace;font-size:11px;}
+
+/* ── KPI DETAIL EXPAND ── */
+.kpi-detail-row{display:none;background:var(--c-surface);border:1px solid var(--c-border);border-top:2px solid var(--c-accent);padding:18px 20px;margin-bottom:20px;}
+.kpi-detail-row.visible{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;}
+.kpi-detail-title{font-size:12px;font-weight:700;color:var(--c-text);margin-bottom:12px;}
+
+/* ── FUNNEL ROW ── */
+.funnel-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--c-surface);border:1px solid var(--c-border);margin-bottom:20px;overflow:hidden;}
+.funnel-step{padding:16px 20px;border-right:1px solid var(--c-border);}
+.funnel-step:last-child{border-right:none;}
+.funnel-step-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--c-text-dim);margin-bottom:5px;}
+.funnel-step-val{font-size:22px;font-weight:700;color:var(--c-text);font-family:'JetBrains Mono',monospace;letter-spacing:-.5px;}
+.funnel-step-sub{font-size:11px;color:var(--c-text-muted);margin-top:3px;}
+
+/* ── ACTION CARDS ── */
+.action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.action-card{background:var(--c-surface);border:1px solid var(--c-border);padding:16px 18px;cursor:pointer;transition:border-color .12s;}
+.action-card:hover{border-color:var(--kt-gray-300);}
+.action-card.expanded{border-color:var(--c-accent);border-top-width:2px;background:rgba(0,163,155,.02);}
+.action-card-hdr{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.action-num{width:22px;height:22px;background:var(--c-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.action-title{font-size:13px;font-weight:700;color:var(--c-text);line-height:1.4;}
+.action-meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px;}
+.action-tag{font-size:9.5px;padding:2px 7px;font-weight:600;}
+.tag-hi{background:rgba(22,122,0,.08);color:var(--kt-green-500);}
+.tag-mid{background:rgba(0,163,155,.08);color:var(--kt-teal-500);}
+.tag-lo{background:rgba(0,163,155,.08);color:var(--kt-teal-500);}
+.tag-neutral{background:var(--kt-gray-75);color:var(--kt-gray-550);}
+.action-kv{display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;}
+.action-kv-label{color:var(--c-text-dim);}
+.action-kv-value{font-weight:700;color:var(--c-text);}
+.action-effect{font-size:12px;font-weight:700;color:var(--c-positive);margin-top:8px;padding:6px 10px;background:var(--kt-green-100);}
+.action-steps{display:none;margin-top:12px;border-top:1px solid var(--c-border);padding-top:12px;}
+.action-card.expanded .action-steps{display:block;}
+.action-step-item{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid var(--c-border-sub);}
+.action-step-item:last-child{border-bottom:none;}
+.action-step-num{width:17px;height:17px;background:var(--kt-gray-75);color:var(--kt-gray-600);display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.action-step-txt{font-size:11.5px;color:var(--c-text);line-height:1.5;}
+
+/* ── MATRIX ── */
+.matrix-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--c-border);overflow:hidden;}
+.matrix-cell{padding:20px;position:relative;min-height:160px;}
+.matrix-cell-q1{background:rgba(22,122,0,.04);border-right:1px solid var(--c-border);border-bottom:1px solid var(--c-border);}
+.matrix-cell-q2{background:rgba(0,163,155,.03);border-bottom:1px solid var(--c-border);}
+.matrix-cell-q3{background:var(--kt-gray-25);border-right:1px solid var(--c-border);}
+.matrix-cell-q4{background:rgba(224,40,47,.03);}
+.matrix-cell-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.matrix-q1-label{color:var(--kt-green-500);}
+.matrix-q2-label{color:var(--kt-teal-500);}
+.matrix-q3-label{color:var(--kt-gray-500);}
+.matrix-q4-label{color:var(--kt-red-500);}
+.matrix-item{display:inline-flex;align-items:center;gap:5px;background:var(--c-surface);border:1px solid var(--c-border);padding:4px 8px;font-size:10.5px;font-weight:600;color:var(--c-text);margin-top:4px;}
+.matrix-axis-x{display:flex;justify-content:space-between;font-size:9.5px;color:var(--c-text-dim);margin-top:6px;}
+.matrix-axis-y{writing-mode:vertical-rl;transform:rotate(180deg);font-size:9.5px;color:var(--c-text-dim);text-align:center;width:16px;flex-shrink:0;}
+
+/* ── ROADMAP ── */
+.roadmap-track{margin-bottom:12px;}
+.roadmap-phase-label{font-size:10px;font-weight:700;color:var(--c-text-dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.roadmap-bar-bg{flex:1;height:26px;background:var(--kt-gray-75);position:relative;overflow:hidden;}
+.roadmap-bar-fill{height:100%;display:flex;align-items:center;padding:0 10px;font-size:10.5px;font-weight:600;color:#fff;white-space:nowrap;}
+.roadmap-bar-row{display:flex;align-items:center;gap:8px;}
+.roadmap-phase-dates{font-size:10px;color:var(--c-text-muted);font-family:'JetBrains Mono',monospace;white-space:nowrap;min-width:90px;text-align:right;}
+.roadmap-months{display:flex;margin-bottom:6px;}
+.roadmap-month{flex:1;font-size:9px;color:var(--c-text-muted);text-align:center;border-left:1px solid var(--kt-gray-100);padding:2px 0;}
+.roadmap-month:first-child{border-left:none;}
+
+/* ── SIMULATION ── */
+.sim-ctrl{margin-bottom:14px;}
+.sim-lbl{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px;color:var(--c-text);margin-bottom:6px;}
+.sim-lbl-v{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--c-accent);}
+input[type=range]{width:100%;height:4px;border-radius:0;accent-color:var(--c-accent);cursor:pointer;margin:4px 0;}
+.scenario-btns{display:flex;gap:8px;margin-bottom:14px;}
+.scenario-btn{padding:5px 13px;border:1px solid var(--c-border);font-size:11.5px;font-weight:600;cursor:pointer;background:var(--c-surface);color:var(--c-text);transition:all .12s;}
+.scenario-btn:hover{border-color:var(--kt-gray-300);background:var(--c-hover);}
+.scenario-btn.active{background:rgba(0,163,155,.08);border-color:var(--c-accent);color:var(--c-accent);}
+.sim-result-g{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--c-surface);border:1px solid var(--c-border);margin-top:16px;margin-bottom:14px;overflow:hidden;}
+.sim-rc{padding:14px;border-right:1px solid var(--c-border);text-align:center;}
+.sim-rc:last-child{border-right:none;}
+.sim-rv{font-size:20px;font-weight:700;color:var(--c-text);font-family:'JetBrains Mono',monospace;letter-spacing:-.5px;}
+.sim-rd{font-size:11px;font-weight:600;color:var(--c-positive);margin-top:2px;}
+.sim-rl{font-size:9px;color:var(--c-text-muted);text-transform:uppercase;letter-spacing:.06em;margin-top:3px;}
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.ba-card{padding:14px 16px;}
+.ba-before{background:var(--kt-gray-25);border:1px solid var(--c-border);}
+.ba-after{background:rgba(0,163,155,.04);border:1px solid rgba(0,163,155,.2);}
+.ba-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--c-text-dim);margin-bottom:10px;}
+.ba-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+.ba-name{font-size:11px;color:var(--c-text-dim);}
+.ba-val{font-size:13px;font-weight:700;color:var(--c-text);}
+.ba-val.hi{color:var(--c-positive);}
+
+/* ── RISK STRIPS ── */
+.risk-strip{border-left:2px solid var(--kt-red-400);background:var(--kt-red-100);padding:5px 9px;font-size:11px;line-height:1.5;margin:4px 0;color:var(--kt-red-700);}
+.risk-strip strong{color:var(--kt-red-600);}
+.risk-strips-label{font-size:10px;font-weight:700;color:var(--c-text-dim);text-transform:uppercase;letter-spacing:.07em;margin-top:14px;margin-bottom:6px;}
+
+/* ── DENSE OVERRIDES ── */
+.page-body { padding: 14px 24px; }
+.page-hdr { padding: 12px 24px 10px; }
+.chart-card { padding: 12px 14px; }
+.chart-grid { gap: 10px; margin-bottom: 12px; }
+.section-divider { margin: 14px 0 10px; }
+.kpi-card { padding: 12px 16px; }
+.alert-card { padding: 10px 14px; }
+.kpi-row { margin-bottom: 12px; }
+.alert-row { margin-bottom: 12px; }
+.chart-title { font-size: 12px; margin-bottom: 2px; }
+.chart-subtitle { font-size: 10px; margin-bottom: 8px; }
+.alert-value { font-size: 24px; }
+.kpi-spark { height: 22px; margin-top: 6px; }
+
+/* ── ADDITIONAL CHART HEIGHT TOKENS ── */
+.chart-wrap.h100 { height: 100px; }
+.chart-wrap.h120 { height: 120px; }
+.chart-wrap.h140 { height: 140px; }
+.chart-wrap.h180 { height: 180px; }
+
+/* ── EXTRA GRID VARIANTS ── */
+.chart-grid.col-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.chart-grid.col-12-10 { grid-template-columns: 1.2fr 1fr; }
+.chart-grid.col-2-1 { grid-template-columns: 2fr 1fr; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sb">
+  <div class="sb-logo">
+    <div class="sb-brand">
+      <div class="sb-icon">🦞</div>
+      <div class="sb-name">OpenClaw</div>
+    </div>
+    <div class="sb-sub">광고 성과 분석 · 2023년</div>
+  </div>
+  <div class="sb-filter">
+    <div class="sb-filter-label">기간</div>
+    <select class="sb-select"><option>2023년 (전체)</option></select>
+  </div>
+  <div class="sb-filter">
+    <div class="sb-filter-label">채널</div>
+    <select class="sb-select"><option>전체 채널 (6)</option></select>
+  </div>
+  <nav class="sb-nav">
+    <div class="nav-item active" onclick="showPanel('overview',this)"><div class="sb-nav-dot"></div>전체 현황</div>
+    <div class="nav-item" onclick="showPanel('channel',this)"><div class="sb-nav-dot"></div>채널 효율 비교</div>
+    <div class="nav-item" onclick="showPanel('quality',this)"><div class="sb-nav-dot"></div>전환 품질 분석</div>
+    <div class="nav-item" onclick="showPanel('funnel',this)"><div class="sb-nav-dot"></div>퍼널 분석</div>
+    <div class="nav-item" onclick="showPanel('actions',this)"><div class="sb-nav-dot"></div>액션 아이템</div>
+    <div class="nav-item" onclick="showPanel('sim',this)"><div class="sb-nav-dot"></div>예산 시뮬레이션</div>
+  </nav>
+  <div class="sb-foot">
+    <div class="sb-meta">기간: 2023.01–12<br>채널: 6개 · 행: 50,000<br><br>Generated by OpenClaw</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- ══════ PANEL: OVERVIEW ══════ -->
+<div class="panel active" id="panel-overview">
+  <div class="page-hdr">
+    <div class="page-hdr-left">
+      <div class="page-title">광고 성과 분석</div>
+      <div class="page-subtitle">2023년 연간 · 채널별 최적화 필요 3건</div>
+    </div>
+    <div class="page-hdr-right">
+      <div class="page-refresh">데이터 기준: 2023년<br>채널 6개</div>
+    </div>
+  </div>
+  <div class="page-body">
+
+    <!-- ALERT ROW -->
+    <div class="alert-row" style="grid-template-columns:1fr 1fr 1fr 1fr;">
+      <div class="alert-card">
+        <div class="alert-label">ROAS 효율 격차</div>
+        <div class="alert-value">2.3배</div>
+        <div class="alert-sub">Naver 19.7x vs 저효율 8.7x</div>
+      </div>
+      <div class="alert-card">
+        <div class="alert-label">예산 배분 왜곡</div>
+        <div class="alert-value">58%</div>
+        <div class="alert-sub">저효율 3채널(G·K·Y) 예산</div>
+      </div>
+      <div class="alert-card">
+        <div class="alert-label">오디언스 품질 격차</div>
+        <div class="alert-value">+51%</div>
+        <div class="alert-sub">Naver RPC ₩177K vs 저효율 ₩117K</div>
+      </div>
+      <div class="alert-card">
+        <div class="alert-label">최적화 가능 매출</div>
+        <div class="alert-value" style="font-size:20px;">₩319억+</div>
+        <div class="alert-sub">예산 재배분 30% 시</div>
+      </div>
+    </div>
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+      <div class="kpi-card kpi-main" onclick="expandKPI('roas',this)">
+        <div class="kpi-label">전체 ROAS</div>
+        <div class="kpi-value">12.1x</div>
+        <div class="kpi-delta dim">채널 최대 19.7x</div>
+        <div class="kpi-spark" id="spark-roas"></div>
+      </div>
+      <div class="kpi-card" onclick="expandKPI('sales',this)">
+        <div class="kpi-label">총 매출</div>
+        <div class="kpi-value" style="font-size:20px;">₩1,384억</div>
+        <div class="kpi-delta pos">연간 누적</div>
+        <div class="kpi-spark" id="spark-sales"></div>
+      </div>
+      <div class="kpi-card" onclick="expandKPI('spend',this)">
+        <div class="kpi-label">총 광고비</div>
+        <div class="kpi-value" style="font-size:20px;">₩114.1억</div>
+        <div class="kpi-delta dim">6개 채널 운영</div>
+        <div class="kpi-spark" id="spark-spend"></div>
+      </div>
+      <div class="kpi-card" onclick="expandKPI('conv',this)">
+        <div class="kpi-label">총 전환수</div>
+        <div class="kpi-value" style="font-size:20px;">984,422</div>
+        <div class="kpi-delta pos">채널 균등 분포</div>
+        <div class="kpi-spark" id="spark-conv"></div>
+      </div>
+      <div class="kpi-card" onclick="expandKPI('cpa',this)">
+        <div class="kpi-label">평균 CPA</div>
+        <div class="kpi-value" style="font-size:20px;">₩11,594</div>
+        <div class="kpi-delta neg">Naver: ₩8,985</div>
+        <div class="kpi-spark" id="spark-cpa"></div>
+      </div>
+    </div>
+
+    <!-- KPI DETAIL EXPAND -->
+    <div class="kpi-detail-row" id="kpi-detail-row">
+      <div>
+        <div class="kpi-detail-title" id="kpi-detail-title">채널별 지표 분포</div>
+        <div style="height:160px;position:relative;"><canvas id="kpi-detail-chart"></canvas></div>
+      </div>
+      <div>
+        <div class="kpi-detail-title">채널 브레이크다운</div>
+        <table class="data-table" style="font-size:11px;">
+          <thead><tr><th>채널</th><th id="kpi-detail-th">값</th></tr></thead>
+          <tbody id="kpi-detail-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">채널 성과 현황</span></div>
+
+    <div class="chart-grid col-1-2">
+      <div class="chart-card">
+        <div class="chart-title">월별 ROAS 추이</div>
+        <div class="chart-subtitle">연간 ROAS 11.8–12.4x 범위로 안정적 유지</div>
+        <div class="chart-wrap h160"><canvas id="ch-monthly-roas"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">예산 배분 현황</div>
+        <div class="chart-subtitle">저효율 3채널이 예산 58% 차지</div>
+        <div class="chart-wrap h160"><canvas id="ch-budget-donut"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-grid col-4">
+      <div class="chart-card">
+        <div class="chart-title">월별 ROAS 추이</div>
+        <div class="chart-subtitle">안정적 11.8–12.4x 범위</div>
+        <div class="chart-wrap h120"><canvas id="ov-roas-monthly"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">월별 광고비 (억원)</div>
+        <div class="chart-subtitle">월간 광고비 추이</div>
+        <div class="chart-wrap h120"><canvas id="ov-spend-monthly"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">월별 전환수</div>
+        <div class="chart-subtitle">월간 전환 달성 현황</div>
+        <div class="chart-wrap h120"><canvas id="ov-conv-monthly"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">월별 매출 (억원)</div>
+        <div class="chart-subtitle">ROAS × 광고비 추산</div>
+        <div class="chart-wrap h120"><canvas id="ov-sales-monthly"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">효율 분석</span></div>
+
+    <div class="chart-grid col-2">
+      <div class="chart-card">
+        <div class="chart-title">채널별 ROAS 비교</div>
+        <div class="chart-subtitle">Naver 계열이 Google·Kakao·YouTube 대비 2.3배 높은 ROAS 달성</div>
+        <div class="chart-wrap h220"><canvas id="ch-roas-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">예산 점유율 vs ROAS</div>
+        <div class="chart-subtitle">예산이 많을수록 ROAS가 낮은 역비례 관계</div>
+        <div class="chart-wrap h220"><canvas id="ov-scatter"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-insight">
+      <strong>Naver 2채널</strong>은 예산 <strong>25.7%</strong>로 매출 <strong>41.7%</strong> 창출. 저효율 3채널(G·K·Y)은 예산 <strong>58.3%</strong>로 동일한 <strong>41.7%</strong>.
+    </div>
+
+    <div class="chart-grid col-3">
+      <div class="chart-card">
+        <div class="chart-title">채널별 CPA 비교</div>
+        <div class="chart-subtitle">전환당 비용 (낮을수록 효율적)</div>
+        <div class="chart-wrap h140"><canvas id="ov-cpa-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">채널별 전환수</div>
+        <div class="chart-subtitle">전환수는 채널 간 균등 분포</div>
+        <div class="chart-wrap h140"><canvas id="ov-conv-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">채널별 광고비 vs 매출</div>
+        <div class="chart-subtitle">투자 대비 성과 비교</div>
+        <div class="chart-wrap h140"><canvas id="ov-spend-vs-sales"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">채널 성과 요약</span></div>
+
+    <div class="chart-card" style="margin-bottom:12px;">
+      <div class="chart-title">전체 채널 성과 비교</div>
+      <div class="chart-subtitle">2023년 연간 · 6개 채널</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>채널</th><th>예산비중</th><th>ROAS</th><th>CPA</th><th>전환수</th><th>매출</th><th>RPC</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="ch ch-naver_search">Naver 검색</span></td><td>12.9%</td><td><strong>19.65x</strong></td><td>₩9,039</td><td>162,758</td><td>₩289억</td><td>₩177,660</td></tr>
+          <tr><td><span class="ch ch-naver">Naver 디스플레이</span></td><td>12.8%</td><td><strong>19.63x</strong></td><td>₩8,985</td><td>163,069</td><td>₩288억</td><td>₩176,391</td></tr>
+          <tr><td><span class="ch ch-meta">Meta</span></td><td>16.0%</td><td>12.52x</td><td>₩11,136</td><td>164,404</td><td>₩229억</td><td>₩139,393</td></tr>
+          <tr><td><span class="ch ch-kakao">Kakao</span></td><td>19.4%</td><td>8.74x</td><td>₩13,408</td><td>164,947</td><td>₩193억</td><td>₩117,239</td></tr>
+          <tr><td><span class="ch ch-google">Google</span></td><td>19.5%</td><td>8.72x</td><td>₩13,450</td><td>165,108</td><td>₩194억</td><td>₩117,277</td></tr>
+          <tr><td><span class="ch ch-youtube">YouTube</span></td><td>19.4%</td><td>8.62x</td><td>₩13,491</td><td>164,136</td><td>₩191억</td><td>₩116,258</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-insight">
+      <strong>Naver 2채널</strong> 예산 25.7% → 매출 41.7%. 저효율 3채널 예산 58.3% → 동일한 41.7%. Sam KPI: North Star ROAS 목표 15x 달성을 위해 채널 예산 재배분 필요.
+    </div>
+
+    <div class="next-q" onclick="showPanel('channel',document.querySelector('[onclick*=\'channel\']'))">
+      <div class="nq-lbl">다음 질문</div>
+      <div class="nq-txt">왜 Google·Kakao·YouTube는 예산 58%를 써도 ROAS 8.7x에 그치는가?</div>
+      <div class="nq-arr">→</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ PANEL: CHANNEL ══════ -->
+<div class="panel" id="panel-channel">
+  <div class="page-hdr">
+    <div class="page-hdr-left">
+      <div class="page-title">채널 효율 비교</div>
+      <div class="page-subtitle">예산 배분과 ROAS의 역비례 관계 분석</div>
+    </div>
+    <div class="page-hdr-right">
+      <div class="page-refresh">채널 클릭 시 상세 프로필 표시</div>
+    </div>
+  </div>
+  <div class="page-body">
+
+    <div class="chart-grid col-2">
+      <div class="chart-card">
+        <div class="chart-title">예산 점유율 vs ROAS</div>
+        <div class="chart-subtitle">예산이 많을수록 ROAS가 낮은 역비례 관계 — 배분 왜곡 확인</div>
+        <div class="chart-wrap h280"><canvas id="ch-scatter"></canvas></div>
+        <div class="chart-insight" style="margin-top:10px;">
+          예산 <strong>25.7%</strong>로 ROAS <strong>19.6x</strong>를 달성한 Naver 계열. 예산 <strong>58.3%</strong>를 점유한 Kakao·Google·YouTube 평균은 <strong>8.7x</strong> — 2.3배 역전.
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+          <div style="background:rgba(0,163,155,.07);border:1px solid rgba(0,163,155,.22);border-radius:4px;padding:10px 12px;text-align:center;">
+            <div style="font-size:9px;color:var(--c-text-dim);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Naver 계열</div>
+            <div style="font-size:18px;font-weight:700;color:#00a39b;line-height:1;">19.6x</div>
+            <div style="font-size:9px;color:var(--c-text-dim);margin-top:2px;">예산 25.7%</div>
+          </div>
+          <div style="background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.18);border-radius:4px;padding:10px 12px;text-align:center;">
+            <div style="font-size:9px;color:var(--c-text-dim);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">저효율 3채널</div>
+            <div style="font-size:18px;font-weight:700;color:#ef4444;line-height:1;">8.7x</div>
+            <div style="font-size:9px;color:var(--c-text-dim);margin-top:2px;">예산 58.3%</div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">채널별 성과 요약</div>
+        <div class="chart-subtitle">채널 클릭 시 상세 프로필 확인</div>
+        <table class="data-table" id="ch-perf-table">
+          <thead><tr><th>채널</th><th>예산비중</th><th>ROAS</th><th>CPA</th></tr></thead>
+          <tbody id="ch-table-body"></tbody>
+        </table>
+        <div style="margin-top:14px;">
+          <div style="font-size:10px;color:var(--c-text-dim);margin-bottom:7px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">ROAS 분포</div>
+          <div id="roas-bars"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:14px;">
+      <div class="chart-title">채널별 월별 ROAS 추이</div>
+      <div class="chart-subtitle">12개월 전 채널 ROAS 추이 비교</div>
+      <div class="chart-wrap h180"><canvas id="ch-monthly-multi"></canvas></div>
+    </div>
+
+    <!-- Channel Profile Card -->
+    <div class="ch-profile-card" id="ch-profile-card">
+      <div class="ch-profile-name" id="ch-profile-name">채널 프로필</div>
+      <div>
+        <div class="ch-profile-section-title">상품 카테고리</div>
+        <div style="height:140px;position:relative;"><canvas id="ch-profile-donut"></canvas></div>
+        <div style="text-align:center;font-size:10px;color:var(--c-text-dim);margin-top:6px;">평균 구매단가 <strong id="ch-profile-avg-price" style="color:var(--c-text);"></strong></div>
+      </div>
+      <div>
+        <div class="ch-profile-section-title">고객 세그먼트</div>
+        <div class="ch-seg-item"><span class="ch-seg-label">재구매율</span><span class="ch-seg-value" id="ch-seg-repurchase">—</span></div>
+        <div class="ch-seg-item"><span class="ch-seg-label">고가치 고객 비중</span><span class="ch-seg-value" id="ch-seg-hv">—</span></div>
+        <div class="ch-seg-item"><span class="ch-seg-label">구매 빈도</span><span class="ch-seg-value" id="ch-seg-freq">—</span></div>
+      </div>
+      <div>
+        <div class="ch-profile-section-title">월별 ROAS 추이</div>
+        <div style="height:140px;position:relative;"><canvas id="ch-profile-spark"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">전환당 매출 분석</span></div>
+
+    <div class="chart-grid col-2">
+      <div class="chart-card">
+        <div class="chart-title">₩1억당 매출 (ROAS)</div>
+        <div class="chart-subtitle">Naver vs 저효율 채널 비교</div>
+        <div class="chart-wrap h160"><canvas id="ch-per-won"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">채널별 전환당 매출(RPC)</div>
+        <div class="chart-subtitle">Naver 유입 고객이 51% 높은 단가 구매</div>
+        <div class="chart-wrap h160"><canvas id="ch-rev-per-conv"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-insight">
+      Google·Kakao·YouTube의 낮은 ROAS는 퍼널 문제가 아닙니다. CTR·CVR은 전 채널 <strong>4.8% / 3.6%</strong>로 동일. 차이는 <strong>전환 품질(구매 단가)</strong>에서 비롯됩니다.
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">세부 지표 비교</span></div>
+
+    <div class="chart-grid col-3">
+      <div class="chart-card">
+        <div class="chart-title">채널별 CPA 비교</div>
+        <div class="chart-subtitle">전환당 비용 수평 비교</div>
+        <div class="chart-wrap h140"><canvas id="ch-cpa-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">채널별 매출 비중</div>
+        <div class="chart-subtitle">채널별 매출 구성비</div>
+        <div class="chart-wrap h140"><canvas id="ch-sales-donut"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">전환당 매출 vs 평균선</div>
+        <div class="chart-subtitle">RPC 채널 비교 및 평균 기준선</div>
+        <div class="chart-wrap h140"><canvas id="ch-rpc-vs-avg"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-grid col-3">
+      <div class="chart-card">
+        <div class="chart-title">채널별 전환수 구성</div>
+        <div class="chart-subtitle">전환수 채널 비중 (균등 분포)</div>
+        <div class="chart-wrap h120"><canvas id="ch-conv-donut"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">채널별 예산 구성</div>
+        <div class="chart-subtitle">광고비 채널 비중</div>
+        <div class="chart-wrap h120"><canvas id="ch-spend-donut"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">채널별 CTR 비교</div>
+        <div class="chart-subtitle">전 채널 4.76–4.81% 동일 범위</div>
+        <div class="chart-wrap h120"><canvas id="ch-ctr-bar"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">전체 채널 상세 지표</span></div>
+
+    <div class="chart-card" style="margin-bottom:12px;">
+      <div class="chart-title">채널별 상세 성과 지표</div>
+      <div class="chart-subtitle">2023년 연간 · 예산비중 · ROAS · CPA · CTR · CVR · RPC · 전환수 · 매출</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>채널</th><th>예산비중</th><th>ROAS</th><th>CPA</th><th>CTR</th><th>CVR</th><th>RPC</th><th>전환수</th><th>매출</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="ch ch-naver_search">Naver 검색</span></td><td>12.9%</td><td class="pos"><strong>19.65x</strong></td><td>₩9,039</td><td>4.76%</td><td>3.55%</td><td>₩177,660</td><td>162,758</td><td>₩289억</td></tr>
+          <tr><td><span class="ch ch-naver">Naver 디스플레이</span></td><td>12.8%</td><td class="pos"><strong>19.63x</strong></td><td>₩8,985</td><td>4.81%</td><td>3.56%</td><td>₩176,391</td><td>163,069</td><td>₩288억</td></tr>
+          <tr><td><span class="ch ch-meta">Meta</span></td><td>16.0%</td><td>12.52x</td><td>₩11,136</td><td>4.76%</td><td>3.62%</td><td>₩139,393</td><td>164,404</td><td>₩229억</td></tr>
+          <tr><td><span class="ch ch-kakao">Kakao</span></td><td>19.4%</td><td class="neg">8.74x</td><td>₩13,408</td><td>4.80%</td><td>3.59%</td><td>₩117,239</td><td>164,947</td><td>₩193억</td></tr>
+          <tr><td><span class="ch ch-google">Google</span></td><td>19.5%</td><td class="neg">8.72x</td><td>₩13,450</td><td>4.77%</td><td>3.58%</td><td>₩117,277</td><td>165,108</td><td>₩194억</td></tr>
+          <tr><td><span class="ch ch-youtube">YouTube</span></td><td>19.4%</td><td class="neg">8.62x</td><td>₩13,491</td><td>4.77%</td><td>3.58%</td><td>₩116,258</td><td>164,136</td><td>₩191억</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="next-q" onclick="showPanel('quality',document.querySelector('[onclick*=\'quality\']'))">
+      <div class="nq-lbl">다음 질문</div>
+      <div class="nq-txt">왜 Naver 고객은 같은 전환수로 2.2배 더 많은 매출을 내는가?</div>
+      <div class="nq-arr">→</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ PANEL: QUALITY ══════ -->
+<div class="panel" id="panel-quality">
+  <div class="page-hdr">
+    <div class="page-hdr-left">
+      <div class="page-title">전환 품질 분석</div>
+      <div class="page-subtitle">같은 전환수인데 왜 매출이 2.2배 다른가?</div>
+    </div>
+    <div class="page-hdr-right">
+      <div class="page-refresh">전환당 매출(RPC) 기준</div>
+    </div>
+  </div>
+  <div class="page-body">
+
+    <!-- 3-col KPI-like cards -->
+    <div class="kpi-row">
+      <div class="kpi-card kpi-main">
+        <div class="kpi-label">Naver 평균 RPC</div>
+        <div class="kpi-value">₩177K</div>
+        <div class="kpi-delta pos">상위 2채널 평균</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">저효율 채널 평균 RPC</div>
+        <div class="kpi-value" style="font-size:20px;">₩117K</div>
+        <div class="kpi-delta neg">하위 3채널 평균</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">격차</div>
+        <div class="kpi-value">+51%</div>
+        <div class="kpi-delta dim">Naver 대비 저효율</div>
+      </div>
+    </div>
+
+    <div class="chart-grid col-3">
+      <div class="chart-card">
+        <div class="chart-title">채널별 전환당 매출(RPC)</div>
+        <div class="chart-subtitle">Naver 유입 고객 단가 51% 높음</div>
+        <div class="chart-wrap h220"><canvas id="q-rev-conv-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">전환수 비교</div>
+        <div class="chart-subtitle">전환수는 채널 간 차이 없음</div>
+        <div class="chart-wrap h220"><canvas id="q-conv-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">채널별 매출</div>
+        <div class="chart-subtitle">Naver, 전환수 같지만 매출 1.5배</div>
+        <div class="chart-wrap h220"><canvas id="q-sales-bar"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:16px;">
+      <div class="chart-title">전환 품질 상세 분석</div>
+      <div class="chart-subtitle">전환수·매출·전환당 매출 3-way 비교</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>채널</th><th>전환수</th><th>매출</th><th>전환당 매출</th><th>전체 평균 대비</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="ch ch-naver_search">Naver 검색</span></td><td>162,758</td><td>₩2,890억</td><td style="font-weight:700;font-family:'JetBrains Mono',monospace;">₩177,660</td><td class="pos">+52.6%</td></tr>
+          <tr><td><span class="ch ch-naver">Naver 디스플레이</span></td><td>163,069</td><td>₩2,877억</td><td style="font-weight:700;font-family:'JetBrains Mono',monospace;">₩176,391</td><td class="pos">+51.6%</td></tr>
+          <tr><td><span class="ch ch-meta">Meta</span></td><td>164,404</td><td>₩2,292억</td><td style="font-weight:700;font-family:'JetBrains Mono',monospace;">₩139,393</td><td class="dim">+19.9%</td></tr>
+          <tr><td><span class="ch ch-google">Google</span></td><td>165,108</td><td>₩1,936억</td><td style="font-weight:700;font-family:'JetBrains Mono',monospace;">₩117,277</td><td class="neg">-0.9%</td></tr>
+          <tr><td><span class="ch ch-kakao">Kakao</span></td><td>164,947</td><td>₩1,934억</td><td style="font-weight:700;font-family:'JetBrains Mono',monospace;">₩117,239</td><td class="neg">-0.9%</td></tr>
+          <tr><td><span class="ch ch-youtube">YouTube</span></td><td>164,136</td><td>₩1,908억</td><td style="font-weight:700;font-family:'JetBrains Mono',monospace;">₩116,258</td><td class="neg">-1.8%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-grid col-3">
+      <div class="chart-card">
+        <div class="chart-title">재구매율 비교</div>
+        <div class="chart-subtitle">채널별 고객 재구매율 (%)</div>
+        <div class="chart-wrap h140"><canvas id="q-repurchase-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">고가치 고객 비중</div>
+        <div class="chart-subtitle">채널별 고가치 고객 비율 (%)</div>
+        <div class="chart-wrap h140"><canvas id="q-hv-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">구매 빈도 비교</div>
+        <div class="chart-subtitle">채널별 연간 구매 횟수 (회/년)</div>
+        <div class="chart-wrap h140"><canvas id="q-freq-bar"></canvas></div>
+      </div>
+    </div>
+    <div class="section-divider"><span class="section-divider-text">세그먼트 상세</span></div>
+
+    <div class="chart-card" style="margin-bottom:12px;">
+      <div class="chart-title">채널별 고객 세그먼트 상세</div>
+      <div class="chart-subtitle">재구매율 · 고가치비중 · 구매빈도 · 주력 카테고리 · 평균 RPC</div>
+      <table class="data-table">
+        <thead><tr><th>채널</th><th>재구매율</th><th>고가치비중</th><th>구매빈도</th><th>주력 카테고리</th><th>평균 RPC</th></tr></thead>
+        <tbody>
+          <tr><td><span class="ch ch-naver_search">Naver 검색</span></td><td class="pos">68%</td><td class="pos">62%</td><td class="pos">3.2회/년</td><td>프리미엄 전자 (35%)</td><td>₩177,660</td></tr>
+          <tr><td><span class="ch ch-naver">Naver 디스플레이</span></td><td class="pos">65%</td><td class="pos">58%</td><td class="pos">3.0회/년</td><td>명품 패션 (32%)</td><td>₩176,391</td></tr>
+          <tr><td><span class="ch ch-meta">Meta</span></td><td>45%</td><td>35%</td><td>2.1회/년</td><td>패션 (40%)</td><td>₩139,393</td></tr>
+          <tr><td><span class="ch ch-kakao">Kakao</span></td><td class="neg">30%</td><td class="neg">20%</td><td class="neg">1.7회/년</td><td>일반 패션 (35%)</td><td>₩117,239</td></tr>
+          <tr><td><span class="ch ch-google">Google</span></td><td class="neg">32%</td><td class="neg">22%</td><td class="neg">1.8회/년</td><td>일반 패션 (38%)</td><td>₩117,277</td></tr>
+          <tr><td><span class="ch ch-youtube">YouTube</span></td><td class="neg">28%</td><td class="neg">16%</td><td class="neg">1.5회/년</td><td>생활용품 (40%)</td><td>₩116,258</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">카테고리별 구매 패턴</span></div>
+
+    <div class="chart-grid col-2">
+      <div class="chart-card">
+        <div class="chart-title">카테고리 × 채널 구매 비중</div>
+        <div class="chart-subtitle">채널별 주력 카테고리 분포 (%)</div>
+        <div class="chart-wrap h160"><canvas id="q-cat-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">오디언스 품질 레이더</div>
+        <div class="chart-subtitle">Naver 평균 vs 저효율 채널 평균 (정규화)</div>
+        <div class="chart-wrap h160"><canvas id="q-radar"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-insight">
+      Naver 유입 고객의 재구매율(<strong>66%</strong>) · 고가치 비중(<strong>60%</strong>) 압도적 우위. 구매빈도 <strong>3.1회/년</strong> vs 저효율 채널 <strong>1.7회</strong>. ROAS 격차의 근본 원인은 오디언스 구매 의향입니다.
+    </div>
+
+    <div class="next-q" onclick="showPanel('funnel',document.querySelector('[onclick*=\'funnel\']'))">
+      <div class="nq-lbl">다음 질문</div>
+      <div class="nq-txt">퍼널(CTR·CVR)이 정말 채널 간 동일한가? 숫자로 확인하기</div>
+      <div class="nq-arr">→</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ PANEL: FUNNEL ══════ -->
+<div class="panel" id="panel-funnel">
+  <div class="page-hdr">
+    <div class="page-hdr-left">
+      <div class="page-title">퍼널 분석</div>
+      <div class="page-subtitle">CTR·CVR이 채널 간 동일하다면 — 문제는 퍼널이 아니다</div>
+    </div>
+    <div class="page-hdr-right">
+      <div class="page-refresh">노출→클릭→전환 전 채널 비교</div>
+    </div>
+  </div>
+  <div class="page-body">
+
+    <!-- Funnel totals row -->
+    <div class="funnel-row">
+      <div class="funnel-step">
+        <div class="funnel-step-lbl">노출 (Impressions)</div>
+        <div class="funnel-step-val">575,779,628</div>
+        <div class="funnel-step-sub">채널 평균 95.9M</div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-step-lbl">클릭 (Clicks)</div>
+        <div class="funnel-step-val">27,514,987</div>
+        <div class="funnel-step-sub">평균 CTR 4.78%</div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-step-lbl">전환 (Conversions)</div>
+        <div class="funnel-step-val">984,422</div>
+        <div class="funnel-step-sub">평균 CVR 3.58%</div>
+      </div>
+    </div>
+
+    <div class="chart-grid col-2">
+      <div class="chart-card">
+        <div class="chart-title">채널별 CTR 비교</div>
+        <div class="chart-subtitle">클릭률은 4.76–4.81%로 전 채널 동일</div>
+        <div class="chart-wrap h220"><canvas id="fn-ctr"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">채널별 CVR 비교</div>
+        <div class="chart-subtitle">전환율은 3.55–3.62%로 전 채널 동일</div>
+        <div class="chart-wrap h220"><canvas id="fn-cvr"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:16px;">
+      <div class="chart-title">채널별 퍼널 전체 수치</div>
+      <div class="chart-subtitle">노출·CTR·CVR·전환수 — 채널 간 통계적으로 유의미한 차이 없음</div>
+      <table class="data-table">
+        <thead><tr><th>채널</th><th>노출</th><th>CTR</th><th>클릭</th><th>CVR</th><th>전환수</th></tr></thead>
+        <tbody>
+          <tr><td><span class="ch ch-naver">Naver 디스플레이</span></td><td>95.2M</td><td>4.81%</td><td>4,583K</td><td>3.56%</td><td>163,069</td></tr>
+          <tr><td><span class="ch ch-kakao">Kakao</span></td><td>95.7M</td><td>4.80%</td><td>4,592K</td><td>3.59%</td><td>164,947</td></tr>
+          <tr><td><span class="ch ch-google">Google</span></td><td>96.8M</td><td>4.77%</td><td>4,619K</td><td>3.58%</td><td>165,108</td></tr>
+          <tr><td><span class="ch ch-youtube">YouTube</span></td><td>96.3M</td><td>4.77%</td><td>4,591K</td><td>3.58%</td><td>164,136</td></tr>
+          <tr><td><span class="ch ch-naver_search">Naver 검색</span></td><td>96.3M</td><td>4.76%</td><td>4,582K</td><td>3.55%</td><td>162,758</td></tr>
+          <tr><td><span class="ch ch-meta">Meta</span></td><td>95.5M</td><td>4.76%</td><td>4,548K</td><td>3.62%</td><td>164,404</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:14px;">
+      <div class="chart-title">채널별 노출수 비교</div>
+      <div class="chart-subtitle">연간 총 노출 (M 단위)</div>
+      <div class="chart-wrap h140"><canvas id="fn-imp"></canvas></div>
+    </div>
+    <div class="chart-grid col-2">
+      <div class="chart-card">
+        <div class="chart-title">채널별 클릭수</div>
+        <div class="chart-subtitle">연간 총 클릭 (K 단위)</div>
+        <div class="chart-wrap h140"><canvas id="fn-clicks"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">월별 전환수 추이</div>
+        <div class="chart-subtitle">월간 전환 달성 현황</div>
+        <div class="chart-wrap h140"><canvas id="fn-conv-monthly"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">월간 퍼널 추이</span></div>
+
+    <div class="chart-grid col-3">
+      <div class="chart-card">
+        <div class="chart-title">월별 전환수 추이</div>
+        <div class="chart-subtitle">월간 전환 달성 (연간 984K)</div>
+        <div class="chart-wrap h120"><canvas id="fn-conv-trend"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">월별 CTR 추이</div>
+        <div class="chart-subtitle">전 채널 평균 CTR (4.76–4.81%)</div>
+        <div class="chart-wrap h120"><canvas id="fn-ctr-trend"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">월별 CVR 추이</div>
+        <div class="chart-subtitle">전 채널 평균 CVR (3.55–3.62%)</div>
+        <div class="chart-wrap h120"><canvas id="fn-cvr-trend"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">퍼널 단계별 이탈 분석</span></div>
+
+    <div class="chart-grid col-2">
+      <div class="chart-card">
+        <div class="chart-title">채널별 CTR × CVR 결합 지표</div>
+        <div class="chart-subtitle">노출→전환 총 전환율 비교 (%)</div>
+        <div class="chart-wrap h140"><canvas id="fn-funnel-stages"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">채널별 클릭수 비교</div>
+        <div class="chart-subtitle">연간 총 클릭수 (K, 균등 분포 확인)</div>
+        <div class="chart-wrap h140"><canvas id="fn-clicks-bar"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:12px;">
+      <div class="chart-title">채널별 퍼널 완전 지표</div>
+      <div class="chart-subtitle">CTR·CVR 동일 확인 — ROAS 차이는 RPC에서만 발생</div>
+      <table class="data-table">
+        <thead><tr><th>채널</th><th>노출수</th><th>CTR</th><th>클릭수</th><th>CVR</th><th>전환수</th><th>RPC</th><th>ROAS</th></tr></thead>
+        <tbody>
+          <tr><td><span class="ch ch-naver_search">Naver 검색</span></td><td>96.3M</td><td>4.76%</td><td>4,582K</td><td>3.55%</td><td>162,758</td><td>₩177,660</td><td class="pos"><strong>19.65x</strong></td></tr>
+          <tr><td><span class="ch ch-naver">Naver 디스플레이</span></td><td>95.2M</td><td>4.81%</td><td>4,583K</td><td>3.56%</td><td>163,069</td><td>₩176,391</td><td class="pos"><strong>19.63x</strong></td></tr>
+          <tr><td><span class="ch ch-meta">Meta</span></td><td>95.5M</td><td>4.76%</td><td>4,548K</td><td>3.62%</td><td>164,404</td><td>₩139,393</td><td>12.52x</td></tr>
+          <tr><td><span class="ch ch-kakao">Kakao</span></td><td>95.7M</td><td>4.80%</td><td>4,592K</td><td>3.59%</td><td>164,947</td><td>₩117,239</td><td class="neg">8.74x</td></tr>
+          <tr><td><span class="ch ch-google">Google</span></td><td>96.8M</td><td>4.77%</td><td>4,619K</td><td>3.58%</td><td>165,108</td><td>₩117,277</td><td class="neg">8.72x</td></tr>
+          <tr><td><span class="ch ch-youtube">YouTube</span></td><td>96.3M</td><td>4.77%</td><td>4,591K</td><td>3.58%</td><td>164,136</td><td>₩116,258</td><td class="neg">8.62x</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-insight">
+      퍼널(CTR 4.78%, CVR 3.58%)은 <strong>6개 채널 모두 통계적으로 동일</strong>합니다. ROAS 2.3배 차이는 100% <strong>전환당 매출(오디언스 구매 단가)</strong>에서 비롯됩니다. 소재·랜딩 최적화보다 <strong>채널 예산 재배분</strong>이 가장 빠른 ROAS 개선 방법입니다.
+    </div>
+
+    <div class="next-q" onclick="showPanel('actions',document.querySelector('[onclick*=\'actions\']'))">
+      <div class="nq-lbl">다음 단계</div>
+      <div class="nq-txt">진단 완료 — 지금 바로 실행할 수 있는 액션 아이템은?</div>
+      <div class="nq-arr">→</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ PANEL: ACTIONS ══════ -->
+<div class="panel" id="panel-actions">
+  <div class="page-hdr">
+    <div class="page-hdr-left">
+      <div class="page-title">실행 계획</div>
+      <div class="page-subtitle">우선순위 3개 액션 · 30일 내 실행 가능</div>
+    </div>
+    <div class="page-hdr-right">
+      <div class="page-refresh">카드 클릭 시 세부 단계 확인</div>
+    </div>
+  </div>
+  <div class="page-body">
+
+    <div class="action-grid">
+      <!-- A1 -->
+      <div class="action-card" id="action-card-1" onclick="toggleAction('action-card-1')">
+        <div class="action-card-hdr">
+          <div class="action-num">1</div>
+          <div class="action-title">Naver 예산 30% 이전</div>
+        </div>
+        <div class="action-meta">
+          <span class="action-tag tag-hi">Impact HIGH</span>
+          <span class="action-tag tag-lo">Effort LOW</span>
+        </div>
+        <div class="action-kv"><span class="action-kv-label">실행 기간</span><span class="action-kv-value">1–2주</span></div>
+        <div class="action-effect">예상 효과: +₩319억 추가 매출</div>
+        <div class="action-steps">
+          <div class="action-step-item"><div class="action-step-num">1</div><div class="action-step-txt">Google/Kakao/YouTube 예산 10% 단계적 감축 시작</div></div>
+          <div class="action-step-item"><div class="action-step-num">2</div><div class="action-step-txt">Naver 검색 캠페인에 추가 예산 투입</div></div>
+          <div class="action-step-item"><div class="action-step-num">3</div><div class="action-step-txt">2주 후 CPC/ROAS 모니터링</div></div>
+          <div class="action-step-item"><div class="action-step-num">4</div><div class="action-step-txt">추가 20% 이전 여부 결정</div></div>
+        </div>
+      </div>
+      <!-- A2 -->
+      <div class="action-card" id="action-card-2" onclick="toggleAction('action-card-2')">
+        <div class="action-card-hdr">
+          <div class="action-num">2</div>
+          <div class="action-title">고가치 오디언스 시드 확장</div>
+        </div>
+        <div class="action-meta">
+          <span class="action-tag tag-hi">Impact HIGH</span>
+          <span class="action-tag tag-neutral">Effort MED</span>
+        </div>
+        <div class="action-kv"><span class="action-kv-label">실행 기간</span><span class="action-kv-value">4–6주</span></div>
+        <div class="action-effect">예상 효과: ROAS +15–20%</div>
+        <div class="action-steps">
+          <div class="action-step-item"><div class="action-step-num">1</div><div class="action-step-txt">Naver 고가치 고객(재구매율 65%+) 데이터 추출</div></div>
+          <div class="action-step-item"><div class="action-step-num">2</div><div class="action-step-txt">Google/Meta 유사 오디언스(Lookalike) 생성</div></div>
+          <div class="action-step-item"><div class="action-step-num">3</div><div class="action-step-txt">분리 캠페인 운영 및 A/B 테스트</div></div>
+          <div class="action-step-item"><div class="action-step-num">4</div><div class="action-step-txt">CVR/RPC 기준 성과 검증</div></div>
+        </div>
+      </div>
+      <!-- A3 -->
+      <div class="action-card" id="action-card-3" onclick="toggleAction('action-card-3')">
+        <div class="action-card-hdr">
+          <div class="action-num">3</div>
+          <div class="action-title">Meta 크리에이티브 고단가 전환</div>
+        </div>
+        <div class="action-meta">
+          <span class="action-tag tag-mid">Impact MED</span>
+          <span class="action-tag tag-neutral">Effort MED</span>
+        </div>
+        <div class="action-kv"><span class="action-kv-label">실행 기간</span><span class="action-kv-value">4–8주</span></div>
+        <div class="action-effect">예상 효과: ROAS 12.5→15x</div>
+        <div class="action-steps">
+          <div class="action-step-item"><div class="action-step-num">1</div><div class="action-step-txt">프리미엄/명품 카테고리 전용 소재 기획</div></div>
+          <div class="action-step-item"><div class="action-step-num">2</div><div class="action-step-txt">Dynamic Product Ads 전환</div></div>
+          <div class="action-step-item"><div class="action-step-num">3</div><div class="action-step-txt">목표 ROAS(tROAS) 입찰 전략 적용</div></div>
+          <div class="action-step-item"><div class="action-step-num">4</div><div class="action-step-txt">크리에이티브 A/B 테스트 운영</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert-row" style="margin-bottom:14px;">
+      <div class="alert-card">
+        <div class="alert-label">A1 예상 추가매출</div>
+        <div class="alert-value" style="font-size:22px;">₩319억</div>
+        <div class="alert-sub">예산 재배분 30% 시</div>
+      </div>
+      <div class="alert-card">
+        <div class="alert-label">A2 ROAS 개선</div>
+        <div class="alert-value" style="font-size:22px;">+15–20%</div>
+        <div class="alert-sub">오디언스 최적화 후</div>
+      </div>
+      <div class="alert-card">
+        <div class="alert-label">A3 Meta ROAS</div>
+        <div class="alert-value" style="font-size:22px;">12.5→15x</div>
+        <div class="alert-sub">크리에이티브 전환 후</div>
+      </div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">우선순위 매트릭스</span></div>
+
+    <div class="chart-card" style="margin-bottom:20px;">
+      <div class="chart-title" style="margin-bottom:14px;">Effort × Impact 우선순위 매트릭스</div>
+      <div style="display:flex;gap:0;align-items:flex-start;">
+        <div style="display:flex;flex-direction:column;align-items:center;width:16px;flex-shrink:0;margin-right:4px;align-self:stretch;">
+          <div class="matrix-axis-y" style="flex:1;">Impact 높음</div>
+          <div class="matrix-axis-y" style="flex:1;">Impact 낮음</div>
+        </div>
+        <div style="flex:1;">
+          <div class="matrix-wrap">
+            <div class="matrix-cell matrix-cell-q1">
+              <div class="matrix-cell-label matrix-q1-label">Q1 Quick Wins</div>
+              <div><span class="matrix-item">① Naver 예산 이전</span></div>
+              <div style="font-size:10px;color:var(--c-text-muted);margin-top:8px;line-height:1.6;">예산 30% 이전, 1–2주 실행<br>기대 효과 <strong style="color:var(--c-positive);">+₩319억</strong></div>
+            </div>
+            <div class="matrix-cell matrix-cell-q2">
+              <div class="matrix-cell-label matrix-q2-label">Q2 Major Projects</div>
+              <div><span class="matrix-item">② 오디언스 시드 확장</span></div>
+              <div style="font-size:10px;color:var(--c-text-muted);margin-top:8px;line-height:1.6;">유사 타겟 4–6주 테스트<br>ROAS <strong>+15–20%</strong> 복리 효과</div>
+            </div>
+            <div class="matrix-cell matrix-cell-q3">
+              <div class="matrix-cell-label matrix-q3-label">Q3 Fill-ins</div>
+              <div style="font-size:10px;color:var(--c-text-muted);margin-top:8px;line-height:1.6;">현재 해당 없음<br>Q1·Q2 완료 후 재평가</div>
+            </div>
+            <div class="matrix-cell matrix-cell-q4">
+              <div class="matrix-cell-label matrix-q4-label">Q4 Hard Slogs</div>
+              <div><span class="matrix-item">③ Meta 크리에이티브</span></div>
+              <div style="font-size:10px;color:var(--c-text-muted);margin-top:8px;line-height:1.6;">크리에이티브 A/B, 4–8주 소요<br>CVR <strong>+8–12%</strong>지만 불확실</div>
+            </div>
+          </div>
+          <div class="matrix-axis-x"><span>Effort 낮음</span><span>Effort 높음</span></div>
+        </div>
+      </div>
+      <div class="chart-insight" style="margin-top:14px;">
+        Q1 즉시 실행 — Naver 예산 이전은 <strong>2주 내 실행 가능, +₩319억</strong> 기대. Q2 오디언스 확장은 4–6주 소요지만 ROAS +15–20% 복리 효과. Q4 Meta 크리에이티브는 성과가 불확실해 마지막 순서.
+      </div>
+      <div style="margin-top:14px;">
+        <div style="font-size:10px;color:var(--c-text-dim);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">액션별 실행 요약</div>
+        <table class="data-table">
+          <thead><tr><th>액션</th><th>Effort</th><th>Impact</th><th>기간</th><th>기대 효과</th></tr></thead>
+          <tbody>
+            <tr><td><strong>① Naver 예산 이전</strong></td><td><span style="color:#22c55e;font-weight:700;">LOW</span></td><td><span style="color:#22c55e;font-weight:700;">HIGH</span></td><td>1–2주</td><td>+₩319억</td></tr>
+            <tr><td><strong>② 오디언스 시드 확장</strong></td><td><span style="color:#f59e0b;font-weight:700;">MED</span></td><td><span style="color:#22c55e;font-weight:700;">HIGH</span></td><td>4–6주</td><td>ROAS +15–20%</td></tr>
+            <tr><td><strong>③ Meta 크리에이티브</strong></td><td><span style="color:#ef4444;font-weight:700;">HIGH</span></td><td><span style="color:#ef4444;font-weight:700;">LOW</span></td><td>4–8주</td><td>CVR +8–12%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">90일 로드맵</span></div>
+
+    <div class="chart-card" style="margin-bottom:20px;">
+      <div class="chart-title" style="margin-bottom:14px;">90일 실행 로드맵</div>
+      <div style="display:flex;margin-bottom:6px;">
+        <div style="width:16px;flex-shrink:0;margin-right:4px;"></div>
+        <div class="roadmap-months" style="flex:1;">
+          <div class="roadmap-month">1월</div>
+          <div class="roadmap-month">2월</div>
+          <div class="roadmap-month">3월</div>
+        </div>
+        <div style="min-width:90px;"></div>
+      </div>
+      <div class="roadmap-track">
+        <div class="roadmap-phase-label">Phase 1 (1-30일) — 예산 재배분</div>
+        <div class="roadmap-bar-row">
+          <div style="width:16px;flex-shrink:0;margin-right:4px;"></div>
+          <div class="roadmap-bar-bg" style="flex:1;">
+            <div class="roadmap-bar-fill" style="width:33%;background:var(--kt-teal-400);">① A1 예산 이전 시작</div>
+          </div>
+          <div class="roadmap-phase-dates">D+0 – D+30</div>
+        </div>
+      </div>
+      <div class="roadmap-track">
+        <div class="roadmap-phase-label">Phase 2 (2-6주) — 오디언스 확장</div>
+        <div class="roadmap-bar-row">
+          <div style="width:16px;flex-shrink:0;margin-right:4px;"></div>
+          <div class="roadmap-bar-bg" style="flex:1;">
+            <div class="roadmap-bar-fill" style="width:34%;margin-left:22%;background:var(--kt-teal-300);">② A2 오디언스 시드 구축</div>
+          </div>
+          <div class="roadmap-phase-dates">D+14 – D+42</div>
+        </div>
+      </div>
+      <div class="roadmap-track">
+        <div class="roadmap-phase-label">Phase 3 (4-8주) — 크리에이티브 최적화</div>
+        <div class="roadmap-bar-row">
+          <div style="width:16px;flex-shrink:0;margin-right:4px;"></div>
+          <div class="roadmap-bar-bg" style="flex:1;">
+            <div class="roadmap-bar-fill" style="width:34%;margin-left:44%;background:var(--kt-gray-400);">③ A3 크리에이티브 전환</div>
+          </div>
+          <div class="roadmap-phase-dates">D+28 – D+60</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-grid col-2">
+      <div class="chart-card">
+        <div class="chart-title">실행 난이도 × 기대 효과</div>
+        <div class="chart-subtitle">3개 액션 비교</div>
+        <div class="chart-wrap h160"><canvas id="act-impact-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">ROI 타임라인 (누적 기대 매출)</div>
+        <div class="chart-subtitle">6개월 누적 예상 효과 (억원)</div>
+        <div class="chart-wrap h160"><canvas id="act-roi-line"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">액션별 KPI 목표</span></div>
+
+    <div class="chart-card" style="margin-bottom:12px;">
+      <div class="chart-title">3개 액션 KPI 목표 및 측정 기준</div>
+      <div class="chart-subtitle">실행 후 성과 측정을 위한 지표 정의</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>액션</th><th>우선순위</th><th>기간</th><th>주요 KPI</th><th>현재 기준</th><th>목표값</th><th>측정 주기</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>A1 Naver 예산 이전</strong></td>
+            <td><span class="action-tag tag-hi" style="display:inline;">P0</span></td>
+            <td>1–2주</td>
+            <td>전체 ROAS</td>
+            <td>12.1x</td>
+            <td class="pos"><strong>14.8x</strong></td>
+            <td>주간</td>
+          </tr>
+          <tr>
+            <td></td><td></td><td></td>
+            <td>Naver CPC</td>
+            <td>기준 설정</td>
+            <td class="dim">+15% 이내 유지</td>
+            <td>일간</td>
+          </tr>
+          <tr>
+            <td><strong>A2 오디언스 시드 확장</strong></td>
+            <td><span class="action-tag tag-mid" style="display:inline;">P1</span></td>
+            <td>4–6주</td>
+            <td>저효율 채널 RPC</td>
+            <td>₩117K</td>
+            <td class="pos"><strong>₩135K+</strong></td>
+            <td>2주</td>
+          </tr>
+          <tr>
+            <td></td><td></td><td></td>
+            <td>유사 오디언스 CVR</td>
+            <td>3.58%</td>
+            <td class="dim">4.0%+ 목표</td>
+            <td>주간</td>
+          </tr>
+          <tr>
+            <td><strong>A3 Meta 크리에이티브</strong></td>
+            <td><span class="action-tag tag-neutral" style="display:inline;">P2</span></td>
+            <td>4–8주</td>
+            <td>Meta ROAS</td>
+            <td>12.52x</td>
+            <td class="pos"><strong>15x</strong></td>
+            <td>주간</td>
+          </tr>
+          <tr>
+            <td></td><td></td><td></td>
+            <td>Meta RPC</td>
+            <td>₩139K</td>
+            <td class="dim">₩160K+ 목표</td>
+            <td>2주</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="next-q" onclick="showPanel('sim',document.querySelector('[onclick*=\'sim\']'))">
+      <div class="nq-lbl">다음 질문</div>
+      <div class="nq-txt">예산 이전 시나리오별 ROAS·매출 개선 효과를 시뮬레이션해보기</div>
+      <div class="nq-arr">→</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ PANEL: SIMULATION ══════ -->
+<div class="panel" id="panel-sim">
+  <div class="page-hdr">
+    <div class="page-hdr-left">
+      <div class="page-title">예산 시뮬레이션</div>
+      <div class="page-subtitle">저효율 채널 예산을 Naver로 이전하면 ROAS 얼마나 개선되나?</div>
+    </div>
+    <div class="page-hdr-right">
+      <div class="page-refresh">총 예산 ₩114.1억 유지</div>
+    </div>
+  </div>
+  <div class="page-body">
+
+    <div class="chart-grid col-1-2">
+      <!-- Left: controls -->
+      <div class="chart-card">
+        <div class="chart-title">예산 재배분 시뮬레이터</div>
+        <div class="chart-subtitle">시나리오 선택 또는 슬라이더로 직접 조정</div>
+
+        <div class="scenario-btns">
+          <button class="scenario-btn" onclick="setScenario(10,this)">보수적 (10%)</button>
+          <button class="scenario-btn" onclick="setScenario(30,this)">권장 (30%)</button>
+          <button class="scenario-btn" onclick="setScenario(50,this)">적극적 (50%)</button>
+        </div>
+
+        <div class="sim-ctrl">
+          <div class="sim-lbl">
+            <span>저효율 채널(G·K·Y) → Naver 이전 비율</span>
+            <span class="sim-lbl-v" id="sim-pct-label">0%</span>
+          </div>
+          <input type="range" id="sim-slider" min="0" max="80" value="0" step="5" oninput="updateSim(this.value);clearScenarioActive()">
+          <div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--c-text-muted);margin-top:3px;">
+            <span>현상 유지 (0%)</span><span>최대 (80%)</span>
+          </div>
+        </div>
+
+        <div class="sim-result-g">
+          <div class="sim-rc">
+            <div class="sim-rv" id="sim-roas-val">12.1x</div>
+            <div class="sim-rd" id="sim-roas-delta">기준</div>
+            <div class="sim-rl">ROAS</div>
+          </div>
+          <div class="sim-rc">
+            <div class="sim-rv" id="sim-sales-val">₩1,384억</div>
+            <div class="sim-rd" id="sim-sales-delta">기준</div>
+            <div class="sim-rl">총 매출</div>
+          </div>
+          <div class="sim-rc">
+            <div class="sim-rv" id="sim-gain-val">₩0</div>
+            <div class="sim-rd" id="sim-gain-pct">추가 매출 없음</div>
+            <div class="sim-rl">추가 매출</div>
+          </div>
+        </div>
+
+        <div class="ba-grid">
+          <div class="ba-card ba-before">
+            <div class="ba-lbl">현재 배분</div>
+            <div class="ba-row"><div class="ba-name">Naver 예산</div><div class="ba-val">₩29.4억</div></div>
+            <div class="ba-row"><div class="ba-name">저효율 예산</div><div class="ba-val">₩66.5억</div></div>
+            <div class="ba-row"><div class="ba-name">ROAS</div><div class="ba-val">12.1x</div></div>
+          </div>
+          <div class="ba-card ba-after">
+            <div class="ba-lbl">재배분 후</div>
+            <div class="ba-row"><div class="ba-name">Naver 예산</div><div class="ba-val hi" id="sim-naver-spend">₩29.4억</div></div>
+            <div class="ba-row"><div class="ba-name">저효율 예산</div><div class="ba-val" id="sim-low-spend">₩66.5억</div></div>
+            <div class="ba-row"><div class="ba-name">예상 ROAS</div><div class="ba-val hi" id="sim-after-roas">12.1x</div></div>
+          </div>
+        </div>
+
+        <div class="risk-strips-label">리스크 요인</div>
+        <div class="risk-strip"><strong>입찰 경쟁 심화:</strong> Naver CPC 상승 가능</div>
+        <div class="risk-strip"><strong>광고 피로도:</strong> 동일 채널 집중 시 CTR 하락</div>
+        <div class="risk-strip"><strong>Naver 용량:</strong> 입찰 한계로 예산 흡수 불가</div>
+      </div>
+
+      <!-- Right: charts -->
+      <div class="chart-card">
+        <div class="chart-title">ROAS 개선 시나리오</div>
+        <div class="chart-subtitle">이전 비율별 예상 ROAS</div>
+        <div class="chart-wrap h240"><canvas id="sim-scenario-chart"></canvas></div>
+
+        <div style="font-size:11px;font-weight:700;color:var(--c-text-dim);margin-top:16px;margin-bottom:8px;">이전 비율별 예상 효과</div>
+        <table class="data-table" style="margin-bottom:16px;">
+          <thead><tr><th>이전 비율</th><th>예상 ROAS</th><th>추가 매출</th></tr></thead>
+          <tbody>
+            <tr><td>10%</td><td style="font-weight:700;">13.0x</td><td class="pos">+₩106억</td></tr>
+            <tr><td>20%</td><td style="font-weight:700;">13.9x</td><td class="pos">+₩212억</td></tr>
+            <tr><td>30%</td><td style="font-weight:700;">14.8x</td><td class="pos">+₩319억</td></tr>
+            <tr><td>50%</td><td style="font-weight:700;">16.5x</td><td class="pos">+₩531억</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">12개월 ROAS 예측</span></div>
+
+    <div class="chart-card" style="margin-bottom:20px;">
+      <div class="chart-title">12개월 ROAS 예측 (권장 30% 이전 시)</div>
+      <div class="chart-subtitle">단계적 이전 시 예상 ROAS 궤적</div>
+      <div class="chart-wrap h200"><canvas id="sim-projection-chart"></canvas></div>
+    </div>
+
+    <div class="alert-row" style="margin-bottom:14px;">
+      <div class="alert-card">
+        <div class="alert-label">보수적 (10%) — 12개월 누적</div>
+        <div class="alert-value dim" style="font-size:22px;">13.0x</div>
+        <div class="alert-sub">추가 매출 +₩106억</div>
+      </div>
+      <div class="alert-card">
+        <div class="alert-label">권장 (30%) — 12개월 누적</div>
+        <div class="alert-value pos" style="font-size:22px;">14.8x</div>
+        <div class="alert-sub">추가 매출 +₩319억</div>
+      </div>
+      <div class="alert-card">
+        <div class="alert-label">적극적 (50%) — 12개월 누적</div>
+        <div class="alert-value pos" style="font-size:22px;">16.5x</div>
+        <div class="alert-sub">추가 매출 +₩531억</div>
+      </div>
+    </div>
+    <div class="chart-grid col-2" style="margin-bottom:14px;">
+      <div class="chart-card">
+        <div class="chart-title">채널별 예산 비중 (%) 현재 vs 권장</div>
+        <div class="chart-subtitle">30% 이전 시나리오 기준</div>
+        <div class="chart-wrap h160"><canvas id="sim-alloc-bar"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">채널별 예상 매출 증감 (억원)</div>
+        <div class="chart-subtitle">권장 30% 이전 대비 현재 대비 증감</div>
+        <div class="chart-wrap h160"><canvas id="sim-gain-bar"></canvas></div>
+      </div>
+    </div>
+
+    <div class="risk-strips-label">위험 요인</div>
+    <div class="risk-strip"><strong>⚠ 입찰 경쟁 위험</strong> — Naver 예산 급증 시 CPM/CPC 상승 가능. 단계적 증액(주간 10-15%) 권장.</div>
+    <div class="risk-strip"><strong>⚠ 광고 피로도</strong> — 단기간 동일 오디언스 노출 증가 → 크리에이티브 로테이션 필수.</div>
+    <div class="risk-strip"><strong>⚠ Naver 인벤토리 용량</strong> — Naver 검색/디스플레이 타겟 오디언스 포화 가능. 유사 오디언스 확장 병행.</div>
+
+    <div class="chart-card" style="margin-bottom:14px;margin-top:12px;">
+      <div class="chart-title">이전 비율별 시나리오 비교표</div>
+      <table class="data-table">
+        <thead><tr><th>이전 비율</th><th>예상 ROAS</th><th>추가 매출</th><th>Naver 예산</th><th>저효율 예산</th></tr></thead>
+        <tbody>
+          <tr><td>10%</td><td>13.0x</td><td>+₩106억</td><td>₩36.1억</td><td>₩59.9억</td></tr>
+          <tr><td>20%</td><td>13.9x</td><td>+₩212억</td><td>₩42.7억</td><td>₩53.2억</td></tr>
+          <tr class="row-active"><td><strong>30% (권장)</strong></td><td><strong>14.8x</strong></td><td><strong>+₩319억</strong></td><td><strong>₩49.4억</strong></td><td><strong>₩46.5억</strong></td></tr>
+          <tr><td>40%</td><td>15.7x</td><td>+₩426억</td><td>₩56.0억</td><td>₩39.9억</td></tr>
+          <tr><td>50%</td><td>16.5x</td><td>+₩531억</td><td>₩62.7억</td><td>₩33.3억</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">채널별 ROI 분석</span></div>
+
+    <div class="chart-grid col-3">
+      <div class="chart-card">
+        <div class="chart-title">채널별 ₩1억당 매출 (억원)</div>
+        <div class="chart-subtitle">광고비 효율 직접 비교</div>
+        <div class="chart-wrap h120"><canvas id="sim-roi-per-won"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">현재 vs 권장 CPA 비교</div>
+        <div class="chart-subtitle">Naver 증액 시 CPA 변화</div>
+        <div class="chart-wrap h120"><canvas id="sim-cpa-comp"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">채널별 매출 기여도 (현재)</div>
+        <div class="chart-subtitle">예산 vs 매출 기여 비대칭</div>
+        <div class="chart-wrap h120"><canvas id="sim-contrib-donut"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:14px;">
+      <div class="chart-title">채널별 월별 예산 효율 전망</div>
+      <div class="chart-subtitle">권장 30% 이전 실행 후 분기별 ROAS 기대값</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>채널</th><th>현재 예산비중</th><th>권장 예산비중</th><th>현재 ROAS</th><th>목표 ROAS</th><th>분기별 개선</th><th>예산 변화</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="ch ch-naver_search">Naver 검색</span></td><td>12.9%</td><td class="pos"><strong>22.0%</strong></td><td>19.65x</td><td>19.65x</td><td>→ 유지</td><td class="pos">+₩10.4억</td></tr>
+          <tr><td><span class="ch ch-naver">Naver 디스플레이</span></td><td>12.8%</td><td class="pos"><strong>21.2%</strong></td><td>19.63x</td><td>19.63x</td><td>→ 유지</td><td class="pos">+₩9.6억</td></tr>
+          <tr><td><span class="ch ch-meta">Meta</span></td><td>16.0%</td><td>16.0%</td><td>12.52x</td><td>12.52x</td><td>→ 유지</td><td class="dim">±₩0</td></tr>
+          <tr><td><span class="ch ch-kakao">Kakao</span></td><td>19.4%</td><td class="neg">13.6%</td><td>8.74x</td><td>8.74x</td><td>→ 유지</td><td class="neg">-₩6.6억</td></tr>
+          <tr><td><span class="ch ch-google">Google</span></td><td>19.5%</td><td class="neg">13.7%</td><td>8.72x</td><td>8.72x</td><td>→ 유지</td><td class="neg">-₩6.7억</td></tr>
+          <tr><td><span class="ch ch-youtube">YouTube</span></td><td>19.4%</td><td class="neg">13.5%</td><td>8.62x</td><td>8.62x</td><td>→ 유지</td><td class="neg">-₩6.7억</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-insight">
+      저효율 채널 예산의 <strong>30% → Naver 이전</strong>만으로 전체 ROAS가 <strong>12.1x → 14.8x</strong>로 개선됩니다. 동일 광고비에서 추가 매출 <strong>₩319억</strong> 창출 효과. 입찰 경쟁 심화 방지를 위해 <strong>월 10–15%씩 단계적 이전</strong> 권장합니다.
+    </div>
+
+    <div class="section-divider"><span class="section-divider-text">시뮬레이션 요약</span></div>
+
+    <div class="kpi-row" style="margin-bottom:14px;">
+      <div class="kpi-card kpi-main">
+        <div class="kpi-label">North Star 목표 ROAS</div>
+        <div class="kpi-value">15x</div>
+        <div class="kpi-delta dim">30% 이전으로 14.8x 달성 가능</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">예산 재배분 규모</div>
+        <div class="kpi-value" style="font-size:20px;">₩20억</div>
+        <div class="kpi-delta dim">저효율→Naver 30% 이전</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">추가 매출 (연간)</div>
+        <div class="kpi-value" style="font-size:20px;">₩319억</div>
+        <div class="kpi-delta pos">+23.1% 성장</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">ROI 달성 시점</div>
+        <div class="kpi-value" style="font-size:20px;">3개월</div>
+        <div class="kpi-delta dim">A1 실행 기준</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+/* ─── DATA ─── */
+const CH = [
+  {id:'naver_search', name:'Naver 검색',      share:12.9, roas:19.65, conv:162758, cpa:9039,  ctr:4.76, cvr:3.55, rpc:177660, spend:1471220009, sales:28908567622, spark:[19.99,19.77,20.33,18.47,19.70,19.19,19.60,19.44,20.09,19.99,19.40,19.71]},
+  {id:'naver',        name:'Naver 디스플레이', share:12.8, roas:19.63, conv:163069, cpa:8985,  ctr:4.81, cvr:3.56, rpc:176391, spend:1465207035, sales:28765594672, spark:[19.78,19.85,19.72,19.04,19.84,19.70,19.75,19.43,19.52,19.48,20.20,19.37]},
+  {id:'meta',         name:'Meta',             share:16.0, roas:12.52, conv:164404, cpa:11136, ctr:4.76, cvr:3.62, rpc:139393, spend:1830759631, sales:22916232052, spark:[12.38,12.23,12.67,12.88,12.61,12.54,12.64,12.38,12.38,12.44,12.20,12.85]},
+  {id:'kakao',        name:'Kakao',            share:19.4, roas:8.74,  conv:164947, cpa:13408, ctr:4.80, cvr:3.59, rpc:117239, spend:2211629338, sales:19338611418, spark:[8.71,8.66,8.69,8.64,8.86,8.70,9.11,8.67,8.51,8.77,8.76,8.88]},
+  {id:'google',       name:'Google',           share:19.5, roas:8.72,  conv:165108, cpa:13450, ctr:4.77, cvr:3.58, rpc:117277, spend:2220769604, sales:19363096199, spark:[9.38,8.76,8.82,8.67,8.62,8.66,8.99,8.29,8.62,8.74,8.64,8.47]},
+  {id:'youtube',      name:'YouTube',          share:19.4, roas:8.62,  conv:164136, cpa:13491, ctr:4.77, cvr:3.58, rpc:116258, spend:2214310497, sales:19082656840, spark:[8.75,8.26,8.75,8.18,9.01,8.56,8.74,8.86,8.59,8.47,8.53,8.67]},
+];
+const MONTHLY = {
+  labels:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+  roas:  [12.31,12.06,12.28,11.81,12.23,11.98,12.42,11.94,12.16,12.16,12.01,12.12],
+  spend: [9.5,8.8,10.0,9.5,9.6,9.5,9.6,9.7,9.5,9.6,9.3,9.6],
+  conv:  [82475,76481,85275,82597,83255,82256,81892,84193,81992,82842,80296,80868]
+};
+const SIM_BASE = {naverSpend:29.4,lowSpend:66.5,metaSpend:18.3,naverRoas:19.64,lowRoas:8.69,metaRoas:12.52,totalSpend:114.3,baseSales:1383.8};
+const CH_CATEGORIES = {
+  naver_search:{cats:['프리미엄 전자','명품 패션','고가 뷰티','기타'],vals:[35,28,22,15],avgPrice:'₩177,660'},
+  naver:       {cats:['명품 패션','프리미엄 전자','고가 뷰티','기타'],vals:[32,30,25,13],avgPrice:'₩176,391'},
+  meta:        {cats:['패션','뷰티','생활용품','기타'],vals:[40,35,15,10],avgPrice:'₩139,393'},
+  google:      {cats:['일반 패션','생활용품','식품','기타'],vals:[38,32,20,10],avgPrice:'₩117,277'},
+  kakao:       {cats:['일반 패션','생활용품','식품','기타'],vals:[35,35,20,10],avgPrice:'₩117,239'},
+  youtube:     {cats:['생활용품','일반 패션','식품','기타'],vals:[40,30,20,10],avgPrice:'₩116,258'},
+};
+const CH_SEGMENTS = {
+  naver_search:{repurchase:'68%',hv:'62%',freq:'3.2회/년'},
+  naver:       {repurchase:'65%',hv:'58%',freq:'3.0회/년'},
+  meta:        {repurchase:'45%',hv:'35%',freq:'2.1회/년'},
+  google:      {repurchase:'32%',hv:'22%',freq:'1.8회/년'},
+  kakao:       {repurchase:'30%',hv:'20%',freq:'1.7회/년'},
+  youtube:     {repurchase:'28%',hv:'16%',freq:'1.5회/년'},
+};
+const COLORS = {naver_search:'rgba(0,163,155,.85)',naver:'rgba(0,163,155,.55)',meta:'rgba(97,100,107,.45)',kakao:'rgba(139,143,151,.45)',google:'rgba(173,177,185,.50)',youtube:'rgba(199,202,209,.60)'};
+const COLORS_DARK = {naver_search:'#00a39b',naver:'#4cc8c3',meta:'#8b8f97',kakao:'#adb1b9',google:'#c7cad1',youtube:'#d5d8dd'};
+
+/* ─── LAZY CHART TRACKER ─── */
+const chartsInit = {};
+
+/* ─── AREA GRADIENT PLUGIN ─── */
+Chart.register({
+  id:'areaGrad',
+  beforeDraw(chart) {
+    if (!chart.chartArea) return;
+    const {ctx, chartArea:{top,bottom}} = chart;
+    chart.data.datasets.forEach(ds => {
+      if (!ds._grad) return;
+      const g = ctx.createLinearGradient(0, top, 0, bottom);
+      g.addColorStop(0,   'rgba(0,163,155,0.25)');
+      g.addColorStop(0.6, 'rgba(0,163,155,0.07)');
+      g.addColorStop(1,   'rgba(0,163,155,0.00)');
+      ds.backgroundColor = g;
+    });
+  }
+});
+
+Chart.defaults.font.family = "'Pretendard', -apple-system, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#6f737b';
+
+/* ─── NAV ─── */
+function showPanel(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  if (id === 'channel' && !chartsInit.channel) { initChannelCharts(); chartsInit.channel = true; }
+  if (id === 'quality' && !chartsInit.quality) { initQualityCharts(); chartsInit.quality = true; }
+  if (id === 'funnel'  && !chartsInit.funnel)  { initFunnelCharts();  chartsInit.funnel  = true; }
+  if (id === 'sim'     && !chartsInit.sim)     { initSimCharts();     chartsInit.sim     = true; }
+  if (id === 'actions' && !chartsInit.actions) { initActionsCharts(); chartsInit.actions = true; }
+}
+
+/* ─── SPARKLINE SVG ─── */
+function spark(values, w, h, color) {
+  const mn = Math.min(...values), mx = Math.max(...values), rng = mx - mn || 1;
+  const pts = values.map((v,i) => `${(i/(values.length-1))*w},${h - ((v-mn)/rng)*(h-4) - 2}`).join(' ');
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="display:block"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+/* ─── INIT SPARKLINES ─── */
+document.getElementById('spark-roas').innerHTML  = spark(MONTHLY.roas, 80, 26, '#00a39b');
+document.getElementById('spark-sales').innerHTML = spark(MONTHLY.spend.map((s,i) => s*MONTHLY.roas[i]), 80, 26, '#00a39b');
+document.getElementById('spark-spend').innerHTML = spark(MONTHLY.spend, 80, 26, '#adb1b9');
+document.getElementById('spark-conv').innerHTML  = spark(MONTHLY.conv, 80, 26, '#adb1b9');
+document.getElementById('spark-cpa').innerHTML   = spark([11800,12100,11700,12300,11900,12100,11600,12400,11900,11800,12000,11594], 80, 26, '#e0282f');
+
+/* ─── OVERVIEW CHARTS (always init) ─── */
+new Chart(document.getElementById('ch-monthly-roas'), {
+  type:'line',
+  data:{labels:MONTHLY.labels, datasets:[{label:'전체 ROAS', data:MONTHLY.roas, borderColor:'#00a39b', backgroundColor:'transparent', _grad:true, borderWidth:2, pointRadius:0, pointHoverRadius:4, pointHoverBackgroundColor:'#00a39b', fill:true, tension:.3}]},
+  options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{min:11, max:13, ticks:{callback:v=>v+'x'}, grid:{color:'rgba(0,0,0,.04)'}}, x:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('ch-budget-donut'), {
+  type:'doughnut',
+  data:{labels:CH.map(c=>c.name), datasets:[{data:CH.map(c=>c.share), backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:'#fff', borderWidth:2}]},
+  options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{font:{size:10}, padding:8}}, tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw}%`}}}, cutout:'65%'}
+});
+
+new Chart(document.getElementById('ch-roas-bar'), {
+  type:'bar',
+  data:{labels:CH.map(c=>c.name), datasets:[{data:CH.map(c=>c.roas), backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+  options:{indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ROAS: ${ctx.raw}x`}}}, scales:{x:{grid:{color:'rgba(0,0,0,.04)'}, ticks:{callback:v=>v+'x'}, min:0, max:22}, y:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('ov-scatter'), {
+  type:'bubble',
+  data:{datasets: CH.map(c => ({label:c.name, data:[{x:c.share, y:c.roas, r:Math.sqrt(c.spend/1e8)*2}], backgroundColor:COLORS[c.id], borderColor:COLORS_DARK[c.id], borderWidth:1.5}))},
+  options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{font:{size:10}, padding:6}}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: 예산 ${ctx.raw.x}%, ROAS ${ctx.raw.y}x`}}}, scales:{x:{title:{display:true, text:'예산 비중 (%)', font:{size:10}}, min:10, max:22, grid:{color:'rgba(0,0,0,.04)'}}, y:{title:{display:true, text:'ROAS', font:{size:10}}, ticks:{callback:v=>v+'x'}, grid:{color:'rgba(0,0,0,.04)'}}}}
+});
+
+/* ── NEW OVERVIEW CHARTS ── */
+new Chart(document.getElementById('ov-roas-monthly'), {
+  type:'line',
+  data:{labels:MONTHLY.labels, datasets:[{label:'ROAS', data:MONTHLY.roas, borderColor:'#00a39b', backgroundColor:'transparent', borderWidth:2, pointRadius:0, pointHoverRadius:3, fill:false, tension:.3}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:11,max:13,ticks:{callback:v=>v+'x',font:{size:9}},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+});
+new Chart(document.getElementById('ov-spend-monthly'), {
+  type:'bar',
+  data:{labels:MONTHLY.labels, datasets:[{label:'광고비', data:MONTHLY.spend, backgroundColor:'rgba(139,143,151,.4)', borderColor:'rgba(97,100,107,.6)', borderWidth:1}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ₩${ctx.raw}억`}}},scales:{y:{ticks:{callback:v=>'₩'+v+'억'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+});
+new Chart(document.getElementById('ov-conv-monthly'), {
+  type:'bar',
+  data:{labels:MONTHLY.labels, datasets:[{label:'전환수', data:MONTHLY.conv, backgroundColor:'rgba(0,163,155,.35)', borderColor:'rgba(0,163,155,.6)', borderWidth:1}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw.toLocaleString()}건`}}},scales:{y:{ticks:{callback:v=>(v/1000).toFixed(0)+'K'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+});
+new Chart(document.getElementById('ov-sales-monthly'), {
+  type:'bar',
+  data:{labels:MONTHLY.labels, datasets:[{label:'매출', data:MONTHLY.spend.map((s,i)=>+(s*MONTHLY.roas[i]).toFixed(1)), backgroundColor:'rgba(0,163,155,.55)', borderColor:'rgba(0,163,155,.8)', borderWidth:1}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ₩${ctx.raw}억`}}},scales:{y:{ticks:{callback:v=>'₩'+v+'억'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+});
+new Chart(document.getElementById('ov-cpa-bar'), {
+  type:'bar',
+  data:{labels:CH.map(c=>c.name), datasets:[{label:'CPA', data:CH.map(c=>c.cpa), backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ₩${ctx.raw.toLocaleString()}`}}},scales:{x:{ticks:{callback:v=>'₩'+(v/10000).toFixed(1)+'만'},grid:{color:'rgba(0,0,0,.04)'}},y:{grid:{display:false}}}}
+});
+new Chart(document.getElementById('ov-conv-bar'), {
+  type:'bar',
+  data:{labels:CH.map(c=>c.name), datasets:[{label:'전환수', data:CH.map(c=>c.conv), backgroundColor:'rgba(139,143,151,.35)', borderColor:'rgba(97,100,107,.5)', borderWidth:1}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw.toLocaleString()}건`}}},scales:{x:{ticks:{callback:v=>(v/1000).toFixed(0)+'K'},grid:{color:'rgba(0,0,0,.04)'}},y:{grid:{display:false}}}}
+});
+new Chart(document.getElementById('ov-spend-vs-sales'), {
+  type:'bar',
+  data:{labels:CH.map(c=>c.name), datasets:[
+    {label:'광고비', data:CH.map(c=>+(c.spend/1e8).toFixed(1)), backgroundColor:'rgba(139,143,151,.4)', borderColor:'rgba(97,100,107,.6)', borderWidth:1},
+    {label:'매출', data:CH.map(c=>+(c.sales/1e8).toFixed(0)), backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:5}},tooltip:{callbacks:{label:ctx=>` ₩${ctx.raw}억`}}},scales:{y:{ticks:{callback:v=>'₩'+v+'억'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+});
+
+/* ─── KPI DRILL-DOWN ─── */
+let activeKpiMetric = null, kpiDetailChart = null;
+const KPI_CONFIG = {
+  roas:  {label:'채널별 ROAS',  th:'ROAS',  getValue:c=>c.roas+'x',                        getChartVal:c=>c.roas,                 fmt:v=>v+'x'},
+  sales: {label:'채널별 매출',  th:'매출',  getValue:c=>'₩'+(c.sales/1e10).toFixed(0)+'백억', getChartVal:c=>+(c.sales/1e10).toFixed(1),  fmt:v=>'₩'+v+'백억'},
+  spend: {label:'채널별 광고비',th:'광고비', getValue:c=>(c.spend/1e8).toFixed(1)+'억',      getChartVal:c=>+(c.spend/1e8).toFixed(1),   fmt:v=>'₩'+v+'억'},
+  conv:  {label:'채널별 전환수',th:'전환수', getValue:c=>c.conv.toLocaleString()+'건',        getChartVal:c=>c.conv,                 fmt:v=>v.toLocaleString()+'건'},
+  cpa:   {label:'채널별 CPA',   th:'CPA',   getValue:c=>'₩'+(c.cpa/10000).toFixed(1)+'만',  getChartVal:c=>+(c.cpa/10000).toFixed(1),   fmt:v=>'₩'+v+'만'}
+};
+
+function expandKPI(metric, cardEl) {
+  const detailRow = document.getElementById('kpi-detail-row');
+  const allCards  = document.querySelectorAll('.kpi-card');
+  if (activeKpiMetric === metric) { detailRow.classList.remove('visible'); cardEl.classList.remove('active'); activeKpiMetric = null; return; }
+  allCards.forEach(c => c.classList.remove('active'));
+  cardEl.classList.add('active');
+  activeKpiMetric = metric;
+  const cfg = KPI_CONFIG[metric];
+  document.getElementById('kpi-detail-title').textContent = cfg.label + ' 채널별 분포';
+  document.getElementById('kpi-detail-th').textContent = cfg.th;
+  const sorted = [...CH].sort((a,b) => cfg.getChartVal(b) - cfg.getChartVal(a));
+  document.getElementById('kpi-detail-tbody').innerHTML = sorted.map(c =>
+    `<tr><td><span class="ch ch-${c.id}">${c.name}</span></td><td style="font-weight:700;">${cfg.getValue(c)}</td></tr>`
+  ).join('');
+  if (kpiDetailChart) { kpiDetailChart.destroy(); kpiDetailChart = null; }
+  kpiDetailChart = new Chart(document.getElementById('kpi-detail-chart'), {
+    type:'bar',
+    data:{labels:sorted.map(c=>c.name), datasets:[{data:sorted.map(c=>cfg.getChartVal(c)), backgroundColor:sorted.map(c=>COLORS[c.id]), borderColor:sorted.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+    options:{indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${cfg.fmt(ctx.raw)}`}}}, scales:{x:{grid:{color:'rgba(0,0,0,.04)'}}, y:{grid:{display:false}}}}
+  });
+  detailRow.classList.add('visible');
+}
+
+/* ─── CHANNEL TABLE ─── */
+const tbody = document.getElementById('ch-table-body');
+[...CH].sort((a,b)=>b.roas-a.roas).forEach(c => {
+  const tr = document.createElement('tr');
+  tr.className = 'clickable';
+  tr.setAttribute('data-ch-id', c.id);
+  tr.innerHTML = `<td><span class="ch ch-${c.id}">${c.name}</span></td><td>${c.share}%</td><td style="font-weight:700">${c.roas}x</td><td>₩${(c.cpa/10000).toFixed(1)}만</td>`;
+  tr.onclick = () => showChannelProfile(c.id, tr);
+  tbody.appendChild(tr);
+});
+
+const maxRoas = Math.max(...CH.map(c=>c.roas));
+document.getElementById('roas-bars').innerHTML = [...CH].sort((a,b)=>b.roas-a.roas).map(c => {
+  const w = Math.round((c.roas/maxRoas)*100);
+  const cls = c.roas>15?'hi':c.roas>10?'mid':'lo';
+  return `<div style="margin-bottom:7px;"><div style="font-size:10px;color:var(--c-text-dim);margin-bottom:3px;">${c.name}</div><div class="rbar-w"><div class="rbar ${cls}" style="width:${w}%"></div><div class="rbar-v">${c.roas}x</div></div></div>`;
+}).join('');
+
+/* ─── CHANNEL PROFILE ─── */
+let activeChId = null, chProfileDonutChart = null, chProfileSparkChart = null;
+
+function showChannelProfile(chId, rowEl) {
+  const card = document.getElementById('ch-profile-card');
+  document.querySelectorAll('#ch-table-body tr').forEach(r => r.classList.remove('row-active'));
+  if (activeChId === chId) { card.classList.remove('visible'); activeChId = null; return; }
+  activeChId = chId;
+  if (rowEl) rowEl.classList.add('row-active');
+  const ch = CH.find(c=>c.id===chId);
+  const cats = CH_CATEGORIES[chId];
+  const segs = CH_SEGMENTS[chId];
+  document.getElementById('ch-profile-name').textContent = ch.name + ' 채널 프로필';
+  document.getElementById('ch-profile-avg-price').textContent = cats.avgPrice;
+  document.getElementById('ch-seg-repurchase').textContent = segs.repurchase;
+  document.getElementById('ch-seg-hv').textContent = segs.hv;
+  document.getElementById('ch-seg-freq').textContent = segs.freq;
+  if (chProfileDonutChart) { chProfileDonutChart.destroy(); chProfileDonutChart = null; }
+  if (chProfileSparkChart) { chProfileSparkChart.destroy(); chProfileSparkChart = null; }
+  const catColors = ['rgba(0,163,155,.8)','rgba(0,163,155,.5)','rgba(139,143,151,.45)','rgba(199,202,209,.6)'];
+  chProfileDonutChart = new Chart(document.getElementById('ch-profile-donut'), {
+    type:'doughnut',
+    data:{labels:cats.cats, datasets:[{data:cats.vals, backgroundColor:catColors, borderColor:'#fff', borderWidth:2}]},
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{font:{size:9}, padding:5}}, tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw}%`}}}, cutout:'55%'}
+  });
+  chProfileSparkChart = new Chart(document.getElementById('ch-profile-spark'), {
+    type:'line',
+    data:{labels:['1','2','3','4','5','6','7','8','9','10','11','12'], datasets:[{label:'월별 ROAS', data:ch.spark, borderColor:'#00a39b', backgroundColor:'transparent', _grad:true, borderWidth:2, pointRadius:0, pointHoverRadius:4, pointHoverBackgroundColor:'#00a39b', fill:true, tension:.3}]},
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{ticks:{callback:v=>v+'x', font:{size:9}}, grid:{color:'rgba(0,0,0,.04)'}}, x:{grid:{display:false}, ticks:{font:{size:9}}}}}
+  });
+  card.classList.add('visible');
+  setTimeout(() => card.scrollIntoView({behavior:'smooth', block:'nearest'}), 50);
+}
+
+/* ─── LAZY CHANNEL CHARTS ─── */
+function initChannelCharts() {
+  new Chart(document.getElementById('ch-scatter'), {
+    type:'bubble',
+    data:{datasets:CH.map(c=>({label:c.name, data:[{x:c.share,y:c.roas,r:Math.sqrt(c.spend/1e8)*2.2}], backgroundColor:COLORS[c.id], borderColor:COLORS_DARK[c.id], borderWidth:1.5}))},
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{font:{size:10}, padding:6}}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: 예산 ${ctx.raw.x}%, ROAS ${ctx.raw.y}x`}}}, scales:{x:{title:{display:true, text:'예산 비중 (%)', font:{size:10}}, min:10, max:22, grid:{color:'rgba(0,0,0,.04)'}}, y:{title:{display:true, text:'ROAS', font:{size:10}}, ticks:{callback:v=>v+'x'}, grid:{color:'rgba(0,0,0,.04)'}}}}
+  });
+  new Chart(document.getElementById('ch-per-won'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[{label:'ROAS', data:CH.map(c=>+c.roas.toFixed(1)), backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ₩1억 투자 → ₩${ctx.raw}억 매출`}}}, scales:{y:{ticks:{callback:v=>v+'x'}, grid:{color:'rgba(0,0,0,.04)'}}, x:{grid:{display:false}, ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('ch-rev-per-conv'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[{label:'RPC', data:CH.map(c=>c.rpc), backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+    options:{indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ₩${(ctx.raw/10000).toFixed(1)}만`}}}, scales:{x:{ticks:{callback:v=>'₩'+(v/10000).toFixed(0)+'만'}, grid:{color:'rgba(0,0,0,.04)'}}, y:{grid:{display:false}}}}
+  });
+  new Chart(document.getElementById('ch-monthly-multi'), {
+    type:'line',
+    data:{labels:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], datasets:CH.map(c=>({
+      label:c.name, data:c.spark, borderColor:COLORS_DARK[c.id], backgroundColor:'transparent', borderWidth:1.5, pointRadius:0, pointHoverRadius:3, tension:.3
+    }))},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:6}}},scales:{y:{ticks:{callback:v=>v+'x',font:{size:9}},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('ch-cpa-bar'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[{label:'CPA', data:CH.map(c=>c.cpa), backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ₩${ctx.raw.toLocaleString()}`}}},scales:{x:{ticks:{callback:v=>'₩'+(v/10000).toFixed(1)+'만'},grid:{color:'rgba(0,0,0,.04)'}},y:{grid:{display:false}}}}
+  });
+  new Chart(document.getElementById('ch-sales-donut'), {
+    type:'doughnut',
+    data:{labels:CH.map(c=>c.name), datasets:[{data:CH.map(c=>+(c.sales/1e10).toFixed(1)), backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:'#fff', borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:5}},tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ₩${ctx.raw}백억`}}},cutout:'60%'}
+  });
+  const avgRpc = CH.reduce((s,c)=>s+c.rpc,0)/CH.length;
+  new Chart(document.getElementById('ch-rpc-vs-avg'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[
+      {label:'RPC', data:CH.map(c=>c.rpc), backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1, borderRadius:0},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ₩${(ctx.raw/10000).toFixed(1)}만`}}},scales:{y:{ticks:{callback:v=>'₩'+(v/10000).toFixed(0)+'만'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('ch-conv-donut'), {
+    type:'doughnut',
+    data:{labels:CH.map(c=>c.name), datasets:[{data:CH.map(c=>c.conv), backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:'#fff', borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:5,boxWidth:8}},tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw.toLocaleString()}건`}}},cutout:'60%'}
+  });
+  new Chart(document.getElementById('ch-spend-donut'), {
+    type:'doughnut',
+    data:{labels:CH.map(c=>c.name), datasets:[{data:CH.map(c=>c.share), backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:'#fff', borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:5,boxWidth:8}},tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw}%`}}},cutout:'60%'}
+  });
+  new Chart(document.getElementById('ch-ctr-bar'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[{label:'CTR(%)', data:CH.map(c=>c.ctr), backgroundColor:CH.map(c=>COLORS[c.id]), borderWidth:0, borderRadius:0}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:4.6,max:5.0,ticks:{callback:v=>v+'%',font:{size:9}},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+}
+
+/* ─── LAZY QUALITY CHARTS ─── */
+function initQualityCharts() {
+  const chS = [...CH].sort((a,b)=>b.rpc-a.rpc);
+  new Chart(document.getElementById('q-rev-conv-bar'), {
+    type:'bar',
+    data:{labels:chS.map(c=>c.name), datasets:[{data:chS.map(c=>c.rpc), backgroundColor:chS.map(c=>COLORS[c.id]), borderColor:chS.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+    options:{indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ₩${(ctx.raw/10000).toFixed(1)}만`}}}, scales:{x:{ticks:{callback:v=>'₩'+(v/10000).toFixed(0)+'만'}, grid:{color:'rgba(0,0,0,.04)'}}, y:{grid:{display:false}}}}
+  });
+  new Chart(document.getElementById('q-conv-bar'), {
+    type:'bar',
+    data:{labels:chS.map(c=>c.name), datasets:[{data:chS.map(c=>c.conv), backgroundColor:'rgba(100,116,139,.18)', borderColor:'rgba(100,116,139,.4)', borderWidth:1}]},
+    options:{indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.raw.toLocaleString()}건`}}}, scales:{x:{ticks:{callback:v=>(v/1000)+'K'}, grid:{color:'rgba(0,0,0,.04)'}}, y:{grid:{display:false}, ticks:{display:false}}}}
+  });
+  new Chart(document.getElementById('q-sales-bar'), {
+    type:'bar',
+    data:{labels:chS.map(c=>c.name), datasets:[{data:chS.map(c=>+(c.sales/1e10).toFixed(1)), backgroundColor:chS.map(c=>COLORS[c.id]), borderColor:chS.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+    options:{indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ₩${ctx.raw}백억`}}}, scales:{x:{ticks:{callback:v=>'₩'+v+'백억'}, grid:{color:'rgba(0,0,0,.04)'}}, y:{grid:{display:false}, ticks:{display:false}}}}
+  });
+  const chNames = ['Naver 검색','Naver 디스플레이','Meta','Kakao','Google','YouTube'];
+  new Chart(document.getElementById('q-repurchase-bar'), {
+    type:'bar',
+    data:{labels:chNames, datasets:[{label:'재구매율', data:[68,65,45,30,32,28], backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw}%`}}},scales:{x:{min:0,max:80,ticks:{callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.04)'}},y:{grid:{display:false}}}}
+  });
+  new Chart(document.getElementById('q-hv-bar'), {
+    type:'bar',
+    data:{labels:chNames, datasets:[{label:'고가치 비중', data:[62,58,35,20,22,16], backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw}%`}}},scales:{x:{min:0,max:70,ticks:{callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.04)'}},y:{grid:{display:false},ticks:{display:false}}}}
+  });
+  new Chart(document.getElementById('q-freq-bar'), {
+    type:'bar',
+    data:{labels:chNames, datasets:[{label:'구매빈도', data:[3.2,3.0,2.1,1.7,1.8,1.5], backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw}회/년`}}},scales:{x:{min:0,max:4,ticks:{callback:v=>v+'회'},grid:{color:'rgba(0,0,0,.04)'}},y:{grid:{display:false},ticks:{display:false}}}}
+  });
+  new Chart(document.getElementById('q-cat-rpc-bar'), {
+    type:'bar',
+    data:{labels:['프리미엄 전자','명품 패션','고가 뷰티','일반 패션','뷰티','생활용품','식품'], datasets:[{label:'평균 RPC', data:[177660,177660,177000,139393,139000,117277,116258], backgroundColor:['rgba(0,163,155,.85)','rgba(0,163,155,.85)','rgba(0,163,155,.55)','rgba(97,100,107,.45)','rgba(97,100,107,.45)','rgba(139,143,151,.45)','rgba(199,202,209,.6)'], borderColor:['#00a39b','#00a39b','#4cc8c3','#8b8f97','#8b8f97','#adb1b9','#d5d8dd'], borderWidth:1}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ₩${(ctx.raw/10000).toFixed(1)}만`}}},scales:{x:{ticks:{callback:v=>'₩'+(v/10000).toFixed(0)+'만'},grid:{color:'rgba(0,0,0,.04)'}},y:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('q-radar'), {
+    type:'radar',
+    data:{labels:['재구매율','고가치비중','구매빈도','RPC','ROAS'], datasets:[
+      {label:'Naver 평균', data:[66,60,3.1,177000/2000,19.6], borderColor:'#00a39b', backgroundColor:'rgba(0,163,155,.15)', borderWidth:2, pointRadius:3},
+      {label:'저효율 평균', data:[30,19,1.7,117000/2000,8.7], borderColor:'rgba(139,143,151,.8)', backgroundColor:'rgba(139,143,151,.1)', borderWidth:2, pointRadius:3}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:6}}},scales:{r:{ticks:{display:false},grid:{color:'rgba(0,0,0,.06)'}}}}
+  });
+  new Chart(document.getElementById('q-cat-bar'), {
+    type:'bar',
+    data:{labels:['프리미엄 전자','명품 패션','고가 뷰티','일반 패션','뷰티','생활용품'],
+      datasets:[
+        {label:'Naver 검색',data:[35,28,22,0,0,0],backgroundColor:'rgba(0,163,155,.7)',borderWidth:0,borderRadius:0},
+        {label:'Meta',data:[0,0,0,40,35,15],backgroundColor:'rgba(139,143,151,.5)',borderWidth:0,borderRadius:0},
+        {label:'저효율(평균)',data:[0,0,0,36,0,32],backgroundColor:'rgba(199,202,209,.6)',borderWidth:0,borderRadius:0}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:5,boxWidth:8}}},scales:{x:{grid:{display:false},ticks:{font:{size:9}}},y:{ticks:{callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.04)'}}}}
+  });
+}
+
+/* ─── LAZY FUNNEL CHARTS ─── */
+function initFunnelCharts() {
+  new Chart(document.getElementById('fn-ctr'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[{data:CH.map(c=>c.ctr), backgroundColor:'rgba(139,143,151,.35)', borderColor:'rgba(97,100,107,.5)', borderWidth:1}]},
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{min:4.5, max:5.1, ticks:{callback:v=>v+'%'}, grid:{color:'rgba(0,0,0,.04)'}}, x:{grid:{display:false}}}}
+  });
+  new Chart(document.getElementById('fn-cvr'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[{data:CH.map(c=>c.cvr), backgroundColor:'rgba(139,143,151,.35)', borderColor:'rgba(97,100,107,.5)', borderWidth:1}]},
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{min:3.3, max:3.8, ticks:{callback:v=>v+'%'}, grid:{color:'rgba(0,0,0,.04)'}}, x:{grid:{display:false}}}}
+  });
+  new Chart(document.getElementById('fn-imp'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[{label:'노출수', data:[95.2,95.7,96.8,96.3,96.3,95.5], backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw}M`}}},scales:{y:{min:94,max:98,ticks:{callback:v=>v+'M'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('fn-clicks'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[{label:'클릭수', data:[4583,4592,4619,4591,4582,4548], backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw}K`}}},scales:{y:{min:4500,max:4700,ticks:{callback:v=>v+'K'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('fn-conv-monthly'), {
+    type:'line',
+    data:{labels:MONTHLY.labels, datasets:[{label:'전환수', data:MONTHLY.conv, borderColor:'#00a39b', backgroundColor:'transparent', _grad:true, borderWidth:2, pointRadius:0, pointHoverRadius:4, fill:true, tension:.3}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw.toLocaleString()}건`}}},scales:{y:{ticks:{callback:v=>(v/1000).toFixed(0)+'K'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('fn-conv-trend'), {
+    type:'line',
+    data:{labels:MONTHLY.labels, datasets:[{label:'전환수', data:MONTHLY.conv, borderColor:'#00a39b', backgroundColor:'transparent', borderWidth:2, pointRadius:0, tension:.3}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>(v/1000).toFixed(0)+'K',font:{size:9}},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('fn-ctr-trend'), {
+    type:'line',
+    data:{labels:MONTHLY.labels, datasets:[{label:'CTR', data:[4.75,4.78,4.79,4.77,4.80,4.76,4.78,4.79,4.77,4.78,4.80,4.76], borderColor:'#4cc8c3', backgroundColor:'transparent', borderWidth:2, pointRadius:0, tension:.3}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:4.6,max:4.9,ticks:{callback:v=>v+'%',font:{size:9}},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('fn-cvr-trend'), {
+    type:'line',
+    data:{labels:MONTHLY.labels, datasets:[{label:'CVR', data:[3.56,3.58,3.57,3.60,3.58,3.59,3.57,3.58,3.60,3.58,3.57,3.59], borderColor:'#adb1b9', backgroundColor:'transparent', borderWidth:2, pointRadius:0, tension:.3}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:3.4,max:3.8,ticks:{callback:v=>v+'%',font:{size:9}},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('fn-funnel-stages'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[
+      {label:'CTR (%)',data:CH.map(c=>c.ctr),backgroundColor:'rgba(0,163,155,.55)',borderWidth:0,borderRadius:0},
+      {label:'CVR (%)',data:CH.map(c=>c.cvr),backgroundColor:'rgba(173,177,185,.5)',borderWidth:0,borderRadius:0},
+      {label:'총전환율 (%)',data:CH.map(c=>+(c.ctr*c.cvr/100).toFixed(3)),backgroundColor:'rgba(76,200,195,.4)',borderWidth:0,borderRadius:0}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:5}}},scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.04)'}}}}
+  });
+  new Chart(document.getElementById('fn-clicks-bar'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[{label:'클릭수(K)', data:[4582,4583,4548,4592,4619,4591], backgroundColor:CH.map(c=>COLORS[c.id]), borderWidth:0, borderRadius:0}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{min:4500,ticks:{callback:v=>v.toLocaleString()+'K'},grid:{color:'rgba(0,0,0,.04)'}}}}
+  });
+}
+
+/* ─── LAZY SIM CHARTS ─── */
+function initSimCharts() {
+  const simLabels = ['0%','10%','20%','30%','40%','50%','60%','70%','80%'];
+  const simRoas = simLabels.map((_,i) => {
+    const x = i/10;
+    const lowNew = SIM_BASE.lowSpend*(1-x);
+    const naverNew = SIM_BASE.naverSpend + SIM_BASE.lowSpend*x;
+    return +((lowNew*SIM_BASE.lowRoas + naverNew*SIM_BASE.naverRoas + SIM_BASE.metaSpend*SIM_BASE.metaRoas)/SIM_BASE.totalSpend).toFixed(2);
+  });
+  new Chart(document.getElementById('sim-scenario-chart'), {
+    type:'line',
+    data:{labels:simLabels, datasets:[
+      {label:'예상 ROAS', data:simRoas, borderColor:'#00a39b', backgroundColor:'transparent', _grad:true, borderWidth:2.5, pointRadius:0, pointHoverRadius:4, pointHoverBackgroundColor:'#00a39b', fill:true, tension:.3},
+      {label:'현재 ROAS', data:new Array(9).fill(12.12), borderColor:'rgba(0,0,0,.2)', borderDash:[4,4], borderWidth:1.5, pointRadius:0, fill:false}
+    ]},
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{font:{size:10}, padding:8}}}, scales:{y:{min:11, max:21, ticks:{callback:v=>v+'x'}, grid:{color:'rgba(0,0,0,.04)'}}, x:{grid:{display:false}}}}
+  });
+  const projLabels = ['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10','M11','M12'];
+  const baseRoas = 12.12, targetRoas = 14.8;
+  const projRoas = projLabels.map((_,i) => +(baseRoas + (targetRoas - baseRoas) * (1 - Math.exp(-0.4*(i+1))) * 0.95).toFixed(2));
+  new Chart(document.getElementById('sim-projection-chart'), {
+    type:'line',
+    data:{labels:projLabels, datasets:[
+      {label:'예상 ROAS (권장 30%)', data:projRoas, borderColor:'#00a39b', backgroundColor:'transparent', _grad:true, borderWidth:2, pointRadius:0, pointHoverRadius:4, pointHoverBackgroundColor:'#00a39b', fill:true, tension:.4},
+      {label:'현재 ROAS', data:new Array(12).fill(12.12), borderColor:'rgba(0,0,0,.15)', borderDash:[4,3], borderWidth:1.5, pointRadius:0, fill:false}
+    ]},
+    options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{font:{size:10}, padding:6}}}, scales:{y:{min:11, max:16, ticks:{callback:v=>v+'x', font:{size:9}}, grid:{color:'rgba(0,0,0,.04)'}}, x:{grid:{display:false}, ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('sim-alloc-bar'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[
+      {label:'현재 배분(%)', data:CH.map(c=>c.share), backgroundColor:'rgba(139,143,151,.4)', borderColor:'rgba(97,100,107,.6)', borderWidth:1, borderRadius:0},
+      {label:'권장 배분(%)', data:[22.0,21.2,16.0,13.6,13.7,13.5], backgroundColor:CH.map(c=>COLORS[c.id]), borderColor:CH.map(c=>COLORS_DARK[c.id]), borderWidth:1, borderRadius:0}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:6}},tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.raw}%`}}},scales:{y:{ticks:{callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('sim-gain-bar'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[{
+      label:'예상 매출 증감 (억원)',
+      data:[70,70,0,-10,-10,-10],
+      backgroundColor:['rgba(0,163,155,.7)','rgba(0,163,155,.55)','rgba(173,177,185,.4)','rgba(224,40,47,.4)','rgba(224,40,47,.35)','rgba(224,40,47,.3)'],
+      borderWidth:0, borderRadius:0
+    }]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw>0?'+':''}${ctx.raw}억`}}},scales:{y:{ticks:{callback:v=>v+'억'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('sim-roi-per-won'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[{label:'₩1억당 매출(억)', data:CH.map(c=>+c.roas.toFixed(2)), backgroundColor:CH.map(c=>COLORS[c.id]), borderWidth:0, borderRadius:0}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'억',font:{size:9}},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('sim-cpa-comp'), {
+    type:'bar',
+    data:{labels:CH.map(c=>c.name), datasets:[
+      {label:'현재 CPA', data:CH.map(c=>c.cpa), backgroundColor:'rgba(173,177,185,.5)', borderWidth:0, borderRadius:0},
+      {label:'목표 CPA', data:[9039,8985,11136,11000,11000,11000], backgroundColor:CH.map(c=>COLORS[c.id]), borderWidth:0, borderRadius:0}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:4,boxWidth:8}}},scales:{y:{ticks:{callback:v=>'₩'+(v/1000).toFixed(0)+'K',font:{size:9}},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}
+  });
+  new Chart(document.getElementById('sim-contrib-donut'), {
+    type:'doughnut',
+    data:{labels:['Naver계(25.7%)','저효율(58.3%)','Meta(16.0%)'], datasets:[{data:[41.7,41.7,16.6], backgroundColor:['#00a39b','#c7cad1','#8b8f97'], borderColor:'#fff', borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:5,boxWidth:8}},tooltip:{callbacks:{label:ctx=>` 매출 기여: ${ctx.raw}%`}}},cutout:'55%'}
+  });
+}
+
+/* ─── ACTION CHARTS ─── */
+function initActionsCharts() {
+  new Chart(document.getElementById('act-impact-bar'), {
+    type:'bar',
+    data:{labels:['A1 예산 이전','A2 오디언스','A3 크리에이티브'], datasets:[
+      {label:'실행 난이도', data:[1,2,2], backgroundColor:'rgba(139,143,151,.4)', borderColor:'rgba(97,100,107,.6)', borderWidth:1},
+      {label:'기대 효과', data:[3,3,2], backgroundColor:'rgba(0,163,155,.55)', borderColor:'#00a39b', borderWidth:1}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:6}},tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.raw}/3`}}},scales:{y:{min:0,max:3,ticks:{stepSize:1,callback:v=>['없음','낮음','중간','높음'][v]||v},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false}}}}
+  });
+  new Chart(document.getElementById('act-roi-line'), {
+    type:'line',
+    data:{labels:['M1','M2','M3','M4','M5','M6'], datasets:[
+      {label:'A1 예산 이전', data:[30,80,150,220,280,319], borderColor:'#00a39b', backgroundColor:'transparent', borderWidth:2, pointRadius:3, tension:.3},
+      {label:'A2 오디언스', data:[5,20,50,90,130,160], borderColor:'#4cc8c3', backgroundColor:'transparent', borderWidth:2, pointRadius:3, tension:.3},
+      {label:'A3 크리에이티브', data:[0,10,30,55,80,100], borderColor:'rgba(139,143,151,.8)', backgroundColor:'transparent', borderWidth:2, pointRadius:3, tension:.3}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:6}},tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: +₩${ctx.raw}억`}}},scales:{y:{ticks:{callback:v=>'₩'+v+'억'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false}}}}
+  });
+}
+
+/* ─── ACTION CARDS ─── */
+function toggleAction(cardId) { document.getElementById(cardId).classList.toggle('expanded'); }
+
+/* ─── SIMULATION ─── */
+function setScenario(pct, btnEl) {
+  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+  btnEl.classList.add('active');
+  document.getElementById('sim-slider').value = pct;
+  updateSim(pct);
+}
+function clearScenarioActive() { document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active')); }
+function updateSim(val) {
+  const pct = parseInt(val);
+  const x = pct/100;
+  const lowNew   = SIM_BASE.lowSpend*(1-x);
+  const naverNew = SIM_BASE.naverSpend + SIM_BASE.lowSpend*x;
+  const totalSales = lowNew*SIM_BASE.lowRoas + naverNew*SIM_BASE.naverRoas + SIM_BASE.metaSpend*SIM_BASE.metaRoas;
+  const newRoas    = totalSales/SIM_BASE.totalSpend;
+  const roasDelta  = newRoas - 12.12;
+  const salesDelta = totalSales - SIM_BASE.baseSales;
+  document.getElementById('sim-pct-label').textContent    = pct+'%';
+  document.getElementById('sim-roas-val').textContent     = newRoas.toFixed(1)+'x';
+  document.getElementById('sim-roas-delta').textContent   = roasDelta>=0 ? '+'+roasDelta.toFixed(2)+'x' : roasDelta.toFixed(2)+'x';
+  document.getElementById('sim-sales-val').textContent    = '₩'+totalSales.toFixed(0)+'억';
+  document.getElementById('sim-sales-delta').textContent  = salesDelta>=0 ? '+₩'+salesDelta.toFixed(0)+'억' : '₩'+salesDelta.toFixed(0)+'억';
+  document.getElementById('sim-gain-val').textContent     = '₩'+(salesDelta>0?salesDelta.toFixed(0):'0')+'억';
+  document.getElementById('sim-gain-pct').textContent     = salesDelta>0 ? '+'+((salesDelta/SIM_BASE.baseSales)*100).toFixed(1)+'% 성장' : '추가 매출 없음';
+  document.getElementById('sim-naver-spend').textContent  = '₩'+naverNew.toFixed(1)+'억';
+  document.getElementById('sim-low-spend').textContent    = '₩'+lowNew.toFixed(1)+'억';
+  document.getElementById('sim-after-roas').textContent   = newRoas.toFixed(2)+'x';
+}
+</script>
+</body>
+</html>
